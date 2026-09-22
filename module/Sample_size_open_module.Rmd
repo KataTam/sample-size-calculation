@@ -77,6 +77,88 @@ These observations are estimates, not known population probabilities. For the te
 
 Use differences in clinically interpretable units. An increase from 0.80 to 0.96 is **16 percentage points**, or a **20% relative increase**. Avoid choosing an effect solely because a generic scale calls it small, medium or large [@caldwell2020].
 
+## How large a treatment difference could your study detect? {#critical-observed-difference}
+
+Let's return to the hypothetical study comparing two painkillers in patients with chronic pain. In the pilot study, 7 out of 10 patients receiving the novel treatment found it effective, compared with 3 out of 10 receiving standard treatment. The observed treatment difference is therefore $0.7-0.3=0.4$, or **40 percentage points**.
+
+After consultation with patients and medical experts, you have decided that a difference of 30 percentage points would be clinically meaningful. The observed difference in your pilot is larger than this. However, does this also mean that the result is statistically significant?
+
+Using a two-sided comparison of proportions, the pilot gives a p-value of approximately 0.074. At a significance level of 0.05, this result is not statistically significant. This does not establish that the treatments are equally effective. It means that these observations do not provide sufficient evidence to reject the null hypothesis using the chosen test.
+
+Now let's investigate how large the observed difference would have to be to obtain a statistically significant result. Keep the standard treatment result at 3 out of 10 patients, but increase the number reporting relief in the novel treatment group from 7 to 8.
+
+```{r pain-critical-p-values, warning=FALSE}
+# Compare the pilot result with one additional treatment response
+pain_p_value <- function(novel, standard, n) {
+  prop.test(
+    x = c(novel, standard),
+    n = c(n, n),
+    alternative = "two.sided",
+    correct = FALSE
+  )$p.value
+}
+
+round(c(
+  "7 versus 3" = pain_p_value(7, 3, 10),
+  "8 versus 3" = pain_p_value(8, 3, 10)
+), 3)
+```
+
+With 8 rather than 7 patients reporting relief, the result becomes statistically significant. For this particular comparison, the smallest observed difference giving $p<0.05$ is therefore $0.8-0.3=0.5$, or **50 percentage points**.
+
+Notice that the clinical threshold remains 30 percentage points. What patients would consider a worthwhile improvement does not change because your pilot happens to contain only 10 patients per group.
+
+*The calculation above uses an approximate test without continuity correction, matching the reasoning lab. With such small groups, an exact test may give a different result.*
+
+### What happens if you recruit more patients?
+
+Let's repeat this calculation for larger studies. At each sample size, keep the observed proportion reporting relief with standard treatment at 30%. Then find the smallest number reporting relief with the novel treatment that gives $p<0.05$.
+
+```{r pain-critical-effect, echo=FALSE, warning=FALSE, fig.height=5.8, fig.cap="Smallest observed improvement giving p < 0.05 at each sample size, conditional on an observed control response of 30%. The two-sided score test uses no continuity correction. Points represent attainable patient counts; connecting lines guide the eye. The clinical threshold is a hypothetical judgement for this example. These are analysable patients, before adjustment for dropout.", fig.alt="The smallest observed difference giving statistical significance falls from 50 percentage points at 10 patients per group to 14 at 100 per group. A horizontal line marks the hypothetical clinical threshold of 30 percentage points. The pilot difference of 40 points at 10 patients per group lies below the significance threshold."}
+pain_n <- seq(10, 100, by = 10)
+pain_critical <- vapply(pain_n, function(n) {
+  control <- as.integer(round(0.30 * n))
+  treatment <- seq.int(control + 1L, n)
+  p <- vapply(treatment, function(x) pain_p_value(x, control, n), numeric(1))
+  min((treatment[p < 0.05] - control) / n)
+}, numeric(1))
+
+local({
+  old_par <- par(mar = c(5, 5, 2, 1), las = 1)
+  on.exit(par(old_par))
+  plot(pain_n, 100 * pain_critical, type = "b", pch = 16, lwd = 2,
+       col = "#17658A", ylim = c(0, 66), xaxt = "n",
+       xlab = "Analysable patients per group (equal allocation)",
+       ylab = "Observed difference in pain relief (percentage points)")
+  axis(1, at = pain_n)
+  abline(h = 30, col = "#A5500C", lty = 2, lwd = 2)
+  points(10, 40, pch = 1, cex = 1.5, lwd = 2, col = "#303A43")
+  legend("topright",
+         c("Smallest observed difference with p < 0.05",
+           "Clinical threshold: 30 percentage points",
+           "Pilot: 7/10 versus 3/10"),
+         col = c("#17658A", "#A5500C", "#303A43"),
+         lty = c(1, 2, NA), pch = c(16, NA, 1),
+         lwd = 2, bty = "n", cex = 0.8)
+})
+```
+
+With 20 patients per group, an observed difference of 35 percentage points is sufficient for statistical significance under these conditions. With 50 patients per group, the corresponding difference is 20 percentage points. As the sample size increases, smaller observed differences can therefore become statistically significant.
+
+The dashed line shows the clinically meaningful difference chosen for this example. With a larger sample, a result can be statistically significant even when the observed difference is smaller than this clinical threshold. You therefore need to consider the size of the difference and its confidence interval when interpreting the result.
+
+### How does this relate to power?
+
+So far, you have asked how large an **observed** difference must be to obtain $p<0.05$. When planning your main study, you need to ask a further question: *If the true treatment difference is 30 percentage points, how likely is your study to produce a statistically significant result?*
+
+Different samples will give different observed differences, even when the true treatment effect remains the same. Some will be larger and others smaller. A power calculation takes this variation into account. We will examine this in the next chapter, after recording the assumptions for our study.
+
+This illustration draws on the distinction between a critical observed effect and a sensitivity power analysis in @lakens2022, and section 1.7 of *Power Analysis with Superpower* [@superpowerbook2022].
+
+::: {.activity}
+Before continuing, consider a study that finds a statistically significant difference of 20 percentage points. **What would you still need to know before deciding whether the novel treatment offers a clinically meaningful benefit?**
+:::
+
 ## Record the assumptions
 
 | Decision | What to make explicit |
