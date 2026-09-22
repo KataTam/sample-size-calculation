@@ -44,6 +44,8 @@ Read the question, make a prediction, inspect the output, and explain what it me
 
 Open the [Sample size reasoning lab](https://katatam.github.io/sample-size-calculation/power_explorer/) for the guided activities. It runs in a browser. The prepared figures and results in this tutorial provide a route through all three activities without the app. Other [clinical sample size tools](https://katatam.github.io/sample-size-calculation/) cover two proportions, two means and dropout.
 
+Need help finding your way around? See [Using the toolbar](#using-the-toolbar) below.
+
 By the end, you should be able to:
 
 - Choose a testing, estimation or fixed-resource planning goal and explain why it fits the question.
@@ -54,6 +56,24 @@ By the end, you should be able to:
 - Interpret repeated-study rejection, coverage, precision and Monte Carlo uncertainty.
 - Interpret an interval against zero and a clinical threshold, and communicate feasibility and limitations.
 
+
+## Using the toolbar {#using-the-toolbar .unnumbered}
+
+In the online book, the toolbar is the row of small icons at the top of the page. You can use it to find a chapter, search the tutorial, or make the text easier to read. The icons appear in this order:
+
+| Icon | What it does | How to use it |
+|:--|:--|:--|
+| **Three horizontal lines** (contents) | Shows or hides the chapter list on the left. | Select a chapter or section to open it. On a phone, open this menu first to see the contents. Close it again with the same icon if it covers the text. |
+| **Magnifying glass** (search) | Searches the text of the whole book. | Select it, type a word such as *dropout*, and select a result to open that passage. Press **Esc** to leave search. |
+| **A** (reading settings) | Changes how the book looks on your screen. | Use the smaller or larger **A** to adjust text size. **Serif / Sans** changes the typeface; **White / Sepia / Night** changes the colour theme; **Spacing - / +** adjusts the line spacing. These choices do not change the content. |
+| **Downward arrow** (download) | Opens the complete tutorial as one HTML page. | Select **Standalone HTML**. It opens in a new browser tab. To keep a local copy, use your browser's **Save page as** command. External links and some mathematical notation may still need internet access. |
+| **i** (help) | Opens this guide to the toolbar. | Use it whenever you need a reminder. |
+
+To read in order, use the **left and right arrows at the sides of the page** to move to the previous or next chapter. The first page has no previous-chapter arrow, and the last page has no next-chapter arrow. On smaller screens, you may need to scroll down to find these arrows; the contents menu is another way to change chapters.
+
+If you prefer the keyboard, press **Tab** to move between controls and **Enter** to activate one. When you are not typing in a text box, **S** shows or hides the contents, **F** opens search, and the **left / right arrow keys** move between chapters. Within search, use **up / down** to select a match and **Enter** to open it.
+
+The downloaded, single-page HTML edition has its own table of contents rather than this book toolbar. Use your browser's **Find** command (**Ctrl+F** on Windows, **Command+F** on Mac) to search that edition.
 
 # Start with the clinical question {#clinical-question}
 

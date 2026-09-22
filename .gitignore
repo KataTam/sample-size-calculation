@@ -21,3 +21,5 @@ module/index.Rmd
 
 _site/
 module/libs/
+
+!module/toolbar-help.html

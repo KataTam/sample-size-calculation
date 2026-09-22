@@ -1,0 +1,27 @@
+<script>
+(function () {
+  "use strict";
+  var helpUrl = "index.html#using-the-toolbar";
+  function labelHelp() {
+    var icon = document.querySelector(".book-header .fa-info");
+    if (!icon) return;
+    var link = icon.closest("a");
+    if (!link) return;
+    link.href = helpUrl;
+    link.title = "Help: using the toolbar";
+    link.setAttribute("aria-label", "Help: using the toolbar");
+  }
+  // Replace the default keyboard-shortcuts alert with the complete help page.
+  document.addEventListener("click", function (event) {
+    var link = event.target.closest && event.target.closest(".book-header a");
+    if (!link || !link.querySelector(".fa-info")) return;
+    event.preventDefault();
+    event.stopImmediatePropagation();
+    window.location.assign(helpUrl);
+  }, true);
+  window.addEventListener("load", function () {
+    labelHelp();
+    if (window.gitbook) window.gitbook.events.bind("page.change", labelHelp);
+  });
+})();
+</script>

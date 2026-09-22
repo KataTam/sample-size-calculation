@@ -1,6 +1,5 @@
 :root { --ink: #25313b; --accent: #176675; --line: #dce4e7; }
 .book .book-body .page-wrapper .page-inner { max-width: 850px; }
-.book .book-body .page-wrapper .page-inner section.normal,
 body { color: var(--ink); font-size: 17px; line-height: 1.65; }
 .main-container { max-width: 1000px; }
 h1, h2, h3 { line-height: 1.25; }
