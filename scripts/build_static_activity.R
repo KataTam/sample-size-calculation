@@ -36,6 +36,6 @@ for (name in names(scenarios)) {
 lines <- c(lines, "## Interpretation and communication", "",
   "Use the case template to justify the goal and assumptions. Explain one inconclusive result, interpret intervals against the clinical threshold, and compare performance while n stays fixed. Report Monte Carlo uncertainty separately from clinical uncertainty.", "",
   "The normal batch uses equivalent sufficient-statistic sampling; the single dataset is a separate realisation, not the batch's first row. These displays include test/CI differences for binary data described in statistical_methods.md.", "",
-  "## References", "", "See [References](../REFERENCES.md) for the pedagogical and statistical sources.")
+  "## References", "", "See [References](../documentation/references.md) for the pedagogical and statistical sources.")
 writeLines(lines, "teaching/static_activity.md")
 message("Static activity, figures, synthetic datasets and assumptions generated.")

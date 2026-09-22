@@ -1,38 +1,26 @@
 # Sample Size Calculation
 
-Clinical sample-size reasoning, power, precision and simulation for medical students, by Katalin Tamási (UMCG).
+**Reasoning about study design in clinical research**
 
-- [Read the tutorial](https://katatam.github.io/sample-size-calculation/book/)
-- [Interactive tools](https://katatam.github.io/sample-size-calculation/)
-- [Standalone HTML](https://katatam.github.io/sample-size-calculation/book/Sample_size_open_module.html)
-- [Download the reusable source](https://katatam.github.io/sample-size-calculation/sample-size-calculation-source.zip)
-- [Collaborator review files](intro_review/)
-- [Teaching guide](teaching/TEACHING_GUIDE.md), [case template](cases/student_case_template.md), [assessment rubric](teaching/assessment_rubric.md)
+Open teaching materials for medical students, by Katalin Tamási (UMCG). Work from a clinical question to the assumptions behind a sample size, explore what different studies could show, and explain what a feasible design could establish.
 
-## One maintained project
+The tutorial, browser tools and prepared examples require no R installation. These are teaching examples for two independent groups with equal allocation; other designs require additional methods.
 
-This public repository consolidates sample-size-calculation-oer and sample-size-calculation-apps. The original name is restored. The old OER repository is retained as a private archive; the former app repository is also a private archive. The old website address is retired; use the links above. Current sources are consolidated here with a fresh public history. External articles are referenced rather than redistributed. Randomization experiments remain a separate project.
+## Start here
 
-Edit **module/Sample_size_open_module.Rmd** for the tutorial, **module/references.bib** for references, and **R/sample_size_functions.R** for shared calculations. apps/ contains the four app sources. Both HTML editions are generated from the same Rmd. No ANOVA lesson is required.
+- **Students:** [read the tutorial](https://katatam.github.io/sample-size-calculation/book/) and explore the [sample size reasoning lab](https://katatam.github.io/sample-size-calculation/power_explorer/).
+- **Teachers:** start with the [teaching guide](teaching/TEACHING_GUIDE.md), [prepared activity](teaching/static_activity.md) and [case studies](case-studies/README.md).
+- **Student reviewers:** use the [review guide](student-materials/README.md) and [open-ended review template](student-materials/material-review-template.md).
+- **Adapters:** see the [documentation](documentation/README.md), [build instructions](documentation/development/build-and-publish.md), and the shared code in [R/](https://github.com/KataTam/sample-size-calculation/tree/main/R) and [apps/](https://github.com/KataTam/sample-size-calculation/tree/main/apps).
 
-## Publish an edit
+## What you will explore
 
-Save your source changes, commit, and push to main. The **Build and publish resource** GitHub Actions workflow checks the R code, renders both tutorial formats, exports all four browser apps, refreshes the source download and deploys GitHub Pages. A successful deployment is shown in the repository Actions tab. Knitting alone is a local preview and does not push changes.
+Clinical questions and assumptions; two means and two proportions; power and precision; expected dropout; one simulated study and repeated studies; recruitment limits; and a written justification of a study design.
 
-## Build locally
+[Open the teaching website](https://katatam.github.io/sample-size-calculation/) · [Download the standalone tutorial](https://katatam.github.io/sample-size-calculation/book/Sample_size_open_module.html) · [Download the source](https://katatam.github.io/sample-size-calculation/sample-size-calculation-source.zip)
 
-Install R (tested with 4.5.1), Python 3, Pandoc (included with RStudio), and the R packages rmarkdown, bookdown, knitr, shiny and shinylive. From the repository root:
+## Reuse and contribute
 
-```sh
-Rscript scripts/check_resource.R
-Rscript scripts/render_resource.R
-Rscript scripts/export_shinylive.R
-python scripts/build_site.py
-python -m http.server 8767 --directory _site
-```
+Original teaching materials are **CC BY 4.0**; original code is **MIT**. See [reuse and citation](documentation/reuse-and-citation.md), [third-party notices](documentation/third-party-notices.md), and [contribution guidance](CONTRIBUTING.md). Student contributions are reviewed and published only with permission. The resource has not yet been evaluated in a student pilot.
 
-Browse http://localhost:8767 . Git ignores generated docs/ and _site/. The website is deployed as an Actions artifact, not a second editable repository. Build with network access for Shinylive dependencies.
-
-## Reuse and provenance
-
-Original teaching materials: CC BY 4.0. Original code: MIT. See LICENSE, LICENSE-code.md, CITATION.cff and THIRD_PARTY_NOTICES.md. Third-party dependencies and historical screenshots retain their own terms. Student contributions require review and consent for public attribution. This resource has not established learning effectiveness through a student pilot.
+To update the tutorial, edit `module/Sample_size_open_module.Rmd`. Commit and push to publish through GitHub Actions. Detailed maintenance instructions are in [documentation/development/](documentation/development/build-and-publish.md).

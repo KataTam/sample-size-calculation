@@ -18,8 +18,9 @@ jobs:
           r-version: '4.5.1'
           use-public-rspm: true
       - uses: r-lib/actions/setup-pandoc@v2
-      - name: Install R dependencies
-        run: Rscript -e 'install.packages(c("rmarkdown", "bookdown", "knitr", "shiny", "shinylive"))'
+      - name: Check source text
+        run: python3 scripts/check_text.py
+      - uses: r-lib/actions/setup-renv@v2
       - name: Check statistical functions and apps
         run: Rscript scripts/check_resource.R
       - name: Render tutorial

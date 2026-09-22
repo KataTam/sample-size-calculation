@@ -18,13 +18,13 @@ Student cases are welcome, but they need review before reuse.
 
 Before submitting a case:
 
-- use `cases/student_case_template.md`
-- check it with `cases/case_quality_checklist.md`
+- use `case-studies/student_case_template.md`
+- check it with `case-studies/case_quality_checklist.md`
 - remove identifiable patient, student, or local project information
 - state whether the case is fictional, adapted, or based on a general clinical topic
 - include assumptions clearly enough that someone else can repeat the calculation
 
-If a student case may be reused publicly, explicit consent is required. See `cases/instructor_review_notes.md`.
+If a student case may be reused publicly, explicit consent is required. See `case-studies/instructor_review_notes.md`.
 
 ## Teaching Changes
 

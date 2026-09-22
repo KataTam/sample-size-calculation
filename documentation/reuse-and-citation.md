@@ -61,7 +61,7 @@ If you adapt the resource, briefly describe what you changed. This can be done i
 
 ## External sources and earlier versions
 
-See [third-party notices](THIRD_PARTY_NOTICES.md) before importing external figures or code, or releasing historical revisions. The separate [References](REFERENCES.md) section records conceptual and statistical sources without relicensing their material.
+See [third-party notices](third-party-notices.md) before importing external figures or code, or releasing historical revisions. The separate [References](references.md) section records conceptual and statistical sources without relicensing their material.
 
 
 ## Consolidated release 0.2.0

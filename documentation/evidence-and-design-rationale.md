@@ -18,7 +18,7 @@ The DICE supplement was consulted but not copied. Its expression `2*pnorm(z)` is
 
 ## References
 
-Full bibliographic details are in [References](../REFERENCES.md). Statistical implementation and provenance are documented in [statistical methods](statistical_methods.md) and [third-party notices](../THIRD_PARTY_NOTICES.md).
+Full bibliographic details are in [References](references.md). Statistical implementation and provenance are documented in [statistical methods](statistical-methods.md) and [third-party notices](third-party-notices.md).
 
 ## Superpower-inspired revision
 

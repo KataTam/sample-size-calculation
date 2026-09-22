@@ -4,19 +4,18 @@ check_resource <- function(render_module = FALSE) {
 
   required_files <- c(
     "README.md",
-    "REFERENCES.md",
-    "THIRD_PARTY_NOTICES.md",
-    "teaching/evidence_and_design_rationale.md",
-    "teaching/statistical_methods.md",
+    "documentation/references.md",
+    "documentation/third-party-notices.md",
+    "documentation/evidence-and-design-rationale.md",
+    "documentation/statistical-methods.md",
     "teaching/pilot_learning_assessment.md",
     "LICENSE",
     "LICENSE-code.md",
     "CITATION.cff",
-    "OER_METADATA.md",
-    "REUSE_AND_CITATION.md",
-    "PUBLICATION_AND_HOSTING.md",
-    "SHINYLIVE_HOSTING.md",
-    "QUALITY_CHECKS.md",
+    "documentation/oer-metadata.md",
+    "documentation/reuse-and-citation.md",
+    "documentation/development/build-and-publish.md",
+    "documentation/development/quality-checks.md",
     "module/Sample_size_open_module.Rmd",
     "module/styles.css",
     "R/sample_size_functions.R",
@@ -26,7 +25,7 @@ check_resource <- function(render_module = FALSE) {
     "teaching/accessibility_checklist.md",
     "teaching/pilot_student_feedback.md",
     "teaching/pilot_observation_notes.md",
-    "cases/student_case_template.md",
+    "case-studies/student_case_template.md",
     "scripts/export_shinylive.R"
   )
 

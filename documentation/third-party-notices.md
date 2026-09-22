@@ -17,7 +17,7 @@ The earlier module identified inspiration from Tim Clayton's 2019 clinical-trial
 
 ## References
 
-Full citations: [References](REFERENCES.md). Keep external material under its own terms if it is ever added, and identify the exact files and licence separately.
+Full citations: [References](references.md). Keep external material under its own terms if it is ever added, and identify the exact files and licence separately.
 
 ## Consolidated tutorial (September 2026)
 

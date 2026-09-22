@@ -1,0 +1,6 @@
+body { font-family: system-ui, sans-serif; color: #202c36; background: #fff; max-width: 850px; margin: 2.5rem auto; padding: 0 1.25rem 3rem; line-height: 1.65; }
+h1 { line-height: 1.2; color: #153c50; } h2 { margin-top: 2rem; line-height: 1.3; }
+a { color: #075b86; text-underline-offset: .15em; } a:focus-visible { outline: 3px solid #d38100; outline-offset: 3px; }
+img { max-width: 100%; height: auto; } pre { overflow: auto; padding: 1rem; background: #f1f5f7; } code { overflow-wrap: anywhere; }
+table { border-collapse: collapse; display: block; max-width: 100%; overflow-x: auto; } th, td { padding: .5rem; border-bottom: 1px solid #ccd7df; text-align: left; }
+@media(max-width: 600px) { body { margin-top: 1.5rem; } h1 { font-size: 1.9rem; } }

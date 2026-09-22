@@ -1,0 +1,22 @@
+{
+  "OER_METADATA.md": "documentation/oer-metadata.md",
+  "REUSE_AND_CITATION.md": "documentation/reuse-and-citation.md",
+  "THIRD_PARTY_NOTICES.md": "documentation/third-party-notices.md",
+  "REFERENCES.md": "documentation/references.md",
+  "PUBLICATION_AND_HOSTING.md": "documentation/development/build-and-publish.md",
+  "QUALITY_CHECKS.md": "documentation/development/quality-checks.md",
+  "RELEASE_CHECKLIST.md": "documentation/development/release-checklist.md",
+  "CONSOLIDATION_INVENTORY.md": "documentation/development/consolidation-inventory.md",
+  "teaching/CONSOLIDATION.md": "documentation/development/history.md",
+  "teaching/IMPLEMENTATION_VALIDATION.md": "documentation/development/validation.md",
+  "teaching/evidence_and_design_rationale.md": "documentation/evidence-and-design-rationale.md",
+  "teaching/statistical_methods.md": "documentation/statistical-methods.md",
+  "style_references_ai_language/README_style_notes.md": "documentation/writing-style.md",
+  "Open_Education_references/README_reference_notes.md": "documentation/reading-guide.md",
+  "cases/case_quality_checklist.md": "case-studies/case_quality_checklist.md",
+  "cases/chronic_pain_case.md": "case-studies/chronic_pain_case.md",
+  "cases/instructor_review_notes.md": "case-studies/instructor_review_notes.md",
+  "cases/peer_review_form.md": "case-studies/peer_review_form.md",
+  "cases/student_case_template.md": "case-studies/student_case_template.md",
+  "SHINYLIVE_HOSTING.md": "documentation/development/build-and-publish.md"
+}

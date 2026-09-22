@@ -36,4 +36,4 @@ Recruit ceil(n/(1−dropout)) in each arm, then double. Inflation changes expect
 
 ## References
 
-See [References](../REFERENCES.md), especially Newcombe (1998) and the R documentation. `scripts/check_resource.R` checks independent reference results, null rejection, interval coverage, reproducibility, edge cases, calculation rounding and app server behaviour. Browser checks are documented separately in the implementation validation record.
+See [References](references.md), especially Newcombe (1998) and the R documentation. `scripts/check_resource.R` checks independent reference results, null rejection, interval coverage, reproducibility, edge cases, calculation rounding and app server behaviour. Browser checks are documented separately in the implementation validation record.

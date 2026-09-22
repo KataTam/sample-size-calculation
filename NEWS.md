@@ -1,6 +1,13 @@
 # Changelog
 
-## 0.3.0 — 22 September 2026
+## Public-facing revision
+
+- Added student, teacher, reviewer and adapter routes.
+- Moved supporting documentation and renamed cases/ to case-studies/.
+- Removed build dependencies on the deleted collaborator folder.
+- Fixed text encoding and added readable supporting pages.
+
+## 0.3.0 â€” 22 September 2026
 
 - Consolidated all maintained sample-size resources into the public sample-size-calculation repository.
 - Added automatic build and Pages deployment, collaborator files and labelled historical sources.

@@ -16,14 +16,6 @@ render_resource <- function() {
     quiet = TRUE, envir = new.env(parent = globalenv()))
   file.copy("Sample_size_open_module.html", "../docs/book", overwrite = TRUE)
   setwd(root)
-  for (folder in c("teaching", "cases")) {
-    target <- file.path("docs", folder)
-    dir.create(target, recursive = TRUE, showWarnings = FALSE)
-    files <- list.files(folder, full.names = TRUE)
-    file.copy(files, target, overwrite = TRUE)
-  }
-  file.copy(c("LICENSE", "LICENSE-code.md", "CITATION.cff", "THIRD_PARTY_NOTICES.md"),
-    "docs", overwrite = TRUE)
   message("Built docs/book/index.html and module/Sample_size_open_module.html")
 }
 if (identical(environment(), globalenv())) render_resource()

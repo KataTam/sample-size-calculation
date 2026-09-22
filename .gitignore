@@ -21,5 +21,3 @@ module/index.Rmd
 
 _site/
 module/libs/
-!intro_review/*.docx
-!intro_review/*.pptx

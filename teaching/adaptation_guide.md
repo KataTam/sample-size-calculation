@@ -20,8 +20,8 @@ The main principle is simple: if you change the teaching context, update the exa
 | Font size or rendered HTML styling | `module/styles.css` |
 | Sample size formulae or interpretation text | `R/sample_size_functions.R` |
 | App labels, defaults, or plots | `apps/<app_name>/app.R` |
-| Clinical examples | `cases/` and relevant sections of the module |
-| Student case co-creation materials | `cases/student_case_template.md`, `cases/case_quality_checklist.md`, `cases/peer_review_form.md`, `cases/instructor_review_notes.md` |
+| Clinical examples | `case-studies/` and relevant sections of the module |
+| Student case co-creation materials | `case-studies/student_case_template.md`, `case-studies/case_quality_checklist.md`, `case-studies/peer_review_form.md`, `case-studies/instructor_review_notes.md` |
 | Teaching plan | `teaching/TEACHING_GUIDE.md` |
 | Learning outcome/activity/assessment links | `teaching/constructive_alignment_table.md` |
 | Rubric | `teaching/assessment_rubric.md` |

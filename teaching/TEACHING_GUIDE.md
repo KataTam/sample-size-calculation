@@ -6,7 +6,7 @@ The module teaches sample size as a justified research-design decision. The app 
 
 Learners should know sample versus population, binary versus continuous outcomes, and the basic purpose of a test and confidence interval. No programming is required for the core route. Send the case, short concept notes and access link in advance. Provide the rendered module and `static_activity.md` with its saved outputs as an offline alternative. Optional visible R code supports reproducibility and further learning.
 
-Check the actual deployment environment before class. The proposed 20â€“25 student pilot can work in groups of 3â€“4 with a facilitator. Let students divide interpretation, assumption checking and recording, and rotate roles; do not let coding dominate participation. Clearly identify all case values as hypothetical. Review accessibility with keyboard and readable text/table alternatives.
+Check the actual deployment environment before class. The proposed 20–25 student pilot can work in groups of 3–4 with a facilitator. Let students divide interpretation, assumption checking and recording, and rotate roles; do not let coding dominate participation. Clearly identify all case values as hypothetical. Review accessibility with keyboard and readable text/table alternatives.
 
 ## Learning pathway
 
@@ -19,7 +19,7 @@ Choose a goal; complete the assumption map; predict a consequence; explore formu
 | 30 minutes | One prepared case, assumption prediction, three interval interpretations and two-sentence justification; use static outputs |
 | 60 minutes | Prepared case plus a guided one-study/many-studies demonstration and short worksheet; omit student coding |
 | 90 minutes | 10 question; 15 assumptions/predictions; 15 one study; 20 repeated studies; 15 precision/feasibility; 15 justification/feedback |
-| Extended practical or homework | Students design a hypothetical investigation, simulate, analyse and write a 200â€“250 word abstract, followed by peer discussion |
+| Extended practical or homework | Students design a hypothetical investigation, simulate, analyse and write a 200–250 word abstract, followed by peer discussion |
 
 These timings are proposed adaptations to pilot, not schedules validated by the publications. Full DICE investigations require substantial design and interpretation time. Allocate the separate pre-assessment before teaching and the post/transfer assessment after it, or reduce activity scope to accommodate them.
 
@@ -34,7 +34,7 @@ These timings are proposed adaptations to pilot, not schedules validated by the 
 
 ## Methods to make explicit
 
-All core designs have equal independent groups. The simple calculator apps use labelled normal approximations. The reasoning lab uses two-sided pooled-variance t-test power for normal outcomes, and a score-test power approximation for binary outcomes. The binary confidence interval uses Newcombe-Wilson rather than inversion of that score test; explain occasional test/CI disagreement. Never describe the binary power approximation as exact. Read `statistical_methods.md` before teaching.
+All core designs have equal independent groups. The simple calculator apps use labelled normal approximations. The reasoning lab uses two-sided pooled-variance t-test power for normal outcomes, and a score-test power approximation for binary outcomes. The binary confidence interval uses Newcombe-Wilson rather than inversion of that score test; explain occasional test/CI disagreement. Never describe the binary power approximation as exact. Read the [statistical methods](../documentation/statistical-methods.md) before teaching.
 
 The lab's width target is FULL width. The normal width curve is an expectation, while the binary curve is a plug-in anticipation. Neither guarantees each interval meets the target. The simulation separately reports the fraction meeting it. Dropout inflation preserves expected analysable counts; it does not resolve missing-data bias.
 
@@ -46,7 +46,7 @@ Students can adapt cases, challenge unclear assumptions and suggest explanations
 
 ## References
 
-See [References](../REFERENCES.md) and [evidence and design rationale](evidence_and_design_rationale.md) for source contributions and limitations. Learning effectiveness of this local module remains to be evaluated.
+See [References](../documentation/references.md) and [evidence and design rationale](../documentation/evidence-and-design-rationale.md) for source contributions and limitations. Learning effectiveness of this local module remains to be evaluated.
 
 ## Consolidated book route (22 September 2026)
 

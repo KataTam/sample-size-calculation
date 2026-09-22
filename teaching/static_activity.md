@@ -146,4 +146,4 @@ The normal batch uses equivalent sufficient-statistic sampling; the single datas
 
 ## References
 
-See [References](../REFERENCES.md) for the pedagogical and statistical sources.
+See [References](../documentation/references.md) for the pedagogical and statistical sources.

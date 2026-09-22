@@ -36,7 +36,7 @@ The examples concern **two independent groups with equal allocation**, a binary 
 
 The presentation and three simulation activities are inspired by chapters 1, 11 and 15 of *Power Analysis with Superpower* [@superpowerbook2022]. The clinical explanations, activities and figures here are tailored to this tutorial. No software installation is required.
 
-Teaching material is shared under CC BY 4.0 and original code under MIT. You may reuse and adapt the material with attribution. The [teaching guide](../teaching/TEACHING_GUIDE.md), [case template](../cases/student_case_template.md) and [assessment rubric](../teaching/assessment_rubric.md) support classroom use. Public attribution or publication requires consent.
+Teaching material is shared under CC BY 4.0 and original code under MIT. You may reuse and adapt the material with attribution. The [teaching guide](../teaching/TEACHING_GUIDE.md), [case template](../case-studies/student_case_template.md) and [assessment rubric](../teaching/assessment_rubric.md) support classroom use. Public attribution or publication requires consent.
 
 ## How to use this tutorial {-}
 
@@ -548,7 +548,7 @@ Suppose only 70 patients can be recruited. Explain what can be learned without t
 
 Write 300–600 words covering the clinical question, primary outcome, evidence for assumptions, clinical threshold, planned analysis, alpha, target power or precision, per-group counts, recruitment inflation, and feasibility. Include a sensitivity curve or table and one simulation result with its seed, replications and Monte Carlo interval.
 
-Complete the [student case template](../cases/student_case_template.md) and use the [assessment rubric](../teaching/assessment_rubric.md) for feedback. The same ten criteria assess assumptions, methods, power, precision and communication.
+Complete the [student case template](../case-studies/student_case_template.md) and use the [assessment rubric](../teaching/assessment_rubric.md) for feedback. The same ten criteria assess assumptions, methods, power, precision and communication.
 
 Use these review questions with a collaborator:
 
