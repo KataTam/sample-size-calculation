@@ -4,7 +4,7 @@
 
 - Consolidated all maintained sample-size resources into the public sample-size-calculation repository.
 - Added automatic build and Pages deployment, collaborator files and labelled historical sources.
-- Retired the separate app deployment repository with compatibility redirects.
+- Retired the separate app deployment repository as a private archive.
 
 ## 0.2.0 — 22 September 2026
 

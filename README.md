@@ -11,7 +11,7 @@ Clinical sample-size reasoning, power, precision and simulation for medical stud
 
 ## One maintained project
 
-This public repository consolidates sample-size-calculation-oer and sample-size-calculation-apps. The original name is restored. The old OER repository is retained as a private archive; the old app website redirects to the matching new pages. Current sources are consolidated here with a fresh public history. External articles are referenced rather than redistributed. Randomization experiments remain a separate project.
+This public repository consolidates sample-size-calculation-oer and sample-size-calculation-apps. The original name is restored. The old OER repository is retained as a private archive; the former app repository is also a private archive. The old website address is retired; use the links above. Current sources are consolidated here with a fresh public history. External articles are referenced rather than redistributed. Randomization experiments remain a separate project.
 
 Edit **module/Sample_size_open_module.Rmd** for the tutorial, **module/references.bib** for references, and **R/sample_size_functions.R** for shared calculations. apps/ contains the four app sources. Both HTML editions are generated from the same Rmd. No ANOVA lesson is required.
 

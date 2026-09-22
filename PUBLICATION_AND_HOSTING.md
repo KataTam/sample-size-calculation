@@ -6,4 +6,4 @@ Push source changes to main to trigger .github/workflows/publish.yml. The workfl
 
 For local preview, follow README.md. Browser apps must be served over HTTP; file:// is insufficient for WebAssembly/service workers. Generated docs/ and _site/ are ignored. A failed build leaves the last successful site online. Review the Actions logs before retrying.
 
-Former URLs under sample-size-calculation-apps are compatibility redirects. That repository is retired. The original source repository is a private historical archive; its README points to this public project. Contributor edits belong here.
+The former sample-size-calculation-apps repository is a private archive and its Pages address is retired. Share the new sample-size-calculation URLs. The original source repository is a private historical archive; its README points to this public project. Contributor edits belong here.

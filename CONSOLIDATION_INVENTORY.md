@@ -3,7 +3,7 @@
 | Former location | Public consolidated location |
 |---|---|
 | sample-size-calculation-oer current maintained sources | Repository root, with a fresh public history |
-| sample-size-calculation-apps website | Generated from this repository; former website addresses redirect here |
+| sample-size-calculation-apps website | Generated from this repository; former repository is a private archive and its website address is retired |
 | sample-size-calculation-apps/intro_review | intro_review/; original filenames preserved |
 | shinylive_poc/two_proportions_source | archive/shinylive_poc/two_proportions_source/ |
 | Open_Education_references | Reading notes here; bibliography in module/references.bib |
