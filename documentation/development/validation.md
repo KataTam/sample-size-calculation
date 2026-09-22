@@ -28,3 +28,8 @@ No student pilot or formal accessibility audit was performed. Use the pilot asse
 ## Consolidation checks — 22 September 2026
 
 The R calculation and Shiny-server checks passed. Both HTML editions rendered successfully. Browser checks found all 26 bibliography entries, no missing images, no unresolved citations and no broken local book targets. Desktop and narrow mobile views were inspected. All four exported apps loaded over HTTP without Shiny output errors; the reasoning lab ran normal and binary single/repeated studies, displayed the new p-value plot, and emitted CSV download events for both outcomes. These checks do not establish educational effectiveness.
+
+
+## Public-facing revision checks
+
+The renamed source paths pass the numerical and Shiny-server checks. Maintained text passes UTF-8 and broken-typography checks. Both tutorial editions render, supporting Markdown is published as readable HTML, and the site assembly checks all local links/images in maintained pages. Desktop and mobile browser checks found no missing images or horizontal page overflow in the revised entry pages. A clean GitHub Actions build restored renv.lock and deployed successfully. Live checks confirmed the student review, case studies, teacher guide and documentation pages; the source ZIP includes the new structure and excludes the deleted collaborator files. The former collaborator document returns HTTP 404.

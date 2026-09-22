@@ -27,4 +27,4 @@ The book presentation and three core activity ideas acknowledge *Power Analysis 
 
 ## Public repository consolidation
 
-The public sample-size-calculation repository starts with a reviewed current-source snapshot. It does not import the former private Git history, old tutorial drafts or third-party screenshots. The current code, original teaching material, references, static simulated data and previously public collaborator files are included.
+The public sample-size-calculation repository starts with a reviewed current-source snapshot. It does not import the former private Git history, old tutorial drafts or third-party screenshots. The current code, original teaching material, references and static simulated data are included. The collaborator files were subsequently removed by the author and are not included in current builds or downloads.
