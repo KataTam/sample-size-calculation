@@ -1,0 +1,20 @@
+cff-version: 1.2.0
+message: "If you use or adapt this open educational resource, please cite it as below."
+title: "Sample Size Calculation OER"
+type: generic
+authors:
+  - family-names: "Tamasi"
+    given-names: "Katalin"
+version: 0.3.0
+date-released: 2026-09-22
+url: "https://katatam.github.io/sample-size-calculation/book/"
+license: "CC-BY-4.0"
+keywords:
+  - open educational resources
+  - sample size calculation
+  - medical statistics
+  - clinical trials
+  - R Markdown
+  - Shiny
+abstract: "A modular open educational resource for teaching sample size calculation with R Markdown, Shiny, clinical cases, student co-creation materials, and educator documentation."
+repository-code: "https://github.com/KataTam/sample-size-calculation"

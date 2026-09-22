@@ -1,0 +1,2 @@
+"outcome","n","delta","sd","p_control","p_treatment","alpha","threshold","width_target","seed","B","benefit_direction","method"
+"proportions",60,3,5,0.3,0.6,0.05,0.3,0.2,20260914,1000,1,"Two-sided pooled score test without continuity correction; Newcombe-Wilson difference interval"

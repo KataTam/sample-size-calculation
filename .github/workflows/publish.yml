@@ -1,0 +1,46 @@
+name: Build and publish resource
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: pages
+  cancel-in-progress: false
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: r-lib/actions/setup-r@v2
+        with:
+          r-version: '4.5.1'
+          use-public-rspm: true
+      - uses: r-lib/actions/setup-pandoc@v2
+      - name: Install R dependencies
+        run: Rscript -e 'install.packages(c("rmarkdown", "bookdown", "knitr", "shiny", "shinylive"))'
+      - name: Check statistical functions and apps
+        run: Rscript scripts/check_resource.R
+      - name: Render tutorial
+        run: Rscript scripts/render_resource.R
+      - name: Export browser apps
+        run: Rscript scripts/export_shinylive.R
+      - name: Assemble website and source download
+        run: python3 scripts/build_site.py
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

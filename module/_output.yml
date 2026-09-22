@@ -1,0 +1,13 @@
+bookdown::gitbook:
+  css: styles.css
+  split_by: chapter
+  split_bib: false
+  config:
+    toc:
+      collapse: section
+      scroll_highlight: true
+      before: |
+        <li><a href="./">Sample size for clinical studies</a></li>
+    search: true
+    sharing: false
+    download: [["Sample_size_open_module.html", "Standalone HTML"]]

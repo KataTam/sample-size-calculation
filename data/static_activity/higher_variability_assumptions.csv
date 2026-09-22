@@ -1,0 +1,2 @@
+"outcome","n","delta","sd","p_control","p_treatment","alpha","threshold","width_target","seed","B","benefit_direction","method"
+"means",45,3,7,0.3,0.6,0.05,2,4,20260914,1000,1,"Two-sided pooled-variance t test; t confidence interval"

@@ -1,0 +1,601 @@
+---
+title: "How many patients do you need for your study?"
+license: "CC BY 4.0 for original teaching material; MIT for original code"
+subtitle: "Reasoning about sample size and power for medical students"
+author: "Katalin Tamási"
+date: "22 September 2026"
+lang: en
+bibliography: references.bib
+link-citations: true
+nocite: '@paskevicius2017oep, @paskevicius2019open, @cronin2018oep, @orsini2024'
+output:
+  bookdown::gitbook:
+    css: styles.css
+    highlight: pygments
+    split_bib: false
+    config:
+      sharing: false
+      toc:
+        collapse: section
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, comment = "##", message = FALSE,
+  warning = TRUE, error = FALSE, fig.width = 7.5, fig.height = 4.8,
+  fig.align = "center", out.width = "100%", dpi = 144)
+options(width = 76, digits = 4)
+source("../R/sample_size_functions.R")
+source("../R/tutorial_helpers.R")
+```
+
+# Welcome {-}
+
+How many patients would make a study informative? This tutorial connects a clinical question to its assumptions, a sample size calculation, and the results that different repetitions of the study could produce.
+
+The examples concern **two independent groups with equal allocation**, a binary or continuous outcome, and a two-sided comparison. All numerical cases are hypothetical teaching examples. The tutorial builds on the original clinical sample size teaching material by @tamasi2021, informed by lecture notes by @clayton2019, and the medical introductions by @kirkwood2003, @whitley2002, @pourhoseingholi2013 and @wang2020.
+
+The presentation and three simulation activities are inspired by chapters 1, 11 and 15 of *Power Analysis with Superpower* [@superpowerbook2022]. The clinical explanations, activities and figures here are tailored to this tutorial. No software installation is required.
+
+Teaching material is shared under CC BY 4.0 and original code under MIT. You may reuse and adapt the material with attribution. The [teaching guide](../teaching/TEACHING_GUIDE.md), [case template](../cases/student_case_template.md) and [assessment rubric](../teaching/assessment_rubric.md) support classroom use. Public attribution or publication requires consent.
+
+## How to use this tutorial {-}
+
+Read the question, make a prediction, inspect the output, and explain what it means for the clinical study. R code is shown in shaded blocks, followed by the output it produces. Lines starting with `#` inside code are comments; `##` marks console output, and `[1]` identifies the first printed element of an R output. You can learn from the results without running R.
+
+Open the [Sample size reasoning lab](https://katatam.github.io/sample-size-calculation/power_explorer/) for the guided activities. It runs in a browser. The prepared figures and results in this tutorial provide a route through all three activities without the app. Other [clinical sample size tools](https://katatam.github.io/sample-size-calculation/) cover two proportions, two means and dropout.
+
+By the end, you should be able to:
+
+- Choose a testing, estimation or fixed-resource planning goal and explain why it fits the question.
+- Distinguish expected effects, planning effects and clinically meaningful thresholds.
+- Justify assumptions and examine plausible alternatives.
+- Calculate approximate sample size for two means or proportions, distinguishing per-group, total and recruitment counts.
+- Explain why one study can be inconclusive despite high planned power.
+- Interpret repeated-study rejection, coverage, precision and Monte Carlo uncertainty.
+- Interpret an interval against zero and a clinical threshold, and communicate feasibility and limitations.
+
+
+# Start with the clinical question {#clinical-question}
+
+## What should the study establish?
+
+Recruiting too few patients can leave an important question unresolved. Recruiting more than needed also uses patients' time and research resources. Sample size planning should therefore begin with the purpose of the study and the information needed to meet that purpose [@lakens2022].
+
+| Goal | Planning question | What to report |
+|:--|:--|:--|
+| Test a treatment difference | What sample size gives the target power at a specified effect? | Test, effect, variability, alpha, power and counts |
+| Estimate a treatment effect | How narrow should the confidence interval be? | Effect scale, confidence level and width target |
+| Work with fixed resources | What could a feasible sample teach us? | Sensitivity across effects, expected precision and limitations |
+
+A sample size that meets a power target may still give confidence intervals too wide for a clinical decision. Precision deserves attention alongside power [@sandoval2025].
+
+## The chronic pain case
+
+Imagine comparing a novel pain treatment with standard treatment. The primary outcome is whether a patient reports pain relief at four weeks: yes or no. Suppose a small pilot observed relief in 7 of 10 treated patients and 3 of 10 control patients.
+
+These observations are estimates, not known population probabilities. For the teaching calculation, assume a control probability of 0.30 and a treatment probability of 0.60. Separately, suppose consultation with patients and clinicians identifies an absolute improvement of 0.30 as clinically important. The expected effect, the planning effect and the clinical threshold happen to coincide in this example; they need not do so in practice.
+
+Use differences in clinically interpretable units. An increase from 0.80 to 0.96 is **16 percentage points**, or a **20% relative increase**. Avoid choosing an effect solely because a generic scale calls it small, medium or large [@caldwell2020].
+
+## Record the assumptions
+
+| Decision | What to make explicit |
+|---|---|
+| Question and outcome | Population, intervention, comparator, primary outcome and time point |
+| Goal | Testing, estimation, fixed resources, or a stated combination |
+| Effect | Treatment minus control; score units or absolute proportion difference; direction of benefit |
+| Expected effect | Best current expectation, evidence source and uncertainty |
+| Clinical threshold | Smallest benefit that matters to patients, and who supports that judgement |
+| Planning effect | Effect at which power is calculated, with justification |
+| Variation or risk | Common SD for normal outcomes, or control and treatment probabilities |
+| Sensitivity | Plausible ranges for effects, SD or baseline risk, with sources |
+| Analysis | Test and confidence interval, sidedness and alpha |
+| Precision | Desired FULL interval width and confidence level |
+| Allocation and resources | Equal groups in this module; analysable cap and recruitment constraints |
+| Attrition | Expected loss per arm, assumptions and recruitment target |
+| Intended conclusion | What the design could establish and what remains uncertain |
+
+
+Small pilot effects are uncertain. Following up only pilots whose estimated effect gives an affordable main study can introduce additional bias [@albers2018]. In this tutorial we examine plausible ranges explicitly. Safeguard power is an optional, more formal approach that uses uncertainty in the effect estimate when planning; it does not replace clinical judgement [@perugini2014].
+
+::: {.activity}
+**Predict and justify.** If the pilot had shown relief in 6 rather than 7 treated patients, should the clinical threshold change? Explain why a noisy pilot estimate and a judgement about meaningful benefit answer different questions.
+:::
+
+# Power means repeated performance {#power}
+
+## Hypotheses and error probabilities
+
+Let $\delta$ denote the signed population difference, treatment minus control. For an ordinary two-sided superiority test:
+
+\begin{equation}
+H_0: \delta=0, \qquad H_1: \delta\ne0.
+(\#eq:hypotheses)
+\end{equation}
+
+Planning for $\delta=0.30$ evaluates power at that particular effect. It does not change the alternative to $|\delta|\geq0.30$. Rejecting zero alone does not show that a clinically important threshold has been exceeded.
+
+```{r error-table, echo=FALSE}
+knitr::kable(data.frame(
+  Decision = c("Reject the null", "Do not reject the null"),
+  `Null is true` = c("Type I error (alpha)", "Correct non-rejection"),
+  `Specified alternative is true` = c("Power (1 - beta)", "Type II error (beta)"),
+  check.names = FALSE), caption = "Testing decisions across repeated studies.")
+```
+
+**Type I error** means rejecting a true null hypothesis. **Type II error** means failing to reject a false null hypothesis. **Power** is the probability of rejection under a specified alternative, design and analysis. It is neither the probability that a hypothesis is true nor a guarantee about one study [@whitley2002; @superpowerbook2022].
+
+Alpha 0.05 and power 0.80 or 0.90 are common planning choices. Choose and justify them in context. The ratio of beta to alpha is not, by itself, a calculation of the relative clinical costs of the two errors. Non-rejection does not establish that the treatments are equivalent.
+
+## Activity 1: one study, then many
+
+Keep relief probabilities at 0.30 and 0.60, alpha at 0.05, and use 20, 50 and 80 patients **per group**. Before looking at the results, predict which design will reject the null most often. This repeated-study approach follows the introductory teaching idea in @superpowerbook2022 and the broader use of simulation in health-sciences education [@thiesmeier2024; @rudolph2021].
+
+```{r three-samples}
+sample_sizes <- c(20, 50, 80)
+batches <- lapply(sample_sizes, function(n) {
+  scenario <- study_spec(outcome = "proportions", n = n,
+    p_control = .30, p_treatment = .60, threshold = .30,
+    width_target = .20, B = 5000, seed = 20260921 + n)
+  simulate_trials(scenario)
+})
+power_results <- do.call(rbind, lapply(batches, power_row))
+knitr::kable(power_results, digits = 3,
+  caption = "Power estimates for three sample sizes; intervals describe Monte Carlo uncertainty.")
+```
+
+The following histograms count the p-values from the independent simulated studies. The dashed line marks alpha. The fraction below the line estimates power under the specified alternative (Figure \@ref(fig:p-values)).
+
+```{r p-values, echo=FALSE, fig.height=7, fig.cap="P-values from 5,000 independent clinical trials at each sample size. The proportion below alpha estimates power for the assumed relief probabilities.", fig.alt="Three histograms compare p-values with 20, 50 and 80 patients per group. The numerical rejection fractions and their Monte Carlo intervals are in the preceding table."}
+par(mfrow = c(3, 1), mar = c(4, 4, 2, 1))
+for (batch in batches) plot_p_values(batch)
+```
+
+::: {.activity}
+**Explore.** In the lab choose *Binary pain relief* and *Assess a fixed sample size*. Set 20 per group, control 0.30, treatment 0.60, alpha 0.05, and 5,000 replications. Run one study, then many studies. Repeat at 50 and 80 per group.
+
+**Explain.** Why can two studies with the same design reach different testing decisions? Why does changing the number of replications improve numerical precision without increasing the power of each study?
+
+**Check under no effect.** Keep the plan fixed and choose *No true treatment effect*. The rejection fraction now estimates Type I error. Compare it with alpha; finite-sample behaviour of a binary test can differ from its nominal level.
+:::
+
+## Precision of a simulation
+
+Use $n$ for patients per group and $B$ for the number of simulated studies. If $\hat p$ is the simulated rejection fraction, its approximate Monte Carlo standard error is:
+
+\begin{equation}
+\mathrm{MCSE}=\sqrt{\hat p(1-\hat p)/B}.
+(\#eq:mcse)
+\end{equation}
+
+At a rejection fraction of 0.80 and $B=5000$, MCSE is about `r round(100 * sqrt(.8 * .2 / 5000), 2)` percentage points. The tables use Wilson intervals for Monte Carlo uncertainty. These intervals remain informative even when a simulation observes no rejections or all rejections. Increasing $B$ does not resolve uncertainty about the real treatment effect.
+
+# Calculate a sample size {#calculations}
+
+## The multiplier
+
+For familiar normal approximations, define:
+
+\begin{equation}
+f(\alpha,\beta)=\left(z_{1-\alpha/2}+z_{1-\beta}\right)^2.
+(\#eq:multiplier)
+\end{equation}
+
+Here $z_q$ is a standard-normal quantile. These formulas make the relationships visible; the required method ultimately depends on the planned analysis [@kirkwood2003; @wang2020].
+
+```{r multiplier}
+alpha <- .05
+target_power <- .90
+f_ab <- (qnorm(1 - alpha / 2) + qnorm(target_power))^2
+f_ab
+```
+
+```{r multiplier-table, echo=FALSE}
+grid <- expand.grid(alpha = c(.05, .01), power = c(.80, .90, .95))
+grid$multiplier <- with(grid, (qnorm(1 - alpha / 2) + qnorm(power))^2)
+knitr::kable(grid, digits = 2, caption = "Multiplier values for common planning choices.")
+```
+
+## Two proportions
+
+For probabilities $\pi_T$ and $\pi_C$ in two independent, equally sized groups:
+
+\begin{equation}
+n\approx f(\alpha,\beta)
+\frac{\pi_T(1-\pi_T)+\pi_C(1-\pi_C)}{(\pi_T-\pi_C)^2}.
+(\#eq:proportions)
+\end{equation}
+
+The result is **per group**. Round up per group, then double for the total.
+
+```{r proportions}
+pi_t <- .60
+pi_c <- .30
+n_raw <- f_ab * (pi_t * (1 - pi_t) + pi_c * (1 - pi_c)) /
+  (pi_t - pi_c)^2
+n_per_group <- ceiling(n_raw)
+c(per_group = n_per_group, total = 2 * n_per_group)
+```
+
+This approximation gives `r n_per_group` per group and `r 2 * n_per_group` in total. It is not a guarantee of 90% finite-sample power. The lab uses the normal approximation implemented by `power.prop.test()` for planning and checks the chosen score test using simulation [@rcore].
+
+```{r proportion-changes}
+proportion_cases <- data.frame(
+  scenario = c("Original", "Smaller difference", "Lower probabilities",
+               "Alpha 0.01", "Power 0.95"),
+  treatment = c(.60, .60, .30, .60, .60),
+  control = c(.30, .45, .15, .30, .30),
+  alpha = c(.05, .05, .05, .01, .05),
+  power = c(.90, .90, .90, .90, .95))
+proportion_cases$per_group <- mapply(sample_size_two_proportions,
+  proportion_cases$treatment, proportion_cases$control,
+  proportion_cases$alpha, proportion_cases$power)
+proportion_cases$total <- 2 * proportion_cases$per_group
+knitr::kable(proportion_cases,
+  caption = "Changes from the original binary-outcome assumptions, using the simple approximation.")
+```
+
+Compare each row with the original. Halving the difference does not necessarily multiply binary sample size by exactly four: changing a probability also changes its variance. In the lower-probabilities row, treatment relief remains twice the control probability.
+
+## Two means
+
+For a mean difference $\delta$ and common population standard deviation $\sigma$:
+
+\begin{equation}
+n\approx f(\alpha,\beta)\frac{2\sigma^2}{\delta^2}.
+(\#eq:means)
+\end{equation}
+
+Suppose a normally distributed improvement score differs by 3 units, with SD 5 in both groups. This is a hypothetical score, not a bounded clinical scale. Keep alpha at 0.05 and power at 0.90.
+
+```{r means}
+delta <- 3
+sigma <- 5
+n_per_group <- ceiling(f_ab * 2 * sigma^2 / delta^2)
+c(per_group = n_per_group, total = 2 * n_per_group)
+```
+
+The equal-allocation total is `r 2 * n_per_group`, rather than rounding the unrounded total to 117. The t-test calculation accounts for estimating variance:
+
+```{r t-test-planning}
+t_plan <- power.t.test(delta = 3, sd = 5, sig.level = .05,
+  power = .90, type = "two.sample", alternative = "two.sided",
+  strict = TRUE)
+t_plan
+c(per_group = ceiling(t_plan$n), total = 2 * ceiling(t_plan$n))
+```
+
+```{r mean-changes}
+mean_cases <- data.frame(
+  scenario = c("Original", "Half the difference", "Twice the SD",
+               "Alpha 0.01", "Power 0.95"),
+  difference = c(3, 1.5, 3, 3, 3), sd = c(5, 5, 10, 5, 5),
+  alpha = c(.05, .05, .05, .01, .05),
+  power = c(.90, .90, .90, .90, .95))
+mean_cases$per_group <- mapply(sample_size_two_means,
+  mean_cases$difference, mean_cases$sd, mean_cases$alpha, mean_cases$power)
+mean_cases$total <- 2 * mean_cases$per_group
+knitr::kable(mean_cases, caption = "Sensitivity of the simple two-means approximation.")
+```
+
+Before rounding, halving the difference or doubling the SD multiplies the required sample size by four. Explain this using equation \@ref(eq:means).
+
+# Read power curves {#curves}
+
+## Activity 2: can the feasible study answer the question?
+
+A single calculation hides its dependence on uncertain inputs. Chapter 11 of @superpowerbook2022 motivates examining power across a range of sample sizes and effects. Here we use the clinical relief example, holding the control probability at 0.30 and comparing treatment probabilities 0.45, 0.50 and 0.60.
+
+Suppose the clinic can recruit **200 patients in total**, with 10% expected loss in each arm. This corresponds to 100 recruited and an expected 90 analysable patients per group. That expected count is not guaranteed.
+
+```{r curve-settings}
+curve_spec <- study_spec(outcome = "proportions", n = 90,
+  p_control = .30, p_treatment = .60, threshold = .30,
+  width_target = .20)
+effect_sizes <- c(.15, .20, .30)
+target_power <- .90
+recruitment_cap <- 200
+expected_loss <- .10
+analysable_cap <- floor(recruitment_cap / 2 * (1 - expected_loss))
+```
+
+```{r power-curves, fig.cap="Approximate power versus analysable patients per group. Curves represent three absolute benefits; dashed lines mark target power and the expected analysable limit from the recruitment cap.", fig.alt="Three curves show that smaller treatment benefits need more patients. A horizontal line marks 90 percent power and a vertical line marks 90 analysable patients per group."}
+curve_table <- power_curve_data(curve_spec, effect_sizes, seq(5, 200, 5))
+plot_power_curves(curve_table, target_power, analysable_cap)
+```
+
+```{r cap-table, echo=FALSE}
+cap_results <- do.call(rbind, lapply(effect_sizes, function(effect) {
+  x <- curve_spec; x$p_treatment <- x$p_control + effect
+  data.frame(absolute_benefit = effect,
+    analysable_per_group = analysable_cap,
+    approximate_power_at_cap = spec_power(x, analysable_cap),
+    per_group_for_target = plan_n(x, target_power = target_power))
+}))
+knitr::kable(cap_results, digits = 3,
+  caption = "What the feasible sample can detect under each assumed benefit.")
+```
+
+## Hold sample size fixed and vary the effect
+
+Figure \@ref(fig:effect-curve) answers a different question: with 90 analysable patients per group, how does power change across possible treatment benefits? The target-power crossing describes a detectable effect at that target. It is not a clinical importance threshold and is not a hard boundary below which detection is impossible.
+
+```{r effect-curve, fig.cap="Approximate power across treatment benefits with 90 analysable patients per group and control relief probability 0.30.", fig.alt="Power rises with the assumed positive treatment benefit; the horizontal reference is 90 percent power."}
+effect_grid <- seq(0, .40, .005)
+effect_power <- vapply(effect_grid, function(effect) {
+  x <- curve_spec; x$p_treatment <- x$p_control + effect
+  spec_power(x)
+}, numeric(1))
+plot(effect_grid * 100, effect_power, type = "l", lwd = 2,
+  col = "#176675", ylim = c(0, 1),
+  xlab = "Absolute treatment benefit (percentage points)", ylab = "Power")
+abline(h = target_power, lty = 2)
+```
+
+::: {.activity}
+**Predict.** Which effect assumption is most demanding at the same power target?
+
+**Explore.** In the lab set a fixed sample of 90 per group, control 0.30, and treatment 0.60. Compare treatment probabilities 0.50 and 0.45. Use the prepared curves above to view all three assumptions together.
+
+**Explain.** Which assumptions make the target feasible? How do you distinguish 200 recruited patients from 180 expected analysable patients?
+
+**Justify.** Write three sentences describing what the clinic's recruitment limit could establish. Do not increase the assumed benefit merely to make the design affordable.
+:::
+
+## Sensitivity is not observed post hoc power
+
+These curves specify hypothetical effects before interpreting a realised study. Calculating power from the effect observed in that same study adds no useful evidence about its result. After data collection, interpret the effect estimate, confidence interval, study design and limitations [@althouse2021].
+
+# Build a simulated clinical trial {#simulation}
+
+## Activity 3: generate, analyse, repeat, summarise
+
+The custom-simulation approach in chapter 15 of @superpowerbook2022 starts from the planned trial and its analysis. Our binary example uses the same score test as the existing reasoning lab. This is an adaptation of the workflow, not a reproduction of the book's logistic-regression example.
+
+### Step 1: generate one trial
+
+Generate 60 independent patients per group, with relief probabilities 0.30 and 0.60. Each patient's outcome is zero or one. Setting the seed makes this example reproducible.
+
+```{r generate-trial}
+set.seed(20260921)
+n <- 60
+control <- rbinom(n, size = 1, prob = .30)
+treatment <- rbinom(n, size = 1, prob = .60)
+c(control_relief = sum(control), treatment_relief = sum(treatment))
+```
+
+### Step 2: apply the planned analysis
+
+Use a two-sided pooled score test without continuity correction. The helper also calculates a Newcombe-Wilson interval for the risk difference [@newcombe1998]. These are different procedures: test rejection and interval exclusion of zero can occasionally disagree.
+
+```{r analyse-trial}
+one_result <- analyse_binary(sum(treatment), sum(control), n, alpha = .05)
+one_result
+```
+
+`estimate` is treatment minus control; `lower` and `upper` are confidence limits. The p-value tests a zero difference. The helper's score-test p-value can be checked against R:
+
+```{r independent-check}
+reference <- prop.test(c(sum(treatment), sum(control)), c(n, n),
+  correct = FALSE)
+c(helper_p = one_result$p_value, R_p = reference$p.value)
+```
+
+This comparison checks the p-value, not the interval: `prop.test()` uses a different interval calculation. When both groups have all successes or all failures, the helper explicitly returns a p-value of one rather than an undefined statistic.
+
+### Step 3: repeat independent trials
+
+The efficient helper generates binomial counts instead of storing every patient's record. This is equivalent to adding up independent binary outcomes in each group. It applies the same analysis to every trial, using a seed set once before the batch.
+
+```{r repeat-trials}
+trial_spec <- study_spec(outcome = "proportions", n = 60,
+  p_control = .30, p_treatment = .60, alpha = .05,
+  threshold = .30, width_target = .30, B = 5000, seed = 20260921)
+trials <- simulate_trials(trial_spec)
+head(trials$results, 4)
+```
+
+### Step 4: summarise what the design achieves
+
+```{r trial-summary}
+knitr::kable(simulation_summary(trials), digits = 3,
+  caption = "Repeated-trial operating characteristics, with Monte Carlo standard errors and 95% intervals.")
+```
+
+The rejection rate estimates power at these probabilities. Coverage is the proportion of confidence intervals containing the generating difference. The width-target rate is the fraction with a **full** interval width no greater than 0.30, or 30 percentage points. These are three separate properties.
+
+```{r trial-intervals, echo=FALSE, fig.height=6, fig.cap="The first 30 simulated trial intervals. Filled dots indicate rejection of zero. The clinical threshold and generating effect coincide in this example.", fig.alt="Intervals vary from trial to trial. The preceding table reports rejection, coverage and attainment of the full interval width target across all 5,000 trials."}
+plot_trial_intervals(trials$results, trial_spec)
+```
+
+## Compare simulation with a planning approximation
+
+```{r simulation-benchmark}
+c(simulated_power = mean(trials$results$reject),
+  approximate_planning_power = spec_power(trial_spec))
+```
+
+A difference can reflect Monte Carlo error or the approximation used for binary planning. Increasing the number of simulations reduces only the Monte Carlo component. Simulation is a way to investigate the analysis under explicit assumptions, not an automatic guarantee that those assumptions fit a real study.
+
+::: {.activity}
+**Predict.** Keep 60 patients per group. What happens if the true treatment relief probability is 0.45 rather than 0.60?
+
+**Explore.** In the lab retain the original planning probabilities, choose *Custom effect or variability*, set generating control to 0.30 and treatment to 0.45, then run many studies. The planned sample must stay fixed. Repeat under no true effect.
+
+**Explain.** Report the generating probabilities, patients per group, replications, rejection rate and its Monte Carlo interval. Distinguish uncertainty in the simulation from uncertainty in the clinical assumptions.
+
+**Justify.** Would the original plan still answer the clinical question? State what extra evidence or design change would help.
+:::
+
+# Recruitment, precision and feasibility {#feasibility}
+
+## Account for expected losses
+
+If $n$ analysable patients are needed in each arm and the expected dropout proportion is $r$, the simple inflation is:
+
+\begin{equation}
+n_{\mathrm{recruit,arm}}=\left\lceil\frac{n}{1-r}\right\rceil.
+(\#eq:dropout)
+\end{equation}
+
+```{r recruitment}
+analysable_per_group <- sample_size_two_proportions(.60, .30, power = .90)
+recruit_per_group <- ceiling(analysable_per_group / (1 - .05))
+c(analysable_per_group = analysable_per_group,
+  recruit_per_group = recruit_per_group, recruit_total = 2 * recruit_per_group)
+```
+
+Inflation protects expected counts under the assumed loss rate. It neither guarantees the final count nor repairs bias caused by missing outcomes or treatment non-adherence. The simulations here condition on analysable counts and do not model dropout.
+
+## Interpret a confidence interval clinically
+
+For the continuous improvement score, suppose a 2-unit benefit is clinically important. Compare three hypothetical 95% confidence intervals:
+
+| Interval | Interpretation |
+|:--|:--|
+| 0.2 to 2.8 | Zero is excluded, but both small and clinically important benefits remain compatible. |
+| -0.8 to 3.2 | Some harm, no effect and clinically important benefit remain compatible. |
+| 2.2 to 4.2 | The interval lies above the specified clinical threshold. |
+
+A confidence procedure with 95% coverage contains the fixed population effect in about 95% of repetitions under its assumptions. It does not assign a 95% probability to the fixed truth after observing one interval. Precision and clinical interpretation complement the power calculation [@sandoval2025].
+
+## Plan for precision
+
+The lab offers *Estimate with a target interval width* alongside testing and fixed-resource goals. Specify the **full** width, in the outcome's original units. For the continuous improvement score, use SD 5 and a target full width of 4 units:
+
+```{r precision-plan}
+precision_spec <- study_spec(outcome = "means", delta = 3, sd = 5,
+  threshold = 2, width_target = 4, B = 5000, seed = 20260922)
+precision_spec$n <- plan_n(precision_spec, goal = "precision")
+c(per_group = precision_spec$n,
+  expected_full_width = anticipated_width(precision_spec),
+  power_at_planning_effect = spec_power(precision_spec))
+precision_batch <- simulate_trials(precision_spec)
+knitr::kable(simulation_summary(precision_batch), digits = 3,
+  caption = "Precision planning and realised interval performance are different quantities.")
+```
+
+For normal data, the curve gives expected full t-interval width. For binary data, it uses a plug-in Newcombe-Wilson width at the assumed probabilities, not exact expected width. Neither criterion guarantees that each realised interval will meet the target; the simulation reports the fraction that does so separately [@sandoval2025; @newcombe1998].
+
+::: {.activity}
+**Compare goals.** In the lab choose *Continuous improvement score*, difference 3, SD 5, clinical threshold 2, alpha 0.05 and full width 4. Compare the sample selected for estimation with the sample selected for 80% power. Explain why the same research question might require considering both criteria.
+:::
+
+## Stress-test the original plan
+
+Keep the sample selected under the original assumptions fixed when considering a smaller true effect or greater variability. In the lab, change *Reality may differ from the plan* rather than replacing the original planning assumptions.
+
+```{r fixed-plan-sensitivity}
+plan <- study_spec(outcome = "means", n = 45, delta = 3, sd = 5)
+smaller <- plan; smaller$delta <- 1
+more_variable <- plan; more_variable$sd <- 7
+scenarios <- list(plan, smaller, more_variable)
+knitr::kable(data.frame(
+  scenario = c("Planning scenario", "Smaller effect", "Larger SD"),
+  n_per_group = vapply(scenarios, function(x) x$n, numeric(1)),
+  power = vapply(scenarios, spec_power, numeric(1)),
+  expected_full_width = vapply(scenarios, anticipated_width, numeric(1))),
+  digits = 3, caption = "Sensitivity with the original sample held fixed.")
+```
+
+## What if the study is too small for its purpose?
+
+Low power makes inconclusive results more likely under the planning alternative. Among selected statistically significant results, effects can be exaggerated. Larger samples reduce sampling variation but do not automatically remove bias.
+
+Possible responses include collaboration across sites, better measurement, revising an overly broad aim, or deciding not to proceed with an efficacy study. Broader eligibility can affect variability and generalisability. Repeated measurements change the design and analysis. A feasibility study should be judged against feasibility aims rather than treated as a miniature confirmatory trial [@lakens2022].
+
+Choose the hypothesis, alpha and sidedness prospectively. Switching to a one-sided test to obtain a smaller sample or a preferred result is not a justification [@moye2002]. Clustered designs, nonparametric analyses, and Bayesian planning require appropriate methods beyond this two-group tutorial [@hayes1999; @happ2019; @pezeshk2003].
+
+# Test your reasoning {#exercises}
+
+## Discharge rates
+
+Standard care discharges 80% of patients by a specified time point. Consider a 20% relative increase, a 10-percentage-point absolute increase, and a higher power target. Use the simple approximation from equation \@ref(eq:proportions).
+
+Before revealing the answers:
+
+1. Convert each effect to a treatment probability.
+2. Predict which scenario needs the most participants.
+3. Calculate the per-group and total sample sizes.
+4. Explain why the analysis method must be stated, especially with probabilities near one.
+
+<details>
+<summary>Show the calculation and interpretation</summary>
+
+```{r discharge-answers}
+discharge <- data.frame(
+  scenario = c("20% relative increase", "10 percentage points", "Higher power"),
+  control = .80, treatment = c(.80 * 1.20, .80 + .10, .80 * 1.20),
+  power = c(.80, .80, .90))
+discharge$per_group <- mapply(function(p, power) {
+  sample_size_two_proportions(p, .80, alpha = .05, power = power)
+}, discharge$treatment, discharge$power)
+discharge$total <- 2 * discharge$per_group
+knitr::kable(discharge, caption = "Discharge exercise answers using the simple approximation.")
+```
+
+The probabilities are 0.96, 0.90 and 0.96. The approximate totals are 122, 394 and 164. The latter two are even because each group is rounded up separately. For the 20% relative increase, $0.80\times1.20=0.96$; the absolute increase is 0.16.
+
+These are teaching approximations. Compare them with score-test planning and simulated performance before interpreting the numbers as a design recommendation.
+
+</details>
+
+## A fixed total of 70 patients
+
+Suppose only 70 patients can be recruited. Explain what can be learned without treating this limit as evidence that the study has adequate power. Address the intended goal, expected losses, achievable precision and plausible effects. Propose either a defensible revised design or a narrower study purpose.
+
+## Write a sample size justification
+
+Write 300–600 words covering the clinical question, primary outcome, evidence for assumptions, clinical threshold, planned analysis, alpha, target power or precision, per-group counts, recruitment inflation, and feasibility. Include a sensitivity curve or table and one simulation result with its seed, replications and Monte Carlo interval.
+
+Complete the [student case template](../cases/student_case_template.md) and use the [assessment rubric](../teaching/assessment_rubric.md) for feedback. The same ten criteria assess assumptions, methods, power, precision and communication.
+
+Use these review questions with a collaborator:
+
+- Are the assumptions supported and distinguished from clinical judgements?
+- Does the calculation match the planned analysis?
+- Are per-group, total and recruitment counts unambiguous?
+- Does the sensitivity analysis keep the appropriate quantities fixed?
+- Does the interpretation acknowledge what an inconclusive result could mean?
+
+For an extended activity, write a short hypothetical study abstract that distinguishes the planned design, realised results and interpretation. This follows the broader learning sequence used in DICE [@thiesmeier2024].
+
+# Reproducibility and further reading {#appendix}
+
+The original PASS 11 screenshots [@pass2011] remain in the archived 2021/2026 tutorial. The current open edition uses original, reproducible R plots and tables. Compare hypotheses, tests, allocation, continuity corrections and rounding before comparing results across software.
+
+In the original relief example, $P_1=0.60$ and $P_2=0.30$. Thus $P_2-P_1=-0.30$, with absolute difference 0.30. Swapping group labels changes the sign, not the power of the same two-sided test.
+
+## Reproduce or adapt the examples
+
+The code uses base R and the shared clinical simulation functions. The two-proportion analysis is a pooled score test without continuity correction, with Newcombe-Wilson confidence intervals. Normal-outcome examples assume independent normal observations with a common variance and use a pooled t test. Binary analytical power is a normal approximation; simulation estimates the finite-sample rejection rate of the specified test.
+
+The shared functions are supplied in `../R/sample_size_functions.R`. Presentation helpers are in `../R/tutorial_helpers.R`. The same clinical simulation functions underpin the existing OER lab. A compact demonstration of the repeated-trial algorithm is:
+
+```{r algorithm, eval=FALSE}
+set.seed(20260921)  # Once before the batch, not inside the repetitions
+B <- 5000
+n <- 60
+treatment_count <- rbinom(B, n, .60)
+control_count <- rbinom(B, n, .30)
+results <- analyse_binary(treatment_count, control_count, n, alpha = .05)
+mean(results$p_value < .05)
+```
+
+The general simulation principle is also described by @lakenscaldwell2021. That paper's factorial examples are not prerequisites for these clinical activities.
+
+<details>
+<summary>R version and package information for this build</summary>
+
+```{r session, echo=FALSE}
+sessionInfo()
+```
+
+</details>
+
+# References {-}
+
+Sources are linked at their point of use. The Superpower book informs the presentation and activity design; the clinical examples use the methods specified in this tutorial.
+
+::: {#refs}
+:::

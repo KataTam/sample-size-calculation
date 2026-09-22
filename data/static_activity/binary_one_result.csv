@@ -1,0 +1,2 @@
+"estimate","lower","upper","p_value","width","reject","cover","width_met"
+0.25,0.0717026508141455,0.407181980126166,0.0059928621702048,0.33547932931202,TRUE,TRUE,FALSE
