@@ -75,19 +75,42 @@ If you prefer the keyboard, press **Tab** to move between controls and **Enter**
 
 The downloaded, single-page HTML edition has its own table of contents rather than this book toolbar. Use your browser's **Find** command (**Ctrl+F** on Windows, **Command+F** on Mac) to search that edition.
 
-# Start with the clinical question {#clinical-question}
+# Start with asking the questions {#clinical-question}
 
 ## What should the study establish?
 
-Recruiting too few patients can leave an important question unresolved. Recruiting more than needed also uses patients' time and research resources. Sample size planning should therefore begin with the purpose of the study and the information needed to meet that purpose [@lakens2022].
+Determining the sufficient number of patients required for your research is a critical
+component of your study design. Recruiting too few patients can leave an important question unresolved, thereby wasting time and resources. On the other hand, recruiting more than needed is also wasteful. Justifying the proposed sample size and demonstrating that your study is able to appropriately address the research question is now required by most ethical review committees as well as funding agencies. For instance, medical experiments
+that involve human subjects in the Netherlands need to be approved by the Medical Ethical
+Testing committee (METc). METc-approved protocols normally have a sample size
+calculation component.
 
-| Goal | Planning question | What to report |
-|:--|:--|:--|
-| Test a treatment difference | What sample size gives the target power at a specified effect? | Test, effect, variability, alpha, power and counts |
-| Estimate a treatment effect | How narrow should the confidence interval be? | Effect scale, confidence level and width target |
-| Work with fixed resources | What could a feasible sample teach us? | Sensitivity across effects, expected precision and limitations |
+There are several overlapping questions that you need to ask yourself before determining
+your sample size:
 
-A sample size that meets a power target may still give confidence intervals too wide for a clinical decision. Precision deserves attention alongside power [@sandoval2025].
+1. Statistical questions. How many patients do you need to get reliable evidence of a
+treatment effect if it exists and to estimate the effect precisely (i.e., with tight
+confidence intervals)?
+2. Clinical questions. How large a treatment effect is meaningful to detect? Is this
+treatment effect truly meaningful for patients and if so, how does it affect their
+health outcomes?
+3. Ethical questions. Can you expect to have enough subjects such that you are able to
+reliably answer your question (will you have enough statistical power)? How long is
+it ethical to conduct the experiment, i.e., continuing to recruit patients to the
+inferior/placebo treatment (applicable in studies in which interim analysis is
+planned)?
+4. Cost-efficiency / logistic questions. How many patients can you feasibly recruit on
+logistic grounds? How much time, effort, and cost are needed?
+
+Although in this module the focus is on the statistical questions, you as the investigator
+should base your final decision on all the relevant facts including clinical, ethical, and cost-efficiency / logistic ones. This module however considers some of the frequently occurring practical constraints and implications thereof.
+
+## How do you determine the minimum required sample size?
+
+In what follows, you will learn about sample size calculation for randomized controlled
+trials, i.e., trials in which you as the researcher intervene and randomly allocate
+participants into groups. Moreover, the focus will be on conventional superiority trials, i.e., trials that test whether one treatment is strictly better than the other(s). However, the below steps can be adapted to non-inferiority and equivalence trials as well. Similar to the other modules, this module works within the null hypothesis significance testing (also called frequentist or Neyman-Pearson) framework. For an introduction to Bayesian sample size calculations, see [@kunzmann2021review].
+
 
 ## The chronic pain case
 

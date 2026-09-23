@@ -28,3 +28,11 @@ Then open http://localhost:8767 . Browser apps require HTTP, not `file://`. Shin
 `documentation/`, `teaching/`, `case-studies/` and `student-materials/` contain maintained Markdown. They are rendered to readable HTML pages on the teaching website. `site/` contains the homepage and shared page styling. Generated output stays in the Git-ignored `docs/` and `_site/` folders; do not edit it by hand.
 
 When moving a file, update Markdown links, script paths and compatibility aliases in `scripts/build_site.py`. Old case-study and documentation URLs are retained as aliases where possible. Deleted collaborator files are not included in the build or source download. The old separate repositories are private archives; use this repository for all current work.
+
+## Editing references
+
+Edit `module/Sample_size_open_module.Rmd` and `module/references.bib` together in the maintained `sample-size-calculation` project. The YAML setting `bibliography: references.bib` refers to the bibliography beside that R Markdown file. For example, add the entry with key `kunzmann2021review` there and cite it with `[@kunzmann2021review]` in the R Markdown text. Save both files before rendering.
+
+The older `sample-size-calculation-oer` and archived `pre2026` folders are not publication sources. Bibliographies in generated website folders are output copies; editing them does not update the tutorial.
+
+From the maintained repository root, run `Rscript scripts/render_resource.R` to rebuild both the book and standalone HTML. Knitting alone does not publish changes online: commit and push the source files to GitHub, then wait for the Pages workflow to finish.
