@@ -10,7 +10,7 @@ Check the actual deployment environment before class. The proposed 20–25 stude
 
 ## Selecting a learning route
 
-Follow the tutorial's original clinical question, planning questions, statistical concepts and worked calculations. Select the extra activities that serve the session's aim; a repeated activity sequence is not required for every section. Use one outcome in a first session. The lab supports a continuous improvement score and a binary chronic-pain case. Single-proportion precision and sampling-distribution activities have their own apps. Compare outcomes in a later session if time permits.
+Begin with the Introduction's two-arm randomized superiority trials, then follow the planning questions, statistical concepts and worked calculations. Later sections broaden to estimation, prevalence and feasibility; the study-design guide directs other designs to appropriate methods. Select the extra activities that serve the session's aim; a repeated activity sequence is not required for every section. Use one outcome in a first session. The lab supports a continuous improvement score and a binary chronic-pain case. Single-proportion precision and sampling-distribution activities have their own apps. Compare outcomes in a later session if time permits.
 
 ## Session formats
 

@@ -3,6 +3,12 @@ on:
   push:
     branches: [main]
   workflow_dispatch:
+    inputs:
+      rebuild_pdf:
+        description: Rebuild the printable PDF as well as the website
+        required: false
+        type: boolean
+        default: false
 permissions:
   contents: read
 concurrency:
@@ -11,6 +17,8 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      BUILD_PDF: ${{ github.event_name == 'workflow_dispatch' && inputs.rebuild_pdf && 'true' || 'false' }}
     steps:
       - uses: actions/checkout@v4
       - uses: r-lib/actions/setup-r@v2
@@ -19,7 +27,9 @@ jobs:
           use-public-rspm: true
       - uses: r-lib/actions/setup-pandoc@v2
       - uses: r-lib/actions/setup-tinytex@v2
+        if: env.BUILD_PDF == 'true'
       - name: Install PDF language and code packages
+        if: env.BUILD_PDF == 'true'
         run: tlmgr install babel-english hyphen-english fvextra
       - name: Check source text
         run: python3 scripts/check_text.py
@@ -28,6 +38,21 @@ jobs:
         run: Rscript scripts/check_resource.R
       - name: Render tutorial
         run: Rscript scripts/render_resource.R
+      - name: Preserve the published PDF
+        if: env.BUILD_PDF != 'true'
+        shell: bash
+        run: |
+          cached_pdf=$(mktemp)
+          trap 'rm -f "$cached_pdf"' EXIT
+          curl --fail --show-error --silent --location --retry 3 \
+            --output "$cached_pdf" \
+            https://katatam.github.io/sample-size-calculation/book/Sample_size_open_module.pdf
+          if [ "$(head -c 5 "$cached_pdf")" != "%PDF-" ]; then
+            echo "The published PDF download is not a PDF." >&2
+            exit 1
+          fi
+          mkdir -p docs/book
+          mv "$cached_pdf" docs/book/Sample_size_open_module.pdf
       - name: Export browser apps
         run: Rscript scripts/export_shinylive.R
       - name: Assemble website and source download

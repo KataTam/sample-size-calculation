@@ -1,5 +1,5 @@
-# Run from repository root. Both editions derive from the same R Markdown.
-render_resource <- function(include_pdf = TRUE) {
+# Run from repository root. The PDF is rebuilt only when explicitly requested.
+render_resource <- function(include_pdf = FALSE) {
   if (capabilities("cairo")) options(bitmapType = "cairo")
   root <- normalizePath(".", winslash = "/", mustWork = TRUE)
   stopifnot(file.exists("module/Sample_size_open_module.Rmd"))
@@ -35,4 +35,9 @@ render_resource <- function(include_pdf = TRUE) {
   setwd(root)
   message("Built chaptered and standalone HTML", if (include_pdf) " and printable PDF" else "")
 }
-if (identical(environment(), globalenv())) render_resource()
+if (identical(environment(), globalenv())) {
+  args <- commandArgs(trailingOnly = TRUE)
+  if (length(setdiff(args, "--pdf"))) stop("Usage: Rscript scripts/render_resource.R [--pdf]")
+  include_pdf <- "--pdf" %in% args || identical(tolower(Sys.getenv("BUILD_PDF", "false")), "true")
+  render_resource(include_pdf = include_pdf)
+}

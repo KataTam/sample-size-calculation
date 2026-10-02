@@ -1,5 +1,11 @@
 # Changelog
 
+## Tutorial scope and HTML publishing — 2 October 2026
+
+- Clarified that the Introduction focuses on two-arm randomized superiority trials, while later sections broaden to estimation, prevalence, feasibility and guidance for other designs.
+- Kept the source-tutorial acknowledgement in the Welcome only and removed the generated map notice.
+- Made PDF generation optional; routine publication updates HTML and retains the last published printable edition.
+
 ## Seven-question mind map — 2 October 2026
 
 - Restored the original seven-question map structure with working information controls and verbatim explanations from the author's 14 May 2021 tutorial.

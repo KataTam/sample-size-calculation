@@ -34,9 +34,9 @@ source("../R/question_map.R")
 
 How many patients would make a study informative? This tutorial connects a clinical question to its assumptions, a sample size calculation, and the results that different repetitions of the study could produce.
 
-The aims of this module are to understand the importance of recruiting an appropriate number of patients into your study and to be able to calculate the required sample size given reasonable assumptions when designing your study. This open edition retains the questions and clinical narrative of the original tutorial dated **14 May 2021**, with additional explanations and browser activities.
+The aims of this module are to understand the importance of recruiting an appropriate number of patients into your study and to be able to calculate the required sample size given reasonable assumptions when designing your study. This open edition retains the questions and clinical narrative of the original tutorial dated **14 May 2021** [@tamasi2021], with additional explanations and browser activities.
 
-The core treatment-comparison examples concern **two independent groups with equal allocation**, a binary or continuous outcome, and a two-sided comparison. Additional examples estimate one proportion and illustrate error probabilities for a normally distributed sample mean with known population SD. All numerical cases are hypothetical teaching examples. The tutorial builds on the original clinical sample size teaching material by @tamasi2021, informed by lecture notes by @clayton2019, and the medical introductions by @kirkwood2003, @whitley2002, @pourhoseingholi2013 and @wang2020.
+The [Introduction](#clinical-question) focuses on **two-arm randomized controlled clinical trials**. The treatment-comparison examples use two independent groups with equal allocation, a binary or continuous outcome, and a two-sided comparison. Later sections broaden the discussion to precision, prevalence surveys and pilot feasibility studies; [Where does my study fit?](#study-designs) guides you to methods for other designs. A single-mean example also illustrates error probabilities using a known population SD. All numerical cases are hypothetical teaching examples. Further background comes from lecture notes by @clayton2019 and the medical introductions by @kirkwood2003, @whitley2002, @pourhoseingholi2013 and @wang2020.
 
 The presentation and three simulation activities are inspired by chapters 1, 11 and 15 of *Power Analysis with Superpower* [@superpowerbook2022]. The clinical explanations, activities and figures here are tailored to this tutorial. No software installation is required.
 
@@ -81,12 +81,12 @@ If you prefer the keyboard, press **Tab** to move between controls and **Enter**
 
 The downloaded, single-page HTML edition has its own table of contents rather than this book toolbar. Use your browser's **Find** command (**Ctrl+F** on Windows, **Command+F** on Mac) to search that edition.
 
-# Start with asking the questions {#clinical-question}
+# Introduction {#clinical-question}
 
 ## What should the study establish?
 
 Determining the sufficient number of patients required for your research is a critical
-component of your study design. Recruiting too few patients can leave an important question unresolved, thereby wasting time and resources. On the other hand, recruiting more than needed is also wasteful. Justifying the proposed sample size and demonstrating that your study is able to appropriately address the research question is now required by most ethical review committees as well as funding agencies. For instance, research in the Netherlands that falls under the Medical Research Involving Human Subjects Act (WMO) requires prior review by an accredited medical research ethics committee (METC) or the CCMO. Ordinary retrospective file research falls outside the WMO; check the requirements for the intended design using the [CCMO guidance](https://english.ccmo.nl/investigators/legal-framework-for-medical-scientific-research/your-research-is-it-subject-to-the-wmo-or-not). The study protocol should explain the proposed sample size and what it can establish.
+component of your study design. Recruiting too few patients can leave an important question unresolved, thereby wasting time and resources. On the other hand, recruiting more than needed is also wasteful. Justifying the proposed sample size and demonstrating that your study is able to appropriately address the research question is now required by most ethical review committees as well as funding agencies. For instance, research in the Netherlands that falls under the Medical Research Involving Human Subjects Act (WMO) requires prior review by an accredited medical research ethics committee (METC) or the CCMO. METc-approved protocols should explain the proposed sample size and what the study can establish.
 
 There are several overlapping questions that you need to ask yourself before determining
 your sample size:
@@ -110,9 +110,9 @@ should base your final decision on all the relevant facts including clinical, et
 
 ## How do you determine the minimum required sample size?
 
-In what follows, you will learn about sample size calculation for randomized controlled
-trials, i.e., trials in which you as the researcher intervene and randomly allocate
-participants into groups. Moreover, the focus will be on conventional superiority trials, i.e., trials that test whether one treatment is strictly better than the other(s). The reasoning about questions and assumptions also applies to other designs, but non-inferiority and equivalence trials require different hypotheses and calculations. Similar to the other modules, this module works within the null hypothesis significance testing (also called frequentist or Neyman-Pearson) framework. For an introduction to Bayesian sample size calculations, see [@kunzmann2021review].
+In this first section, you will learn about sample size calculation for **two-arm randomized controlled clinical
+trials**, i.e., trials in which you as the researcher intervene and randomly allocate
+participants to one of two independent treatment groups. The examples use equal allocation and two-sided tests. Moreover, the focus will be on conventional superiority trials, i.e., trials that test whether one treatment is better than the comparator. The reasoning about questions and assumptions also applies to other designs, which are discussed in later sections. Non-inferiority and equivalence trials require different hypotheses and calculations and are not worked examples here. This tutorial uses frequentist methods: null hypothesis significance testing for power calculations, and confidence intervals for estimation. For an introduction to Bayesian sample size calculations, see [@kunzmann2021review].
 
 The following questions are relevant when you determine the minimum required sample size:
 
@@ -120,14 +120,14 @@ The following questions are relevant when you determine the minimum required sam
 knitr::asis_output(render_question_map())
 ```
 
-In the majority of cases, you do not and indeed cannot know the true value of a treatment effect. You base your conclusions on observed effects and use statistical inference to estimate the population effect. The observed treatment effect may be larger or smaller than the true effect. Your study needs to take this variability due to random sampling into account. The examples below connect these original questions to the calculation and its interpretation.
+In the majority of cases, you do not and indeed cannot know the true value of a treatment effect. You base your conclusions on observed effects and use statistical inference to estimate the population effect. The observed treatment effect may be larger or smaller than the true effect. Your study needs to take this variability due to random sampling into account. The examples below connect these questions to the calculation and its interpretation.
 
 
 ## The chronic pain case
 
-Imagine comparing a novel pain treatment with standard treatment. The primary outcome is whether a patient reports pain relief at four weeks: yes or no. Suppose a small pilot observed relief in 7 of 10 treated patients and 3 of 10 control patients.
+Imagine a two-arm randomized trial comparing a novel pain treatment with standard treatment. The primary outcome is whether a patient reports pain relief at four weeks: yes or no. Suppose a small pilot observed relief in 7 of 10 treated patients and 3 of 10 control patients.
 
-These observations are estimates, not known population probabilities. For the teaching calculation, assume a control probability of 0.30 and a treatment probability of 0.60. Separately, suppose consultation with patients and clinicians identifies an absolute improvement of 0.30 as clinically important. The expected effect, the planning effect and the clinical threshold happen to coincide in this example; they need not do so in practice.
+These observations are estimates, not known population probabilities. For the calculation, we assume a control probability of 30% and a treatment probability of 60% (instead of the observed 7/10 = 70%). Separately, suppose consultation with patients and clinicians identifies an absolute improvement of 0.30 as clinically important. The expected effect, the planning effect and the clinical threshold happen to coincide in this example; they need not do so in practice.
 
 Use differences in clinically interpretable units. An increase from 0.80 to 0.96 is **16 percentage points**, or a **20% relative increase**. Avoid choosing an effect solely because a generic scale calls it small, medium or large [@caldwell2020].
 
@@ -227,7 +227,7 @@ Before continuing, consider a study that finds a statistically significant diffe
 | Sensitivity | Plausible ranges for effects, SD or baseline risk, with sources |
 | Analysis | Test and confidence interval, sidedness and alpha |
 | Precision | Desired FULL interval width and confidence level |
-| Allocation and resources | Equal groups in this module; analysable cap and recruitment constraints |
+| Allocation and resources | Equal allocation in the two-arm examples; analysable cap and recruitment constraints |
 | Attrition | Expected loss per arm, assumptions and recruitment target |
 | Intended conclusion | What the design could establish and what remains uncertain |
 
@@ -267,7 +267,7 @@ Alpha 0.05 and power 0.80 or 0.90 are common planning choices. Choose and justif
 
 ## See alpha and beta as areas {#alpha-beta}
 
-An illustration with a single mean makes the two error probabilities visible. Suppose the null mean systolic blood pressure is 120 mmHg, the specified alternative is 125 mmHg, the population SD is known to be 15 mmHg, and 25 independent observations are taken. For this **one-sided known-SD illustration**, rejection occurs when the sample mean exceeds a critical value. The core two-group activities later in the tutorial use two-sided tests.
+We now use a single-sample illustration to make the two error probabilities visible. Suppose the null mean systolic blood pressure is 120 mmHg, the specified alternative is 125 mmHg, the population SD is known to be 15 mmHg, and 25 independent observations are taken. For this **one-sided known-SD illustration**, rejection occurs when the sample mean exceeds a critical value. The two-arm treatment-comparison activities use two-sided tests.
 
 Both curves represent the **sampling distribution of the sample mean**, not the distribution of individual blood pressures. Their SD is the standard error, $15/\sqrt{25}=3$ mmHg. Alpha is the rejection area under the null curve. Under the specified alternative, beta is the non-rejection area, and power is the rejection area.
 
@@ -339,6 +339,8 @@ Use $n$ for patients per group and $B$ for the number of simulated studies. If $
 At a rejection fraction of 0.80 and $B=5000$, MCSE is about `r round(100 * sqrt(.8 * .2 / 5000), 2)` percentage points. The tables use Wilson intervals for Monte Carlo uncertainty. These intervals remain informative even when a simulation observes no rejections or all rejections. Increasing $B$ does not resolve uncertainty about the real treatment effect.
 
 # Calculate a sample size {#calculations}
+
+We return to two-arm treatment comparisons. The formulas below assume two independent groups with equal allocation and a two-sided test. Later, [Recruitment, precision and feasibility](#feasibility) extends planning to estimation and single-proportion examples, and [Where does my study fit?](#study-designs) considers other designs.
 
 ## The multiplier
 
@@ -564,6 +566,8 @@ With an existing records dataset, explain why that sample is available, assess d
 
 # Build a simulated clinical trial {#simulation}
 
+This chapter returns to the two-arm chronic-pain trial and its planned analysis.
+
 ## Activity 3: generate, analyse, repeat, summarise
 
 The custom-simulation approach in chapter 15 of @superpowerbook2022 starts from the planned trial and its analysis. Our binary example uses the same score test as the existing reasoning lab. This is an adaptation of the workflow, not a reproduction of the book's logistic-regression example.
@@ -701,6 +705,8 @@ For normal data, the curve gives expected full t-interval width. For binary data
 
 ## Estimate one proportion: a prevalence survey {#prevalence}
 
+Here the design changes from a two-arm treatment comparison to a survey estimating one population proportion. There is no treatment or control arm; sample size is chosen for a useful margin of error.
+
 Estimation also occurs without a treatment comparison. Suppose a service wants to estimate the proportion of eligible patients reporting a symptom. It wants a 95% confidence interval with an approximate margin of error of **5 percentage points**: half-width $d=0.05$, or full width 0.10. This is a simple independent-sample prevalence example, with one total sample rather than n per treatment arm.
 
 For an anticipated population proportion $p_0$, the familiar normal approximation gives:
@@ -752,7 +758,7 @@ Low power makes inconclusive results more likely under the planning alternative.
 
 Possible responses include collaboration across sites, better measurement, revising an overly broad aim, or deciding not to proceed with an efficacy study. Broader eligibility can affect variability and generalisability. Repeated measurements change the design and analysis. A feasibility study should be judged against feasibility aims rather than treated as a miniature confirmatory trial [@lakens2022].
 
-Choose the hypothesis, alpha and sidedness prospectively. Switching to a one-sided test to obtain a smaller sample or a preferred result is not a justification [@moye2002]. Clustered designs, nonparametric analyses, and Bayesian planning require appropriate methods beyond this two-group tutorial [@hayes1999; @happ2019; @pezeshk2003].
+Choose the hypothesis, alpha and sidedness prospectively. Switching to a one-sided test to obtain a smaller sample or a preferred result is not a justification [@moye2002]. Clustered designs, nonparametric analyses, and Bayesian planning require appropriate methods beyond the calculations illustrated here [@hayes1999; @happ2019; @pezeshk2003].
 
 ## What can you do when information is limited? {#pilot-feasibility}
 
@@ -832,7 +838,7 @@ For an extended activity, write a short hypothetical study abstract that disting
 
 ## Plan your own study {#own-study}
 
-Apply the original statistical, clinical, ethical and logistic questions to your own project. [Open the own-study workspace](https://katatam.github.io/sample-size-calculation/study/?activity=own_study) and complete the [case and assumption map](../case-studies/student_case_template.md). Use hypothetical or public values for this exercise; do not put patient records into the teaching app.
+Apply the statistical, clinical, ethical and logistic questions introduced earlier to your own project. [Open the own-study workspace](https://katatam.github.io/sample-size-calculation/study/?activity=own_study) and complete the [case and assumption map](../case-studies/student_case_template.md). Use hypothetical or public values for this exercise; do not put patient records into the teaching app.
 
 1. **Describe the question and design.** State the population, comparison, outcome and time point. Check [the study-design guide](#study-designs): one independent observation per person, paired observations, clustered recruitment and prediction models have different planning needs.
 2. **Choose what the study should establish.** Specify an effect to test, a useful interval width, feasibility criteria, or what an already fixed sample could establish. Record evidence sources and plausible alternatives, rather than entering unsupported numbers.
@@ -861,7 +867,7 @@ cat(readLines("../student-materials/common-mistakes.md", warn = FALSE),
 
 The current open edition uses reproducible R plots, tables and browser apps. Compare hypotheses, tests, allocation, continuity corrections and rounding before comparing results across software. Numerical agreement is informative only when the methods and inputs match; methodological validation records belong with the source documentation.
 
-In the original relief example, $P_1=0.60$ and $P_2=0.30$. Thus $P_2-P_1=-0.30$, with absolute difference 0.30. Swapping group labels changes the sign, not the power of the same two-sided test.
+In the chronic-pain example, $P_1=0.60$ and $P_2=0.30$. Thus $P_2-P_1=-0.30$, with absolute difference 0.30. Swapping group labels changes the sign, not the power of the same two-sided test.
 
 ## Reproduce or adapt the examples
 

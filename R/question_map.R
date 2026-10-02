@@ -7,11 +7,9 @@ render_question_map <- function() {
     svg <- paste(readLines("../figures/study_questions.svg", warn = FALSE, encoding = "UTF-8"), collapse = "\n")
     svg <- sub("^<\\?xml[^>]*>\\s*", "", svg)
     parts <- c(parts, '<div class="question-map" aria-label="Seven questions for planning sample size">',
-      '<p class="question-map-instruction">Select an <strong>i</strong> on the map, or open a question below it. The quoted explanations come directly from the original tutorial (14 May 2021); planning clarifications are labelled separately.</p>',
       svg, '\n</div>\n')
   } else {
-    parts <- c(parts, '![Seven questions for determining the minimum required sample size. The explanations follow below.](../figures/study_questions.png){width=100%}',
-      '\nThe quoted explanations below come directly from the original tutorial (14 May 2021). Planning clarifications are labelled separately.\n')
+    parts <- c(parts, '![Seven questions for determining the minimum required sample size. The explanations follow below.](../figures/study_questions.png){width=100%}')
   }
   for (i in seq_along(content$questions)) {
     question <- content$questions[[i]]
