@@ -44,7 +44,7 @@ Teaching material is shared under CC BY 4.0 and original code under MIT. You may
 
 ## How to use this tutorial {-}
 
-Read the question, make a prediction, inspect the output, and explain what it means for the clinical study. R code is shown in shaded blocks, followed by the output it produces. Lines starting with `#` inside code are comments; `##` marks console output, and `[1]` identifies the first printed element of an R output. You can learn from the results without running R.
+Read the question, make a prediction, inspect the output, and explain what it means for the clinical study. R code is shown in shaded blocks, followed by the output it produces. Lines starting with `#` inside code are comments; `##` marks console output, and `[1]` identifies the first printed element of an R output.
 
 Open [the tutorial and matching app together](https://katatam.github.io/sample-size-calculation/study/?activity=pain_one_many) for the guided activities. Each activity link loads the same case and assumptions used in the text. The [Sample size reasoning lab](https://katatam.github.io/sample-size-calculation/power_explorer/) is also available on its own. The prepared figures and results in this tutorial provide a route without the app. Other [clinical sample size tools](https://katatam.github.io/sample-size-calculation/) cover two proportions, two means and dropout.
 
@@ -57,10 +57,12 @@ By the end, you should be able to:
 - Choose a testing, estimation or fixed-resource planning goal and explain why it fits the question.
 - Distinguish expected effects, planning effects and clinically meaningful thresholds.
 - Justify assumptions and examine plausible alternatives.
-- Calculate approximate sample size for two means or proportions, distinguishing per-group, total and recruitment counts.
-- Explain why one study can be inconclusive despite high planned power.
+- Explain alpha, beta and power, and why one study can be inconclusive despite high planned power.
+- Calculate approximate sample sizes for two means or two proportions, and plan the precision of a single-proportion estimate.
+- Read power curves and distinguish per-group, total, analysable and recruitment counts.
 - Interpret repeated-study rejection, coverage, precision and Monte Carlo uncertainty.
-- Interpret an interval against zero and a clinical threshold, and communicate feasibility and limitations.
+- Interpret an interval against zero and a clinical threshold, and recognise when a study design needs another planning method.
+- Write a study justification that records evidence, assumptions, sensitivity, feasibility and limitations, and reproduce its calculations.
 
 
 ## Using the toolbar {#using-the-toolbar .unnumbered}
@@ -85,10 +87,13 @@ The downloaded, single-page HTML edition has its own table of contents rather th
 
 # Introduction {#clinical-question}
 
+::: {.learning-goals}
+**Learning goals.** After this section, you should be able to explain why sample size starts with the clinical question, identify the assumptions needed before calculating, and distinguish expected effects, planning effects and clinical thresholds in a two-arm clinical trial.
+:::
+
 ## What should the study establish?
 
-Determining the sufficient number of patients required for your research is a critical
-component of your study design. Recruiting too few patients can leave an important question unresolved, thereby wasting time and resources. On the other hand, recruiting more than needed is also wasteful. Justifying the proposed sample size and demonstrating that your study is able to appropriately address the research question is now required by most ethical review committees as well as funding agencies. For instance, research in the Netherlands that falls under the Medical Research Involving Human Subjects Act (WMO) requires prior review by an accredited medical research ethics committee (METC) or the CCMO. METc-approved protocols should explain the proposed sample size and what the study can establish.
+A sample size calculation is a way of checking whether a planned study can answer the question it is meant to answer. Recruiting too few patients can leave an important question unresolved, thereby wasting time and resources. On the other hand, recruiting more than needed is also wasteful. Justifying the proposed sample size and demonstrating that your study is able to appropriately address the research question is now required by most ethical review committees as well as funding agencies. For instance, research in the Netherlands that falls under the Medical Research Involving Human Subjects Act (WMO) requires prior review by an accredited medical research ethics committee (METC) or the CCMO. METc-approved protocols should explain the proposed sample size and what the study can establish.
 
 There are several overlapping questions that you need to ask yourself before determining
 your sample size:
@@ -252,7 +257,11 @@ Small pilot effects are uncertain. Following up only pilots whose estimated effe
 
 # What does statistical power tell you? {#power}
 
-Imagine repeating the same planned study many times, with the same sample size, analysis and specified true treatment effect. **Power is the percentage of those studies that would reject the null hypothesis.** At 90% power, about 90 out of 100 repetitions would detect that effect, while about 10 would not. This describes the design's long-run performance; it does not guarantee the result of your one study. You do not need to conduct the trial repeatedly: calculations or simulations estimate this probability under the stated assumptions.
+::: {.learning-goals}
+**Learning goals.** After this section, you should be able to explain alpha, beta and power under a specified population scenario, and distinguish the outcome of one study from the performance of a design across repeated studies.
+:::
+
+Imagine repeating the same planned study many times, with the same sample size, analysis and specified true treatment effect. **Power is the percentage of those studies that would reject the null hypothesis given that the null hypothesis is false.** At 90% power, about 90 out of 100 repetitions would detect that effect if it exists, while about 10 would not. This describes the design's long-run performance; it does not guarantee the result of your one study. You do not need to conduct the trial repeatedly: calculations or simulations estimate this probability under the stated assumptions.
 
 ## Hypotheses and error probabilities
 
@@ -352,6 +361,10 @@ Use $n$ for patients per group and $B$ for the number of simulated studies. If $
 At a rejection rate of 80% and $B=5000$, MCSE is about `r round(100 * sqrt(.8 * .2 / 5000), 2)` percentage points. The tables use Wilson intervals for Monte Carlo uncertainty. These intervals remain informative even when a simulation observes no rejections or all rejections. Increasing $B$ does not resolve uncertainty about the real treatment effect.
 
 # Calculate a sample size {#calculations}
+
+::: {.learning-goals}
+**Learning goals.** After this section, you should be able to calculate approximate sample sizes for two independent proportions or means, explain how the planning effect, variability, alpha and target power affect the calculation, and distinguish per-group from total counts.
+:::
 
 We return to two-arm treatment comparisons. The formulas below assume two independent groups with equal allocation and a two-sided test. Later, [Recruitment, precision and feasibility](#feasibility) extends planning to estimation and single-proportion examples, and [Where does my study fit?](#study-designs) considers other designs.
 
@@ -512,6 +525,10 @@ The expected-loss adjustment gives a recruitment total of `r 2 * adjust_for_drop
 
 # Read power curves {#curves}
 
+::: {.learning-goals}
+**Learning goals.** After this section, you should be able to read power curves, compare plausible effects and sample sizes, and assess sensitivity and recruitment limits while keeping the planned sample size fixed when appropriate.
+:::
+
 ## Activity 2: can the feasible study answer the question?
 
 A single calculation hides its dependence on uncertain inputs. Chapter 11 of @superpowerbook2022 motivates examining power across a range of sample sizes and effects. Here we keep the chronic-pain plan fixed and examine true control relief of 30% with treatment relief of 45%, 50% or 60%. The case still has an expected benefit of 40 percentage points, a planning benefit of 30 points and a clinical threshold of 20 points; these curves explore performance if reality differs from the expectation.
@@ -583,6 +600,10 @@ For example, suppose a completed study estimates a 1-unit improvement with a 95%
 With an existing records dataset, explain why that sample is available, assess data quality and missingness, and report what its estimate and interval support. A sensitivity analysis at independently justified effects can still describe a fixed design's performance. It should not use the observed effect to create additional evidence for the same study. This distinction follows the sample size justification approach in @lakens2022; [the FAQ](#common-mistakes) gives a short retrospective-study example.
 
 # Build a simulated clinical trial {#simulation}
+
+::: {.learning-goals}
+**Learning goals.** After this section, you should be able to generate and analyse one hypothetical trial, repeat the trial to assess rejection and interval coverage, and explain how Monte Carlo uncertainty differs from uncertainty in the planning assumptions.
+:::
 
 This chapter returns to the two-arm chronic-pain trial and its planned analysis.
 
@@ -668,6 +689,10 @@ A difference can reflect Monte Carlo error or the approximation used for binary 
 :::
 
 # Recruitment, precision and feasibility {#feasibility}
+
+::: {.learning-goals}
+**Learning goals.** After this section, you should be able to adjust recruitment for expected losses, interpret confidence intervals against zero and a clinical threshold, and plan useful precision for a prevalence estimate or pilot feasibility outcome.
+:::
 
 ## Account for expected losses
 
@@ -802,6 +827,10 @@ Check relevant guidance and the current funder's requirements before writing the
 
 # Test your reasoning {#exercises}
 
+::: {.learning-goals}
+**Learning goals.** After this section, you should be able to justify a planning goal in a new clinical case, assess what a fixed sample can establish, and turn your evidence and assumptions into a complete study-planning report.
+:::
+
 ## Discharge rates {#discharge}
 
 Standard care discharges 80% of patients by a specified time point. Suppose comparable evidence suggests an **18-percentage-point expected benefit** (98% versus 80%), use a more conservative **16-percentage-point planning benefit** (96% versus 80%), and patients judge an **8-percentage-point benefit** worthwhile. Consider a 20% relative increase, an alternative planning benefit of 10 percentage points, and a higher power target. Use the simple approximation from equation \@ref(eq:proportions).
@@ -885,6 +914,10 @@ cat(readLines("../student-materials/common-mistakes.md", warn = FALSE),
 ```
 
 # Reproducibility and further reading {#appendix}
+
+::: {.learning-goals}
+**Learning goals.** After this section, you should be able to reproduce a calculation or simulation using its inputs, method and random seed, and explain why results from different software must be compared using matching assumptions and methods.
+:::
 
 The current open edition uses reproducible R plots, tables and browser apps. Compare hypotheses, tests, allocation, continuity corrections and rounding before comparing results across software. Numerical agreement is informative only when the methods and inputs match; methodological validation records belong with the source documentation.
 

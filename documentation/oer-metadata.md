@@ -58,13 +58,15 @@ This modular teaching package helps students understand sample size calculation 
 
 After completing the module, learners should be able to:
 
-- explain why sample size calculation is part of study design
-- identify the assumptions needed for a sample size calculation
-- calculate sample size for two proportions and two means
-- explain how alpha, power, effect size, standard deviation, and dropout affect required sample size
-- adjust a required sample size for expected loss to follow-up
-- interpret when a study is likely to be underpowered
-- write a short sample-size justification for a clinical research scenario
+- choose a testing, estimation or fixed-resource planning goal and explain why it fits the question
+- distinguish expected effects, planning effects and clinically meaningful thresholds
+- justify assumptions and examine plausible alternatives
+- explain alpha, beta and power, and why one study can be inconclusive despite high planned power
+- calculate approximate sample sizes for two means or two proportions, and plan the precision of a single-proportion estimate
+- read power curves and distinguish per-group, total, analysable and recruitment counts
+- interpret repeated-study rejection, coverage, precision and Monte Carlo uncertainty
+- interpret an interval against zero and a clinical threshold, and recognise when a study design needs another planning method
+- write a study justification that records evidence, assumptions, sensitivity, feasibility and limitations, and reproduce its calculations
 
 ## Technical Requirements
 

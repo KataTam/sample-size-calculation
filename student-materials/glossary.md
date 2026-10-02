@@ -1,6 +1,10 @@
 # Key parameters and prerequisites {#glossary}
 
-Use this section when a term in the tutorial or app needs a reminder. The formulas and R code remain visible in the main tutorial; you can interpret the tables and graphs without running them yourself.
+::: {.learning-goals}
+**Learning goals.** After this section, you should be able to interpret the effect scale, distinguish individual variability from uncertainty in an estimate, and explain the error rates, precision targets and participant counts used in planning.
+:::
+
+Use this section when a term in the tutorial or app needs a reminder. The formulas and R code remain visible in the main tutorial.
 
 ## Population, sample and planning values
 

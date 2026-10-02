@@ -17,7 +17,7 @@ Ask students to change one assumption at a time and write down what changed in t
 
 The apps can be used locally from RStudio or hosted separately. If hosted links are added, keep the local app folders in the repository so teachers can inspect, adapt, and run the code themselves.
 
-See `../PUBLICATION_AND_HOSTING.md` for publication and hosting notes.
+See the [build and publish guide](../documentation/development/build-and-publish.md) for publication and hosting notes.
 
 ## Sample size reasoning lab
 

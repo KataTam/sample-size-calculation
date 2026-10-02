@@ -9,5 +9,8 @@ table { border-collapse: collapse; display: block; max-width: 100%; overflow-x: 
 .start-route strong { display: block; margin-top: .4rem; font-size: 1.2rem; }
 .start-route:hover { background: #e6f1f6; border-color: #075b86; }
 .landing-footer { border-top: 1px solid #ccd7df; padding-top: 1rem; margin-top: 2rem; font-size: .9rem; color: #415761; }
+.learning-goals { border-left: 4px solid #3263a0; background: #edf3fc; color: #25313b; padding: 12px 20px; margin: 20px 0 26px; }
+.learning-goals p:last-child { margin-bottom: 0; }
+.learning-goals strong { color: #244f86; }
 @media(max-width: 600px) { .start-routes { grid-template-columns: 1fr; } }
 @media(max-width: 600px) { body { margin-top: 1.5rem; } h1 { font-size: 1.9rem; } }

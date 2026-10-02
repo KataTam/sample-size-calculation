@@ -5,11 +5,11 @@ source("../../R/activity_bridge.R")
 
 ui <- fluidPage(
   tags$head(tags$script(HTML(activity_bridge_script("dropout_adjustment")))),
-  titlePanel("Dropout Adjustment"),
+  titlePanel("Dropout Adjustment", windowTitle = "Dropout adjustment"),
   sidebarLayout(
     sidebarPanel(
       numericInput("n", "Required analysable participants PER GROUP", value = 100, min = 1, step = 1),
-      sliderInput("dropout", "Expected dropout proportion (0.10 = 10%)", min = 0, max = 0.50, value = 0.10, step = 0.01)
+      sliderInput("dropout", "Expected loss to follow-up (0.10 = 10%)", min = 0, max = 0.50, value = 0.10, step = 0.01)
     ),
     mainPanel(
       p("Equal allocation. Round recruitment up within each arm, then double. Inflation does not remove missing-data bias or guarantee the realised analysable count."),
@@ -22,10 +22,10 @@ ui <- fluidPage(
         p("A count and dropout fraction do not specify an outcome or effect. Add those assumptions below. The initial values are illustrative."),
         selectInput("lab_outcome", "Outcome for the two-group design", c("Continuous" = "means", "Binary" = "proportions")),
         conditionalPanel("input.lab_outcome == 'means'",
-          numericInput("lab_delta", "Planning difference", 3), numericInput("lab_sd", "Planning SD", 5, min = .1)),
+          numericInput("lab_delta", "Difference used for planning", 3), numericInput("lab_sd", "Standard deviation used for planning", 5, min = .1)),
         conditionalPanel("input.lab_outcome == 'proportions'",
-          sliderInput("lab_p0", "Planning control probability", .01, .99, .3, step = .01),
-          sliderInput("lab_p1", "Planning treatment probability", .01, .99, .6, step = .01)),
+          sliderInput("lab_p0", "Control event rate used for planning (0.30 = 30%)", .01, .99, .3, step = .01),
+          sliderInput("lab_p1", "Treatment event rate used for planning (0.60 = 60%)", .01, .99, .6, step = .01)),
         uiOutput("lab_link"),
         helpText("This transfers the entered analysable count per group, without recalculating it from a power target."))
     )

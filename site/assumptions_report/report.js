@@ -20,7 +20,7 @@
     ]],
     ['Analysis and information target', [
       ['analysis', 'Planned analysis', 'Name the test and confidence interval method. State the sidedness and relevant assumptions.', 'The planned analysis is'],
-      ['power', 'Alpha and power', 'State alpha and target power as percentages. With fixed resources, record attainable power and the effect at which it is evaluated.', 'The alpha and power specification is', 'power'],
+      ['power', 'Alpha / Type I error rate and target power', 'State alpha (Type I error rate) and target power as percentages. With fixed resources, record attainable power and the effect at which it is evaluated.', 'The alpha and power specification is', 'power'],
       ['precision', 'Precision target', 'State the desired full confidence interval width, its units and the confidence level. With fixed resources, record attainable precision.', 'The precision specification is', 'precision']
     ]],
     ['Sample size, recruitment and conclusion', [
@@ -55,7 +55,7 @@
         alpha.href = '../student-materials/glossary.html#alpha'; alpha.textContent = 'Alpha';
         power.href = '../student-materials/glossary.html#statistical-power'; power.textContent = 'power';
         for (const link of [alpha, power]) { link.target = '_blank'; link.rel = 'noopener'; }
-        label.replaceChildren(alpha, ' and ', power);
+        label.replaceChildren(alpha, ' / Type I error rate and target ', power);
       }
       const guidance = document.createElement('p'); guidance.className = 'field-help'; guidance.id = id + '-help'; guidance.textContent = help;
       const input = document.createElement('textarea'); input.id = id; input.name = id; input.rows = 3; input.maxLength = 5000; input.setAttribute('aria-describedby', guidance.id);

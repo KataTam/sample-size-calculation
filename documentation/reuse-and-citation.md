@@ -68,4 +68,4 @@ See [third-party notices](third-party-notices.md) before importing external figu
 
 ## Consolidated release 0.2.0
 
-The public edition is https://katatam.github.io/sample-size-calculation/book/ and its source download is https://katatam.github.io/sample-size-calculation/sample-size-oer-source.zip . See SHINYLIVE_HOSTING.md for the coordinated release procedure. Both HTML editions derive from module/Sample_size_open_module.Rmd and share module/references.bib with the maintained resource. The source and website now share the public sample-size-calculation repository.
+The public edition is https://katatam.github.io/sample-size-calculation/book/ and its source download is https://katatam.github.io/sample-size-calculation/sample-size-oer-source.zip . See the [build and publish guide](development/build-and-publish.md) for the coordinated release procedure. Both HTML editions derive from module/Sample_size_open_module.Rmd and share module/references.bib with the maintained resource. The source and website now share the public sample-size-calculation repository.

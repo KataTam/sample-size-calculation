@@ -35,9 +35,9 @@ Use this checklist before sharing the resource with students, colleagues, or an 
 - [ ] Confirm that teaching materials are covered by CC BY 4.0.
 - [ ] Confirm that R/Shiny code is covered by the MIT License.
 - [ ] Check `CITATION.cff`.
-- [ ] Check `REUSE_AND_CITATION.md`.
-- [ ] Check `PUBLICATION_AND_HOSTING.md`.
-- [ ] Check `QUALITY_CHECKS.md`.
+- [ ] Check [reuse and citation](../reuse-and-citation.md).
+- [ ] Check the [build and publish guide](build-and-publish.md).
+- [ ] Check [quality checks](quality-checks.md).
 - [ ] Update `NEWS.md`.
 - [ ] Create a version tag or GitHub release.
 - [ ] Consider archiving the release with Zenodo or another DOI-providing service.

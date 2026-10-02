@@ -44,19 +44,19 @@ ui <- fluidPage(
   tags$head(tags$script(HTML(activity_bridge_script("prevalence_precision"))),
     tags$script(HTML(activity_download_script())),
     tags$style(HTML("body{font-size:17px;line-height:1.55}.well{background:#f4f7fa}.shiny-output-error-validation{color:#8a3410}"))),
-  titlePanel("Estimate one proportion with useful precision"),
+  titlePanel("Estimate one proportion with useful precision", windowTitle = "Estimate one proportion"),
   p("Plan a prevalence survey or estimate a feasibility process such as retention. These are hypothetical independently sampled binary outcomes."),
   sidebarLayout(sidebarPanel(width = 4,
     selectInput("case_id", "Teaching case", c("Prevalence survey" = "prevalence", "Pilot retention" = "pilot_feasibility")),
     actionButton("load_case", "Load case assumptions"),
     selectInput("goal", "Planning goal", c("Plan for a target width" = "precision", "Assess an available sample" = "fixed")),
-    sliderInput("anticipated_p", "Anticipated proportion (0.20 = 20%)", .001, .999, .20, step = .001),
-    checkboxInput("unknown_p", "No previous estimate: plan conservatively with p = 0.50", FALSE),
+    sliderInput("anticipated_p", "Expected event rate (0.20 = 20%)", .001, .999, .20, step = .001),
+    checkboxInput("unknown_p", "No previous estimate: use 50% for conservative planning", FALSE),
     helpText("This choice maximises the usual single-proportion sample requirement at fixed absolute margin of error. It does not supply an assumed treatment effect."),
-    numericInput("full_width", "Target FULL confidence interval width (0.10 = 10 percentage points)", .10, min = .01, max = .50, step = .01),
-    sliderInput("confidence", "Confidence level", .80, .99, .95, step = .01),
+    numericInput("full_width", "Target full confidence interval width (0.10 = 10 percentage points)", .10, min = .01, max = .50, step = .01),
+    sliderInput("confidence", "Confidence level (0.95 = 95%)", .80, .99, .95, step = .01),
     conditionalPanel("input.goal == 'fixed'", numericInput("fixed_n", "Available analysable participants (one sample)", 246, min = 1, max = 1e7, step = 1)),
-    sliderInput("dropout", "Expected loss or nonresponse fraction", 0, .80, 0, step = .01),
+    sliderInput("dropout", "Expected loss or nonresponse rate (0.10 = 10%)", 0, .80, 0, step = .01),
     helpText("When retention is the outcome, retained and non-retained participants belong in its denominator. Apply extra loss adjustment only when the outcome status itself will be unavailable."),
     numericInput("seed", "Seed for the illustrative study", 20260942, min = 0, max = 2147483647, step = 1)),
   mainPanel(width = 8,
@@ -70,18 +70,18 @@ ui <- fluidPage(
     p("Both reference curves use 95% confidence and fixed absolute margins: ±5 versus ±2.5 percentage points. The dot and separate curve show your chosen confidence and width."),
     h3("One realised interval"),
     actionButton("simulate", "Draw one illustrative sample", class = "btn-primary"),
-    p("The sample uses the anticipated proportion slider as a hypothetical generating truth. The unknown-proportion option affects planning; it does not make the truth known."),
+    p("The sample uses the expected event rate as the assumed true population rate. Choosing 50% for conservative planning changes the sample size calculation; it does not make the population rate known."),
     textOutput("saved_status"), tableOutput("study_table"),
     p(class = "caption", "Table. Event count, observed percentage and Wilson confidence limits from one illustrative sample, with the realised width and target assessment."),
     plotOutput("interval_plot", height = "220px"),
     p(class = "caption", "Figure. One illustrative Wilson confidence interval compared with the assumed population percentage and requested width."),
-    p("Wilson intervals stay within 0 and 1. Their realised width depends on the observed count; the planning approximation cannot guarantee that this interval meets the target. Recruitment inflation addresses expected numbers and does not correct selection or missing-data bias."),
+    p("Wilson intervals stay between 0% and 100%. Their realised width depends on the observed count; the planning approximation cannot guarantee that this interval meets the target. Recruitment inflation addresses expected numbers and does not correct selection or missing-data bias."),
     textAreaInput("justification", "Justify the margin, assumptions, sample availability and limits.", rows = 5, width = "100%"),
     activity_download_button("download_plan", "Download assumptions and explanation"),
     activity_download_button("download_study", "Download realised interval and assumptions"),
     tags$p(id = "download-status", role = "status", "aria-live" = "polite"),
     tags$details(tags$summary("Calculation and sources"),
-      p("Approximate n = z² × p × (1 − p) / d², where d is the HALF width. Required n is rounded upward; recruitment is ceiling(n / (1 − loss)). All calculation functions and app code are included in the open source download."),
+      p("Approximate n = z² × p × (1 − p) / d², where d is the margin of error (half the interval width). Required n is rounded upward; recruitment is ceiling(n / (1 − loss)). All calculation functions and app code are included in the open source download."),
       tags$ul(tags$li(tags$a(href = "https://www.who.int/docs/default-source/ncds/ncd-surveillance/steps/steps-manual.pdf", "WHO STEPS manual: sample planning and the conservative p = 0.50 choice.")),
         tags$li(tags$a(href = "https://www.nihr.ac.uk/funding-programmes/research-for-patient-benefit/scope-eligibility/feasibility-studies", "NIHR: match feasibility work to the uncertainty needing resolution.")),
         tags$li(tags$a(href = "https://doi.org/10.1080/01621459.1927.10502953", "Wilson (1927): score confidence intervals.")))))))
@@ -135,7 +135,7 @@ server <- function(input, output, session) {
   output$plan_table <- renderTable({
     p <- plan(); n <- analysable_n(); x <- snapshot()
     anticipated_width <- 2 * qnorm((1+x$confidence)/2) * sqrt(p$planning_p * (1-p$planning_p) / n)
-    data.frame(Item = c("Planning proportion", "Target FULL interval width", "Target HALF width (margin)",
+    data.frame(Item = c("Event rate used for planning", "Target full interval width", "Target margin of error (half width)",
       "Approximate required analysable n", "Current analysable n", "Recruitment target", "Approximate full width at current n"),
       Value = c(format_percent(p$planning_p, 1), paste0(100*p$full_width, " percentage points"),
         paste0("±", 100*p$half_width, " percentage points"), p$n, n,
@@ -188,10 +188,10 @@ server <- function(input, output, session) {
   output$interval_plot <- renderPlot({
     y <- study(); r <- y$result
     plot(r$estimate*100, 1, xlim = c(0,100), ylim = c(.5,1.5), yaxt = "n", pch = 19,
-      xlab = "Proportion (%)", ylab = "", main = paste(round(100*y$confidence), "% Wilson interval"))
+      xlab = "Event rate (%)", ylab = "", main = paste(round(100*y$confidence), "% Wilson interval"))
     segments(r$lower*100, 1, r$upper*100, 1, lwd = 3, col = "#176675")
     abline(v = y$p*100, lty = 2, col = "#a34724")
-    legend("topright", "Illustrative generating truth", lty = 2, col = "#a34724", bty = "n", cex = .8)
+    legend("topright", "True rate assumed for simulation", lty = 2, col = "#a34724", bty = "n", cex = .8)
   }, alt = "Saved one-sample Wilson interval; observed events, estimate and limits are supplied in the table.")
   output$download_plan <- downloadHandler(filename = function() "proportion_precision_plan.txt", content = function(file) {
     writeLines(c("Single proportion: planning assumptions", capture.output(dput(snapshot())),

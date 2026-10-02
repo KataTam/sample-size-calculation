@@ -5,15 +5,15 @@ source("../../R/activity_bridge.R")
 
 ui <- fluidPage(
   tags$head(tags$script(HTML(activity_bridge_script("two_means")))),
-  titlePanel("Sample Size: Two Means"),
+  titlePanel("Sample Size: Two Means", windowTitle = "Two means sample size"),
   sidebarLayout(
     sidebarPanel(
       numericInput("delta", "Difference assumed for planning", value = 3, min = 0.01),
       helpText("The score example expects a 4-unit benefit, plans for 3 units and uses a 2-unit clinical threshold."),
       numericInput("sd", "Expected standard deviation", value = 5, min = 0.01),
-      sliderInput("alpha", tags$a(href = "../book/Sample_size_open_module.html#alpha", target = "_blank", rel = "noopener", "Alpha (proportion; 0.05 = 5%)"), min = 0.001, max = 0.10, value = 0.05, step = 0.001),
-      sliderInput("power", tags$a(href = "../book/Sample_size_open_module.html#statistical-power", target = "_blank", rel = "noopener", "Power (proportion; 0.90 = 90%)"), min = 0.50, max = 0.99, value = 0.90, step = 0.01),
-      sliderInput("dropout", "Expected dropout proportion (0.10 = 10%)", min = 0, max = 0.50, value = 0, step = 0.01)
+      sliderInput("alpha", tags$a(href = "../book/Sample_size_open_module.html#alpha", target = "_blank", rel = "noopener", "Alpha / Type I error rate (0.05 = 5%)"), min = 0.001, max = 0.10, value = 0.05, step = 0.001),
+      sliderInput("power", tags$a(href = "../book/Sample_size_open_module.html#statistical-power", target = "_blank", rel = "noopener", "Target power (0.90 = 90%)"), min = 0.50, max = 0.99, value = 0.90, step = 0.01),
+      sliderInput("dropout", "Expected loss to follow-up (0.10 = 10%)", min = 0, max = 0.50, value = 0, step = 0.01)
     ),
     mainPanel(
       p("Introductory normal approximation; two independent groups with equal allocation. The reasoning lab uses explicitly specified test-based power and may give a different answer."),

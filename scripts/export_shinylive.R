@@ -66,6 +66,14 @@ export_shinylive_apps <- function(
       destdir = output_path,
       subdir = app
     )
+    # The exported wrapper has its own title, separate from Shiny's inner page.
+    app_index <- file.path(output_path, app, "index.html")
+    html <- readLines(app_index, warn = FALSE, encoding = "UTF-8")
+    if (!any(grepl("<title>[^<]*</title>", html))) {
+      stop(sprintf("Cannot find the exported browser title for '%s'.", app))
+    }
+    html <- sub("<title>[^<]*</title>", paste0("<title>", app_labels(app), "</title>"), html)
+    writeLines(html, app_index, useBytes = TRUE)
   }
 
   index_path <- file.path(output_path, "index.html")
@@ -99,11 +107,11 @@ export_shinylive_apps <- function(
 
 app_labels <- function(apps) {
   labels <- c(
-    two_proportions = "Two Proportions",
-    two_means = "Two Means",
+    two_proportions = "Two proportions sample size",
+    two_means = "Two means sample size",
     power_explorer = "Sample size reasoning lab",
-    dropout_adjustment = "Dropout Adjustment",
-    prevalence_precision = "Estimate a proportion or pilot retention rate",
+    dropout_adjustment = "Dropout adjustment",
+    prevalence_precision = "Estimate one proportion",
     sampling_distributions = "Alpha, beta and power"
   )
   unname(ifelse(apps %in% names(labels), labels[apps], apps))

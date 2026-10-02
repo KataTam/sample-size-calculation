@@ -90,7 +90,7 @@ Before publishing or archiving:
 - check that no local student, patient, or project details are included
 - check `OER_METADATA.md`
 - check `REUSE_AND_CITATION.md`
-- check `PUBLICATION_AND_HOSTING.md`
+- check the [build and publish guide](build-and-publish.md)
 - update `NEWS.md`
 - tag the release when the version is ready
 

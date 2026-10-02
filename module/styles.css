@@ -21,6 +21,11 @@ pre:not(.sourceCode):not(.r) { background: #fff; border-left: 3px solid #b5c8ce;
 p.caption { color: #505b64; font-size: .92em; margin: 10px 0 24px; }
 .activity { border-left: 4px solid var(--accent); background: #f1f7f8; padding: 12px 20px; margin: 22px 0; }
 .activity p:last-child { margin-bottom: 0; }
+.learning-goals { border-left: 4px solid #3263a0; background: #edf3fc; color: #25313b; padding: 12px 20px; margin: 20px 0 26px; }
+.learning-goals p:last-child { margin-bottom: 0; }
+.learning-goals strong { color: #244f86; }
+.book.color-theme-2 .learning-goals { background: #25364d; color: #eef3fa; border-left-color: #8ab6f0; }
+.book.color-theme-2 .learning-goals strong { color: #b9d5fa; }
 details { border: 1px solid var(--line); padding: 12px 18px; margin: 20px 0; }
 summary { color: var(--accent); cursor: pointer; font-weight: 600; }
 table { font-size: .92em; }

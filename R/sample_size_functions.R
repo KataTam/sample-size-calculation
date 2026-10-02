@@ -213,7 +213,7 @@ study_spec <- function(outcome = "means", n = 60, delta = 3, sd = 5,
   check_integer(n, "Participants per group", 2, 100000)
   check_integer(B, "Replications", 1, 100000)
   check_integer(seed, "Seed", 0, .Machine$integer.max)
-  check_scalar(delta, "Generating difference"); check_positive_number(sd, "Generating SD")
+  check_scalar(delta, "True difference assumed for simulation"); check_positive_number(sd, "Standard deviation assumed for simulation")
   check_probability(alpha, "alpha"); check_probability(p_control, "Control probability")
   check_probability(p_treatment, "Treatment probability")
   check_positive_number(threshold, "Clinical threshold magnitude")
@@ -383,7 +383,7 @@ plot_trial_intervals <- function(results, spec, max_display = 30) {
   abline(v = 0, lty = 1, col = "grey40")
   abline(v = clinical, lty = 2, col = "#9a3412")
   abline(v = truth, lty = 3, col = "#075985")
-  legend("topright", c("Zero", "Clinical threshold", "Generating truth"),
+  legend("topright", c("Zero", "Clinical threshold", "Assumed true effect"),
          lty = 1:3, col = c("grey40", "#9a3412", "#075985"), cex = .75, bg = "white")
 }
 
@@ -435,7 +435,7 @@ single_proportion_interval <- function(events, n, confidence = .95) {
 
 simulate_proportion_study <- function(n, p, confidence = .95, seed = 20260942) {
   check_integer(n, "Analysable sample size", 1, 1e7)
-  check_unit_probability(p, "Generating proportion")
+  check_unit_probability(p, "Event rate assumed for simulation")
   check_probability(confidence, "Confidence level")
   check_integer(seed, "Seed", 0, .Machine$integer.max)
   result <- with_study_seed(seed, {
