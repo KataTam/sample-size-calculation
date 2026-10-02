@@ -81,6 +81,7 @@ for folder in folders:
     for source in (ROOT / folder).rglob("*.md"):
         page(source, (SITE / source.relative_to(ROOT)).with_suffix(".html"))
 page(ROOT / "site/index.md", SITE / "index.html")
+page(ROOT / "site/apps.md", SITE / "apps.html")
 page(ROOT / "README.md", SITE / "README.html")
 page(ROOT / "CONTRIBUTING.md", SITE / "CONTRIBUTING.html")
 page(ROOT / "LICENSE-code.md", SITE / "LICENSE-code.html")

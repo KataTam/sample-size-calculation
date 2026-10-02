@@ -2,6 +2,8 @@
 
 This repository contains both teaching materials and code.
 
+[Download the source package](../sample-size-calculation-source.zip) or [browse the GitHub source](https://github.com/KataTam/sample-size-calculation). The guidance below explains attribution, licensing and adaptation.
+
 ## Teaching Materials
 
 The teaching materials are licensed under CC BY 4.0. This includes:

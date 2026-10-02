@@ -3,4 +3,11 @@ h1 { line-height: 1.2; color: #153c50; } h2 { margin-top: 2rem; line-height: 1.3
 a { color: #075b86; text-underline-offset: .15em; } a:focus-visible { outline: 3px solid #d38100; outline-offset: 3px; }
 img { max-width: 100%; height: auto; } pre { overflow: auto; padding: 1rem; background: #f1f5f7; } code { overflow-wrap: anywhere; }
 table { border-collapse: collapse; display: block; max-width: 100%; overflow-x: auto; } th, td { padding: .5rem; border-bottom: 1px solid #ccd7df; text-align: left; }
+.start-routes { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; margin: 2rem 0; }
+.start-route { display: block; padding: 1.25rem; border: 1px solid #b7cbd5; border-radius: .4rem; text-decoration: none; background: #f5f9fb; }
+.start-route > span { display: block; color: #364d59; }
+.start-route strong { display: block; margin-top: .4rem; font-size: 1.2rem; }
+.start-route:hover { background: #e6f1f6; border-color: #075b86; }
+.landing-footer { border-top: 1px solid #ccd7df; padding-top: 1rem; margin-top: 2rem; font-size: .9rem; color: #415761; }
+@media(max-width: 600px) { .start-routes { grid-template-columns: 1fr; } }
 @media(max-width: 600px) { body { margin-top: 1.5rem; } h1 { font-size: 1.9rem; } }
