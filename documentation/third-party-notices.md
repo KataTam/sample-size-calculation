@@ -1,6 +1,6 @@
 # Third-party notices and provenance
 
-The current learner prose and new simulation code were written for this revision. External papers informed the concepts; no paper figures, PDF pages, or supplemental code were copied into the package. Original code remains MIT and original teaching material CC BY 4.0.
+The current learner prose combines the author's original tutorial with explanations and simulation code written for this revision. The seven-question map includes selected verbatim excerpts from Katalin Tamási's tutorial dated 14 May 2021, supplied by the author; separate planning clarifications identify later explanations. External papers informed the concepts; no paper figures, PDF pages, or supplemental code were copied into the package. Original code remains MIT and original teaching material CC BY 4.0.
 
 | Source | Use in this package | Licence or provenance note |
 |---|---|---|
@@ -13,7 +13,7 @@ The current learner prose and new simulation code were written for this revision
 
 ## Earlier Clayton lecture-note attribution
 
-The earlier module identified inspiration from Tim Clayton's 2019 clinical-trial lecture notes. No permission or reusable licence for those notes was found among the inspected project files. The current learner module has been rewritten in original wording and no longer incorporates the earlier lecture-note-derived narrative. This does not resolve rights for old revisions retained in Git history. Before making repository history public, the project owner should confirm permissions for earlier versions or choose an appropriate release strategy. This revision does not rewrite history or assert permission that has not been established.
+The original tutorial identified inspiration from Tim Clayton's 2019 clinical-trial lecture notes. The seven-question explanations reproduce selected passages from the author's own supplied 2021 tutorial; available local records do not establish that those passages were copied from the lecture notes. No Clayton PDF pages, figures or supplemental code are distributed. This revision does not assert a reusable licence for the lecture notes or import the former private repository history. The exact excerpts and their source locations are recorded in [question-map provenance](development/question-map-provenance.md).
 
 ## References
 
@@ -21,7 +21,7 @@ Full citations: [References](references.md). Keep external material under its ow
 
 ## Consolidated tutorial (September 2026)
 
-The book presentation and three core activity ideas acknowledge *Power Analysis with Superpower*, especially chapters 1, 11 and 15. The prose and clinical R plots are independently written adaptations. The PASS screenshots remain in the private/local historical archive and are excluded from the public repository. Attribution to Clayton's lecture notes records the history of the original tutorial; the current prose does not reproduce the lecture notes. Bookdown supplies the GitBook rendering framework under its own licence. The older lecture-derived source and teaching drafts remain private/local; external reading PDFs are not redistributed.
+The book presentation and three core activity ideas acknowledge *Power Analysis with Superpower*, especially chapters 1, 11 and 15. The clinical R plots and activity adaptations were written for this resource. The PASS screenshots remain in the private/local historical archive and are excluded from the public repository. Attribution to Clayton's lecture notes records the history of the original tutorial. Bookdown supplies the GitBook rendering framework under its own licence. Historical source and teaching drafts remain private/local; external reading PDFs are not redistributed.
 
 
 

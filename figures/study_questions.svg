@@ -1,35 +1,66 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="650" viewBox="0 0 1200 650" role="img" aria-labelledby="title description">
-<title id="title">Relevant questions for determining sample size</title>
-<desc id="description">Four connected families of questions: statistical information, clinical relevance, ethical justification and practical resources.</desc>
-<rect width="1200" height="650" fill="white"/>
-<g fill="none" stroke="#799ca5" stroke-width="4">
-<path d="M450 272 C420 272 450 140 435 140"/><path d="M750 272 C780 272 750 140 765 140"/>
-<path d="M450 340 C420 340 450 510 435 510"/><path d="M750 340 C780 340 750 510 765 510"/>
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1030" width="1000" height="1030" role="group" aria-labelledby="question-map-title question-map-description">
+<title id="question-map-title">Seven questions for determining the minimum required sample size</title>
+<desc id="question-map-description">Seven questions surround the minimum required sample size: primary outcome; expected effect with standard treatment; expected effect with novel treatment; clinically relevant difference; null and alternative hypotheses; risk of a Type I error; and risk of a Type II error at a specified true difference. Activate an information link to read the explanation below the map.</desc>
+<style>.question-link {cursor:pointer;} .question-link:hover .info-disc, .question-link:focus-visible .info-disc {fill:#73217d;} .question-link:focus-visible .question-circle {stroke:#73217d;stroke-width:5;} .question-link:focus-visible .info-ring {stroke:#73217d;stroke-width:4;}</style>
+<g aria-hidden="true" fill="none" stroke="#64717a" stroke-width="1.5">
+<path d="M639.2,456.5 L742.6,409.4"/>
+<path d="M636.8,588.4 L740.7,640.4"/>
+<path d="M518.7,671.9 L535.4,807.7"/>
+<path d="M400.5,636.2 L296.9,757.2"/>
+<path d="M347.1,524.0 L249.0,526.5"/>
+<path d="M396.9,406.9 L324.3,327.2"/>
+<path d="M541.9,372.8 L564.1,294.8"/>
 </g>
-<g font-family="Arial, sans-serif" fill="#25313b">
-<rect x="35" y="30" width="400" height="185" rx="16" fill="#eef7f8" stroke="#176675" stroke-width="2"/>
-<text x="60" y="73" font-size="27" font-weight="bold" fill="#176675">Statistical questions</text>
-<text x="60" y="113" font-size="22">What should the study establish?</text>
-<text x="60" y="150" font-size="20">Power, precision and assumptions</text>
-<text x="60" y="185" font-size="20">What could different studies show?</text>
-<rect x="765" y="30" width="400" height="185" rx="16" fill="#f4f3fa" stroke="#635493" stroke-width="2"/>
-<text x="790" y="73" font-size="27" font-weight="bold" fill="#635493">Clinical questions</text>
-<text x="790" y="113" font-size="22">What information would be useful?</text>
-<text x="790" y="150" font-size="20">A meaningful outcome and benefit</text>
-<text x="790" y="185" font-size="20">Evidence and patient perspectives</text>
-<rect x="35" y="435" width="400" height="185" rx="16" fill="#fff5ef" stroke="#a04a24" stroke-width="2"/>
-<text x="60" y="478" font-size="27" font-weight="bold" fill="#a04a24">Ethical questions</text>
-<text x="60" y="518" font-size="22">Is participant burden justified?</text>
-<text x="60" y="555" font-size="20">Informational value and uncertainty</text>
-<text x="60" y="590" font-size="20">Limits of the intended conclusion</text>
-<rect x="765" y="435" width="400" height="185" rx="16" fill="#f3f6f0" stroke="#557244" stroke-width="2"/>
-<text x="790" y="478" font-size="27" font-weight="bold" fill="#557244">Resources and logistics</text>
-<text x="790" y="518" font-size="22">What can you recruit and afford?</text>
-<text x="790" y="555" font-size="20">Time, costs and recruitment capacity</text>
-<text x="790" y="590" font-size="20">Expected losses and feasibility</text>
-<rect x="450" y="235" width="300" height="150" rx="18" fill="#176675"/>
-<text x="600" y="288" text-anchor="middle" font-size="28" font-weight="bold" fill="white">How many patients</text>
-<text x="600" y="328" text-anchor="middle" font-size="28" font-weight="bold" fill="white">do you need?</text>
-<text x="600" y="360" text-anchor="middle" font-size="19" fill="white">An informative study design</text>
-</g>
+<circle cx="500" cy="520" r="153" fill="#cce9f4" aria-hidden="true"/>
+<text text-anchor="middle" dominant-baseline="central" font-family="Arial, Helvetica, sans-serif" font-size="27" fill="#17242d" font-weight="600" aria-hidden="true"><tspan x="500" y="452.0">Relevant</tspan><tspan x="500" y="486.0">questions for</tspan><tspan x="500" y="520.0">determining the</tspan><tspan x="500" y="554.0">minimum required</tspan><tspan x="500" y="588.0">sample size</tspan></text>
+<a class="question-link" href="#sample-size-question-q1" data-question="q1" tabindex="0" aria-label="Read explanation for question 1: What is the main outcome measure of your study?">
+<circle class="question-circle" cx="840" cy="365" r="107" fill="#fafbe7" stroke="transparent" stroke-width="5" aria-hidden="true"/>
+<text text-anchor="middle" dominant-baseline="central" font-family="Arial, Helvetica, sans-serif" font-size="19" fill="#17242d" aria-hidden="true"><tspan x="840" y="330.5">What is</tspan><tspan x="840" y="353.5">the main outcome</tspan><tspan x="840" y="376.5">measure of your</tspan><tspan x="840" y="399.5">study?</tspan></text>
+<circle class="info-ring" cx="921.3" cy="281.5" r="31" fill="#fff" stroke="#d9dde0" stroke-width="1.5" aria-hidden="true"/>
+<circle class="info-disc" cx="921.3" cy="281.5" r="25" fill="#951aa4" aria-hidden="true"/>
+<text x="921.3" y="282.5" text-anchor="middle" dominant-baseline="central" font-family="Georgia, serif" font-size="39" font-weight="bold" fill="#fff" aria-hidden="true">i</text>
+</a>
+<a class="question-link" href="#sample-size-question-q2" data-question="q2" tabindex="0" aria-label="Read explanation for question 2: What effect do you expect with the standard treatment?">
+<circle class="question-circle" cx="840" cy="690" r="111" fill="#fff0e6" stroke="transparent" stroke-width="5" aria-hidden="true"/>
+<text text-anchor="middle" dominant-baseline="central" font-family="Arial, Helvetica, sans-serif" font-size="19" fill="#17242d" aria-hidden="true"><tspan x="840" y="644.0">What</tspan><tspan x="840" y="667.0">effect do</tspan><tspan x="840" y="690.0">you expect with</tspan><tspan x="840" y="713.0">the standard</tspan><tspan x="840" y="736.0">treatment?</tspan></text>
+<circle class="info-ring" cx="924.4" cy="603.4" r="31" fill="#fff" stroke="#d9dde0" stroke-width="1.5" aria-hidden="true"/>
+<circle class="info-disc" cx="924.4" cy="603.4" r="25" fill="#951aa4" aria-hidden="true"/>
+<text x="924.4" y="604.4" text-anchor="middle" dominant-baseline="central" font-family="Georgia, serif" font-size="39" font-weight="bold" fill="#fff" aria-hidden="true">i</text>
+</a>
+<a class="question-link" href="#sample-size-question-q3" data-question="q3" tabindex="0" aria-label="Read explanation for question 3: What effect do you expect with the novel treatment?">
+<circle class="question-circle" cx="547" cy="902" r="95" fill="#e5f3f5" stroke="transparent" stroke-width="5" aria-hidden="true"/>
+<text text-anchor="middle" dominant-baseline="central" font-family="Arial, Helvetica, sans-serif" font-size="19" fill="#17242d" aria-hidden="true"><tspan x="547" y="867.5">What effect</tspan><tspan x="547" y="890.5">do you expect with</tspan><tspan x="547" y="913.5">the novel</tspan><tspan x="547" y="936.5">treatment?</tspan></text>
+<circle class="info-ring" cx="619.2" cy="827.9" r="31" fill="#fff" stroke="#d9dde0" stroke-width="1.5" aria-hidden="true"/>
+<circle class="info-disc" cx="619.2" cy="827.9" r="25" fill="#951aa4" aria-hidden="true"/>
+<text x="619.2" y="828.9" text-anchor="middle" dominant-baseline="central" font-family="Georgia, serif" font-size="39" font-weight="bold" fill="#fff" aria-hidden="true">i</text>
+</a>
+<a class="question-link" href="#sample-size-question-q4" data-question="q4" tabindex="0" aria-label="Read explanation for question 4: What is a clinically relevant treatment difference that you want to detect?">
+<circle class="question-circle" cx="226" cy="840" r="109" fill="#e4f3fa" stroke="transparent" stroke-width="5" aria-hidden="true"/>
+<text text-anchor="middle" dominant-baseline="central" font-family="Arial, Helvetica, sans-serif" font-size="19" fill="#17242d" aria-hidden="true"><tspan x="226" y="794.0">What is a clinically</tspan><tspan x="226" y="817.0">relevant treatment</tspan><tspan x="226" y="840.0">difference that</tspan><tspan x="226" y="863.0">you want to</tspan><tspan x="226" y="886.0">detect?</tspan></text>
+<circle class="info-ring" cx="308.8" cy="755.0" r="31" fill="#fff" stroke="#d9dde0" stroke-width="1.5" aria-hidden="true"/>
+<circle class="info-disc" cx="308.8" cy="755.0" r="25" fill="#951aa4" aria-hidden="true"/>
+<text x="308.8" y="756.0" text-anchor="middle" dominant-baseline="central" font-family="Georgia, serif" font-size="39" font-weight="bold" fill="#fff" aria-hidden="true">i</text>
+</a>
+<a class="question-link" href="#sample-size-question-q5" data-question="q5" tabindex="0" aria-label="Read explanation for question 5: What are your null and alternative hypotheses?">
+<circle class="question-circle" cx="153" cy="529" r="96" fill="#e4ebf4" stroke="transparent" stroke-width="5" aria-hidden="true"/>
+<text text-anchor="middle" dominant-baseline="central" font-family="Arial, Helvetica, sans-serif" font-size="19" fill="#17242d" aria-hidden="true"><tspan x="153" y="506.0">What are your</tspan><tspan x="153" y="529.0">null and alternative</tspan><tspan x="153" y="552.0">hypotheses?</tspan></text>
+<circle class="info-ring" cx="226.0" cy="454.1" r="31" fill="#fff" stroke="#d9dde0" stroke-width="1.5" aria-hidden="true"/>
+<circle class="info-disc" cx="226.0" cy="454.1" r="25" fill="#951aa4" aria-hidden="true"/>
+<text x="226.0" y="455.1" text-anchor="middle" dominant-baseline="central" font-family="Georgia, serif" font-size="39" font-weight="bold" fill="#fff" aria-hidden="true">i</text>
+</a>
+<a class="question-link" href="#sample-size-question-q6" data-question="q6" tabindex="0" aria-label="Read explanation for question 6: What is the degree of risk that you are willing to accept to conclude that a treatment difference exists when in fact it doesn't (risk of type I error)?">
+<circle class="question-circle" cx="232" cy="226" r="137" fill="#eee8f3" stroke="transparent" stroke-width="5" aria-hidden="true"/>
+<text text-anchor="middle" dominant-baseline="central" font-family="Arial, Helvetica, sans-serif" font-size="19" fill="#17242d" aria-hidden="true"><tspan x="232" y="145.5">What is the</tspan><tspan x="232" y="168.5">degree of risk that</tspan><tspan x="232" y="191.5">you are willing to</tspan><tspan x="232" y="214.5">accept to conclude that</tspan><tspan x="232" y="237.5">a treatment difference</tspan><tspan x="232" y="260.5">exists when in fact it</tspan><tspan x="232" y="283.5">doesn't (risk of</tspan><tspan x="232" y="306.5">type I error)?</tspan></text>
+<circle class="info-ring" cx="336.1" cy="119.1" r="31" fill="#fff" stroke="#d9dde0" stroke-width="1.5" aria-hidden="true"/>
+<circle class="info-disc" cx="336.1" cy="119.1" r="25" fill="#951aa4" aria-hidden="true"/>
+<text x="336.1" y="120.1" text-anchor="middle" dominant-baseline="central" font-family="Georgia, serif" font-size="39" font-weight="bold" fill="#fff" aria-hidden="true">i</text>
+</a>
+<a class="question-link" href="#sample-size-question-q7" data-question="q7" tabindex="0" aria-label="Read explanation for question 7: What is the degree of risk you are willing to accept when failing to reject the null hypothesis at a specified true treatment difference (risk of type II error)?">
+<circle class="question-circle" cx="601" cy="165" r="135" fill="#fbeaf5" stroke="transparent" stroke-width="5" aria-hidden="true"/>
+<text text-anchor="middle" dominant-baseline="central" font-family="Arial, Helvetica, sans-serif" font-size="19" fill="#17242d" aria-hidden="true"><tspan x="601" y="96.0">What is the degree of</tspan><tspan x="601" y="119.0">risk you are willing to</tspan><tspan x="601" y="142.0">accept when failing to</tspan><tspan x="601" y="165.0">reject the null hypothesis</tspan><tspan x="601" y="188.0">at a specified true</tspan><tspan x="601" y="211.0">treatment difference</tspan><tspan x="601" y="234.0">(risk of type II error)?</tspan></text>
+<circle class="info-ring" cx="703.6" cy="59.7" r="31" fill="#fff" stroke="#d9dde0" stroke-width="1.5" aria-hidden="true"/>
+<circle class="info-disc" cx="703.6" cy="59.7" r="25" fill="#951aa4" aria-hidden="true"/>
+<text x="703.6" y="60.7" text-anchor="middle" dominant-baseline="central" font-family="Georgia, serif" font-size="39" font-weight="bold" fill="#fff" aria-hidden="true">i</text>
+</a>
 </svg>

@@ -85,9 +85,10 @@
       lessonSeparate.href = lesson.contentWindow.location.href;
       // Delegation also covers chapter content replaced by GitBook navigation.
       doc.addEventListener('click', event => {
+        if (event.defaultPrevented) return;
         const link = event.target.closest('a[href]');
         if (!link) return;
-        const target = new URL(link.href);
+        const target = new URL(link.getAttribute('href'), doc.baseURI);
         if (/\/study\/?$/.test(target.pathname) && cases[target.searchParams.get('activity')]) {
           event.preventDefault();
           openActivity(target.searchParams.get('activity'));

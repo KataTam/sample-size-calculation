@@ -3,7 +3,7 @@ title: "How many patients do you need for your study?"
 license: "CC BY 4.0 for original teaching material; MIT for original code"
 subtitle: "Sample size calculation tutorial"
 author: "Katalin Tamási"
-date: "1 October 2026"
+date: "2 October 2026"
 lang: en
 bibliography: references.bib
 link-citations: true
@@ -27,6 +27,7 @@ options(width = 76, digits = 4)
 source("../R/sample_size_functions.R")
 source("../R/tutorial_helpers.R")
 source("../R/teaching_cases.R")
+source("../R/question_map.R")
 ```
 
 # Welcome {-}
@@ -113,21 +114,11 @@ In what follows, you will learn about sample size calculation for randomized con
 trials, i.e., trials in which you as the researcher intervene and randomly allocate
 participants into groups. Moreover, the focus will be on conventional superiority trials, i.e., trials that test whether one treatment is strictly better than the other(s). The reasoning about questions and assumptions also applies to other designs, but non-inferiority and equivalence trials require different hypotheses and calculations. Similar to the other modules, this module works within the null hypothesis significance testing (also called frequentist or Neyman-Pearson) framework. For an introduction to Bayesian sample size calculations, see [@kunzmann2021review].
 
-```{r study-questions-map, echo=FALSE, fig.cap="The four overlapping families of questions in the original tutorial: statistical, clinical, ethical, and cost-efficiency/logistic.", fig.alt="A study question connects to statistical information, clinical meaning, ethical burden and benefit, and feasible recruitment and resources. The following text links cover the same four families."}
-knitr::include_graphics("../figures/study_questions.png")
-```
-
-Use the map to return to the relevant question: [statistical information and power](#power), [clinical meaning and interval interpretation](#feasibility), [ethical justification](#own-study), and [resources and recruitment](#curves).
-
 The following questions are relevant when you determine the minimum required sample size:
 
-1. **What is the main outcome measure of your study?** At the design stage, you choose an outcome measure that addresses the primary objective of the trial. This is the measure on which sample size calculations will be based.
-2. **What effect do you expect with standard treatment?** If there is a control group, use relevant previous randomized or observational studies, systematic reviews, or clinical practice to inform the expected outcome. Record how comparable that evidence is to your population and measurement.
-3. **What effect do you expect with the novel treatment?** This is naturally trickier to estimate, since the uncertainty is often the reason for conducting the study. A pilot can inform feasibility and variability, but a small pilot's effect estimate is uncertain. The [practical pilot case](#pilot-feasibility) shows what to do when information is limited.
-4. **What is a clinically relevant treatment difference that you want to detect?** Be realistic about the smallest difference that would matter to patients if true. Clinical relevance requires clinical judgement or consensus; statistical significance also depends on sample size and variability. Distinguish this judgement from the effect used in the power calculation.
-5. **What are your null and alternative hypotheses?** In ordinary superiority trials, the null hypothesis is that there is no treatment difference and the alternative is that there is a difference. A clinically relevant threshold does not automatically change that hypothesis.
-6. **What degree of risk are you willing to accept when rejecting the null hypothesis although it is true?** This is the risk of a Type I error, alpha.
-7. **What degree of risk are you willing to accept when failing to reject the null hypothesis at a specified true treatment difference?** This is the risk of a Type II error, beta; power is its complement. Non-rejection does not establish that there is no difference.
+```{r study-questions-map, echo=FALSE, results='asis'}
+knitr::asis_output(render_question_map())
+```
 
 In the majority of cases, you do not and indeed cannot know the true value of a treatment effect. You base your conclusions on observed effects and use statistical inference to estimate the population effect. The observed treatment effect may be larger or smaller than the true effect. Your study needs to take this variability due to random sampling into account. The examples below connect these original questions to the calculation and its interpretation.
 

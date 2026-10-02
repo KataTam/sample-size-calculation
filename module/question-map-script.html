@@ -1,0 +1,27 @@
+<script>
+(function () {
+  if (window.sampleSizeQuestionMapReady) return;
+  window.sampleSizeQuestionMapReady = true;
+  function targetForHash() {
+    var id;
+    try { id = decodeURIComponent(location.hash.slice(1)); } catch (_) { return; }
+    var panel = document.getElementById(id);
+    if (panel && panel.classList.contains('question-map-info')) panel.open = true;
+  }
+  document.addEventListener('click', function (event) {
+    var link = event.target.closest && event.target.closest('.question-map a[data-question]');
+    if (!link) return;
+    var panel = document.getElementById('sample-size-question-' + link.getAttribute('data-question'));
+    if (!panel) return;
+    event.preventDefault();
+    panel.open = true;
+    var summary = panel.querySelector('summary');
+    summary.focus({preventScroll: true});
+    panel.scrollIntoView({block: 'start', behavior: 'auto'});
+  });
+  window.addEventListener('hashchange', targetForHash);
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', targetForHash);
+  else targetForHash();
+  if (window.jQuery) window.jQuery(document).on('page.change.questionmap', targetForHash);
+})();
+</script>

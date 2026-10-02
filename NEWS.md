@@ -1,5 +1,11 @@
 # Changelog
 
+## Seven-question mind map — 2 October 2026
+
+- Restored the original seven-question map structure with working information controls and verbatim explanations from the author's 14 May 2021 tutorial.
+- Added separate planning clarifications, corrected the Type II question wording, and included every explanation in the printable edition.
+- Kept the map usable by keyboard and in the combined lesson/app view.
+
 ## Student-feedback revision — 1 October 2026
 
 - Preserved the original 14 May 2021 tutorial's narrative and planning questions, with visible formulas and R code and additional interpretation.

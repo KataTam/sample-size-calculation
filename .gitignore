@@ -29,5 +29,6 @@ module/*.toc
 module/*.xdv
 
 !module/toolbar-help.html
+!module/question-map-script.html
 !module/pdf-header.tex
 !site/study/index.html
