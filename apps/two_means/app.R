@@ -1,8 +1,10 @@
 library(shiny)
 
 source("../../R/sample_size_functions.R")
+source("../../R/activity_bridge.R")
 
 ui <- fluidPage(
+  tags$head(tags$script(HTML(activity_bridge_script("two_means")))),
   titlePanel("Sample Size: Two Means"),
   sidebarLayout(
     sidebarPanel(
@@ -19,6 +21,8 @@ ui <- fluidPage(
       verbatimTextOutput("result"),
       h3("Interpretation"),
       textOutput("interpretation"),
+      uiOutput("lab_link"),
+      helpText("The lab receives this calculated analysable count as a fixed sample, together with your difference, SD, alpha, power target and losses. Its test-based power may differ from this approximation."),
       h3("Difference and sample size"),
       plotOutput("sample_size_plot", height = "320px"),
       h3("Assumptions"),
@@ -50,6 +54,15 @@ server <- function(input, output, session) {
 
   output$interpretation <- renderText({
     sample_size_interpretation(result())
+  })
+  output$lab_link <- renderUI({
+    x <- result()
+    validate(need(x$n_per_group >= 2 && x$n_per_group <= 100000,
+      "The reasoning lab supports 2 to 100,000 analysable participants per group."))
+    tags$a(href = lab_state_url(list(outcome = "means", goal = "fixed", fixed_n = x$n_per_group,
+      plan_delta = input$delta, plan_sd = input$sd, alpha = input$alpha,
+      target_power = input$power, dropout = input$dropout)), target = "_top",
+      class = "btn btn-primary", "Explore this design in the lab")
   })
 
   output$sample_size_plot <- renderPlot({

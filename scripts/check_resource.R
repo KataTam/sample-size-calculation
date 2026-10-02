@@ -19,6 +19,13 @@ check_resource <- function(render_module = FALSE) {
     "module/Sample_size_open_module.Rmd",
     "module/styles.css",
     "R/sample_size_functions.R",
+    "R/teaching_cases.R",
+    "R/activity_bridge.R",
+    "student-materials/study-design-guide.md",
+    "student-materials/glossary.md",
+    "student-materials/common-mistakes.md",
+    "site/study/index.html",
+    "site/study/study.js",
     "teaching/TEACHING_GUIDE.md",
     "teaching/constructive_alignment_table.md",
     "teaching/assessment_rubric.md",
@@ -41,11 +48,15 @@ check_resource <- function(render_module = FALSE) {
 
   r_files <- c(
     "R/sample_size_functions.R",
+    "R/teaching_cases.R",
+    "R/activity_bridge.R",
     "scripts/export_shinylive.R",
     "apps/two_proportions/app.R",
     "apps/two_means/app.R",
     "apps/power_explorer/app.R",
-    "apps/dropout_adjustment/app.R"
+    "apps/dropout_adjustment/app.R",
+    "apps/prevalence_precision/app.R",
+    "apps/sampling_distributions/app.R"
   )
 
   for (file in r_files) {
@@ -116,6 +127,11 @@ check_resource <- function(render_module = FALSE) {
   source("scripts/check_simulation.R", local = TRUE)
   check_simulation()
   check_lab_server()
+  source("scripts/check_feedback.R", local = TRUE)
+  check_feedback_methods()
+  check_feedback_servers()
+  source("scripts/check_activity.R", local = TRUE)
+  check_activity()
   say("All checks passed.")
   invisible(TRUE)
 }

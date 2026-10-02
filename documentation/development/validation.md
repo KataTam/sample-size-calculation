@@ -1,5 +1,16 @@
 # Implementation validation
 
+## Student-feedback revision — 1 October 2026
+
+- Source text, R syntax, numerical references and Shiny server checks passed, including the two new apps and the activity bridge.
+- Existing tutorial R chunks and formulas were retained; setup adds the shared case registry. The original planning-question order and narrative remain, with additional interpretation and study routes.
+- The chaptered book and complete HTML rendered with resolved citations, informative image alt text and valid book targets. Separate glossary, FAQ and design-guide pages resolve their chapter links correctly.
+- All six Shinylive apps exported. Browser checks verified case inputs, saved-result warnings, own-study capacity/cost calculations, JSON download/reload, unsupported-design routing, exact calculator-to-fixed-N transfer, and restoration of edited inputs and notes from a URL fragment.
+- The two-panel view preserves edited lab inputs, completed single-study results and the app instance during lesson navigation; another case in the same app applies its preset without recreating the frame. New-app checks confirmed prevalence plans of 246/385, a fixed pilot sample of 40, and normal sampling-distribution power of 50.87%/38.48% for the illustrated one/two-sided rules.
+- The complete 45-page PDF compiled in a fresh R process and was visually checked, including the mindmap, formulas, tables, plots, references and wrapped code. Earlier local compiler-pipe failures were resolved; the publication workflow includes TinyTeX.
+
+These are local implementation checks. No PASS 2022 comparison, student learning pilot or formal accessibility audit was performed. Publication is checked separately through GitHub Actions and the live website.
+
 Validated 16 September 2026 before applying the literature-informed revision.
 
 - `Rscript scripts/check_resource.R`: passed, including numerical checks, module code parsing and the simulation/Shiny server suite.

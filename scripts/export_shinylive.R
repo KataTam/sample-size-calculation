@@ -1,5 +1,6 @@
 export_shinylive_apps <- function(
-  apps = c("two_proportions", "two_means", "power_explorer", "dropout_adjustment"),
+  apps = c("two_proportions", "two_means", "power_explorer", "dropout_adjustment",
+           "prevalence_precision", "sampling_distributions"),
   output_dir = "docs/apps",
   staging_dir = file.path("build", "shinylive_staging"),
   clean = TRUE
@@ -12,10 +13,10 @@ export_shinylive_apps <- function(
   }
 
   root <- normalizePath(".", winslash = "/", mustWork = TRUE)
-  helper_file <- file.path(root, "R", "sample_size_functions.R")
+  helper_files <- file.path(root, "R", c("sample_size_functions.R", "teaching_cases.R", "activity_bridge.R"))
 
-  if (!file.exists(helper_file)) {
-    stop("Cannot find R/sample_size_functions.R.", call. = FALSE)
+  if (!all(file.exists(helper_files))) {
+    stop("Cannot find all shared calculation, case and activity-bridge files.", call. = FALSE)
   }
 
   output_path <- file.path(root, output_dir)
@@ -51,13 +52,13 @@ export_shinylive_apps <- function(
 
     app_lines <- readLines(source_app, warn = FALSE)
     app_lines <- gsub(
-      'source\\("\\.\\./\\.\\./R/sample_size_functions\\.R"\\)',
-      'source("sample_size_functions.R")',
+      'source\\("\\.\\./\\.\\./R/([^" ]+)"\\)',
+      'source("\\1")',
       app_lines
     )
 
     writeLines(app_lines, file.path(staged_app, "app.R"), useBytes = TRUE)
-    file.copy(helper_file, file.path(staged_app, "sample_size_functions.R"), overwrite = TRUE)
+    file.copy(helper_files, file.path(staged_app, basename(helper_files)), overwrite = TRUE)
 
     message(sprintf("Exporting %s to %s", app, file.path(output_dir, app)))
     shinylive::export(
@@ -101,7 +102,9 @@ app_labels <- function(apps) {
     two_proportions = "Two Proportions",
     two_means = "Two Means",
     power_explorer = "Sample size reasoning lab",
-    dropout_adjustment = "Dropout Adjustment"
+    dropout_adjustment = "Dropout Adjustment",
+    prevalence_precision = "Estimate a proportion or pilot retention rate",
+    sampling_distributions = "Alpha, beta and power"
   )
   unname(ifelse(apps %in% names(labels), labels[apps], apps))
 }

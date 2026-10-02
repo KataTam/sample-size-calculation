@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="650" viewBox="0 0 1200 650" role="img" aria-labelledby="title description">
+<title id="title">Relevant questions for determining sample size</title>
+<desc id="description">Four connected families of questions: statistical information, clinical relevance, ethical justification and practical resources.</desc>
+<rect width="1200" height="650" fill="white"/>
+<g fill="none" stroke="#799ca5" stroke-width="4">
+<path d="M450 272 C420 272 450 140 435 140"/><path d="M750 272 C780 272 750 140 765 140"/>
+<path d="M450 340 C420 340 450 510 435 510"/><path d="M750 340 C780 340 750 510 765 510"/>
+</g>
+<g font-family="Arial, sans-serif" fill="#25313b">
+<rect x="35" y="30" width="400" height="185" rx="16" fill="#eef7f8" stroke="#176675" stroke-width="2"/>
+<text x="60" y="73" font-size="27" font-weight="bold" fill="#176675">Statistical questions</text>
+<text x="60" y="113" font-size="22">What should the study establish?</text>
+<text x="60" y="150" font-size="20">Power, precision and assumptions</text>
+<text x="60" y="185" font-size="20">What could different studies show?</text>
+<rect x="765" y="30" width="400" height="185" rx="16" fill="#f4f3fa" stroke="#635493" stroke-width="2"/>
+<text x="790" y="73" font-size="27" font-weight="bold" fill="#635493">Clinical questions</text>
+<text x="790" y="113" font-size="22">What information would be useful?</text>
+<text x="790" y="150" font-size="20">A meaningful outcome and benefit</text>
+<text x="790" y="185" font-size="20">Evidence and patient perspectives</text>
+<rect x="35" y="435" width="400" height="185" rx="16" fill="#fff5ef" stroke="#a04a24" stroke-width="2"/>
+<text x="60" y="478" font-size="27" font-weight="bold" fill="#a04a24">Ethical questions</text>
+<text x="60" y="518" font-size="22">Is participant burden justified?</text>
+<text x="60" y="555" font-size="20">Informational value and uncertainty</text>
+<text x="60" y="590" font-size="20">Limits of the intended conclusion</text>
+<rect x="765" y="435" width="400" height="185" rx="16" fill="#f3f6f0" stroke="#557244" stroke-width="2"/>
+<text x="790" y="478" font-size="27" font-weight="bold" fill="#557244">Resources and logistics</text>
+<text x="790" y="518" font-size="22">What can you recruit and afford?</text>
+<text x="790" y="555" font-size="20">Time, costs and recruitment capacity</text>
+<text x="790" y="590" font-size="20">Expected losses and feasibility</text>
+<rect x="450" y="235" width="300" height="150" rx="18" fill="#176675"/>
+<text x="600" y="288" text-anchor="middle" font-size="28" font-weight="bold" fill="white">How many patients</text>
+<text x="600" y="328" text-anchor="middle" font-size="28" font-weight="bold" fill="white">do you need?</text>
+<text x="600" y="360" text-anchor="middle" font-size="19" fill="white">An informative study design</text>
+</g>
+</svg>

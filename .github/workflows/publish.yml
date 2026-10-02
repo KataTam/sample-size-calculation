@@ -18,6 +18,7 @@ jobs:
           r-version: '4.5.1'
           use-public-rspm: true
       - uses: r-lib/actions/setup-pandoc@v2
+      - uses: r-lib/actions/setup-tinytex@v2
       - name: Check source text
         run: python3 scripts/check_text.py
       - uses: r-lib/actions/setup-renv@v2

@@ -12,4 +12,4 @@ bookdown::gitbook:
         <li><a href="./">Sample size for clinical studies</a></li>
     search: true
     sharing: false
-    download: [["Sample_size_open_module.html", "Standalone HTML"]]
+    download: [["Sample_size_open_module.html", "Standalone HTML"], ["Sample_size_open_module.pdf", "Printable PDF"]]

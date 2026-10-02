@@ -1,12 +1,14 @@
 # Student case and assumption map
 
-Draft a hypothetical clinical case or use a topic with public evidence. Do not include identifiable patient data. Label every invented value as a teaching assumption. This template supports equal independent groups with normal continuous outcomes or binary outcomes; use a different validated method for other designs.
+Draft a hypothetical clinical case or use a topic with public evidence. Do not include identifiable patient data. Label every invented value as a teaching assumption. The core comparison fields support equal independent groups with normal continuous outcomes or binary outcomes. The single-proportion extension supports descriptive/feasibility estimation; use a different validated method for other designs.
 
 ## Question and inferential goal
 
 Population, intervention, comparator, primary outcome and time point:
 
-Goal (testing, estimation, fixed resources, or a justified combination):
+Design dimensions: preclinical/clinical/population setting; interventional/observational; prospective/existing records; independent/paired/repeated/clustered units:
+
+Goal (testing, estimation, fixed resources, feasibility, or a justified combination):
 
 Intended conclusion and what would make the information useful:
 
@@ -28,6 +30,22 @@ Intended conclusion and what would make the information useful:
 | Dropout per arm | | | |
 | Recruitment period, cap and resources | | | |
 
+For a single-proportion estimation or pilot process-measure case, replace the two-group fields with the parameter, confidence level, useful margin of error, available total n and sampling plan. For an unsupported design, record the intended method and obtain design-specific advice before using the app.
+
+## Clinical, ethical and resource questions
+
+Who judges the outcome and smallest benefit worthwhile? Record patient/clinical input:
+
+What participant burden, potential harms or opportunity costs must the information justify?
+
+What conclusion would change practice or determine the next research step?
+
+Expected eligible participants per month; recruitment period; per-participant cost; fixed costs; funding/resource cap:
+
+Could collaboration, better measurement or a narrower purpose make the study informative?
+
+For a pilot: feasibility objectives, evidence already available, prospective progression criteria and useful precision for each objective:
+
 ## Prediction and exploration
 
 Which assumption will you change first? Predict its effect before using the app.
@@ -37,6 +55,8 @@ Analysable participants per group / total:
 Recruitment per group / total after rounding within each arm:
 
 Planning method and achieved power or anticipated precision:
+
+For existing records: why this sample is available, completeness, selection and missingness; what its estimate and interval could establish. Do not calculate power from the same study's observed effect as additional evidence.
 
 ## One study and repeated studies
 

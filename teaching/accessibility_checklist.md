@@ -53,7 +53,7 @@ Use this checklist when editing, adapting, or sharing the module.
 
 ## Current Module Notes
 
-- Figures 1-4 include captions and alt text in the R Markdown source.
+- Figures include captions and alt text in the R Markdown source.
 - The module includes text summaries before the interactive app calls.
 - The Shiny apps include text output alongside plots.
 - The app plots use high-contrast lines and point markers rather than color-only interpretation.
@@ -66,3 +66,13 @@ Use this checklist when editing, adapting, or sharing the module.
 - [ ] Tables, interpretations and CSV downloads accompany plots.
 - [ ] The static module/activity is available if live interaction fails.
 - [ ] Optional code remains optional for the assessed concepts.
+
+## Tutorial and app together
+
+- [ ] The activity selector, view buttons and width control have labels and visible keyboard focus.
+- [ ] Each iframe has a meaningful title and a separate-page alternative.
+- [ ] Activity readiness appears as text in a live status region.
+- [ ] Lesson navigation preserves app inputs and completed simulations.
+- [ ] Narrow screens expose both the lesson and the app through labelled view buttons.
+- [ ] Check keyboard movement into and out of both frames in the teaching browser.
+- [ ] Check the complete HTML and PDF as alternatives; app interaction still requires a browser connection on first load.

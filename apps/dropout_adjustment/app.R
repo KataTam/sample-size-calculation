@@ -1,8 +1,10 @@
 library(shiny)
 
 source("../../R/sample_size_functions.R")
+source("../../R/activity_bridge.R")
 
 ui <- fluidPage(
+  tags$head(tags$script(HTML(activity_bridge_script("dropout_adjustment")))),
   titlePanel("Dropout Adjustment"),
   sidebarLayout(
     sidebarPanel(
@@ -14,13 +16,32 @@ ui <- fluidPage(
       h3("Recruitment target"),
       verbatimTextOutput("result"),
       h3("Dropout and recruitment target"),
-      plotOutput("dropout_plot", height = "320px")
+      plotOutput("dropout_plot", height = "320px"),
+      tags$details(tags$summary("Continue with this sample size in the reasoning lab"),
+        p("A count and dropout fraction do not specify an outcome or effect. Add those assumptions below. The initial values are illustrative."),
+        selectInput("lab_outcome", "Outcome for the two-group design", c("Continuous" = "means", "Binary" = "proportions")),
+        conditionalPanel("input.lab_outcome == 'means'",
+          numericInput("lab_delta", "Planning difference", 3), numericInput("lab_sd", "Planning SD", 5, min = .1)),
+        conditionalPanel("input.lab_outcome == 'proportions'",
+          sliderInput("lab_p0", "Planning control probability", .01, .99, .3, step = .01),
+          sliderInput("lab_p1", "Planning treatment probability", .01, .99, .6, step = .01)),
+        uiOutput("lab_link"),
+        helpText("This transfers the entered analysable count per group, without recalculating it from a power target."))
     )
   )
 )
 
 server <- function(input, output, session) {
   valid_n <- reactive({ validate(need(is.finite(input$n) && input$n == floor(input$n) && input$n >= 1, "Use a positive integer per group.")); input$n })
+  output$lab_link <- renderUI({
+    n <- valid_n()
+    validate(need(n >= 2 && n <= 100000, "The lab supports 2 to 100,000 analysable participants per group."))
+    values <- list(outcome = input$lab_outcome, goal = "fixed", fixed_n = n, dropout = input$dropout)
+    if (input$lab_outcome == "means") { values$plan_delta <- input$lab_delta; values$plan_sd <- input$lab_sd }
+    else { values$plan_p0 <- input$lab_p0; values$plan_p1 <- input$lab_p1 }
+    url <- tryCatch(lab_state_url(values), error = function(e) validate(need(FALSE, conditionMessage(e))))
+    tags$a(href = url, target = "_top", class = "btn btn-primary", "Explore this design in the lab")
+  })
   output$result <- renderPrint({
     valid_n()
     cat("Analysable per group:", input$n, "\n")

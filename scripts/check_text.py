@@ -6,7 +6,7 @@ import subprocess
 root = Path(__file__).resolve().parents[1]
 paths = subprocess.check_output(["git", "ls-files", "--cached", "--others",
     "--exclude-standard", "-z"], cwd=root).decode("utf-8").split("\0")
-text_types = {".md", ".Rmd", ".R", ".py", ".yml", ".cff", ".bib", ".css", ".Rproj", ".json", ".csv"}
+text_types = {".md", ".Rmd", ".R", ".py", ".yml", ".cff", ".bib", ".css", ".Rproj", ".json", ".csv", ".js", ".svg"}
 broken = re.compile(r"[\ufffd]|\u00e2\u20ac|\u00c3[\u0080-\u00bf]|\u00c2\u00a0")
 errors = []
 count = 0

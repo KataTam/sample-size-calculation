@@ -14,7 +14,9 @@ This checks:
 
 - R syntax in the shared function file and app files
 - R code chunks in the learner module
-- a few expected outputs from the sample-size functions
+- expected outputs, invariants and independent references for sample-size and simulation methods
+- single-proportion precision, normal sampling distributions and case routing
+- validated study-plan save/reload, fixed-N transfer and own-study recruitment calculations
 - whether key documentation files are present
 
 The check does not replace reading the rendered module. It is meant to catch simple breakages early.
@@ -35,8 +37,8 @@ Use the render check before a release, after changing figures or tables, and aft
 After rendering `module/Sample_size_open_module.Rmd`, check:
 
 - main text is large enough in RStudio Viewer and in a browser
-- Tables 1-3 appear as tables, not as broken plain text
-- Figures 1-4 are readable on a laptop screen
+- all tables appear as tables, not as broken plain text
+- all figures are readable on a laptop screen and in the PDF
 - figure captions and surrounding text refer to the correct figure numbers
 - app descriptions match the current app defaults
 - links to teaching files, cases, licenses, and the repository work
@@ -64,6 +66,8 @@ Before using the resource in class:
 - check that the rubric matches the assessment task
 - decide whether students will use the chronic pain case or create their own cases
 - prepare a backup route if Shiny is unavailable
+
+In the two-panel study view, check activity presets against the text, change an app input and navigate the lesson, and confirm that the input and saved simulations remain. Switching to a different app starts that activity's preset; switching the visible Lesson/App panel keeps the existing frame. Test direct app links, calculator-to-lab transfer, study-plan download/reload and invalid plan handling in the actual browser. Inspect the PDF's first page, tables, plots, code wrapping and page breaks after rendering.
 
 ## Accessibility Check
 

@@ -4,11 +4,15 @@
 
 Start with a clinical question, make the assumptions explicit, and explore what a study could establish. These open teaching materials are intended for medical students and their teachers. No R installation is needed to use the tutorial or browser tools.
 
-Teaching examples cover two independent groups with equal allocation; other designs require additional methods.
+The main teaching examples cover two independent groups with equal allocation. Separate activities cover estimating one proportion and understanding alpha, beta and power. The study-design guide routes other designs to additional methods.
 
 ## Students
 
 [Read the tutorial](book/) and try the [sample size reasoning lab](power_explorer/). Compare one study with repeated studies, explore power and precision, and explain your design choices.
+
+[Open tutorial and app together](study/) to keep the explanation visible while you explore. Choose a matching activity or move through chapters with the app open.
+
+For a specific question, use the [study design guide](student-materials/study-design-guide.md), [short concept explanations](student-materials/glossary.md) or [common mistakes and questions](student-materials/common-mistakes.md).
 
 ## Teachers
 
@@ -27,7 +31,10 @@ Read the [documentation](documentation/README.md), [reuse and citation guidance]
 - [Two proportions](two_proportions/)
 - [Two means](two_means/)
 - [Dropout adjustment](dropout_adjustment/)
+- [Estimate a proportion or pilot retention rate](prevalence_precision/)
+- [Alpha, beta and power](sampling_distributions/)
 - [Standalone tutorial](book/Sample_size_open_module.html)
+- [Printable tutorial](book/Sample_size_open_module.pdf)
 - [Reusable source package](sample-size-calculation-source.zip)
 
 Katalin Tamási, UMCG. Original teaching materials: CC BY 4.0. Original code: MIT. [Third-party notices](documentation/third-party-notices.md).

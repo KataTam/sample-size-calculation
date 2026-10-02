@@ -382,3 +382,117 @@ plot_trial_intervals <- function(results, spec, max_display = 30) {
   legend("topright", c("Zero", "Clinical threshold", "Generating truth"),
          lty = 1:3, col = c("grey40", "#9a3412", "#075985"), cex = .75, bg = "white")
 }
+
+# Single-proportion precision: the requested target is always FULL CI width.
+# This is the usual normal approximation for an independently sampled proportion,
+# not a guarantee for the realised Wilson width or coverage under biased sampling.
+check_unit_probability <- function(x, name) {
+  check_scalar(x, name)
+  if (x < 0 || x > 1) stop(name, " must be between 0 and 1 inclusive.", call. = FALSE)
+  invisible(TRUE)
+}
+
+proportion_precision_plan <- function(p = .20, full_width = .10, confidence = .95,
+                                      unknown_p = FALSE, dropout_rate = 0) {
+  check_unit_probability(p, "Anticipated proportion")
+  check_positive_number(full_width, "Full interval width")
+  if (full_width > 1) stop("Full interval width cannot exceed 1.", call. = FALSE)
+  check_probability(confidence, "Confidence level")
+  check_nonnegative_probability(dropout_rate, "Expected loss fraction")
+  if (!is.logical(unknown_p) || length(unknown_p) != 1 || is.na(unknown_p))
+    stop("Unknown-proportion choice must be TRUE or FALSE.", call. = FALSE)
+  planning_p <- if (unknown_p) .5 else p
+  if (planning_p %in% c(0, 1)) stop(
+    "A planning proportion of 0 or 1 gives a degenerate normal approximation. Use a justified non-boundary range or the unknown-proportion option.",
+    call. = FALSE)
+  half_width <- full_width / 2
+  raw_n <- qnorm((1 + confidence) / 2)^2 * planning_p * (1 - planning_p) / half_width^2
+  n <- ceiling(raw_n)
+  check_integer(n, "Calculated analysable sample size", 1, 1e7)
+  list(anticipated_p = p, planning_p = planning_p, unknown_p = unknown_p,
+    full_width = full_width, half_width = half_width, confidence = confidence,
+    raw_n = raw_n, n = n, dropout_rate = dropout_rate,
+    recruitment_n = adjust_for_dropout(n, dropout_rate),
+    expected_events = n * planning_p, expected_nonevents = n * (1 - planning_p),
+    sparse = min(n * planning_p, n * (1 - planning_p)) < 10,
+    method = "Normal approximation for single-proportion precision; rounded upward")
+}
+
+single_proportion_interval <- function(events, n, confidence = .95) {
+  check_integer(n, "Analysable sample size", 1, 1e7)
+  check_integer(events, "Observed event count", 0, n)
+  check_probability(confidence, "Confidence level")
+  estimate <- events / n
+  limits <- wilson_interval(estimate, n, alpha = 1 - confidence)
+  data.frame(events = events, n = n, estimate = estimate,
+    lower = limits[1, "lower"], upper = limits[1, "upper"],
+    full_width = limits[1, "upper"] - limits[1, "lower"])
+}
+
+simulate_proportion_study <- function(n, p, confidence = .95, seed = 20260942) {
+  check_integer(n, "Analysable sample size", 1, 1e7)
+  check_unit_probability(p, "Generating proportion")
+  check_probability(confidence, "Confidence level")
+  check_integer(seed, "Seed", 0, .Machine$integer.max)
+  result <- with_study_seed(seed, {
+    single_proportion_interval(rbinom(1, n, p), n, confidence)
+  })
+  list(result = result, n = n, p = p, confidence = confidence, seed = seed,
+       method = "Uncorrected Wilson confidence interval for one binomial proportion")
+}
+
+# Exact operating characteristics for a sample mean from independent normal
+# observations with KNOWN population SD. This is distinct from the lab's t test.
+normal_sampling_operating_characteristics <- function(mu0 = 120, mu1 = 125,
+    sigma = 15, n = 25, alpha = .05, sidedness = "greater") {
+  check_scalar(mu0, "Null mean"); check_scalar(mu1, "Alternative mean")
+  check_positive_number(sigma, "Known population SD")
+  check_integer(n, "Sample size", 1, 1e7)
+  check_probability(alpha, "alpha")
+  if (!is.character(sidedness) || length(sidedness) != 1 ||
+      !sidedness %in% c("greater", "less", "two.sided"))
+    stop("Sidedness must be greater, less or two.sided.", call. = FALSE)
+  se <- sigma / sqrt(n)
+  z <- qnorm(1 - alpha / if (sidedness == "two.sided") 2 else 1)
+  lower <- if (sidedness %in% c("less", "two.sided")) mu0 - z * se else -Inf
+  upper <- if (sidedness %in% c("greater", "two.sided")) mu0 + z * se else Inf
+  # pnorm's lower.tail=FALSE avoids cancellation when upper-tail power is tiny.
+  power <- pnorm(lower, mu1, se) + pnorm(upper, mu1, se, lower.tail = FALSE)
+  actual_alpha <- pnorm(lower, mu0, se) + pnorm(upper, mu0, se, lower.tail = FALSE)
+  critical <- if (sidedness == "greater") upper else if (sidedness == "less") lower
+              else c(lower, upper)
+  list(mu0 = mu0, mu1 = mu1, effect = mu1 - mu0, sigma = sigma, n = n,
+    alpha = alpha, type1 = actual_alpha, beta = 1 - power, power = power,
+    se = se, SE = se, lower = lower, upper = upper, critical = critical,
+    standardized_critical = z, sidedness = sidedness,
+    method = "Normal sample mean; independent observations; known population SD")
+}
+
+plot_sample_mean_distributions <- function(x) {
+  limits <- range(c(x$mu0, x$mu1, x$critical)) + c(-4.5, 4.5) * x$se
+  grid <- seq(limits[1], limits[2], length.out = 1200)
+  null_density <- dnorm(grid, x$mu0, x$se)
+  alt_density <- dnorm(grid, x$mu1, x$se)
+  ymax <- max(null_density, alt_density) * 1.17
+  plot(grid, null_density, type = "n", ylim = c(0, ymax),
+    xlab = "Sample mean (not individual observations)", ylab = "Density",
+    main = paste0("Sampling distributions of the mean: n = ", x$n))
+  shade <- function(from, to, mean, colour) {
+    left <- max(from, limits[1]); right <- min(to, limits[2])
+    if (left >= right) return(invisible(NULL))
+    g <- seq(left, right, length.out = 400)
+    polygon(c(left, g, right), c(0, dnorm(g, mean, x$se), 0),
+      col = colour, border = NA)
+  }
+  shade(-Inf, x$lower, x$mu0, adjustcolor("#a34724", alpha.f = .38))
+  shade(x$upper, Inf, x$mu0, adjustcolor("#a34724", alpha.f = .38))
+  shade(x$lower, x$upper, x$mu1, adjustcolor("#176675", alpha.f = .32))
+  lines(grid, null_density, col = "#a34724", lwd = 2, lty = 1)
+  lines(grid, alt_density, col = "#176675", lwd = 2, lty = 2)
+  abline(v = x$critical, col = "#555555", lty = 3)
+  legend("topright", c("Null distribution", "Specified alternative", "Alpha: reject under null",
+    "Beta: do not reject under alternative", "Rejection boundary"),
+    col = c("#a34724", "#176675", "#a34724", "#176675", "#555555"),
+    lty = c(1, 2, NA, NA, 3), pch = c(NA, NA, 15, 15, NA),
+    lwd = c(2, 2, NA, NA, 1), cex = .75, bg = "white")
+}

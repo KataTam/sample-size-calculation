@@ -4,20 +4,20 @@
 
 Open teaching materials for medical students, by Katalin Tamási (UMCG). Work from a clinical question to the assumptions behind a sample size, explore what different studies could show, and explain what a feasible design could establish.
 
-The tutorial, browser tools and prepared examples require no R installation. These are teaching examples for two independent groups with equal allocation; other designs require additional methods.
+The tutorial, browser tools and prepared examples require no R installation. The main calculations concern two independent groups with equal allocation. Separate activities cover estimating a single proportion and understanding alpha, beta and power. A study-design guide routes other designs to appropriate methods.
 
 ## Start here
 
-- **Students:** [read the tutorial](https://katatam.github.io/sample-size-calculation/book/) and explore the [sample size reasoning lab](https://katatam.github.io/sample-size-calculation/power_explorer/).
+- **Students:** [open the lesson and matching app together](https://katatam.github.io/sample-size-calculation/study/), or [read the tutorial](https://katatam.github.io/sample-size-calculation/book/) and explore the [sample size reasoning lab](https://katatam.github.io/sample-size-calculation/power_explorer/).
 - **Teachers:** start with the [teaching guide](teaching/TEACHING_GUIDE.md), [prepared activity](teaching/static_activity.md) and [case studies](case-studies/README.md).
 - **Student reviewers:** use the [review guide](student-materials/README.md) and [open-ended review template](student-materials/material-review-template.md).
 - **Adapters:** see the [documentation](documentation/README.md), [build instructions](documentation/development/build-and-publish.md), and the shared code in [R/](https://github.com/KataTam/sample-size-calculation/tree/main/R) and [apps/](https://github.com/KataTam/sample-size-calculation/tree/main/apps).
 
 ## What you will explore
 
-Clinical questions and assumptions; two means and two proportions; power and precision; expected dropout; one simulated study and repeated studies; recruitment limits; and a written justification of a study design.
+Clinical questions and assumptions; two means and two proportions; power and precision; expected dropout; one simulated study and repeated studies; recruitment limits; prevalence and pilot feasibility; and a written justification of a study design. Visible R code and formulas remain alongside interpretation, with glossary and FAQ refreshers.
 
-[Open the teaching website](https://katatam.github.io/sample-size-calculation/) · [Download the standalone tutorial](https://katatam.github.io/sample-size-calculation/book/Sample_size_open_module.html) · [Download the source](https://katatam.github.io/sample-size-calculation/sample-size-calculation-source.zip)
+[Open the teaching website](https://katatam.github.io/sample-size-calculation/) · [Download the standalone tutorial](https://katatam.github.io/sample-size-calculation/book/Sample_size_open_module.html) · [Printable PDF](https://katatam.github.io/sample-size-calculation/book/Sample_size_open_module.pdf) · [Download the source](https://katatam.github.io/sample-size-calculation/sample-size-calculation-source.zip)
 
 ## Reuse and contribute
 

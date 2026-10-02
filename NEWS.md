@@ -1,5 +1,14 @@
 # Changelog
 
+## Student-feedback revision — 1 October 2026
+
+- Preserved the original 14 May 2021 tutorial's narrative and planning questions, with visible formulas and R code and additional interpretation.
+- Added study-design routing, glossary, FAQ, pilot feasibility, a prevalence precision example and rehabilitation, discharge and adherence cases.
+- Added single-proportion precision and alpha/beta sampling-distribution apps, using shared calculation functions and matched activity settings.
+- Added a two-panel lesson/app view that preserves the active app during lesson navigation, with narrow-screen views and separate-tab links.
+- Added study-plan save/reload, calculator-to-lab links and an own-study justification route with clinical, ethical and recruitment considerations.
+- Added complete printable PDF generation and documented teacher validation against other software.
+
 ## Public-facing revision
 
 - Added student, teacher, reviewer and adapter routes.

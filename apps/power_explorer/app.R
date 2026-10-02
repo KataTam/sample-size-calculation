@@ -1,5 +1,7 @@
 library(shiny)
 source("../../R/sample_size_functions.R")
+source("../../R/teaching_cases.R")
+source("../../R/activity_bridge.R")
 
 # Let the download response supply the filename. Chromium's download attribute
 # can bypass the service worker serving a Shinylive download (issue 468227).
@@ -48,32 +50,49 @@ document.addEventListener('click', async function(event) {
 }, true);)---"
 
 ui <- fluidPage(
-  tags$head(tags$script(HTML(download_script))),
+  tags$head(tags$script(HTML(download_script)), tags$script(HTML(activity_bridge_script()))),
   tags$p(id = "download-status", role = "status", `aria-live` = "polite"),
   tags$head(tags$style(HTML("body{font-size:17px;line-height:1.55}.well{background:#f4f7fa}table{font-size:15px}.shiny-html-output{overflow-x:auto}.shiny-output-error-validation{color:#8a3410}"))),
   titlePanel("Sample size reasoning lab"),
-  p("Choose a goal, predict a consequence, explore one study and many studies, then justify your design. All cases are hypothetical. No coding is required."),
+  p("Explore a study question and the assumptions behind its design. All prepared cases are hypothetical. No coding is required."),
+  selectInput("activity_choice", "Prepared activity", c("Choose an activity or use your own inputs" = "",
+    setNames(names(teaching_cases()), vapply(teaching_cases(), function(x) x$title, character(1)))), width = "100%"),
+  uiOutput("activity_context"),
+  textOutput("plan_import_status"),
   sidebarLayout(sidebarPanel(width = 4,
-    selectInput("outcome", "Outcome", c("Continuous improvement score" = "means", "Binary pain relief" = "proportions")),
+    checkboxInput("show_advanced", "Show all controls and explanations", TRUE),
+    selectInput("outcome", "Outcome", c("Continuous outcome" = "means", "Binary event outcome" = "proportions")),
     selectInput("goal", "Planning goal", c("Test a difference from zero" = "testing", "Estimate with a target interval width" = "precision", "Assess a fixed sample size" = "fixed")),
     p("Two independent groups, equal allocation. Differences are treatment minus control; positive values mean benefit in these cases."),
     conditionalPanel("input.outcome == 'means'",
-      numericInput("plan_delta", "Difference assumed for planning (score units)", 3, step = .5),
+      numericInput("plan_delta", "Difference assumed for planning (outcome units)", 3, step = .5),
       numericInput("plan_sd", "Planning standard deviation", 5, min = .1),
-      numericInput("threshold_m", "Clinically important benefit (score units)", 2, min = .1),
-      numericInput("width_m", "Target FULL interval width (score units)", 4, min = .1)),
+      helpText("The planning difference is an assumption about benefit; SD describes variation between patients."),
+      conditionalPanel("input.show_advanced",
+      numericInput("threshold_m", "Clinically important benefit (outcome units)", 2, min = .1),
+      helpText("This clinical threshold is a separate judgement from the planning difference.")),
+      conditionalPanel("input.show_advanced || input.goal == 'precision'",
+      numericInput("width_m", "Target FULL interval width (outcome units)", 4, min = .1),
+      helpText("Full width 4 means a symmetric interval extending approximately 2 units on each side."))),
     conditionalPanel("input.outcome == 'proportions'",
-      sliderInput("plan_p0", "Planning relief probability: control", .01, .99, .3, step = .01),
-      sliderInput("plan_p1", "Planning relief probability: treatment", .01, .99, .6, step = .01),
+      sliderInput("plan_p0", "Planning event probability: control", .01, .99, .3, step = .01),
+      sliderInput("plan_p1", "Planning event probability: treatment", .01, .99, .6, step = .01),
+      helpText("0.30 means 30%. A change from 0.30 to 0.60 is 30 percentage points."),
+      conditionalPanel("input.show_advanced",
       numericInput("threshold_p", "Clinically important absolute benefit (proportion units)", .3, min = .001, max = 1, step = .01),
-      numericInput("width_p", "Target FULL interval width (proportion units)", .2, min = .001, max = 2, step = .01)),
+      helpText("Clinical importance is separate from statistical significance.")),
+      conditionalPanel("input.show_advanced || input.goal == 'precision'",
+      numericInput("width_p", "Target FULL interval width (proportion units)", .2, min = .001, max = 2, step = .01))),
     helpText("Expected, planning and clinically important effects are separate judgements. Record sources and uncertainty in your case worksheet."),
     sliderInput("alpha", "Two-sided alpha (CI confidence = 1 - alpha)", .001, .1, .05, step = .001),
+    conditionalPanel("input.show_advanced", helpText("Alpha is the test's long-run false-positive probability under its null model.")),
     sliderInput("target_power", "Power target (reference line for fixed or precision goals)", .5, .99, .8, step = .01),
+    conditionalPanel("input.show_advanced", helpText("Power refers to a specified true difference; it is not the probability that a hypothesis is true.")),
     conditionalPanel("input.goal == 'fixed'", numericInput("fixed_n", "Analysable participants PER GROUP", 60, min = 2, max = 100000, step = 1)),
     sliderInput("dropout", "Expected dropout fraction in EACH group", 0, .5, .1, step = .01),
     numericInput("recruit_cap", "Recruitment limit: TOTAL across both groups", 200, min = 4, max = 200000, step = 2),
     helpText("The curve marks the expected analysable limit after losses; this is not a guaranteed final count."),
+    conditionalPanel("input.show_advanced",
     h4("Reality may differ from the plan"),
     selectInput("reality", "Data-generating scenario", c("Same as planning assumptions" = "same", "No true treatment effect" = "null", "Custom effect or variability" = "custom")),
     conditionalPanel("input.reality == 'custom' && input.outcome == 'means'",
@@ -85,6 +104,8 @@ ui <- fluidPage(
     numericInput("seed", "Random seed", 20260914, min = 0, max = 2147483647, step = 1),
     numericInput("B", "Independent study replications B", 1000, min = 100, max = 10000, step = 100),
     helpText("More participants change study performance. More replications improve simulation precision. Same inputs and seed reproduce results.")),
+    p(tags$a(href = "../book/Sample_size_open_module.html#glossary", target = "_top", "Parameter glossary"), " · ",
+      tags$a(href = "../book/Sample_size_open_module.html#common-mistakes", target = "_top", "Common mistakes and FAQ"))),
   mainPanel(width = 8, tabsetPanel(id = "stage",
     tabPanel("Explore assumptions", h3("Your planned design"), tableOutput("planning"),
       p("Predict a change before moving a control. Compare testing, precision and fixed-resource goals."),
@@ -114,10 +135,33 @@ ui <- fluidPage(
       plotOutput("p_values", height = "300px"),
       p("The dashed line uses the alpha saved with this run. Below it, the fraction estimates power under an alternative or Type I error under the null."),
       downloadButton("download_many", "Download replications and assumptions")),
+    tabPanel("My study", h3("Apply this to your question"),
+      textAreaInput("study_question", "Research question and primary outcome", rows = 2, width = "100%"),
+      selectInput("study_design", "Study design", c("Two independent groups, equal allocation" = "two_groups",
+        "Paired or repeated measurements" = "paired", "One population proportion" = "single_proportion",
+        "Observational or retrospective study" = "observational", "Diagnostic or screening study" = "diagnostic",
+        "Prediction or prognostic model" = "prediction", "Another design" = "other")),
+      uiOutput("design_route"),
+      textAreaInput("clinical_relevance", "Why would this difference or precision matter clinically?", rows = 3, width = "100%"),
+      textAreaInput("participant_burden", "Participant burden, benefits and ethical considerations", rows = 3, width = "100%"),
+      textAreaInput("evidence_sources", "Evidence sources and uncertainty in the planning inputs", rows = 3, width = "100%"),
+      fluidRow(column(6, numericInput("eligible_monthly", "Eligible participants per month", 20, min = 0)),
+        column(6, sliderInput("consent_fraction", "Expected fraction consenting", 0, 1, .7, step = .01))),
+      fluidRow(column(4, numericInput("recruitment_months", "Months available for recruitment", 12, min = 0)),
+        column(4, numericInput("cost_base", "Fixed study costs (your currency)", 0, min = 0)),
+        column(4, numericInput("cost_per_patient", "Cost per recruited participant", 0, min = 0))),
+      tableOutput("feasibility_table"),
+      helpText("These are expected recruitment and cost scenarios, not guarantees. Account for other exclusions and costs where relevant."),
+      actionButton("use_feasible_cap", "Use expected recruitment as the lab limit"),
+      p(tags$a(href = "../book/Sample_size_open_module.html#own-study", target = "_top", "Read the study justification guidance"))),
     tabPanel("Justify and communicate", h3("Explain your decision"),
       textAreaInput("justification", "State the goal, sources, clinical threshold, sensitivity, feasibility and limits of the intended conclusion.", rows = 8, width = "100%"),
       p("Use the case template. Increasing the assumed effect simply to reduce recruitment is not a justification."),
       downloadButton("download_plan", "Download plan and explanation"),
+      h4("Save and return to your plan"),
+      downloadButton("download_plan_json", "Save study plan (JSON)"),
+      fileInput("upload_plan", "Reload a saved study plan", accept = c(".json", "application/json")),
+      helpText("The file saves your inputs and written justification on your device. Reloading restores the plan; saved simulation results are kept separate and must be rerun for the new inputs."),
       tags$details(tags$summary("Optional reproducible R workflow"),
         p("Run this script from the repository root to reproduce the current scenario with the same shared functions."), downloadButton("download_code", "Download R script")),
       h3("References"), tags$ul(
@@ -132,7 +176,137 @@ ui <- fluidPage(
 
 server <- function(input, output, session) {
   safe <- function(expr) tryCatch(expr, error = function(e) validate(need(FALSE, conditionMessage(e))))
+  current_activity <- reactiveVal("")
+  activity_selection <- reactiveVal("")
+  routed_case <- reactiveVal(NULL)
+  import_status <- reactiveVal("")
+  current_lab_inputs <- reactive({
+    defaults <- lab_input_defaults()
+    values <- lapply(names(defaults), function(name) if (is.null(input[[name]])) defaults[[name]] else input[[name]])
+    names(values) <- names(defaults)
+    safe(validate_lab_inputs(values))
+  })
+  study_details <- reactive({
+    defaults <- study_input_defaults()
+    values <- lapply(names(defaults), function(name) if (is.null(input[[name]])) defaults[[name]] else input[[name]])
+    names(values) <- names(defaults)
+    safe(validate_study_inputs(values))
+  })
+  apply_case <- function(id) {
+    x <- teaching_case(id)
+    current_activity(id)
+    if (x$app != "power_explorer") {
+      routed_case(x)
+      import_status("This activity uses a different study design. Follow its activity link below.")
+      return(invisible(NULL))
+    }
+    routed_case(NULL)
+    apply_lab_inputs(session, x$inputs[names(x$inputs) %in% names(lab_input_defaults())])
+    activity_selection(id)
+    updateSelectInput(session, "activity_choice", selected = id)
+    updateSelectInput(session, "study_design", selected = "two_groups")
+    updateCheckboxInput(session, "show_advanced", value = FALSE)
+    import_status("Activity assumptions loaded. Any earlier simulation results remain labelled with their saved assumptions.")
+    invisible(x)
+  }
+  handle <- function(expr) tryCatch(expr, error = function(e) import_status(conditionMessage(e)))
+  observeEvent(input$activity_choice, {
+    if (identical(input$activity_choice, activity_selection())) return()
+    activity_selection(input$activity_choice)
+    if (nzchar(input$activity_choice)) handle(apply_case(input$activity_choice))
+    else { current_activity(""); routed_case(NULL) }
+  }, ignoreInit = TRUE)
+  observeEvent(input$activity_request, {
+    handle(apply_case(input$activity_request$activity))
+  }, ignoreInit = FALSE)
+  observeEvent(input$state_request, {
+    handle({
+      state <- input$state_request$state
+      if (!is.list(state)) stop("Linked study inputs must be an object.")
+      case_id <- state$case_id
+      if (is.null(case_id)) case_id <- ""
+      if (!is.character(case_id) || length(case_id) != 1 || is.na(case_id)) stop("Invalid activity context.")
+      if (nzchar(case_id) && teaching_case(case_id)$app != "power_explorer") stop("This linked case uses another activity.")
+      details <- if (is.null(state$study)) NULL else validate_study_inputs(state$study)
+      state$case_id <- NULL; state$study <- NULL
+      values <- validate_lab_inputs(state)
+      apply_lab_inputs(session, values)
+      if (is.null(details)) updateSelectInput(session, "study_design", selected = "two_groups")
+      else apply_study_inputs(session, details)
+      activity_selection(case_id)
+      updateSelectInput(session, "activity_choice", selected = case_id)
+      current_activity(case_id); routed_case(NULL)
+      updateCheckboxInput(session, "show_advanced", value = TRUE)
+      import_status("Linked inputs loaded. A transferred sample size is assessed as fixed; it is not silently recalculated.")
+    })
+  }, ignoreInit = FALSE)
+  observeEvent(input$bridge_error, import_status(input$bridge_error), ignoreInit = FALSE)
+  output$plan_import_status <- renderText(import_status())
+  output$activity_context <- renderUI({
+    req(nzchar(current_activity()))
+    x <- teaching_case(current_activity())
+    tagList(h3(x$title), p(x$prompt),
+      if (!is.null(routed_case())) p(tags$a(href = paste0("../", x$app, "/?activity=", x$id),
+        target = "_top", "Open the matching activity")),
+      p(tags$a(href = paste0("../", x$return_path), target = "_top", "Return to this passage in the tutorial")))
+  })
+  output$design_route <- renderUI({
+    design <- study_details()$study_design
+    if (design == "two_groups") return(p("The lab calculations apply to two independent, equally sized groups. Check that the outcome and intended analysis match your study."))
+    tagList(p("The two-group lab does not calculate a sample size for this design. Your notes and feasibility calculation can still be saved."),
+      if (design == "single_proportion") p(tags$a(href = "../prevalence_precision/?activity=prevalence", target = "_top", "Open the single-proportion precision activity")),
+      p(tags$a(href = "../book/Sample_size_open_module.html#study-designs", target = "_top", "Choose the appropriate planning approach")))
+  })
+  feasibility <- reactive({
+    x <- study_details()
+    recruits <- floor(x$eligible_monthly * x$consent_fraction * x$recruitment_months)
+    list(recruits = recruits, balanced = 2 * floor(recruits / 2),
+      expected_analysable = 2 * floor(floor(recruits / 2) * (1 - input$dropout)),
+      budget = x$cost_base + recruits * x$cost_per_patient)
+  })
+  output$feasibility_table <- renderTable({
+    x <- feasibility()
+    if (study_details()$study_design != "two_groups") return(data.frame(
+      Item = c("Expected recruitment: all participants", "Cost at expected recruitment"), Value = c(x$recruits, x$budget)))
+    required <- 2 * adjust_for_dropout(planned()$n, input$dropout)
+    details <- study_details()
+    data.frame(Item = c("Expected recruitment: all participants", "Available under equal allocation", "Expected analysable: both groups after losses", "Cost at expected recruitment",
+      "Recruitment required for the current plan", "Cost at required recruitment", "Expected recruitment covers the current plan"),
+      Value = c(x$recruits, x$balanced, x$expected_analysable, x$budget, required,
+        details$cost_base + required * details$cost_per_patient, if (x$balanced >= required) "Yes" else "No"))
+  })
+  observeEvent(input$use_feasible_cap, handle({
+    x <- feasibility()
+    if (study_details()$study_design != "two_groups") stop("Choose an appropriate design-specific calculator before applying this recruitment limit.")
+    if (x$balanced < 4 || x$balanced > 200000) stop("The lab recruitment limit must be between 4 and 200,000 participants in total.")
+    updateNumericInput(session, "recruit_cap", value = x$balanced)
+    import_status("Expected recruitment applied as a limit, without changing the planned sample size.")
+  }))
+  observeEvent(input$upload_plan, handle({
+    req(input$upload_plan$datapath)
+    if (input$upload_plan$size > 100000) stop("Choose a study-plan file smaller than 100 KB.")
+    saved <- read_study_plan(paste(readLines(input$upload_plan$datapath, warn = FALSE), collapse = "\n"))
+    apply_lab_inputs(session, saved$inputs)
+    apply_study_inputs(session, saved$study)
+    activity <- if (saved$activity %in% names(teaching_cases()) && teaching_case(saved$activity)$app == "power_explorer") saved$activity else ""
+    current_activity(activity); activity_selection(activity); routed_case(NULL)
+    updateSelectInput(session, "activity_choice", selected = activity)
+    updateCheckboxInput(session, "show_advanced", value = TRUE)
+    import_status("Study plan restored. Previous simulation outputs have their original saved assumptions; run again to generate results for this plan.")
+  }), ignoreInit = TRUE)
+  # The wrapper can display current inputs; it never receives uploaded file paths.
+  observe({
+    values <- tryCatch(current_lab_inputs(), error = function(e) NULL)
+    details <- tryCatch(study_details(), error = function(e) NULL)
+    activity <- current_activity()
+    if (!is.null(values) && !is.null(details)) {
+      values$case_id <- activity; values$study <- details
+      session$sendCustomMessage("sample-size-state", values)
+    }
+  })
   planned <- reactive({
+    validate(need(is.null(routed_case()), "Open the matching activity for this study design."),
+      need(study_details()$study_design == "two_groups", "This design needs another planning method. See My study for the appropriate route."))
     x <- safe(study_spec(outcome = input$outcome, n = if (input$goal == "fixed") input$fixed_n else 60,
       delta = input$plan_delta, sd = input$plan_sd, p_control = input$plan_p0, p_treatment = input$plan_p1,
       alpha = input$alpha, threshold = if (input$outcome == "means") input$threshold_m else input$threshold_p,
@@ -227,7 +401,7 @@ server <- function(input, output, session) {
       spec_power(y)
     }, numeric(1))
     plot(effects, powers, type = "l", lwd = 2, col = "#176675", ylim = c(0,1),
-      xlab = if (x$outcome == "means") "Treatment minus control (score units)" else "Treatment minus control (proportion units)",
+      xlab = if (x$outcome == "means") "Treatment minus control (outcome units)" else "Treatment minus control (proportion units)",
       ylab = "Power", main = paste(x$n, "analysable patients per group"))
     abline(h = input$target_power, lty = 2); abline(v = 0, lty = 3)
     points(d, spec_power(x), pch = 19)
@@ -283,7 +457,18 @@ server <- function(input, output, session) {
     x <- many(); write.csv(export_rows(x$results, x$meta), file, row.names = FALSE)
   })
   output$download_plan <- downloadHandler(filename = function() "sample_size_justification.txt", content = function(file) {
-    x <- snapshot(); writeLines(c("Current sample size justification", capture.output(str(x)), method_label(x$plan$outcome), "Learner explanation:", input$justification), file)
+    details <- study_details()
+    design <- if (details$study_design == "two_groups" && is.null(routed_case()))
+      c(capture.output(str(snapshot())), method_label(planned()$outcome)) else "No sample size calculation: this design requires another planning method."
+    writeLines(c("Current sample size justification", design, "Study question and feasibility:",
+      capture.output(str(details[names(details) != "justification"])), capture.output(str(feasibility())),
+      "Learner explanation:", details$justification), file)
+  })
+  output$download_plan_json <- downloadHandler(filename = function() "sample_size_study_plan.json", content = function(file) {
+    plan <- list(schema = "sample-size-study-plan", version = 1, activity = current_activity(),
+      inputs = current_lab_inputs(), study = study_details(),
+      snapshot = if (study_details()$study_design == "two_groups" && is.null(routed_case())) snapshot() else NULL)
+    writeLines(jsonlite::toJSON(plan, auto_unbox = TRUE, pretty = TRUE, digits = 16, null = "null"), file)
   })
   output$download_code <- downloadHandler(filename = function() "reproduce_studies.R", content = function(file) {
     x <- snapshot(); writeLines(c('# Run from the repository root.', 'source("R/sample_size_functions.R")',

@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tutorial and activity together | Sample size calculation</title>
+  <link rel="stylesheet" href="study.css">
+  <script src="study.js" defer></script>
+</head>
+<body data-view="both">
+  <header class="study-header">
+    <div class="heading"><a href="../">Sample size calculation</a><h1>Tutorial and activity together</h1></div>
+    <div class="controls">
+      <label for="activity">Activity <select id="activity"><option>Loading activities...</option></select></label>
+      <div class="view-controls" aria-label="Visible panels">
+        <button type="button" data-view="lesson" aria-pressed="false">Lesson</button>
+        <button type="button" data-view="app" aria-pressed="false">App</button>
+        <button type="button" data-view="both" aria-pressed="true">Both</button>
+      </div>
+      <label class="width-control" for="panel-width">Lesson width <input id="panel-width" type="range" min="35" max="65" value="50"></label>
+      <button id="reset" type="button">Reset this activity</button>
+    </div>
+    <p id="activity-prompt">Read the case and explore its assumptions.</p>
+    <p id="app-status" role="status" aria-live="polite">Loading the activity. You can read the lesson while it starts.</p>
+  </header>
+  <main class="panels">
+    <section class="pane lesson-pane" aria-label="Tutorial panel">
+      <div class="pane-bar"><h2>Lesson</h2><a id="lesson-separate" href="../book/" target="_blank" rel="noopener">Open lesson separately</a></div>
+      <iframe id="lesson-frame" title="Sample size tutorial" src="../book/"></iframe>
+    </section>
+    <section class="pane app-pane" aria-label="Activity panel">
+      <div class="pane-bar"><h2>Activity</h2><a id="app-separate" href="../power_explorer/" target="_blank" rel="noopener">Open app separately</a></div>
+      <iframe id="app-frame" title="Interactive sample size activity" src="about:blank"></iframe>
+    </section>
+  </main>
+  <noscript><p>Open the <a href="../book/">tutorial</a> and <a href="../power_explorer/">reasoning lab</a> separately. This view needs JavaScript.</p></noscript>
+</body>
+</html>

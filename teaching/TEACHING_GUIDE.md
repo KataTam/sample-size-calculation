@@ -8,9 +8,9 @@ Learners should know sample versus population, binary versus continuous outcomes
 
 Check the actual deployment environment before class. The proposed 20–25 student pilot can work in groups of 3–4 with a facilitator. Let students divide interpretation, assumption checking and recording, and rotate roles; do not let coding dominate participation. Clearly identify all case values as hypothetical. Review accessibility with keyboard and readable text/table alternatives.
 
-## Learning pathway
+## Selecting a learning route
 
-Choose a goal; complete the assumption map; predict a consequence; explore formulas; generate one study; repeat studies; compare precision; stress-test assumptions at fixed n; communicate a recommendation. Use one outcome in a first session. The lab supports a continuous improvement score and a binary chronic-pain case; compare outcomes in a later session if time permits.
+Follow the tutorial's original clinical question, planning questions, statistical concepts and worked calculations. Select the extra activities that serve the session's aim; a repeated activity sequence is not required for every section. Use one outcome in a first session. The lab supports a continuous improvement score and a binary chronic-pain case. Single-proportion precision and sampling-distribution activities have their own apps. Compare outcomes in a later session if time permits.
 
 ## Session formats
 
@@ -34,7 +34,7 @@ These timings are proposed adaptations to pilot, not schedules validated by the 
 
 ## Methods to make explicit
 
-All core designs have equal independent groups. The simple calculator apps use labelled normal approximations. The reasoning lab uses two-sided pooled-variance t-test power for normal outcomes, and a score-test power approximation for binary outcomes. The binary confidence interval uses Newcombe-Wilson rather than inversion of that score test; explain occasional test/CI disagreement. Never describe the binary power approximation as exact. Read the [statistical methods](../documentation/statistical-methods.md) before teaching.
+The two-group designs have equal independent groups. The simple calculator apps use labelled normal approximations. The reasoning lab uses two-sided pooled-variance t-test power for normal outcomes, and a score-test power approximation for binary outcomes. The binary confidence interval uses Newcombe-Wilson rather than inversion of that score test; explain occasional test/CI disagreement. Never describe the binary power approximation as exact. The single-proportion app uses an approximate precision plan and illustrates Wilson intervals. The alpha/beta app uses a known-SD normal mean example. Read the [statistical methods](../documentation/statistical-methods.md) before teaching.
 
 The lab's width target is FULL width. The normal width curve is an expectation, while the binary curve is a plug-in anticipation. Neither guarantees each interval meets the target. The simulation separately reports the fraction meeting it. Dropout inflation preserves expected analysable counts; it does not resolve missing-data bias.
 
@@ -48,15 +48,21 @@ Students can adapt cases, challenge unclear assumptions and suggest explanations
 
 See [References](../documentation/references.md) and [evidence and design rationale](../documentation/evidence-and-design-rationale.md) for source contributions and limitations. Learning effectiveness of this local module remains to be evaluated.
 
-## Consolidated book route (22 September 2026)
+## Consolidated book and app route
 
 Use the single learner source in `module/Sample_size_open_module.Rmd`. Short sessions select from this book; do not create an independently maintained short tutorial. Short R examples are visible by default, but students are assessed on interpretation, not code.
 
 | Route | Book chapters and evidence |
 |---|---|
-| 30 minutes | Clinical question (1), prepared repeated-study results (2), interval interpretation (6), short justification (7) |
-| 60 minutes | Above plus power-curve activity (4), using prepared trial results if time is short |
-| 90 minutes | 10 min question/assumptions; 15 min Activity 1 (chapter 2); 15 min worked calculation (3); 15 min Activity 2 (4); 15 min Activity 3 (5); 10 min precision (6); 10 min justification/review (7) |
-| Extended | Compare estimation/testing goals (6), alter a clinical case and justify the result using the full rubric |
+| 30 minutes | Clinical question, prepared repeated-study results, interval interpretation and a short justification |
+| 60 minutes | Above plus power curves, using prepared trial results if time is short |
+| 90 minutes | 10 min question/assumptions; 15 min Activity 1; 15 min worked calculation; 15 min Activity 2; 15 min Activity 3; 10 min precision; 10 min justification/review |
+| Extended | Compare estimation/testing goals, investigate prevalence or pilot retention, or alter a clinical case and justify the result using the full rubric |
 
-Activity 1: distinguish one result, power, Type I error and Monte Carlo uncertainty. Activity 2: read several curves and distinguish recruitment from expected analysable counts. Activity 3: identify generation, analysis, repetition and summary. For each, collect a prediction and a written explanation. All core examples are two-group clinical studies; no ANOVA lesson is required.
+Activity 1: distinguish one result, power, Type I error and Monte Carlo uncertainty. Activity 2: read several curves and distinguish recruitment from expected analysable counts. Activity 3: identify generation, analysis, repetition and summary. Collect a prediction and a written explanation where they help the chosen activity. No ANOVA lesson is required.
+
+Open the [two-panel study view](https://katatam.github.io/sample-size-calculation/study/). The activity selector loads matched case assumptions. Ordinary lesson navigation leaves the app session open; choosing or resetting an activity applies that preset. On narrow screens, Lesson and App buttons switch the visible panel. Students can also open either panel separately.
+
+Use the [glossary](../student-materials/glossary.md), [FAQ](../student-materials/common-mistakes.md) and [study-design guide](../student-materials/study-design-guide.md) as needed. Code and formulas remain visible. R programming is not required for the conceptual tasks.
+
+For an own-study exercise, students can complete the lab's My study tab, save the plan, and download a draft justification. Check their evidence, clinical threshold, participant burden and recruitment assumptions. A draft needs review against the intended design. The [software validation guide](../documentation/software-validation.md) is optional teacher material.

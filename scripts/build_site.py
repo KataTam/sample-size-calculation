@@ -7,6 +7,7 @@ import json
 import os
 import re
 import shutil
+import stat
 import subprocess
 import zipfile
 
@@ -19,10 +20,17 @@ for required in ["docs/apps/index.html", "docs/book/index.html"]:
         raise RuntimeError(f"Build {required} first; see README.md")
 # Rebuild into a fresh directory so removed resources cannot survive publication.
 if SITE.exists():
+    def remove_readonly(function, path, error_info):
+        error = error_info[1]
+        if not isinstance(error, PermissionError):
+            raise error
+        resolved = Path(path).resolve()
+        if resolved != SITE.resolve() and SITE.resolve() not in resolved.parents:
+            raise RuntimeError("Unsafe cleanup target")
+        os.chmod(path, stat.S_IWRITE | stat.S_IREAD)
+        function(path)
     if os.name == "nt":
-        subprocess.run(["powershell", "-NoProfile", "-Command",
-            "Remove-Item -LiteralPath $env:SAMPLE_SIZE_SITE_OUTPUT -Recurse -Force"],
-            env={**os.environ, "SAMPLE_SIZE_SITE_OUTPUT": str(SITE)}, check=True)
+        shutil.rmtree(SITE, onerror=remove_readonly)
     else:
         shutil.rmtree(SITE)
 shutil.copytree(ROOT / "docs/apps", SITE)
@@ -35,7 +43,13 @@ for name in ["README.md", "CONTRIBUTING.md", "LICENSE", "LICENSE-code.md", "CITA
 (SITE / "module").mkdir(exist_ok=True)
 shutil.copy2(ROOT / "module/references.bib", SITE / "module/references.bib")
 shutil.copy2(ROOT / "site/styles.css", SITE / "styles.css")
+shutil.copytree(ROOT / "site/study", SITE / "study")
 (SITE / ".nojekyll").touch()
+
+# The lesson and apps use one registry, including the same seed and replications.
+subprocess.run(["Rscript", "-e", 'source("R/teaching_cases.R"); '
+    'jsonlite::write_json(teaching_cases(), "_site/teaching-cases.json", auto_unbox=TRUE, pretty=TRUE)'],
+    cwd=ROOT, check=True)
 
 pandoc = shutil.which("pandoc")
 if not pandoc:
@@ -45,8 +59,10 @@ if not pandoc:
 def page(source, target):
     title = next((line[2:].strip() for line in source.read_text(encoding="utf-8").splitlines()
                   if line.startswith("# ")), source.stem)
+    title = re.sub(r"\s+\{#[^}]+\}\s*$", "", title)
     css = os.path.relpath(SITE / "styles.css", target.parent).replace(os.sep, "/")
-    subprocess.run([pandoc, str(source), "--from=gfm", "--to=html5", "--standalone",
+    reader = "markdown" if source.name in {"glossary.md", "common-mistakes.md", "study-design-guide.md"} else "gfm"
+    subprocess.run([pandoc, str(source), "--from=" + reader, "--to=html5", "--standalone",
         "--metadata", "pagetitle=" + title, "--css", css, "--mathjax", "--output", str(target)], check=True)
     text = target.read_text(encoding="utf-8")
     # Website readers get HTML; repository readers keep Markdown links.
@@ -72,6 +88,43 @@ for target in (SITE / "book").glob("*.html"):
     text = re.sub(r'(href="[^"]+?)\.md([#?][^"]*|)(")', r'\1.html\2\3', text)
     target.write_text(text, encoding="utf-8")
 
+# Resolve case links to chapters without maintaining duplicate chapter filenames.
+chapter_anchors = {}
+class ChapterAnchors(HTMLParser):
+    def handle_starttag(self, tag, attrs):
+        for key, value in attrs:
+            if key == "id" and value:
+                chapter_anchors.setdefault(value, str(chapter.relative_to(SITE)).replace("\\", "/") + "#" + value)
+for chapter in sorted((SITE / "book").glob("*.html")):
+    if chapter.name != "Sample_size_open_module.html":
+        ChapterAnchors().feed(chapter.read_text(encoding="utf-8"))
+(SITE / "chapter-anchors.json").write_text(json.dumps(chapter_anchors, indent=2), encoding="utf-8")
+
+# The help sources also live inside the book. On their separate pages, chapter
+# fragments must point back to the book while their own headings stay local.
+for name in ["glossary", "common-mistakes", "study-design-guide"]:
+    target = SITE / "student-materials" / (name + ".html")
+    text = target.read_text(encoding="utf-8")
+    local_ids = set(re.findall(r'\bid="([^"]+)"', text))
+    def help_link(match):
+        anchor = match.group(1)
+        if anchor in local_ids or anchor not in chapter_anchors:
+            return match.group(0)
+        chapter_path, fragment = chapter_anchors[anchor].split("#", 1)
+        relative = os.path.relpath(SITE / chapter_path, target.parent).replace(os.sep, "/")
+        return 'href="' + relative + '#' + fragment + '"'
+    text = re.sub(r'href="#([^"]+)"', help_link, text)
+    target.write_text(text, encoding="utf-8")
+
+cases = json.loads((SITE / "teaching-cases.json").read_text(encoding="utf-8"))
+for case in cases.values():
+    app = case.get("app")
+    if not (SITE / app / "index.html").is_file():
+        raise RuntimeError(f"Missing app for case {case['id']}: {app}")
+    anchor = urlsplit(case.get("return_path", "")).fragment
+    if anchor and anchor not in chapter_anchors:
+        raise RuntimeError(f"Missing tutorial anchor for case {case['id']}: {anchor}")
+
 # Maintain old documentation and case-study website addresses after the source moves.
 aliases = json.loads((ROOT / "site/legacy-paths.json").read_text(encoding="utf-8"))
 base = "https://katatam.github.io/sample-size-calculation/"
@@ -85,9 +138,9 @@ for previous, current in aliases.items():
         f'<meta http-equiv="refresh" content="0;url={html.escape(relative, quote=True)}">'
         f'<title>Page moved</title><a href="{html.escape(relative, quote=True)}">Open the current page</a></html>', encoding="utf-8")
 
-paths = subprocess.check_output(["git", "ls-files", "-z"], cwd=ROOT).decode("utf-8").split("\0")
+paths = subprocess.check_output(["git", "ls-files", "--cached", "--others", "--exclude-standard", "-z"], cwd=ROOT).decode("utf-8").split("\0")
 with zipfile.ZipFile(SITE / "sample-size-calculation-source.zip", "w", zipfile.ZIP_DEFLATED) as archive:
-    for name in sorted(filter(None, paths)):
+    for name in sorted(set(filter(None, paths))):
         file = ROOT / name
         if file.is_file() and not file.is_symlink():
             archive.write(file, f"sample-size-calculation/{name}")
@@ -108,7 +161,7 @@ class LocalLinks(HTMLParser):
                 errors.append(f"{current_page.relative_to(SITE)}: {value}")
 for current_page in SITE.rglob("*.html"):
     rel = current_page.relative_to(SITE)
-    if rel.parts[0] in {"shinylive", "two_means", "two_proportions", "power_explorer", "dropout_adjustment"} or "libs" in rel.parts:
+    if rel.parts[0] in {"shinylive", "two_means", "two_proportions", "power_explorer", "dropout_adjustment", "prevalence_precision", "sampling_distributions"} or "libs" in rel.parts:
         continue
     LocalLinks().feed(current_page.read_text(encoding="utf-8"))
 if errors:
