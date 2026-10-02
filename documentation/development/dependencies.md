@@ -6,7 +6,7 @@ Students and reviewers using the website need a browser, not R or RStudio.
 
 Use R 4.5.1, Python 3.10 or later, and Pandoc (available separately or with RStudio). Python uses only its standard library. R Markdown rendering uses rmarkdown, bookdown and knitr; the apps use shiny; browser export uses shinylive. JSON study plans and the activity registry use jsonlite. Exact R package versions and their dependencies are recorded in the root renv.lock.
 
-The printable PDF also needs a TeX distribution with XeLaTeX. TinyTeX is supported; `tinytex::install_tinytex()` installs it if required on an adapter's machine. The publication workflow uses [r-lib's setup-tinytex action](https://github.com/r-lib/actions/tree/v2/setup-tinytex). The complete HTML remains available without TeX.
+The printable PDF also needs a TeX distribution with XeLaTeX. TinyTeX is supported; `tinytex::install_tinytex()` installs it if required on an adapter's machine. The publication workflow uses [r-lib's setup-tinytex action](https://github.com/r-lib/actions/tree/v2/setup-tinytex) and explicitly installs `babel-english`, `hyphen-english` and `fvextra` for English text and wrapped code. On a local TinyTeX installation, use `tinytex::tlmgr_install(c("babel-english", "hyphen-english", "fvextra"))` if needed. The complete HTML remains available without TeX.
 
 From the project root, install renv if needed, then activate and restore the environment:
 
