@@ -1,6 +1,6 @@
 # Software and numerical validation
 
-The student resource uses reproducible R calculations and browser apps. Learners do not need to install R, PASS or G*Power. The tutorial and apps share the functions in `R/sample_size_functions.R`; the exported browser apps run those calculations through Shinylive/webR.
+The student resource uses reproducible R calculations and browser apps. The tutorial and apps share the functions in `R/sample_size_functions.R`; the exported browser apps run those calculations through Shinylive/webR.
 
 ## What agreement does and does not establish
 

@@ -1,6 +1,6 @@
 # Assessment rubric
 
-Assess a case worksheet and 300–600 word justification, with a saved simulation output or the equivalent prepared static results. Coding proficiency is not required. Score each criterion 0 (missing or incorrect), 1 (partly justified) or 2 (clear, accurate and justified). Maximum 20. Scores describe performance on this educational task; they do not certify a real protocol as ready for use.
+Assess a case worksheet and 300–600 word justification, with a saved simulation output or the equivalent prepared static results. Score each criterion 0 (missing or incorrect), 1 (partly justified) or 2 (clear, accurate and justified). Maximum 20. Scores describe performance on this educational task; they do not certify a real protocol as ready for use.
 
 | Criterion | Evidence for 2 points |
 |---|---|

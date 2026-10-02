@@ -1,6 +1,6 @@
 # Review and contribute
 
-You can help make these materials clearer by trying a small part of the tutorial and describing your experience. You do not need to install R or know how to program.
+You can help make these materials clearer by trying a small part of the tutorial and describing your experience.
 
 ## Review an explanation or activity
 

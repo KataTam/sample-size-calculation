@@ -7,7 +7,6 @@ For classroom use, start with the [teaching guide](../teaching/TEACHING_GUIDE.md
 - [Statistical methods](statistical-methods.md): calculations, simulation assumptions and limitations.
 - [Evidence and design rationale](evidence-and-design-rationale.md): scholarly background, rather than a student handout.
 - [Reading guide](reading-guide.md) and [references](references.md).
-- [Writing style](writing-style.md).
 - [Student-feedback implementation](student-feedback-implementation.md).
 - [Optional teacher software validation](software-validation.md).
 

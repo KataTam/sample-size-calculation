@@ -72,7 +72,7 @@ check_feedback_methods <- function() {
   expect_error(normal_sampling_operating_characteristics(sidedness="post-hoc"))
 
   cases <- teaching_cases()
-  required <- c("pain_one_many","pain_curves","pain_simulation","mean_precision",
+  required <- c("assumptions_report","pain_one_many","pain_curves","pain_simulation","mean_precision",
     "own_study","rehabilitation","discharge","adherence","prevalence","pilot_feasibility","alpha_beta")
   stopifnot(setequal(names(cases),required), !anyDuplicated(names(cases)))
   for (id in names(cases)) {
@@ -88,6 +88,9 @@ check_feedback_methods <- function() {
   }
   expect_error(teaching_case("unknown"))
   expect_error(teaching_case_spec("prevalence"))
+  expect_error(teaching_case_spec("assumptions_report"))
+  stopifnot(cases$assumptions_report$app == "assumptions_report",
+    grepl("#record-assumptions$", cases$assumptions_report$return_path))
   message(sprintf("Feedback numerical checks passed: enumerated Wilson coverage %.4f; width attainment %.4f.",coverage,width_rate))
   invisible(TRUE)
 }

@@ -38,7 +38,7 @@ The aims of this module are to understand the importance of recruiting an approp
 
 The [Introduction](#clinical-question) focuses on **two-arm randomized controlled clinical trials**. The treatment-comparison examples use two independent groups with equal allocation, a binary or continuous outcome, and a two-sided comparison. Later sections broaden the discussion to precision, prevalence surveys and pilot feasibility studies; [Where does my study fit?](#study-designs) guides you to methods for other designs. A single-mean example illustrates [alpha](#alpha), [beta](#beta) and [power](#statistical-power) using a known population SD. All numerical cases are hypothetical teaching examples. Further background comes from lecture notes by @clayton2019 and the medical introductions by @kirkwood2003, @whitley2002, @pourhoseingholi2013 and @wang2020.
 
-The presentation and three simulation activities are inspired by chapters 1, 11 and 15 of *Power Analysis with Superpower* [@superpowerbook2022]. The clinical explanations, activities and figures here are tailored to this tutorial. No software installation is required.
+The presentation and three simulation activities are inspired by chapters 1, 11 and 15 of *Power Analysis with Superpower* [@superpowerbook2022]. The clinical explanations, activities and figures here are tailored to this tutorial.
 
 Teaching material is shared under CC BY 4.0 and original code under MIT. You may reuse and adapt the material with attribution. The [teaching guide](../teaching/TEACHING_GUIDE.md), [case template](../case-studies/student_case_template.md) and [assessment rubric](../teaching/assessment_rubric.md) support classroom use. Public attribution or publication requires consent.
 
@@ -215,27 +215,33 @@ This illustration draws on the distinction between a critical observed effect an
 Before continuing, consider a study that finds a statistically significant difference of 20 percentage points. **What would you still need to know before deciding whether the novel treatment offers a clinically meaningful benefit?**
 :::
 
-## Record the assumptions
+## Record the assumptions {#record-assumptions}
+
+Write a study plan before choosing a sample size. Distinguish what you expect, what matters clinically, and the effect used to plan the study.
 
 | Decision | What to make explicit |
 |---|---|
 | Question and outcome | Population, intervention, comparator, primary outcome and time point |
 | Goal | Testing, estimation, fixed resources, or a stated combination |
-| Effect | Treatment minus control; score units or absolute proportion difference; direction of benefit |
-| Expected effect | Best current expectation, evidence source and uncertainty |
-| Clinical threshold | Smallest benefit that matters to patients, and who supports that judgement |
-| Planning effect | Effect at which power is calculated, with justification |
-| Variation or risk | Common SD for normal outcomes, or control and treatment probabilities |
-| Sensitivity | Plausible ranges for effects, SD or baseline risk, with sources |
-| Analysis | Test and confidence interval, sidedness and alpha |
-| Precision | Desired FULL interval width and confidence level |
-| Allocation and resources | Equal allocation in the two-arm examples; analysable cap and recruitment constraints |
-| Attrition | Expected loss per arm, assumptions and recruitment target |
+| Effect scale | Treatment minus control; score units or percentage points; direction of benefit |
+| Expected effect | Best current expectation, supporting evidence and uncertainty |
+| Clinical threshold | Smallest benefit that matters to patients, with justification |
+| Planning effect | Difference used in the power calculation, with justification |
+| Variation or event rates | Common standard deviation for continuous outcomes, or control and treatment percentages |
+| Sensitivity | Plausible alternative effects, standard deviations or event rates, with sources |
+| Analysis and power | Planned test and confidence interval; sidedness, alpha and target power |
+| Precision | Desired full confidence interval width and confidence level |
+| Allocation and counts | Allocation ratio; per-group and total analysable sample sizes |
+| Recruitment | Expected losses, recruitment target, recruitment period and available resources |
 | Intended conclusion | What the design could establish and what remains uncertain |
 
 Table: (\#tab:planning-assumptions) Assumptions to record before planning the sample size.
 
-The **planning effect** tells the calculation where to evaluate power. The **standard deviation** describes differences between individuals, whereas the **standard error** describes sampling variation of an estimate. For binary outcomes, enter the two event probabilities rather than a relative percentage change. The app labels distinguish **per-group**, **total analysable**, and **recruitment** counts. [The glossary](#glossary) gives examples of each parameter.
+The **planning effect** tells the calculation where to evaluate power. The **standard deviation** describes variation between individuals; the **standard error** describes sampling variation of an estimate. For binary outcomes, report each group's event rate as a percentage and their absolute difference in percentage points. [The glossary](#glossary) explains these terms.
+
+::: {.activity}
+**Record and justify.** [Open the assumptions report activity](https://katatam.github.io/sample-size-calculation/study/?activity=assumptions_report). Fill in the text boxes to build a study-plan report alongside your answers. Start with your clinical question and evidence; add the sample size and recruitment counts after using the calculation activities. You can load a hypothetical two-arm example, save your entries, and download the report. Check that the expected effect, planning effect and clinical threshold each have a clear role, and explain what your study could establish.
+:::
 
 
 Small pilot effects are uncertain. Following up only pilots whose estimated effect gives an affordable main study can introduce additional bias [@albers2018]. In this tutorial we examine plausible ranges explicitly. Safeguard power is an optional, more formal approach that uses uncertainty in the effect estimate when planning; it does not replace clinical judgement [@perugini2014].
@@ -912,6 +918,14 @@ sessionInfo()
 </details>
 
 # References {-}
+
+## AI-use disclosure {-}
+
+OpenAI Codex assisted with developing the website and interactive applications, reviewing code, and managing the GitHub repository. The author remains fully responsible for the content and accuracy of the teaching materials and software.
+
+Software reference: [@openaicodex].
+
+## Sources {-}
 
 Sources are linked at their point of use. The Superpower book informs the presentation and activity design; the clinical examples use the methods specified in this tutorial.
 

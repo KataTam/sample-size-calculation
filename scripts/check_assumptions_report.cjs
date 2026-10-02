@@ -1,0 +1,126 @@
+/* Run with Playwright on NODE_PATH. Optionally supply a published site base URL. */
+const assert = require('node:assert/strict');
+const fs = require('node:fs');
+const path = require('node:path');
+const http = require('node:http');
+const {chromium} = require('playwright');
+
+(async () => {
+  let server, browser;
+  try {
+    let base = process.argv[2];
+    if (!base) {
+      const root = path.resolve('_site');
+      server = http.createServer((request, response) => {
+        const url = new URL(request.url, 'http://localhost');
+        const file = path.resolve(root, '.' + decodeURIComponent(url.pathname), url.pathname.endsWith('/') ? 'index.html' : '');
+        if (!file.startsWith(root + path.sep)) { response.writeHead(403); response.end(); return; }
+        try {
+          const types = {'.html': 'text/html', '.js': 'text/javascript', '.css': 'text/css', '.json': 'application/json', '.svg': 'image/svg+xml', '.png': 'image/png'};
+          response.setHeader('Content-Type', types[path.extname(file)] || 'application/octet-stream'); response.end(fs.readFileSync(file));
+        } catch (_) { response.writeHead(404); response.end(); }
+      });
+      await new Promise(resolve => server.listen(0, '127.0.0.1', resolve));
+      base = `http://127.0.0.1:${server.address().port}/`;
+    }
+    if (!base.endsWith('/')) base += '/';
+    browser = await chromium.launch({channel: process.env.BROWSER_CHANNEL || 'msedge', headless: true});
+    const context = await browser.newContext({viewport: {width: 1500, height: 1000}, acceptDownloads: true});
+    const page = await context.newPage(), errors = [];
+    page.on('pageerror', error => errors.push(error.message));
+    await page.goto(base + 'assumptions_report/');
+    assert.match(await page.locator('#progress').innerText(), /Draft: 0 of/);
+    await page.locator('#question').fill('Does treatment improve pain relief in adults?');
+    await page.locator('#clinical').fill('20 percentage points, based on patient priorities');
+    assert.match(await page.locator('#report').innerText(), /20 percentage points, based on patient priorities/);
+    assert.match(await page.locator('#report').innerText(), /not yet specified/);
+    await page.reload();
+    assert.equal(await page.locator('#question').inputValue(), 'Does treatment improve pain relief in adults?');
+    await page.locator('#goal').selectOption('precision');
+    assert.equal(await page.locator('#power').isVisible(), false);
+    assert.equal(await page.locator('#planning').isVisible(), false);
+    assert.equal(await page.locator('#precision').isVisible(), true);
+    assert.doesNotMatch(await page.locator('#report').innerText(), /alpha and power specification|Alpha and power: not/);
+    await page.locator('#goal').selectOption('both');
+    assert.equal(await page.locator('#power').isVisible(), true);
+    await page.locator('#outcome').selectOption('continuous');
+    assert.match(await page.locator('#outcome-scale-help').innerText(), /outcome’s units/);
+    await page.locator('#example').click();
+    await page.waitForFunction(() => document.querySelector('#status').textContent.startsWith('Hypothetical'));
+    assert.match(await page.locator('#expected').inputValue(), /^40 percentage points/);
+    assert.match(await page.locator('#planning').inputValue(), /^30 percentage points/);
+    assert.match(await page.locator('#clinical').inputValue(), /^20 percentage points/);
+    assert.match(await page.locator('#question').inputValue(), /standard treatment/);
+    assert.equal(await page.locator('#outcome_detail').inputValue(), 'Pain relief (yes/no) at four weeks');
+    assert.match(await page.locator('#counts').inputValue(), /20 analysable patients per group, 40 in total/);
+    assert.match(await page.locator('#recruitment').inputValue(), /23 per group, 46 in total/);
+    assert.match(await page.locator('#progress').innerText(), /All 16 prompts answered/);
+    fs.mkdirSync('build', {recursive: true});
+    await page.screenshot({path: 'build/assumptions-report-desktop.png'});
+    await page.locator('#question').fill('<img src=x onerror="window.injected=true">');
+    assert.equal(await page.locator('#report img').count(), 0);
+    assert.equal(await page.evaluate(() => window.injected), undefined);
+    let pending = page.waitForEvent('download'); await page.locator('#save').click();
+    const saved = await pending, savedPath = await saved.path();
+    const document = JSON.parse(fs.readFileSync(savedPath, 'utf8'));
+    assert.equal(document.entries.expected.slice(0, 2), '40');
+    await page.locator('#clear').click(); assert.equal(await page.locator('#question').inputValue(), '');
+    await page.locator('#restore').setInputFiles({name: 'study-plan.json', mimeType: 'application/json', buffer: Buffer.from(JSON.stringify(document))});
+    await page.waitForFunction(() => document.querySelector('#status').textContent === 'Saved entries restored.');
+    assert.equal(await page.locator('#question').inputValue(), document.entries.question);
+    const large = {...document, entries: {...document.entries}};
+    for (const name of Object.keys(large.entries)) if (!['outcome', 'goal'].includes(name)) large.entries[name] = '漢'.repeat(5000);
+    assert.ok(Buffer.byteLength(JSON.stringify(large)) > 100000);
+    await page.locator('#restore').setInputFiles({name: 'large.json', mimeType: 'application/json', buffer: Buffer.from(JSON.stringify(large))});
+    await page.waitForFunction(() => document.querySelector('#question').value.length === 5000);
+    assert.equal(await page.locator('#question').inputValue(), large.entries.question);
+    await page.locator('#restore').setInputFiles({name: 'study-plan.json', mimeType: 'application/json', buffer: Buffer.from(JSON.stringify(document))});
+    await page.waitForFunction(() => document.querySelector('#question').value.startsWith('<img'));
+    await page.locator('#restore').setInputFiles({name: 'bad.json', mimeType: 'application/json', buffer: Buffer.from(JSON.stringify({...document, entries: {...document.entries, goal: 'unsupported'}}))});
+    await page.waitForFunction(() => document.querySelector('#status').textContent.startsWith('Entries were not changed.'));
+    assert.equal(await page.locator('#question').inputValue(), document.entries.question);
+    pending = page.waitForEvent('download'); await page.locator('#download').click();
+    const report = await pending, reportText = fs.readFileSync(await report.path(), 'utf8');
+    assert.match(reportText, /40 percentage points/); assert.match(reportText, /23 per group, 46 in total/);
+    await page.goto(base + 'study/?activity=assumptions_report');
+    await page.waitForFunction(() => document.querySelector('#app-status').textContent.startsWith('Activity loaded'));
+    const activity = page.frameLocator('#app-frame');
+    assert.equal(await activity.locator('#question').inputValue(), document.entries.question);
+    const separate = await page.locator('#app-separate').getAttribute('href');
+    assert.ok(!separate.includes('state='), 'Written answers must not be added to the URL');
+    assert.match(await page.locator('#lesson-frame').getAttribute('src'), /#record-assumptions$/);
+    await activity.locator('#question').fill('Keep this plan while navigating the tutorial');
+    await page.screenshot({path: 'build/assumptions-report-two-panel.png'});
+    const lesson = page.frameLocator('#lesson-frame');
+    await lesson.locator('.book-summary a[href="power.html"]').first().click();
+    assert.equal(await activity.locator('#question').inputValue(), 'Keep this plan while navigating the tutorial');
+    const lessonPane = await page.locator('#lesson-pane').boundingBox(), separator = await page.locator('#panel-separator').boundingBox();
+    await page.mouse.move(separator.x + separator.width / 2, separator.y + 50); await page.mouse.down();
+    await page.mouse.move(separator.x - 130, separator.y + 50); await page.mouse.up();
+    assert.ok((await page.locator('#lesson-pane').boundingBox()).width < lessonPane.width - 100);
+    await page.locator('#reset').click();
+    await page.waitForFunction(() => document.querySelector('#app-frame').contentDocument.querySelector('#question').value === '');
+    await activity.locator('#question').fill('Clear this even if reset is pressed during loading');
+    let releaseScript, scriptWasHeld;
+    const held = new Promise(resolve => { scriptWasHeld = resolve; });
+    await page.route('**/assumptions_report/report.js', async route => {
+      await new Promise(resolve => { releaseScript = resolve; scriptWasHeld(); });
+      await route.continue();
+    });
+    await page.goto(base + 'study/?activity=assumptions_report', {waitUntil: 'domcontentloaded'});
+    await held;
+    await page.locator('#reset').click();
+    releaseScript();
+    await page.waitForFunction(() => document.querySelector('#app-status').textContent.startsWith('Activity loaded'));
+    await page.waitForFunction(() => document.querySelector('#app-frame').contentDocument.querySelector('#question').value === '');
+    await page.unroute('**/assumptions_report/report.js');
+    await page.goto(base + 'assumptions_report/');
+    await page.setViewportSize({width: 390, height: 844});
+    assert.equal(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), true);
+    const form = await page.locator('.form-pane').boundingBox(), output = await page.locator('.report-pane').boundingBox();
+    assert.ok(output.y >= form.y + form.height);
+    await page.screenshot({path: 'build/assumptions-report-mobile.png'});
+    assert.deepEqual(errors, []);
+    console.log('Assumptions report: live output, shared example, goal fields, safe text, save/restore/download, two-panel persistence/reset/resize and mobile checks passed.');
+  } finally { if (browser) await browser.close(); if (server) await new Promise(resolve => server.close(resolve)); }
+})().catch(error => { console.error(error); process.exitCode = 1; });

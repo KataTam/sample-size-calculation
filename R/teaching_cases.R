@@ -16,6 +16,9 @@ teaching_cases <- function() {
       goal = if (is.null(goal)) values$goal else goal, inputs = values, ...)
   }
   list(
+    assumptions_report = case("assumptions_report", "Record the assumptions: study-plan report",
+      "Write your clinical question, justify the expected effect, planning effect and clinical threshold, and record the analysis, sample size and recruitment plan. Your entries build a report alongside the form.",
+      "record-assumptions", app = "assumptions_report"),
     pain_one_many = case("pain_one_many", "Pain relief: one study and many",
       "Distinguish the expected 40-percentage-point benefit, the 30-point planning benefit and the 20-point clinical threshold. Compare 20, 50 and 80 patients per group before interpreting the rejection rate.",
       "power", list(outcome = "proportions", goal = "fixed", fixed_n = 20,

@@ -45,6 +45,7 @@ shutil.copy2(ROOT / "module/references.bib", SITE / "module/references.bib")
 shutil.copy2(ROOT / "site/styles.css", SITE / "styles.css")
 shutil.copy2(ROOT / "site/link-behavior.js", SITE / "link-behavior.js")
 shutil.copytree(ROOT / "site/study", SITE / "study")
+shutil.copytree(ROOT / "site/assumptions_report", SITE / "assumptions_report")
 (SITE / ".nojekyll").touch()
 
 # The lesson and apps use one registry, including the same seed and replications.

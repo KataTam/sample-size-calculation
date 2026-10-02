@@ -1,0 +1,33 @@
+:root { color-scheme: light; }
+* { box-sizing: border-box; }
+body { margin: 0; font-family: system-ui, sans-serif; line-height: 1.55; color: #20343e; background: #f5f8fa; }
+header { padding: 1rem 1.4rem; background: #fff; border-bottom: 1px solid #b8cbd4; }
+h1 { font-size: 1.65rem; margin: 0 0 .5rem; }
+h2 { font-size: 1.3rem; margin-top: 0; }
+h3, legend { font-size: 1.05rem; font-weight: 650; }
+p { margin: .5rem 0; }
+a { color: #006481; }
+button, .file-button { font: inherit; padding: .4rem .7rem; border: 1px solid #577a8c; border-radius: .3rem; background: #fff; color: #20343e; cursor: pointer; }
+button:hover, .file-button:hover { background: #e5f0f4; }
+:focus-visible { outline: 3px solid #ba6600; outline-offset: 2px; }
+.actions { display: flex; flex-wrap: wrap; gap: .5rem; margin: .8rem 0; }
+.file-button { position: relative; }
+.file-button input { max-width: 12rem; display: block; margin-top: .2rem; font-size: .8rem; }
+.note { color: #415a66; font-size: .9rem; }
+#status { font-size: .9rem; min-height: 1.4em; }
+main { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 1rem; padding: 1rem; align-items: start; }
+.form-pane, .report-pane { background: #fff; padding: 1rem; border: 1px solid #b8cbd4; border-radius: .3rem; min-width: 0; }
+.report-pane { position: sticky; top: 1rem; max-height: calc(100vh - 2rem); overflow: auto; }
+.choices { display: grid; gap: .75rem; }
+label { display: block; font-weight: 600; }
+select, textarea { width: 100%; font: inherit; color: inherit; border: 1px solid #819ba8; border-radius: .25rem; padding: .45rem; background: #fff; margin: .25rem 0 .7rem; }
+textarea { resize: vertical; min-height: 5rem; }
+.field-help { margin: .15rem 0; font-size: .9rem; color: #415a66; }
+fieldset { border: 0; border-top: 1px solid #cfdee5; padding: .8rem 0 0; margin: 1rem 0; min-width: 0; }
+legend { padding: 0 .4rem 0 0; }
+#report p { white-space: pre-wrap; overflow-wrap: anywhere; }
+#report .missing { color: #854200; padding-left: .6rem; border-left: 3px solid #d6a05c; }
+#progress { font-size: .9rem; color: #415a66; }
+[hidden] { display: none !important; }
+@media (max-width: 640px) { main { grid-template-columns: 1fr; padding: .6rem; } header { padding: .8rem; } .report-pane { position: static; max-height: none; } }
+@media print { header, .form-pane, .report-heading { display: none; } main { display: block; padding: 0; } .report-pane { position: static; max-height: none; overflow: visible; border: 0; } }

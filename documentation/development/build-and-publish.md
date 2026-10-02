@@ -43,6 +43,12 @@ When moving a file, update Markdown links, script paths and compatibility aliase
 
 The main tutorial narrative is in `module/Sample_size_open_module.Rmd`. Some sections are inserted by R code during rendering: edit the mind-map question labels and explanations in `data/question-map.json`, and its surrounding layout or instructions in `R/question_map.R`. This is why the paragraph explaining how to use the map appeared online but was absent from the R Markdown file. Edit these maintained sources and render the tutorial to see the result; generated HTML in `docs/` and `_site/` is replaced during the next build.
 
+## Assumptions report activity
+
+The written study-plan activity lives in `site/assumptions_report/`. Its labels and report prompts use the tutorial's terminology. The hypothetical pain-relief example reads the shared case registry; it does not calculate a new sample size. Students record calculator results and their interpretation. Entries persist in browser storage and can be saved and reopened as JSON; the report downloads as plain text. The activity is available through the same two-panel study view as the calculation apps.
+
+The writing-style notes are kept outside the public repository, in the project's local `working/` folder. They are excluded from the website and downloadable source package.
+
 ## Editing references
 
 Edit `module/Sample_size_open_module.Rmd` and `module/references.bib` together in the maintained `sample-size-calculation` project. The YAML setting `bibliography: references.bib` refers to the bibliography beside that R Markdown file. For example, add the entry with key `kunzmann2021review` there and cite it with `[@kunzmann2021review]` in the R Markdown text. Save both files before rendering.

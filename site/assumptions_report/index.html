@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Record the assumptions | Sample size calculation</title>
+  <link rel="stylesheet" href="report.css">
+  <script src="report.js" defer></script>
+</head>
+<body>
+  <header>
+    <h1>Record the assumptions</h1>
+    <p>Write a plan for a two-arm clinical trial. Your answers build a report on the right. Use the calculation activities to obtain sample sizes, <a href="../student-materials/glossary.html#statistical-power" target="_blank" rel="noopener">power</a> or precision, then record and interpret those results here.</p>
+    <p><a href="../book/clinical-question.html#record-assumptions" target="_blank" rel="noopener">Read the tutorial</a> · <a href="../student-materials/glossary.html" target="_blank" rel="noopener">Check the terminology</a> · <a href="../study/?activity=own_study" target="_blank" rel="noopener">Explore the calculations</a></p>
+    <div class="actions">
+      <button id="example" type="button">Load pain-relief example</button>
+      <button id="clear" type="button">Clear entries</button>
+      <button id="save" type="button">Save entries</button>
+      <label class="file-button" for="restore">Open saved entries<input id="restore" type="file" accept=".json,application/json"></label>
+      <button id="download" type="button">Download report</button>
+    </div>
+    <p class="note">Entries are saved in this browser on this device and can be saved to a file. Use hypothetical or non-identifying study details. Export a file to keep a copy or continue on another device.</p>
+    <p id="status" role="status" aria-live="polite"></p>
+  </header>
+  <main>
+    <section class="form-pane" aria-labelledby="form-title">
+      <h2 id="form-title">Your study plan</h2>
+      <form id="plan-form">
+        <div class="choices">
+          <label for="outcome">Primary outcome type<select id="outcome" name="outcome"><option value="binary">Binary outcome</option><option value="continuous">Continuous outcome</option></select></label>
+          <label for="goal">Planning goal<select id="goal" name="goal"><option value="testing">Testing</option><option value="precision">Estimation with a precision target</option><option value="fixed">Fixed resources</option><option value="both">Testing and estimation</option></select></label>
+        </div>
+        <p id="outcome-scale-help" class="note"></p>
+        <div id="fields"></div>
+      </form>
+    </section>
+    <section class="report-pane" aria-labelledby="report-title">
+      <div class="report-heading"><h2 id="report-title">Study-plan report</h2><p id="progress" role="status" aria-live="polite"></p></div>
+      <article id="report"></article>
+    </section>
+  </main>
+  <noscript><p>The report builder needs JavaScript. Use the <a href="../case-studies/student_case_template.html">student case template</a> to write your plan.</p></noscript>
+</body>
+</html>

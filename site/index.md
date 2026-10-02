@@ -2,7 +2,7 @@
 
 **Reasoning about study design in clinical research**
 
-Start with a clinical question, make the assumptions explicit, and explore what a study could establish. These open teaching materials are intended for medical students and their teachers. No R installation is needed to use the tutorial or browser tools.
+Start with a clinical question, make the assumptions explicit, and explore what a study could establish. These open teaching materials are intended for medical students and their teachers.
 
 The main teaching examples cover two independent groups with equal allocation. Separate activities cover estimating one proportion and understanding alpha, beta and power. The study-design guide routes other designs to additional methods.
 
@@ -20,7 +20,7 @@ Use the [teaching guide](teaching/TEACHING_GUIDE.md), [prepared activity](teachi
 
 ## Student reviewers
 
-[Review a section or activity](student-materials/README.md) using the [open-ended review template](student-materials/material-review-template.md). You can contribute without programming or agreeing to publish your comments.
+[Review a section or activity](student-materials/README.md) using the [open-ended review template](student-materials/material-review-template.md). You can contribute without agreeing to publish your comments.
 
 ## Adapt the materials
 
@@ -38,3 +38,4 @@ Read the [documentation](documentation/README.md), [reuse and citation guidance]
 - [Reusable source package](sample-size-calculation-source.zip)
 
 Katalin Tamási, UMCG. Original teaching materials: CC BY 4.0. Original code: MIT. [Third-party notices](documentation/third-party-notices.md).
+- [Record the assumptions and generate a study-plan report](study/?activity=assumptions_report)

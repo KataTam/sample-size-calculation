@@ -106,7 +106,7 @@ Tamasi, K. (2026). *Sample Size Calculation OER*. GitHub. https://github.com/Kat
 
 ## Revised learning scope
 
-Keywords: sample size justification; precision; simulation; Monte Carlo uncertainty; clinical research; open education. Learning routes include testing, estimation and fixed resources. No coding is required for core activities. Supplementary components include paired concept/transfer assessment, offline activities and a separate references bibliography. Local learning effectiveness remains to be evaluated.
+Keywords: sample size justification; precision; simulation; Monte Carlo uncertainty; clinical research; open education. Learning routes include testing, estimation and fixed resources. Supplementary components include paired concept/transfer assessment, offline activities and a separate references bibliography. Local learning effectiveness remains to be evaluated.
 
 ## Browser app access
 

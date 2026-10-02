@@ -14,7 +14,7 @@ effect_text <- function(value, outcome) {
   else paste0(signif(value, 4), " units")
 }
 lines <- c("# Static sample size activity", "",
-  "Use these prepared synthetic results when the live app is unavailable. No code is required. All studies use equal allocation and a two-sided alpha of 5%. Full reproducible results and assumptions accompany the activity.", "",
+  "Use these prepared synthetic results when the live app is unavailable. All studies use equal allocation and a two-sided alpha of 5%. Full reproducible results and assumptions accompany the activity.", "",
   "## Before viewing the results", "",
   "1. Predict how a smaller effect or larger SD changes power at 45 per group.",
   "2. Explain the distinct roles of the expected 4-unit benefit, 3-unit planning effect and 2-unit clinical threshold. For the binary trial, these values are 40, 30 and 20 percentage points respectively.",

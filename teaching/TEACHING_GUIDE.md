@@ -4,7 +4,7 @@ The module teaches sample size as a justified research-design decision. The app 
 
 ## Preparation and access
 
-Learners should know sample versus population, binary versus continuous outcomes, and the basic purpose of a test and confidence interval. No programming is required for the core route. Send the case, short concept notes and access link in advance. Provide the rendered module and `static_activity.md` with its saved outputs as an offline alternative. Optional visible R code supports reproducibility and further learning.
+Learners should know sample versus population, binary versus continuous outcomes, and the basic purpose of a test and confidence interval. Send the case, short concept notes and access link in advance. Provide the rendered module and `static_activity.md` with its saved outputs as an offline alternative. Visible R code supports reproducibility and further learning.
 
 Check the actual deployment environment before class. The proposed 20–25 student pilot can work in groups of 3–4 with a facilitator. Let students divide interpretation, assumption checking and recording, and rotate roles; do not let coding dominate participation. Clearly identify all case values as hypothetical. Review accessibility with keyboard and readable text/table alternatives.
 
@@ -63,6 +63,6 @@ Activity 1: distinguish one result, power, Type I error and Monte Carlo uncertai
 
 Open the [two-panel study view](https://katatam.github.io/sample-size-calculation/study/). The activity selector loads matched case assumptions. Drag the separator to adjust panel widths, or focus it and use Left/Right arrow keys; Home and End reach the width limits. Chapter navigation leaves the app session open; choosing or resetting an activity applies that preset. Content links open in a new tab. On narrow screens, Both stacks the panels, while Lesson and App show either panel alone. Students can also open either panel separately.
 
-Use the [glossary](../student-materials/glossary.md), [FAQ](../student-materials/common-mistakes.md) and [study-design guide](../student-materials/study-design-guide.md) as needed. Code and formulas remain visible. R programming is not required for the conceptual tasks.
+Use the [glossary](../student-materials/glossary.md), [FAQ](../student-materials/common-mistakes.md) and [study-design guide](../student-materials/study-design-guide.md) as needed. Code and formulas remain visible.
 
 For an own-study exercise, students can complete the lab's My study tab, save the plan, and download a draft justification. Check their evidence, clinical threshold, participant burden and recruitment assumptions. A draft needs review against the intended design. The [software validation guide](../documentation/software-validation.md) is optional teacher material.

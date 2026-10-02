@@ -32,3 +32,4 @@ module/*.xdv
 !module/question-map-script.html
 !module/pdf-header.tex
 !site/study/index.html
+!site/assumptions_report/index.html

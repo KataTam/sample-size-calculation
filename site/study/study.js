@@ -10,7 +10,7 @@
   const site = new URL('../', location.href);
   let cases = {}, anchors = {}, selected = '', engine = '', ready = false, state = null;
   let queuedActivity = null;
-  const allowedApps = new Set(['power_explorer', 'prevalence_precision', 'sampling_distributions']);
+  const allowedApps = new Set(['power_explorer', 'prevalence_precision', 'sampling_distributions', 'assumptions_report']);
   const send = value => app.contentWindow.postMessage(value, location.origin);
   function setView(view) {
     if (!['lesson', 'app', 'both'].includes(view)) return;
@@ -25,7 +25,7 @@
   function updateSeparate() {
     const target = new URL(engine + '/', site);
     target.searchParams.set('activity', selected);
-    if (state) target.hash = new URLSearchParams({state: JSON.stringify(state)}).toString();
+    if (state && engine !== 'assumptions_report') target.hash = new URLSearchParams({state: JSON.stringify(state)}).toString();
     appSeparate.href = target.href;
   }
   function openActivity(id, reset = false) {
@@ -40,7 +40,7 @@
     const next = new URL(location.href);
     next.searchParams.set('activity', id);
     history.replaceState(null, '', next);
-    queuedActivity = id;
+    queuedActivity = {activity: id, reset};
     state = null;
     if (engine !== record.app || !engine) {
       engine = record.app;
@@ -71,7 +71,7 @@
     if (!message || message.app !== engine) return;
     if (message.type === 'sample-size:ready') {
       ready = true;
-      if (queuedActivity) send({type: 'sample-size:activity', activity: queuedActivity});
+      if (queuedActivity) send({type: 'sample-size:activity', ...queuedActivity});
       queuedActivity = null;
       status.textContent = 'Activity loaded. Chapter navigation keeps the app open.';
     } else if (message.type === 'sample-size:state' && message.state && typeof message.state === 'object') {
