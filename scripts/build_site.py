@@ -43,6 +43,7 @@ for name in ["README.md", "CONTRIBUTING.md", "LICENSE", "LICENSE-code.md", "CITA
 (SITE / "module").mkdir(exist_ok=True)
 shutil.copy2(ROOT / "module/references.bib", SITE / "module/references.bib")
 shutil.copy2(ROOT / "site/styles.css", SITE / "styles.css")
+shutil.copy2(ROOT / "site/link-behavior.js", SITE / "link-behavior.js")
 shutil.copytree(ROOT / "site/study", SITE / "study")
 (SITE / ".nojekyll").touch()
 
@@ -145,6 +146,58 @@ with zipfile.ZipFile(SITE / "sample-size-calculation-source.zip", "w", zipfile.Z
         if file.is_file() and not file.is_symlink():
             archive.write(file, f"sample-size-calculation/{name}")
 shutil.copy2(SITE / "sample-size-calculation-source.zip", SITE / "sample-size-oer-source.zip")
+
+# Apply new-tab resource links to maintained HTML, including the standalone book.
+# Native chapter/toolbar navigation and interactive disclosure controls stay local.
+class NewTabLinks(HTMLParser):
+    navigation_classes = {"book-summary", "book-header", "navigation-prev", "navigation-next", "tocify", "toc"}
+    control_classes = {"anchor-section", "anchor", "shiny-download-link", "shiny-tab-input", "action-button", "dropdown-toggle", "toggle-dropdown"}
+    void_elements = {"area", "base", "br", "col", "embed", "hr", "img", "input", "link", "meta", "param", "source", "track", "wbr"}
+
+    def __init__(self, source):
+        super().__init__()
+        self.stack, self.replacements = [], []
+        self.line_offsets = [0]
+        for match in re.finditer("\n", source):
+            self.line_offsets.append(match.end())
+
+    def handle_starttag(self, tag, attrs):
+        attr = dict(attrs)
+        classes = set((attr.get("class") or "").split())
+        navigation = bool(classes & self.navigation_classes or attr.get("id") == "TOC" or attr.get("data-link-navigation") == "same-tab")
+        inside_navigation = navigation or any(item[1] for item in self.stack)
+        href = (attr.get("href") or "").strip()
+        control = bool(classes & self.control_classes or attr.get("role") == "button" or any(key in attr for key in ["download", "data-question", "data-toggle", "data-bs-toggle"]))
+        if tag == "a" and href and href != "#" and not re.match(r"(?:javascript|mailto|tel|data|blob):", href, re.I) and not inside_navigation and not control:
+            original = self.get_starttag_text()
+            updated = re.sub(r'\s+target\s*=\s*(?:"[^"]*"|\x27[^\x27]*\x27|[^\s>]+)', "", original, flags=re.I)
+            updated = re.sub(r'\s+rel\s*=\s*(?:"[^"]*"|\x27[^\x27]*\x27|[^\s>]+)', "", updated, flags=re.I)
+            rel = " ".join(dict.fromkeys((attr.get("rel") or "").split() + ["noopener"]))
+            updated = updated[:-1] + ' target="_blank" rel="' + html.escape(rel, quote=True) + '">'
+            line, column = self.getpos()
+            self.replacements.append((self.line_offsets[line - 1] + column, original, updated))
+        if tag not in self.void_elements:
+            self.stack.append((tag, navigation))
+
+    def handle_endtag(self, tag):
+        for index in range(len(self.stack) - 1, -1, -1):
+            if self.stack[index][0] == tag:
+                del self.stack[index:]
+                break
+
+for target in SITE.rglob("*.html"):
+    rel = target.relative_to(SITE)
+    if rel.parts[0] in {"shinylive", "two_means", "two_proportions", "power_explorer", "dropout_adjustment", "prevalence_precision", "sampling_distributions"} or "libs" in rel.parts:
+        continue
+    text = target.read_text(encoding="utf-8")
+    parser = NewTabLinks(text)
+    parser.feed(text)
+    for offset, original, updated in reversed(parser.replacements):
+        text = text[:offset] + updated + text[offset + len(original):]
+    script_path = os.path.relpath(SITE / "link-behavior.js", target.parent).replace(os.sep, "/")
+    script = '<script src="' + script_path + '"></script>'
+    text = text.replace("</body>", script + "\n</body>") if "</body>" in text else text + script
+    target.write_text(text, encoding="utf-8")
 
 # Validate local links and images in maintained pages, not third-party runtime internals.
 errors = []

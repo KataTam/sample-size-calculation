@@ -1,4 +1,4 @@
-# The map and print edition share the same author-provided original excerpts.
+# The online map and print edition share the same learner-facing explanations.
 render_question_map <- function() {
   content <- jsonlite::fromJSON("../data/question-map.json", simplifyVector = FALSE)
   is_html <- knitr::is_html_output()
@@ -6,10 +6,10 @@ render_question_map <- function() {
   if (is_html) {
     svg <- paste(readLines("../figures/study_questions.svg", warn = FALSE, encoding = "UTF-8"), collapse = "\n")
     svg <- sub("^<\\?xml[^>]*>\\s*", "", svg)
-    parts <- c(parts, '<div class="question-map" aria-label="Seven questions for planning sample size">',
-      svg, '\n</div>\n')
+    parts <- c(parts, '<div class="figure question-map" role="figure" aria-label="Seven questions for planning a two-arm clinical trial">',
+      svg, '\n<p class="caption">(#fig:study-questions-map) Seven questions for planning the sample size of a two-arm clinical trial. Based on illustration by Sieben Medical Art.</p>\n</div>\n')
   } else {
-    parts <- c(parts, '![Seven questions for determining the minimum required sample size. The explanations follow below.](../figures/study_questions.png){width=100%}')
+    parts <- c(parts, '![Seven questions for planning the sample size of a two-arm clinical trial. Based on illustration by Sieben Medical Art. (\\#fig:study-questions-map)](../figures/study_questions.png){width=100%}')
   }
   for (i in seq_along(content$questions)) {
     question <- content$questions[[i]]
@@ -19,11 +19,7 @@ render_question_map <- function() {
     } else {
       parts <- c(parts, sprintf("\n### %s. %s {.unnumbered}\n", i, question$question))
     }
-    paragraphs <- strsplit(question$original_excerpt, "\n\n", fixed = TRUE)[[1]]
-    parts <- c(parts, paste0("\n", paste(paste0("> ", paragraphs), collapse = "\n>\n"), "\n"))
-    if (!is.null(question$clarification)) {
-      parts <- c(parts, paste0("\n**Planning clarification.** ", question$clarification, "\n"))
-    }
+    parts <- c(parts, paste0("\n", question$explanation, "\n"))
     if (is_html) parts <- c(parts, "\n</details>\n")
   }
   if (is_html) {

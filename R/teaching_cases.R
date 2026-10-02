@@ -2,9 +2,9 @@
 # Keep assumptions here so a lesson and its activity start from the same plan.
 
 teaching_cases <- function() {
-  defaults <- list(outcome = "means", goal = "testing", plan_delta = 3,
+  defaults <- list(outcome = "means", goal = "testing", expected_m = 4, expected_p = .40, plan_delta = 3,
     plan_sd = 5, plan_p0 = .30, plan_p1 = .60, threshold_m = 2,
-    threshold_p = .30, width_m = 4, width_p = .20, alpha = .05,
+    threshold_p = .20, width_m = 4, width_p = .20, alpha = .05,
     target_power = .90, fixed_n = 60, dropout = .10, recruit_cap = 200,
     reality = "same", seed = 20260914, B = 5000, stage = "Explore assumptions")
   case <- function(id, title, prompt, anchor, inputs = list(), app = "power_explorer",
@@ -17,7 +17,7 @@ teaching_cases <- function() {
   }
   list(
     pain_one_many = case("pain_one_many", "Pain relief: one study and many",
-      "Predict whether another study would give the same result. Compare 20, 50 and 80 patients per group before interpreting the rejection rate.",
+      "Distinguish the expected 40-percentage-point benefit, the 30-point planning benefit and the 20-point clinical threshold. Compare 20, 50 and 80 patients per group before interpreting the rejection rate.",
       "power", list(outcome = "proportions", goal = "fixed", fixed_n = 20,
         plan_p0 = .30, plan_p1 = .60, width_p = .20, seed = 20260941, stage = "One study"),
       n_choices = c(20, 50, 80)),
@@ -40,19 +40,19 @@ teaching_cases <- function() {
       "own-study", list(outcome = "means", goal = "testing", target_power = .80,
         seed = 20260914, B = 1000, stage = "My study")),
     rehabilitation = case("rehabilitation", "Rehabilitation: improvement in a score",
-      "A hypothetical rehabilitation programme is compared with usual care. Distinguish the 3-unit planning difference from the 2-unit clinically important benefit.",
+      "A hypothetical rehabilitation programme is compared with usual care. Distinguish the expected 4-unit benefit, the 3-unit planning difference and the 2-unit clinical threshold.",
       "rehabilitation", list(outcome = "means", goal = "testing", plan_delta = 3,
         plan_sd = 5, threshold_m = 2, target_power = .90, dropout = .10,
         recruit_cap = 200, seed = 20261001)),
     discharge = case("discharge", "Discharge: an absolute probability difference",
-      "Plan a hypothetical comparison of discharge by a specified day: 80% versus 96%. State the absolute difference before interpreting the relative change.",
+      "The expected benefit is 18 percentage points. Plan using 80% versus 96%, a 16-point benefit, and interpret against an 8-point clinical threshold. State the absolute difference before interpreting the relative change.",
       "discharge", list(outcome = "proportions", goal = "testing", plan_p0 = .80,
-        plan_p1 = .96, threshold_p = .10, target_power = .80, dropout = 0,
+        plan_p1 = .96, expected_p = .18, threshold_p = .08, target_power = .80, dropout = 0,
         width_p = .20, seed = 20261003)),
     adherence = case("adherence", "Medication support: adequate adherence",
-      "Plan a hypothetical comparison of adequate adherence at 12 weeks: 50% versus 65%. Examine uncertainty in the assumed improvement and 15% losses.",
+      "The expected benefit is 20 percentage points. Plan using adherence of 50% versus 65%, a 15-point benefit, and interpret against a 10-point clinical threshold. Examine uncertainty and 15% losses.",
       "adherence", list(outcome = "proportions", goal = "testing", plan_p0 = .50,
-        plan_p1 = .65, threshold_p = .10, target_power = .90, dropout = .15,
+        plan_p1 = .65, expected_p = .20, threshold_p = .10, target_power = .90, dropout = .15,
         recruit_cap = 240, width_p = .20, seed = 20261002)),
     prevalence = case("prevalence", "Prevalence: estimate disease burden",
       "A hypothetical survey anticipates a prevalence of 20%. Plan for a 95% interval with full width 10 percentage points, then compare narrower precision and unknown prevalence.",

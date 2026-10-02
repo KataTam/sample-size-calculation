@@ -8,18 +8,23 @@ check_activity <- function() {
   expect_error(validate_lab_inputs(list(outcome = "paired")))
   expect_error(validate_lab_inputs(list(goal = "observed_power")))
   expect_error(validate_lab_inputs(list(alpha = Inf)))
+  expect_error(validate_lab_inputs(list(expected_p = 1.1)))
+  expect_error(validate_lab_inputs(list(expected_m = NA_real_)))
   expect_error(validate_lab_inputs(list(unrecognised = 1)))
   expect_error(validate_study_inputs(list(consent_fraction = 1.5)))
   expect_error(validate_study_inputs(list(cost_per_patient = -1)))
   for (x in teaching_cases()) if (x$app == "power_explorer") {
     values <- x$inputs[names(x$inputs) %in% names(defaults)]
     stopifnot(validate_lab_inputs(values)$outcome %in% c("means", "proportions"))
+    roles <- if (values$outcome == "means") c(values$expected_m, values$plan_delta, values$threshold_m)
+      else c(values$expected_p, values$plan_p1 - values$plan_p0, values$threshold_p)
+    stopifnot(length(unique(round(roles, 10))) == 3L, all(diff(roles) < 0))
   }
   transferred <- list(outcome = "proportions", goal = "fixed", fixed_n = 37,
-    plan_p0 = .8, plan_p1 = .9, dropout = .15, target_power = .9)
+    expected_p = .18, plan_p0 = .8, plan_p1 = .9, threshold_p = .08, dropout = .15, target_power = .9)
   linked <- jsonlite::fromJSON(utils::URLdecode(sub(".*\\?state=", "", lab_state_url(transferred))), simplifyVector = FALSE)
   stopifnot(linked$goal == "fixed", linked$fixed_n == 37, linked$plan_p0 == .8,
-    linked$plan_p1 == .9, linked$dropout == .15)
+    linked$plan_p1 == .9, linked$expected_p == .18, linked$threshold_p == .08, linked$dropout == .15)
   document <- list(schema = "sample-size-study-plan", version = 1, activity = "rehabilitation",
     inputs = validate_lab_inputs(transferred), study = study_input_defaults())
   document$study$study_question <- "A learner's clinical question"
@@ -27,7 +32,13 @@ check_activity <- function() {
   text <- jsonlite::toJSON(document, auto_unbox = TRUE, digits = 16)
   restored <- read_study_plan(text)
   stopifnot(restored$inputs$fixed_n == 37, restored$inputs$goal == "fixed",
+    restored$inputs$expected_p == .18,
     identical(restored$study$justification, document$study$justification))
+  # Plans saved before the expected-effect fields were introduced still load.
+  older <- document; older$inputs$expected_m <- NULL; older$inputs$expected_p <- NULL
+  migrated <- read_study_plan(jsonlite::toJSON(older, auto_unbox = TRUE, digits = 16))
+  stopifnot(migrated$inputs$expected_m == defaults$expected_m,
+    migrated$inputs$expected_p == defaults$expected_p, migrated$inputs$fixed_n == 37)
   expect_error(read_study_plan('{"schema":"another-tool","version":1}'))
   document$inputs$B <- 1e7
   expect_error(read_study_plan(jsonlite::toJSON(document, auto_unbox = TRUE)))
@@ -42,6 +53,7 @@ check_activity <- function() {
     session$setInputs(activity_request = list(activity = "pain_one_many", nonce = 1))
     stopifnot(current_activity() == "pain_one_many", is.null(routed_case()),
       get("fixed_n", messages)$value == 20, get("goal", messages)$value == "fixed",
+      get("expected_p", messages)$value == .4, get("threshold_p", messages)$value == .2,
       identical(get("show_advanced", messages)$value, FALSE))
     session$setInputs(activity_request = list(activity = "pilot_feasibility", nonce = 2))
     stopifnot(routed_case()$app == "prevalence_precision")

@@ -4,13 +4,13 @@ Use this section when a term in the tutorial or app needs a reminder. The formul
 
 ## Population, sample and planning values
 
-A **population parameter** is a feature of the population you want to learn about, such as its mean, proportion, or treatment difference. A **sample estimate** is calculated from the observations you obtained. In the pain example, 7/10 is a sample proportion; 0.60 is an anticipated population probability used for planning. The latter is an assumption supported with evidence and sensitivity analysis, not a known truth.
+A **population parameter** is a feature of the population you want to learn about, such as its mean, proportion, or treatment difference. A **sample estimate** is calculated from the observations you obtained. In the pain pilot, 7/10 is a sample proportion, expressed as 70%. The treatment probability of 60% used in the sample size calculation is a planning assumption supported with evidence and sensitivity analysis, rather than a known truth. Use **proportion** for a fraction such as 7/10 and **percentage** for its expression as 70%.
 
-The **expected effect**, **planning effect** and **clinical threshold** answer different questions. The expected effect is your best current expectation. The planning effect is the particular population effect at which you calculate power. The clinical threshold is the smallest benefit that matters to patients, based on a stated judgement. They may coincide, but should not be treated as interchangeable.
+The **expected effect**, **planning effect** and **clinical threshold** answer different questions. The expected effect is your best current expectation. The planning effect is the particular population effect at which you calculate [power](#statistical-power). The clinical threshold is the smallest benefit that matters to patients, based on a stated judgement. They may coincide in practice, but the worked examples use distinct values to show their different roles. For the pain trial, these are an expected benefit of 40 percentage points, a planning benefit of 30 percentage points and a clinical threshold of 20 percentage points.
 
 ## Effect scale and direction
 
-An **absolute proportion difference** subtracts two probabilities: 0.60 - 0.30 = 0.30, or 30 percentage points. A **relative increase** divides by the baseline: (0.60 - 0.30)/0.30 = 1, or 100%. An increase from 0.80 to 0.96 is 16 percentage points and a 20% relative increase. State which scale you mean.
+An **absolute difference** between two percentages is expressed in **percentage points**: 60% - 30% = 30 percentage points. A **relative increase** divides the change by the baseline: (60 - 30)/30 = 1, or 100%. An increase from 80% to 96% is 16 percentage points and a 20% relative increase. State which scale you mean. Formulas and R inputs represent these probabilities as proportions between zero and one, such as 0.60 and 0.30.
 
 A **mean difference** is in the outcome's own units, such as mmHg or score units. The lab uses treatment minus control. Positive is beneficial in the prepared improvement/relief cases; an outcome such as pain severity or mortality needs an explicit decision about beneficial direction.
 
@@ -30,9 +30,19 @@ A **confidence interval** describes uncertainty about an estimate using a proced
 
 The **null hypothesis** in the ordinary superiority examples is a zero population difference. A two-sided **alternative hypothesis** allows a difference in either direction. The alternative does not become "at least the clinical threshold" because that threshold was used for planning.
 
-**Alpha** is the planned probability of rejecting a true null under the test's assumptions. It is not the probability that the null is true after observing the data. Approximate procedures can have finite-sample error rates that depart from their nominal alpha.
+### Alpha {#alpha}
 
-**Beta** is the probability of non-rejection at a specified alternative, with the design and analysis held fixed. **Power** is 1 - beta: the probability of rejection at that specified effect. A study with 90% power can still produce a non-significant result. Non-rejection does not establish equivalence.
+**Alpha ($\alpha$)** is the planned probability of rejecting a true null under the test's assumptions: the Type I error probability. It is not the probability that the null is true after observing the data. Approximate procedures can have finite-sample error rates that depart from their nominal alpha.
+
+### Beta {#beta}
+
+**Beta ($\beta$)** is the probability of failing to reject the null at a specified true alternative, with the design and analysis held fixed: the Type II error probability. It depends on the assumed true effect, rather than applying to every possible treatment difference.
+
+### Statistical power {#statistical-power}
+
+**Power** is $1-\beta$: the probability of rejecting the null hypothesis at the specified true effect, using the planned design and analysis. With 90% power, about 90% of hypothetical independent repetitions under those assumptions would reject the null and about 10% would not. This describes how the procedure behaves across studies; it does not involve repeatedly measuring the same patients. An individual study can still produce a non-significant result, and non-rejection does not establish equivalence.
+
+### P-value
 
 A **p-value** describes how incompatible the data are with the null under the stated model/test. It is not a measure of effect size, clinical benefit, or the probability that a hypothesis is true.
 
@@ -46,7 +56,7 @@ A **z calculation** uses the standard normal distribution, often as an approxima
 
 ## Counts, losses and simulation
 
-**Analysable n** is the number contributing to the stated analysis. In the two-group lab it is per group; the total is 2n. **Recruitment n** is inflated for anticipated losses, rounding within each arm. Expected dropout of 10% requires division by 0.90, not multiplication by 1.10. Inflation does not correct missing-data bias.
+**Analysable n** is the number contributing to the stated analysis. In the two-group lab it is per group; the total is 2n. **Recruitment n** is inflated for anticipated losses, rounding within each arm. With expected dropout of 10%, divide by the retention proportion 0.90, rather than multiplying by 1.10. Inflation does not correct missing-data bias.
 
 The **planning scenario** selects the design. A **generating scenario** specifies what could actually happen in repeated hypothetical studies. Changing generating assumptions while holding the planned n fixed is a sensitivity analysis; recalculating n each time answers a different question.
 

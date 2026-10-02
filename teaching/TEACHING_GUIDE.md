@@ -61,7 +61,7 @@ Use the single learner source in `module/Sample_size_open_module.Rmd`. Short ses
 
 Activity 1: distinguish one result, power, Type I error and Monte Carlo uncertainty. Activity 2: read several curves and distinguish recruitment from expected analysable counts. Activity 3: identify generation, analysis, repetition and summary. Collect a prediction and a written explanation where they help the chosen activity. No ANOVA lesson is required.
 
-Open the [two-panel study view](https://katatam.github.io/sample-size-calculation/study/). The activity selector loads matched case assumptions. Ordinary lesson navigation leaves the app session open; choosing or resetting an activity applies that preset. On narrow screens, Lesson and App buttons switch the visible panel. Students can also open either panel separately.
+Open the [two-panel study view](https://katatam.github.io/sample-size-calculation/study/). The activity selector loads matched case assumptions. Drag the separator to adjust panel widths, or focus it and use Left/Right arrow keys; Home and End reach the width limits. Chapter navigation leaves the app session open; choosing or resetting an activity applies that preset. Content links open in a new tab. On narrow screens, Both stacks the panels, while Lesson and App show either panel alone. Students can also open either panel separately.
 
 Use the [glossary](../student-materials/glossary.md), [FAQ](../student-materials/common-mistakes.md) and [study-design guide](../student-materials/study-design-guide.md) as needed. Code and formulas remain visible. R programming is not required for the conceptual tasks.
 

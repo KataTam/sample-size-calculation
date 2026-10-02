@@ -43,6 +43,9 @@ ui <- fluidPage(
     tags$script(HTML(activity_download_script())),
     tags$style(HTML("body{font-size:17px;line-height:1.55}.well{background:#f4f7fa}.shiny-output-error-validation{color:#8a3410}"))),
   titlePanel("Alpha, beta and power on a sampling distribution"),
+  p("Definitions: ", tags$a(href = "../book/Sample_size_open_module.html#alpha", target = "_blank", rel = "noopener", "alpha"), ", ",
+    tags$a(href = "../book/Sample_size_open_module.html#beta", target = "_blank", rel = "noopener", "beta"), " and ",
+    tags$a(href = "../book/Sample_size_open_module.html#statistical-power", target = "_blank", rel = "noopener", "power"), "."),
   p("Explore a one-sample mean with independent normal observations and a known population standard deviation. This simplified reference model makes the error regions visible."),
   sidebarLayout(sidebarPanel(width = 4,
     actionButton("load_case", "Restore the blood pressure example"),
@@ -57,11 +60,15 @@ ui <- fluidPage(
     h3("Blood pressure: sample means under two assumptions"),
     textOutput("bridge_status"),
     p("Predict what happens when n doubles, the alternative moves towards the null, or the SD increases. Keep one control fixed while exploring another."),
-    plotOutput("distributions", height = "470px"), tableOutput("operating_table"),
+    plotOutput("distributions", height = "470px"),
+    p(class = "caption", "Figure. Sampling distributions under the null and specified alternative, with alpha and beta shaded."),
+    tableOutput("operating_table"),
+    p(class = "caption", "Table. Standard error, rejection boundaries and error probabilities under the selected design."),
     textOutput("explanation"),
     p("Alpha is the rejection probability under the null. Beta is the non-rejection probability under the specified alternative; power is 1 − beta. The shaded areas refer to different assumed populations, so their overlap on the page is not an extra probability."),
     p("The vertical boundaries are fixed by the null distribution and chosen alpha. Greater sample size narrows the distribution of the mean; it does not shrink the population SD shown in the controls."),
     h3("Power across sample sizes"), plotOutput("power_curve", height = "280px"),
+    p(class = "caption", "Figure. Power at the specified alternative across independent sample sizes. The point marks the current sample; the reference line marks alpha."),
     p("A one-sided alternative in the wrong direction can have power below alpha. Direction should follow the prespecified scientific question. A realised non-significant result does not establish that the null is true."),
     textAreaInput("interpretation", "Explain the two shaded regions and one design choice.", rows = 4, width = "100%"),
     activity_download_button("download_assumptions", "Download assumptions and explanation"),
@@ -117,8 +124,9 @@ server <- function(input, output, session) {
     x <- snapshot(); ns <- unique(round(seq(1, max(100, min(1000, 2*x$n)), length.out = 100)))
     powers <- vapply(ns, function(n) { y <- x; y$n <- n
       do.call(normal_sampling_operating_characteristics, y)$power }, numeric(1))
-    plot(ns, powers, type = "l", lwd = 2, col = "#176675", ylim = c(0,1),
-      xlab = "Independent observations per sample", ylab = "Power at specified alternative")
+    plot(ns, powers, type = "l", lwd = 2, col = "#176675", ylim = c(0,1), yaxt = "n",
+      xlab = "Independent observations per sample", ylab = "Power at specified alternative (%)")
+    axis(2, at = seq(0, 1, .2), labels = paste0(seq(0, 100, 20), "%"))
     abline(h = x$alpha, lty = 3, col = "#a34724")
     points(x$n, operating()$power, pch = 19)
   }, alt = "Power at the specified alternative across independent sample sizes, with current power given in the table and a line at alpha.")

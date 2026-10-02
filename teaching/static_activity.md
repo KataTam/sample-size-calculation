@@ -1,18 +1,22 @@
 # Static sample size activity
 
-Use these prepared synthetic results when the live app is unavailable. No code is required. All studies use equal allocation and a two-sided alpha of .05. Full reproducible results and assumptions accompany the activity.
+Use these prepared synthetic results when the live app is unavailable. No code is required. All studies use equal allocation and a two-sided alpha of 5%. Full reproducible results and assumptions accompany the activity.
 
 ## Before viewing the results
 
 1. Predict how a smaller effect or larger SD changes power at 45 per group.
-2. Explain the difference between the 3-unit planning effect and 2-unit clinical threshold.
+2. Explain the distinct roles of the expected 4-unit benefit, 3-unit planning effect and 2-unit clinical threshold. For the binary trial, these values are 40, 30 and 20 percentage points respectively.
 3. Predict what changes if replications increase while participants per study remain fixed.
 
 ## planned
 
-Participants per group: 45; generating difference: 3; SD (normal outcome): 5; B: 1000; seed: 20260914.
+Expected benefit: 4 units; original planning benefit: 3 units; clinical threshold: 2 units.
+
+Participants per group: 45; generating difference: 3 units; SD: 5; B: 1000; seed: 20260914.
 
 ### One study
+
+**Table 1.** Estimate, confidence interval and decisions from one simulated study under the planned scenario.
 
 | estimate| lower|  upper| p_value|  width|reject |cover |width_met |
 |--------:|-----:|------:|-------:|------:|:------|:-----|:---------|
@@ -22,23 +26,31 @@ The test rejects a zero difference. The interval excludes zero in the beneficial
 
 ### Repeated studies
 
-|measure               | estimate|   MCSE| MC_lower_95| MC_upper_95|
-|:---------------------|--------:|------:|-----------:|-----------:|
-|Rejection rate        |    0.798| 0.0127|      0.7720|      0.8217|
-|CI coverage           |    0.941| 0.0075|      0.9246|      0.9540|
-|Full width target met |    0.315| 0.0147|      0.2870|      0.3445|
+**Table 2.** Rejection, confidence interval coverage and full-width attainment across 1000 independent studies under the planned scenario. Monte Carlo intervals describe simulation uncertainty.
 
-Mean FULL interval width: 4.15.
+|Measure               |Rate  |Monte Carlo SE (percentage points) |95% lower limit |95% upper limit |
+|:---------------------|:-----|:----------------------------------|:---------------|:---------------|
+|Rejection rate        |79.8% |1.27                               |77.2%           |82.2%           |
+|CI coverage           |94.1% |0.75                               |92.5%           |95.4%           |
+|Full width target met |31.5% |1.47                               |28.7%           |34.4%           |
+
+Mean FULL interval width: 4.15 units.
 
 ![First 30 study intervals with zero, clinical threshold and generating truth. Numerical summaries above.](../figures/static_activity/planned.png)
+
+**Figure 1.** First 30 simulated intervals under the planned scenario. Filled points reject zero; the separate lines mark zero, the clinical threshold and the generating truth. The horizontal scale is outcome units.
 
 [Assumptions](../data/static_activity/planned_assumptions.csv) | [All replications](../data/static_activity/planned_replications.csv)
 
 ## null
 
-Participants per group: 45; generating difference: 0; SD (normal outcome): 5; B: 1000; seed: 20260914.
+Expected benefit: 4 units; original planning benefit: 3 units; clinical threshold: 2 units.
+
+Participants per group: 45; generating difference: 0 units; SD: 5; B: 1000; seed: 20260914.
 
 ### One study
+
+**Table 3.** Estimate, confidence interval and decisions from one simulated study under the null scenario.
 
 | estimate|  lower|  upper| p_value|  width|reject |cover |width_met |
 |--------:|------:|------:|-------:|------:|:------|:-----|:---------|
@@ -48,23 +60,31 @@ The test does not reject a zero difference; this does not establish no effect. T
 
 ### Repeated studies
 
-|measure               | estimate|   MCSE| MC_lower_95| MC_upper_95|
-|:---------------------|--------:|------:|-----------:|-----------:|
-|Rejection rate        |    0.059| 0.0075|      0.0460|      0.0754|
-|CI coverage           |    0.941| 0.0075|      0.9246|      0.9540|
-|Full width target met |    0.315| 0.0147|      0.2870|      0.3445|
+**Table 4.** Rejection, confidence interval coverage and full-width attainment across 1000 independent studies under the null scenario. Monte Carlo intervals describe simulation uncertainty.
 
-Mean FULL interval width: 4.15.
+|Measure               |Rate  |Monte Carlo SE (percentage points) |95% lower limit |95% upper limit |
+|:---------------------|:-----|:----------------------------------|:---------------|:---------------|
+|Rejection rate        |5.9%  |0.75                               |4.6%            |7.5%            |
+|CI coverage           |94.1% |0.75                               |92.5%           |95.4%           |
+|Full width target met |31.5% |1.47                               |28.7%           |34.4%           |
+
+Mean FULL interval width: 4.15 units.
 
 ![First 30 study intervals with zero, clinical threshold and generating truth. Numerical summaries above.](../figures/static_activity/null.png)
+
+**Figure 2.** First 30 simulated intervals under the null scenario. Filled points reject zero; the separate lines mark zero, the clinical threshold and the generating truth. The horizontal scale is outcome units.
 
 [Assumptions](../data/static_activity/null_assumptions.csv) | [All replications](../data/static_activity/null_replications.csv)
 
 ## smaller effect
 
-Participants per group: 45; generating difference: 1; SD (normal outcome): 5; B: 1000; seed: 20260914.
+Expected benefit: 4 units; original planning benefit: 3 units; clinical threshold: 2 units.
+
+Participants per group: 45; generating difference: 1 units; SD: 5; B: 1000; seed: 20260914.
 
 ### One study
+
+**Table 5.** Estimate, confidence interval and decisions from one simulated study under the smaller effect scenario.
 
 | estimate|  lower|  upper| p_value|  width|reject |cover |width_met |
 |--------:|------:|------:|-------:|------:|:------|:-----|:---------|
@@ -74,23 +94,31 @@ The test does not reject a zero difference; this does not establish no effect. T
 
 ### Repeated studies
 
-|measure               | estimate|   MCSE| MC_lower_95| MC_upper_95|
-|:---------------------|--------:|------:|-----------:|-----------:|
-|Rejection rate        |    0.167| 0.0118|      0.1452|      0.1914|
-|CI coverage           |    0.941| 0.0075|      0.9246|      0.9540|
-|Full width target met |    0.315| 0.0147|      0.2870|      0.3445|
+**Table 6.** Rejection, confidence interval coverage and full-width attainment across 1000 independent studies under the smaller effect scenario. Monte Carlo intervals describe simulation uncertainty.
 
-Mean FULL interval width: 4.15.
+|Measure               |Rate  |Monte Carlo SE (percentage points) |95% lower limit |95% upper limit |
+|:---------------------|:-----|:----------------------------------|:---------------|:---------------|
+|Rejection rate        |16.7% |1.18                               |14.5%           |19.1%           |
+|CI coverage           |94.1% |0.75                               |92.5%           |95.4%           |
+|Full width target met |31.5% |1.47                               |28.7%           |34.4%           |
+
+Mean FULL interval width: 4.15 units.
 
 ![First 30 study intervals with zero, clinical threshold and generating truth. Numerical summaries above.](../figures/static_activity/smaller_effect.png)
+
+**Figure 3.** First 30 simulated intervals under the smaller effect scenario. Filled points reject zero; the separate lines mark zero, the clinical threshold and the generating truth. The horizontal scale is outcome units.
 
 [Assumptions](../data/static_activity/smaller_effect_assumptions.csv) | [All replications](../data/static_activity/smaller_effect_replications.csv)
 
 ## higher variability
 
-Participants per group: 45; generating difference: 3; SD (normal outcome): 7; B: 1000; seed: 20260914.
+Expected benefit: 4 units; original planning benefit: 3 units; clinical threshold: 2 units.
+
+Participants per group: 45; generating difference: 3 units; SD: 7; B: 1000; seed: 20260914.
 
 ### One study
+
+**Table 7.** Estimate, confidence interval and decisions from one simulated study under the higher variability scenario.
 
 | estimate|   lower| upper| p_value|  width|reject |cover |width_met |
 |--------:|-------:|-----:|-------:|------:|:------|:-----|:---------|
@@ -100,41 +128,53 @@ The test does not reject a zero difference; this does not establish no effect. T
 
 ### Repeated studies
 
-|measure               | estimate|   MCSE| MC_lower_95| MC_upper_95|
-|:---------------------|--------:|------:|-----------:|-----------:|
-|Rejection rate        |    0.542| 0.0158|      0.5110|      0.5727|
-|CI coverage           |    0.941| 0.0075|      0.9246|      0.9540|
-|Full width target met |    0.000| 0.0000|      0.0000|      0.0038|
+**Table 8.** Rejection, confidence interval coverage and full-width attainment across 1000 independent studies under the higher variability scenario. Monte Carlo intervals describe simulation uncertainty.
 
-Mean FULL interval width: 5.81.
+|Measure               |Rate  |Monte Carlo SE (percentage points) |95% lower limit |95% upper limit |
+|:---------------------|:-----|:----------------------------------|:---------------|:---------------|
+|Rejection rate        |54.2% |1.58                               |51.1%           |57.3%           |
+|CI coverage           |94.1% |0.75                               |92.5%           |95.4%           |
+|Full width target met |0.0%  |0.00                               |0.0%            |0.4%            |
+
+Mean FULL interval width: 5.81 units.
 
 ![First 30 study intervals with zero, clinical threshold and generating truth. Numerical summaries above.](../figures/static_activity/higher_variability.png)
+
+**Figure 4.** First 30 simulated intervals under the higher variability scenario. Filled points reject zero; the separate lines mark zero, the clinical threshold and the generating truth. The horizontal scale is outcome units.
 
 [Assumptions](../data/static_activity/higher_variability_assumptions.csv) | [All replications](../data/static_activity/higher_variability_replications.csv)
 
 ## binary
 
-Participants per group: 60; generating difference: 0.3; SD (normal outcome): 5; B: 1000; seed: 20260914.
+Expected benefit: 40 percentage points; original planning benefit: 30 percentage points; clinical threshold: 20 percentage points.
+
+Participants per group: 60; generating difference: 30 percentage points; control 30.0%, treatment 60.0%; B: 1000; seed: 20260914.
 
 ### One study
 
-| estimate|  lower|  upper| p_value|  width|reject |cover |width_met |
-|--------:|------:|------:|-------:|------:|:------|:-----|:---------|
-|     0.25| 0.0717| 0.4072|   0.006| 0.3355|TRUE   |TRUE  |FALSE     |
+**Table 9.** Estimate, confidence interval and decisions from one simulated study under the binary scenario.
+
+|estimate               |lower                 |upper                  | p value|width                  |reject |cover |width met |
+|:----------------------|:---------------------|:----------------------|-------:|:----------------------|:------|:-----|:---------|
+|25.0 percentage points |7.2 percentage points |40.7 percentage points |   0.006|33.5 percentage points |TRUE   |TRUE  |FALSE     |
 
 The test rejects a zero difference. The interval excludes zero in the beneficial direction, but includes benefits below the clinical threshold. Interpret uncertainty in context; this is not a prespecified equivalence or non-inferiority test.
 
 ### Repeated studies
 
-|measure               | estimate|   MCSE| MC_lower_95| MC_upper_95|
-|:---------------------|--------:|------:|-----------:|-----------:|
-|Rejection rate        |    0.919| 0.0086|      0.9004|      0.9344|
-|CI coverage           |    0.956| 0.0065|      0.9414|      0.9671|
-|Full width target met |    0.000| 0.0000|      0.0000|      0.0038|
+**Table 10.** Rejection, confidence interval coverage and full-width attainment across 1000 independent studies under the binary scenario. Monte Carlo intervals describe simulation uncertainty.
 
-Mean FULL interval width: 0.328.
+|Measure               |Rate  |Monte Carlo SE (percentage points) |95% lower limit |95% upper limit |
+|:---------------------|:-----|:----------------------------------|:---------------|:---------------|
+|Rejection rate        |91.9% |0.86                               |90.0%           |93.4%           |
+|CI coverage           |95.6% |0.65                               |94.1%           |96.7%           |
+|Full width target met |0.0%  |0.00                               |0.0%            |0.4%            |
+
+Mean FULL interval width: 32.8 percentage points.
 
 ![First 30 study intervals with zero, clinical threshold and generating truth. Numerical summaries above.](../figures/static_activity/binary.png)
+
+**Figure 5.** First 30 simulated intervals under the binary scenario. Filled points reject zero; the separate lines mark zero, the clinical threshold and the generating truth. The horizontal scale is percentage points.
 
 [Assumptions](../data/static_activity/binary_assumptions.csv) | [All replications](../data/static_activity/binary_replications.csv)
 

@@ -2,7 +2,7 @@
 
 ## Does "20% better" mean 20 percentage points?
 
-State the baseline and scale. From a probability of 0.80, a 20% relative increase gives 0.96; a 20-percentage-point absolute increase gives 1.00. The two-proportion calculator needs the probabilities in each group. The [discharge example](#discharge) lets you compare these interpretations.
+State the baseline and scale. From a baseline of 80%, a 20% relative increase gives 96%; an absolute increase of 20 percentage points gives 100%. The two-proportion calculator needs the probabilities in each group, entered as proportions between zero and one. The [discharge example](#discharge) lets you compare these interpretations.
 
 ## Can I put a clinically important difference directly into the alternative hypothesis?
 
@@ -14,17 +14,17 @@ No. An interval might include both negligible and important effects. Assess the 
 
 ## Are alpha and beta probabilities that the hypotheses are true?
 
-No. Alpha concerns rejection when the null is true. Beta concerns non-rejection at a specified alternative. Both condition on a population scenario and a procedure. They are not posterior probabilities after observing the data. The [sampling distributions](#alpha-beta) and repeated studies illustrate this conditioning.
+No. [Alpha](#alpha) concerns rejection when the null is true. [Beta](#beta) concerns failure to reject at a specified true alternative. Both condition on a population scenario and a procedure. They are not posterior probabilities after observing the data. The [sampling distributions](#alpha-beta) and simulated independent studies illustrate this conditioning.
 
 ## Does 90% power guarantee a useful result?
 
-No. It describes repeated rejection at the specified effect, design and analysis. One study can be inconclusive, and a significant study can have an interval too wide for a clinical decision. Compare power, anticipated precision and realised interval performance.
+No. With [90% power](#statistical-power), about 90% of hypothetical independent studies under the specified effect, design and analysis would reject the null hypothesis. An individual study can be inconclusive, and a significant study can have an interval too wide for a clinical decision. Compare power, anticipated precision and realised interval performance.
 
 ## Can I use my small pilot's effect estimate without qualification?
 
 Record its uncertainty and compare it with wider evidence. Small pilots can give unstable treatment estimates; selecting only promising pilots can introduce further bias. Pilot planning should follow feasibility objectives and useful precision for those objectives. See the [practical pilot case](#pilot-feasibility) and [Albers and Lakens (2018)](https://doi.org/10.1016/j.jesp.2017.09.004).
 
-## Is p = 0.50 a safe default whenever I do not know the event rate?
+## Is a 50% event probability a safe default whenever I do not know the event rate?
 
 Its conservative role here is limited to **absolute precision for one proportion under the displayed normal approximation**: it maximizes p(1-p). It is not a general fallback for unknown treatment/control rates, prediction-model planning, relative precision or rare-event questions. See the [single-proportion example](#prevalence).
 
@@ -46,7 +46,7 @@ Divide the required analysable count by 1 - 0.10, then round up within each arm.
 
 ## Is more simulation the same as a larger study?
 
-Increasing B reduces Monte Carlo uncertainty about repeated performance. Increasing n changes the amount of patient information and therefore study performance. Keep these two quantities separate, and report both with the seed.
+Increasing B estimates the rejection rate, interval coverage and other simulation results more precisely. Increasing n changes the amount of patient information in each study and therefore changes its power and precision. Keep these two quantities separate, and report both with the seed.
 
 ## Will a larger sample solve bias?
 

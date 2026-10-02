@@ -17,18 +17,18 @@
         <button type="button" data-view="app" aria-pressed="false">App</button>
         <button type="button" data-view="both" aria-pressed="true">Both</button>
       </div>
-      <label class="width-control" for="panel-width">Lesson width <input id="panel-width" type="range" min="35" max="65" value="50"></label>
       <button id="reset" type="button">Reset this activity</button>
     </div>
     <p id="activity-prompt">Read the case and explore its assumptions.</p>
     <p id="app-status" role="status" aria-live="polite">Loading the activity. You can read the lesson while it starts.</p>
   </header>
   <main class="panels">
-    <section class="pane lesson-pane" aria-label="Tutorial panel">
+    <section id="lesson-pane" class="pane lesson-pane" aria-label="Tutorial panel">
       <div class="pane-bar"><h2>Lesson</h2><a id="lesson-separate" href="../book/" target="_blank" rel="noopener">Open lesson separately</a></div>
       <iframe id="lesson-frame" title="Sample size tutorial" src="../book/"></iframe>
     </section>
-    <section class="pane app-pane" aria-label="Activity panel">
+    <div id="panel-separator" role="separator" tabindex="0" aria-label="Adjust lesson and activity widths" aria-orientation="vertical" aria-controls="lesson-pane app-pane" aria-valuemin="20" aria-valuemax="80" aria-valuenow="50" aria-valuetext="Lesson 50%, activity 50%" title="Drag to resize. Use Left and Right arrow keys to adjust the lesson width."><span aria-hidden="true"></span></div>
+    <section id="app-pane" class="pane app-pane" aria-label="Activity panel">
       <div class="pane-bar"><h2>Activity</h2><a id="app-separate" href="../power_explorer/" target="_blank" rel="noopener">Open app separately</a></div>
       <iframe id="app-frame" title="Interactive sample size activity" src="about:blank"></iframe>
     </section>

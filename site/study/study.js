@@ -83,29 +83,51 @@
     try {
       const doc = lesson.contentDocument;
       lessonSeparate.href = lesson.contentWindow.location.href;
-      // Delegation also covers chapter content replaced by GitBook navigation.
-      doc.addEventListener('click', event => {
-        if (event.defaultPrevented) return;
-        const link = event.target.closest('a[href]');
-        if (!link) return;
-        const target = new URL(link.getAttribute('href'), doc.baseURI);
-        if (/\/study\/?$/.test(target.pathname) && cases[target.searchParams.get('activity')]) {
-          event.preventDefault();
-          openActivity(target.searchParams.get('activity'));
-          if (matchMedia('(max-width: 900px)').matches) setView('app');
-        } else if (target.origin !== location.origin && /^https?:$/.test(target.protocol)) {
-          link.target = '_blank'; link.rel = 'noopener';
-        } else if (target.pathname.includes('/book/')) {
-          lessonSeparate.href = target.href;
-        }
-      });
+      // Content links open separately. Chapter navigation still stays in this pane.
+      if (doc.defaultView.sampleSizeLinks) doc.defaultView.sampleSizeLinks.apply(doc);
     } catch (_) { status.textContent = 'Use the separate lesson link if this page cannot be displayed here.'; }
   });
   selector.addEventListener('change', () => openActivity(selector.value));
   document.getElementById('reset').addEventListener('click', () => openActivity(selected, true));
   document.querySelectorAll('button[data-view]').forEach(button => button.addEventListener('click', () => setView(button.dataset.view)));
-  document.getElementById('panel-width').addEventListener('input', event => document.documentElement.style.setProperty('--lesson-width', event.target.value + '%'));
-  if (matchMedia('(max-width: 900px)').matches) setView('lesson');
+  const separator = document.getElementById('panel-separator');
+  const panels = document.querySelector('.panels');
+  let lessonWidth = 50, dragging = false;
+  const canResize = () => document.body.dataset.view === 'both' && !matchMedia('(max-width: 900px)').matches;
+  function setLessonWidth(value) {
+    lessonWidth = Math.max(20, Math.min(80, value));
+    document.documentElement.style.setProperty('--lesson-width', lessonWidth + 'fr');
+    document.documentElement.style.setProperty('--app-width', (100 - lessonWidth) + 'fr');
+    const rounded = Math.round(lessonWidth);
+    separator.setAttribute('aria-valuenow', rounded);
+    separator.setAttribute('aria-valuetext', `Lesson ${rounded}%, activity ${100 - rounded}%`);
+  }
+  function resizeAt(event) {
+    const bounds = panels.getBoundingClientRect();
+    setLessonWidth(100 * (event.clientX - bounds.left - separator.offsetWidth / 2) / (bounds.width - separator.offsetWidth));
+  }
+  separator.addEventListener('pointerdown', event => {
+    if (!canResize() || event.button !== 0) return;
+    event.preventDefault();
+    separator.focus();
+    dragging = true;
+    document.body.classList.add('resizing');
+    separator.setPointerCapture(event.pointerId);
+    resizeAt(event);
+  });
+  separator.addEventListener('pointermove', event => { if (dragging) resizeAt(event); });
+  const endResize = () => { dragging = false; document.body.classList.remove('resizing'); };
+  separator.addEventListener('pointerup', endResize);
+  separator.addEventListener('pointercancel', endResize);
+  separator.addEventListener('lostpointercapture', endResize);
+  separator.addEventListener('keydown', event => {
+    if (!canResize()) return;
+    const step = event.shiftKey ? 10 : 2;
+    const next = {ArrowLeft: lessonWidth - step, ArrowRight: lessonWidth + step, Home: 20, End: 80}[event.key];
+    if (next === undefined) return;
+    event.preventDefault();
+    setLessonWidth(next);
+  });
   Promise.all([fetch('../teaching-cases.json').then(response => { if (!response.ok) throw Error('Activities unavailable'); return response.json(); }),
     fetch('../chapter-anchors.json').then(response => { if (!response.ok) throw Error('Lesson index unavailable'); return response.json(); })])
     .then(([registry, map]) => {

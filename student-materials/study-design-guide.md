@@ -13,6 +13,8 @@ Choose a method from the research question, outcome, sampling structure and inte
 | Aim | Describe a prevalence, compare effects, assess diagnostic accuracy, study a risk factor, predict individual outcomes | Determines the target quantity and whether power, precision or predictive performance drives planning |
 | Outcome/analysis | Continuous, binary, time-to-event, counts; adjusted model or simple comparison | Determines the required distributional and modelling assumptions |
 
+Table: Design dimensions that determine the appropriate planning method.
+
 ## Match the question to a method and resource
 
 | Example question | Planning focus | Route |
@@ -28,6 +30,8 @@ Choose a method from the research question, outcome, sampling structure and inte
 | Can a model predict an individual's future risk? | Development versus external evaluation, events, predictor parameters, overfitting and useful performance precision | [Riley et al. (2020)](https://www.bmj.com/content/368/bmj.m441) gives model-development planning guidance; [TRIPOD+AI](https://www.tripod-statement.org/) supports reporting of regression and machine-learning prediction models |
 | How informative is an existing retrospective dataset? | Available analysable n, selection, missingness, intended model and achievable precision | Assess fixed resources at independently justified scenarios; avoid observed-effect post-hoc power |
 | How many units does an animal or laboratory experiment need? | Experimental unit, replication, allocation, outcome, variability and animal burden | [ARRIVE 2.0 sample-size guidance](https://arriveguidelines.org/arrive-guidelines/sample-size) and design-specific planning; repeated wells or measurements are not automatically independent units |
+
+Table: Planning questions and resources for different study designs.
 
 A sensitivity estimate uses participants with the target condition as its denominator; specificity uses participants without it. Total recruitment also depends on how these groups are obtained. A precision calculation for a single prevalence cannot by itself plan an entire diagnostic comparison.
 

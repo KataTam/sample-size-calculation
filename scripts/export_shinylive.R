@@ -13,7 +13,7 @@ export_shinylive_apps <- function(
   }
 
   root <- normalizePath(".", winslash = "/", mustWork = TRUE)
-  helper_files <- file.path(root, "R", c("sample_size_functions.R", "teaching_cases.R", "activity_bridge.R"))
+  helper_files <- file.path(root, "R", c("sample_size_functions.R", "tutorial_helpers.R", "teaching_cases.R", "activity_bridge.R"))
 
   if (!all(file.exists(helper_files))) {
     stop("Cannot find all shared calculation, case and activity-bridge files.", call. = FALSE)

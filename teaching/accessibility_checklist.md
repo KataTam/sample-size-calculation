@@ -69,10 +69,11 @@ Use this checklist when editing, adapting, or sharing the module.
 
 ## Tutorial and app together
 
-- [ ] The activity selector, view buttons and width control have labels and visible keyboard focus.
+- [ ] The activity selector, view buttons and panel separator have labels and visible keyboard focus.
+- [ ] The separator adjusts widths by dragging and by Left/Right arrow keys; Home and End reach the bounds.
 - [ ] Each iframe has a meaningful title and a separate-page alternative.
 - [ ] Activity readiness appears as text in a live status region.
 - [ ] Lesson navigation preserves app inputs and completed simulations.
-- [ ] Narrow screens expose both the lesson and the app through labelled view buttons.
+- [ ] Narrow screens stack both panels without horizontal overflow; labelled view buttons also show either panel alone.
 - [ ] Check keyboard movement into and out of both frames in the teaching browser.
 - [ ] Check the complete HTML and PDF as alternatives; app interaction still requires a browser connection on first load.

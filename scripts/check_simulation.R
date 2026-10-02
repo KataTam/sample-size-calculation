@@ -73,17 +73,22 @@ check_lab_server <- function() {
   button <- app$downloadButton("check_download", "Download")
   stopifnot(is.null(button$attribs$download), identical(button$attribs$target, "_self"))
   shiny::testServer(app$server, {
-    session$setInputs(outcome = "means", goal = "testing", plan_delta = 3, plan_sd = 5,
-      threshold_m = 2, width_m = 4, plan_p0 = .3, plan_p1 = .6, threshold_p = .3, width_p = .2,
+    session$setInputs(outcome = "means", goal = "testing", expected_m = 4, expected_p = .4, plan_delta = 3, plan_sd = 5,
+      threshold_m = 2, width_m = 4, plan_p0 = .3, plan_p1 = .6, threshold_p = .2, width_p = .2,
       alpha = .05, target_power = .8, fixed_n = 60, dropout = .1, reality = "same",
       true_delta = 1, true_sd = 7, true_p0 = .3, true_p1 = .4, seed = 20260914, B = 1000,
       run_one = 0, run_many = 0, recruit_cap = 200, justification = "A hypothetical test plan")
     stopifnot(planned()$n == 45)
+    original_plan <- planned()
+    session$setInputs(expected_m = 5)
+    stopifnot(identical(planned(), original_plan), snapshot()$expected_effect == 5)
+    session$setInputs(expected_m = 4)
     stopifnot(comparison()$cap_n == 90,
       identical(comparison()$effects, c(1.5, 2, 3)))
     stopifnot(!is.null(output$comparison_plot), !is.null(output$effect_plot))
     session$setInputs(run_one = 1, run_many = 1)
     stopifnot(nrow(one()$data) == 90, nrow(many()$results) == 1000)
+    stopifnot(one()$meta$expected_effect == 4, many()$meta$expected_effect == 4)
     stopifnot(!is.null(output$p_values))
     saved <- many(); session$setInputs(reality = "null")
     stopifnot(planned()$n == 45, generating()$delta == 0, identical(saved, many()))
@@ -99,7 +104,8 @@ check_lab_server <- function() {
     stopifnot(nrow(one()$data) == 2 * planned()$n, all(one()$data$outcome %in% 0:1))
     stopifnot(nrow(many()$results) == 1000)
     exported <- export_rows(many()$results, many()$meta)
-    stopifnot(all(c("plan_n", "generating_seed", "planning_goal", "method") %in% names(exported)))
+    stopifnot(all(c("plan_n", "generating_seed", "planning_goal", "expected_effect", "method") %in% names(exported)),
+      all(exported$expected_effect == .4))
     session$setInputs(goal = "testing", plan_p1 = .3, plan_p0 = .3)
     stopifnot(inherits(tryCatch(planned(), error = identity), "error"))
   })

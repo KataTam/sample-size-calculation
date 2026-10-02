@@ -1,5 +1,6 @@
 library(shiny)
 source("../../R/sample_size_functions.R")
+source("../../R/tutorial_helpers.R")
 source("../../R/teaching_cases.R")
 source("../../R/activity_bridge.R")
 
@@ -52,7 +53,7 @@ document.addEventListener('click', async function(event) {
 ui <- fluidPage(
   tags$head(tags$script(HTML(download_script)), tags$script(HTML(activity_bridge_script()))),
   tags$p(id = "download-status", role = "status", `aria-live` = "polite"),
-  tags$head(tags$style(HTML("body{font-size:17px;line-height:1.55}.well{background:#f4f7fa}table{font-size:15px}.shiny-html-output{overflow-x:auto}.shiny-output-error-validation{color:#8a3410}"))),
+  tags$head(tags$style(HTML("body{font-size:17px;line-height:1.55}.well{background:#f4f7fa}table{font-size:15px}.shiny-html-output{overflow-x:auto}.shiny-output-error-validation{color:#8a3410}.caption{font-size:.9em;color:#505b64;margin:8px 0 20px}"))),
   titlePanel("Sample size reasoning lab"),
   p("Explore a study question and the assumptions behind its design. All prepared cases are hypothetical. No coding is required."),
   selectInput("activity_choice", "Prepared activity", c("Choose an activity or use your own inputs" = "",
@@ -65,9 +66,10 @@ ui <- fluidPage(
     selectInput("goal", "Planning goal", c("Test a difference from zero" = "testing", "Estimate with a target interval width" = "precision", "Assess a fixed sample size" = "fixed")),
     p("Two independent groups, equal allocation. Differences are treatment minus control; positive values mean benefit in these cases."),
     conditionalPanel("input.outcome == 'means'",
+      numericInput("expected_m", "Expected treatment benefit (outcome units)", 4, step = .5),
       numericInput("plan_delta", "Difference assumed for planning (outcome units)", 3, step = .5),
       numericInput("plan_sd", "Planning standard deviation", 5, min = .1),
-      helpText("The planning difference is an assumption about benefit; SD describes variation between patients."),
+      helpText("The expected benefit records your best current expectation. Only the planning difference enters the sample size calculation; SD describes variation between patients."),
       conditionalPanel("input.show_advanced",
       numericInput("threshold_m", "Clinically important benefit (outcome units)", 2, min = .1),
       helpText("This clinical threshold is a separate judgement from the planning difference.")),
@@ -75,21 +77,28 @@ ui <- fluidPage(
       numericInput("width_m", "Target FULL interval width (outcome units)", 4, min = .1),
       helpText("Full width 4 means a symmetric interval extending approximately 2 units on each side."))),
     conditionalPanel("input.outcome == 'proportions'",
-      sliderInput("plan_p0", "Planning event probability: control", .01, .99, .3, step = .01),
-      sliderInput("plan_p1", "Planning event probability: treatment", .01, .99, .6, step = .01),
-      helpText("0.30 means 30%. A change from 0.30 to 0.60 is 30 percentage points."),
+      numericInput("expected_p", "Expected absolute benefit (difference of proportions)", .4, min = -1, max = 1, step = .01),
+      sliderInput("plan_p0", "Planning event probability: control (proportion, 0–1)", .01, .99, .3, step = .01),
+      sliderInput("plan_p1", "Planning event probability: treatment (proportion, 0–1)", .01, .99, .6, step = .01),
+      textOutput("probability_inputs"),
+      helpText("Enter probabilities as proportions: 0.30 means 30%. An increase from 30% to 60% is 30 percentage points. Expected benefit is recorded separately and does not enter the calculation."),
       conditionalPanel("input.show_advanced",
-      numericInput("threshold_p", "Clinically important absolute benefit (proportion units)", .3, min = .001, max = 1, step = .01),
+      numericInput("threshold_p", "Clinically important absolute benefit (proportion, 0–1)", .2, min = .001, max = 1, step = .01),
       helpText("Clinical importance is separate from statistical significance.")),
       conditionalPanel("input.show_advanced || input.goal == 'precision'",
       numericInput("width_p", "Target FULL interval width (proportion units)", .2, min = .001, max = 2, step = .01))),
     helpText("Expected, planning and clinically important effects are separate judgements. Record sources and uncertainty in your case worksheet."),
-    sliderInput("alpha", "Two-sided alpha (CI confidence = 1 - alpha)", .001, .1, .05, step = .001),
+    sliderInput("alpha", tags$span("Two-sided ", tags$a(href = "../book/Sample_size_open_module.html#alpha", target = "_blank", rel = "noopener", "alpha"),
+      " (proportion, 0–1; CI confidence = 1 - alpha)"), .001, .1, .05, step = .001),
     conditionalPanel("input.show_advanced", helpText("Alpha is the test's long-run false-positive probability under its null model.")),
-    sliderInput("target_power", "Power target (reference line for fixed or precision goals)", .5, .99, .8, step = .01),
-    conditionalPanel("input.show_advanced", helpText("Power refers to a specified true difference; it is not the probability that a hypothesis is true.")),
+    sliderInput("target_power", tags$span(tags$a(href = "../book/Sample_size_open_module.html#statistical-power", target = "_blank", rel = "noopener", "Power"),
+      " target (proportion, 0–1)"), .5, .99, .8, step = .01),
+    textOutput("error_target_inputs"),
+    conditionalPanel("input.show_advanced", helpText("Power is 1 minus ", tags$a(href = "../book/Sample_size_open_module.html#beta", target = "_blank", rel = "noopener", "beta"),
+      ": the probability of detecting a specified true difference. It is not the probability that a hypothesis is true.")),
     conditionalPanel("input.goal == 'fixed'", numericInput("fixed_n", "Analysable participants PER GROUP", 60, min = 2, max = 100000, step = 1)),
-    sliderInput("dropout", "Expected dropout fraction in EACH group", 0, .5, .1, step = .01),
+    sliderInput("dropout", "Expected dropout in EACH group (proportion, 0–1)", 0, .5, .1, step = .01),
+    textOutput("dropout_input"),
     numericInput("recruit_cap", "Recruitment limit: TOTAL across both groups", 200, min = 4, max = 200000, step = 2),
     helpText("The curve marks the expected analysable limit after losses; this is not a guaranteed final count."),
     conditionalPanel("input.show_advanced",
@@ -99,41 +108,57 @@ ui <- fluidPage(
       numericInput("true_delta", "Generating difference (zero or negative allowed)", 1, step = .5),
       numericInput("true_sd", "Generating standard deviation", 7, min = .1)),
     conditionalPanel("input.reality == 'custom' && input.outcome == 'proportions'",
-      sliderInput("true_p0", "Generating probability: control", .01, .99, .3, step = .01),
-      sliderInput("true_p1", "Generating probability: treatment", .01, .99, .4, step = .01)),
+      sliderInput("true_p0", "Generating probability: control (proportion, 0–1)", .01, .99, .3, step = .01),
+      sliderInput("true_p1", "Generating probability: treatment (proportion, 0–1)", .01, .99, .4, step = .01),
+      textOutput("generating_inputs")),
     numericInput("seed", "Random seed", 20260914, min = 0, max = 2147483647, step = 1),
     numericInput("B", "Independent study replications B", 1000, min = 100, max = 10000, step = 100),
     helpText("More participants change study performance. More replications improve simulation precision. Same inputs and seed reproduce results.")),
-    p(tags$a(href = "../book/Sample_size_open_module.html#glossary", target = "_top", "Parameter glossary"), " · ",
-      tags$a(href = "../book/Sample_size_open_module.html#common-mistakes", target = "_top", "Common mistakes and FAQ"))),
+    p(tags$a(href = "../book/Sample_size_open_module.html#glossary", target = "_blank", rel = "noopener", "Parameter glossary"), " · ",
+      tags$a(href = "../book/Sample_size_open_module.html#common-mistakes", target = "_blank", rel = "noopener", "Common mistakes and FAQ"))),
   mainPanel(width = 8, tabsetPanel(id = "stage",
     tabPanel("Explore assumptions", h3("Your planned design"), tableOutput("planning"),
+      p(class = "caption", "Table 1. Expected benefit, planning benefit, clinical threshold and sample requirements for the current design."),
       p("Predict a change before moving a control. Compare testing, precision and fixed-resource goals."),
       plotOutput("planning_plot", height = "430px"), textOutput("planning_text"),
+      p(class = "caption", "Figure 1. Power and anticipated full confidence interval width across sample sizes. Dashed lines show the selected targets; points mark the current plan."),
       h4("Compare smaller effects"),
       p("Curves compare the planning difference with two smaller differences. Predict which curve will reach the target first. Clinical importance is a separate judgement."),
-      plotOutput("comparison_plot", height = "360px"), tableOutput("comparison_table"),
+      plotOutput("comparison_plot", height = "360px"),
+      p(class = "caption", "Figure 2. Power curves at half, two-thirds and the full planning benefit, with the power target and expected analysable recruitment limit."),
+      tableOutput("comparison_table"),
+      p(class = "caption", "Table 2. Power at the expected analysable recruitment limit for each assumed benefit."),
       h4("Power across effects at the planned sample size"),
       plotOutput("effect_plot", height = "320px"),
+      p(class = "caption", "Figure 3. Two-sided power across hypothetical true effects, holding the current planned sample size fixed."),
       p("The target-power crossing is not a hard detection boundary. This explores hypothetical effects, not observed post hoc power."),
       h4("Sensitivity at this planned sample size"), tableOutput("sensitivity"),
+      p(class = "caption", "Table 3. Power and anticipated full interval width under the plan, current generating scenario and null effect at unchanged sample size."),
       p("Changing the generating scenario keeps the planned sample size fixed. Simulations use analysable counts; dropout only changes recruitment targets and does not remove missing-data bias."),
       h4("Analysis assumptions"), textOutput("method"),
       p("Normal outcomes use a pooled-variance t test and interval. Binary outcomes use a pooled score test without continuity correction and a Newcombe-Wilson difference interval. Binary analytical power and precision are approximations; check finite-sample behaviour with simulations.")),
     tabPanel("One study", h3("One realised study"), actionButton("run_one", "Simulate one study", class = "btn-primary"),
       p("Change the seed for another realisation. High planned power does not guarantee a conclusive result."),
-      textOutput("one_status"), tableOutput("one_result"), textOutput("one_interpretation"),
-      plotOutput("one_plot", height = "300px"), h4("First 12 participant records"), tableOutput("one_data"),
+      textOutput("one_status"), tableOutput("one_result"),
+      p(class = "caption", "Table 4. Effect estimate, interval, p-value and decisions from the saved single-study simulation."),
+      textOutput("one_interpretation"), plotOutput("one_plot", height = "300px"),
+      p(class = "caption", "Figure 4. The saved study's estimate and interval compared with zero, the clinical threshold and generating truth."),
+      h4("First 12 participant records"), tableOutput("one_data"),
+      p(class = "caption", "Table 5. The first 12 simulated participant records from the saved study; binary outcomes use 0 for no event and 1 for an event."),
       downloadButton("download_one", "Download study and assumptions")),
     tabPanel("Many studies", h3("Repeated independent studies"), actionButton("run_many", "Simulate many studies", class = "btn-primary"),
-      textOutput("many_status"), tableOutput("many_summary"), textOutput("many_text"),
+      textOutput("many_status"), tableOutput("many_summary"),
+      p(class = "caption", "Table 6. Rejection, interval coverage and width attainment across the saved simulation batch, with Monte Carlo uncertainty."),
+      textOutput("many_text"),
       p("Monte Carlo intervals describe finite-replication uncertainty, not uncertainty in clinical assumptions. Coverage evaluates the interval procedure; rejection evaluates the stated test."),
       plotOutput("many_plot", height = "480px"),
-      p("First 30 intervals only. Filled dots: reject zero; open dots: do not reject. Line styles distinguish zero, the clinical threshold and generating truth."),
+      p(class = "caption", "Figure 5. The first 30 saved trial intervals. Filled dots reject zero; open dots do not. Line styles distinguish zero, the clinical threshold and generating truth."),
       plotOutput("distribution", height = "300px"),
+      p(class = "caption", "Figure 6. Distribution of estimated treatment effects across the saved independent studies; the dashed line marks the generating truth."),
       h4("How often is the p-value below alpha?"),
       plotOutput("p_values", height = "300px"),
-      p("The dashed line uses the alpha saved with this run. Below it, the fraction estimates power under an alternative or Type I error under the null."),
+      p(class = "caption", "Figure 7. Saved p-values across independent studies; the dashed line marks the alpha used for that simulation batch."),
+      p("The fraction of p-values below the saved alpha estimates power under an alternative or Type I error under the null."),
       downloadButton("download_many", "Download replications and assumptions")),
     tabPanel("My study", h3("Apply this to your question"),
       textAreaInput("study_question", "Research question and primary outcome", rows = 2, width = "100%"),
@@ -151,9 +176,10 @@ ui <- fluidPage(
         column(4, numericInput("cost_base", "Fixed study costs (your currency)", 0, min = 0)),
         column(4, numericInput("cost_per_patient", "Cost per recruited participant", 0, min = 0))),
       tableOutput("feasibility_table"),
+      p(class = "caption", "Table 7. Expected recruitment, analysable counts and costs under the stated eligibility, consent and loss assumptions."),
       helpText("These are expected recruitment and cost scenarios, not guarantees. Account for other exclusions and costs where relevant."),
       actionButton("use_feasible_cap", "Use expected recruitment as the lab limit"),
-      p(tags$a(href = "../book/Sample_size_open_module.html#own-study", target = "_top", "Read the study justification guidance"))),
+      p(tags$a(href = "../book/Sample_size_open_module.html#own-study", target = "_blank", rel = "noopener", "Read the study justification guidance"))),
     tabPanel("Justify and communicate", h3("Explain your decision"),
       textAreaInput("justification", "State the goal, sources, clinical threshold, sensitivity, feasibility and limits of the intended conclusion.", rows = 8, width = "100%"),
       p("Use the case template. Increasing the assumed effect simply to reduce recruitment is not a justification."),
@@ -176,6 +202,10 @@ ui <- fluidPage(
 
 server <- function(input, output, session) {
   safe <- function(expr) tryCatch(expr, error = function(e) validate(need(FALSE, conditionMessage(e))))
+  effect_text <- function(value, outcome, digits = 2) {
+    if (outcome == "proportions") paste0(round(100 * value, digits), " percentage points")
+    else paste0(signif(value, digits + 2), " units")
+  }
   current_activity <- reactiveVal("")
   activity_selection <- reactiveVal("")
   routed_case <- reactiveVal(NULL)
@@ -185,6 +215,30 @@ server <- function(input, output, session) {
     values <- lapply(names(defaults), function(name) if (is.null(input[[name]])) defaults[[name]] else input[[name]])
     names(values) <- names(defaults)
     safe(validate_lab_inputs(values))
+  })
+  expected_effect <- reactive({
+    values <- current_lab_inputs()
+    if (values$outcome == "means") values$expected_m else values$expected_p
+  })
+  output$probability_inputs <- renderText({
+    values <- current_lab_inputs()
+    paste0("Expected benefit: ", effect_text(values$expected_p, "proportions"),
+      "; planning probabilities: control ", format_percent(values$plan_p0, 1),
+      ", treatment ", format_percent(values$plan_p1, 1),
+      "; planning benefit: ", effect_text(values$plan_p1 - values$plan_p0, "proportions"),
+      "; clinical threshold: ", effect_text(values$threshold_p, "proportions"), ".")
+  })
+  output$error_target_inputs <- renderText({
+    values <- current_lab_inputs()
+    paste0("Alpha: ", format_percent(values$alpha, 1), "; target power: ",
+      format_percent(values$target_power, 1), "; interval confidence: ",
+      format_percent(1 - values$alpha, 1), ".")
+  })
+  output$dropout_input <- renderText(paste0("Expected dropout: ", format_percent(current_lab_inputs()$dropout, 1), "."))
+  output$generating_inputs <- renderText({
+    values <- current_lab_inputs()
+    paste0("Generating probabilities: control ", format_percent(values$true_p0, 1),
+      ", treatment ", format_percent(values$true_p1, 1), ".")
   })
   study_details <- reactive({
     defaults <- study_input_defaults()
@@ -247,15 +301,15 @@ server <- function(input, output, session) {
     x <- teaching_case(current_activity())
     tagList(h3(x$title), p(x$prompt),
       if (!is.null(routed_case())) p(tags$a(href = paste0("../", x$app, "/?activity=", x$id),
-        target = "_top", "Open the matching activity")),
-      p(tags$a(href = paste0("../", x$return_path), target = "_top", "Return to this passage in the tutorial")))
+        target = "_blank", rel = "noopener", "Open the matching activity")),
+      p(tags$a(href = paste0("../", x$return_path), target = "_blank", rel = "noopener", "Return to this passage in the tutorial")))
   })
   output$design_route <- renderUI({
     design <- study_details()$study_design
     if (design == "two_groups") return(p("The lab calculations apply to two independent, equally sized groups. Check that the outcome and intended analysis match your study."))
     tagList(p("The two-group lab does not calculate a sample size for this design. Your notes and feasibility calculation can still be saved."),
-      if (design == "single_proportion") p(tags$a(href = "../prevalence_precision/?activity=prevalence", target = "_top", "Open the single-proportion precision activity")),
-      p(tags$a(href = "../book/Sample_size_open_module.html#study-designs", target = "_top", "Choose the appropriate planning approach")))
+      if (design == "single_proportion") p(tags$a(href = "../prevalence_precision/?activity=prevalence", target = "_blank", rel = "noopener", "Open the single-proportion precision activity")),
+      p(tags$a(href = "../book/Sample_size_open_module.html#study-designs", target = "_blank", rel = "noopener", "Choose the appropriate planning approach")))
   })
   feasibility <- reactive({
     x <- study_details()
@@ -324,7 +378,7 @@ server <- function(input, output, session) {
   })
   snapshot <- reactive(list(plan = planned(), generating = generating(), goal = input$goal,
                             target_power = input$target_power, dropout = input$dropout,
-                            recruitment_cap = input$recruit_cap))
+                            recruitment_cap = input$recruit_cap, expected_effect = expected_effect()))
   one <- eventReactive(input$run_one, {
     meta <- snapshot(); x <- simulate_one_study(meta$generating); x$meta <- meta; x
   }, ignoreInit = TRUE)
@@ -335,12 +389,14 @@ server <- function(input, output, session) {
     })
   }, ignoreInit = TRUE)
   status <- function(saved, label) paste0(label, ": n = ", saved$spec$n,
-    " per group; generating difference = ", signif(true_difference(saved$spec), 4), "; seed = ", saved$spec$seed,
+    " per group; generating difference = ", effect_text(true_difference(saved$spec), saved$spec$outcome), "; seed = ", saved$spec$seed,
     ". ", if (!identical(saved$meta, snapshot())) "Inputs changed. These are saved results; run again to update." else "Results match current inputs.")
   output$planning <- renderTable({
     x <- planned(); recruit <- adjust_for_dropout(x$n, input$dropout)
-    data.frame(Item = c("Analysable per group", "Analysable total", "Recruit per group", "Recruitment total", "Planning power", "Anticipated FULL interval width"),
-      Value = c(x$n, 2*x$n, recruit, 2*recruit, format_percent(spec_power(x), 1), signif(anticipated_width(x), 4)))
+    data.frame(Item = c("Expected benefit (recorded judgement)", "Planning benefit (used in calculation)", "Clinical threshold (meaningful benefit)",
+      "Analysable per group", "Analysable total", "Recruit per group", "Recruitment total", "Planning power", "Anticipated FULL interval width"),
+      Value = c(effect_text(expected_effect(), x$outcome), effect_text(true_difference(x), x$outcome), effect_text(x$threshold, x$outcome),
+        x$n, 2*x$n, recruit, 2*recruit, format_percent(spec_power(x), 1), effect_text(anticipated_width(x), x$outcome)))
   })
   output$method <- renderText(method_label(planned()$outcome))
   output$planning_text <- renderText(paste(if (planned()$outcome == "means")
@@ -349,13 +405,14 @@ server <- function(input, output, session) {
     "Reaching the target on this curve does not guarantee every interval meets it. Check the fraction meeting the width target under Many studies."))
   output$planning_plot <- renderPlot({
     x <- planned(); ns <- unique(round(seq(2, min(100000, max(40, 2*x$n)), length.out = 70)))
+    scale <- if (x$outcome == "proportions") 100 else 1
     par(mfrow = c(2, 1), mar = c(4, 4, 2, 1))
-    plot(ns, vapply(ns, function(n) spec_power(x, n), numeric(1)), type = "l", lwd = 2,
-      ylim = c(0, 1), xlab = "Analysable participants per group", ylab = "Power")
-    abline(h = input$target_power, lty = 2); points(x$n, spec_power(x), pch = 19)
-    plot(ns, vapply(ns, function(n) anticipated_width(x, n), numeric(1)), type = "l", lwd = 2,
-      xlab = "Analysable participants per group", ylab = "Full CI width")
-    abline(h = x$width_target, lty = 2); points(x$n, anticipated_width(x), pch = 19)
+    plot(ns, 100 * vapply(ns, function(n) spec_power(x, n), numeric(1)), type = "l", lwd = 2,
+      ylim = c(0, 100), xlab = "Analysable participants per group", ylab = "Power (%)")
+    abline(h = 100 * input$target_power, lty = 2); points(x$n, 100 * spec_power(x), pch = 19)
+    plot(ns, scale * vapply(ns, function(n) anticipated_width(x, n), numeric(1)), type = "l", lwd = 2,
+      xlab = "Analysable participants per group", ylab = if (x$outcome == "proportions") "Full CI width (percentage points)" else "Full CI width (outcome units)")
+    abline(h = scale * x$width_target, lty = 2); points(x$n, scale * anticipated_width(x), pch = 19)
   }, alt = "Power and anticipated full confidence interval width versus participants per group. Current values are provided in the design table.")
   comparison <- reactive({
     x <- planned()
@@ -377,19 +434,19 @@ server <- function(input, output, session) {
     z <- comparison(); x <- z$spec
     ns <- unique(round(seq(2, min(100000, max(40, 2*x$n, z$cap_n)), length.out = 80)))
     colours <- c("#176675", "#a04a24", "#635493")
-    plot(range(ns), c(0, 1), type = "n", xlab = "Analysable patients per group", ylab = "Power")
+    plot(range(ns), c(0, 100), type = "n", xlab = "Analysable patients per group", ylab = "Power (%)")
     for (i in seq_along(z$scenarios)) lines(ns,
-      vapply(ns, function(n) spec_power(z$scenarios[[i]], n), numeric(1)),
+      100 * vapply(ns, function(n) spec_power(z$scenarios[[i]], n), numeric(1)),
       lwd = 2, col = colours[i], lty = i)
-    abline(h = input$target_power, lty = 2, col = "#555555")
+    abline(h = 100 * input$target_power, lty = 2, col = "#555555")
     abline(v = z$cap_n, lty = 3, col = "#555555")
-    legend("bottomright", legend = paste("Difference", signif(z$effects, 3)),
+    legend("bottomright", legend = effect_text(z$effects, x$outcome, 1),
       col = colours, lty = 1:3, lwd = 2, bty = "n")
   }, alt = "Power curves compare half, two-thirds and the full planning difference. The table gives power at the expected analysable recruitment limit.")
   output$comparison_table <- renderTable({
     z <- comparison()
-    data.frame(Difference = z$effects, Expected_analysable_per_group = z$cap_n,
-      Power_at_limit = vapply(z$scenarios, function(x) spec_power(x, z$cap_n), numeric(1)))
+    data.frame(Difference = effect_text(z$effects, z$spec$outcome), Expected_analysable_per_group = z$cap_n,
+      Power_at_limit = format_percent(vapply(z$scenarios, function(x) spec_power(x, z$cap_n), numeric(1)), 1))
   }, digits = 3)
   output$effect_plot <- renderPlot({
     x <- planned(); d <- true_difference(x)
@@ -400,41 +457,47 @@ server <- function(input, output, session) {
       if (y$outcome == "means") y$delta <- effect else y$p_treatment <- y$p_control + effect
       spec_power(y)
     }, numeric(1))
-    plot(effects, powers, type = "l", lwd = 2, col = "#176675", ylim = c(0,1),
-      xlab = if (x$outcome == "means") "Treatment minus control (outcome units)" else "Treatment minus control (proportion units)",
-      ylab = "Power", main = paste(x$n, "analysable patients per group"))
-    abline(h = input$target_power, lty = 2); abline(v = 0, lty = 3)
-    points(d, spec_power(x), pch = 19)
+    scale <- if (x$outcome == "proportions") 100 else 1
+    plot(scale * effects, 100 * powers, type = "l", lwd = 2, col = "#176675", ylim = c(0,100),
+      xlab = if (x$outcome == "means") "Treatment minus control (outcome units)" else "Treatment minus control (percentage points)",
+      ylab = "Power (%)", main = paste(x$n, "analysable patients per group"))
+    abline(h = 100 * input$target_power, lty = 2); abline(v = 0, lty = 3)
+    points(scale * d, 100 * spec_power(x), pch = 19)
   }, alt = "Two-sided power across hypothetical signed differences at fixed planned sample size. Negative differences mean harm; rejection in either direction is counted.")
   output$sensitivity <- renderTable({
     p <- planned(); g <- generating(); null <- p; null$delta <- 0; null$p_treatment <- null$p_control
     xs <- list(p, g, null)
-    data.frame(Scenario = c("Plan", "Current generating scenario", "Null effect"), Difference = vapply(xs, true_difference, numeric(1)),
-      Power = vapply(xs, spec_power, numeric(1)), Full_width = vapply(xs, anticipated_width, numeric(1)))
+    data.frame(Scenario = c("Plan", "Current generating scenario", "Null effect"), Difference = effect_text(vapply(xs, true_difference, numeric(1)), p$outcome),
+      Power = format_percent(vapply(xs, spec_power, numeric(1)), 1), Full_width = effect_text(vapply(xs, anticipated_width, numeric(1)), p$outcome))
   }, digits = 3)
   output$one_status <- renderText({ req(input$run_one > 0); status(one(), "Saved single study") })
   output$one_result <- renderTable({
-    x <- one()$result
+    saved <- one(); x <- saved$result
     data.frame(Measure = c("Effect estimate", "CI lower limit", "CI upper limit", "Two-sided p-value",
       "FULL interval width", "Reject zero", "Interval contains generating truth", "Width target met"),
-      Value = c(format(round(unlist(x[1:5]), 4), nsmall = 4),
+      Value = c(effect_text(unlist(x[1:3]), saved$spec$outcome), format(round(x$p_value, 4), nsmall = 4),
+                effect_text(x$width, saved$spec$outcome),
                 ifelse(unlist(x[6:8]), "Yes", "No")), row.names = NULL)
   })
   output$one_interpretation <- renderText(interval_interpretation(one()$result, one()$spec))
   output$one_plot <- renderPlot(plot_trial_intervals(one()$result, one()$spec), alt = "One study estimate and interval; values and interpretation are stated above.")
   output$one_data <- renderTable(head(one()$data, 12))
   output$many_status <- renderText({ req(input$run_many > 0); paste(status(many(), "Saved batch"), "B =", many()$spec$B) })
-  output$many_summary <- renderTable(simulation_summary(many()), digits = 4)
+  output$many_summary <- renderTable({
+    display_simulation_summary(simulation_summary(many()))
+  })
   output$many_text <- renderText({
     x <- many(); r <- x$results
     paste0(if (abs(true_difference(x$spec)) < 1e-12) "Null scenario: rejection rate estimates Type I error. " else "Effect scenario: rejection rate estimates power. ",
-      "Mean full interval width = ", signif(mean(r$width), 4), "; mean estimate = ", signif(mean(r$estimate), 4),
-      "; truth = ", signif(true_difference(x$spec), 4), ". The separate single-study draw is not the first row of this batch.")
+      "Mean full interval width = ", effect_text(mean(r$width), x$spec$outcome), "; mean estimate = ", effect_text(mean(r$estimate), x$spec$outcome),
+      "; truth = ", effect_text(true_difference(x$spec), x$spec$outcome), ". The separate single-study draw is not the first row of this batch.")
   })
   output$many_plot <- renderPlot(plot_trial_intervals(many()$results, many()$spec), alt = "First 30 study intervals; summary rates and downloadable data provide a text alternative.")
   output$distribution <- renderPlot({
-    x <- many(); hist(x$results$estimate, breaks = 25, col = "#dbeafe", border = "white", main = "Sampling distribution of effects", xlab = "Treatment minus control")
-    abline(v = true_difference(x$spec), lty = 3, lwd = 2)
+    x <- many(); scale <- if (x$spec$outcome == "proportions") 100 else 1
+    hist(scale * x$results$estimate, breaks = 25, col = "#dbeafe", border = "white", main = "Sampling distribution of effects",
+      xlab = if (x$spec$outcome == "proportions") "Treatment minus control (percentage points)" else "Treatment minus control (outcome units)")
+    abline(v = scale * true_difference(x$spec), lty = 3, lwd = 2)
   }, alt = "Effect estimate histogram; mean estimate and generating truth are provided above.")
   output$p_values <- renderPlot({
     x <- many()
@@ -446,6 +509,7 @@ server <- function(input, output, session) {
     for (k in names(meta$plan)) rows[[paste0("plan_", k)]] <- meta$plan[[k]]
     for (k in names(meta$generating)) rows[[paste0("generating_", k)]] <- meta$generating[[k]]
     rows$planning_goal <- meta$goal; rows$target_power <- meta$target_power
+    rows$expected_effect <- meta$expected_effect
     rows$dropout_fraction <- meta$dropout
     if (!is.null(meta$recruitment_cap)) rows$recruitment_cap <- meta$recruitment_cap
     rows$method <- method_label(meta$plan$outcome); rows

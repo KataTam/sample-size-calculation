@@ -370,15 +370,19 @@ interval_interpretation <- function(result, spec) {
 
 plot_trial_intervals <- function(results, spec, max_display = 30) {
   x <- head(results, max_display); y <- seq_len(nrow(x))
-  clinical <- spec$threshold * spec$benefit_direction
-  limits <- range(c(x$lower, x$upper, 0, clinical, true_difference(spec)))
-  plot(x$estimate, y, xlim = limits, ylim = c(.5, nrow(x) + .5),
-       pch = ifelse(x$reject, 19, 1), xlab = "Treatment minus control", ylab = "Study",
+  # Rescale the display only; methods, input values and returned data stay unchanged.
+  scale <- if (spec$outcome == "proportions") 100 else 1
+  clinical <- scale * spec$threshold * spec$benefit_direction
+  truth <- scale * true_difference(spec)
+  limits <- range(c(scale * x$lower, scale * x$upper, 0, clinical, truth))
+  plot(scale * x$estimate, y, xlim = limits, ylim = c(.5, nrow(x) + .5),
+       pch = ifelse(x$reject, 19, 1),
+       xlab = if (spec$outcome == "proportions") "Treatment minus control (percentage points)" else "Treatment minus control (outcome units)", ylab = "Study",
        main = "Intervals from individual studies")
-  segments(x$lower, y, x$upper, y)
+  segments(scale * x$lower, y, scale * x$upper, y)
   abline(v = 0, lty = 1, col = "grey40")
   abline(v = clinical, lty = 2, col = "#9a3412")
-  abline(v = true_difference(spec), lty = 3, col = "#075985")
+  abline(v = truth, lty = 3, col = "#075985")
   legend("topright", c("Zero", "Clinical threshold", "Generating truth"),
          lty = 1:3, col = c("grey40", "#9a3412", "#075985"), cex = .75, bg = "white")
 }

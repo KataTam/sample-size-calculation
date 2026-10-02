@@ -21,9 +21,9 @@ This revision implements the ideas in `ideas_student_feedback.md`, with the auth
 | 15. Parameters | Contextual help explains assumptions, units, per-arm counts, confidence width, power, dropout and recruitment. |
 | 16. Plots | Existing power, precision, simulation and dropout plots retained; new sampling-distribution and single-proportion plots added. |
 | 17. Own study | My study fields cover question, outcome, evidence, clinical value, burden, eligible patients, consent, time and costs; downloadable justification. |
-| 18. Lesson/app integration | Persistent two-panel study view, activity presets, separate-page links and narrow-screen switching. |
+| 18. Lesson/app integration | Persistent two-panel study view with a draggable, keyboard-accessible divider, activity presets, new-tab resource links and stacked panels on narrow screens. |
 | 19. Core medical examples | Rehabilitation, discharge and adherence cases complement the original pain example. |
-| 20. Introductory mindmap | Four original question families recreated in an accessible diagram, with text interpretation and links. |
+| 20. Introductory mindmap | Seven planning questions in an accessible diagram, with integrated explanations, separate alpha/beta/power links and a caption crediting Sieben Medical Art. |
 
 ## Maintenance
 

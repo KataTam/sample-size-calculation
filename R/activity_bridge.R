@@ -1,8 +1,8 @@
 # Browser activity links and portable study plans. Statistical methods live in
 # sample_size_functions.R; these helpers validate UI state before applying it.
 lab_input_defaults <- function() list(
-  outcome = "means", goal = "testing", plan_delta = 3, plan_sd = 5,
-  plan_p0 = .3, plan_p1 = .6, threshold_m = 2, threshold_p = .3,
+  outcome = "means", goal = "testing", expected_m = 4, expected_p = .4, plan_delta = 3, plan_sd = 5,
+  plan_p0 = .3, plan_p1 = .6, threshold_m = 2, threshold_p = .2,
   width_m = 4, width_p = .2, alpha = .05, target_power = .8,
   fixed_n = 60, dropout = .1, recruit_cap = 200, reality = "same",
   true_delta = 1, true_sd = 7, true_p0 = .3, true_p1 = .4,
@@ -23,7 +23,8 @@ validate_lab_inputs <- function(values, complete = TRUE) {
   enums <- list(outcome = c("means", "proportions"),
     goal = c("testing", "precision", "fixed"), reality = c("same", "null", "custom"),
     stage = c("Explore assumptions", "One study", "Many studies", "My study", "Justify and communicate"))
-  ranges <- list(plan_delta = c(-1e6, 1e6), plan_sd = c(.1, 1e6),
+  ranges <- list(expected_m = c(-1e6, 1e6), expected_p = c(-1, 1),
+    plan_delta = c(-1e6, 1e6), plan_sd = c(.1, 1e6),
     plan_p0 = c(.01, .99), plan_p1 = c(.01, .99), threshold_m = c(.1, 1e6),
     threshold_p = c(.001, 1), width_m = c(.1, 1e6), width_p = c(.001, 2),
     alpha = c(.001, .1), target_power = c(.5, .99), fixed_n = c(2, 100000),
@@ -166,9 +167,15 @@ activity_bridge_script <- function(app = "power_explorer") {
   let connected = false, startupApplied = false;
   // Relative lesson/app links must use the public shell, not an inner webR URL.
   const resolveLinks = () => {
-    if (!siteRoot) return;
-    document.querySelectorAll('a[target="_top"][href^="../"]').forEach(link => {
-      link.href = new URL(link.getAttribute('href').slice(3), siteRoot).href;
+    document.querySelectorAll('a[href]').forEach(link => {
+      const href = (link.getAttribute('href') || '').trim();
+      if (!href || href === '#' || /^(?:javascript:|mailto:|tel:|data:|blob:)/i.test(href)) return;
+      if (link.hasAttribute('download') || link.getAttribute('role') === 'button' ||
+          link.matches('.shiny-download-link, .shiny-tab-input, .action-button, [data-toggle], [data-bs-toggle]')) return;
+      if (siteRoot && href.startsWith('../')) link.href = new URL(href.slice(3), siteRoot).href;
+      link.setAttribute('target', '_blank');
+      const rel = new Set((link.getAttribute('rel') || '').split(/\s+/).filter(Boolean));
+      rel.add('noopener'); link.setAttribute('rel', [...rel].join(' '));
     });
   };
   new MutationObserver(resolveLinks).observe(document.documentElement, {childList: true, subtree: true});

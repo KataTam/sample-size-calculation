@@ -64,12 +64,17 @@ ui <- fluidPage(
     h3("Predict, explore and interpret"),
     p("Predict the recruitment change when the margin of error is halved. Explain why required precision should follow the intended clinical or planning decision."),
     tableOutput("plan_table"), textOutput("precision_text"), textOutput("approximation_note"),
+    p(class = "caption", "Table. Planning prevalence, requested margin of error, approximate analysable counts and recruitment target."),
     plotOutput("sample_plot", height = "360px"),
+    p(class = "caption", "Figure. Approximate prevalence sample size across assumed percentages and confidence-interval margins. The dot marks the current plan."),
     p("Both reference curves use 95% confidence and fixed absolute margins: ±5 versus ±2.5 percentage points. The dot and separate curve show your chosen confidence and width."),
     h3("One realised interval"),
     actionButton("simulate", "Draw one illustrative sample", class = "btn-primary"),
     p("The sample uses the anticipated proportion slider as a hypothetical generating truth. The unknown-proportion option affects planning; it does not make the truth known."),
-    textOutput("saved_status"), tableOutput("study_table"), plotOutput("interval_plot", height = "220px"),
+    textOutput("saved_status"), tableOutput("study_table"),
+    p(class = "caption", "Table. Event count, observed percentage and Wilson confidence limits from one illustrative sample, with the realised width and target assessment."),
+    plotOutput("interval_plot", height = "220px"),
+    p(class = "caption", "Figure. One illustrative Wilson confidence interval compared with the assumed population percentage and requested width."),
     p("Wilson intervals stay within 0 and 1. Their realised width depends on the observed count; the planning approximation cannot guarantee that this interval meets the target. Recruitment inflation addresses expected numbers and does not correct selection or missing-data bias."),
     textAreaInput("justification", "Justify the margin, assumptions, sample availability and limits.", rows = 5, width = "100%"),
     activity_download_button("download_plan", "Download assumptions and explanation"),
@@ -156,7 +161,7 @@ server <- function(input, output, session) {
     ns <- function(width, confidence) ceiling(qnorm((1+confidence)/2)^2 * ps*(1-ps)/(width/2)^2)
     y1 <- ns(.10, .95); y2 <- ns(.05, .95); current <- ns(x$full_width, x$confidence)
     plot(ps*100, y2, type = "l", lwd = 2, col = "#a34724", ylim = c(0,max(y1,y2,current)),
-      xlab = "Assumed proportion (%)", ylab = "Approximate analysable participants")
+      xlab = "Assumed prevalence (%)", ylab = "Approximate analysable participants")
     lines(ps*100, y1, col = "#176675", lwd = 2, lty = 2)
     lines(ps*100, current, col = "#635493", lwd = 2, lty = 3)
     points(plan()$planning_p*100, plan()$n, pch = 19, col = "#635493")
@@ -175,8 +180,9 @@ server <- function(input, output, session) {
   })
   output$study_table <- renderTable({
     y <- study(); r <- y$result
-    data.frame(Events = r$events, Participants = r$n, Estimate = r$estimate,
-      Lower = r$lower, Upper = r$upper, Full_width = r$full_width,
+    data.frame(Events = r$events, Participants = r$n, Estimate = format_percent(r$estimate, 1),
+      Lower = format_percent(r$lower, 1), Upper = format_percent(r$upper, 1),
+      Full_width = paste0(round(100 * r$full_width, 1), " percentage points"),
       Target_met = r$full_width <= y$inputs$full_width)
   }, digits = 4)
   output$interval_plot <- renderPlot({

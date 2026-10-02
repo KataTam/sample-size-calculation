@@ -13,49 +13,49 @@
       "question": "What is the main outcome measure of your study?",
       "original_excerpt": "At the design stage, you choose an outcome measure that addresses the primary objective of the trial. This is the measure on which sample size calculations will be based.",
       "original_line": 59,
-      "clarification": null
+      "explanation": "At the design stage, choose an outcome measure that addresses the primary objective of the trial. Base the sample size calculation on this primary outcome."
     },
     {
       "id": "q2",
       "question": "What effect do you expect with standard treatment?",
       "original_excerpt": "In case there is a control group in your study in which the patients receive placebo or standard treatment, you can estimate the effect of such treatments from the existing literature including previous randomized and observational studies or from clinical practice.",
       "original_line": 63,
-      "clarification": "Record how comparable that evidence is to your population and measurement."
+      "explanation": "Estimate the expected outcome with standard treatment or placebo from previous randomized or observational studies, or from clinical practice. Record how comparable this evidence is to your study population, treatment and outcome measurement."
     },
     {
       "id": "q3",
       "question": "What effect do you expect with the novel treatment?",
       "original_excerpt": "This is naturally trickier to estimate since you normally do not have a good idea about the effect of the novel treatment, which is why you want to conduct the study in the first place. In many cases, a pilot study is an appropriate way to obtain a rough estimate of the effect.",
       "original_line": 67,
-      "clarification": "A small pilot's effect estimate is uncertain. Use it alongside external evidence and examine plausible ranges; the [practical pilot case](#pilot-feasibility) shows how."
+      "explanation": "The outcome with a novel treatment is usually harder to estimate, which is one reason for conducting the trial. A pilot study can provide a rough estimate, but small pilots give uncertain treatment estimates. Combine them with other evidence and examine plausible ranges. The [practical pilot case](#pilot-feasibility) shows how to use a pilot for feasibility objectives."
     },
     {
       "id": "q4",
       "question": "What is a clinically relevant treatment difference that you want to detect?",
       "original_excerpt": "This is the most important decision you have to make in a sample size calculation. You can detect a relatively large treatment difference with few participants, while if you expect a relatively small treatment difference that requires more participants to demonstrate conclusively. It is important to be realistic when you estimate the appropriate treatment difference, what you need to aim for is the *smallest clinically relevant difference* that would be important to detect if true. In the absence of existing literature, you may need to consult with experts and/or conduct a pilot study to help with the estimation. Note that the issue of clinical relevance is completely separate from that of statistical significance. The former requires clinical judgment or consensus and statistical considerations have no bearing on it (e.g., is this treatment difference clinically relevant and thus meaningful for the patient?). The latter is a purely statistical concept that as you will see is a function of sample size and is arbitrary.",
       "original_line": 71,
-      "clarification": "Keep the clinically important threshold distinct from the assumed true effect used in a power calculation. Statistical significance follows the chosen test and significance level; it does not establish clinical importance."
+      "explanation": "Keep three quantities separate: the expected effect is your best current expectation, the planning effect is the particular true difference at which you calculate [power](#statistical-power), and the clinical threshold is the smallest benefit judged meaningful, agreed with patients and clinicians using relevant evidence. The worked examples use distinct values for these three quantities.\n\nLarger differences can be detected with fewer participants; detecting smaller differences usually requires more participants. Choose a credible planning effect that is clinically worthwhile, then examine other plausible effects. Statistical significance does not establish clinical importance: interpret the effect estimate and its confidence interval against the clinical threshold."
     },
     {
       "id": "q5",
       "question": "What are your null and alternative hypotheses?",
       "original_excerpt": "Once the clinically relevant treatment difference is determined, you can formulate your null and alternative hypotheses. In standard superiority trials, the null hypothesis is that there is no treatment difference while the alternative hypothesis is that there is a treatment difference.",
       "original_line": 75,
-      "clarification": "In an ordinary two-sided superiority test, the alternative is a nonzero treatment difference. Choosing a clinically relevant planning difference does not automatically make that difference the boundary of the null hypothesis."
+      "explanation": "State the hypotheses for the planned analysis. In the ordinary two-sided superiority trials used here, the null hypothesis is no population treatment difference and the alternative is a difference in either direction. The particular difference used for sample size planning does not become the boundary of the null hypothesis. After the trial, interpret the estimated effect and its confidence interval against both zero and the clinical threshold."
     },
     {
       "id": "q6",
       "question": "What degree of Type I error risk are you willing to accept?",
       "original_excerpt": "$\\alpha$ is the probability of detecting a treatment difference when it does not exist (conventionally set at 0.05 or equivalently at 5%). In other words, you can think about $\\alpha$ as the risk of committing a type I error, i.e., when a treatment difference is found based on a statistically significant observed result when in reality there is no difference (false positive result).",
       "original_line": 114,
-      "clarification": null
+      "explanation": "[Alpha ($\\alpha$)](#alpha) is the planned probability of rejecting the null hypothesis when it is true, under the assumptions of the test. In these superiority examples, this means finding a statistically significant treatment difference when no population difference exists: a Type I error, or false positive result. A conventional significance level is 5%. Alpha does not give the probability that the null hypothesis is true after observing the data."
     },
     {
       "id": "q7",
       "question": "What degree of Type II error risk are you willing to accept?",
       "original_excerpt": "$\\beta$ is defined as the risk of committing a type II error, i.e., when the null hypothesis is retained by error because a true treatment difference was not detected (false negative result).\n\nThe power of a study is the complement of committing a type II error: Provided the true difference exists, there can again logically only be two study outcomes. With power set at 90%, you have a 90% chance that you detect the true difference and 10% that you don’t.",
       "original_line": 116,
-      "clarification": "Power is evaluated at a specified true treatment difference. Failing to reject the null hypothesis does not establish that no difference exists. See [alpha, beta and power](#alpha-beta)."
+      "explanation": "[Beta ($\\beta$)](#beta) is the probability of failing to reject the null hypothesis at a specified true treatment difference, with the design and analysis held fixed: a Type II error, or false negative result. [Power](#statistical-power) is $1-\\beta$, the probability of rejecting the null hypothesis at that difference.\n\nWith 90% power, studies carried out under those assumptions would detect the specified difference in about 90% of repetitions and fail to detect it in about 10%. An individual trial can still produce a non-significant result. Failing to reject the null does not establish that there is no treatment difference."
     }
   ]
 }

@@ -1,5 +1,13 @@
 # Changelog
 
+## Integrated tutorial and activities — 2 October 2026
+
+- Replaced the lesson-width slider with a draggable and keyboard-accessible separator; content links open in new tabs while navigation and app controls keep their function.
+- Consolidated the mind-map explanations, added the Sieben Medical Art credit and linked alpha, beta and power to separate definitions.
+- Used distinct expected effects, planning effects and clinical thresholds across the worked treatment-comparison cases and recorded expected effects in saved study plans.
+- Preferred percentages and percentage points in explanations, tables and plots, added captions, and clarified what statistical power says about repeated comparable studies.
+- Kept the existing printable PDF unchanged.
+
 ## Tutorial scope and HTML publishing — 2 October 2026
 
 - Clarified that the Introduction focuses on two-arm randomized superiority trials, while later sections broaden to estimation, prevalence, feasibility and guidance for other designs.

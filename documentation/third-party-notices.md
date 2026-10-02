@@ -1,6 +1,6 @@
 # Third-party notices and provenance
 
-The current learner prose combines the author's original tutorial with explanations and simulation code written for this revision. The seven-question map includes selected verbatim excerpts from Katalin Tamási's tutorial dated 14 May 2021, supplied by the author; separate planning clarifications identify later explanations. External papers informed the concepts; no paper figures, PDF pages, or supplemental code were copied into the package. Original code remains MIT and original teaching material CC BY 4.0.
+The current learner prose combines the author's original tutorial with explanations and simulation code written for this revision. The seven-question map adapts selected passages from Katalin Tamási's tutorial dated 14 May 2021, supplied by the author, into integrated explanations. Its caption credits the underlying illustration to Sieben Medical Art. External papers informed the concepts; no paper figures, PDF pages, or supplemental code were copied into the package. Original code remains MIT and original teaching material CC BY 4.0.
 
 | Source | Use in this package | Licence or provenance note |
 |---|---|---|
@@ -13,7 +13,7 @@ The current learner prose combines the author's original tutorial with explanati
 
 ## Earlier Clayton lecture-note attribution
 
-The original tutorial identified inspiration from Tim Clayton's 2019 clinical-trial lecture notes. The seven-question explanations reproduce selected passages from the author's own supplied 2021 tutorial; available local records do not establish that those passages were copied from the lecture notes. No Clayton PDF pages, figures or supplemental code are distributed. This revision does not assert a reusable licence for the lecture notes or import the former private repository history. The exact excerpts and their source locations are recorded in [question-map provenance](development/question-map-provenance.md).
+The original tutorial identified inspiration from Tim Clayton's 2019 clinical-trial lecture notes. The seven-question explanations adapt selected passages from the author's own supplied 2021 tutorial; available local records do not establish that those passages were copied from the lecture notes. No Clayton PDF pages, figures or supplemental code are distributed. This revision does not assert a reusable licence for the lecture notes or import the former private repository history. The source excerpts and their locations are recorded in [question-map provenance](development/question-map-provenance.md).
 
 ## References
 

@@ -9,7 +9,7 @@ ui <- fluidPage(
   sidebarLayout(
     sidebarPanel(
       numericInput("n", "Required analysable participants PER GROUP", value = 100, min = 1, step = 1),
-      sliderInput("dropout", "Expected dropout rate", min = 0, max = 0.50, value = 0.10, step = 0.01)
+      sliderInput("dropout", "Expected dropout proportion (0.10 = 10%)", min = 0, max = 0.50, value = 0.10, step = 0.01)
     ),
     mainPanel(
       p("Equal allocation. Round recruitment up within each arm, then double. Inflation does not remove missing-data bias or guarantee the realised analysable count."),
@@ -17,6 +17,7 @@ ui <- fluidPage(
       verbatimTextOutput("result"),
       h3("Dropout and recruitment target"),
       plotOutput("dropout_plot", height = "320px"),
+      p(class = "caption", "Figure. Recruitment required per arm at different expected dropout percentages, for the chosen analysable count."),
       tags$details(tags$summary("Continue with this sample size in the reasoning lab"),
         p("A count and dropout fraction do not specify an outcome or effect. Add those assumptions below. The initial values are illustrative."),
         selectInput("lab_outcome", "Outcome for the two-group design", c("Continuous" = "means", "Binary" = "proportions")),
@@ -40,7 +41,7 @@ server <- function(input, output, session) {
     if (input$lab_outcome == "means") { values$plan_delta <- input$lab_delta; values$plan_sd <- input$lab_sd }
     else { values$plan_p0 <- input$lab_p0; values$plan_p1 <- input$lab_p1 }
     url <- tryCatch(lab_state_url(values), error = function(e) validate(need(FALSE, conditionMessage(e))))
-    tags$a(href = url, target = "_top", class = "btn btn-primary", "Explore this design in the lab")
+    tags$a(href = url, target = "_blank", rel = "noopener", class = "btn btn-primary", "Explore this design in the lab")
   })
   output$result <- renderPrint({
     valid_n()
@@ -56,16 +57,16 @@ server <- function(input, output, session) {
     dropout_values <- seq(0, 0.5, by = 0.01)
     targets <- vapply(dropout_values, adjust_for_dropout, numeric(1), n = input$n)
     plot(
-      dropout_values,
+      100 * dropout_values,
       targets,
       type = "l",
       lwd = 2,
-      xlab = "Expected dropout rate",
+      xlab = "Expected dropout (%)",
       ylab = "Recruitment target per group",
       main = "More dropout means more recruitment"
     )
-    points(input$dropout, adjust_for_dropout(input$n, input$dropout), pch = 19, cex = 1.3)
-    text(input$dropout, adjust_for_dropout(input$n, input$dropout), labels = " current", pos = 4)
+    points(100 * input$dropout, adjust_for_dropout(input$n, input$dropout), pch = 19, cex = 1.3)
+    text(100 * input$dropout, adjust_for_dropout(input$n, input$dropout), labels = " current", pos = 4)
   })
 }
 
