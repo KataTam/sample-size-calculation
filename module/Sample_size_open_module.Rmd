@@ -41,6 +41,8 @@ The [Introduction](#clinical-question) focuses on **two-arm randomized controlle
 
 The presentation and three simulation activities are inspired by chapters 1, 11 and 15 of *Power Analysis with Superpower* [@superpowerbook2022]. The clinical explanations, activities and figures here are tailored to this tutorial.
 
+Hans Burgerhof's *Statistics 3: Sample size calculation*, developed as aNewSpring study material in 2020, also informs the discussion of testing and estimation goals [@burgerhof2020].
+
 Teaching material is shared under CC BY 4.0 and original code under MIT. You may reuse and adapt the material with attribution. The [teaching guide](../teaching/TEACHING_GUIDE.md), [case template](../case-studies/student_case_template.md) and [assessment rubric](../teaching/assessment_rubric.md) support classroom use. Public attribution or publication requires consent.
 
 ## How to use this tutorial {-}
@@ -117,9 +119,15 @@ A sample size calculation checks whether a planned study can answer its question
 
 The final plan should address all four. A statistical target alone does not establish clinical usefulness or feasibility.
 
+### Ethical review and the study protocol
+
+In the Netherlands, research that falls under the **Medical Research Involving Human Subjects Act (WMO)** requires prior review and a positive decision from an accredited medical research ethics committee (**METC**, or MREC in English) or the **CCMO** before it starts [@ccmowmo]. The study protocol should explain the proposed sample size, the evidence supporting its assumptions and what the study can establish. This connects the statistical justification to the clinical question, participant burden and feasibility. Consult the relevant review committee's requirements and the applicable [CCMO protocol template](https://english.ccmo.nl/documents/2018/09/19/standard-research-file-c1-template-research-protocol).
+
 ## What assumptions do we need before calculating? {#how-do-you-determine-the-minimum-required-sample-size}
 
-Start with the primary outcome, the expected results in each group, the planned analysis and the acceptable error rates. The map below gathers the questions to answer before choosing a sample size. Apply each question to the chronic-pain trial: we already know the outcome, the two independent groups and the equal allocation.
+**Before choosing numerical parameters, consult guidance appropriate to the study design and research question.** For a randomized trial, use **SPIRIT 2025** for the protocol and **CONSORT 2025**, together with relevant extensions, for reporting the results [@spiritconsort2025]. For other designs, consult the corresponding guidance, such as STROBE for observational studies or STARD for diagnostic accuracy; [Where does my study fit?](#study-designs) provides routes. These are reporting guidelines: they help identify decisions to document, but do not replace design-specific statistical methods or supply universal values for the planning effect, error rates or sample size. Check disease-specific, funder and ethics-review requirements where applicable.
+
+Then specify the primary outcome, the expected results in each group, the planned analysis and the acceptable error rates. The map below gathers the questions to answer before choosing a sample size. Apply each question to the chronic-pain trial: we already know the outcome, the two independent groups and the equal allocation.
 
 ```{r study-questions-map, echo=FALSE, results='asis'}
 knitr::asis_output(render_question_map())
@@ -831,6 +839,7 @@ A difference can reflect Monte Carlo error or the approximation used for binary 
 - Interpret confidence intervals against zero and a clinical threshold.
 - Plan useful precision for a prevalence estimate or pilot feasibility outcome.
 - Assess what an existing dataset can establish for a new research question.
+- Explain planning options when a rare disease limits recruitment.
 :::
 
 The chronic-pain trial needs enough analysable outcomes, but recruitment is only part of its plan. We also need to allow for losses and consider whether the resulting estimates would guide a clinical decision.
@@ -1019,7 +1028,27 @@ A larger **true** benefit is easier to detect, but entering a larger assumed ben
 **Compare plans.** [Open the chronic-pain activity](http://127.0.0.1:8769/study/?activity=pain_one_many). Keep standard-treatment relief at 30%, novel-treatment relief at 60% and the Type I error rate at 5%. Compare 50 and 80 analysable patients per group. Which plan detects the specified benefit more often? What would obtaining the larger sample require in practice? Record the recruitment implications in your study plan.
 :::
 
-If none of these options makes the study informative and feasible, reconsider an overly broad aim, collaborate, or decide not to proceed with an efficacy study. A feasibility study should be judged against feasibility aims rather than treated as a miniature confirmatory trial [@lakens2022]. Changing the aim changes what the study can establish; it does not make the original treatment comparison more powerful. Broader eligibility can affect variability and generalisability. Clustered designs, nonparametric analyses and Bayesian planning require appropriate methods beyond the calculations illustrated here [@hayes1999; @happ2019; @pezeshk2003].
+If none of these options makes the study informative and feasible, reconsider an overly broad aim, collaborate, or decide not to proceed with an efficacy study. For a rare disease, however, low power alone need not rule out a useful controlled study; see [What if the disease is rare?](#rare-diseases) below. A feasibility study should be judged against feasibility aims rather than treated as a miniature confirmatory trial [@lakens2022]. Changing the aim changes what the study can establish; it does not make the original treatment comparison more powerful. Broader eligibility can affect variability and generalisability. Clustered designs, nonparametric analyses and Bayesian planning require appropriate methods beyond the calculations illustrated here [@hayes1999; @happ2019; @pezeshk2003].
+
+## What if the disease is rare? {#rare-diseases}
+
+For a rare disease, the number of eligible patients may impose a genuine limit on recruitment. Start by documenting how many patients could realistically participate, over what period and across which centres. Then assess what that sample could establish.
+
+1. **Establish the recruitment ceiling.** Work with specialist centres, registries and patient organisations. Consider collaboration across countries, eligibility criteria and ways to reduce travel and follow-up burden. Distinguish the number of people with the disease from the number eligible and willing to participate [@fdarare2023].
+2. **Use knowledge of the disease's natural course.** Previous studies and registries can inform progression, variability, suitable assessment times and meaningful outcomes. Check whether these data describe the population you intend to study. If this knowledge is insufficient, a natural-history study may be a useful research objective in its own right [@fdanaturalhistory2019].
+3. **Obtain useful information from each participant.** Use reliable, clinically meaningful measurements and minimise missing outcomes. Where appropriate, retain a continuous outcome rather than reducing it to "response/no response", and prespecify adjustment for informative baseline measurements. These choices require a matching analysis and sample size method [@emasmall2006].
+4. **Consider another design when appropriate.** Crossover or n-of-1 designs may suit stable conditions with reversible treatment effects and manageable carryover. They generally do not suit irreversible treatments or rapidly progressing disease. Prespecified adaptive or Bayesian approaches may also help, but require specialist planning; they do not guarantee that fewer patients will suffice [@emasmall2006; @fdarare2023].
+5. **Preserve a credible comparison.** Randomisation remains valuable. Registry or historical controls can sometimes help, but differences in patient severity, treatment era and outcome measurement can bias the comparison. They are not an automatic replacement for a concurrent control group [@fdaexternal2023].
+6. **Explain the remaining uncertainty.** Evaluate attainable power across plausible effects and the anticipated confidence interval width. A small randomized study may still be informative, although inconclusive results remain possible. Explain what it could establish and what would require further evidence [@emasmall2006].
+
+These recommendations draw on the EMA guideline on clinical trials in small populations (2006) and FDA rare-disease guidance (final, 2023). The FDA natural-history (2019) and external-control (2023) documents cited here are **draft guidance**, rather than final recommendations. These sources concern medicinal-product development; use the principles that fit your own study's purpose and discuss alternative designs with a methodological collaborator.
+
+<details class="misconception" id="misconception-rare-disease-threshold">
+<summary>Common misconception: rare diseases require a different significance threshold</summary>
+
+Rarity does not, by itself, justify increasing the Type I error rate. Alternative designs and error targets need prospective justification; a small available population does not make uncertain evidence more conclusive [@emasmall2006].
+
+</details>
 
 ## What can you do when information is limited? {#pilot-feasibility}
 
@@ -1193,11 +1222,11 @@ sessionInfo()
 
 # References {-}
 
-## AI-use disclosure {-}
+## Acknowledgments {-}
 
-OpenAI Codex assisted with developing the website and interactive applications, reviewing code, and managing the GitHub repository. The author remains fully responsible for the content and accuracy of the teaching materials and software.
+The author thanks **Carlotta Drewer** and **Bert van der Leest**, students who reviewed the materials from a student's perspective and provided feedback on their clarity and usability.
 
-Software reference: [@openaicodex].
+OpenAI Codex [@openaicodex] assisted with developing the website and interactive applications, reviewing code, and managing the GitHub repository. The author remains fully responsible for the content and accuracy of the teaching materials and software.
 
 ## Sources {-}
 

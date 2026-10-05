@@ -79,7 +79,7 @@ let browser;
 
   await page.goto(base + '/book/Sample_size_open_module.html');
   assert.equal(await page.locator('.learning-goals ul').count(), 11);
-  assert.equal(await page.locator('details.misconception').count(), 12);
+  assert.equal(await page.locator('details.misconception').count(), 13);
   for (const element of await page.locator('details.misconception').all()) {
     assert.equal(await element.getAttribute('open'), null);
   }
@@ -109,6 +109,6 @@ let browser;
   await page.waitForFunction(() => document.getElementById('app-status').textContent.startsWith('Activity loaded.'));
   assert(page.frames().some(frame => frame.url().includes('/assumptions_report/')));
   assert.deepEqual(errors, []);
-  console.log('DISCLOSURE CHECK PASSED: learning-outcome lists, twelve closed amber boxes, keyboard controls, folded R code and raw output with visible formatted results, nested exercise answer, night theme, mobile width, standalone HTML, local activity links, RStudio-style /rmd_output/ activity launch.');
+  console.log('DISCLOSURE CHECK PASSED: learning-outcome lists, thirteen closed amber boxes, keyboard controls, folded R code and raw output with visible formatted results, nested exercise answer, night theme, mobile width, standalone HTML, local activity links, RStudio-style /rmd_output/ activity launch.');
   await browser.close();
 })().catch(async error => { console.error(error); if (browser) await browser.close(); process.exitCode = 1; });
