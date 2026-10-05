@@ -8,12 +8,12 @@ ui <- fluidPage(
   titlePanel("Sample Size: Two Proportions", windowTitle = "Two proportions sample size"),
   sidebarLayout(
     sidebarPanel(
-      sliderInput("pi1", "Event rate with novel treatment used for planning (0.60 = 60%)", min = 0.01, max = 0.99, value = 0.60, step = 0.01),
-      sliderInput("pi2", "Event rate with standard treatment used for planning (0.30 = 30%)", min = 0.01, max = 0.99, value = 0.30, step = 0.01),
+      percent_slider("pi1", "Novel treatment: expected event rate for the calculation (%)", min = 0.01, max = 0.99, value = 0.60, step = 0.01),
+      percent_slider("pi2", "Standard treatment: expected event rate for the calculation (%)", min = 0.01, max = 0.99, value = 0.30, step = 0.01),
       helpText("These assumed event rates determine the planning difference. The pain example expects a 40-percentage-point benefit, plans for 30 points and uses a 20-point clinical threshold."),
-      sliderInput("alpha", tags$a(href = "../book/Sample_size_open_module.html#alpha", target = "_blank", rel = "noopener", "Type I error rate (0.05 = 5%)"), min = 0.001, max = 0.10, value = 0.05, step = 0.001),
-      sliderInput("power", tags$a(href = "../book/Sample_size_open_module.html#statistical-power", target = "_blank", rel = "noopener", "Target power (0.90 = 90%)"), min = 0.50, max = 0.99, value = 0.90, step = 0.01),
-      sliderInput("dropout", "Expected loss to follow-up (0.10 = 10%)", min = 0, max = 0.50, value = 0, step = 0.01)
+      percent_slider("alpha", tags$a(href = "../book/Sample_size_open_module.html#alpha", target = "_blank", rel = "noopener", "Type I error rate (%)"), min = 0.001, max = 0.10, value = 0.05, step = 0.001),
+      percent_slider("power", tags$a(href = "../book/Sample_size_open_module.html#statistical-power", target = "_blank", rel = "noopener", "Target power (%)"), min = 0.50, max = 0.99, value = 0.90, step = 0.01),
+      percent_slider("dropout", "Expected loss to follow-up (%)", min = 0, max = 0.50, value = 0, step = 0.01)
     ),
     mainPanel(
       p("Introductory normal approximation; two independent groups with equal allocation. The reasoning lab uses explicitly specified test-based power and may give a different answer."),

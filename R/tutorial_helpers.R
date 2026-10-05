@@ -15,8 +15,8 @@ display_probabilities <- function(x, probabilities = character(), points = chara
 }
 
 display_simulation_summary <- function(x) {
-  data.frame(Measure = x$measure, Rate = percent(x$estimate),
-    `Monte Carlo SE (percentage points)` = formatC(100 * x$MCSE,
+  data.frame(Measure = c("Statistically significant results (rejection rate)", "Intervals containing the true effect (coverage)", "Intervals meeting the target width"), Rate = percent(x$estimate),
+    `Simulation uncertainty: Monte Carlo SE (percentage points)` = formatC(100 * x$MCSE,
       format = "f", digits = 2),
     `95% lower limit` = percent(x$MC_lower_95),
     `95% upper limit` = percent(x$MC_upper_95), check.names = FALSE)
@@ -34,7 +34,7 @@ power_row <- function(batch) {
 plot_p_values <- function(batch) {
   values <- batch$results$p_value
   hist(values, breaks = seq(0, 1, .025), col = "#d2e6e9", border = "white",
-    main = sprintf("%s per group; rejection fraction %.1f%%",
+    main = sprintf("%s per group; statistically significant results %.1f%%",
       batch$spec$n, 100 * mean(batch$results$reject)),
     xlab = "p-value", ylab = "Number of studies", xlim = c(0, 1))
   abline(v = batch$spec$alpha, lty = 2, lwd = 2, col = "#923d20")
@@ -54,7 +54,7 @@ power_curve_data <- function(spec, effects, ns) {
 plot_power_curves <- function(data, target = .90, cap = 90) {
   effects <- unique(data$effect)
   colours <- c("#176675", "#a04a24", "#635493")
-  plot(range(data$n), c(0, 1), type = "n", xlab = "Analysable patients per group",
+  plot(range(data$n), c(0, 1), type = "n", xlab = "Participants for analysis, per group",
     ylab = "Power (%)", yaxt = "n")
   axis(2, at = seq(0, 1, .2), labels = paste0(seq(0, 100, 20), "%"))
   for (i in seq_along(effects)) {

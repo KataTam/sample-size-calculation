@@ -73,7 +73,7 @@ validate_study_inputs <- function(values, complete = TRUE) {
 
 apply_lab_inputs <- function(session, values) {
   values <- validate_lab_inputs(values)
-  sliders <- c("plan_p0", "plan_p1", "alpha", "target_power", "dropout", "true_p0", "true_p1")
+  sliders <- c("plan_p0", "plan_p1", "alpha", "target_power", "dropout", "true_p0", "true_p1", "expected_p", "threshold_p", "width_p")
   selectors <- c("outcome", "goal", "reality")
   for (name in names(values)) {
     if (name == "stage") shiny::updateTabsetPanel(session, "stage", selected = values[[name]])
@@ -144,6 +144,28 @@ activity_download_script <- function() r"---(document.addEventListener('click', 
 
 # Exported Shinylive apps have nested frames. Listen on accessible same-origin
 # ancestors as well as the app frame, and read the nearest activity/state URL.
+percent_slider <- function(inputId, label, min, max, value, step = .01, suffix = "%") {
+  shiny::tags$div(class = "percentage-slider", `data-suffix` = suffix, shiny::sliderInput(inputId, label,
+    min = min, max = max, value = value, step = step))
+}
+
+percentage_display_script <- function() r"---((function () {
+  function format(value) { return (Math.round(Number(value) * 10000) / 100).toLocaleString('en', {maximumFractionDigits:2}); }
+  function update() {
+    if (!window.jQuery) return;
+    document.querySelectorAll('.percentage-slider input').forEach(function (input) {
+      var slider = jQuery(input).data('ionRangeSlider');
+      if (!slider || slider.options.prettify === format) return;
+      slider.update({prettify_enabled:true, prettify:format, postfix:input.closest('.percentage-slider').dataset.suffix});
+    });
+  }
+  document.addEventListener('DOMContentLoaded', update);
+  if (window.jQuery) jQuery(document).on('shiny:connected shiny:bound shiny:message', function () { setTimeout(update, 50); });
+  var observer = new MutationObserver(function () { setTimeout(update, 0); });
+  observer.observe(document.documentElement, {childList:true, subtree:true});
+  setTimeout(update, 100);
+})();)---"
+
 activity_bridge_script <- function(app = "power_explorer") {
   code <- r"---((function() {
   const app = '__APP__';
@@ -211,5 +233,5 @@ activity_bridge_script <- function(app = "power_explorer") {
   $(document).on('shiny:disconnected', function() { connected = false; });
   Shiny.addCustomMessageHandler('sample-size-state', function(state) { send({type: 'sample-size:state', state}); });
 })();)---"
-  sub("__APP__", app, code, fixed = TRUE)
+  paste(percentage_display_script(), sub("__APP__", app, code, fixed = TRUE))
 }

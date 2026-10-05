@@ -38,6 +38,12 @@ details.misconception p:last-child { margin-bottom: 0; }
 table { font-size: .92em; }
 th, td { padding: 8px 10px; vertical-align: top; }
 img { max-width: 100%; height: auto; }
+.route-label { margin: .7em 0 1.2em; padding: .55em .8em; border-left: 4px solid #176675; background: #eef7f6; font-size: .9em; }
+.route-label span { display: inline-block; font-weight: bold; margin-right: .5em; }
+.route-label.advanced { border-color: #635493; background: #f2eef8; }
+.core-next { margin: 1.5em 0; padding: .8em; border: 1px solid #9abfbc; border-radius: 4px; background: #eef7f6; }
+@media print { .core-next { display: none !important; } .route-label { break-after: avoid; } }
+.color-theme-2 .route-label, .color-theme-2 .core-next { background: #263442; color: #e9eef2; }
 #refs > div { margin-bottom: 1em; }
 a:focus-visible, summary:focus-visible { outline: 3px solid #a45115; outline-offset: 3px; }
 .question-map { margin: 1.5em 0 1em; }

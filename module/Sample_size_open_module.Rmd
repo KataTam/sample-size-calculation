@@ -60,7 +60,7 @@ For a reminder of a term, see [Key parameters and prerequisites](#glossary). If 
 
 Need help finding your way around? See [Using the toolbar](#using-the-toolbar) below.
 
-By the end, you should be able to:
+After the core route, you should be able to define and justify a basic two-arm study, calculate its sample size, adjust recruitment for expected losses, and interpret its limitations. The advanced route adds precision planning, repeated-study simulation and guidance for other designs. Across both routes, you should be able to:
 
 - Choose a testing, estimation or fixed-resource planning goal and explain why it fits the question.
 - Distinguish expected effects, planning effects and clinically meaningful thresholds.
@@ -72,6 +72,32 @@ By the end, you should be able to:
 - Interpret an interval against zero and a clinical threshold, and recognise when a study design needs another planning method.
 - Write a study justification that records evidence, assumptions, sensitivity, feasibility and limitations, and reproduce its calculations.
 
+
+## Core route {#core-route .unnumbered}
+
+The core route develops a sample size justification for a two-arm trial. Follow these steps; the original chapter order remains available in the contents.
+
+1. [Clinical question, study design and assumptions](#clinical-question): define the outcome and distinguish expected, planning and clinically important effects.
+2. [Power and error rates](#power): understand what the planned calculation can establish.
+3. [Basic sample size calculations](#calculations): compare two proportions or two means.
+4. [Recruitment and expected losses](#account-for-expected-losses), then [clinical interpretation of a confidence interval](#interpret-a-confidence-interval-clinically).
+5. [Sensitivity analysis](#stress-test-the-study-plan), [underpowered studies](#what-if-the-study-is-too-small-for-its-purpose) and [ways to increase power](#increase-power): check plausible assumptions and feasibility.
+6. [Write a sample size justification](#write-a-sample-size-justification) and complete the [assumptions report activity](http://127.0.0.1:8769/study/?activity=assumptions_report).
+
+Before using a calculator for your own project, check [Where does my study fit?](#study-designs). Estimation and reuse of an existing dataset are legitimate planning goals; the core introduction identifies them, while the extensions explain their calculations.
+
+## Advanced route {#advanced-route .unnumbered}
+
+Use the advanced route to examine the methods and explore designs beyond the basic two-group calculations:
+
+- [Sampling distributions and error regions](#alpha-beta).
+- [One study, then many](#activity-1-one-study-then-many), including confidence interval coverage and Monte Carlo uncertainty.
+- [Power curves and sensitivity power analysis](#curves).
+- [Build a simulated clinical trial](#simulation).
+- [Precision planning and prevalence estimation](#plan-for-precision), [existing-dataset reuse](#dataset-reuse), [rare diseases](#rare-diseases) and [pilot feasibility](#pilot-feasibility).
+- [Other study designs](#study-designs), including paired measurements and prediction models.
+
+**Core** and **Advanced** labels identify the route at each main section. Advanced indicates an extension beyond the basic calculations, rather than a judgement that every topic is mathematically difficult. Key terms, common questions and references support both routes.
 
 ## Using the toolbar {#using-the-toolbar .unnumbered}
 
@@ -94,6 +120,8 @@ If you prefer the keyboard, press **Tab** to move between controls and **Enter**
 The downloaded, single-page HTML edition has its own table of contents rather than this book toolbar. Use your browser's **Find** command (**Ctrl+F** on Windows, **Command+F** on Mac) to search that edition.
 
 # Introduction {#clinical-question}
+
+<div class="route-label core"><span>Core</span> Basic two-arm study planning and interpretation.</div>
 
 ::: {.learning-goals}
 **Learning outcomes.** After this section, you should be able to:
@@ -143,6 +171,8 @@ Our examples use frequentist methods: two-sided significance tests for superiori
 ## What do we expect, what will we plan for, and what matters clinically?
 
 Suppose the pilot and other relevant evidence support an **expected benefit of 40 percentage points**. For the sample size calculation, use a **planning benefit of 30 percentage points**: 60% relief with the novel treatment versus 30% with standard treatment. Separately, consultation with patients and clinicians identifies a **clinical threshold of 20 percentage points**.
+
+The **expected effect** is our best current expectation; the **planning effect** is the effect used in the sample size calculation. The **clinically important difference** (called the clinical threshold here) is the smallest treatment benefit that matters to patients. These terms identify different decisions, even when a study chooses the same value for more than one of them [@lakens2022; @caldwell2020]. Event rates in this trial mean the percentage reporting pain relief at the specified four-week follow-up.
 
 | Quantity | Value | Role in this study |
 |:--|:--|:--|
@@ -286,7 +316,11 @@ Small pilot effects are uncertain. Following up only pilots whose estimated effe
 **Predict and justify.** If the pilot had shown relief in 6 rather than 7 treated patients, should the clinical threshold change? Explain why a noisy pilot estimate and a judgement about meaningful benefit answer different questions.
 :::
 
+<div class="core-next">Continue along the core route: <a href="#power">Power and error rates</a>.</div>
+
 # What does statistical power tell you? {#power}
+
+<div class="route-label core"><span>Core</span> Basic two-arm study planning and interpretation.</div>
 
 ::: {.learning-goals}
 **Learning outcomes.** After this section, you should be able to:
@@ -336,7 +370,11 @@ Type I error rate of 5% means that the testing procedure rejects in about 5% of 
 
 Type I error rate of 5% and power of 80% or 90% are common planning choices. Choose and justify them in context. The ratio of Type II error rate to Type I error rate is not, by itself, a calculation of the relative clinical costs of the two errors. Non-rejection does not establish that the treatments are equivalent.
 
+<div class="core-next">Continue along the core route: <a href="#calculations">Basic sample size calculations</a>.</div>
+
 ## See Type I error rate and Type II error rate as areas {#alpha-beta}
+
+<div class="route-label advanced"><span>Advanced</span> Extension beyond the basic calculations.</div>
 
 We now use a single-sample illustration to make the two error probabilities visible. Suppose the null mean systolic blood pressure is 120 mmHg, the specified alternative is 125 mmHg, the population SD is known to be 15 mmHg, and 25 independent observations are taken. For this **one-sided known-SD illustration**, rejection occurs when the sample mean exceeds a critical value. The two-arm treatment-comparison activities use two-sided tests.
 
@@ -373,6 +411,8 @@ Here the critical mean is about 124.9 mmHg and power is about 51%. Repeating the
 
 ## Activity 1: one study, then many
 
+<div class="route-label advanced"><span>Advanced</span> Extension beyond the basic calculations.</div>
+
 Use the chronic-pain planning probabilities: 30% relief with control and 60% with treatment, with Type I error rate of 5%, and 20, 50 and 80 patients **per group**. The simulations evaluate the 30-percentage-point planning effect; the expected benefit is 40 points and the clinical threshold is 20 points. Before looking at the results, predict which design will reject the null most often. This repeated-study approach follows the introductory teaching idea in @superpowerbook2022 and the broader use of simulation in health-sciences education [@thiesmeier2024; @rudolph2021].
 
 ```{r three-samples}
@@ -406,6 +446,10 @@ for (batch in batches) plot_p_values(batch)
 
 ## Precision of a simulation
 
+<div class="route-label advanced"><span>Advanced</span> Extension beyond the basic calculations.</div>
+
+**Rejection rate** means the percentage of simulated studies with a statistically significant result. Under a specified treatment effect it estimates power; under no treatment effect it estimates the Type I error rate. **Confidence interval coverage** is the percentage of intervals containing the assumed true effect. **Monte Carlo uncertainty** is uncertainty from using a limited number of simulated studies. The app tables pair these established terms with their practical meaning.
+
 Use $n$ for patients per group and $B$ for the number of simulated studies. If $\hat p$ is the simulated rejection fraction, its approximate Monte Carlo standard error is:
 
 \begin{equation}
@@ -416,6 +460,8 @@ Use $n$ for patients per group and $B$ for the number of simulated studies. If $
 At a rejection rate of 80% and $B=5000$, MCSE is about `r round(100 * sqrt(.8 * .2 / 5000), 2)` percentage points. The tables use Wilson intervals for Monte Carlo uncertainty. These intervals remain informative even when a simulation observes no rejections or all rejections. Increasing $B$ does not resolve uncertainty about the real treatment effect.
 
 # Calculate a sample size {#calculations}
+
+<div class="route-label core"><span>Core</span> Basic two-arm study planning and interpretation.</div>
 
 ::: {.learning-goals}
 **Learning outcomes.** After this section, you should be able to:
@@ -617,7 +663,11 @@ knitr::kable(data.frame(`Analysable per group`=rehabilitation_plan$n, `Analysabl
 
 The expected-loss adjustment gives a recruitment total of `r 2 * adjust_for_dropout(rehabilitation_plan$n, rehabilitation_case$inputs$dropout)`, below this example's cap of 200. Meeting the cap and power target still leaves questions about the credibility of the assumptions, measurement quality and the precision needed for a clinical decision.
 
+<div class="core-next">Continue along the core route: <a href="#account-for-expected-losses">Recruitment and expected losses</a>.</div>
+
 # Read power curves {#curves}
+
+<div class="route-label advanced"><span>Advanced</span> Extension beyond the basic calculations.</div>
 
 ::: {.learning-goals}
 **Learning outcomes.** After this section, you should be able to:
@@ -714,6 +764,8 @@ For example, suppose a completed study estimates a 1-unit improvement with a 95%
 With an existing records dataset, explain why that sample is available, assess data quality and missingness, and report what its estimate and interval support. A sensitivity analysis at independently justified effects can still describe a fixed design's performance. It should not use the observed effect to create additional evidence for the same study. This distinction follows the sample size justification approach in @lakens2022; [the FAQ](#common-mistakes) gives a short retrospective-study example.
 
 # Build a simulated clinical trial {#simulation}
+
+<div class="route-label advanced"><span>Advanced</span> Extension beyond the basic calculations.</div>
 
 ::: {.learning-goals}
 **Learning outcomes.** After this section, you should be able to:
@@ -851,6 +903,8 @@ The chronic-pain trial needs enough analysable outcomes, but recruitment is only
 
 ## Account for expected losses
 
+<div class="route-label core"><span>Core</span> Basic two-arm study planning and interpretation.</div>
+
 If $n$ analysable patients are needed in each arm and the expected dropout proportion is $r$, the simple inflation is:
 
 \begin{equation}
@@ -881,6 +935,8 @@ To allow for 10% expected loss, divide the required analysable count by 0.90 rat
 
 ## Interpret a confidence interval clinically
 
+<div class="route-label core"><span>Core</span> Basic two-arm study planning and interpretation.</div>
+
 For the continuous improvement-score case, the expected benefit is 4 units, the planning difference is 3 units and the clinical threshold is 2 units. Compare three hypothetical 95% confidence intervals:
 
 | Interval | Interpretation |
@@ -900,7 +956,11 @@ A study can detect a difference from zero while leaving considerable uncertainty
 
 </details>
 
+<div class="core-next">Continue along the core route: <a href="#stress-test-the-study-plan">Sensitivity analysis and feasibility</a>.</div>
+
 ## Plan for precision
+
+<div class="route-label advanced"><span>Advanced</span> Extension beyond the basic calculations.</div>
 
 The lab offers *Estimate with a target interval width* alongside testing and fixed-resource goals. Specify the **full** width, in the outcome's original units. For the continuous improvement score, keep the expected benefit at 4 units, planning difference at 3 units and clinical threshold at 2 units. Use SD 5 and a target full width of 4 units:
 
@@ -927,6 +987,8 @@ For normal data, the curve gives expected full t-interval width. For binary data
 :::
 
 ## Estimate one proportion: a prevalence survey {#prevalence}
+
+<div class="route-label advanced"><span>Advanced</span> Extension beyond the basic calculations.</div>
 
 Here the design changes from a two-arm treatment comparison to a survey estimating one population proportion. There is no treatment or control arm; sample size is chosen for a useful margin of error.
 
@@ -960,6 +1022,8 @@ The conservative 50% choice concerns **absolute precision for one proportion und
 
 ## Reuse an existing dataset for a different question {#dataset-reuse}
 
+<div class="route-label advanced"><span>Advanced</span> Extension beyond the basic calculations.</div>
+
 A bachelor project may start with an existing dataset rather than new recruitment. Suppose a completed chronic-pain trial included **200 patients** and also recorded sleep difficulty before treatment. Your new question is: **what percentage of these trial participants reported sleep difficulty at baseline?** This differs from the trial's original question about treatment effectiveness.
 
 Baseline sleep information is available for **180** participants; **72** reported difficulty. The observed percentage is **72/180 = 40%**. The sample size is already fixed, so assess the precision the available data provide instead of calculating how many patients to recruit.
@@ -990,6 +1054,8 @@ The original trial's power calculation does not transfer to this new question. C
 
 ## Stress-test the study plan
 
+<div class="route-label core"><span>Core</span> Basic two-arm study planning and interpretation.</div>
+
 Keep the sample selected under the original assumptions fixed when considering a smaller true effect or greater variability. In the lab, change *Reality may differ from the plan* rather than replacing the original planning assumptions.
 
 ```{r fixed-plan-sensitivity}
@@ -1007,11 +1073,15 @@ knitr::kable(data.frame(
 
 ## Underpowered studies: what if the study is too small for its purpose? {#what-if-the-study-is-too-small-for-its-purpose}
 
+<div class="route-label core"><span>Core</span> Basic two-arm study planning and interpretation.</div>
+
 Low power makes inconclusive results more likely under the planning alternative. Among selected statistically significant results, effects can be exaggerated. Larger samples reduce sampling variation but do not automatically remove bias.
 
 For the chronic-pain trial, a study with low power at the 30-percentage-point planning effect would often fail to detect that benefit even if it were real. A non-significant result would not establish that the treatments are equally effective. Examine the estimated benefit and confidence interval against zero and the 20-percentage-point clinical threshold.
 
 ## Ways to increase power {#increase-power}
+
+<div class="route-label core"><span>Core</span> Basic two-arm study planning and interpretation.</div>
 
 Before collecting data, consider whether you can obtain more information about the treatment effect. Table \@ref(tab:increase-power) separates changes to the study from changes to its error targets.
 
@@ -1035,7 +1105,11 @@ A larger **true** benefit is easier to detect, but entering a larger assumed ben
 
 If none of these options makes the study informative and feasible, reconsider an overly broad aim, collaborate, or decide not to proceed with an efficacy study. For a rare disease, however, low power alone need not rule out a useful controlled study; see [What if the disease is rare?](#rare-diseases) below. A feasibility study should be judged against feasibility aims rather than treated as a miniature confirmatory trial [@lakens2022]. Changing the aim changes what the study can establish; it does not make the original treatment comparison more powerful. Broader eligibility can affect variability and generalisability. Clustered designs, nonparametric analyses and Bayesian planning require appropriate methods beyond the calculations illustrated here [@hayes1999; @happ2019; @pezeshk2003].
 
+<div class="core-next">Continue along the core route: <a href="#write-a-sample-size-justification">Write a sample size justification</a>.</div>
+
 ## What if the disease is rare? {#rare-diseases}
+
+<div class="route-label advanced"><span>Advanced</span> Extension beyond the basic calculations.</div>
 
 For a rare disease, the number of eligible patients may impose a genuine limit on recruitment. Start by documenting how many patients could realistically participate, over what period and across which centres. Then assess what that sample could establish.
 
@@ -1056,6 +1130,8 @@ Rarity does not, by itself, justify increasing the Type I error rate. Alternativ
 </details>
 
 ## What can you do when information is limited? {#pilot-feasibility}
+
+<div class="route-label advanced"><span>Advanced</span> Extension beyond the basic calculations.</div>
 
 Suppose a team wants to test a new rehabilitation pathway but has little evidence about the treatment effect. It can recruit 40 patients over three months for a feasibility study. Rather than assuming a large improvement to obtain an affordable efficacy calculation, it asks whether recruitment, delivery and follow-up can work in practice.
 
@@ -1097,6 +1173,8 @@ Check relevant guidance and the current funder's requirements before writing the
 :::
 
 ## Discharge rates {#discharge}
+
+<div class="route-label core"><span>Core</span> Basic two-arm study planning and interpretation.</div>
 
 Standard care discharges 80% of patients by a specified time point. Suppose comparable evidence suggests an **18-percentage-point expected benefit** (98% versus 80%), use a more conservative **16-percentage-point planning benefit** (96% versus 80%), and patients judge an **8-percentage-point benefit** worthwhile. Consider a 20% relative increase, an alternative planning benefit of 10 percentage points, and a higher power target. Use the simple approximation from equation \@ref(eq:proportions).
 
@@ -1140,9 +1218,13 @@ These are teaching approximations. Compare them with score-test planning and sim
 
 ## A fixed total of 70 patients
 
+<div class="route-label advanced"><span>Advanced</span> Extension beyond the basic calculations.</div>
+
 Suppose only 70 patients can be recruited. Explain what can be learned without treating this limit as evidence that the study has adequate power. Address the intended goal, expected losses, achievable precision and plausible effects. Propose either a defensible revised design or a narrower study purpose.
 
 ## Write a sample size justification
+
+<div class="route-label core"><span>Core</span> Basic two-arm study planning and interpretation.</div>
 
 Write 300–600 words covering the clinical question, primary outcome, evidence for assumptions, clinical threshold, planned analysis, Type I error rate, target power or precision, per-group counts, recruitment inflation, and feasibility. Include a sensitivity curve or table and one simulation result with its seed, replications and Monte Carlo interval.
 
@@ -1158,7 +1240,11 @@ Use these review questions with a collaborator:
 
 For an extended activity, write a short hypothetical study abstract that distinguishes the planned design, realised results and interpretation. This follows the broader learning sequence used in DICE [@thiesmeier2024].
 
+<div class="core-next">Continue along the core route: <a href="#record-assumptions">Record and justify your assumptions</a>.</div>
+
 ## Plan your own study {#own-study}
+
+<div class="route-label advanced"><span>Advanced</span> Extension beyond the basic calculations.</div>
 
 Apply the statistical, clinical, ethical and logistic questions introduced earlier to your own project. [Open the own-study workspace](http://127.0.0.1:8769/study/?activity=own_study) and complete the [case and assumption map](../case-studies/student_case_template.md). Use hypothetical or public values for this exercise; do not put patient records into the teaching app.
 
@@ -1198,6 +1284,8 @@ cat(readLines("../student-materials/common-mistakes.md", warn = FALSE),
 ```
 
 # Reproducibility and further reading {#appendix}
+
+<div class="route-label advanced"><span>Advanced</span> Extension beyond the basic calculations.</div>
 
 ::: {.learning-goals}
 **Learning outcomes.** After this section, you should be able to:

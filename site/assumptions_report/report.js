@@ -13,18 +13,18 @@
     ['Effects and supporting evidence', [
       ['scale', 'Effect scale and direction of benefit', 'Use treatment minus control. Specify whether a positive or negative difference is beneficial.', 'The effect scale and direction of benefit are'],
       ['expected', 'Expected effect', 'Give the best current expectation, its evidence source and uncertainty.', 'The expected effect and supporting evidence are'],
-      ['clinical', 'Clinical threshold', 'Give the smallest benefit that matters to patients and justify that judgement.', 'The clinical threshold and its justification are'],
-      ['planning', 'Planning effect', 'Give the difference used to evaluate power and explain why it is appropriate.', 'The planning effect and its justification are', 'power'],
+      ['clinical', 'Clinically important difference (clinical threshold)', 'Give the smallest benefit that matters to patients and justify that judgement.', 'The clinical threshold and its justification are'],
+      ['planning', 'Planning effect: used in the calculation', 'Give the difference used to evaluate power and explain why it is appropriate.', 'The planning effect and its justification are', 'power'],
       ['variation', 'Variation or event rates', 'For a continuous outcome, give the common standard deviation. For a binary outcome, give control and treatment percentages.', 'The variation or event rates used for planning are'],
-      ['sensitivity', 'Sensitivity scenarios', 'Give plausible alternative effects, standard deviations or event rates and their sources.', 'The sensitivity scenarios and their evidence are']
+      ['sensitivity', 'Sensitivity analysis: alternative assumptions', 'Give plausible alternative effects, standard deviations or event rates and their sources.', 'The sensitivity scenarios and their evidence are']
     ]],
     ['Analysis and information target', [
       ['analysis', 'Planned analysis', 'Name the test and confidence interval method. State the sidedness and relevant assumptions.', 'The planned analysis is'],
       ['power', 'Type I error rate and target power', 'State Type I error rate and target power as percentages. With fixed resources, record attainable power and the effect at which it is evaluated.', 'The Type I error rate and power specification is', 'power'],
-      ['precision', 'Precision target', 'State the desired full confidence interval width, its units and the confidence level. With fixed resources, record attainable precision.', 'The precision specification is', 'precision']
+      ['precision', 'Precision: desired confidence interval width', 'State the desired full confidence interval width, its units and the confidence level. With fixed resources, record attainable precision.', 'The precision specification is', 'precision']
     ]],
     ['Sample size, recruitment and conclusion', [
-      ['counts', 'Analysable sample size', 'Record patients per group and total analysable patients, the calculation method and its result. Mark calculations still to be completed.', 'The analysable sample size and calculation are'],
+      ['counts', 'Sample size needed for analysis', 'Record patients per group and total analysable patients, the calculation method and its result. Mark calculations still to be completed.', 'The analysable sample size and calculation are'],
       ['recruitment', 'Losses and recruitment target', 'State expected losses as a percentage, recruitment counts per group and total, and how the adjustment was made.', 'The loss allowance and recruitment target are'],
       ['resources', 'Feasibility and resources', 'Record the recruitment rate and period, available patients, costs or constraints, and whether the target is feasible.', 'The recruitment feasibility and resources are'],
       ['conclusion', 'Intended conclusion and limitations', 'Explain what the design could establish, what remains uncertain and which planning decisions still need to be resolved.', 'The intended conclusion and limitations are']

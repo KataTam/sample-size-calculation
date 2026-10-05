@@ -10,6 +10,8 @@ Check the actual deployment environment before class. The proposed 20–25 stude
 
 ## Selecting a learning route
 
+The [core route](../book/index.html#core-route) covers clinical assumptions, power, two-group calculations, expected losses, interpretation, a short sensitivity analysis and a written justification. The [advanced route](../book/index.html#advanced-route) adds sampling distributions, power curves, repeated-study simulation, precision planning and other designs. Route badges mark mixed chapters section by section. The reasoning lab starts with basic controls; clinical importance remains visible. Select **Explore further** for advanced controls and methods.
+
 Begin with the Introduction's two-arm randomized superiority trials, then follow the planning questions, statistical concepts and worked calculations. Later sections broaden to estimation, prevalence and feasibility; the study-design guide directs other designs to appropriate methods. Select the extra activities that serve the session's aim; a repeated activity sequence is not required for every section. Use one outcome in a first session. The lab supports a continuous improvement score and a binary chronic-pain case. Single-proportion precision and sampling-distribution activities have their own apps. Compare outcomes in a later session if time permits.
 
 ## Session formats
@@ -52,7 +54,7 @@ See [References](../documentation/references.md) and [evidence and design ration
 
 ## Consolidated book and app route
 
-Use the single learner source in `module/Sample_size_open_module.Rmd`. Short sessions select from this book; do not create an independently maintained short tutorial. Short R examples are visible by default, but students are assessed on interpretation, not code.
+Use the single learner source in `module/Sample_size_open_module.Rmd`. Short sessions select from this book; do not create an independently maintained short tutorial. R code and raw output are available in expandable sections, but students are assessed on interpretation, not code.
 
 | Route | Book chapters and evidence |
 |---|---|
@@ -65,6 +67,6 @@ Activity 1: distinguish one result, power, Type I error and Monte Carlo uncertai
 
 Open the [two-panel study view](https://katatam.github.io/sample-size-calculation/study/). The activity selector loads matched case assumptions. Drag the separator to adjust panel widths, or focus it and use Left/Right arrow keys; Home and End reach the width limits. Chapter navigation leaves the app session open; choosing or resetting an activity applies that preset. Content links open in a new tab. On narrow screens, Both stacks the panels, while Lesson and App show either panel alone. Students can also open either panel separately.
 
-Use the [glossary](../student-materials/glossary.md), [FAQ](../student-materials/common-mistakes.md) and [study-design guide](../student-materials/study-design-guide.md) as needed. Code and formulas remain visible.
+Use the [glossary](../student-materials/glossary.md), [FAQ](../student-materials/common-mistakes.md) and [study-design guide](../student-materials/study-design-guide.md) as needed. Formulas remain visible; code and raw output can be expanded.
 
 For an own-study exercise, students can complete the lab's My study tab, save the plan, and download a draft justification. Check their evidence, clinical threshold, participant burden and recruitment assumptions. A draft needs review against the intended design. The [software validation guide](../documentation/software-validation.md) is optional teacher material.

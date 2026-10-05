@@ -8,8 +8,8 @@ ui <- fluidPage(
   titlePanel("Dropout Adjustment", windowTitle = "Dropout adjustment"),
   sidebarLayout(
     sidebarPanel(
-      numericInput("n", "Required analysable participants PER GROUP", value = 100, min = 1, step = 1),
-      sliderInput("dropout", "Expected loss to follow-up (0.10 = 10%)", min = 0, max = 0.50, value = 0.10, step = 0.01)
+      numericInput("n", "Participants needed for analysis, per group", value = 100, min = 1, step = 1),
+      percent_slider("dropout", "Expected loss to follow-up (%)", min = 0, max = 0.50, value = 0.10, step = 0.01)
     ),
     mainPanel(
       p("Equal allocation. Round recruitment up within each arm, then double. Inflation does not remove missing-data bias or guarantee the realised analysable count."),
@@ -24,8 +24,8 @@ ui <- fluidPage(
         conditionalPanel("input.lab_outcome == 'means'",
           numericInput("lab_delta", "Difference used for planning", 3), numericInput("lab_sd", "Standard deviation used for planning", 5, min = .1)),
         conditionalPanel("input.lab_outcome == 'proportions'",
-          sliderInput("lab_p0", "Control event rate used for planning (0.30 = 30%)", .01, .99, .3, step = .01),
-          sliderInput("lab_p1", "Treatment event rate used for planning (0.60 = 60%)", .01, .99, .6, step = .01)),
+          percent_slider("lab_p0", "Standard treatment: event rate used for planning (%)", .01, .99, .3, step = .01),
+          percent_slider("lab_p1", "Novel treatment: event rate used for planning (%)", .01, .99, .6, step = .01)),
         uiOutput("lab_link"),
         helpText("This transfers the entered analysable count per group, without recalculating it from a power target."))
     )
@@ -45,7 +45,7 @@ server <- function(input, output, session) {
   })
   output$result <- renderPrint({
     valid_n()
-    cat("Analysable per group:", input$n, "\n")
+    cat("Participants for analysis, per group:", input$n, "\n")
     cat("Expected dropout:", format_percent(input$dropout), "\n")
     cat("Recruitment per group:", adjust_for_dropout(input$n, input$dropout), "\n")
     cat("Recruitment total:", 2 * adjust_for_dropout(input$n, input$dropout), "\n")

@@ -30,7 +30,7 @@ A **standardized difference**, often called Cohen's d for a mean comparison, exp
 
 **Standard error (SE)** describes variability of an estimate across repetitions. For one mean with known population SD, SE = SD/sqrt(n). More independent observations reduce SE; they do not make the population's individual values less variable. The sampling-distribution illustration uses SE, not SD, as the width of the sample-mean curves.
 
-A **confidence interval** describes uncertainty about an estimate using a procedure with stated long-run coverage. Under its assumptions, a 95% procedure contains the fixed population value in about 95% of repetitions. An observed interval does not give the fixed truth a 95% probability of lying inside it. Interpret the range of compatible effects against zero and a clinically important threshold.
+A **confidence interval** describes uncertainty about an estimate using a procedure with stated long-run coverage (the percentage of intervals containing the population value across repeated studies). Under its assumptions, a 95% procedure contains the fixed population value in about 95% of repetitions. An observed interval does not give the fixed truth a 95% probability of lying inside it. Interpret the range of compatible effects against zero and a clinically important threshold.
 
 **Full width** is the upper confidence limit minus the lower. For a symmetric interval its **half-width**, or margin of error, is half the full width. A margin of five percentage points means a full width of ten percentage points. For asymmetric intervals, the two distances from the estimate to the limits need not be equal.
 
@@ -64,10 +64,10 @@ A **z calculation** uses the standard normal distribution, often as an approxima
 
 ## Counts, losses and simulation
 
-**Analysable n** is the number contributing to the stated analysis. In the two-group lab it is per group; the total is 2n. **Recruitment n** is inflated for anticipated losses, rounding within each arm. With expected dropout of 10%, divide by the retention proportion 0.90, rather than multiplying by 1.10. Inflation does not correct missing-data bias.
+**Analysable sample size (n)** means the number of participants included in the stated analysis; app labels use “participants for analysis”. In the two-group lab it is per group; the total is 2n. **Recruitment n** is inflated for anticipated losses, rounding within each arm. With expected dropout of 10%, divide by the retention proportion 0.90, rather than multiplying by 1.10. Inflation does not correct missing-data bias.
 
 The **planning scenario** selects the design. A **generating scenario** specifies what could actually happen in repeated hypothetical studies. Changing generating assumptions while holding the planned n fixed is a sensitivity analysis; recalculating n each time answers a different question.
 
-**B** is the number of independent simulated studies, not the number of patients per study. **Monte Carlo uncertainty** describes numerical uncertainty from a finite B. Increasing B estimates the design's performance more precisely; it does not increase each study's power or resolve uncertainty about clinical assumptions. A **seed** makes a specified simulation reproducible.
+**B** is the number of independent simulated studies, not the number of patients per study. **Monte Carlo uncertainty** is uncertainty from using a limited number of simulated studies (B). Increasing B estimates the design's performance more precisely; it does not increase each study's power or resolve uncertainty about clinical assumptions. A **seed** makes a specified simulation reproducible.
 
 For more detail, return to the [power chapter](#power), [sampling-distribution illustration](#alpha-beta), [precision examples](#feasibility), or [common mistakes](#common-mistakes). Methodological sources include Kirkwood and Sterne (2003), Whitley and Ball (2002), and the R documentation cited in the tutorial.

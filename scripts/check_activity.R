@@ -54,7 +54,7 @@ check_activity <- function() {
     stopifnot(current_activity() == "pain_one_many", is.null(routed_case()),
       get("fixed_n", messages)$value == 20, get("goal", messages)$value == "fixed",
       get("expected_p", messages)$value == .4, get("threshold_p", messages)$value == .2,
-      identical(get("show_advanced", messages)$value, FALSE))
+      identical(get("show_advanced", messages)$value, TRUE))
     session$setInputs(activity_request = list(activity = "pilot_feasibility", nonce = 2))
     stopifnot(routed_case()$app == "prevalence_precision")
     session$setInputs(state_request = list(state = list(outcome = "means", goal = "fixed",
