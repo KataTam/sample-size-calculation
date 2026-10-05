@@ -95,7 +95,20 @@ let browser;
   await page.locator('.code-folding-btn').first().click();
   await sourceBlocks.first().waitFor({state: 'hidden'});
   assert.equal(await standaloneOutput.isVisible(), true);
+  // RStudio can serve a knit result below /rmd_output/ rather than /book/.
+  // Test the unassembled render there, not only the site's rewritten links.
+  const previewURL = base + '/rmd_output/preview/tutorial.html';
+  await page.route(previewURL, route => route.fulfill({
+    contentType: 'text/html', body: fs.readFileSync('docs/book/Sample_size_open_module.html', 'utf8')
+  }));
+  await page.goto(previewURL);
+  const activityLink = page.getByRole('link', {name: 'Open the assumptions report activity', exact: true});
+  const activityURL = 'http://127.0.0.1:8769/study/?activity=assumptions_report';
+  assert.equal(await activityLink.getAttribute('href'), activityURL);
+  await Promise.all([page.waitForURL(activityURL), activityLink.click()]);
+  await page.waitForFunction(() => document.getElementById('app-status').textContent.startsWith('Activity loaded.'));
+  assert(page.frames().some(frame => frame.url().includes('/assumptions_report/')));
   assert.deepEqual(errors, []);
-  console.log('DISCLOSURE CHECK PASSED: learning-outcome lists, twelve closed amber boxes, keyboard controls, folded R code with visible outputs, nested exercise answer, night theme, mobile width, standalone HTML, local activity links.');
+  console.log('DISCLOSURE CHECK PASSED: learning-outcome lists, twelve closed amber boxes, keyboard controls, folded R code with visible outputs, nested exercise answer, night theme, mobile width, standalone HTML, local activity links, RStudio-style /rmd_output/ activity launch.');
   await browser.close();
 })().catch(async error => { console.error(error); if (browser) await browser.close(); process.exitCode = 1; });

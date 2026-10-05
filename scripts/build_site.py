@@ -195,10 +195,13 @@ for target in SITE.rglob("*.html"):
     # Same-project links also work in the author's private localhost preview.
     def local_project_link(match):
         url = urlsplit(html.unescape(match.group(1)))
-        public = urlsplit(base)
-        prefix = public.path.rstrip("/")
-        if url.netloc.lower() != public.netloc.lower() or not (url.path == prefix or url.path.startswith(prefix + "/")):
+        locations = [urlsplit(base), urlsplit("http://127.0.0.1:8769/")]
+        location = next((candidate for candidate in locations
+            if url.netloc.lower() == candidate.netloc.lower() and
+            (url.path == candidate.path.rstrip("/") or url.path.startswith(candidate.path.rstrip("/") + "/"))), None)
+        if location is None:
             return match.group(0)
+        prefix = location.path.rstrip("/")
         path = SITE / url.path[len(prefix):].lstrip("/")
         relative = os.path.relpath(path, target.parent).replace(os.sep, "/")
         if url.path.endswith("/") or url.path == prefix:

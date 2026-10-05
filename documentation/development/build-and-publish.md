@@ -22,10 +22,10 @@ Rscript scripts/check_resource.R
 Rscript scripts/render_resource.R
 Rscript scripts/export_shinylive.R
 python scripts/build_site.py
-python -m http.server 8767 --bind 127.0.0.1 --directory _site
+python -m http.server 8769 --bind 127.0.0.1 --directory _site
 ```
 
-Then open http://127.0.0.1:8767/study/ . Binding to 127.0.0.1 keeps the preview on this computer. Same-project website links resolve within the preview. Browser apps require HTTP, not `file://`. Shinylive downloads dependencies during export, so the build needs network access. The tutorial render builds HTML by default and leaves any existing PDF unchanged. While the website is offline, preserve the existing local PDF; on a fresh checkout, obtain a copy from the author's local archive or explicitly rebuild it.
+Then open http://127.0.0.1:8769/study/ . Binding to 127.0.0.1 keeps the preview on this computer. Activity links in the R Markdown source use this full local address so they also work from an RStudio preview under `/rmd_output/`. Keep this server running while testing those links. The website build converts same-project links to relative paths for the complete site. Browser apps require HTTP, not `file://`. Shinylive downloads dependencies during export, so the build needs network access. The tutorial render builds HTML by default and leaves any existing PDF unchanged. While the website is offline, preserve the existing local PDF; on a fresh checkout, obtain a copy from the author's local archive or explicitly rebuild it.
 
 To rebuild HTML and the PDF locally, run:
 

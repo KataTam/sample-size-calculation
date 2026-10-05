@@ -47,7 +47,7 @@ Teaching material is shared under CC BY 4.0 and original code under MIT. You may
 
 Read the question, make a prediction, inspect the output, and explain what it means for the clinical study. R code is collapsed initially: select **Code** to reveal a shaded code block. Its output, tables and figures remain visible. Lines starting with `#` inside code are comments; `##` marks console output, and `[1]` identifies the first printed element of an R output. Select an amber **Common misconception** title to read its explanation.
 
-Open [the tutorial and matching app together](../study/?activity=pain_one_many) for the guided activities. Each activity link loads the same case and assumptions used in the text. The [Sample size reasoning lab](../power_explorer/) is also available on its own. The prepared figures and results in this tutorial provide a route without the app. Other [clinical sample size tools](../apps.html) cover two proportions, two means and dropout.
+Open [the tutorial and matching app together](http://127.0.0.1:8769/study/?activity=pain_one_many) for the guided activities. Each activity link loads the same case and assumptions used in the text. The [Sample size reasoning lab](http://127.0.0.1:8769/power_explorer/) is also available on its own. The prepared figures and results in this tutorial provide a route without the app. Other [clinical sample size tools](http://127.0.0.1:8769/apps.html) cover two proportions, two means and dropout.
 
 For a reminder of a term, see [Key parameters and prerequisites](#glossary). If you are applying the material to your own project, begin with [Where does my study fit?](#study-designs) and [Plan your own study](#own-study). [Common mistakes and questions](#common-mistakes) collects explanations you can return to while working.
 
@@ -264,7 +264,7 @@ Table: (\#tab:planning-assumptions) Assumptions to record before planning the sa
 The **planning effect** tells the calculation where to evaluate power. The **standard deviation** describes variation between individuals; the **standard error** describes sampling variation of an estimate. For binary outcomes, report each group's event rate as a percentage and their absolute difference in percentage points. [The glossary](#glossary) explains these terms.
 
 ::: {.activity}
-**Record and justify.** [Open the assumptions report activity](../study/?activity=assumptions_report). Fill in the text boxes to build a study-plan report alongside your answers. Start with your clinical question and evidence; add the sample size and recruitment counts after using the calculation activities. You can load a hypothetical two-arm example, save your entries, and download the report. Check that the expected effect, planning effect and clinical threshold each have a clear role, and explain what your study could establish.
+**Record and justify.** [Open the assumptions report activity](http://127.0.0.1:8769/study/?activity=assumptions_report). Fill in the text boxes to build a study-plan report alongside your answers. Start with your clinical question and evidence; add the sample size and recruitment counts after using the calculation activities. You can load a hypothetical two-arm example, save your entries, and download the report. Check that the expected effect, planning effect and clinical threshold each have a clear role, and explain what your study could establish.
 :::
 
 
@@ -350,7 +350,7 @@ plot_sample_mean_distributions(sampling_example)
 
 Here the critical mean is about 124.9 mmHg and power is about 51%. Repeating the study at the specified alternative would produce a mean above that threshold about half the time. This does not mean that the alternative has a 51% probability of being true.
 
-[Explore the two sampling distributions](../study/?activity=alpha_beta). Increase n while holding the two population means and SD fixed. The curves become narrower because the standard error decreases. Explain how the rejection rule still controls alpha while beta changes. Then compare one-sided and two-sided rules; sidedness should follow the research question before data collection.
+[Explore the two sampling distributions](http://127.0.0.1:8769/study/?activity=alpha_beta). Increase n while holding the two population means and SD fixed. The curves become narrower because the standard error decreases. Explain how the rejection rule still controls alpha while beta changes. Then compare one-sided and two-sided rules; sidedness should follow the research question before data collection.
 
 ## Activity 1: one study, then many
 
@@ -378,7 +378,7 @@ for (batch in batches) plot_p_values(batch)
 ```
 
 ::: {.activity}
-**Explore.** [Open Activity 1 with its case loaded](../study/?activity=pain_one_many). In the lab choose *Binary event outcome* and *Assess a fixed sample size*. The event here is pain relief. Set 20 per group, control 30%, treatment 60%, alpha 5%, and 5,000 replications. Proportion controls use 0.30, 0.60 and 0.05 for these percentages. Keep the expected benefit at 40 percentage points and clinical threshold at 20 points. Run one study, then many studies. Repeat at 50 and 80 per group.
+**Explore.** [Open Activity 1 with its case loaded](http://127.0.0.1:8769/study/?activity=pain_one_many). In the lab choose *Binary event outcome* and *Assess a fixed sample size*. The event here is pain relief. Set 20 per group, control 30%, treatment 60%, alpha 5%, and 5,000 replications. Proportion controls use 0.30, 0.60 and 0.05 for these percentages. Keep the expected benefit at 40 percentage points and clinical threshold at 20 points. Run one study, then many studies. Repeat at 50 and 80 per group.
 
 **Explain.** Why can two studies with the same design reach different testing decisions? Why does changing the number of replications improve numerical precision without increasing the power of each study?
 
@@ -501,7 +501,7 @@ c(analysable_per_group = adherence_plan$n,
   planning_power = spec_power(adherence_plan))
 ```
 
-[Explore the adherence case](../study/?activity=adherence). Compare the recruitment requirement with a limit of 240 participants and 15% expected loss per arm. Then keep the original planned n fixed and reduce the generating percentage under support to 60%. Explain why a smaller actual benefit changes power without changing the original recruitment plan. These methods assume patients are allocated independently; allocating entire practices would require cluster methods.
+[Explore the adherence case](http://127.0.0.1:8769/study/?activity=adherence). Compare the recruitment requirement with a limit of 240 participants and 15% expected loss per arm. Then keep the original planned n fixed and reduce the generating percentage under support to 60%. Explain why a smaller actual benefit changes power without changing the original recruitment plan. These methods assume patients are allocated independently; allocating entire practices would require cluster methods.
 
 Under these assumptions, the required recruitment total is `r 2 * adjust_for_dropout(adherence_plan$n, adherence_case$inputs$dropout)`, exceeding the proposed limit of 240. This is a reason to reconsider recruitment, collaboration or the study's aim. Increasing the assumed benefit merely to obtain a smaller n would not supply the missing evidence.
 
@@ -566,7 +566,7 @@ c(analysable_per_group = rehabilitation_plan$n,
     rehabilitation_case$inputs$dropout))
 ```
 
-[Explore the rehabilitation case](../study/?activity=rehabilitation). Ask whether 10% expected loss and a recruitment limit of 200 make this plan feasible. Compare the confidence interval with the 2-unit clinical threshold. Although an improvement score uses before/after information within each patient, this example analyses one score per patient across **two independent groups**. A single-group paired comparison, repeated-measures model, or baseline-adjusted analysis needs its own planning method.
+[Explore the rehabilitation case](http://127.0.0.1:8769/study/?activity=rehabilitation). Ask whether 10% expected loss and a recruitment limit of 200 make this plan feasible. Compare the confidence interval with the 2-unit clinical threshold. Although an improvement score uses before/after information within each patient, this example analyses one score per patient across **two independent groups**. A single-group paired comparison, repeated-measures model, or baseline-adjusted analysis needs its own planning method.
 
 The expected-loss adjustment gives a recruitment total of `r 2 * adjust_for_dropout(rehabilitation_plan$n, rehabilitation_case$inputs$dropout)`, below this example's cap of 200. Meeting the cap and power target still leaves questions about the credibility of the assumptions, measurement quality and the precision needed for a clinical decision.
 
@@ -642,7 +642,7 @@ An effect below the target-power crossing can still produce a significant result
 ::: {.activity}
 **Predict.** Which effect assumption is most demanding at the same power target?
 
-**Explore.** [Open Activity 2 with its recruitment limit loaded](../study/?activity=pain_curves). In the lab set a fixed sample of 90 per group, control 30%, and treatment 60%. Compare true treatment relief of 50% and 45% while keeping the expected benefit, planning benefit and clinical threshold distinct. Use the prepared curves above to view all three scenarios together.
+**Explore.** [Open Activity 2 with its recruitment limit loaded](http://127.0.0.1:8769/study/?activity=pain_curves). In the lab set a fixed sample of 90 per group, control 30%, and treatment 60%. Compare true treatment relief of 50% and 45% while keeping the expected benefit, planning benefit and clinical threshold distinct. Use the prepared curves above to view all three scenarios together.
 
 **Explain.** Which assumptions make the target feasible? How do you distinguish 200 recruited patients from 180 expected analysable patients?
 
@@ -680,7 +680,7 @@ This chapter returns to the two-arm chronic-pain trial and its planned analysis.
 
 The custom-simulation approach in chapter 15 of @superpowerbook2022 starts from the planned trial and its analysis. Our binary example uses the same score test as the existing reasoning lab. This is an adaptation of the workflow, not a reproduction of the book's logistic-regression example.
 
-[Open Activity 3 with the trial assumptions loaded](../study/?activity=pain_simulation) to connect these four steps with one study and repeated studies in the app. The prepared batch and app use the same seed, sample size and analysis.
+[Open Activity 3 with the trial assumptions loaded](http://127.0.0.1:8769/study/?activity=pain_simulation) to connect these four steps with one study and repeated studies in the app. The prepared batch and app use the same seed, sample size and analysis.
 
 ### Step 1: generate one trial
 
@@ -839,7 +839,7 @@ knitr::kable(display_simulation_summary(simulation_summary(precision_batch)),
 For normal data, the curve gives expected full t-interval width. For binary data, it uses a plug-in Newcombe-Wilson width at the assumed probabilities, not exact expected width. Neither criterion guarantees that each realised interval will meet the target; the simulation reports the fraction that does so separately [@sandoval2025; @newcombe1998].
 
 ::: {.activity}
-**Compare goals.** [Open the precision activity](../study/?activity=mean_precision). In the lab choose *Continuous outcome*, expected benefit 4, planning difference 3, SD 5, clinical threshold 2, alpha 5% and full width 4. The outcome here is an improvement score. Compare the sample selected for estimation with the sample selected for 80% power. Explain why the same research question might require considering both criteria.
+**Compare goals.** [Open the precision activity](http://127.0.0.1:8769/study/?activity=mean_precision). In the lab choose *Continuous outcome*, expected benefit 4, planning difference 3, SD 5, clinical threshold 2, alpha 5% and full width 4. The outcome here is an improvement score. Compare the sample selected for estimation with the sample selected for 80% power. Explain why the same research question might require considering both criteria.
 :::
 
 ## Estimate one proportion: a prevalence survey {#prevalence}
@@ -872,7 +872,7 @@ knitr::kable(data.frame(
 
 The conservative 50% choice concerns **absolute precision for one proportion under this approximation**. It is not a general substitute for unknown control and treatment percentages in a power calculation. For a rare outcome, an absolute margin of five percentage points might be unhelpfully wide; event counts and the chosen interval method also matter.
 
-[Explore the prevalence activity](../study/?activity=prevalence). Compare margins of error of 5 and 2.5 percentage points. The latter requires about four times as many completed observations under the formula. The app shows a Wilson interval for an illustrative realised sample; its width can differ from the planning approximation. No formula here guarantees that every realised interval meets the target. Representative recruitment matters as well: a larger convenience sample does not automatically remove selection bias [@whitley2002; @wang2020].
+[Explore the prevalence activity](http://127.0.0.1:8769/study/?activity=prevalence). Compare margins of error of 5 and 2.5 percentage points. The latter requires about four times as many completed observations under the formula. The app shows a Wilson interval for an illustrative realised sample; its width can differ from the planning approximation. No formula here guarantees that every realised interval meets the target. Representative recruitment matters as well: a larger convenience sample does not automatically remove selection bias [@whitley2002; @wang2020].
 
 ## Stress-test the original plan
 
@@ -922,7 +922,7 @@ A pilot may primarily investigate recruitment, retention or whether procedures a
 
 </details>
 
-[Explore the pilot feasibility case](../study/?activity=pilot_feasibility). It starts with a fixed total of 40 and anticipated retention of 80%. Compare illustrative intervals at 40 and 80 observations; make clear whether another recruitment period or collaboration could obtain the larger sample. This is descriptive estimation of retention, not a treatment-effect power calculation.
+[Explore the pilot feasibility case](http://127.0.0.1:8769/study/?activity=pilot_feasibility). It starts with a fixed total of 40 and anticipated retention of 80%. Compare illustrative intervals at 40 and 80 observations; make clear whether another recruitment period or collaboration could obtain the larger sample. This is descriptive estimation of retention, not a treatment-effect power calculation.
 
 Check relevant guidance and the current funder's requirements before writing the protocol. For examples, [NIHR HTA guidance on feasibility and pilot studies](https://njl-admin.nihr.ac.uk/document/download/2023130) distinguishes feasibility questions from definitive efficacy questions; this is an archived guidance example. The [CONSORT extension for randomized pilot and feasibility trials](https://www.bmj.com/content/355/bmj.i5239) asks for a rationale for pilot numbers and criteria for progression [@nihrfeasibility; @eldridge2016]. Reporting guidance helps you document the design; it does not supply one sample-size formula for every study.
 
@@ -974,7 +974,7 @@ From a baseline of 80%, a 20% relative increase gives 96% ($0.80\times1.20=0.96$
 
 These are teaching approximations. Compare them with score-test planning and simulated performance before interpreting the numbers as a design recommendation.
 
-[Open the discharge activity](../study/?activity=discharge). The 80% versus 96% scenario starts with 80% target power. Consider whether an outcome so close to 100% makes the simple approximation adequate, and examine simulated performance. A shorter time-to-discharge outcome or clustered ward allocation would require a different method.
+[Open the discharge activity](http://127.0.0.1:8769/study/?activity=discharge). The 80% versus 96% scenario starts with 80% target power. Consider whether an outcome so close to 100% makes the simple approximation adequate, and examine simulated performance. A shorter time-to-discharge outcome or clustered ward allocation would require a different method.
 
 </details>
 
@@ -1000,7 +1000,7 @@ For an extended activity, write a short hypothetical study abstract that disting
 
 ## Plan your own study {#own-study}
 
-Apply the statistical, clinical, ethical and logistic questions introduced earlier to your own project. [Open the own-study workspace](../study/?activity=own_study) and complete the [case and assumption map](../case-studies/student_case_template.md). Use hypothetical or public values for this exercise; do not put patient records into the teaching app.
+Apply the statistical, clinical, ethical and logistic questions introduced earlier to your own project. [Open the own-study workspace](http://127.0.0.1:8769/study/?activity=own_study) and complete the [case and assumption map](../case-studies/student_case_template.md). Use hypothetical or public values for this exercise; do not put patient records into the teaching app.
 
 1. **Describe the question and design.** State the population, comparison, outcome and time point. Check [the study-design guide](#study-designs): one independent observation per person, paired observations, clustered recruitment and prediction models have different planning needs.
 2. **Choose what the study should establish.** Specify an effect to test, a useful interval width, feasibility criteria, or what an already fixed sample could establish. Record evidence sources and plausible alternatives, rather than entering unsupported numbers.
