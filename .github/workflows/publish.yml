@@ -20,22 +20,29 @@ jobs:
           r-version: '4.5.1'
           use-public-rspm: true
       - uses: r-lib/actions/setup-pandoc@v2
-      - uses: r-lib/actions/setup-tinytex@v2
-        if: env.BUILD_PDF == 'true'
-      - name: Install PDF language and code packages
-        if: env.BUILD_PDF == 'true'
-        run: tlmgr install babel-english hyphen-english fvextra
       - name: Check source text
         run: python3 scripts/check_text.py
       - uses: r-lib/actions/setup-renv@v2
       - name: Check statistical functions and apps
         run: Rscript scripts/check_resource.R
       - name: Render tutorial
-        run: Rscript scripts/render_resource.R
+        run: Rscript scripts/render_resource.R --html
       - name: Export browser apps
         run: Rscript scripts/export_shinylive.R
       - name: Assemble website and source download
         run: python3 scripts/build_site.py
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Prepare complete tutorial export
+        run: |
+          npm install --no-save --package-lock=false playwright
+          npx playwright install --with-deps chromium
+      - name: Export complete tutorial HTML and PDF
+        run: |
+          python3 -m http.server 8769 --bind 127.0.0.1 --directory _site > /tmp/tutorial-preview.log 2>&1 &
+          node scripts/export_tutorial.cjs
+          node scripts/check_reader_tools.cjs
       - uses: actions/upload-pages-artifact@v3
         with:
           path: _site

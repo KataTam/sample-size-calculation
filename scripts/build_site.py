@@ -35,6 +35,14 @@ if SITE.exists():
         shutil.rmtree(SITE)
 shutil.copytree(ROOT / "docs/apps", SITE)
 shutil.copytree(ROOT / "docs/book", SITE / "book")
+# Only the full tutorial is downloadable; do not copy retired chapter artifacts.
+retired = SITE / "book/downloads"
+if retired.exists():
+    if retired.resolve().parent != (SITE / "book").resolve():
+        raise RuntimeError("Unsafe retired downloads path")
+    shutil.rmtree(retired)
+(SITE / "book/chapter-downloads.json").unlink(missing_ok=True)
+
 folders = ["teaching", "case-studies", "student-materials", "documentation", "figures", "data"]
 for folder in folders:
     shutil.copytree(ROOT / folder, SITE / folder)

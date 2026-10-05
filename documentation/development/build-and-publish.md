@@ -10,7 +10,7 @@ Open `sample-size-calculation.Rproj`. Edit `module/Sample_size_open_module.Rmd` 
 
 Save, commit and push to `main` to save work privately while publication is disabled. When publication is authorized again, the GitHub Actions workflow checks source encoding, runs the statistical/server checks, renders chaptered and complete HTML and the complete PDF, exports the browser apps, renders the supporting pages, checks local website links, refreshes the source download and deploys GitHub Pages. Knitting alone updates local files and does not publish. A failed deployment leaves the previous successful site online.
 
-**PDF update policy (5 October 2026):** after tutorial changes, refresh the complete PDF and the HTML/PDF downloads for affected chapters. Check their content and rendered layout before delivery. The complete PDF keeps formatted tables and figures while omitting R code and raw console output.
+**PDF update policy (5 October 2026):** after tutorial changes, refresh the complete tutorial HTML and PDF downloads. Check their content and rendered layout before delivery. The complete PDF keeps formatted tables and figures while omitting R code and raw console output.
 
 ## Build locally
 
@@ -25,7 +25,7 @@ python scripts/build_site.py
 python -m http.server 8769 --bind 127.0.0.1 --directory _site
 ```
 
-Then open http://127.0.0.1:8769/study/ . Binding to 127.0.0.1 keeps the preview on this computer. Activity links in the R Markdown source use this full local address so they also work from an RStudio preview under `/rmd_output/`. Keep this server running while testing those links. The website build converts same-project links to relative paths for the complete site. Browser apps require HTTP, not `file://`. Shinylive downloads dependencies during export, so the build needs network access. The tutorial render builds HTML and the complete PDF by default. Refresh affected chapter downloads after the site build.
+Then open http://127.0.0.1:8769/study/ . Binding to 127.0.0.1 keeps the preview on this computer. Activity links in the R Markdown source use this full local address so they also work from an RStudio preview under `/rmd_output/`. Keep this server running while testing those links. The website build converts same-project links to relative paths for the complete site. Browser apps require HTTP, not `file://`. Shinylive downloads dependencies during export, so the build needs network access. The tutorial render builds HTML and the complete PDF by default. Refresh the complete tutorial downloads after the site build.
 
 To rebuild HTML and the PDF locally, run:
 
@@ -33,7 +33,7 @@ To rebuild HTML and the PDF locally, run:
 Rscript scripts/render_resource.R --pdf
 ```
 
-PDF generation is now the default, including when calling `render_resource()` from R. Use `--html`, `BUILD_PDF=false`, or `render_resource(include_pdf = FALSE)` only for a temporary HTML-only preview; refresh the PDF before delivering the finished tutorial change. After assembling the site and starting the local preview, run `node scripts/export_chapters.cjs` to refresh chapter downloads, or set `CHAPTERS` to a comma-separated list of affected chapter slugs. The exporter also assembles the complete print edition from all chapter exports, replacing the intermediate LaTeX PDF with the same formatted results, expanded explanations and hidden code used in chapter downloads. It writes the complete PDF to `module/`, `docs/book/`, `_site/book/` and `output/pdf/`. On a fresh checkout, export all chapters first.
+PDF generation remains required after tutorial changes. Render HTML with `Rscript scripts/render_resource.R --html`, assemble the site and start the loopback preview, then run `node scripts/export_tutorial.cjs`. The exporter combines all chapters into one self-contained HTML and one browser-printed PDF, retaining formatted results, figures and equations. HTML keeps code and output expandable; PDF hides them. It writes complete downloads to `module/`, `docs/book/`, `_site/book/`, and the PDF to `output/pdf/`. No chapter downloads are generated. Use the browser export as the final print edition; the optional LaTeX render is an intermediate alternative.
 
 ## Sources and generated files
 
@@ -59,10 +59,6 @@ The older `sample-size-calculation-oer` and archived `pre2026` folders are not p
 
 From the maintained repository root, run `Rscript scripts/render_resource.R` to rebuild the book and standalone HTML. Add `--pdf` when you also want to update the printable edition. Commit and push to save changes in the private repository. Public deployment remains disabled until the author explicitly asks to publish again.
 
-## Individual chapter downloads
+## Complete tutorial downloads
 
-After building the HTML and starting the private loopback preview, run `node scripts/export_chapters.cjs`. This creates thirteen self-contained chapter HTML files and thirteen chapter PDFs, adds download links to each book chapter, and leaves the existing complete tutorial PDF unchanged. Install Playwright for Node if it is unavailable; on Windows the exporter uses Microsoft Edge, while other platforms use Playwright Chromium. Generated files are ignored by Git.
-
-The chapter HTML keeps expandable explanations and R code with raw output. The PDF includes the teaching explanations and exercise answers, omits the technical code/output, and embeds the computed figures, tables and equations. Applications still require the local preview server. Chapter PDFs are also stored in `output/pdf/`. Re-run the chapter exporter after a tutorial rebuild; `build_site.py` copies previously generated downloads from `docs/book/`.
-
-To refresh only an edited chapter, set `CHAPTERS` to its filename stem before running the exporter (for example, `$env:CHAPTERS="feasibility"` in PowerShell). Clear that variable for a complete chapter export. The exporter retains the download manifest for the other chapters.
+Only the Welcome page offers the complete HTML/PDF download pair. The chapter-based website navigation remains available. Run `node scripts/export_tutorial.cjs` after each finished tutorial update. The exporter uses Microsoft Edge on Windows and Playwright Chromium elsewhere, and removes the known generated chapter download files and manifest. Generated files are ignored by Git.

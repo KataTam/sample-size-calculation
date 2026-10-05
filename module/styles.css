@@ -69,7 +69,7 @@ details.r-code-output pre { margin: .5em; }
 .reference-preview th, .reference-preview td { padding: 6px; border-bottom: 1px solid #d9e2e6; }
 .reference-preview button { float: right; cursor: pointer; }
 .reference-preview-button { font: inherit; font-size: .75em; margin-left: .3em; cursor: pointer; color: #17658a; border: 1px solid #b6c9d3; border-radius: 3px; background: #eef5f8; }
-.chapter-downloads { display: flex; flex-wrap: wrap; gap: .8em; margin: 1em 0 1.5em; padding: .75em; background: #eef5f8; border-radius: 4px; font-size: .9em; }
+.tutorial-downloads { display: flex; flex-wrap: wrap; gap: .8em; margin: 1em 0 1.5em; padding: .75em; background: #eef5f8; border-radius: 4px; font-size: .9em; }
 .color-theme-2 details.r-code-output { background: #263442; }
 .color-theme-2 details.r-code-output > summary { color: #b8dcee; }
-@media print { .chapter-downloads, .reference-preview, .reference-preview-button, details.r-code-output { display: none !important; } }
+@media print { .tutorial-downloads, .reference-preview, .reference-preview-button, details.r-code-output { display: none !important; } }

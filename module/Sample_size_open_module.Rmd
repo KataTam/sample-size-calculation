@@ -36,6 +36,8 @@ source("../R/question_map.R")
 
 # Welcome {-}
 
+<nav class="tutorial-downloads" aria-label="Download the complete tutorial"><strong>Download the complete tutorial:</strong> <a href="Sample_size_open_module.html" download target="_blank" rel="noopener">HTML</a> <a href="Sample_size_open_module.pdf" download target="_blank" rel="noopener">PDF</a></nav>
+
 How many patients would make a study informative? This tutorial connects a clinical question to its assumptions, a sample size calculation, and the results that different repetitions of the study could produce.
 
 The aims of this module are to understand the importance of recruiting an appropriate number of patients into your study and to be able to calculate the required sample size given reasonable assumptions when designing your study. This open edition retains the questions and clinical narrative of the original tutorial dated **14 May 2021** [@tamasi2021], with additional explanations and browser activities.
@@ -52,7 +54,7 @@ Teaching material is shared under CC BY 4.0 and original code under MIT. You may
 
 ## How to use this tutorial {-}
 
-Read the question, make a prediction, inspect the output, and explain what it means for the clinical study. Hover over a figure or table reference, or use its **Preview** button, to inspect it while reading. R code and raw console output are collapsed initially: select **R code and output** to inspect them. Formatted results, tables and figures remain visible. Each chapter offers HTML and PDF downloads; HTML retains the expandable explanations and code, while PDF expands the teaching explanations and keeps technical code hidden. Lines starting with `#` inside code are comments; `##` marks console output, and `[1]` identifies the first printed element of an R output. Select an amber **Common misconception** title to read its explanation.
+Read the question, make a prediction, inspect the output, and explain what it means for the clinical study. Hover over a figure or table reference, or use its **Preview** button, to inspect it while reading. R code and raw console output are collapsed initially: select **R code and output** to inspect them. Formatted results, tables and figures remain visible. The complete tutorial is available as a single HTML download and a single PDF download; HTML retains the expandable explanations and code, while PDF expands the teaching explanations and keeps technical code hidden. Lines starting with `#` inside code are comments; `##` marks console output, and `[1]` identifies the first printed element of an R output. Select an amber **Common misconception** title to read its explanation.
 
 Open [the tutorial and matching app together](http://127.0.0.1:8769/study/?activity=pain_one_many) for the guided activities. Each activity link loads the same case and assumptions used in the text. The [Sample size reasoning lab](http://127.0.0.1:8769/power_explorer/) is also available on its own. The prepared figures and results in this tutorial provide a route without the app. Other [clinical sample size tools](http://127.0.0.1:8769/apps.html) cover two proportions, two means and dropout.
 
@@ -1332,6 +1334,12 @@ sessionInfo()
 The author thanks **Carlotta Drewer** and **Bert van der Leest**, students who reviewed the materials from a student's perspective and provided feedback on their clarity and usability.
 
 OpenAI Codex [@openaicodex] assisted with developing the website and interactive applications, reviewing code, and managing the GitHub repository. The author remains fully responsible for the content and accuracy of the teaching materials and software.
+
+## Further reading {-}
+
+For further reading on clinical trial design and sample size planning, see @julious2023 and @piantadosi2024. Recent clinical introductions include @fong2026 and @zrineh2026. For specific extensions, @ying2025 addresses pilot-trial sample size, @candel2023 discusses efficient trial designs, and @pargent2024 introduces simulation-based planning for mixed models. The CONSORT 2025 explanation and elaboration provides detailed reporting guidance, including sample size assumptions in item 16a [@consortee2025].
+
+For teachers and readers exploring prediction models, @shamsutdinova2026 describes recent simulation-based approaches; this is a preprint and is included as emerging further reading.
 
 ## Sources {-}
 

@@ -4,7 +4,8 @@ const fs=require('node:fs');
 const base=(process.argv[2]||'http://127.0.0.1:8769').replace(/\/$/,'');
 let browser;
 (async()=>{
- browser=await chromium.launch({headless:true,channel:'msedge'});
+ fs.mkdirSync('build/browser-checks',{recursive:true});
+ browser=await chromium.launch({headless:true,...(process.platform==='win32'?{channel:'msedge'}:{})});
  const page=await browser.newPage({viewport:{width:1400,height:1000}}), errors=[];
  page.on('pageerror',e=>errors.push(e.message));
  await page.goto(base+'/book/clinical-question.html');
@@ -28,17 +29,23 @@ let browser;
  assert(await page.locator('#reference-preview').evaluate(el=>{const r=el.getBoundingClientRect();return r.left>=0&&r.right<=innerWidth;}));
  await page.goto(base+'/book/feasibility.html#dataset-reuse');
  assert((await page.locator('#dataset-reuse').innerText()).includes('different question'));
- const manifest=await (await page.request.get(base+'/book/chapter-downloads.json')).json();assert.equal(manifest.length,13);
- for(const chapter of manifest){
-  await page.goto(base+'/book/'+chapter.slug+'.html');
-  assert.equal(await page.locator('.chapter-downloads a').count(),2);
-  for(const ext of ['html','pdf']){const r=await page.request.get(base+'/book/downloads/'+chapter.slug+'.'+ext);assert(r.ok());assert((await r.body()).length>1000);}
+ await page.goto(base+'/book/index.html');
+ assert.equal(await page.locator('.tutorial-downloads a').count(),2);
+ for(const ext of ['html','pdf']){const r=await page.request.get(base+'/book/Sample_size_open_module.'+ext);assert(r.ok());assert((await r.body()).length>1000);}
+ for(const slug of ['clinical-question','power','calculations','curves','simulation','feasibility','exercises','study-designs','glossary','common-mistakes','appendix','references']) {
+  await page.goto(base+'/book/'+slug+'.html');
+  assert.equal(await page.locator('.chapter-downloads, .tutorial-downloads').count(),0);
  }
- await page.goto(base+'/book/downloads/calculations.html');
+ const retired=await page.request.get(base+'/book/downloads/calculations.pdf');assert.equal(retired.status(),404);
+ await page.goto(base+'/book/Sample_size_open_module.html');
+ assert.equal(await page.locator('.print-chapter').count(),13);
+ assert.equal(await page.locator('.tutorial-contents a').count(),13);
+ assert(await page.locator('main img').evaluateAll(images=>images.every(img=>img.src.startsWith('data:'))));
+ assert((await page.locator('#refs').innerText()).includes('Julious'));
  assert(await page.locator('svg').count()>0);
  assert.equal(await page.locator('details.r-code-output pre').first().isVisible(),false);
  assert(await page.locator('table').first().isVisible());
  assert.deepEqual(errors,[]);
- console.log('READER TOOLS CHECK PASSED: case-first order, delayed misconception, raw output folded, visible summaries, hover/focus/cross-chapter/touch previews, reuse example, 13 HTML/PDF downloads, self-contained mathematical figures.');
+ console.log('READER TOOLS CHECK PASSED: case-first order, delayed misconception, raw output folded, visible summaries, hover/focus/cross-chapter/touch previews, reuse example, one complete HTML/PDF download pair, self-contained mathematical figures.');
  await browser.close();
 })().catch(async e=>{console.error(e);if(browser)await browser.close();process.exit(1);});
