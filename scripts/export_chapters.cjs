@@ -87,5 +87,24 @@ let browser;
       fs.writeFileSync(file,html);
     }
   }
+  // Assemble the full print edition from the same learner-facing chapter exports.
+  // This preserves formatted results and math while hiding technical code/output.
+  if (allChapters.every(slug => fs.existsSync(`docs/book/downloads/${slug}.html`))) {
+    const sections = allChapters.map(slug => {
+      const html = fs.readFileSync(`docs/book/downloads/${slug}.html`, 'utf8');
+      const main = html.match(/<main>([\s\S]*?)<\/main>/)[1];
+      const mathCSS = html.match(/<style>([\s\S]*?)<\/style>/)[1];
+      return `<section class="print-chapter"><style>${mathCSS}</style>${main}</section>`;
+    }).join('\n');
+    await page.setContent(`<!doctype html><html lang="en"><head><meta charset="utf-8"><title>Sample size calculation tutorial</title><style>${css}\n@media print {.print-chapter + .print-chapter {break-before:page;}}</style></head><body>${sections}</body></html>`, {waitUntil:'load'});
+    await page.evaluate(async () => {
+      document.querySelectorAll('details:not(.r-code-output)').forEach(el => el.open=true);
+      await Promise.all(Array.from(document.images).map(img => img.decode().catch(() => {})));
+      await document.fonts.ready;
+    });
+    const complete = await page.pdf({format:'A4',printBackground:true,margin:{top:'16mm',right:'16mm',bottom:'18mm',left:'16mm'},displayHeaderFooter:true,headerTemplate:'<span></span>',footerTemplate:'<div style="font:9px Arial;width:100%;text-align:center;color:#586572">Katalin Tamási · Sample size calculation tutorial · <span class="pageNumber"></span> / <span class="totalPages"></span></div>'});
+    for (const folder of ['module','docs/book','_site/book','output/pdf']) fs.writeFileSync(`${folder}/Sample_size_open_module.pdf`, complete);
+    console.log('Exported complete tutorial PDF from chapter downloads');
+  }
   await browser.close();
 })().catch(async error=>{ console.error(error); if(browser) await browser.close(); process.exit(1); });

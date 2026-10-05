@@ -1,5 +1,5 @@
-# Run from repository root. The PDF is rebuilt only when explicitly requested.
-render_resource <- function(include_pdf = FALSE) {
+# Run from repository root. Keep the complete PDF aligned with the HTML by default.
+render_resource <- function(include_pdf = TRUE) {
   if (capabilities("cairo")) options(bitmapType = "cairo")
   root <- normalizePath(".", winslash = "/", mustWork = TRUE)
   stopifnot(file.exists("module/Sample_size_open_module.Rmd"))
@@ -38,7 +38,10 @@ render_resource <- function(include_pdf = FALSE) {
 }
 if (identical(environment(), globalenv())) {
   args <- commandArgs(trailingOnly = TRUE)
-  if (length(setdiff(args, "--pdf"))) stop("Usage: Rscript scripts/render_resource.R [--pdf]")
-  include_pdf <- "--pdf" %in% args || identical(tolower(Sys.getenv("BUILD_PDF", "false")), "true")
+  if (length(setdiff(args, c("--pdf", "--html"))) || all(c("--pdf", "--html") %in% args)) {
+    stop("Usage: Rscript scripts/render_resource.R [--pdf | --html]")
+  }
+  include_pdf <- !"--html" %in% args &&
+    ("--pdf" %in% args || !identical(tolower(Sys.getenv("BUILD_PDF", "true")), "false"))
   render_resource(include_pdf = include_pdf)
 }

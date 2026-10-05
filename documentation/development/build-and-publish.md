@@ -8,9 +8,9 @@ The source is maintained in [KataTam/sample-size-calculation](https://github.com
 
 Open `sample-size-calculation.Rproj`. Edit `module/Sample_size_open_module.Rmd` for the tutorial and `module/references.bib` for references. Shared statistical functions live in `R/sample_size_functions.R`; the six app sources live in `apps/`. Matched activity settings are maintained once in `R/teaching_cases.R`. The glossary, FAQ and study-design guide in `student-materials/` are also included in the complete tutorial from those same sources.
 
-Save, commit and push to `main`. The GitHub Actions workflow checks source encoding, runs the statistical/server checks, renders chaptered and complete HTML, exports the browser apps, renders the supporting pages, checks local website links, refreshes the source download and deploys GitHub Pages. Ordinary publications retain the last published PDF without rebuilding it. Check the Actions tab for successful deployment. Knitting alone updates local files and does not publish. A failed deployment leaves the previous successful site online.
+Save, commit and push to `main` to save work privately while publication is disabled. When publication is authorized again, the GitHub Actions workflow checks source encoding, runs the statistical/server checks, renders chaptered and complete HTML and the complete PDF, exports the browser apps, renders the supporting pages, checks local website links, refreshes the source download and deploys GitHub Pages. Knitting alone updates local files and does not publish. A failed deployment leaves the previous successful site online.
 
-To update the printable edition, open the workflow in the GitHub Actions tab, choose **Run workflow**, and select **Rebuild the printable PDF as well as the website**. That manual publication builds the PDF from the current tutorial. Between PDF updates, the online tutorial can be newer than the downloadable PDF.
+**PDF update policy (5 October 2026):** after tutorial changes, refresh the complete PDF and the HTML/PDF downloads for affected chapters. Check their content and rendered layout before delivery. The complete PDF keeps formatted tables and figures while omitting R code and raw console output.
 
 ## Build locally
 
@@ -25,7 +25,7 @@ python scripts/build_site.py
 python -m http.server 8769 --bind 127.0.0.1 --directory _site
 ```
 
-Then open http://127.0.0.1:8769/study/ . Binding to 127.0.0.1 keeps the preview on this computer. Activity links in the R Markdown source use this full local address so they also work from an RStudio preview under `/rmd_output/`. Keep this server running while testing those links. The website build converts same-project links to relative paths for the complete site. Browser apps require HTTP, not `file://`. Shinylive downloads dependencies during export, so the build needs network access. The tutorial render builds HTML by default and leaves any existing PDF unchanged. While the website is offline, preserve the existing local PDF; on a fresh checkout, obtain a copy from the author's local archive or explicitly rebuild it.
+Then open http://127.0.0.1:8769/study/ . Binding to 127.0.0.1 keeps the preview on this computer. Activity links in the R Markdown source use this full local address so they also work from an RStudio preview under `/rmd_output/`. Keep this server running while testing those links. The website build converts same-project links to relative paths for the complete site. Browser apps require HTTP, not `file://`. Shinylive downloads dependencies during export, so the build needs network access. The tutorial render builds HTML and the complete PDF by default. Refresh affected chapter downloads after the site build.
 
 To rebuild HTML and the PDF locally, run:
 
@@ -33,7 +33,7 @@ To rebuild HTML and the PDF locally, run:
 Rscript scripts/render_resource.R --pdf
 ```
 
-`BUILD_PDF=true` also enables the PDF when running the render script; the publication workflow sets this only for an explicitly requested PDF rebuild. When calling the renderer from R, use `render_resource(include_pdf = TRUE)` for a PDF update.
+PDF generation is now the default, including when calling `render_resource()` from R. Use `--html`, `BUILD_PDF=false`, or `render_resource(include_pdf = FALSE)` only for a temporary HTML-only preview; refresh the PDF before delivering the finished tutorial change. After assembling the site and starting the local preview, run `node scripts/export_chapters.cjs` to refresh chapter downloads, or set `CHAPTERS` to a comma-separated list of affected chapter slugs. The exporter also assembles the complete print edition from all chapter exports, replacing the intermediate LaTeX PDF with the same formatted results, expanded explanations and hidden code used in chapter downloads. It writes the complete PDF to `module/`, `docs/book/`, `_site/book/` and `output/pdf/`. On a fresh checkout, export all chapters first.
 
 ## Sources and generated files
 
