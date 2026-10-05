@@ -1,7 +1,10 @@
 # Where does my study fit? {#study-designs}
 
 ::: {.learning-goals}
-**Learning goals.** After this section, you should be able to choose a planning method from the research question, outcome and dependency between observations, and recognise designs that need methods beyond the two-independent-group examples.
+**Learning outcomes.** After this section, you should be able to:
+
+- Choose a planning method from the research question, outcome and dependency between observations.
+- Recognise designs that need methods beyond the two-independent-group examples.
 :::
 
 Choose a method from the research question, outcome, sampling structure and intended analysis. "Clinical," "retrospective," "diagnostic" and "within-subject" describe different dimensions; they are not mutually exclusive study categories. A diagnostic study can be clinical and retrospective, and a preclinical experiment can have repeated measurements.

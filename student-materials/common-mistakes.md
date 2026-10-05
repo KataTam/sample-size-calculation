@@ -1,7 +1,10 @@
 # Common mistakes and questions {#common-mistakes}
 
 ::: {.learning-goals}
-**Learning goals.** After this section, you should be able to identify and correct common misinterpretations of percentage changes, statistical significance, clinical importance and power, and explain the limits of pilot estimates and fixed samples.
+**Learning outcomes.** After this section, you should be able to:
+
+- Identify and correct common misinterpretations of percentage changes, statistical significance, clinical importance and power.
+- Explain the limits of pilot estimates and fixed samples.
 :::
 
 ## Does "20% better" mean 20 percentage points?

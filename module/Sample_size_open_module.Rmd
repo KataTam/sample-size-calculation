@@ -3,7 +3,7 @@ title: "How many patients do you need for your study?"
 license: "CC BY 4.0 for original teaching material; MIT for original code"
 subtitle: "Sample size calculation tutorial"
 author: "Katalin Tamási"
-date: "2 October 2026"
+date: "5 October 2026"
 lang: en
 bibliography: references.bib
 link-citations: true
@@ -12,6 +12,7 @@ output:
   bookdown::gitbook:
     css: styles.css
     highlight: pygments
+    code_folding: hide
     split_bib: false
     config:
       sharing: false
@@ -44,7 +45,7 @@ Teaching material is shared under CC BY 4.0 and original code under MIT. You may
 
 ## How to use this tutorial {-}
 
-Read the question, make a prediction, inspect the output, and explain what it means for the clinical study. R code is shown in shaded blocks, followed by the output it produces. Lines starting with `#` inside code are comments; `##` marks console output, and `[1]` identifies the first printed element of an R output.
+Read the question, make a prediction, inspect the output, and explain what it means for the clinical study. R code is collapsed initially: select **Code** to reveal a shaded code block. Its output, tables and figures remain visible. Lines starting with `#` inside code are comments; `##` marks console output, and `[1]` identifies the first printed element of an R output. Select an amber **Common misconception** title to read its explanation.
 
 Open [the tutorial and matching app together](https://katatam.github.io/sample-size-calculation/study/?activity=pain_one_many) for the guided activities. Each activity link loads the same case and assumptions used in the text. The [Sample size reasoning lab](https://katatam.github.io/sample-size-calculation/power_explorer/) is also available on its own. The prepared figures and results in this tutorial provide a route without the app. Other [clinical sample size tools](https://katatam.github.io/sample-size-calculation/) cover two proportions, two means and dropout.
 
@@ -88,7 +89,11 @@ The downloaded, single-page HTML edition has its own table of contents rather th
 # Introduction {#clinical-question}
 
 ::: {.learning-goals}
-**Learning goals.** After this section, you should be able to explain why sample size starts with the clinical question, identify the assumptions needed before calculating, and distinguish expected effects, planning effects and clinical thresholds in a two-arm clinical trial.
+**Learning outcomes.** After this section, you should be able to:
+
+- Explain why sample size starts with the clinical question.
+- Identify the assumptions needed before calculating.
+- Distinguish expected effects, planning effects and clinical thresholds in a two-arm clinical trial.
 :::
 
 ## What should the study establish?
@@ -134,7 +139,14 @@ In the majority of cases, you do not and indeed cannot know the true value of a 
 
 Imagine a two-arm randomized trial comparing a novel pain treatment with standard treatment. The primary outcome is whether a patient reports pain relief at four weeks: yes or no. Suppose a small pilot observed relief in 7 of 10 treated patients and 3 of 10 control patients.
 
-These observations are sample proportions: 7/10 and 3/10, expressed as **70%** and **30%**. They are estimates, not known population probabilities. For this hypothetical case, suppose the evidence supports an **expected benefit of 40 percentage points**. Because a small pilot is uncertain, use a more conservative **planning benefit of 30 percentage points**: 60% relief with treatment versus 30% with control. Separately, consultation with patients and clinicians identifies a **clinical threshold of 20 percentage points**. The expected effect describes what you currently anticipate; the planning effect is the assumed true difference at which you calculate power; the clinical threshold describes what patients would consider worthwhile.
+These observations are sample proportions: 7/10 and 3/10, expressed as **70%** and **30%**. For this hypothetical case, suppose the evidence supports an **expected benefit of 40 percentage points**. Because a small pilot is uncertain, use a more conservative **planning benefit of 30 percentage points**: 60% relief with treatment versus 30% with control. Separately, consultation with patients and clinicians identifies a **clinical threshold of 20 percentage points**. The expected effect describes what you currently anticipate; the planning effect is the assumed true difference at which you calculate power; the clinical threshold describes what patients would consider worthwhile.
+
+<details class="misconception" id="misconception-pilot-effect">
+<summary>Common misconception: the pilot reveals the true treatment effect</summary>
+
+The pilot's 70% versus 30% relief rates are sample estimates and could change in another small sample. They inform our expectations, but do not establish the population effect. The expected benefit, effect used for planning and clinical threshold answer different questions and should each be justified.
+
+</details>
 
 Use differences in clinically interpretable units. An increase from 80% to 96% is **16 percentage points**, or a **20% relative increase**. Avoid choosing an effect solely because a generic scale calls it small, medium or large [@caldwell2020].
 
@@ -144,7 +156,7 @@ Let's return to the hypothetical study comparing two painkillers in patients wit
 
 After consultation with patients and medical experts, you have decided that a difference of 20 percentage points would be clinically meaningful. The observed difference in your pilot is larger than this. However, does this also mean that the result is statistically significant?
 
-Using a two-sided comparison of proportions, the pilot gives a p-value of approximately 0.074. At a significance level of 5%, this result is not statistically significant. This does not establish that the treatments are equally effective. It means that these observations do not provide sufficient evidence to reject the null hypothesis using the chosen test.
+Using a two-sided comparison of proportions, the pilot gives a p-value of approximately 0.074. At a significance level of 5%, this result is not statistically significant. It means that these observations do not provide sufficient evidence to reject the null hypothesis using the chosen test.
 
 Now let's investigate how large the observed difference would have to be to obtain a statistically significant result. Keep the standard treatment result at 3 out of 10 patients, but increase the number reporting relief in the novel treatment group from 7 to 8.
 
@@ -168,6 +180,13 @@ round(c(
 With 8 rather than 7 patients reporting relief, the result becomes statistically significant. For this particular comparison, the smallest observed difference giving $p<0.05$ is therefore $0.8-0.3=0.5$, or **50 percentage points**.
 
 Notice that the clinical threshold remains 20 percentage points. What patients would consider a worthwhile improvement does not change because your pilot happens to contain only 10 patients per group.
+
+<details class="misconception" id="misconception-significance">
+<summary>Common misconception: statistical significance decides whether a treatment matters</summary>
+
+A non-significant result does not establish that the treatments are equally effective. A significant result does not establish that the benefit matters to patients. Examine the estimated difference and its confidence interval against both zero and the clinical threshold.
+
+</details>
 
 *The calculation above uses an approximate test without continuity correction, matching the reasoning lab. With such small groups, an exact test may give a different result.*
 
@@ -258,10 +277,20 @@ Small pilot effects are uncertain. Following up only pilots whose estimated effe
 # What does statistical power tell you? {#power}
 
 ::: {.learning-goals}
-**Learning goals.** After this section, you should be able to explain alpha, beta and power under a specified population scenario, and distinguish the outcome of one study from the performance of a design across repeated studies.
+**Learning outcomes.** After this section, you should be able to:
+
+- Explain alpha, beta and power under a specified population scenario.
+- Distinguish the outcome of one study from the performance of a design across repeated studies.
 :::
 
-Imagine repeating the same planned study many times, with the same sample size, analysis and specified true treatment effect. **Power is the percentage of those studies that would reject the null hypothesis given that the null hypothesis is false.** At 90% power, about 90 out of 100 repetitions would detect that effect if it exists, while about 10 would not. This describes the design's long-run performance; it does not guarantee the result of your one study. You do not need to conduct the trial repeatedly: calculations or simulations estimate this probability under the stated assumptions.
+Imagine repeating the same planned study many times, with the same sample size, analysis and specified true treatment effect. **Power is the percentage of those studies that would reject the null hypothesis given that the null hypothesis is false.** At 90% power, about 90 out of 100 repetitions would detect that effect if it exists, while about 10 would not. This describes the design's long-run performance. You do not need to conduct the trial repeatedly: calculations or simulations estimate this probability under the stated assumptions.
+
+<details class="misconception" id="misconception-power-meaning">
+<summary>Common misconception: 90% power means a 90% probability that the treatment works</summary>
+
+Power assumes a particular true effect and describes how often the planned test would reject the null hypothesis across repeated studies. It does not tell us how likely that effect is to exist. A study with 90% power can still produce an inconclusive result.
+
+</details>
 
 ## Hypotheses and error probabilities
 
@@ -282,7 +311,14 @@ knitr::kable(data.frame(
   check.names = FALSE), caption = "Testing decisions across repeated studies.")
 ```
 
-**Type I error** means rejecting a true null hypothesis. **Type II error** means failing to reject a false null hypothesis. **Power** is the probability of rejection under a specified alternative, design and analysis. It is neither the probability that a hypothesis is true nor a guarantee about one study [@whitley2002; @superpowerbook2022].
+**Type I error** means rejecting a true null hypothesis. **Type II error** means failing to reject a false null hypothesis. **Power** is the probability of rejection under a specified alternative, design and analysis [@whitley2002; @superpowerbook2022].
+
+<details class="misconception" id="misconception-alpha-meaning">
+<summary>Common misconception: alpha of 5% means a significant result has a 5% probability of being a false positive</summary>
+
+Alpha of 5% means that the testing procedure rejects in about 5% of repetitions when the null hypothesis is true, under its assumptions. It does not give the probability that a significant result is a false positive. Alpha conditions on the null hypothesis being true; it does not tell us how likely that hypothesis is after observing the data.
+
+</details>
 
 Alpha of 5% and power of 80% or 90% are common planning choices. Choose and justify them in context. The ratio of beta to alpha is not, by itself, a calculation of the relative clinical costs of the two errors. Non-rejection does not establish that the treatments are equivalent.
 
@@ -363,7 +399,11 @@ At a rejection rate of 80% and $B=5000$, MCSE is about `r round(100 * sqrt(.8 * 
 # Calculate a sample size {#calculations}
 
 ::: {.learning-goals}
-**Learning goals.** After this section, you should be able to calculate approximate sample sizes for two independent proportions or means, explain how the planning effect, variability, alpha and target power affect the calculation, and distinguish per-group from total counts.
+**Learning outcomes.** After this section, you should be able to:
+
+- Calculate approximate sample sizes for two independent proportions or means.
+- Explain how the planning effect, variability, alpha and target power affect the calculation.
+- Distinguish per-group from total counts.
 :::
 
 We return to two-arm treatment comparisons. The formulas below assume two independent groups with equal allocation and a two-sided test. Later, [Recruitment, precision and feasibility](#feasibility) extends planning to estimation and single-proportion examples, and [Where does my study fit?](#study-designs) considers other designs.
@@ -417,6 +457,13 @@ c(per_group = n_per_group, total = 2 * n_per_group)
 ```
 
 This approximation gives `r n_per_group` per group and `r 2 * n_per_group` in total. It is not a guarantee of 90% finite-sample power. The lab uses the normal approximation implemented by `power.prop.test()` for planning and checks the chosen score test using simulation [@rcore].
+
+<details class="misconception" id="misconception-definitive-sample">
+<summary>Common misconception: the calculator provides one definitive minimum number</summary>
+
+The calculated sample size depends on the effect, event rates or variability, error targets and analysis method you specify. It is a conditional planning result. Check plausible alternative assumptions and whether the reported number is per group or for the whole study before interpreting it.
+
+</details>
 
 ```{r proportion-changes}
 proportion_cases <- data.frame(
@@ -526,7 +573,11 @@ The expected-loss adjustment gives a recruitment total of `r 2 * adjust_for_drop
 # Read power curves {#curves}
 
 ::: {.learning-goals}
-**Learning goals.** After this section, you should be able to read power curves, compare plausible effects and sample sizes, and assess sensitivity and recruitment limits while keeping the planned sample size fixed when appropriate.
+**Learning outcomes.** After this section, you should be able to:
+
+- Read power curves.
+- Compare plausible effects and sample sizes.
+- Assess sensitivity and recruitment limits while keeping the planned sample size fixed when appropriate.
 :::
 
 ## Activity 2: can the feasible study answer the question?
@@ -566,7 +617,7 @@ knitr::kable(display_probabilities(cap_results, "approximate_power_at_cap",
 
 ## Hold sample size fixed and vary the effect
 
-Figure \@ref(fig:effect-curve) answers a different question: with 90 analysable patients per group, how does power change across possible treatment benefits? The target-power crossing describes a detectable effect at that target. It is not a clinical importance threshold and is not a hard boundary below which detection is impossible.
+Figure \@ref(fig:effect-curve) answers a different question: with 90 analysable patients per group, how does power change across possible treatment benefits? The target-power crossing describes a detectable effect at that target.
 
 ```{r effect-curve, fig.cap="Approximate power across true treatment benefits with 90 analysable patients per group and 30% control relief. The horizontal reference marks 90% power.", fig.alt="Power rises with the assumed positive treatment benefit; the horizontal reference is 90 percent power."}
 effect_grid <- seq(0, .40, .005)
@@ -581,6 +632,13 @@ axis(2, at = seq(0, 1, .2), labels = paste0(seq(0, 100, 20), "%"))
 abline(h = target_power, lty = 2)
 ```
 
+<details class="misconception" id="misconception-detection-boundary">
+<summary>Common misconception: the target-power crossing is a detection boundary</summary>
+
+An effect below the target-power crossing can still produce a significant result; an effect above it can still go undetected. The curve describes probabilities across repeated studies, not a boundary separating detectable from undetectable effects. The clinical threshold is a separate judgement.
+
+</details>
+
 ::: {.activity}
 **Predict.** Which effect assumption is most demanding at the same power target?
 
@@ -593,7 +651,14 @@ abline(h = target_power, lty = 2)
 
 ## Sensitivity is not observed post hoc power
 
-These curves specify hypothetical effects before interpreting a realised study. Calculating power from the effect observed in that same study adds no useful evidence about its result. After data collection, interpret the effect estimate, confidence interval, study design and limitations [@althouse2021].
+These curves specify hypothetical effects before interpreting a realised study.
+
+<details class="misconception" id="misconception-observed-power">
+<summary>Common misconception: power calculated from the observed effect explains the completed study</summary>
+
+Substituting the study's observed effect into a power calculation adds no useful evidence about that same result. Interpret the estimate, confidence interval, study design and limitations instead. At a fixed sample size, power across independently justified hypothetical effects can still help describe the design's capabilities [@althouse2021].
+
+</details>
 
 For example, suppose a completed study estimates a 1-unit improvement with a 95% confidence interval from -1 to 3, while a 2-unit benefit would matter clinically. The interval includes some harm, zero, a small benefit and a clinically important benefit. The study leaves those possibilities unresolved; calculating low power from the observed 1-unit estimate does not decide between them.
 
@@ -602,7 +667,11 @@ With an existing records dataset, explain why that sample is available, assess d
 # Build a simulated clinical trial {#simulation}
 
 ::: {.learning-goals}
-**Learning goals.** After this section, you should be able to generate and analyse one hypothetical trial, repeat the trial to assess rejection and interval coverage, and explain how Monte Carlo uncertainty differs from uncertainty in the planning assumptions.
+**Learning outcomes.** After this section, you should be able to:
+
+- Generate and analyse one hypothetical trial.
+- Repeat the trial to assess rejection and interval coverage.
+- Explain how Monte Carlo uncertainty differs from uncertainty in the planning assumptions.
 :::
 
 This chapter returns to the two-arm chronic-pain trial and its planned analysis.
@@ -665,6 +734,13 @@ knitr::kable(display_simulation_summary(simulation_summary(trials)),
 
 The rejection rate estimates power at these probabilities. Coverage is the percentage of confidence intervals containing the generating difference. The width-target rate is the percentage with a **full** interval width no greater than 30 percentage points. These are three separate properties.
 
+<details class="misconception" id="misconception-simulation-repetitions">
+<summary>Common misconception: running more simulations makes the study more powerful</summary>
+
+Increasing the number of simulated studies makes the estimated rejection rate more precise. It does not add patients to each study or increase its underlying power. Increasing the patients per group changes the study; increasing the simulation repetitions improves our numerical description of it.
+
+</details>
+
 ```{r trial-intervals, echo=FALSE, fig.height=6, fig.cap="Risk-difference confidence intervals from the first 30 simulated trials. Filled dots indicate rejection of zero. Reference lines mark the 20-percentage-point clinical threshold and the 30-percentage-point generating effect used for planning.", fig.alt="Intervals vary from trial to trial. Separate lines mark zero, the 20-point clinical threshold and the 30-point generating effect. The preceding table reports rejection, coverage and attainment of the full interval width target across all 5,000 trials."}
 plot_trial_intervals(trials$results, trial_spec)
 ```
@@ -691,7 +767,11 @@ A difference can reflect Monte Carlo error or the approximation used for binary 
 # Recruitment, precision and feasibility {#feasibility}
 
 ::: {.learning-goals}
-**Learning goals.** After this section, you should be able to adjust recruitment for expected losses, interpret confidence intervals against zero and a clinical threshold, and plan useful precision for a prevalence estimate or pilot feasibility outcome.
+**Learning outcomes.** After this section, you should be able to:
+
+- Adjust recruitment for expected losses.
+- Interpret confidence intervals against zero and a clinical threshold.
+- Plan useful precision for a prevalence estimate or pilot feasibility outcome.
 :::
 
 ## Account for expected losses
@@ -710,7 +790,14 @@ c(analysable_per_group = analysable_per_group,
   recruit_per_group = recruit_per_group, recruit_total = 2 * recruit_per_group)
 ```
 
-Inflation protects expected counts under the assumed loss rate. It neither guarantees the final count nor repairs bias caused by missing outcomes or treatment non-adherence. The simulations here condition on analysable counts and do not model dropout.
+The simulations here condition on analysable counts and do not model dropout.
+
+<details class="misconception" id="misconception-dropout">
+<summary>Common misconception: adding the expected dropout percentage solves missing data</summary>
+
+To allow for 10% expected loss, divide the required analysable count by 0.90 rather than simply adding 10%. This protects the expected participant count, but does not guarantee it. Recruiting extra participants also does not remove bias caused by missing outcomes or treatment non-adherence.
+
+</details>
 
 ## Interpret a confidence interval clinically
 
@@ -725,6 +812,13 @@ For the continuous improvement-score case, the expected benefit is 4 units, the 
 Table: (\#tab:clinical-intervals) Interpreting hypothetical 95% intervals against zero and a 2-unit clinical threshold.
 
 A confidence procedure with 95% coverage contains the fixed population effect in about 95% of repetitions under its assumptions. It does not assign a 95% probability to the fixed truth after observing one interval. Precision and clinical interpretation complement the power calculation [@sandoval2025].
+
+<details class="misconception" id="misconception-power-precision">
+<summary>Common misconception: high power guarantees clinically useful precision</summary>
+
+A study can detect a difference from zero while leaving considerable uncertainty about whether the benefit is clinically worthwhile. Power concerns the testing decision; precision concerns the interval's width. Consider both when deciding whether the study can answer the clinical question.
+
+</details>
 
 ## Plan for precision
 
@@ -819,7 +913,14 @@ pilot_retention <- single_proportion_interval(events = 32, n = 40,
 pilot_retention
 ```
 
-The observed 80% retention still has a wide interval. Compare it with a **prospectively agreed** progression criterion and consider reasons for missing outcomes. A point estimate of 80% alone cannot establish that the main trial will retain at least 80%. The pilot's sample should be justified by its feasibility questions and the useful precision achievable with the available resources, rather than by a universal minimum per arm.
+The observed 80% retention still has a wide interval. Compare it with a **prospectively agreed** progression criterion and consider reasons for missing outcomes. A point estimate of 80% alone cannot establish that the main trial will retain at least 80%.
+
+<details class="misconception" id="misconception-pilot-goal">
+<summary>Common misconception: every pilot needs a treatment-effect power calculation</summary>
+
+A pilot may primarily investigate recruitment, retention or whether procedures are workable. Its numbers should support those feasibility questions and the precision needed for decisions, rather than a universal minimum per arm. A small pilot's uncertain treatment-effect estimate should not become the sole basis for planning the definitive trial [@albers2018].
+
+</details>
 
 [Explore the pilot feasibility case](https://katatam.github.io/sample-size-calculation/study/?activity=pilot_feasibility). It starts with a fixed total of 40 and anticipated retention of 80%. Compare illustrative intervals at 40 and 80 observations; make clear whether another recruitment period or collaboration could obtain the larger sample. This is descriptive estimation of retention, not a treatment-effect power calculation.
 
@@ -828,7 +929,11 @@ Check relevant guidance and the current funder's requirements before writing the
 # Test your reasoning {#exercises}
 
 ::: {.learning-goals}
-**Learning goals.** After this section, you should be able to justify a planning goal in a new clinical case, assess what a fixed sample can establish, and turn your evidence and assumptions into a complete study-planning report.
+**Learning outcomes.** After this section, you should be able to:
+
+- Justify a planning goal in a new clinical case.
+- Assess what a fixed sample can establish.
+- Turn your evidence and assumptions into a complete study-planning report.
 :::
 
 ## Discharge rates {#discharge}
@@ -858,11 +963,18 @@ knitr::kable(display_probabilities(discharge, c("control", "treatment", "power")
   caption = "Analysable discharge-study sample sizes for alternative planning benefits and power targets, using the simple normal approximation.")
 ```
 
-The treatment percentages are 96%, 90% and 96%. The approximate totals are 122, 394 and 164. The latter two are even because each group is rounded up separately. For the 20% relative increase, $0.80\times1.20=0.96$; the absolute increase is **16 percentage points**. The expected benefit remains 18 points and the clinical threshold remains 8 points in each comparison.
+The treatment percentages are 96%, 90% and 96%. The approximate totals are 122, 394 and 164. The latter two are even because each group is rounded up separately. The expected benefit remains 18 points and the clinical threshold remains 8 points in each comparison.
+
+<details class="misconception" id="misconception-percentage-points">
+<summary>Common misconception: percentages and percentage points are interchangeable</summary>
+
+From a baseline of 80%, a 20% relative increase gives 96% ($0.80\times1.20=0.96$), an increase of **16 percentage points**. An increase of 20 percentage points gives 100%. State the baseline and whether the change is relative or absolute before entering event rates into a calculator.
+
+</details>
 
 These are teaching approximations. Compare them with score-test planning and simulated performance before interpreting the numbers as a design recommendation.
 
-[Open the discharge activity](https://katatam.github.io/sample-size-calculation/study/?activity=discharge). The 80% versus 96% scenario starts with 80% target power. Distinguish a **20% relative increase** from a **20-percentage-point increase**, which would take 80% to 100%. Consider whether an outcome so close to 100% makes the simple approximation adequate, and examine simulated performance. A shorter time-to-discharge outcome or clustered ward allocation would require a different method.
+[Open the discharge activity](https://katatam.github.io/sample-size-calculation/study/?activity=discharge). The 80% versus 96% scenario starts with 80% target power. Consider whether an outcome so close to 100% makes the simple approximation adequate, and examine simulated performance. A shorter time-to-discharge outcome or clustered ward allocation would require a different method.
 
 </details>
 
@@ -916,7 +1028,10 @@ cat(readLines("../student-materials/common-mistakes.md", warn = FALSE),
 # Reproducibility and further reading {#appendix}
 
 ::: {.learning-goals}
-**Learning goals.** After this section, you should be able to reproduce a calculation or simulation using its inputs, method and random seed, and explain why results from different software must be compared using matching assumptions and methods.
+**Learning outcomes.** After this section, you should be able to:
+
+- Reproduce a calculation or simulation using its inputs, method and random seed.
+- Explain why results from different software must be compared using matching assumptions and methods.
 :::
 
 The current open edition uses reproducible R plots, tables and browser apps. Compare hypotheses, tests, allocation, continuity corrections and rounding before comparing results across software. Numerical agreement is informative only when the methods and inputs match; methodological validation records belong with the source documentation.

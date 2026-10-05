@@ -23,11 +23,18 @@ p.caption { color: #505b64; font-size: .92em; margin: 10px 0 24px; }
 .activity p:last-child { margin-bottom: 0; }
 .learning-goals { border-left: 4px solid #3263a0; background: #edf3fc; color: #25313b; padding: 12px 20px; margin: 20px 0 26px; }
 .learning-goals p:last-child { margin-bottom: 0; }
+.learning-goals ul { padding-left: 1.4em; margin-bottom: 0; }
+.learning-goals li + li { margin-top: .3em; }
 .learning-goals strong { color: #244f86; }
 .book.color-theme-2 .learning-goals { background: #25364d; color: #eef3fa; border-left-color: #8ab6f0; }
 .book.color-theme-2 .learning-goals strong { color: #b9d5fa; }
 details { border: 1px solid var(--line); padding: 12px 18px; margin: 20px 0; }
 summary { color: var(--accent); cursor: pointer; font-weight: 600; }
+details.misconception { border: 0; border-left: 4px solid #b7790b; background: #fff4d6; color: #513600; padding: 12px 18px; }
+details.misconception summary { display: list-item; color: #694900; line-height: 1.5; }
+details.misconception p:last-child { margin-bottom: 0; }
+.book.color-theme-2 details.misconception { background: #493b20; color: #fff1cf; border-left-color: #d8a950; }
+.book.color-theme-2 details.misconception summary { color: #ffe1a0; }
 table { font-size: .92em; }
 th, td { padding: 8px 10px; vertical-align: top; }
 img { max-width: 100%; height: auto; }

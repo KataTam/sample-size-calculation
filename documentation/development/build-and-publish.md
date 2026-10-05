@@ -1,6 +1,8 @@
 # Build and publish
 
-The source and website are maintained in [KataTam/sample-size-calculation](https://github.com/KataTam/sample-size-calculation). Learners can use the published materials without installing software.
+The source is maintained in [KataTam/sample-size-calculation](https://github.com/KataTam/sample-size-calculation).
+
+**Current status: private working edition (5 October 2026).** At the author's request, the repository is private, GitHub Pages is unpublished and the publishing workflow is disabled. Commit and push to save work privately; preview the website locally. Do not change repository visibility, enable Pages or re-enable deployment unless the author explicitly asks to publish again. The publication procedure below applies after that decision.
 
 ## Edit and publish
 
@@ -20,10 +22,10 @@ Rscript scripts/check_resource.R
 Rscript scripts/render_resource.R
 Rscript scripts/export_shinylive.R
 python scripts/build_site.py
-python -m http.server 8767 --directory _site
+python -m http.server 8767 --bind 127.0.0.1 --directory _site
 ```
 
-Then open http://localhost:8767/study/ . Browser apps require HTTP, not `file://`. Shinylive downloads dependencies during export, so the build needs network access. The tutorial render builds HTML by default and leaves any existing PDF unchanged. On a fresh checkout, download the last published PDF into `docs/book/Sample_size_open_module.pdf` before assembling the complete website, or explicitly rebuild it.
+Then open http://127.0.0.1:8767/study/ . Binding to 127.0.0.1 keeps the preview on this computer. Same-project website links resolve within the preview. Browser apps require HTTP, not `file://`. Shinylive downloads dependencies during export, so the build needs network access. The tutorial render builds HTML by default and leaves any existing PDF unchanged. While the website is offline, preserve the existing local PDF; on a fresh checkout, obtain a copy from the author's local archive or explicitly rebuild it.
 
 To rebuild HTML and the PDF locally, run:
 
@@ -55,4 +57,4 @@ Edit `module/Sample_size_open_module.Rmd` and `module/references.bib` together i
 
 The older `sample-size-calculation-oer` and archived `pre2026` folders are not publication sources. Bibliographies in generated website folders are output copies; editing them does not update the tutorial.
 
-From the maintained repository root, run `Rscript scripts/render_resource.R` to rebuild the book and standalone HTML. Add `--pdf` when you also want to update the printable edition. Knitting alone does not publish changes online: commit and push the source files to GitHub, then wait for the Pages workflow to finish.
+From the maintained repository root, run `Rscript scripts/render_resource.R` to rebuild the book and standalone HTML. Add `--pdf` when you also want to update the printable edition. Commit and push to save changes in the private repository. Public deployment remains disabled until the author explicitly asks to publish again.

@@ -192,6 +192,23 @@ for target in SITE.rglob("*.html"):
     if rel.parts[0] in {"shinylive", "two_means", "two_proportions", "power_explorer", "dropout_adjustment", "prevalence_precision", "sampling_distributions"} or "libs" in rel.parts:
         continue
     text = target.read_text(encoding="utf-8")
+    # Same-project links also work in the author's private localhost preview.
+    def local_project_link(match):
+        url = urlsplit(html.unescape(match.group(1)))
+        public = urlsplit(base)
+        prefix = public.path.rstrip("/")
+        if url.netloc.lower() != public.netloc.lower() or not (url.path == prefix or url.path.startswith(prefix + "/")):
+            return match.group(0)
+        path = SITE / url.path[len(prefix):].lstrip("/")
+        relative = os.path.relpath(path, target.parent).replace(os.sep, "/")
+        if url.path.endswith("/") or url.path == prefix:
+            relative += "/"
+        if url.query:
+            relative += "?" + url.query
+        if url.fragment:
+            relative += "#" + url.fragment
+        return 'href="' + html.escape(relative, quote=True) + '"'
+    text = re.sub(r'href="([^"]+)"', local_project_link, text)
     parser = NewTabLinks(text)
     parser.feed(text)
     for offset, original, updated in reversed(parser.replacements):

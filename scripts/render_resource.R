@@ -8,7 +8,8 @@ render_resource <- function(include_pdf = FALSE) {
   input <- "Sample_size_open_module.Rmd"
   rmarkdown::render(input, output_format = bookdown::html_document2(
     toc = TRUE, toc_float = TRUE, number_sections = TRUE,
-    self_contained = TRUE, css = "styles.css", highlight = "pygments"),
+    self_contained = TRUE, css = "styles.css", highlight = "pygments",
+    code_folding = "hide"),
     output_file = "Sample_size_open_module.html", quiet = TRUE,
     envir = new.env(parent = globalenv()))
   file.copy(input, "index.Rmd", overwrite = TRUE)

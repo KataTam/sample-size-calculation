@@ -1,5 +1,6 @@
 bookdown::gitbook:
   css: styles.css
+  code_folding: hide
   includes:
     after_body: toolbar-help.html
   split_by: chapter
