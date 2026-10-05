@@ -5,7 +5,10 @@ const path = require('node:path');
 const {chromium} = require('playwright');
 const base = (process.argv[2] || 'http://127.0.0.1:8769').replace(/\/$/, '');
 if (!['127.0.0.1', 'localhost'].includes(new URL(base).hostname)) throw Error('Use the private loopback preview.');
-const chapters = ['index', 'clinical-question', 'power', 'calculations', 'curves', 'simulation', 'feasibility', 'exercises', 'study-designs', 'glossary', 'common-mistakes', 'appendix', 'references'];
+const allChapters = ['index', 'clinical-question', 'power', 'calculations', 'curves', 'simulation', 'feasibility', 'exercises', 'study-designs', 'glossary', 'common-mistakes', 'appendix', 'references'];
+// CHAPTERS=feasibility refreshes only that chapter's downloads after a text edit.
+const chapters = process.env.CHAPTERS ? process.env.CHAPTERS.split(',') : allChapters;
+if (chapters.some(slug => !allChapters.includes(slug))) throw Error('Unknown chapter requested.');
 const css = fs.readFileSync('module/styles.css', 'utf8') + `
 body { font: 16px/1.65 Arial, sans-serif; color: #26343d; margin: 0 auto; padding: 28px; max-width: 920px; }
 h1 { font-size: 30px; line-height: 1.3; } h2 { font-size: 23px; margin-top: 1.8em; } h3 { font-size: 19px; }
@@ -32,7 +35,8 @@ let browser;
   for (const folder of ['docs/book/downloads', '_site/book/downloads', 'output/pdf']) fs.mkdirSync(folder, {recursive: true});
   browser = await chromium.launch({headless: true, ...(process.platform === 'win32' ? {channel:'msedge'} : {})});
   const page = await browser.newPage();
-  const manifest = [];
+  const manifestFile='docs/book/chapter-downloads.json';
+  const manifest = fs.existsSync(manifestFile) ? JSON.parse(fs.readFileSync(manifestFile,'utf8')).filter(item=>!chapters.includes(item.slug)) : [];
   for (const slug of chapters) {
     const response = await page.goto(`${base}/book/${slug}.html`, {waitUntil:'networkidle'});
     if (!response.ok()) throw Error(`Missing chapter ${slug}`);
@@ -72,6 +76,7 @@ let browser;
     manifest.push({slug,title:extracted.title,html:`downloads/${slug}.html`,pdf:`downloads/${slug}.pdf`});
     console.log(`Exported ${slug}: HTML and PDF`);
   }
+  manifest.sort((a,b)=>allChapters.indexOf(a.slug)-allChapters.indexOf(b.slug));
   for (const folder of ['docs/book','_site/book']) {
     fs.writeFileSync(`${folder}/chapter-downloads.json`, JSON.stringify(manifest,null,2));
     for (const chapter of manifest) {

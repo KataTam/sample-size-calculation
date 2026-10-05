@@ -991,13 +991,35 @@ knitr::kable(data.frame(
   digits = 3, caption = "Sensitivity with the original sample held fixed.")
 ```
 
-## What if the study is too small for its purpose?
+## Underpowered studies: what if the study is too small for its purpose? {#what-if-the-study-is-too-small-for-its-purpose}
 
 Low power makes inconclusive results more likely under the planning alternative. Among selected statistically significant results, effects can be exaggerated. Larger samples reduce sampling variation but do not automatically remove bias.
 
-Possible responses include collaboration across sites, better measurement, revising an overly broad aim, or deciding not to proceed with an efficacy study. Broader eligibility can affect variability and generalisability. Repeated measurements change the design and analysis. A feasibility study should be judged against feasibility aims rather than treated as a miniature confirmatory trial [@lakens2022].
+For the chronic-pain trial, a study with low power at the 30-percentage-point planning effect would often fail to detect that benefit even if it were real. A non-significant result would not establish that the treatments are equally effective. Examine the estimated benefit and confidence interval against zero and the 20-percentage-point clinical threshold.
 
-Choose the hypothesis, Type I error rate and sidedness prospectively. Switching to a one-sided test to obtain a smaller sample or a preferred result is not a justification [@moye2002]. Clustered designs, nonparametric analyses, and Bayesian planning require appropriate methods beyond the calculations illustrated here [@hayes1999; @happ2019; @pezeshk2003].
+## Ways to increase power {#increase-power}
+
+Before collecting data, consider whether you can obtain more information about the treatment effect. Table \@ref(tab:increase-power) separates changes to the study from changes to its error targets.
+
+| Option | Why it can help | What to consider |
+|:--|:--|:--|
+| Increase the analysable sample | More independent patients reduce sampling uncertainty at the same true effect. | Extend recruitment or collaborate across sites. Allow for expected losses and check that recruitment is feasible. |
+| Improve follow-up and outcome completeness | Retaining more outcomes protects the analysable sample. | Address reasons for missing outcomes; a larger count alone does not remove missing-data bias. |
+| Improve measurement | More reliable measurement can reduce unexplained variability in a continuous outcome and improve precision. | For pain relief, use a clear, consistent definition and assessment time. A different outcome needs its own assumptions and calculation. |
+| Use an appropriate, efficient design and analysis | Prespecified adjustment for informative baseline measures, or a suitable paired or repeated-measures design, can improve precision. | These methods require different planning calculations. Repeated observations from one patient are not extra independent patients. |
+| Keep allocation balanced when appropriate | For the equal-variance, equal-cost comparisons illustrated here, equal group sizes make efficient use of a fixed total. | Unequal costs, variances or other design requirements can justify another allocation. Recalculate for that design. |
+| Accept a higher Type I error rate | A less stringent rejection rule increases power at the specified alternative. | It also increases the risk of rejecting a true null. Justify the error rate prospectively; changing it to make a result significant is not sound planning. |
+| Use a one-sided test when the scientific question warrants it | Directing the rejection region to a prespecified direction can increase power for effects in that direction. | It does not test both directions in the same way. Specify and justify it before seeing the data; a smaller required sample is not sufficient justification [@moye2002]. |
+
+Table: (\#tab:increase-power) Options for increasing power and the assumptions or tradeoffs they require.
+
+A larger **true** benefit is easier to detect, but entering a larger assumed benefit into a calculator does not make the treatment more effective. Keep the chronic-pain expected benefit (40 percentage points), planning benefit (30 points) and clinical threshold (20 points) distinct and justified. Changing the clinical threshold alone does not increase power for a test of zero difference. Likewise, running more simulations improves the precision of the estimated power; it does not increase the study's power.
+
+::: {.activity}
+**Compare plans.** [Open the chronic-pain activity](http://127.0.0.1:8769/study/?activity=pain_one_many). Keep standard-treatment relief at 30%, novel-treatment relief at 60% and the Type I error rate at 5%. Compare 50 and 80 analysable patients per group. Which plan detects the specified benefit more often? What would obtaining the larger sample require in practice? Record the recruitment implications in your study plan.
+:::
+
+If none of these options makes the study informative and feasible, reconsider an overly broad aim, collaborate, or decide not to proceed with an efficacy study. A feasibility study should be judged against feasibility aims rather than treated as a miniature confirmatory trial [@lakens2022]. Changing the aim changes what the study can establish; it does not make the original treatment comparison more powerful. Broader eligibility can affect variability and generalisability. Clustered designs, nonparametric analyses and Bayesian planning require appropriate methods beyond the calculations illustrated here [@hayes1999; @happ2019; @pezeshk2003].
 
 ## What can you do when information is limited? {#pilot-feasibility}
 
