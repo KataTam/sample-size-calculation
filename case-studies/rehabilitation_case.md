@@ -4,7 +4,7 @@ All values are hypothetical teaching assumptions, not evidence about an actual p
 
 Compare two individually allocated rehabilitation programmes using improvement at six weeks on an approximately normal continuous mobility score. Expect a mean benefit of 4 units, but use a more cautious planning difference of 3 units and common SD 5. Separately, suppose patient and clinical consultation identifies a 2-unit benefit as clinically meaningful. The expected effect, planning effect and clinical threshold are distinct; only the planning difference enters the sample size calculation.
 
-Use a two-sided pooled t test, alpha 5%, target power 90%, equal groups and 10% expected loss per arm. The total recruitment cap is 200. The shared case definition is `rehabilitation` in `R/teaching_cases.R`.
+Use a two-sided pooled t test, Type I error rate 5%, target power 90%, equal groups and 10% expected loss per arm. The total recruitment cap is 200. The shared case definition is `rehabilitation` in `R/teaching_cases.R`.
 
 [Open the tutorial and app](https://katatam.github.io/sample-size-calculation/study/?activity=rehabilitation).
 

@@ -8,6 +8,8 @@ display_probabilities <- function(x, probabilities = character(), points = chara
   for (column in probabilities) x[[column]] <- percent(x[[column]])
   for (column in points) x[[column]] <- paste0(formatC(100 * x[[column]],
     format = "f", digits = 1), " percentage points")
+  names(x)[names(x) == "alpha"] <- "Type I error rate"
+  names(x)[names(x) == "beta"] <- "Type II error rate"
   names(x) <- gsub("_", " ", names(x), fixed = TRUE)
   x
 }

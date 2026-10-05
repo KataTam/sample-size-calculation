@@ -23,7 +23,7 @@ Intended conclusion and what would make the information useful:
 | Control probability and treatment probability, if binary | | | |
 | Common SD, if continuous | | | |
 | Two-sided test and CI method | | | |
-| Alpha and power target, if testing | | | |
+| Type I error rate and power target, if testing | | | |
 | Confidence level and FULL width target, if estimating | | | |
 | Analysable sample available, if fixed resources | | | |
 | Allocation | Equal groups | Core implementation restriction | |

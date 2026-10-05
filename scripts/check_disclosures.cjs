@@ -25,18 +25,18 @@ let browser;
   assert.equal(await misconception.locator('p').isVisible(), true);
   await misconception.locator('summary').press('Space');
 
-  const code = page.locator('details.chunk-details').first();
+  const code = page.locator('details.r-code-output').first();
   assert.equal(await code.getAttribute('open'), null);
-  assert.equal(await code.locator('pre').isVisible(), false);
+  assert.equal(await code.locator('pre').first().isVisible(), false);
   const output = page.locator('pre:not(.sourceCode):not(.r)').first();
-  assert.equal(await output.isVisible(), true);
+  assert.equal(await output.isVisible(), false);
   const savedOutput = await output.innerText();
   await code.locator('summary').click();
-  assert.equal(await code.locator('pre').isVisible(), true);
+  assert.equal(await code.locator('pre').first().isVisible(), true);
   await code.locator('summary').press('Enter');
-  assert.equal(await code.locator('pre').isVisible(), false);
+  assert.equal(await code.locator('pre').first().isVisible(), false);
   assert.equal(await output.innerText(), savedOutput);
-  assert.equal(await output.isVisible(), true);
+  assert.equal(await output.isVisible(), false);
   assert.equal(await page.locator('.figure img').first().isVisible(), true);
   assert.equal(await page.locator('a[href*="activity=assumptions_report"]').first().getAttribute('href'), '../study/?activity=assumptions_report');
 
@@ -62,7 +62,7 @@ let browser;
     await page.goto(base + '/' + anchors[chapter]);
     assert.equal(await page.locator('.learning-goals').count(), 1);
     assert(await page.locator('.learning-goals li').count() >= 2);
-    for (const element of await page.locator('details.misconception, details.chunk-details').all()) {
+    for (const element of await page.locator('details.misconception, details.r-code-output').all()) {
       assert.equal(await element.getAttribute('open'), null);
     }
   }
@@ -83,18 +83,18 @@ let browser;
   for (const element of await page.locator('details.misconception').all()) {
     assert.equal(await element.getAttribute('open'), null);
   }
-  await page.locator('.code-folding-btn').first().waitFor();
+  await page.locator('details.r-code-output').first().waitFor();
   const sourceBlocks = page.locator('pre.r');
   assert(await sourceBlocks.count() > 20);
   for (const source of await sourceBlocks.all()) assert.equal(await source.isVisible(), false);
   const standaloneOutput = page.locator('pre:not(.r):not(.sourceCode)').first();
-  assert.equal(await standaloneOutput.isVisible(), true);
-  await page.locator('.code-folding-btn').first().click();
+  assert.equal(await standaloneOutput.isVisible(), false);
+  await page.locator('details.r-code-output summary').first().click();
   await sourceBlocks.first().waitFor({state: 'visible'});
   await page.waitForFunction(() => !document.querySelector('.collapsing'));
-  await page.locator('.code-folding-btn').first().click();
+  await page.locator('details.r-code-output summary').first().click();
   await sourceBlocks.first().waitFor({state: 'hidden'});
-  assert.equal(await standaloneOutput.isVisible(), true);
+  assert.equal(await standaloneOutput.isVisible(), false);
   // RStudio can serve a knit result below /rmd_output/ rather than /book/.
   // Test the unassembled render there, not only the site's rewritten links.
   const previewURL = base + '/rmd_output/preview/tutorial.html';
@@ -109,6 +109,6 @@ let browser;
   await page.waitForFunction(() => document.getElementById('app-status').textContent.startsWith('Activity loaded.'));
   assert(page.frames().some(frame => frame.url().includes('/assumptions_report/')));
   assert.deepEqual(errors, []);
-  console.log('DISCLOSURE CHECK PASSED: learning-outcome lists, twelve closed amber boxes, keyboard controls, folded R code with visible outputs, nested exercise answer, night theme, mobile width, standalone HTML, local activity links, RStudio-style /rmd_output/ activity launch.');
+  console.log('DISCLOSURE CHECK PASSED: learning-outcome lists, twelve closed amber boxes, keyboard controls, folded R code and raw output with visible formatted results, nested exercise answer, night theme, mobile width, standalone HTML, local activity links, RStudio-style /rmd_output/ activity launch.');
   await browser.close();
 })().catch(async error => { console.error(error); if (browser) await browser.close(); process.exitCode = 1; });

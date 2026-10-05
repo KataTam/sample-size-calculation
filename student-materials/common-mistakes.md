@@ -19,9 +19,9 @@ For the ordinary two-sided superiority test, the alternative is any nonzero diff
 
 No. An interval might include both negligible and important effects. Assess the range and the design's limitations. Equivalence and non-inferiority ask different questions and require their own margins, hypotheses and planning methods.
 
-## Are alpha and beta probabilities that the hypotheses are true?
+## Are Type I error rate and Type II error rate probabilities that the hypotheses are true?
 
-No. [Alpha](#alpha) concerns rejection when the null is true. [Beta](#beta) concerns failure to reject at a specified true alternative. Both condition on a population scenario and a procedure. They are not posterior probabilities after observing the data. The [sampling distributions](#alpha-beta) and simulated independent studies illustrate this conditioning.
+No. [Type I error rate](#alpha) concerns rejection when the null is true. [Type II error rate](#beta) concerns failure to reject at a specified true alternative. Both condition on a population scenario and a procedure. They are not posterior probabilities after observing the data. The [sampling distributions](#alpha-beta) and simulated independent studies illustrate this conditioning.
 
 ## Does 90% power guarantee a useful result?
 
@@ -41,7 +41,7 @@ If the records already exist, explain why that sample is available and report th
 
 ## Why do the hand formula, R and another calculator give different numbers?
 
-Check outcome, allocation, sidedness, effect scale, alpha, target power, test assumptions, continuity correction and rounding. The simple mean calculator uses a normal approximation; the lab plans for a pooled t test. Binary analytical power remains an approximation and can differ from finite-sample simulation. A numerical difference is not automatically a software error.
+Check outcome, allocation, sidedness, effect scale, Type I error rate, target power, test assumptions, continuity correction and rounding. The simple mean calculator uses a normal approximation; the lab plans for a pooled t test. Binary analytical power remains an approximation and can differ from finite-sample simulation. A numerical difference is not automatically a software error.
 
 ## Can I count two visits, two eyes or patients in one allocated ward as independent observations?
 

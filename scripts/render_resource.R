@@ -9,7 +9,7 @@ render_resource <- function(include_pdf = FALSE) {
   rmarkdown::render(input, output_format = bookdown::html_document2(
     toc = TRUE, toc_float = TRUE, number_sections = TRUE,
     self_contained = TRUE, css = "styles.css", highlight = "pygments",
-    code_folding = "hide"),
+    code_folding = "none", includes = rmarkdown::includes(after_body = "toolbar-help.html")),
     output_file = "Sample_size_open_module.html", quiet = TRUE,
     envir = new.env(parent = globalenv()))
   file.copy(input, "index.Rmd", overwrite = TRUE)

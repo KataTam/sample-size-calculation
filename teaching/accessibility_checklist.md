@@ -13,7 +13,7 @@ Use this checklist when editing, adapting, or sharing the module.
 ## Text And Notation
 
 - [ ] Use plain-language explanations before or after statistical notation.
-- [ ] Define symbols such as alpha, beta, power, delta, and sigma where they first appear.
+- [ ] Define symbols such as Type I error rate, Type II error rate, power, delta, and sigma where they first appear.
 - [ ] Avoid very long paragraphs when adding new material.
 - [ ] Keep instructions direct and specific.
 - [ ] State whether sample size is per group, total, or a recruitment target.

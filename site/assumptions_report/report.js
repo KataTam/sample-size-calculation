@@ -20,7 +20,7 @@
     ]],
     ['Analysis and information target', [
       ['analysis', 'Planned analysis', 'Name the test and confidence interval method. State the sidedness and relevant assumptions.', 'The planned analysis is'],
-      ['power', 'Alpha / Type I error rate and target power', 'State alpha (Type I error rate) and target power as percentages. With fixed resources, record attainable power and the effect at which it is evaluated.', 'The alpha and power specification is', 'power'],
+      ['power', 'Type I error rate and target power', 'State Type I error rate and target power as percentages. With fixed resources, record attainable power and the effect at which it is evaluated.', 'The Type I error rate and power specification is', 'power'],
       ['precision', 'Precision target', 'State the desired full confidence interval width, its units and the confidence level. With fixed resources, record attainable precision.', 'The precision specification is', 'precision']
     ]],
     ['Sample size, recruitment and conclusion', [
@@ -52,10 +52,10 @@
       const label = document.createElement('label'); label.htmlFor = id; label.textContent = title;
       if (id === 'power') {
         const alpha = document.createElement('a'), power = document.createElement('a');
-        alpha.href = '../student-materials/glossary.html#alpha'; alpha.textContent = 'Alpha';
+        alpha.href = '../student-materials/glossary.html#alpha'; alpha.textContent = 'Type I error rate';
         power.href = '../student-materials/glossary.html#statistical-power'; power.textContent = 'power';
         for (const link of [alpha, power]) { link.target = '_blank'; link.rel = 'noopener'; }
-        label.replaceChildren(alpha, ' / Type I error rate and target ', power);
+        label.replaceChildren(alpha, ' and target ', power);
       }
       const guidance = document.createElement('p'); guidance.className = 'field-help'; guidance.id = id + '-help'; guidance.textContent = help;
       const input = document.createElement('textarea'); input.id = id; input.name = id; input.rows = 3; input.maxLength = 5000; input.setAttribute('aria-describedby', guidance.id);
@@ -131,7 +131,7 @@
         variation: percent(input.plan_p0) + '% relief in controls and ' + percent(input.plan_p1) + '% in the treatment group',
         sensitivity: 'Compare smaller true benefits while keeping the original sample size fixed. Specify plausible ranges using evidence beyond the pilot',
         analysis: 'A two-sided pooled score test without continuity correction, with a Newcombe-Wilson confidence interval; independent observations and allocation are assumed',
-        power: 'Alpha ' + percent(input.alpha) + '%. Evaluate attainable power at the ' + percent(input.plan_p1 - input.plan_p0) + '-percentage-point planning effect using the matched pain-relief activity',
+        power: 'Type I error rate ' + percent(input.alpha) + '%. Evaluate attainable power at the ' + percent(input.plan_p1 - input.plan_p0) + '-percentage-point planning effect using the matched pain-relief activity',
         precision: 'Evaluate the attainable 95% confidence interval width at the fixed sample size. The activity compares it with a full width of ' + percent(input.width_p) + ' percentage points',
         counts: input.fixed_n + ' analysable patients per group, ' + (2 * input.fixed_n) + ' in total; the illustrative sample size is held fixed to assess power and precision rather than selected to meet a target power',
         recruitment: percent(input.dropout) + '% expected losses. Recruit ' + Math.ceil(input.fixed_n / (1 - input.dropout)) + ' per group, ' + (2 * Math.ceil(input.fixed_n / (1 - input.dropout))) + ' in total using the expected-loss adjustment; this does not guarantee the final analysable count',

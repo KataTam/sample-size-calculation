@@ -11,7 +11,7 @@ ui <- fluidPage(
       sliderInput("pi1", "Event rate with novel treatment used for planning (0.60 = 60%)", min = 0.01, max = 0.99, value = 0.60, step = 0.01),
       sliderInput("pi2", "Event rate with standard treatment used for planning (0.30 = 30%)", min = 0.01, max = 0.99, value = 0.30, step = 0.01),
       helpText("These assumed event rates determine the planning difference. The pain example expects a 40-percentage-point benefit, plans for 30 points and uses a 20-point clinical threshold."),
-      sliderInput("alpha", tags$a(href = "../book/Sample_size_open_module.html#alpha", target = "_blank", rel = "noopener", "Alpha / Type I error rate (0.05 = 5%)"), min = 0.001, max = 0.10, value = 0.05, step = 0.001),
+      sliderInput("alpha", tags$a(href = "../book/Sample_size_open_module.html#alpha", target = "_blank", rel = "noopener", "Type I error rate (0.05 = 5%)"), min = 0.001, max = 0.10, value = 0.05, step = 0.001),
       sliderInput("power", tags$a(href = "../book/Sample_size_open_module.html#statistical-power", target = "_blank", rel = "noopener", "Target power (0.90 = 90%)"), min = 0.50, max = 0.99, value = 0.90, step = 0.01),
       sliderInput("dropout", "Expected loss to follow-up (0.10 = 10%)", min = 0, max = 0.50, value = 0, step = 0.01)
     ),
@@ -23,10 +23,10 @@ ui <- fluidPage(
       h3("Interpretation"),
       textOutput("interpretation"),
       uiOutput("lab_link"),
-      helpText("The lab receives this calculated analysable count as a fixed sample, together with your event rates, alpha, power target and losses. Its test-based power may differ from this approximation."),
+      helpText("The lab receives this calculated analysable count as a fixed sample, together with your event rates, Type I error rate, power target and losses. Its test-based power may differ from this approximation."),
       h3("Effect size and sample size"),
       plotOutput("sample_size_plot", height = "320px"),
-      p(class = "caption", "Figure. Approximate total analysable sample size across absolute planning differences, holding the control event rate, alpha and target power fixed."),
+      p(class = "caption", "Figure. Approximate total analysable sample size across absolute planning differences, holding the control event rate, Type I error rate and target power fixed."),
       h3("Assumptions"),
       tableOutput("assumptions"),
       p(class = "caption", "Table. Current event percentages, absolute planning difference, error targets and expected losses.")
@@ -103,7 +103,7 @@ server <- function(input, output, session) {
         "Novel treatment event rate",
         "Standard treatment event rate",
         "Absolute difference",
-        "Alpha",
+        "Type I error rate",
         "Power",
         "Dropout"
       ),

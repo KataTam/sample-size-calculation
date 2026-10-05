@@ -494,8 +494,8 @@ plot_sample_mean_distributions <- function(x) {
   lines(grid, null_density, col = "#a34724", lwd = 2, lty = 1)
   lines(grid, alt_density, col = "#176675", lwd = 2, lty = 2)
   abline(v = x$critical, col = "#555555", lty = 3)
-  legend("topright", c("Null distribution", "Specified alternative", "Alpha: reject under null",
-    "Beta: do not reject under alternative", "Rejection boundary"),
+  legend("topright", c("Null distribution", "Specified alternative", "Type I error: reject under null",
+    "Type II error: do not reject under alternative", "Rejection boundary"),
     col = c("#a34724", "#176675", "#a34724", "#176675", "#555555"),
     lty = c(1, 2, NA, NA, 3), pch = c(NA, NA, 15, 15, NA),
     lwd = c(2, 2, NA, NA, 1), cex = .75, bg = "white")

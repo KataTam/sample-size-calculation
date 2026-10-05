@@ -14,7 +14,7 @@ Use this checklist before sharing a student-generated case with peers or an inst
 - [ ] The standard-treatment or control value is stated.
 - [ ] The expected novel-treatment value or clinically relevant difference is stated.
 - [ ] The assumed effect is plausible enough for a teaching example.
-- [ ] Alpha and power are stated.
+- [ ] Type I error rate and power are stated.
 - [ ] Expected dropout or missing data is considered.
 - [ ] The source of the assumptions is described.
 

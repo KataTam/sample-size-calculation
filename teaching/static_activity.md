@@ -1,6 +1,6 @@
 # Static sample size activity
 
-Use these prepared synthetic results when the live app is unavailable. All studies use equal allocation and a two-sided alpha of 5%. Full reproducible results and assumptions accompany the activity.
+Use these prepared synthetic results when the live app is unavailable. All studies use equal allocation and a two-sided Type I error rate of 5%. Full reproducible results and assumptions accompany the activity.
 
 ## Before viewing the results
 

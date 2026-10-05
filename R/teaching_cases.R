@@ -67,7 +67,7 @@ teaching_cases <- function() {
       "pilot-feasibility", list(outcome = "single_proportion", goal = "fixed",
         anticipated_p = .80, full_width = .20, confidence = .95, unknown_p = FALSE,
         fixed_n = 40, dropout = 0, seed = 20260943), app = "prevalence_precision"),
-    alpha_beta = case("alpha_beta", "Blood pressure: alpha, beta and power",
+    alpha_beta = case("alpha_beta", "Blood pressure: Type I error rate, Type II error rate and power",
       "Compare distributions of the sample mean under a null mean of 120 and a specified alternative mean of 125 mmHg. Predict how sample size changes the overlap.",
       "alpha-beta", list(outcome = "mean_one_sample", goal = "testing", mu0 = 120,
         mu1 = 125, sigma = 15, n = 25, alpha = .05, sidedness = "greater"),

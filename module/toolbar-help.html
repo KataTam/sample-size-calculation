@@ -25,3 +25,91 @@
   });
 })();
 </script>
+<script>
+(function () {
+  "use strict";
+  var cache = new Map(), popup, timer, active;
+  function foldResults() {
+    var content = document.querySelector('.page-inner') || document.querySelector('.main-container') || document.body;
+    content.querySelectorAll('pre').forEach(function (pre) {
+      if (pre.closest('details.r-code-output') || pre.closest('#reference-preview')) return;
+      var source = pre.matches('.r, .sourceCode') || pre.closest('div.sourceCode');
+      var consoleOutput = /^\s*##/m.test(pre.textContent);
+      if (!source && !consoleOutput) return;
+      var block = pre.closest('div.sourceCode') || pre;
+      var details = document.createElement('details');
+      details.className = 'r-code-output';
+      var summary = document.createElement('summary');
+      summary.textContent = 'R code and output';
+      block.before(details); details.append(summary, block);
+      while (details.nextElementSibling && details.nextElementSibling.matches('pre') && /^\s*##/m.test(details.nextElementSibling.textContent)) {
+        details.append(details.nextElementSibling);
+      }
+    });
+  }
+  function closePreview() {
+    clearTimeout(timer);
+    if (popup) popup.hidden = true;
+    if (active) active.removeAttribute('aria-describedby');
+    active = null;
+  }
+  function scheduleClose() { timer = setTimeout(closePreview, 180); }
+  async function showPreview(link) {
+    clearTimeout(timer);
+    var url = new URL(link.href, location.href), id = decodeURIComponent(url.hash.slice(1));
+    active = link;
+    try {
+      var doc = document;
+      if (url.pathname !== location.pathname) {
+        var key = url.origin + url.pathname;
+        if (!cache.has(key)) cache.set(key, fetch(key).then(function (r) { if (!r.ok) throw Error('Preview unavailable'); return r.text(); }).then(function (html) { return new DOMParser().parseFromString(html, 'text/html'); }));
+        doc = await cache.get(key);
+      }
+      if (active !== link) return;
+      var label = doc.getElementById(id);
+      if (!label) return;
+      var original = label.closest('.figure, table') || (id.indexOf('tab:') === 0 && label.closest('caption') && label.closest('caption').parentElement);
+      if (!original) return;
+      if (!popup) {
+        popup = document.createElement('div'); popup.id = 'reference-preview'; popup.className = 'reference-preview';
+        popup.setAttribute('role', 'region'); popup.setAttribute('aria-label', 'Figure or table preview');
+        popup.addEventListener('mouseenter', function () { clearTimeout(timer); });
+        popup.addEventListener('mouseleave', scheduleClose);
+        document.body.append(popup);
+      }
+      var clone = original.cloneNode(true);
+      clone.querySelectorAll('[id]').forEach(function (el) { el.removeAttribute('id'); });
+      clone.removeAttribute('id');
+      clone.querySelectorAll('img').forEach(function (img) { img.src = new URL(img.getAttribute('src'), url).href; });
+      clone.querySelectorAll('a').forEach(function (a) { a.removeAttribute('href'); });
+      var title = document.createElement('strong'); title.textContent = 'Preview: ' + (id.indexOf('fig:') === 0 ? 'figure' : 'table');
+      var dismiss = document.createElement('button'); dismiss.type = 'button'; dismiss.textContent = 'Close'; dismiss.addEventListener('click', closePreview);
+      popup.replaceChildren(title, dismiss, clone); popup.hidden = false;
+      link.setAttribute('aria-describedby', popup.id);
+      var rect = link.getBoundingClientRect(), width = Math.min(620, innerWidth - 24);
+      popup.style.width = width + 'px';
+      popup.style.left = Math.max(12, Math.min(rect.left, innerWidth - width - 12)) + 'px';
+      popup.style.top = Math.max(12, Math.min(rect.bottom + 8, innerHeight - popup.offsetHeight - 12)) + 'px';
+    } catch (_) { closePreview(); }
+  }
+  function init() {
+    foldResults();
+    document.querySelectorAll('a[href]').forEach(function (link) {
+      if (link.dataset.referencePreview) return;
+      var url = new URL(link.href, location.href);
+      if (url.origin !== location.origin || !/^#(?:fig|tab)(?::|%3A)/i.test(url.hash)) return;
+      link.dataset.referencePreview = 'true';
+      link.addEventListener('mouseenter', function () { showPreview(link); });
+      link.addEventListener('focus', function () { showPreview(link); });
+      link.addEventListener('mouseleave', scheduleClose);
+      link.addEventListener('blur', scheduleClose);
+      // A separate preview button keeps the reference link's navigation available on touchscreens.
+      var button = document.createElement('button'); button.className = 'reference-preview-button'; button.type = 'button';
+      button.textContent = 'Preview'; button.setAttribute('aria-label', 'Preview ' + link.textContent);
+      button.addEventListener('click', function () { showPreview(link); }); link.after(button);
+    });
+  }
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closePreview(); });
+  window.addEventListener('load', function () { init(); if (window.gitbook) window.gitbook.events.bind('page.change', function () { closePreview(); init(); }); });
+})();
+</script>

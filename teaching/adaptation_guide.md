@@ -35,7 +35,7 @@ To replace the chronic pain example:
 2. Decide whether the primary outcome is binary or continuous.
 3. State the standard-treatment result.
 4. State the expected novel-treatment result or clinically relevant difference.
-5. Decide alpha and power.
+5. Decide Type I error rate and power.
 6. Add expected dropout if relevant.
 7. Check that the required sample size is plausible enough for discussion.
 
@@ -102,7 +102,7 @@ If translating the module:
 
 - translate the learner-facing text first
 - keep statistical notation consistent
-- check whether terms such as alpha, beta, power, and clinically relevant difference have accepted local translations
+- check whether terms such as Type I error rate, Type II error rate, power, and clinically relevant difference have accepted local translations
 - re-knit the module and check all figures and tables
 - update license and attribution notes in the translated version
 

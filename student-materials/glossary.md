@@ -34,17 +34,17 @@ A **confidence interval** describes uncertainty about an estimate using a proced
 
 **Full width** is the upper confidence limit minus the lower. For a symmetric interval its **half-width**, or margin of error, is half the full width. A margin of five percentage points means a full width of ten percentage points. For asymmetric intervals, the two distances from the estimate to the limits need not be equal.
 
-## Hypotheses, alpha, beta and power
+## Hypotheses, Type I error rate, Type II error rate and power
 
 The **null hypothesis** in the ordinary superiority examples is a zero population difference. A two-sided **alternative hypothesis** allows a difference in either direction. The alternative does not become "at least the clinical threshold" because that threshold was used for planning.
 
-### Alpha {#alpha}
+### Type I error rate {#alpha}
 
-**Alpha ($\alpha$)** is the planned probability of rejecting a true null under the test's assumptions: the Type I error probability. It is not the probability that the null is true after observing the data. Approximate procedures can have finite-sample error rates that depart from their nominal alpha.
+**Type I error rate ($\alpha$)** is the planned probability of rejecting a true null under the test's assumptions: the Type I error probability. It is not the probability that the null is true after observing the data. Approximate procedures can have finite-sample error rates that depart from their nominal Type I error rate.
 
-### Beta {#beta}
+### Type II error rate {#beta}
 
-**Beta ($\beta$)** is the probability of failing to reject the null at a specified true alternative, with the design and analysis held fixed: the Type II error probability. It depends on the assumed true effect, rather than applying to every possible treatment difference.
+**Type II error rate ($\beta$)** is the probability of failing to reject the null at a specified true alternative, with the design and analysis held fixed: the Type II error probability. It depends on the assumed true effect, rather than applying to every possible treatment difference.
 
 ### Statistical power {#statistical-power}
 

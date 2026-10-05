@@ -6,7 +6,7 @@
 
 Open teaching materials for medical students, by Katalin Tamási (UMCG). Work from a clinical question to the assumptions behind a sample size, explore what different studies could show, and explain what a feasible design could establish.
 
-The tutorial, browser tools and prepared examples require no R installation. The main calculations concern two independent groups with equal allocation. Separate activities cover estimating a single proportion and understanding alpha, beta and power. A study-design guide routes other designs to appropriate methods.
+The tutorial, browser tools and prepared examples require no R installation. The main calculations concern two independent groups with equal allocation. Separate activities cover estimating a single proportion and understanding Type I error rate, Type II error rate and power. A study-design guide routes other designs to appropriate methods.
 
 ## Start here
 

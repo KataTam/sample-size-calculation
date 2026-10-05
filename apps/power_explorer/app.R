@@ -88,9 +88,9 @@ ui <- fluidPage(
       conditionalPanel("input.show_advanced || input.goal == 'precision'",
       numericInput("width_p", "Target full confidence interval width (0.20 = 20 percentage points)", .2, min = .001, max = 2, step = .01))),
     helpText("Expected, planning and clinically important effects are separate judgements. Record sources and uncertainty in your case worksheet."),
-    sliderInput("alpha", tags$span(tags$a(href = "../book/Sample_size_open_module.html#alpha", target = "_blank", rel = "noopener", "Alpha"),
-      " / Type I error rate (0.05 = 5%)"), .001, .1, .05, step = .001),
-    conditionalPanel("input.show_advanced", helpText("Alpha is the test's long-run false-positive probability under its null model. The test is two-sided; alpha of 5% corresponds to 95% confidence for the interval.")),
+    sliderInput("alpha", tags$span(tags$a(href = "../book/Sample_size_open_module.html#alpha", target = "_blank", rel = "noopener", "Type I error rate"),
+      " (0.05 = 5%)"), .001, .1, .05, step = .001),
+    conditionalPanel("input.show_advanced", helpText("Type I error rate is the test's long-run false-positive probability under its null model. The test is two-sided; Type I error rate of 5% corresponds to 95% confidence for the interval.")),
     sliderInput("target_power", tags$span("Target ", tags$a(href = "../book/Sample_size_open_module.html#statistical-power", target = "_blank", rel = "noopener", "power"),
       " (0.80 = 80%)"), .5, .99, .8, step = .01),
     textOutput("error_target_inputs"),
@@ -155,10 +155,10 @@ ui <- fluidPage(
       p(class = "caption", "Figure 5. The first 30 saved trial intervals. Filled dots reject zero; open dots do not. Line styles distinguish zero, the clinical threshold and the true effect assumed for simulation."),
       plotOutput("distribution", height = "300px"),
       p(class = "caption", "Figure 6. Distribution of estimated treatment effects across the saved independent studies; the dashed line marks the true effect assumed for simulation."),
-      h4("How often is the p-value below alpha?"),
+      h4("How often is the p-value below Type I error rate?"),
       plotOutput("p_values", height = "300px"),
-      p(class = "caption", "Figure 7. Saved p-values across independent studies; the dashed line marks the alpha used for that simulation batch."),
-      p("The fraction of p-values below the saved alpha estimates power under an alternative or Type I error under the null."),
+      p(class = "caption", "Figure 7. Saved p-values across independent studies; the dashed line marks the Type I error rate used for that simulation batch."),
+      p("The fraction of p-values below the saved Type I error rate estimates power under an alternative or Type I error under the null."),
       downloadButton("download_many", "Download replications and assumptions")),
     tabPanel("My study", h3("Apply this to your question"),
       textAreaInput("study_question", "Research question and primary outcome", rows = 2, width = "100%"),
@@ -230,7 +230,7 @@ server <- function(input, output, session) {
   })
   output$error_target_inputs <- renderText({
     values <- current_lab_inputs()
-    paste0("Alpha / Type I error rate: ", format_percent(values$alpha, 1), "; target power: ",
+    paste0("Type I error rate: ", format_percent(values$alpha, 1), "; target power: ",
       format_percent(values$target_power, 1), "; interval confidence: ",
       format_percent(1 - values$alpha, 1), ".")
   })

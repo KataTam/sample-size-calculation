@@ -7,7 +7,7 @@ Choose an activity or calculation tool. You can also [open the tutorial and an a
 - [Sample size reasoning lab](power_explorer/): explore power, precision, repeated studies and recruitment.
 - [Record the assumptions](study/?activity=assumptions_report): write a study plan and generate a report.
 - [Estimate a proportion or pilot retention rate](prevalence_precision/): plan and interpret confidence interval precision.
-- [Alpha, beta and power](sampling_distributions/): compare sampling distributions under the null and an alternative.
+- [Type I error rate, Type II error rate and power](sampling_distributions/): compare sampling distributions under the null and an alternative.
 
 ## Calculation tools
 

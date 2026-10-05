@@ -26,7 +26,7 @@ Table: Design dimensions that determine the appropriate planning method.
 
 | Example question | Planning focus | Route |
 |:--|:--|:--|
-| Do two individually allocated rehabilitation programmes differ on a continuous improvement score? | Difference, common SD, analysis, alpha/power or interval width | [Rehabilitation case](#rehabilitation); the core equal-independent-group lab applies under its assumptions |
+| Do two individually allocated rehabilitation programmes differ on a continuous improvement score? | Difference, common SD, analysis, Type I error rate/power or interval width | [Rehabilitation case](#rehabilitation); the core equal-independent-group lab applies under its assumptions |
 | Does individual adherence support improve a yes/no outcome? | Two probabilities, independent allocation, effect scale and analysis | [Adherence case](#adherence); the binary core lab applies under its assumptions |
 | What proportion of eligible patients has a symptom? | Representative sample, confidence level and useful absolute margin of error | [Single-proportion precision activity](#prevalence); a simple independent sample |
 | Can a pathway recruit and retain enough patients for a future trial? | Feasibility outcomes, progression criteria and their precision | [Pilot case](#pilot-feasibility); [CONSORT pilot extension](https://www.bmj.com/content/355/bmj.i5239) for randomized pilots |
