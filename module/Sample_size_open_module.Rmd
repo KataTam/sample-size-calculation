@@ -43,6 +43,8 @@ The presentation and three simulation activities are inspired by chapters 1, 11 
 
 Hans Burgerhof's *Statistics 3: Sample size calculation*, developed as aNewSpring study material in 2020, also informs the discussion of testing and estimation goals [@burgerhof2020].
 
+The development of the epidemiology and medical statistics e-learning environment is described by @wieringa2025. Their account of identifying learner and teacher needs provides background for involving students in reviewing this open edition and combining independent preparation with guided discussion.
+
 Teaching material is shared under CC BY 4.0 and original code under MIT. You may reuse and adapt the material with attribution. The [teaching guide](../teaching/TEACHING_GUIDE.md), [case template](../case-studies/student_case_template.md) and [assessment rubric](../teaching/assessment_rubric.md) support classroom use. Public attribution or publication requires consent.
 
 ## How to use this tutorial {-}

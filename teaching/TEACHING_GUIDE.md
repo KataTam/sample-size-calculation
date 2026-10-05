@@ -40,6 +40,8 @@ The lab's width target is FULL width. The normal width curve is an expectation, 
 
 ## Assessment and co-creation
 
+Wieringa et al. (2025) describe a user-centered development process for epidemiology and medical statistics e-learning, including identifying stakeholder needs and combining online preparation with face-to-face teaching. Use this as a design reference: ask learners and teachers to review navigation, explanations and activities, then revise the material using their feedback. It does not establish learning gains for this module. See the [publication](https://doi.org/10.5281/zenodo.15064177) and the full entry in the tutorial bibliography.
+
 Use `constructive_alignment_table.md`, `assessment_rubric.md` and the case template together. Collect pseudonymously paired conceptual responses using `pilot_learning_assessment.md`; collect usability/confidence feedback separately. Include an unfamiliar transfer case and an optional delayed assessment. Record participant and response counts and report descriptive changes without claiming causal superiority from an uncontrolled pilot.
 
 Students can adapt cases, challenge unclear assumptions and suggest explanations. Use `case_quality_checklist.md` and `peer_review_form.md` before teacher approval. Keep consent records outside the public repository and do not make public contribution consent a condition of participation.
