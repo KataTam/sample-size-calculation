@@ -7,7 +7,7 @@ Use the same case and assumptions through the module, lab and assessment. If a c
 | Select and justify a planning goal | Compare testing, precision and fixed-resource routes | Goal and intended conclusion in case map | 1 |
 | Separate effects and assess evidence | Discuss the tiny pilot and clinical threshold | Distinct effects, source and uncertainty fields | 2–3 |
 | Calculate under explicit methods | Compare approximation and lab planning outputs | Method, assumptions and reproducible counts | 4 |
-| Plan recruitment | Inflate within each arm; discuss missing-data limits | Analysable and recruitment counts | 5 |
+| Plan recruitment | Inflate within each arm; discuss missing-data limits | Analyzable and recruitment counts | 5 |
 | Explore sensitivity | Predict changes, then vary true effect/SD/risk at fixed n | Before/after comparison and explanation | 6 |
 | Understand one study and many | Interpret one draw, then null and effect batches | Non-significance and repeated error explanations | 7 |
 | Evaluate precision | Compare CI width and clinical threshold | Interpretation of three prepared intervals | 8 |

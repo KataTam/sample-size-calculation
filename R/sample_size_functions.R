@@ -245,9 +245,9 @@ with_study_seed <- function(seed, code) {
 
 wilson_interval <- function(p, n, alpha = .05) {
   z <- qnorm(1 - alpha / 2)
-  centre <- (p + z^2 / (2 * n)) / (1 + z^2 / n)
+  center <- (p + z^2 / (2 * n)) / (1 + z^2 / n)
   half <- z * sqrt(p * (1 - p) / n + z^2 / (4 * n^2)) / (1 + z^2 / n)
-  cbind(lower = pmax(0, centre - half), upper = pmin(1, centre + half))
+  cbind(lower = pmax(0, center - half), upper = pmin(1, center + half))
 }
 
 analyse_binary <- function(treatment_count, control_count, n, alpha) {
@@ -296,7 +296,7 @@ simulate_one_study <- function(spec) {
 }
 
 simulate_trials <- function(spec) {
-  # Normal sufficient statistics have the same distribution as analysing B full
+  # Normal sufficient statistics have the same distribution as analyzing B full
   # independent normal datasets. This avoids storing B * 2n patient records.
   with_study_seed(spec$seed, {
     n <- spec$n; B <- spec$B
@@ -389,7 +389,7 @@ plot_trial_intervals <- function(results, spec, max_display = 30) {
 
 # Single-proportion precision: the requested target is always FULL CI width.
 # This is the usual normal approximation for an independently sampled proportion,
-# not a guarantee for the realised Wilson width or coverage under biased sampling.
+# not a guarantee for the realized Wilson width or coverage under biased sampling.
 check_unit_probability <- function(x, name) {
   check_scalar(x, name)
   if (x < 0 || x > 1) stop(name, " must be between 0 and 1 inclusive.", call. = FALSE)
@@ -412,7 +412,7 @@ proportion_precision_plan <- function(p = .20, full_width = .10, confidence = .9
   half_width <- full_width / 2
   raw_n <- qnorm((1 + confidence) / 2)^2 * planning_p * (1 - planning_p) / half_width^2
   n <- ceiling(raw_n)
-  check_integer(n, "Calculated analysable sample size", 1, 1e7)
+  check_integer(n, "Calculated analyzable sample size", 1, 1e7)
   list(anticipated_p = p, planning_p = planning_p, unknown_p = unknown_p,
     full_width = full_width, half_width = half_width, confidence = confidence,
     raw_n = raw_n, n = n, dropout_rate = dropout_rate,
@@ -423,7 +423,7 @@ proportion_precision_plan <- function(p = .20, full_width = .10, confidence = .9
 }
 
 single_proportion_interval <- function(events, n, confidence = .95) {
-  check_integer(n, "Analysable sample size", 1, 1e7)
+  check_integer(n, "Analyzable sample size", 1, 1e7)
   check_integer(events, "Observed event count", 0, n)
   check_probability(confidence, "Confidence level")
   estimate <- events / n
@@ -434,7 +434,7 @@ single_proportion_interval <- function(events, n, confidence = .95) {
 }
 
 simulate_proportion_study <- function(n, p, confidence = .95, seed = 20260942) {
-  check_integer(n, "Analysable sample size", 1, 1e7)
+  check_integer(n, "Analyzable sample size", 1, 1e7)
   check_unit_probability(p, "Event rate assumed for simulation")
   check_probability(confidence, "Confidence level")
   check_integer(seed, "Seed", 0, .Machine$integer.max)
@@ -481,12 +481,12 @@ plot_sample_mean_distributions <- function(x) {
   plot(grid, null_density, type = "n", ylim = c(0, ymax),
     xlab = "Sample mean (not individual observations)", ylab = "Density",
     main = paste0("Sampling distributions of the mean: n = ", x$n))
-  shade <- function(from, to, mean, colour) {
+  shade <- function(from, to, mean, color) {
     left <- max(from, limits[1]); right <- min(to, limits[2])
     if (left >= right) return(invisible(NULL))
     g <- seq(left, right, length.out = 400)
     polygon(c(left, g, right), c(0, dnorm(g, mean, x$se), 0),
-      col = colour, border = NA)
+      col = color, border = NA)
   }
   shade(-Inf, x$lower, x$mu0, adjustcolor("#a34724", alpha.f = .38))
   shade(x$upper, Inf, x$mu0, adjustcolor("#a34724", alpha.f = .38))

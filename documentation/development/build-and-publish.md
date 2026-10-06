@@ -2,7 +2,7 @@
 
 The source is maintained in [KataTam/sample-size-calculation](https://github.com/KataTam/sample-size-calculation).
 
-**Current status: private working edition (5 October 2026).** At the author's request, the repository is private, GitHub Pages is unpublished and the publishing workflow is disabled. Commit and push to save work privately; preview the website locally. Do not change repository visibility, enable Pages or re-enable deployment unless the author explicitly asks to publish again. The publication procedure below applies after that decision.
+Current status: private working edition (5 October 2026). At the author's request, the repository is private, GitHub Pages is unpublished and the publishing workflow is disabled. Commit and push to save work privately; preview the website locally. Do not change repository visibility, enable Pages or re-enable deployment unless the author explicitly asks to publish again. The publication procedure below applies after that decision.
 
 ## Edit and publish
 
@@ -10,7 +10,7 @@ Open `sample-size-calculation.Rproj`. Edit `module/Sample_size_open_module.Rmd` 
 
 Save, commit and push to `main` to save work privately while publication is disabled. When publication is authorized again, the GitHub Actions workflow checks source encoding, runs the statistical/server checks, renders chaptered and complete HTML and the complete PDF, exports the browser apps, renders the supporting pages, checks local website links, refreshes the source download and deploys GitHub Pages. Knitting alone updates local files and does not publish. A failed deployment leaves the previous successful site online.
 
-**PDF update policy (5 October 2026):** after tutorial changes, refresh the complete tutorial HTML and PDF downloads. Check their content and rendered layout before delivery. The complete PDF keeps formatted tables and figures while omitting R code and raw console output.
+PDF update policy (5 October 2026): after tutorial changes, refresh the complete tutorial HTML and PDF downloads. Check their content and rendered layout before delivery. The complete PDF keeps formatted tables and figures while omitting R code and raw console output.
 
 ## Build locally
 

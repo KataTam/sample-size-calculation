@@ -10,7 +10,7 @@ Assess a case worksheet and 300–600 word justification, with a saved simulatio
 | Analysis and calculation | Appropriate stated test/interval and assumptions; reproducible calculation with method limits acknowledged |
 | Sample and recruitment counts | Correct per-group and total rounding; dropout inflation distinguished from fixing missing-data bias |
 | Sensitivity | Plausible alternative effect, SD or risk evaluated at fixed planned n and interpreted |
-| One versus many studies | One realisation distinguished from power/Type I error across replications; non-significance is not treated as proof of no effect |
+| One versus many studies | One realization distinguished from power/Type I error across replications; non-significance is not treated as proof of no effect |
 | Precision and clinical interpretation | Full width, coverage and clinical threshold interpreted without confusing statistical significance and clinical importance |
 | Simulation uncertainty | Participants and replications distinguished; seed/method recorded; Monte Carlo error separated from uncertain assumptions |
 | Feasibility and communication | Informational value, participant burden, resources and limits support a coherent recommendation |
@@ -19,7 +19,7 @@ For a short activity use criteria 1, 2, 7, 8 and 10 (maximum 10), with prepared 
 
 ## Feedback prompts
 
-- Which effect is an expectation, and which is a judgement about importance?
+- Which effect is an expectation, and which is a judgment about importance?
 - Your interval excludes zero. Does it also exclude effects below the clinical threshold?
 - What is fixed while you change the generating scenario?
 - Would increasing replications alter the power of each study?

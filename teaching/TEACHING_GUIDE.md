@@ -10,7 +10,7 @@ Check the actual deployment environment before class. The proposed 20–25 stude
 
 ## Selecting a learning route
 
-The [core route](../book/index.html#core-route) covers clinical assumptions, power, two-group calculations, expected losses, interpretation, a short sensitivity analysis and a written justification. The [advanced route](../book/index.html#advanced-route) adds sampling distributions, power curves, repeated-study simulation, precision planning and other designs. Route badges mark mixed chapters section by section. The reasoning lab starts with basic controls; clinical importance remains visible. Select **Explore further** for advanced controls and methods.
+The [core route](../book/index.html#core-route) covers clinical assumptions, power, two-group calculations, expected losses, interpretation, a short sensitivity analysis and a written justification. The [advanced route](../book/index.html#advanced-route) adds sampling distributions, power curves, repeated-study simulation, precision planning and other designs. Route badges mark mixed chapters section by section. The reasoning lab starts with basic controls; clinical importance remains visible. Select Explore further for advanced controls and methods.
 
 Begin with the Introduction's two-arm randomized superiority trials, then follow the planning questions, statistical concepts and worked calculations. Later sections broaden to estimation, prevalence and feasibility; the study-design guide directs other designs to appropriate methods. Select the extra activities that serve the session's aim; a repeated activity sequence is not required for every section. Use one outcome in a first session. The lab supports a continuous improvement score and a binary chronic-pain case. Single-proportion precision and sampling-distribution activities have their own apps. Compare outcomes in a later session if time permits.
 
@@ -21,7 +21,7 @@ Begin with the Introduction's two-arm randomized superiority trials, then follow
 | 30 minutes | One prepared case, assumption prediction, three interval interpretations and two-sentence justification; use static outputs |
 | 60 minutes | Prepared case plus a guided one-study/many-studies demonstration and short worksheet; omit student coding |
 | 90 minutes | 10 question; 15 assumptions/predictions; 15 one study; 20 repeated studies; 15 precision/feasibility; 15 justification/feedback |
-| Extended practical or homework | Students design a hypothetical investigation, simulate, analyse and write a 200–250 word abstract, followed by peer discussion |
+| Extended practical or homework | Students design a hypothetical investigation, simulate, analyze and write a 200–250 word abstract, followed by peer discussion |
 
 These timings are proposed adaptations to pilot, not schedules validated by the publications. Full DICE investigations require substantial design and interpretation time. Allocate the separate pre-assessment before teaching and the post/transfer assessment after it, or reduce activity scope to accommodate them.
 
@@ -36,9 +36,9 @@ These timings are proposed adaptations to pilot, not schedules validated by the 
 
 ## Methods to make explicit
 
-The two-group designs have equal independent groups. The simple calculator apps use labelled normal approximations. The reasoning lab uses two-sided pooled-variance t-test power for normal outcomes, and a score-test power approximation for binary outcomes. The binary confidence interval uses Newcombe-Wilson rather than inversion of that score test; explain occasional test/CI disagreement. Never describe the binary power approximation as exact. The single-proportion app uses an approximate precision plan and illustrates Wilson intervals. The Type I error rate/Type II error rate app uses a known-SD normal mean example. Read the [statistical methods](../documentation/statistical-methods.md) before teaching.
+The two-group designs have equal independent groups. The simple calculator apps use labeled normal approximations. The reasoning lab uses two-sided pooled-variance t-test power for normal outcomes, and a score-test power approximation for binary outcomes. The binary confidence interval uses Newcombe-Wilson rather than inversion of that score test; explain occasional test/CI disagreement. Never describe the binary power approximation as exact. The single-proportion app uses an approximate precision plan and illustrates Wilson intervals. The Type I error rate/Type II error rate app uses a known-SD normal mean example. Read the [statistical methods](../documentation/statistical-methods.md) before teaching.
 
-The lab's width target is FULL width. The normal width curve is an expectation, while the binary curve is a plug-in anticipation. Neither guarantees each interval meets the target. The simulation separately reports the fraction meeting it. Dropout inflation preserves expected analysable counts; it does not resolve missing-data bias.
+The lab's width target is FULL width. The normal width curve is an expectation, while the binary curve is a plug-in anticipation. Neither guarantees each interval meets the target. The simulation separately reports the fraction meeting it. Dropout inflation preserves expected analyzable counts; it does not resolve missing-data bias.
 
 ## Assessment and co-creation
 
@@ -63,7 +63,7 @@ Use the single learner source in `module/Sample_size_open_module.Rmd`. Short ses
 | 90 minutes | 10 min question/assumptions; 15 min Activity 1; 15 min worked calculation; 15 min Activity 2; 15 min Activity 3; 10 min precision; 10 min justification/review |
 | Extended | Compare estimation/testing goals, investigate prevalence or pilot retention, or alter a clinical case and justify the result using the full rubric |
 
-Activity 1: distinguish one result, power, Type I error and Monte Carlo uncertainty. Activity 2: read several curves and distinguish recruitment from expected analysable counts. Activity 3: identify generation, analysis, repetition and summary. Collect a prediction and a written explanation where they help the chosen activity. No ANOVA lesson is required.
+Activity 1: distinguish one result, power, Type I error and Monte Carlo uncertainty. Activity 2: read several curves and distinguish recruitment from expected analyzable counts. Activity 3: identify generation, analysis, repetition and summary. Collect a prediction and a written explanation where they help the chosen activity. No ANOVA lesson is required.
 
 Open the [two-panel study view](https://katatam.github.io/sample-size-calculation/study/). The activity selector loads matched case assumptions. Drag the separator to adjust panel widths, or focus it and use Left/Right arrow keys; Home and End reach the width limits. Chapter navigation leaves the app session open; choosing or resetting an activity applies that preset. Content links open in a new tab. On narrow screens, Both stacks the panels, while Lesson and App show either panel alone. Students can also open either panel separately.
 

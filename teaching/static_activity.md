@@ -16,7 +16,7 @@ Participants per group: 45; generating difference: 3 units; SD: 5; B: 1000; seed
 
 ### One study
 
-**Table 1.** Estimate, confidence interval and decisions from one simulated study under the planned scenario.
+Table 1. Estimate, confidence interval and decisions from one simulated study under the planned scenario.
 
 | estimate| lower|  upper| p_value|  width|reject |cover |width_met |
 |--------:|-----:|------:|-------:|------:|:------|:-----|:---------|
@@ -26,7 +26,7 @@ The test rejects a zero difference. The interval excludes zero in the beneficial
 
 ### Repeated studies
 
-**Table 2.** Rejection, confidence interval coverage and full-width attainment across 1000 independent studies under the planned scenario. Monte Carlo intervals describe simulation uncertainty.
+Table 2. Rejection, confidence interval coverage and full-width attainment across 1000 independent studies under the planned scenario. Monte Carlo intervals describe simulation uncertainty.
 
 |Measure               |Rate  |Monte Carlo SE (percentage points) |95% lower limit |95% upper limit |
 |:---------------------|:-----|:----------------------------------|:---------------|:---------------|
@@ -38,7 +38,7 @@ Mean FULL interval width: 4.15 units.
 
 ![First 30 study intervals with zero, clinical threshold and generating truth. Numerical summaries above.](../figures/static_activity/planned.png)
 
-**Figure 1.** First 30 simulated intervals under the planned scenario. Filled points reject zero; the separate lines mark zero, the clinical threshold and the generating truth. The horizontal scale is outcome units.
+Figure 1. First 30 simulated intervals under the planned scenario. Filled points reject zero; the separate lines mark zero, the clinical threshold and the generating truth. The horizontal scale is outcome units.
 
 [Assumptions](../data/static_activity/planned_assumptions.csv) | [All replications](../data/static_activity/planned_replications.csv)
 
@@ -50,7 +50,7 @@ Participants per group: 45; generating difference: 0 units; SD: 5; B: 1000; seed
 
 ### One study
 
-**Table 3.** Estimate, confidence interval and decisions from one simulated study under the null scenario.
+Table 3. Estimate, confidence interval and decisions from one simulated study under the null scenario.
 
 | estimate|  lower|  upper| p_value|  width|reject |cover |width_met |
 |--------:|------:|------:|-------:|------:|:------|:-----|:---------|
@@ -60,7 +60,7 @@ The test does not reject a zero difference; this does not establish no effect. T
 
 ### Repeated studies
 
-**Table 4.** Rejection, confidence interval coverage and full-width attainment across 1000 independent studies under the null scenario. Monte Carlo intervals describe simulation uncertainty.
+Table 4. Rejection, confidence interval coverage and full-width attainment across 1000 independent studies under the null scenario. Monte Carlo intervals describe simulation uncertainty.
 
 |Measure               |Rate  |Monte Carlo SE (percentage points) |95% lower limit |95% upper limit |
 |:---------------------|:-----|:----------------------------------|:---------------|:---------------|
@@ -72,7 +72,7 @@ Mean FULL interval width: 4.15 units.
 
 ![First 30 study intervals with zero, clinical threshold and generating truth. Numerical summaries above.](../figures/static_activity/null.png)
 
-**Figure 2.** First 30 simulated intervals under the null scenario. Filled points reject zero; the separate lines mark zero, the clinical threshold and the generating truth. The horizontal scale is outcome units.
+Figure 2. First 30 simulated intervals under the null scenario. Filled points reject zero; the separate lines mark zero, the clinical threshold and the generating truth. The horizontal scale is outcome units.
 
 [Assumptions](../data/static_activity/null_assumptions.csv) | [All replications](../data/static_activity/null_replications.csv)
 
@@ -84,7 +84,7 @@ Participants per group: 45; generating difference: 1 units; SD: 5; B: 1000; seed
 
 ### One study
 
-**Table 5.** Estimate, confidence interval and decisions from one simulated study under the smaller effect scenario.
+Table 5. Estimate, confidence interval and decisions from one simulated study under the smaller effect scenario.
 
 | estimate|  lower|  upper| p_value|  width|reject |cover |width_met |
 |--------:|------:|------:|-------:|------:|:------|:-----|:---------|
@@ -94,7 +94,7 @@ The test does not reject a zero difference; this does not establish no effect. T
 
 ### Repeated studies
 
-**Table 6.** Rejection, confidence interval coverage and full-width attainment across 1000 independent studies under the smaller effect scenario. Monte Carlo intervals describe simulation uncertainty.
+Table 6. Rejection, confidence interval coverage and full-width attainment across 1000 independent studies under the smaller effect scenario. Monte Carlo intervals describe simulation uncertainty.
 
 |Measure               |Rate  |Monte Carlo SE (percentage points) |95% lower limit |95% upper limit |
 |:---------------------|:-----|:----------------------------------|:---------------|:---------------|
@@ -106,7 +106,7 @@ Mean FULL interval width: 4.15 units.
 
 ![First 30 study intervals with zero, clinical threshold and generating truth. Numerical summaries above.](../figures/static_activity/smaller_effect.png)
 
-**Figure 3.** First 30 simulated intervals under the smaller effect scenario. Filled points reject zero; the separate lines mark zero, the clinical threshold and the generating truth. The horizontal scale is outcome units.
+Figure 3. First 30 simulated intervals under the smaller effect scenario. Filled points reject zero; the separate lines mark zero, the clinical threshold and the generating truth. The horizontal scale is outcome units.
 
 [Assumptions](../data/static_activity/smaller_effect_assumptions.csv) | [All replications](../data/static_activity/smaller_effect_replications.csv)
 
@@ -118,7 +118,7 @@ Participants per group: 45; generating difference: 3 units; SD: 7; B: 1000; seed
 
 ### One study
 
-**Table 7.** Estimate, confidence interval and decisions from one simulated study under the higher variability scenario.
+Table 7. Estimate, confidence interval and decisions from one simulated study under the higher variability scenario.
 
 | estimate|   lower| upper| p_value|  width|reject |cover |width_met |
 |--------:|-------:|-----:|-------:|------:|:------|:-----|:---------|
@@ -128,7 +128,7 @@ The test does not reject a zero difference; this does not establish no effect. T
 
 ### Repeated studies
 
-**Table 8.** Rejection, confidence interval coverage and full-width attainment across 1000 independent studies under the higher variability scenario. Monte Carlo intervals describe simulation uncertainty.
+Table 8. Rejection, confidence interval coverage and full-width attainment across 1000 independent studies under the higher variability scenario. Monte Carlo intervals describe simulation uncertainty.
 
 |Measure               |Rate  |Monte Carlo SE (percentage points) |95% lower limit |95% upper limit |
 |:---------------------|:-----|:----------------------------------|:---------------|:---------------|
@@ -140,7 +140,7 @@ Mean FULL interval width: 5.81 units.
 
 ![First 30 study intervals with zero, clinical threshold and generating truth. Numerical summaries above.](../figures/static_activity/higher_variability.png)
 
-**Figure 4.** First 30 simulated intervals under the higher variability scenario. Filled points reject zero; the separate lines mark zero, the clinical threshold and the generating truth. The horizontal scale is outcome units.
+Figure 4. First 30 simulated intervals under the higher variability scenario. Filled points reject zero; the separate lines mark zero, the clinical threshold and the generating truth. The horizontal scale is outcome units.
 
 [Assumptions](../data/static_activity/higher_variability_assumptions.csv) | [All replications](../data/static_activity/higher_variability_replications.csv)
 
@@ -152,7 +152,7 @@ Participants per group: 60; generating difference: 30 percentage points; control
 
 ### One study
 
-**Table 9.** Estimate, confidence interval and decisions from one simulated study under the binary scenario.
+Table 9. Estimate, confidence interval and decisions from one simulated study under the binary scenario.
 
 |estimate               |lower                 |upper                  | p value|width                  |reject |cover |width met |
 |:----------------------|:---------------------|:----------------------|-------:|:----------------------|:------|:-----|:---------|
@@ -162,7 +162,7 @@ The test rejects a zero difference. The interval excludes zero in the beneficial
 
 ### Repeated studies
 
-**Table 10.** Rejection, confidence interval coverage and full-width attainment across 1000 independent studies under the binary scenario. Monte Carlo intervals describe simulation uncertainty.
+Table 10. Rejection, confidence interval coverage and full-width attainment across 1000 independent studies under the binary scenario. Monte Carlo intervals describe simulation uncertainty.
 
 |Measure               |Rate  |Monte Carlo SE (percentage points) |95% lower limit |95% upper limit |
 |:---------------------|:-----|:----------------------------------|:---------------|:---------------|
@@ -174,7 +174,7 @@ Mean FULL interval width: 32.8 percentage points.
 
 ![First 30 study intervals with zero, clinical threshold and generating truth. Numerical summaries above.](../figures/static_activity/binary.png)
 
-**Figure 5.** First 30 simulated intervals under the binary scenario. Filled points reject zero; the separate lines mark zero, the clinical threshold and the generating truth. The horizontal scale is percentage points.
+Figure 5. First 30 simulated intervals under the binary scenario. Filled points reject zero; the separate lines mark zero, the clinical threshold and the generating truth. The horizontal scale is percentage points.
 
 [Assumptions](../data/static_activity/binary_assumptions.csv) | [All replications](../data/static_activity/binary_replications.csv)
 
@@ -182,7 +182,7 @@ Mean FULL interval width: 32.8 percentage points.
 
 Use the case template to justify the goal and assumptions. Explain one inconclusive result, interpret intervals against the clinical threshold, and compare performance while n stays fixed. Report Monte Carlo uncertainty separately from clinical uncertainty.
 
-The normal batch uses equivalent sufficient-statistic sampling; the single dataset is a separate realisation, not the batch's first row. These displays include test/CI differences for binary data described in statistical_methods.md.
+The normal batch uses equivalent sufficient-statistic sampling; the single dataset is a separate realization, not the batch's first row. These displays include test/CI differences for binary data described in statistical_methods.md.
 
 ## References
 

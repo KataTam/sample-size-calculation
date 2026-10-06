@@ -53,17 +53,17 @@ power_curve_data <- function(spec, effects, ns) {
 
 plot_power_curves <- function(data, target = .90, cap = 90) {
   effects <- unique(data$effect)
-  colours <- c("#176675", "#a04a24", "#635493")
+  colors <- c("#176675", "#a04a24", "#635493")
   plot(range(data$n), c(0, 1), type = "n", xlab = "Participants for analysis, per group",
     ylab = "Power (%)", yaxt = "n")
   axis(2, at = seq(0, 1, .2), labels = paste0(seq(0, 100, 20), "%"))
   for (i in seq_along(effects)) {
     rows <- data[data$effect == effects[i], ]
-    lines(rows$n, rows$power, lwd = 2, col = colours[i], lty = i)
+    lines(rows$n, rows$power, lwd = 2, col = colors[i], lty = i)
   }
   abline(h = target, lty = 2, col = "#555555")
   abline(v = cap, lty = 3, col = "#555555")
   legend("bottomright", legend = paste(100 * effects, "percentage points"),
-    col = colours[seq_along(effects)], lty = seq_along(effects), lwd = 2,
+    col = colors[seq_along(effects)], lty = seq_along(effects), lwd = 2,
     bty = "n", cex = .9)
 }

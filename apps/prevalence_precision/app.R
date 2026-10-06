@@ -64,7 +64,7 @@ ui <- fluidPage(
     h3("Predict, explore and interpret"),
     p("Predict the recruitment change when the margin of error is halved. Explain why required precision should follow the intended clinical or planning decision."),
     tableOutput("plan_table"), textOutput("precision_text"), textOutput("approximation_note"),
-    p(class = "caption", "Table. Planning prevalence, requested margin of error, approximate analysable counts and recruitment target."),
+    p(class = "caption", "Table. Planning prevalence, requested margin of error, approximate analyzable counts and recruitment target."),
     plotOutput("sample_plot", height = "360px"),
     p(class = "caption", "Figure. Approximate prevalence sample size across assumed percentages and confidence-interval margins. The dot marks the current plan."),
     p("Both reference curves use 95% confidence and fixed absolute margins: ±5 versus ±2.5 percentage points. The dot and separate curve show your chosen confidence and width."),
@@ -72,18 +72,18 @@ ui <- fluidPage(
     actionButton("simulate", "Draw one illustrative sample", class = "btn-primary"),
     p("The sample uses the expected event rate as the assumed true population rate. Choosing 50% for conservative planning changes the sample size calculation; it does not make the population rate known."),
     textOutput("saved_status"), tableOutput("study_table"),
-    p(class = "caption", "Table. Event count, observed percentage and Wilson confidence limits from one illustrative sample, with the realised width and target assessment."),
+    p(class = "caption", "Table. Event count, observed percentage and Wilson confidence limits from one illustrative sample, with the realized width and target assessment."),
     plotOutput("interval_plot", height = "220px"),
     p(class = "caption", "Figure. One illustrative Wilson confidence interval compared with the assumed population percentage and requested width."),
-    p("Wilson intervals stay between 0% and 100%. Their realised width depends on the observed count; the planning approximation cannot guarantee that this interval meets the target. Recruitment inflation addresses expected numbers and does not correct selection or missing-data bias."),
+    p("Wilson intervals stay between 0% and 100%. Their realized width depends on the observed count; the planning approximation cannot guarantee that this interval meets the target. Recruitment inflation addresses expected numbers and does not correct selection or missing-data bias."),
     textAreaInput("justification", "Justify the margin, assumptions, sample availability and limits.", rows = 5, width = "100%"),
     activity_download_button("download_plan", "Download assumptions and explanation"),
-    activity_download_button("download_study", "Download realised interval and assumptions"),
+    activity_download_button("download_study", "Download realized interval and assumptions"),
     tags$p(id = "download-status", role = "status", "aria-live" = "polite"),
     tags$details(tags$summary("Calculation and sources"),
       p("Approximate n = z² × p × (1 − p) / d², where d is the margin of error (half the interval width). Required n is rounded upward; recruitment is ceiling(n / (1 − loss)). All calculation functions and app code are included in the open source download."),
       tags$ul(tags$li(tags$a(href = "https://www.who.int/docs/default-source/ncds/ncd-surveillance/steps/steps-manual.pdf", "WHO STEPS manual: sample planning and the conservative p = 0.50 choice.")),
-        tags$li(tags$a(href = "https://www.nihr.ac.uk/funding-programmes/research-for-patient-benefit/scope-eligibility/feasibility-studies", "NIHR: match feasibility work to the uncertainty needing resolution.")),
+        tags$li(tags$a(href = "https://www.nihr.ac.uk/funding-programs/research-for-patient-benefit/scope-eligibility/feasibility-studies", "NIHR: match feasibility work to the uncertainty needing resolution.")),
         tags$li(tags$a(href = "https://doi.org/10.1080/01621459.1927.10502953", "Wilson (1927): score confidence intervals.")))))))
 
 server <- function(input, output, session) {
@@ -161,13 +161,13 @@ server <- function(input, output, session) {
     ns <- function(width, confidence) ceiling(qnorm((1+confidence)/2)^2 * ps*(1-ps)/(width/2)^2)
     y1 <- ns(.10, .95); y2 <- ns(.05, .95); current <- ns(x$full_width, x$confidence)
     plot(ps*100, y2, type = "l", lwd = 2, col = "#a34724", ylim = c(0,max(y1,y2,current)),
-      xlab = "Assumed prevalence (%)", ylab = "Approximate analysable participants")
+      xlab = "Assumed prevalence (%)", ylab = "Approximate analyzable participants")
     lines(ps*100, y1, col = "#176675", lwd = 2, lty = 2)
     lines(ps*100, current, col = "#635493", lwd = 2, lty = 3)
     points(plan()$planning_p*100, plan()$n, pch = 19, col = "#635493")
     legend("topright", c("95% confidence; ±2.5 points", "95% confidence; ±5 points", "Your confidence and margin"),
       col = c("#a34724", "#176675", "#635493"), lty = 1:3, lwd = 2, cex = .78, bg = "white")
-  }, alt = "Required analysable sample size versus assumed proportion. The largest requirement is near 50%; halving the margin approximately quadruples the requirement. Current values are in the table.")
+  }, alt = "Required analyzable sample size versus assumed proportion. The largest requirement is near 50%; halving the margin approximately quadruples the requirement. Current values are in the table.")
   study <- eventReactive(input$simulate, {
     x <- snapshot(); y <- simulate_proportion_study(analysable_n(), x$anticipated_p, x$confidence, x$seed)
     y$inputs <- x; y
@@ -197,7 +197,7 @@ server <- function(input, output, session) {
     writeLines(c("Single proportion: planning assumptions", capture.output(dput(snapshot())),
       "Approximate precision plan", capture.output(dput(plan())),
       paste("Current participants for analysis:", analysable_n()), "Learner explanation:", input$justification,
-      "Planning approximation is not a guarantee for realised interval width or protection against sampling bias."), file)
+      "Planning approximation is not a guarantee for realized interval width or protection against sampling bias."), file)
   })
   output$download_study <- downloadHandler(filename = function() "proportion_realised_interval.csv", content = function(file) {
     y <- study(); r <- y$result

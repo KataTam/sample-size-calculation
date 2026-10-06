@@ -31,3 +31,8 @@ legend { padding: 0 .4rem 0 0; }
 [hidden] { display: none !important; }
 @media (max-width: 640px) { main { grid-template-columns: 1fr; padding: .6rem; } header { padding: .8rem; } .report-pane { position: static; max-height: none; } }
 @media print { header, .form-pane, .report-heading { display: none; } main { display: block; padding: 0; } .report-pane { position: static; max-height: none; overflow: visible; border: 0; } }
+
+/* Normal-weight content; headings and disclosure titles keep their hierarchy. */
+body :where(p, li, td, th, label, button, a, span, strong, b, code, pre, input, textarea, select) { font-weight: 400 !important; }
+body :where(h1,h2,h3,h4,h5,h6,summary,legend) :where(a,span,strong,b,code) { font-weight: inherit !important; }
+.reference-preview > strong { font-weight: 600 !important; }

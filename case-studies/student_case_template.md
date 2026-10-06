@@ -25,7 +25,7 @@ Intended conclusion and what would make the information useful:
 | Two-sided test and CI method | | | |
 | Type I error rate and power target, if testing | | | |
 | Confidence level and FULL width target, if estimating | | | |
-| Analysable sample available, if fixed resources | | | |
+| Analyzable sample available, if fixed resources | | | |
 | Allocation | Equal groups | Core implementation restriction | |
 | Dropout per arm | | | |
 | Recruitment period, cap and resources | | | |
@@ -50,7 +50,7 @@ For a pilot: feasibility objectives, evidence already available, prospective pro
 
 Which assumption will you change first? Predict its effect before using the app.
 
-Analysable participants per group / total:
+Analyzable participants per group / total:
 
 Recruitment per group / total after rounding within each arm:
 
@@ -73,7 +73,7 @@ Write 300–600 words recommending proceeding, redesigning, changing the aim or 
 
 ## Contribution and attribution
 
-Source links and licences for any reused material:
+Source links and licenses for any reused material:
 
 Teacher review completed:
 

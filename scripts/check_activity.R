@@ -10,7 +10,7 @@ check_activity <- function() {
   expect_error(validate_lab_inputs(list(alpha = Inf)))
   expect_error(validate_lab_inputs(list(expected_p = 1.1)))
   expect_error(validate_lab_inputs(list(expected_m = NA_real_)))
-  expect_error(validate_lab_inputs(list(unrecognised = 1)))
+  expect_error(validate_lab_inputs(list(unrecognized = 1)))
   expect_error(validate_study_inputs(list(consent_fraction = 1.5)))
   expect_error(validate_study_inputs(list(cost_per_patient = -1)))
   for (x in teaching_cases()) if (x$app == "power_explorer") {

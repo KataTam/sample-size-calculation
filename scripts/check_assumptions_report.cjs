@@ -52,7 +52,7 @@ const {chromium} = require('playwright');
     assert.match(await page.locator('#clinical').inputValue(), /^20 percentage points/);
     assert.match(await page.locator('#question').inputValue(), /standard treatment/);
     assert.equal(await page.locator('#outcome_detail').inputValue(), 'Pain relief (yes/no) at four weeks');
-    assert.match(await page.locator('#counts').inputValue(), /20 analysable patients per group, 40 in total/);
+    assert.match(await page.locator('#counts').inputValue(), /20 analyzable patients per group, 40 in total/);
     assert.match(await page.locator('#recruitment').inputValue(), /23 per group, 46 in total/);
     assert.match(await page.locator('#progress').innerText(), /All 16 prompts answered/);
     fs.mkdirSync('build', {recursive: true});

@@ -11,7 +11,7 @@ Choose an activity or calculation tool. Start with the [core tutorial route](boo
 
 ## Explore further
 
-- [Sample size reasoning lab](power_explorer/): starts with basic calculation controls; select **Explore further** for advanced controls, sensitivity analyses and simulation settings. **One study** and **Many studies** are simulation extensions.
+- [Sample size reasoning lab](power_explorer/): starts with basic calculation controls; select Explore further for advanced controls, sensitivity analyses and simulation settings. One study and Many studies are simulation extensions.
 - [Estimate a proportion or pilot retention rate](prevalence_precision/): plan and interpret confidence interval precision.
 - [Type I error rate, Type II error rate and power](sampling_distributions/): compare sampling distributions under the null and an alternative.
 

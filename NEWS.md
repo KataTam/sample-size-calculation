@@ -18,7 +18,7 @@
 ## Tutorial scope and HTML publishing — 2 October 2026
 
 - Clarified that the Introduction focuses on two-arm randomized superiority trials, while later sections broaden to estimation, prevalence, feasibility and guidance for other designs.
-- Kept the source-tutorial acknowledgement in the Welcome only and removed the generated map notice.
+- Kept the source-tutorial acknowledgment in the Welcome only and removed the generated map notice.
 - Made PDF generation optional; routine publication updates HTML and retains the last published printable edition.
 
 ## Seven-question mind map — 2 October 2026
@@ -46,7 +46,7 @@
 ## 0.3.0 — 22 September 2026
 
 - Consolidated all maintained sample-size resources into the public sample-size-calculation repository.
-- Added automatic build and Pages deployment, collaborator files and labelled historical sources.
+- Added automatic build and Pages deployment, collaborator files and labeled historical sources.
 - Retired the separate app deployment repository as a private archive.
 
 ## 0.2.0 — 22 September 2026

@@ -62,7 +62,7 @@ Use this checklist when editing, adapting, or sharing the module.
 
 - [ ] All controls are keyboard reachable and have meaningful labels.
 - [ ] Run status and stale-output messages are readable.
-- [ ] Intervals distinguish features by line style and points, not colour alone.
+- [ ] Intervals distinguish features by line style and points, not color alone.
 - [ ] Tables, interpretations and CSV downloads accompany plots.
 - [ ] The static module/activity is available if live interaction fails.
 - [ ] Optional code remains optional for the assessed concepts.
@@ -74,6 +74,6 @@ Use this checklist when editing, adapting, or sharing the module.
 - [ ] Each iframe has a meaningful title and a separate-page alternative.
 - [ ] Activity readiness appears as text in a live status region.
 - [ ] Lesson navigation preserves app inputs and completed simulations.
-- [ ] Narrow screens stack both panels without horizontal overflow; labelled view buttons also show either panel alone.
+- [ ] Narrow screens stack both panels without horizontal overflow; labeled view buttons also show either panel alone.
 - [ ] Check keyboard movement into and out of both frames in the teaching browser.
 - [ ] Check the complete HTML and PDF as alternatives; app interaction still requires a browser connection on first load.

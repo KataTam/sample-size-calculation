@@ -23,10 +23,10 @@ ui <- fluidPage(
       h3("Interpretation"),
       textOutput("interpretation"),
       uiOutput("lab_link"),
-      helpText("The lab receives this calculated analysable count as a fixed sample, together with your difference, SD, Type I error rate, power target and losses. Its test-based power may differ from this approximation."),
+      helpText("The lab receives this calculated analyzable count as a fixed sample, together with your difference, SD, Type I error rate, power target and losses. Its test-based power may differ from this approximation."),
       h3("Difference and sample size"),
       plotOutput("sample_size_plot", height = "320px"),
-      p(class = "caption", "Figure. Approximate total analysable sample size across planning differences, holding the common SD, Type I error rate and target power fixed."),
+      p(class = "caption", "Figure. Approximate total analyzable sample size across planning differences, holding the common SD, Type I error rate and target power fixed."),
       h3("Assumptions"),
       tableOutput("assumptions"),
       p(class = "caption", "Table. Current planning difference, common SD, error targets and expected losses.")
@@ -61,7 +61,7 @@ server <- function(input, output, session) {
   output$lab_link <- renderUI({
     x <- result()
     validate(need(x$n_per_group >= 2 && x$n_per_group <= 100000,
-      "The reasoning lab supports 2 to 100,000 analysable participants per group."))
+      "The reasoning lab supports 2 to 100,000 analyzable participants per group."))
     tags$a(href = lab_state_url(list(outcome = "means", goal = "fixed", fixed_n = x$n_per_group,
       plan_delta = input$delta, plan_sd = input$sd, alpha = input$alpha,
       target_power = input$power, dropout = input$dropout)), target = "_blank", rel = "noopener",

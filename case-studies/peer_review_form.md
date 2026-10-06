@@ -98,7 +98,7 @@ Does the goal match the proposed conclusion? Are clinical importance and expecte
 - Did the prediction precede inspecting the output?
 - Does the p-value histogram explanation distinguish the null and alternative scenarios?
 - Does the curve interpretation keep n fixed when varying the assumed effect?
-- Are recruited and expected analysable counts distinguished?
+- Are recruited and expected analyzable counts distinguished?
 - Is the full-width target separated from its probability of attainment?
 - Are simulated trials, Monte Carlo uncertainty and clinical assumption uncertainty distinguished?
 - Is each borrowed idea or assumption connected to an appropriate reference?

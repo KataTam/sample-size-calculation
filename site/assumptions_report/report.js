@@ -8,12 +8,12 @@
     ['Question and design', [
       ['question', 'Clinical question', 'State the population, intervention and comparator.', 'The clinical question is'],
       ['outcome_detail', 'Primary outcome and time point', 'Define what will be measured and when.', 'The primary outcome and time point are'],
-      ['design', 'Design and allocation', 'Describe two independent treatment groups, randomisation and the allocation ratio.', 'The design and allocation are']
+      ['design', 'Design and allocation', 'Describe two independent treatment groups, randomization and the allocation ratio.', 'The design and allocation are']
     ]],
     ['Effects and supporting evidence', [
       ['scale', 'Effect scale and direction of benefit', 'Use treatment minus control. Specify whether a positive or negative difference is beneficial.', 'The effect scale and direction of benefit are'],
       ['expected', 'Expected effect', 'Give the best current expectation, its evidence source and uncertainty.', 'The expected effect and supporting evidence are'],
-      ['clinical', 'Clinically important difference (clinical threshold)', 'Give the smallest benefit that matters to patients and justify that judgement.', 'The clinical threshold and its justification are'],
+      ['clinical', 'Clinically important difference (clinical threshold)', 'Give the smallest benefit that matters to patients and justify that judgment.', 'The clinical threshold and its justification are'],
       ['planning', 'Planning effect: used in the calculation', 'Give the difference used to evaluate power and explain why it is appropriate.', 'The planning effect and its justification are', 'power'],
       ['variation', 'Variation or event rates', 'For a continuous outcome, give the common standard deviation. For a binary outcome, give control and treatment percentages.', 'The variation or event rates used for planning are'],
       ['sensitivity', 'Sensitivity analysis: alternative assumptions', 'Give plausible alternative effects, standard deviations or event rates and their sources.', 'The sensitivity scenarios and their evidence are']
@@ -24,7 +24,7 @@
       ['precision', 'Precision: desired confidence interval width', 'State the desired full confidence interval width, its units and the confidence level. With fixed resources, record attainable precision.', 'The precision specification is', 'precision']
     ]],
     ['Sample size, recruitment and conclusion', [
-      ['counts', 'Sample size needed for analysis', 'Record patients per group and total analysable patients, the calculation method and its result. Mark calculations still to be completed.', 'The analysable sample size and calculation are'],
+      ['counts', 'Sample size needed for analysis', 'Record patients per group and total analyzable patients, the calculation method and its result. Mark calculations still to be completed.', 'The analyzable sample size and calculation are'],
       ['recruitment', 'Losses and recruitment target', 'State expected losses as a percentage, recruitment counts per group and total, and how the adjustment was made.', 'The loss allowance and recruitment target are'],
       ['resources', 'Feasibility and resources', 'Record the recruitment rate and period, available patients, costs or constraints, and whether the target is feasible.', 'The recruitment feasibility and resources are'],
       ['conclusion', 'Intended conclusion and limitations', 'Explain what the design could establish, what remains uncertain and which planning decisions still need to be resolved.', 'The intended conclusion and limitations are']
@@ -123,18 +123,18 @@
       const percent = value => Number((100 * value).toFixed(8));
       apply({outcome: 'binary', goal: 'fixed', question: 'Does a novel treatment improve pain relief compared with standard treatment in adults with chronic pain?',
         outcome_detail: 'Pain relief (yes/no) at four weeks',
-        design: 'An individually randomised superiority trial with two independent groups and equal allocation',
-        scale: 'Treatment minus control, in percentage points; a positive difference favours treatment',
+        design: 'An individually randomized superiority trial with two independent groups and equal allocation',
+        scale: 'Treatment minus control, in percentage points; a positive difference favors treatment',
         expected: percent(input.expected_p) + ' percentage points. The hypothetical pilot observed relief in 7/10 treated patients (70%) and 3/10 controls (30%); this small pilot gives an uncertain expectation',
-        clinical: percent(input.threshold_p) + ' percentage points. This is an illustrative judgement about meaningful benefit that needs justification with patients and clinicians',
+        clinical: percent(input.threshold_p) + ' percentage points. This is an illustrative judgment about meaningful benefit that needs justification with patients and clinicians',
         planning: percent(input.plan_p1 - input.plan_p0) + ' percentage points, smaller than the expected benefit to allow for uncertainty in the pilot effect',
         variation: percent(input.plan_p0) + '% relief in controls and ' + percent(input.plan_p1) + '% in the treatment group',
         sensitivity: 'Compare smaller true benefits while keeping the original sample size fixed. Specify plausible ranges using evidence beyond the pilot',
         analysis: 'A two-sided pooled score test without continuity correction, with a Newcombe-Wilson confidence interval; independent observations and allocation are assumed',
         power: 'Type I error rate ' + percent(input.alpha) + '%. Evaluate attainable power at the ' + percent(input.plan_p1 - input.plan_p0) + '-percentage-point planning effect using the matched pain-relief activity',
         precision: 'Evaluate the attainable 95% confidence interval width at the fixed sample size. The activity compares it with a full width of ' + percent(input.width_p) + ' percentage points',
-        counts: input.fixed_n + ' analysable patients per group, ' + (2 * input.fixed_n) + ' in total; the illustrative sample size is held fixed to assess power and precision rather than selected to meet a target power',
-        recruitment: percent(input.dropout) + '% expected losses. Recruit ' + Math.ceil(input.fixed_n / (1 - input.dropout)) + ' per group, ' + (2 * Math.ceil(input.fixed_n / (1 - input.dropout))) + ' in total using the expected-loss adjustment; this does not guarantee the final analysable count',
+        counts: input.fixed_n + ' analyzable patients per group, ' + (2 * input.fixed_n) + ' in total; the illustrative sample size is held fixed to assess power and precision rather than selected to meet a target power',
+        recruitment: percent(input.dropout) + '% expected losses. Recruit ' + Math.ceil(input.fixed_n / (1 - input.dropout)) + ' per group, ' + (2 * Math.ceil(input.fixed_n / (1 - input.dropout))) + ' in total using the expected-loss adjustment; this does not guarantee the final analyzable count',
         resources: 'The feasibility of the recruitment target must be assessed from eligible patients, consent, recruitment period and costs',
         conclusion: 'Assess power and precision at this fixed sample size before deciding what the trial could establish. A significant result alone does not establish a clinically meaningful benefit'});
       status.textContent = 'Hypothetical pain-relief example loaded. Replace illustrative assumptions and unresolved decisions with a justified plan.';

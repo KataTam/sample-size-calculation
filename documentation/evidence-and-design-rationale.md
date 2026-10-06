@@ -5,9 +5,9 @@ This package combines a clinical question, explicit assumptions, deterministic e
 | Source | Implemented contribution | Limits |
 |---|---|---|
 | [Wieringa et al. 2025](https://doi.org/10.5281/zenodo.15064177) | User-centered development, learner and teacher feedback, and preparation followed by guided discussion | Preprint describing development of an e-learning environment; not evidence of learning gains for this module |
-| Lakens 2022 | Goal selection, separate effect judgements, resource constraints and sensitivity | Methodological framework, not a learning-effectiveness study |
+| Lakens 2022 | Goal selection, separate effect judgments, resource constraints and sensitivity | Methodological framework, not a learning-effectiveness study |
 | Sandoval et al. 2025 | Power alongside precision, intervals and clinical thresholds | Published clinical teaching comparator; classroom experience does not establish comparative efficacy |
-| Thiesmeier and Orsini 2024 | Design, simulate, analyse, interpret and communicate; extended abstract task | DICE means Design, Interpret, Compute, Estimate. Viewpoint with no formal effectiveness evaluation; full activity needs substantial time |
+| Thiesmeier and Orsini 2024 | Design, simulate, analyze, interpret and communicate; extended abstract task | DICE means Design, Interpret, Compute, Estimate. Viewpoint with no formal effectiveness evaluation; full activity needs substantial time |
 | Orsini et al. 2024 | One versus many studies, inferential errors, preparation, small groups and optional coding | 85 attendees, 53 evaluable responses, 89% reporting better understanding; self-report without formal knowledge testing or properly paired pre/post data |
 | Rudolph et al. 2021 | Controlled experiments to investigate statistical misconceptions | Pedagogical rationale; not direct evidence of local learning gains |
 

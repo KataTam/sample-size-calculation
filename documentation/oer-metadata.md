@@ -63,9 +63,9 @@ After completing the module, learners should be able to:
 - justify assumptions and examine plausible alternatives
 - explain alpha, beta and power, and why one study can be inconclusive despite high planned power
 - calculate approximate sample sizes for two means or two proportions, and plan the precision of a single-proportion estimate
-- read power curves and distinguish per-group, total, analysable and recruitment counts
+- read power curves and distinguish per-group, total, analyzable and recruitment counts
 - interpret repeated-study rejection, coverage, precision and Monte Carlo uncertainty
-- interpret an interval against zero and a clinical threshold, and recognise when a study design needs another planning method
+- interpret an interval against zero and a clinical threshold, and recognize when a study design needs another planning method
 - write a study justification that records evidence, assumptions, sensitivity, feasibility and limitations, and reproduce its calculations
 
 ## Technical Requirements

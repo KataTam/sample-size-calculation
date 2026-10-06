@@ -73,3 +73,8 @@ details.r-code-output pre { margin: .5em; }
 .color-theme-2 details.r-code-output { background: #263442; }
 .color-theme-2 details.r-code-output > summary { color: #b8dcee; }
 @media print { .tutorial-downloads, .reference-preview, .reference-preview-button, details.r-code-output { display: none !important; } }
+
+/* Normal-weight content; headings and disclosure titles keep their hierarchy. */
+body :where(p, li, td, th, label, button, a, span, strong, b, code, pre, input, textarea, select) { font-weight: 400 !important; }
+body :where(h1,h2,h3,h4,h5,h6,summary,legend) :where(a,span,strong,b,code) { font-weight: inherit !important; }
+.reference-preview > strong { font-weight: 600 !important; }

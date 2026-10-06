@@ -23,4 +23,4 @@ Use this case to discuss how the smallest clinically relevant difference affects
 
 ## Revised teaching specification
 
-Treat binary pain relief as assessed at four weeks. The expected 40-percentage-point benefit, planning benefit of 30 percentage points and clinical threshold of 20 percentage points are distinct hypothetical judgements. Only the planning percentages of 30% and 60% enter the sample size calculation. Use the updated student case template and lab; compare a generating treatment percentage of 40% at unchanged planned n. The tiny pilot does not establish the true treatment probabilities.
+Treat binary pain relief as assessed at four weeks. The expected 40-percentage-point benefit, planning benefit of 30 percentage points and clinical threshold of 20 percentage points are distinct hypothetical judgments. Only the planning percentages of 30% and 60% enter the sample size calculation. Use the updated student case template and lab; compare a generating treatment percentage of 40% at unchanged planned n. The tiny pilot does not establish the true treatment probabilities.

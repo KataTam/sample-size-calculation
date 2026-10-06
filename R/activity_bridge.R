@@ -169,6 +169,10 @@ percentage_display_script <- function() r"---((function () {
 activity_bridge_script <- function(app = "power_explorer") {
   code <- r"---((function() {
   const app = '__APP__';
+  const typography=document.createElement('style');
+  typography.id='teaching-typography';
+  typography.textContent="\n/* Normal-weight content; headings and disclosure titles keep their hierarchy. */\nbody :where(p, li, td, th, label, button, a, span, strong, b, code, pre, input, textarea, select) { font-weight: 400 !important; }\nbody :where(h1,h2,h3,h4,h5,h6,summary,legend) :where(a,span,strong,b,code) { font-weight: inherit !important; }\n.reference-preview > strong { font-weight: 600 !important; }\n";
+  document.head.append(typography);
   const frames = [];
   let current = window, context = null, origin = null, siteRoot = null;
   while (current) {

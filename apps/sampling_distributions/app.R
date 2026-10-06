@@ -69,7 +69,7 @@ ui <- fluidPage(
     p("The vertical boundaries are fixed by the null distribution and chosen Type I error rate. Greater sample size narrows the distribution of the mean; it does not shrink the population SD shown in the controls."),
     h3("Power across sample sizes"), plotOutput("power_curve", height = "280px"),
     p(class = "caption", "Figure. Power at the specified alternative across independent sample sizes. The point marks the current sample; the reference line marks Type I error rate."),
-    p("A one-sided alternative in the wrong direction can have power below Type I error rate. Direction should follow the prespecified scientific question. A realised non-significant result does not establish that the null is true."),
+    p("A one-sided alternative in the wrong direction can have power below Type I error rate. Direction should follow the prespecified scientific question. A realized non-significant result does not establish that the null is true."),
     textAreaInput("interpretation", "Explain the two shaded regions and one design choice.", rows = 4, width = "100%"),
     activity_download_button("download_assumptions", "Download assumptions and explanation"),
     tags$p(id = "download-status", role = "status", "aria-live" = "polite"),

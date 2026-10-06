@@ -33,7 +33,7 @@ check_feedback_methods <- function() {
   }
   expect_error(single_proportion_interval(41,40))
   expect_error(single_proportion_interval(4.5,40))
-  # Enumeration establishes that realised width varies and the target is not
+  # Enumeration establishes that realized width varies and the target is not
   # a guaranteed-width statement.
   intervals <- do.call(rbind,lapply(0:x$n, single_proportion_interval,n=x$n))
   mass <- stats::dbinom(0:x$n,x$n,.20)

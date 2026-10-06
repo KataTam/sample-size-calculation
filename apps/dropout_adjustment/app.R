@@ -12,12 +12,12 @@ ui <- fluidPage(
       percent_slider("dropout", "Expected loss to follow-up (%)", min = 0, max = 0.50, value = 0.10, step = 0.01)
     ),
     mainPanel(
-      p("Equal allocation. Round recruitment up within each arm, then double. Inflation does not remove missing-data bias or guarantee the realised analysable count."),
+      p("Equal allocation. Round recruitment up within each arm, then double. Inflation does not remove missing-data bias or guarantee the realized analyzable count."),
       h3("Recruitment target"),
       verbatimTextOutput("result"),
       h3("Dropout and recruitment target"),
       plotOutput("dropout_plot", height = "320px"),
-      p(class = "caption", "Figure. Recruitment required per arm at different expected dropout percentages, for the chosen analysable count."),
+      p(class = "caption", "Figure. Recruitment required per arm at different expected dropout percentages, for the chosen analyzable count."),
       tags$details(tags$summary("Continue with this sample size in the reasoning lab"),
         p("A count and dropout fraction do not specify an outcome or effect. Add those assumptions below. The initial values are illustrative."),
         selectInput("lab_outcome", "Outcome for the two-group design", c("Continuous" = "means", "Binary" = "proportions")),
@@ -27,7 +27,7 @@ ui <- fluidPage(
           percent_slider("lab_p0", "Standard treatment: event rate used for planning (%)", .01, .99, .3, step = .01),
           percent_slider("lab_p1", "Novel treatment: event rate used for planning (%)", .01, .99, .6, step = .01)),
         uiOutput("lab_link"),
-        helpText("This transfers the entered analysable count per group, without recalculating it from a power target."))
+        helpText("This transfers the entered analyzable count per group, without recalculating it from a power target."))
     )
   )
 )
@@ -36,7 +36,7 @@ server <- function(input, output, session) {
   valid_n <- reactive({ validate(need(is.finite(input$n) && input$n == floor(input$n) && input$n >= 1, "Use a positive integer per group.")); input$n })
   output$lab_link <- renderUI({
     n <- valid_n()
-    validate(need(n >= 2 && n <= 100000, "The lab supports 2 to 100,000 analysable participants per group."))
+    validate(need(n >= 2 && n <= 100000, "The lab supports 2 to 100,000 analyzable participants per group."))
     values <- list(outcome = input$lab_outcome, goal = "fixed", fixed_n = n, dropout = input$dropout)
     if (input$lab_outcome == "means") { values$plan_delta <- input$lab_delta; values$plan_sd <- input$lab_sd }
     else { values$plan_p0 <- input$lab_p0; values$plan_p1 <- input$lab_p1 }

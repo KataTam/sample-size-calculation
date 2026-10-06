@@ -1,8 +1,8 @@
 # Sample Size Calculation
 
-**Reasoning about study design in clinical research**
+Reasoning about study design in clinical research
 
-**Private working edition (5 October 2026).** The GitHub repository is private, the teaching website is offline, and automatic publishing is disabled at the author's request. Website links below identify the intended publication URLs; use the [local build and preview](documentation/development/build-and-publish.md#build-locally) while developing the material.
+Private working edition (5 October 2026). The GitHub repository is private, the teaching website is offline, and automatic publishing is disabled at the author's request. Website links below identify the intended publication URLs; use the [local build and preview](documentation/development/build-and-publish.md#build-locally) while developing the material.
 
 Open teaching materials for medical students, by Katalin Tamási (UMCG). Work from a clinical question to the assumptions behind a sample size, explore what different studies could show, and explain what a feasible design could establish.
 
@@ -10,10 +10,10 @@ The tutorial, browser tools and prepared examples require no R installation. The
 
 ## Start here
 
-- **Students:** [open the lesson and matching app together](https://katatam.github.io/sample-size-calculation/study/), or [read the tutorial](https://katatam.github.io/sample-size-calculation/book/) and explore the [sample size reasoning lab](https://katatam.github.io/sample-size-calculation/power_explorer/).
-- **Teachers:** start with the [teaching guide](teaching/TEACHING_GUIDE.md), [prepared activity](teaching/static_activity.md) and [case studies](case-studies/README.md).
-- **Student reviewers:** use the [review guide](student-materials/README.md) and [open-ended review template](student-materials/material-review-template.md).
-- **Adapters:** see the [documentation](documentation/README.md), [build instructions](documentation/development/build-and-publish.md), and the shared code in [R/](https://github.com/KataTam/sample-size-calculation/tree/main/R) and [apps/](https://github.com/KataTam/sample-size-calculation/tree/main/apps).
+- Students: [open the lesson and matching app together](https://katatam.github.io/sample-size-calculation/study/), or [read the tutorial](https://katatam.github.io/sample-size-calculation/book/) and explore the [sample size reasoning lab](https://katatam.github.io/sample-size-calculation/power_explorer/).
+- Teachers: start with the [teaching guide](teaching/TEACHING_GUIDE.md), [prepared activity](teaching/static_activity.md) and [case studies](case-studies/README.md).
+- Student reviewers: use the [review guide](student-materials/README.md) and [open-ended review template](student-materials/material-review-template.md).
+- Adapters: see the [documentation](documentation/README.md), [build instructions](documentation/development/build-and-publish.md), and the shared code in [R/](https://github.com/KataTam/sample-size-calculation/tree/main/R) and [apps/](https://github.com/KataTam/sample-size-calculation/tree/main/apps).
 
 ## What you will explore
 
@@ -23,6 +23,6 @@ Clinical questions and assumptions; two means and two proportions; power and pre
 
 ## Reuse and contribute
 
-Original teaching materials are **CC BY 4.0**; original code is **MIT**. See [reuse and citation](documentation/reuse-and-citation.md), [third-party notices](documentation/third-party-notices.md), and [contribution guidance](CONTRIBUTING.md). Student contributions are reviewed and published only with permission. The resource has not yet been evaluated in a student pilot.
+Original teaching materials are CC BY 4.0; original code is MIT. See [reuse and citation](documentation/reuse-and-citation.md), [third-party notices](documentation/third-party-notices.md), and [contribution guidance](CONTRIBUTING.md). Student contributions are reviewed and published only with permission. The resource has not yet been evaluated in a student pilot.
 
 To update the tutorial, edit `module/Sample_size_open_module.Rmd`. Commit and push to save changes to the private repository; this does not publish them while the deployment workflow is disabled. Detailed maintenance instructions are in [documentation/development/](documentation/development/build-and-publish.md).

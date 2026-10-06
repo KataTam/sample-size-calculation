@@ -16,3 +16,8 @@ table { border-collapse: collapse; display: block; max-width: 100%; overflow-x: 
 .learning-goals strong { color: #244f86; }
 @media(max-width: 600px) { .start-routes { grid-template-columns: 1fr; } }
 @media(max-width: 600px) { body { margin-top: 1.5rem; } h1 { font-size: 1.9rem; } }
+
+/* Normal-weight content; headings and disclosure titles keep their hierarchy. */
+body :where(p, li, td, th, label, button, a, span, strong, b, code, pre, input, textarea, select) { font-weight: 400 !important; }
+body :where(h1,h2,h3,h4,h5,h6,summary,legend) :where(a,span,strong,b,code) { font-weight: inherit !important; }
+.reference-preview > strong { font-weight: 600 !important; }

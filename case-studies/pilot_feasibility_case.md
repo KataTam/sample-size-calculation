@@ -6,7 +6,7 @@ A team developing a rehabilitation pathway has limited evidence about its effect
 
 Before planning, review relevant systematic reviews, previous studies, service records and patient/clinical expertise. State which information is transferable and uncertain. Define feasible delivery and useful follow-up precision, then agree progression criteria before results are seen.
 
-The app scenario assesses a retention proportion at fixed total n = 40, anticipated retention 0.80 and 95% confidence. It compares realised Wilson intervals with a full-width reference of 0.20. The shared definition is `pilot_feasibility` in `R/teaching_cases.R`.
+The app scenario assesses a retention proportion at fixed total n = 40, anticipated retention 0.80 and 95% confidence. It compares realized Wilson intervals with a full-width reference of 0.20. The shared definition is `pilot_feasibility` in `R/teaching_cases.R`.
 
 [Open the tutorial and app](https://katatam.github.io/sample-size-calculation/study/?activity=pilot_feasibility).
 

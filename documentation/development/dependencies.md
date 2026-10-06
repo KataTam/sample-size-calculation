@@ -20,4 +20,4 @@ Restart R after activation. Open sample-size-calculation.Rproj for editing. Then
 
 Keep the lockfile under version control. Update dependencies deliberately, run the checks and both render/export steps, and verify the browser apps before publishing an updated lockfile. Record the tested release in the validation record. Local renv/library and cache files are not committed.
 
-The lockfile pins R packages; it does not freeze the browser, operating system, Pandoc or downloaded webR/Shinylive runtime assets. Check browser behaviour separately after rebuilding.
+The lockfile pins R packages; it does not freeze the browser, operating system, Pandoc or downloaded webR/Shinylive runtime assets. Check browser behavior separately after rebuilding.

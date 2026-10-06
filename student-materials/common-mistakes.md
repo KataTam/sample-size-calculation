@@ -1,7 +1,7 @@
 # Common mistakes and questions {#common-mistakes}
 
 ::: {.learning-goals}
-**Learning outcomes.** After this section, you should be able to:
+Learning outcomes. After this section, you should be able to:
 
 - Identify and correct common misinterpretations of percentage changes, statistical significance, clinical importance and power.
 - Explain the limits of pilot estimates and fixed samples.
@@ -25,7 +25,7 @@ No. [Type I error rate](#alpha) concerns rejection when the null is true. [Type 
 
 ## Does 90% power guarantee a useful result?
 
-No. With [90% power](#statistical-power), about 90% of hypothetical independent studies under the specified effect, design and analysis would reject the null hypothesis. An individual study can be inconclusive, and a significant study can have an interval too wide for a clinical decision. Compare power, anticipated precision and realised interval performance.
+No. With [90% power](#statistical-power), about 90% of hypothetical independent studies under the specified effect, design and analysis would reject the null hypothesis. An individual study can be inconclusive, and a significant study can have an interval too wide for a clinical decision. Compare power, anticipated precision and realized interval performance.
 
 ## Can I use my small pilot's effect estimate without qualification?
 
@@ -33,7 +33,7 @@ Record its uncertainty and compare it with wider evidence. Small pilots can give
 
 ## Is a 50% event probability a safe default whenever I do not know the event rate?
 
-Its conservative role here is limited to **absolute precision for one proportion under the displayed normal approximation**: it maximizes p(1-p). It is not a general fallback for unknown treatment/control rates, prediction-model planning, relative precision or rare-event questions. See the [single-proportion example](#prevalence).
+Its conservative role here is limited to absolute precision for one proportion under the displayed normal approximation: it maximizes p(1-p). It is not a general fallback for unknown treatment/control rates, prediction-model planning, relative precision or rare-event questions. See the [single-proportion example](#prevalence).
 
 ## My study is retrospective: should I calculate observed power instead of sample size?
 
@@ -49,7 +49,7 @@ Usually not. Identify the experimental unit and dependency before selecting the 
 
 ## Should I add 10% for expected 10% dropout?
 
-Divide the required analysable count by 1 - 0.10, then round up within each arm. This is about 11.1% extra before rounding. The actual number retained can differ from expectation, and missing outcomes can bias results even after recruitment inflation.
+Divide the required analyzable count by 1 - 0.10, then round up within each arm. This is about 11.1% extra before rounding. The actual number retained can differ from expectation, and missing outcomes can bias results even after recruitment inflation.
 
 ## Is more simulation the same as a larger study?
 

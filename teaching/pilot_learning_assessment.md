@@ -18,7 +18,7 @@ Administer Form A before any teaching and Form B immediately after. Allocate abo
 
 ## Unfamiliar transfer case after teaching
 
-A hypothetical rehabilitation study can analyse 40 patients per arm. The anticipated full interval width is 5 score units, while clinicians would like width 2. The planning effect is 2 units, the clinically important benefit is 1 unit, and effect uncertainty is substantial. Write a short recommendation: identify the planning goal, distinguish the effects, explain what to examine at fixed n, and propose a defensible next step. This is a teaching scenario, not a clinical decision.
+A hypothetical rehabilitation study can analyze 40 patients per arm. The anticipated full interval width is 5 score units, while clinicians would like width 2. The planning effect is 2 units, the clinically important benefit is 1 unit, and effect uncertainty is substantial. Write a short recommendation: identify the planning goal, distinguish the effects, explain what to examine at fixed n, and propose a defensible next step. This is a teaching scenario, not a clinical decision.
 
 ## Form C delayed assessment
 

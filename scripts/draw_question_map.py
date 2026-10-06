@@ -5,7 +5,7 @@ preserved in archive/2026-10-02/tutorial-draft/mind_map.png beside this project.
 The Type II error label uses the current module's precise description of
 non-rejection at a specified true difference. The archived image is untouched.
 
-Figure content: CC BY 4.0. Generator code: MIT (see project licences).
+Figure content: CC BY 4.0. Generator code: MIT (see project licenses).
 Run from any directory with Python and Pillow installed.
 """
 
@@ -59,7 +59,7 @@ NODES = (
 
 
 def text_svg(x, y, lines, size, line_height, bold=False):
-    """Centre several lines without relying on SVG automatic text wrapping."""
+    """Center several lines without relying on SVG automatic text wrapping."""
     start = y - (len(lines) - 1) * line_height / 2
     weight = ' font-weight="600"' if bold else ""
     lines_xml = "".join(

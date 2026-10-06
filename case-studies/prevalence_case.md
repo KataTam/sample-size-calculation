@@ -10,7 +10,7 @@ The normal planning approximation gives 246 completed observations. With no usef
 
 1. Explain why 0.50 is conservative for this absolute-precision formula.
 2. Halve the margin of error and predict how n changes.
-3. Compare the planning width with the Wilson interval from an illustrative realised sample.
+3. Compare the planning width with the Wilson interval from an illustrative realized sample.
 4. Explain how representative sampling, nonresponse and outcome definition affect what the estimate means.
 
-The 0.50 choice is not a universal default for two-group power, relative precision or rare events. The displayed planning criterion does not guarantee every realised interval meets it. Diagnostic accuracy, finite-population sampling, weighted surveys and clustering need appropriate additional methods.
+The 0.50 choice is not a universal default for two-group power, relative precision or rare events. The displayed planning criterion does not guarantee every realized interval meets it. Diagnostic accuracy, finite-population sampling, weighted surveys and clustering need appropriate additional methods.
