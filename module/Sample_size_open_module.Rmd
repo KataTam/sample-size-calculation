@@ -36,31 +36,25 @@ source("../R/question_map.R")
 
 # Welcome {-}
 
-<nav class="tutorial-downloads" aria-label="Download the complete tutorial"><strong>Download the complete tutorial:</strong> <a href="Sample_size_open_module.html" download target="_blank" rel="noopener">HTML</a> <a href="Sample_size_open_module.pdf" download target="_blank" rel="noopener">PDF</a></nav>
+The aims of this tutorial are to understand the importance of recruiting an appropriate number of patients into your study and to be able to calculate the required sample size given reasonable assumptions when designing your study. This open edition retains the questions and clinical narrative of the original e-learning module [@tamasi2021], with additional explanations, browser activities, and applications.
 
-How many patients would make a study informative? This tutorial connects a clinical question to its assumptions, a sample size calculation, and the results that different repetitions of the study could produce.
+The [Introduction](#clinical-question) focuses on two-arm randomized controlled clinical trials. The treatment-comparison examples use two independent groups with equal allocation, a binary or continuous outcome, and a two-sided comparison. Later sections broaden the discussion to precision, prevalence surveys and pilot feasibility studies; [Where does my study fit?](#study-designs) guides you to methods for other designs. A single-mean example illustrates [Type I error rate](#alpha), [Type II error rate](#beta) and [power](#statistical-power) using a known population standard deviation. All cases are hypothetical teaching examples. Further background comes from @clayton2019, @kirkwood2003, @whitley2002, @pourhoseingholi2013 and @wang2020.
 
-The aims of this module are to understand the importance of recruiting an appropriate number of patients into your study and to be able to calculate the required sample size given reasonable assumptions when designing your study. This open edition retains the questions and clinical narrative of the original tutorial dated **14 May 2021** [@tamasi2021], with additional explanations and browser activities.
+The presentation and three simulation activities are inspired by chapters 1, 11 and 15 of *Power Analysis with Superpower* [@superpowerbook2022]. The clinical explanations, activities and figures here are tailored to this tutorial. Hans Burgerhof's *Statistics 3: Sample size calculation* e-learning module also informs the discussion of testing and estimation goals [@burgerhof2020].
 
-The [Introduction](#clinical-question) focuses on **two-arm randomized controlled clinical trials**. The treatment-comparison examples use two independent groups with equal allocation, a binary or continuous outcome, and a two-sided comparison. Later sections broaden the discussion to precision, prevalence surveys and pilot feasibility studies; [Where does my study fit?](#study-designs) guides you to methods for other designs. A single-mean example illustrates [Type I error rate](#alpha), [Type II error rate](#beta) and [power](#statistical-power) using a known population SD. All numerical cases are hypothetical teaching examples. Further background comes from lecture notes by @clayton2019 and the medical introductions by @kirkwood2003, @whitley2002, @pourhoseingholi2013 and @wang2020.
+The development of the epidemiology and medical statistics e-learning environment is described by @wieringa2025. Our account of identifying learner and teacher needs provides background for involving students in reviewing this open edition and combining independent preparation with guided discussion.
 
-The presentation and three simulation activities are inspired by chapters 1, 11 and 15 of *Power Analysis with Superpower* [@superpowerbook2022]. The clinical explanations, activities and figures here are tailored to this tutorial.
-
-Hans Burgerhof's *Statistics 3: Sample size calculation*, developed as aNewSpring study material in 2020, also informs the discussion of testing and estimation goals [@burgerhof2020].
-
-The development of the epidemiology and medical statistics e-learning environment is described by @wieringa2025. Their account of identifying learner and teacher needs provides background for involving students in reviewing this open edition and combining independent preparation with guided discussion.
-
-Teaching material is shared under CC BY 4.0 and original code under MIT. You may reuse and adapt the material with attribution. The [teaching guide](../teaching/TEACHING_GUIDE.md), [case template](../case-studies/student_case_template.md) and [assessment rubric](../teaching/assessment_rubric.md) support classroom use. Public attribution or publication requires consent.
+Teaching materials are shared under CC BY 4.0 and original code under MIT. You may reuse and adapt the material with attribution. The [teaching guide](../teaching/TEACHING_GUIDE.md), [case template](../case-studies/student_case_template.md) and [assessment rubric](../teaching/assessment_rubric.md) support classroom use. Public attribution or publication requires consent.
 
 ## How to use this tutorial {-}
 
-Read the question, make a prediction, inspect the output, and explain what it means for the clinical study. Hover over a figure or table reference, or use its **Preview** button, to inspect it while reading. R code and raw console output are collapsed initially: select **R code and output** to inspect them. Formatted results, tables and figures remain visible. The complete tutorial is available as a single HTML download and a single PDF download; HTML retains the expandable explanations and code, while PDF expands the teaching explanations and keeps technical code hidden. Lines starting with `#` inside code are comments; `##` marks console output, and `[1]` identifies the first printed element of an R output. Select an amber **Common misconception** title to read its explanation.
+This tutorial has core and advanced sections. The core sections cover the steps needed to plan and justify a basic two-arm clinical trial: define the question, choose assumptions, calculate sample size, plan recruitment and interpret results. The advanced sections extend these ideas to power curves, simulations, precision planning and other study designs. Labels identify each section, and the Core route below guides you through the essentials.
 
-Open [the tutorial and matching app together](http://127.0.0.1:8769/study/?activity=pain_one_many) for the guided activities. Each activity link loads the same case and assumptions used in the text. The [Sample size reasoning lab](http://127.0.0.1:8769/power_explorer/) is also available on its own. The prepared figures and results in this tutorial provide a route without the app. Other [clinical sample size tools](http://127.0.0.1:8769/apps.html) cover two proportions, two means and dropout.
+Hover over a figure or table reference or use its **Preview** button to inspect it while reading. R code and raw console output are collapsed initially: select **R code and output** to inspect them. Formatted results, tables and figures remain visible. The complete tutorial is available as a single HTML download and a single PDF download; HTML retains the expandable explanations and code, while PDF expands the teaching explanations and keeps technical code hidden. Lines starting with `#` inside code are comments; `##` marks console output, and `[1]` identifies the first printed element of an R output. Select an amber **Common misconception** title to read its explanation.
+
+You can read the tutorial by itself or open [the tutorial and matching app together](http://127.0.0.1:8769/study/?activity=pain_one_many) for the guided activities. Each activity link loads the same case and assumptions used in the text. The [Sample size reasoning lab](http://127.0.0.1:8769/power_explorer/) is also available on its own. The prepared figures and results in this tutorial provide a route without the app. Other [clinical sample size tools](http://127.0.0.1:8769/apps.html) cover two proportions, two means, and dropout adjustment.
 
 For a reminder of a term, see [Key parameters and prerequisites](#glossary). If you are applying the material to your own project, begin with [Where does my study fit?](#study-designs) and [Plan your own study](#own-study). [Common mistakes and questions](#common-mistakes) collects explanations you can return to while working.
-
-Need help finding your way around? See [Using the toolbar](#using-the-toolbar) below.
 
 After the core route, you should be able to define and justify a basic two-arm study, calculate its sample size, adjust recruitment for expected losses, and interpret its limitations. The advanced route adds precision planning, repeated-study simulation and guidance for other designs. Across both routes, you should be able to:
 
@@ -100,26 +94,6 @@ Use the advanced route to examine the methods and explore designs beyond the bas
 - [Other study designs](#study-designs), including paired measurements and prediction models.
 
 **Core** and **Advanced** labels identify the route at each main section. Advanced indicates an extension beyond the basic calculations, rather than a judgement that every topic is mathematically difficult. Key terms, common questions and references support both routes.
-
-## Using the toolbar {#using-the-toolbar .unnumbered}
-
-In the online book, the toolbar is the row of small icons at the top of the page. You can use it to find a chapter, search the tutorial, or make the text easier to read. The icons appear in this order:
-
-| Icon | What it does | How to use it |
-|:--|:--|:--|
-| **Three horizontal lines** (contents) | Shows or hides the chapter list on the left. | Select a chapter or section to open it. On a phone, open this menu first to see the contents. Close it again with the same icon if it covers the text. |
-| **Magnifying glass** (search) | Searches the text of the whole book. | Select it, type a word such as *dropout*, and select a result to open that passage. Press **Esc** to leave search. |
-| **A** (reading settings) | Changes how the book looks on your screen. | Use the smaller or larger **A** to adjust text size. **Serif / Sans** changes the typeface; **White / Sepia / Night** changes the colour theme; **Spacing - / +** adjusts the line spacing. These choices do not change the content. |
-| **Downward arrow** (download) | Opens the complete tutorial as one HTML page. | Select **Standalone HTML**. It opens in a new browser tab. To keep a local copy, use your browser's **Save page as** command. External links and some mathematical notation may still need internet access. |
-| **i** (help) | Opens this guide to the toolbar. | Use it whenever you need a reminder. |
-
-Table: (\#tab:toolbar-guide) Controls in the online tutorial toolbar.
-
-To read in order, use the **left and right arrows at the sides of the page** to move to the previous or next chapter. The first page has no previous-chapter arrow, and the last page has no next-chapter arrow. On smaller screens, you may need to scroll down to find these arrows; the contents menu is another way to change chapters.
-
-If you prefer the keyboard, press **Tab** to move between controls and **Enter** to activate one. When you are not typing in a text box, **S** shows or hides the contents, **F** opens search, and the **left / right arrow keys** move between chapters. Within search, use **up / down** to select a match and **Enter** to open it.
-
-The downloaded, single-page HTML edition has its own table of contents rather than this book toolbar. Use your browser's **Find** command (**Ctrl+F** on Windows, **Command+F** on Mac) to search that edition.
 
 # Introduction {#clinical-question}
 

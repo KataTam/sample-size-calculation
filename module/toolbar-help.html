@@ -1,28 +1,125 @@
+<style>
+#toolbar-help-dialog { color:#26343d; background:#fff; border:0; border-radius:8px; width:min(760px,calc(100vw - 32px)); max-height:calc(100dvh - 40px); padding:0; box-shadow:0 12px 45px #0005; }
+#toolbar-help-dialog::backdrop { background:#0007; }
+#toolbar-help-dialog header { display:flex; align-items:center; justify-content:space-between; gap:1em; position:sticky; top:0; background:#fff; padding:16px 22px; border-bottom:1px solid #d8e1e7; }
+#toolbar-help-dialog h2 { margin:0; font-size:1.3em; }
+#toolbar-help-dialog .toolbar-help-content { padding:8px 22px 22px; overflow-wrap:anywhere; font-size:15px; line-height:1.6; }
+#toolbar-help-dialog table { width:100%; border-collapse:collapse; font-size:14px; }
+#toolbar-help-dialog th, #toolbar-help-dialog td { padding:8px; vertical-align:top; text-align:left; border-bottom:1px solid #d8e1e7; }
+#toolbar-help-dialog button { padding:6px 12px; cursor:pointer; }
+@media print { #toolbar-help-dialog {display:none!important;} }
+</style>
+<template id="toolbar-help-content-template">
+<p>In the online book, the toolbar is the row of small icons at the top
+of the page. You can use it to find a chapter, search the tutorial, or
+make the text easier to read. The icons appear in this order:</p>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th style="text-align: left;">Icon</th>
+<th style="text-align: left;">What it does</th>
+<th style="text-align: left;">How to use it</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Three horizontal lines</strong>
+(contents)</td>
+<td style="text-align: left;">Shows or hides the chapter list on the
+left.</td>
+<td style="text-align: left;">Select a chapter or section to open it. On
+a phone, open this menu first to see the contents. Close it again with
+the same icon if it covers the text.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Magnifying glass</strong>
+(search)</td>
+<td style="text-align: left;">Searches the text of the whole book.</td>
+<td style="text-align: left;">Select it, type a word such as
+<em>dropout</em>, and select a result to open that passage. Press
+<strong>Esc</strong> to leave search.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>A</strong> (reading settings)</td>
+<td style="text-align: left;">Changes how the book looks on your
+screen.</td>
+<td style="text-align: left;">Use the smaller or larger
+<strong>A</strong> to adjust text size. <strong>Serif / Sans</strong>
+changes the typeface; <strong>White / Sepia / Night</strong> changes the
+colour theme; <strong>Spacing - / +</strong> adjusts the line spacing.
+These choices do not change the content.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Downward arrow</strong>
+(download)</td>
+<td style="text-align: left;">Opens the complete tutorial as one HTML
+page.</td>
+<td style="text-align: left;">Select <strong>Standalone HTML</strong>.
+It opens in a new browser tab. To keep a local copy, use your browser’s
+<strong>Save page as</strong> command. External links and some
+mathematical notation may still need internet access.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>i</strong> (help)</td>
+<td style="text-align: left;">Opens this guide to the toolbar.</td>
+<td style="text-align: left;">Use it whenever you need a reminder.</td>
+</tr>
+</tbody>
+</table>
+<p>To read in order, use the <strong>left and right arrows at the sides
+of the page</strong> to move to the previous or next chapter. The first
+page has no previous-chapter arrow, and the last page has no
+next-chapter arrow. On smaller screens, you may need to scroll down to
+find these arrows; the contents menu is another way to change
+chapters.</p>
+<p>If you prefer the keyboard, press <strong>Tab</strong> to move
+between controls and <strong>Enter</strong> to activate one. When you
+are not typing in a text box, <strong>S</strong> shows or hides the
+contents, <strong>F</strong> opens search, and the <strong>left / right
+arrow keys</strong> move between chapters. Within search, use <strong>up
+/ down</strong> to select a match and <strong>Enter</strong> to open
+it.</p>
+<p>The downloaded, single-page HTML edition has its own table of
+contents rather than this book toolbar. Use your browser’s
+<strong>Find</strong> command (<strong>Ctrl+F</strong> on Windows,
+<strong>Command+F</strong> on Mac) to search that edition.</p>
+</template>
 <script>
 (function () {
   "use strict";
-  var helpUrl = "index.html#using-the-toolbar";
+  var dialog, trigger;
   function labelHelp() {
-    var icon = document.querySelector(".book-header .fa-info");
-    if (!icon) return;
-    var link = icon.closest("a");
+    var link=document.querySelector('.book-header a .fa-info');
     if (!link) return;
-    link.href = helpUrl;
-    link.title = "Help: using the toolbar";
-    link.setAttribute("aria-label", "Help: using the toolbar");
+    link=link.closest('a'); link.href='#';
+    link.title='Help: using the toolbar'; link.setAttribute('aria-label','Help: using the toolbar');
+    link.setAttribute('aria-haspopup','dialog'); link.setAttribute('aria-controls','toolbar-help-dialog');
   }
-  // Replace the default keyboard-shortcuts alert with the complete help page.
-  document.addEventListener("click", function (event) {
-    var link = event.target.closest && event.target.closest(".book-header a");
-    if (!link || !link.querySelector(".fa-info")) return;
-    event.preventDefault();
-    event.stopImmediatePropagation();
-    window.location.assign(helpUrl);
-  }, true);
-  window.addEventListener("load", function () {
-    labelHelp();
-    if (window.gitbook) window.gitbook.events.bind("page.change", labelHelp);
-  });
+  function showHelp(link) {
+    trigger=link;
+    if (!dialog) {
+      dialog=document.createElement('dialog'); dialog.id='toolbar-help-dialog';
+      dialog.setAttribute('aria-labelledby','toolbar-help-title');
+      dialog.innerHTML='<header><h2 id="toolbar-help-title">Using the toolbar</h2><button type="button" aria-label="Close toolbar help">Close</button></header><div class="toolbar-help-content"></div>';
+      dialog.querySelector('.toolbar-help-content').append(document.getElementById('toolbar-help-content-template').content.cloneNode(true));
+      document.body.append(dialog);
+      dialog.querySelector('button').addEventListener('click',function(){dialog.close();});
+      dialog.addEventListener('click',function(event){if(event.target===dialog){var r=dialog.getBoundingClientRect();if(event.clientX<r.left||event.clientX>r.right||event.clientY<r.top||event.clientY>r.bottom)dialog.close();}});
+      dialog.addEventListener('close',function(){if(trigger&&trigger.isConnected)trigger.focus();});
+    }
+    dialog.showModal(); dialog.querySelector('button').focus();
+  }
+  document.addEventListener('click',function(event){
+    var link=event.target.closest&&event.target.closest('.book-header a');
+    if(!link||!link.querySelector('.fa-info'))return;
+    event.preventDefault();event.stopImmediatePropagation();showHelp(link);
+  },true);
+  window.addEventListener('load',function(){labelHelp();if(window.gitbook)window.gitbook.events.bind('page.change',labelHelp);});
 })();
 </script>
 <script>

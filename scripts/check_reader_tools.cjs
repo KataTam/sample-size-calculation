@@ -30,7 +30,16 @@ let browser;
  await page.goto(base+'/book/feasibility.html#dataset-reuse');
  assert((await page.locator('#dataset-reuse').innerText()).includes('different question'));
  await page.goto(base+'/book/index.html');
- assert.equal(await page.locator('.tutorial-downloads a').count(),2);
+ assert.equal(await page.locator('.page-inner #using-the-toolbar, .book-summary a[href*="using-the-toolbar"]').count(),0);
+ const help=page.locator('.book-header a[aria-label="Help: using the toolbar"]');
+ const before=page.url(); await help.click();
+ const dialog=page.locator('#toolbar-help-dialog'); assert(await dialog.isVisible());
+ assert.equal(page.url(),before); assert.equal(await dialog.locator('table').count(),1);
+ await page.keyboard.press('Escape'); assert.equal(await dialog.isVisible(),false);
+ assert(await help.evaluate(el=>document.activeElement===el));
+ await page.setViewportSize({width:390,height:844}); await help.click();
+ assert(await dialog.evaluate(el=>{const r=el.getBoundingClientRect();return r.left>=0&&r.right<=innerWidth&&r.height<=innerHeight;}));
+ await dialog.locator('button').click(); assert.equal(await dialog.isVisible(),false);
  for(const ext of ['html','pdf']){const r=await page.request.get(base+'/book/Sample_size_open_module.'+ext);assert(r.ok());assert((await r.body()).length>1000);}
  for(const slug of ['clinical-question','power','calculations','curves','simulation','feasibility','exercises','study-designs','glossary','common-mistakes','appendix','references']) {
   await page.goto(base+'/book/'+slug+'.html');
