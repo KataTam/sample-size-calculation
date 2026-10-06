@@ -343,7 +343,7 @@ plan_n <- function(spec, goal = "testing", target_power = .8, maximum = 100000) 
   if (goal == "fixed") return(spec$n)
   check_probability(target_power, "Target power")
   if (goal == "testing" && abs(true_difference(spec)) < 1e-12)
-    stop("A zero planning effect cannot define a sample size for detecting a difference.", call. = FALSE)
+    stop("A zero target difference cannot define a sample size for detecting a difference.", call. = FALSE)
   if (!goal %in% c("testing", "precision")) stop("Unknown planning goal.")
   meets <- function(n) if (goal == "testing") spec_power(spec, n) >= target_power
                        else anticipated_width(spec, n) <= spec$width_target

@@ -8,7 +8,7 @@ ui <- fluidPage(
   titlePanel("Sample Size: Two Means", windowTitle = "Two means sample size"),
   sidebarLayout(
     sidebarPanel(
-      numericInput("delta", "Planning difference: used in the sample size calculation", value = 3, min = 0.01),
+      numericInput("delta", "Target difference: used in the sample size calculation", value = 3, min = 0.01),
       helpText("The score example expects a 4-unit benefit, plans for 3 units and uses a 2-unit clinical threshold."),
       numericInput("sd", "Assumed standard deviation (SD)", value = 5, min = 0.01),
       percent_slider("alpha", tags$a(href = "../book/Sample_size_open_module.html#alpha", target = "_blank", rel = "noopener", "Type I error rate (%)"), min = 0.001, max = 0.10, value = 0.05, step = 0.001),
@@ -26,17 +26,17 @@ ui <- fluidPage(
       helpText("The lab receives this calculated analyzable count as a fixed sample, together with your difference, SD, Type I error rate, power target and losses. Its test-based power may differ from this approximation."),
       h3("Difference and sample size"),
       plotOutput("sample_size_plot", height = "320px"),
-      p(class = "caption", "Figure. Approximate total analyzable sample size across planning differences, holding the common SD, Type I error rate and target power fixed."),
+      p(class = "caption", "Figure. Approximate total analyzable sample size across target differences, holding the common SD, Type I error rate and target power fixed."),
       h3("Assumptions"),
       tableOutput("assumptions"),
-      p(class = "caption", "Table. Current planning difference, common SD, error targets and expected losses.")
+      p(class = "caption", "Table. Current target difference, common SD, error targets and expected losses.")
     )
   )
 )
 
 server <- function(input, output, session) {
   result <- reactive({
-    validate(need(is.finite(input$delta) && input$delta > 0 && is.finite(input$sd) && input$sd > 0, "Enter positive finite planning difference and SD."))
+    validate(need(is.finite(input$delta) && input$delta > 0 && is.finite(input$sd) && input$sd > 0, "Enter positive finite target difference and SD."))
     sample_size_two_means_details(
       delta = input$delta,
       sd = input$sd,
@@ -86,7 +86,7 @@ server <- function(input, output, session) {
       2 * n_values,
       type = "l",
       lwd = 2,
-      xlab = "Planning difference",
+      xlab = "Target difference",
       ylab = "Required total sample size",
       main = "Smaller differences require larger studies"
     )
@@ -98,7 +98,7 @@ server <- function(input, output, session) {
     x <- result()
     data.frame(
       Assumption = c(
-        "Planning difference",
+        "Target difference",
         "Assumed standard deviation (SD)",
         "Type I error rate",
         "Power",

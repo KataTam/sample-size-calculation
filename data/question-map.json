@@ -17,14 +17,14 @@
     },
     {
       "id": "q2",
-      "question": "What effect do you expect with standard treatment?",
+      "question": "What outcome do you expect with standard treatment?",
       "original_excerpt": "In case there is a control group in your study in which the patients receive placebo or standard treatment, you can estimate the effect of such treatments from the existing literature including previous randomized and observational studies or from clinical practice.",
       "original_line": 63,
       "explanation": "Estimate the expected outcome with standard treatment or placebo from previous randomized or observational studies, or from clinical practice. Record how comparable this evidence is to your study population, treatment and outcome measurement."
     },
     {
       "id": "q3",
-      "question": "What effect do you expect with the novel treatment?",
+      "question": "What outcome do you expect with the novel treatment?",
       "original_excerpt": "This is naturally trickier to estimate since you normally do not have a good idea about the effect of the novel treatment, which is why you want to conduct the study in the first place. In many cases, a pilot study is an appropriate way to obtain a rough estimate of the effect.",
       "original_line": 67,
       "explanation": "The outcome with a novel treatment is usually harder to estimate, which is one reason for conducting the trial. A pilot study can provide a rough estimate, but small pilots give uncertain treatment estimates. Combine them with other evidence and examine plausible ranges. The [practical pilot case](#pilot-feasibility) shows how to use a pilot for feasibility objectives."
@@ -34,7 +34,7 @@
       "question": "What is a clinically relevant treatment difference that you want to detect?",
       "original_excerpt": "This is the most important decision you have to make in a sample size calculation. You can detect a relatively large treatment difference with few participants, while if you expect a relatively small treatment difference that requires more participants to demonstrate conclusively. It is important to be realistic when you estimate the appropriate treatment difference, what you need to aim for is the *smallest clinically relevant difference* that would be important to detect if true. In the absence of existing literature, you may need to consult with experts and/or conduct a pilot study to help with the estimation. Note that the issue of clinical relevance is completely separate from that of statistical significance. The former requires clinical judgment or consensus and statistical considerations have no bearing on it (e.g., is this treatment difference clinically relevant and thus meaningful for the patient?). The latter is a purely statistical concept that as you will see is a function of sample size and is arbitrary.",
       "original_line": 71,
-      "explanation": "Keep three quantities separate: the expected effect is your best current expectation, the planning effect is the particular true difference at which you calculate [power](#statistical-power), and the clinical threshold is the smallest benefit judged meaningful, agreed with patients and clinicians using relevant evidence. The worked examples use distinct values for these three quantities.\n\nLarger differences can be detected with fewer participants; detecting smaller differences usually requires more participants. Choose a credible planning effect that is clinically worthwhile, then examine other plausible effects. Statistical significance does not establish clinical importance: interpret the effect estimate and its confidence interval against the clinical threshold."
+      "explanation": "Keep three quantities separate: the expected difference is your best current expectation, the target difference is the particular true difference at which you calculate [power](#statistical-power), and the clinical threshold is the smallest benefit judged meaningful, agreed with patients and clinicians using relevant evidence. The worked examples use distinct values for these three quantities.\n\nLarger differences can be detected with fewer participants; detecting smaller differences usually requires more participants. Choose a credible target difference that is clinically worthwhile, then examine other plausible effects. Statistical significance does not establish clinical importance: interpret the effect estimate and its confidence interval against the clinical threshold."
     },
     {
       "id": "q5",

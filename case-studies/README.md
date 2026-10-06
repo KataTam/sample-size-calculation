@@ -4,7 +4,7 @@ Start with the [chronic pain example](chronic_pain_case.md), then use the [stude
 
 The additional cases show how the research question changes the purpose of a calculation:
 
-- [Rehabilitation improvement](rehabilitation_case.md): compare two independent mean improvement scores, distinguishing clinical threshold and planning effect.
+- [Rehabilitation improvement](rehabilitation_case.md): compare two independent mean improvement scores, distinguishing clinical threshold and target difference.
 - [Adherence support](adherence_case.md): compare independent binary outcomes, then consider a smaller actual effect and loss to follow-up.
 - [Discharge pathways](discharge_case.md): distinguish relative change from an absolute proportion difference.
 - [Prevalence survey](prevalence_case.md): estimate one proportion with useful absolute precision.

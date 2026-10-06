@@ -2,7 +2,7 @@
 
 All values are hypothetical teaching assumptions, not evidence about an actual program or instrument.
 
-Compare two individually allocated rehabilitation programs using improvement at six weeks on an approximately normal continuous mobility score. Expect a mean benefit of 4 units, but use a more cautious planning difference of 3 units and common SD 5. Separately, suppose patient and clinical consultation identifies a 2-unit benefit as clinically meaningful. The expected effect, planning effect and clinical threshold are distinct; only the planning difference enters the sample size calculation.
+Compare two individually allocated rehabilitation programs using improvement at six weeks on an approximately normal continuous mobility score. The expected mean difference is 4 units; use a more cautious target difference of 3 units and common SD 5. Separately, suppose patient and clinical consultation identifies a 2-unit benefit as clinically meaningful. The expected difference, target difference and clinical threshold are distinct; only the target difference enters the sample size calculation.
 
 Use a two-sided pooled t test, Type I error rate 5%, target power 90%, equal groups and 10% expected loss per arm. The total recruitment cap is 200. The shared case definition is `rehabilitation` in `R/teaching_cases.R`.
 
@@ -12,6 +12,6 @@ Use a two-sided pooled t test, Type I error rate 5%, target power 90%, equal gro
 2. Compare analyzable counts, recruitment after losses and the recruitment cap.
 3. Keep the original planned n fixed and examine a 1-unit generating benefit.
 4. Interpret one interval against zero and the 2-unit clinical threshold.
-5. Explain what evidence would justify SD 5 and a planned benefit of 3 in an actual study.
+5. Explain what evidence would justify SD 5 and a target difference of 3 in an actual study.
 
 Each participant contributes one improvement score to a comparison of independent groups. This illustration does not plan a single-group paired test, a repeated-measures model or an analysis adjusted for baseline; those analyses need suitable planning assumptions and methods.

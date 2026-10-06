@@ -28,7 +28,7 @@ These timings are proposed adaptations to pilot, not schedules validated by the 
 ## Discussion prompts
 
 - Why is the effect expected from a small pilot uncertain?
-- Is the planning effect the same as the clinically important threshold, and why?
+- Is the target difference the same as the clinically important threshold, and why?
 - Can a well-powered design yield an inconclusive study?
 - Does exclusion of zero establish clinical importance?
 - What changes when you increase participants? What changes when you increase replications?

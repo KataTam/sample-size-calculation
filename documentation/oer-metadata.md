@@ -59,7 +59,7 @@ This modular teaching package helps students understand sample size calculation 
 After completing the module, learners should be able to:
 
 - choose a testing, estimation or fixed-resource planning goal and explain why it fits the question
-- distinguish expected effects, planning effects and clinically meaningful thresholds
+- distinguish expected differences, target differences and clinically meaningful thresholds
 - justify assumptions and examine plausible alternatives
 - explain alpha, beta and power, and why one study can be inconclusive despite high planned power
 - calculate approximate sample sizes for two means or two proportions, and plan the precision of a single-proportion estimate

@@ -49,6 +49,6 @@ G*Power is also a possible reference for methods it supports. It has a statistic
 
 ## Reporting a study plan
 
-State the clinical question, primary outcome and planned analysis; planning effect and variability or probabilities; evidence and sensitivity scenarios; alpha, power or full interval-width target; allocation; analyzable and recruitment counts; expected losses; feasibility and cost assumptions; software/functions and versions; and the limits of what the proposed study could establish. Preserve the written justification as well as the calculation.
+State the clinical question, primary outcome and planned analysis; target difference and variability or probabilities; evidence and sensitivity scenarios; alpha, power or full interval-width target; allocation; analyzable and recruitment counts; expected losses; feasibility and cost assumptions; software/functions and versions; and the limits of what the proposed study could establish. Preserve the written justification as well as the calculation.
 
 The lab's JSON download stores inputs and notes locally so the plan can be reloaded. The text and R-script downloads support communication and reproduction. Files are not a shared learner record or a central submission system.

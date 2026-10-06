@@ -104,8 +104,8 @@ check_lab_server <- function() {
     stopifnot(nrow(one()$data) == 2 * planned()$n, all(one()$data$outcome %in% 0:1))
     stopifnot(nrow(many()$results) == 1000)
     exported <- export_rows(many()$results, many()$meta)
-    stopifnot(all(c("plan_n", "generating_seed", "planning_goal", "expected_effect", "method") %in% names(exported)),
-      all(exported$expected_effect == .4))
+    stopifnot(all(c("plan_n", "generating_seed", "planning_goal", "expected_difference", "method") %in% names(exported)),
+      all(exported$expected_difference == .4))
     session$setInputs(goal = "testing", plan_p1 = .3, plan_p0 = .3)
     stopifnot(inherits(tryCatch(planned(), error = identity), "error"))
   })

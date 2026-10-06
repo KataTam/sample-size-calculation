@@ -17,9 +17,9 @@ Intended conclusion and what would make the information useful:
 | Item | Value or decision | Source and rationale | Plausible alternative or uncertainty |
 |---|---|---|---|
 | Effect scale and beneficial direction | Treatment minus control | | |
-| Expected treatment effect | | | |
+| Expected difference | | | |
 | Smallest clinically important benefit | | Patient or clinical rationale | |
-| Effect used for planning | | Explain differences from the expected effect | |
+| Target difference | | Explain differences from the expected difference | |
 | Control probability and treatment probability, if binary | | | |
 | Common SD, if continuous | | | |
 | Two-sided test and CI method | | | |

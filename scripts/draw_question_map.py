@@ -33,11 +33,11 @@ NODES = (
     },
     {
         "id": "q2", "x": 840, "y": 690, "r": 111, "fill": "#fff0e6",
-        "lines": ("What", "effect do", "you expect with", "the standard", "treatment?"),
+        "lines": ("What", "outcome do", "you expect with", "the standard", "treatment?"),
     },
     {
         "id": "q3", "x": 547, "y": 902, "r": 95, "fill": "#e5f3f5",
-        "lines": ("What effect", "do you expect with", "the novel", "treatment?"),
+        "lines": ("What outcome", "do you expect with", "the novel", "treatment?"),
     },
     {
         "id": "q4", "x": 226, "y": 840, "r": 109, "fill": "#e4f3fa",
@@ -92,7 +92,7 @@ def connector(node):
 def draw_svg():
     desc = (
         "Seven questions surround the minimum required sample size: primary outcome; "
-        "expected effect with standard treatment; expected effect with novel treatment; "
+        "expected outcome with standard treatment; expected outcome with novel treatment; "
         "clinically relevant difference; null and alternative hypotheses; risk of a "
         "Type I error; and risk of a Type II error at a specified true difference. "
         "Activate an information link to read the explanation below the map."

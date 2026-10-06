@@ -17,7 +17,7 @@ lines <- c("# Static sample size activity", "",
   "Use these prepared synthetic results when the live app is unavailable. All studies use equal allocation and a two-sided alpha of 5%. Full reproducible results and assumptions accompany the activity.", "",
   "## Before viewing the results", "",
   "1. Predict how a smaller effect or larger SD changes power at 45 per group.",
-  "2. Explain the distinct roles of the expected 4-unit benefit, 3-unit planning effect and 2-unit clinical threshold. For the binary trial, these values are 40, 30 and 20 percentage points respectively.",
+  "2. Explain the distinct roles of the expected difference of 4 units, 3-unit target difference and 2-unit clinical threshold. For the binary trial, these values are 40, 30 and 20 percentage points respectively.",
   "3. Predict what changes if replications increase while participants per study remain fixed.", "")
 for (index in seq_along(scenarios)) {
   name <- names(scenarios)[index]
@@ -36,8 +36,8 @@ for (index in seq_along(scenarios)) {
     points = c("estimate", "lower", "upper", "width"))
   title <- gsub("_", " ", name)
   lines <- c(lines, paste0("## ", title), "",
-    paste0("Expected benefit: ", effect_text(metadata$expected_effect, spec$outcome),
-      "; original planning benefit: ", effect_text(metadata$planning_effect, spec$outcome),
+    paste0("Expected difference: ", effect_text(metadata$expected_effect, spec$outcome),
+      "; original target difference: ", effect_text(metadata$planning_effect, spec$outcome),
       "; clinical threshold: ", effect_text(spec$threshold, spec$outcome), "."), "",
     paste0("Participants per group: ", spec$n, "; generating difference: ", effect_text(true_difference(spec), spec$outcome),
       if (spec$outcome == "means") paste0("; SD: ", spec$sd) else paste0("; control ", percent(spec$p_control), ", treatment ", percent(spec$p_treatment)),

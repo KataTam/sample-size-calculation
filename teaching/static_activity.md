@@ -5,12 +5,12 @@ Use these prepared synthetic results when the live app is unavailable. All studi
 ## Before viewing the results
 
 1. Predict how a smaller effect or larger SD changes power at 45 per group.
-2. Explain the distinct roles of the expected 4-unit benefit, 3-unit planning effect and 2-unit clinical threshold. For the binary trial, these values are 40, 30 and 20 percentage points respectively.
+2. Explain the distinct roles of the expected difference of 4 units, 3-unit target difference and 2-unit clinical threshold. For the binary trial, these values are 40, 30 and 20 percentage points respectively.
 3. Predict what changes if replications increase while participants per study remain fixed.
 
 ## planned
 
-Expected benefit: 4 units; original planning benefit: 3 units; clinical threshold: 2 units.
+Expected difference: 4 units; original target difference: 3 units; clinical threshold: 2 units.
 
 Participants per group: 45; generating difference: 3 units; SD: 5; B: 1000; seed: 20260914.
 
@@ -44,7 +44,7 @@ Figure 1. First 30 simulated intervals under the planned scenario. Filled points
 
 ## null
 
-Expected benefit: 4 units; original planning benefit: 3 units; clinical threshold: 2 units.
+Expected difference: 4 units; original target difference: 3 units; clinical threshold: 2 units.
 
 Participants per group: 45; generating difference: 0 units; SD: 5; B: 1000; seed: 20260914.
 
@@ -78,7 +78,7 @@ Figure 2. First 30 simulated intervals under the null scenario. Filled points re
 
 ## smaller effect
 
-Expected benefit: 4 units; original planning benefit: 3 units; clinical threshold: 2 units.
+Expected difference: 4 units; original target difference: 3 units; clinical threshold: 2 units.
 
 Participants per group: 45; generating difference: 1 units; SD: 5; B: 1000; seed: 20260914.
 
@@ -112,7 +112,7 @@ Figure 3. First 30 simulated intervals under the smaller effect scenario. Filled
 
 ## higher variability
 
-Expected benefit: 4 units; original planning benefit: 3 units; clinical threshold: 2 units.
+Expected difference: 4 units; original target difference: 3 units; clinical threshold: 2 units.
 
 Participants per group: 45; generating difference: 3 units; SD: 7; B: 1000; seed: 20260914.
 
@@ -146,7 +146,7 @@ Figure 4. First 30 simulated intervals under the higher variability scenario. Fi
 
 ## binary
 
-Expected benefit: 40 percentage points; original planning benefit: 30 percentage points; clinical threshold: 20 percentage points.
+Expected difference: 40 percentage points; original target difference: 30 percentage points; clinical threshold: 20 percentage points.
 
 Participants per group: 60; generating difference: 30 percentage points; control 30.0%, treatment 60.0%; B: 1000; seed: 20260914.
 

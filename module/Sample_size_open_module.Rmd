@@ -59,7 +59,7 @@ For a reminder of a term, see [Key parameters and prerequisites](#glossary). If 
 After the core route, you should be able to define and justify a basic two-arm study, calculate its sample size, adjust recruitment for expected losses, and interpret its limitations. The advanced route adds precision planning, repeated-study simulation and guidance for other designs. Across both routes, you should be able to:
 
 - Choose a testing, estimation or fixed-resource planning goal and explain why it fits the question.
-- Distinguish expected effects, planning effects and clinically meaningful thresholds.
+- Distinguish expected differences, target differences and clinically meaningful thresholds.
 - Justify assumptions and examine plausible alternatives, including when reusing an existing dataset.
 - Explain Type I error rate, Type II error rate and power, and why one study can be inconclusive despite high planned power.
 - Calculate approximate sample sizes for two means or two proportions, and plan the precision of a single-proportion estimate.
@@ -104,7 +104,7 @@ Learning outcomes. After this section, you should be able to:
 
 - Explain why sample size starts with the clinical question.
 - Identify the assumptions needed before calculating.
-- Distinguish expected effects, planning effects and clinical thresholds in a two-arm clinical trial.
+- Distinguish expected differences, target differences and clinical thresholds in a two-arm clinical trial.
 :::
 
 ## The chronic-pain study: how many patients do we need?
@@ -134,7 +134,7 @@ In the Netherlands, research that falls under the Medical Research Involving Hum
 
 ## What assumptions do we need before calculating? {#how-do-you-determine-the-minimum-required-sample-size}
 
-Before choosing numerical parameters, consult guidance appropriate to the study design and research question. For a randomized trial, use SPIRIT 2025 for the protocol and CONSORT 2025, together with relevant extensions, for reporting the results [@spiritconsort2025]. For other designs, consult the corresponding guidance, such as STROBE for observational studies or STARD for diagnostic accuracy; [Where does my study fit?](#study-designs) provides routes. These are reporting guidelines: they help identify decisions to document, but do not replace design-specific statistical methods or supply universal values for the planning effect, error rates or sample size. Check disease-specific, funder and ethics-review requirements where applicable.
+Before choosing numerical parameters, consult guidance appropriate to the study design and research question. For a randomized trial, use SPIRIT 2025 for the protocol and CONSORT 2025, together with relevant extensions, for reporting the results [@spiritconsort2025]. For other designs, consult the corresponding guidance, such as STROBE for observational studies or STARD for diagnostic accuracy; [Where does my study fit?](#study-designs) provides routes. These are reporting guidelines: they help identify decisions to document, but do not replace design-specific statistical methods or supply universal values for the target difference, error rates or sample size. Check disease-specific, funder and ethics-review requirements where applicable.
 
 Then specify the primary outcome, the expected results in each group, the planned analysis and the acceptable error rates. The map below gathers the questions to answer before choosing a sample size. Apply each question to the chronic-pain trial: we already know the outcome, the two independent groups and the equal allocation.
 
@@ -146,24 +146,24 @@ Our examples use frequentist methods: two-sided significance tests for superiori
 
 ## What do we expect, what will we plan for, and what matters clinically?
 
-Suppose the pilot and other relevant evidence support an expected benefit of 40 percentage points. For the sample size calculation, use a planning benefit of 30 percentage points: 60% relief with the novel treatment versus 30% with standard treatment. Separately, consultation with patients and clinicians identifies a clinical threshold of 20 percentage points.
+Suppose the pilot and other relevant evidence support an expected difference of 40 percentage points. For the sample size calculation, use a target difference of 30 percentage points: 60% relief with the novel treatment versus 30% with standard treatment. Separately, consultation with patients and clinicians identifies a clinical threshold of 20 percentage points.
 
-The expected effect is our best current expectation; the planning effect is the effect used in the sample size calculation. The clinically important difference (called the clinical threshold here) is the smallest treatment benefit that matters to patients. These terms identify different decisions, even when a study chooses the same value for more than one of them [@lakens2022; @caldwell2020]. Event rates in this trial mean the percentage reporting pain relief at the specified four-week follow-up.
+The expected difference is the anticipated population difference based on current evidence, with uncertainty. The target difference is the between-group difference used in the sample size calculation: the assumed true difference at which we evaluate power. It is not a result the study must achieve. The smallest clinically important difference (called the clinical threshold here) is the smallest treatment benefit judged worthwhile by patients and clinicians. These terms identify different decisions and may have the same value in a study. DELTA² guidance distinguishes realistic and important differences and explains that the target difference need not equal the smallest clinically important difference [@cook2018delta2; @lakens2022]. Event rates in this trial mean the percentage reporting pain relief at the specified four-week follow-up.
 
 | Quantity | Value | Role in this study |
 |:--|:--|:--|
-| Expected benefit | 40 percentage points | Best current expectation, with uncertainty |
-| Planning benefit | 30 percentage points: 60% versus 30% | Assumed true difference at which we evaluate power |
+| Expected difference | 40 percentage points | Best current expectation, with uncertainty |
+| Target difference | 30 percentage points: 60% versus 30% | Assumed true difference at which we evaluate power |
 | Clinical threshold | 20 percentage points | Smallest benefit judged worthwhile by patients and clinicians |
 
 Table: (\#tab:pain-planning-values) Three distinct decisions for the chronic-pain trial.
 
-The three values in Table \@ref(tab:pain-planning-values) answer different questions. Using a smaller planning effect acknowledges uncertainty here; subtracting a fixed amount from every pilot estimate is not a general rule. Justify the choice from relevant evidence and examine plausible alternatives. Express absolute differences in percentage points, and avoid choosing an effect solely because a generic scale calls it small, medium or large [@caldwell2020].
+The three values in Table \@ref(tab:pain-planning-values) answer different questions. Using a smaller target difference acknowledges uncertainty here; subtracting a fixed amount from every pilot estimate is not a general rule. Justify the choice from relevant evidence and examine plausible alternatives. Express absolute differences in percentage points, and avoid choosing an effect solely because a generic scale calls it small, medium or large [@caldwell2020].
 
 <details class="misconception" id="misconception-pilot-effect">
 <summary>Common misconception: the pilot reveals the true treatment effect</summary>
 
-The pilot's 70% versus 30% relief rates are sample estimates and could change in another small sample. They inform our expectations, but do not establish the population effect. The expected benefit, effect used for planning and clinical threshold answer different questions and should each be justified.
+The pilot's 70% versus 30% relief rates are sample estimates and could change in another small sample. They inform our expectations, but do not establish the population effect. The expected difference, target difference and clinical threshold answer different questions and should each be justified.
 
 </details>
 
@@ -266,9 +266,9 @@ Write a study plan before choosing a sample size. Distinguish what you expect, w
 | Question and outcome | Population, intervention, comparator, primary outcome and time point |
 | Goal | Testing, estimation, fixed resources, or a stated combination |
 | Effect scale | Treatment minus control; score units or percentage points; direction of benefit |
-| Expected effect | Best current expectation, supporting evidence and uncertainty |
+| Expected difference | Best current expectation, supporting evidence and uncertainty |
 | Clinical threshold | Smallest benefit that matters to patients, with justification |
-| Planning effect | Difference used in the power calculation, with justification |
+| Target difference | Difference used in the power calculation, with justification |
 | Variation or event rates | Common standard deviation for continuous outcomes, or control and treatment percentages |
 | Sensitivity | Plausible alternative effects, standard deviations or event rates, with sources |
 | Analysis and power | Planned test and confidence interval; sidedness, Type I error rate and target power |
@@ -279,10 +279,10 @@ Write a study plan before choosing a sample size. Distinguish what you expect, w
 
 Table: (\#tab:planning-assumptions) Assumptions to record before planning the sample size.
 
-The planning effect tells the calculation where to evaluate power. The standard deviation describes variation between individuals; the standard error describes sampling variation of an estimate. For binary outcomes, report each group's event rate as a percentage and their absolute difference in percentage points. [The glossary](#glossary) explains these terms.
+The target difference tells the calculation where to evaluate power. The standard deviation describes variation between individuals; the standard error describes sampling variation of an estimate. For binary outcomes, report each group's event rate as a percentage and their absolute difference in percentage points. [The glossary](#glossary) explains these terms.
 
 ::: {.activity}
-Record and justify. [Open the assumptions report activity](http://127.0.0.1:8769/study/?activity=assumptions_report). Fill in the text boxes to build a study-plan report alongside your answers. Start with your clinical question and evidence; add the sample size and recruitment counts after using the calculation activities. You can load a hypothetical two-arm example, save your entries, and download the report. Check that the expected effect, planning effect and clinical threshold each have a clear role, and explain what your study could establish.
+Record and justify. [Open the assumptions report activity](http://127.0.0.1:8769/study/?activity=assumptions_report). Fill in the text boxes to build a study-plan report alongside your answers. Start with your clinical question and evidence; add the sample size and recruitment counts after using the calculation activities. You can load a hypothetical two-arm example, save your entries, and download the report. Check that the expected difference, target difference and clinical threshold each have a clear role, and explain what your study could establish.
 :::
 
 
@@ -325,7 +325,7 @@ H_0: \delta=0, \qquad H_1: \delta\ne0.
 (\#eq:hypotheses)
 \end{equation}
 
-In the chronic-pain case, planning for a 30-percentage-point difference ($\delta=0.30$) evaluates power at that particular effect. It does not change the alternative to $|\delta|\geq0.30$. The expected benefit remains 40 percentage points and the clinical threshold remains 20 percentage points. Rejecting zero alone does not show that this clinical threshold has been exceeded.
+In the chronic-pain case, planning for a 30-percentage-point difference ($\delta=0.30$) evaluates power at that particular effect. It does not change the alternative to $|\delta|\geq0.30$. The expected difference remains 40 percentage points and the clinical threshold remains 20 percentage points. Rejecting zero alone does not show that this clinical threshold has been exceeded.
 
 ```{r error-table, echo=FALSE}
 knitr::kable(data.frame(
@@ -389,7 +389,7 @@ Here the critical mean is about 124.9 mmHg and power is about 51%. Repeating the
 
 <div class="route-label advanced"><span>Advanced</span> Extension beyond the basic calculations.</div>
 
-Use the chronic-pain planning probabilities: 30% relief with control and 60% with treatment, with Type I error rate of 5%, and 20, 50 and 80 patients per group. The simulations evaluate the 30-percentage-point planning effect; the expected benefit is 40 points and the clinical threshold is 20 points. Before looking at the results, predict which design will reject the null most often. This repeated-study approach follows the introductory teaching idea in @superpowerbook2022 and the broader use of simulation in health-sciences education [@thiesmeier2024; @rudolph2021].
+Use the chronic-pain planning probabilities: 30% relief with control and 60% with treatment, with Type I error rate of 5%, and 20, 50 and 80 patients per group. The simulations evaluate the 30-percentage-point target difference; the expected difference is 40 points and the clinical threshold is 20 points. Before looking at the results, predict which design will reject the null most often. This repeated-study approach follows the introductory teaching idea in @superpowerbook2022 and the broader use of simulation in health-sciences education [@thiesmeier2024; @rudolph2021].
 
 ```{r three-samples}
 sample_sizes <- c(20, 50, 80)
@@ -413,7 +413,7 @@ for (batch in batches) plot_p_values(batch)
 ```
 
 ::: {.activity}
-Explore. [Open Activity 1 with its case loaded](http://127.0.0.1:8769/study/?activity=pain_one_many). In the lab choose *Binary event outcome* and *Assess a fixed sample size*. The event here is pain relief. Set 20 per group, control 30%, treatment 60%, Type I error rate 5%, and 5,000 replications. Proportion controls use 0.30, 0.60 and 0.05 for these percentages. Keep the expected benefit at 40 percentage points and clinical threshold at 20 points. Run one study, then many studies. Repeat at 50 and 80 per group.
+Explore. [Open Activity 1 with its case loaded](http://127.0.0.1:8769/study/?activity=pain_one_many). In the lab choose *Binary event outcome* and *Assess a fixed sample size*. The event here is pain relief. Set 20 per group, control 30%, treatment 60%, Type I error rate 5%, and 5,000 replications. Proportion controls use 0.30, 0.60 and 0.05 for these percentages. Keep the expected difference at 40 percentage points and clinical threshold at 20 points. Run one study, then many studies. Repeat at 50 and 80 per group.
 
 Explain. Why can two studies with the same design reach different testing decisions? Why does changing the number of replications improve numerical precision without increasing the power of each study?
 
@@ -443,13 +443,13 @@ At a rejection rate of 80% and $B=5000$, MCSE is about `r round(100 * sqrt(.8 * 
 Learning outcomes. After this section, you should be able to:
 
 - Calculate approximate sample sizes for two independent proportions or means.
-- Explain how the planning effect, variability, Type I error rate and target power affect the calculation.
+- Explain how the target difference, variability, Type I error rate and target power affect the calculation.
 - Distinguish per-group from total counts.
 :::
 
 We return to two-arm treatment comparisons. The formulas below assume two independent groups with equal allocation and a two-sided test. Later, [Recruitment, precision and feasibility](#feasibility) extends planning to estimation and single-proportion examples, and [Where does my study fit?](#study-designs) considers other designs.
 
-Having specified the chronic-pain planning effect and acceptable error risks, we can calculate the required number of analyzable patients. We start with that trial, then consider a continuous-outcome comparison.
+Having specified the chronic-pain target difference and acceptable error risks, we can calculate the required number of analyzable patients. We start with that trial, then consider a continuous-outcome comparison.
 
 ## The multiplier
 
@@ -462,7 +462,7 @@ f(\alpha,\beta)=\left(z_{1-\alpha/2}+z_{1-\beta}\right)^2.
 
 Here $z_q$ is a standard-normal quantile. These formulas make the relationships visible; the required method ultimately depends on the planned analysis [@kirkwood2003; @wang2020].
 
-In the equations, $\alpha$ denotes the Type I error rate and $\beta$ the Type II error rate; target power is $1-\beta$. The multiplier gathers the two error targets into one quantity. A smaller Type I error rate makes a false rejection less frequent under the null, and a higher target power requires more information at the planning effect. Both increase the multiplier and therefore the sample size when the other assumptions stay the same. You can read the table below without calculating z-scores yourself.
+In the equations, $\alpha$ denotes the Type I error rate and $\beta$ the Type II error rate; target power is $1-\beta$. The multiplier gathers the two error targets into one quantity. A smaller Type I error rate makes a false rejection less frequent under the null, and a higher target power requires more information at the target difference. Both increase the multiplier and therefore the sample size when the other assumptions stay the same. You can read the table below without calculating z-scores yourself.
 
 ```{r multiplier}
 alpha <- .05
@@ -538,7 +538,7 @@ Read a row as a conditional statement: if those event probabilities and that ana
 
 ### An adherence-support case {#adherence}
 
-Suppose you compare usual care with individual adherence support, using adequate adherence at 12 weeks as a yes/no outcome. Comparable evidence suggests an expected improvement from 50% to 70%, a 20-percentage-point expected benefit. For planning, use 50% versus 65%, a more conservative 15-percentage-point benefit. Patients and clinicians separately judge a 10-percentage-point benefit worthwhile. These three values answer different questions.
+Suppose you compare usual care with individual adherence support, using adequate adherence at 12 weeks as a yes/no outcome. Comparable evidence suggests an expected improvement from 50% to 70%, a 20-percentage-point expected difference. For planning, use 50% versus 65%, a more conservative 15-percentage-point benefit. Patients and clinicians separately judge a 10-percentage-point benefit worthwhile. These three values answer different questions.
 
 ```{r adherence-case}
 adherence_case <- teaching_case("adherence")
@@ -569,7 +569,7 @@ n\approx f(\alpha,\beta)\frac{2\sigma^2}{\delta^2}.
 (\#eq:means)
 \end{equation}
 
-Suppose comparable evidence suggests a 4-unit expected difference in a normally distributed improvement score. Use a more conservative 3-unit planning difference, with SD 5 in both groups, while patients and clinicians judge a 2-unit benefit clinically important. This is a hypothetical score, not a bounded clinical scale. Keep Type I error rate at 5% and power at 90%.
+Suppose comparable evidence suggests a 4-unit expected difference in a normally distributed improvement score. Use a more conservative 3-unit target difference, with SD 5 in both groups, while patients and clinicians judge a 2-unit benefit clinically important. This is a hypothetical score, not a bounded clinical scale. Keep Type I error rate at 5% and power at 90%.
 
 ```{r means}
 delta <- 3
@@ -618,7 +618,7 @@ Before rounding, halving the difference or doubling the SD multiplies the requir
 
 ### A rehabilitation case {#rehabilitation}
 
-The same calculation could compare two rehabilitation programs, rather than two drugs. Suppose the primary outcome is improvement at six weeks on a hypothetical continuous mobility score. The expected benefit is 4 units, the planning difference is 3 units, and patients and clinicians judge a 2-unit benefit clinically meaningful. Use a common SD of 5 units. For this illustration, independent patients are randomized to the two programs and the improvement scores are approximately normal.
+The same calculation could compare two rehabilitation programs, rather than two drugs. Suppose the primary outcome is improvement at six weeks on a hypothetical continuous mobility score. The expected difference is 4 units, the target difference is 3 units, and patients and clinicians judge a 2-unit benefit clinically meaningful. Use a common SD of 5 units. For this illustration, independent patients are randomized to the two programs and the improvement scores are approximately normal.
 
 ```{r rehabilitation-case}
 rehabilitation_case <- teaching_case("rehabilitation")
@@ -657,7 +657,7 @@ The chronic-pain calculation uses one set of assumptions. What if the true benef
 
 ## Activity 2: can the feasible study answer the question?
 
-A single calculation hides its dependence on uncertain inputs. Chapter 11 of @superpowerbook2022 motivates examining power across a range of sample sizes and effects. Here we keep the chronic-pain plan fixed and examine true control relief of 30% with treatment relief of 45%, 50% or 60%. The case still has an expected benefit of 40 percentage points, a planning benefit of 30 points and a clinical threshold of 20 points; these curves explore performance if reality differs from the expectation.
+A single calculation hides its dependence on uncertain inputs. Chapter 11 of @superpowerbook2022 motivates examining power across a range of sample sizes and effects. Here we keep the chronic-pain plan fixed and examine true control relief of 30% with treatment relief of 45%, 50% or 60%. The case still has an expected difference of 40 percentage points, a target difference of 30 points and a clinical threshold of 20 points; these curves explore performance if reality differs from the expectation.
 
 Suppose the clinic can recruit 200 patients in total, with 10% expected loss in each arm. This corresponds to 100 recruited and an expected 90 analyzable patients per group. That expected count is not guaranteed.
 
@@ -717,7 +717,7 @@ An effect below the target-power crossing can still produce a significant result
 ::: {.activity}
 Predict. Which effect assumption is most demanding at the same power target?
 
-Explore. [Open Activity 2 with its recruitment limit loaded](http://127.0.0.1:8769/study/?activity=pain_curves). In the lab set a fixed sample of 90 per group, control 30%, and treatment 60%. Compare true treatment relief of 50% and 45% while keeping the expected benefit, planning benefit and clinical threshold distinct. Use the prepared curves above to view all three scenarios together.
+Explore. [Open Activity 2 with its recruitment limit loaded](http://127.0.0.1:8769/study/?activity=pain_curves). In the lab set a fixed sample of 90 per group, control 30%, and treatment 60%. Compare true treatment relief of 50% and 45% while keeping the expected difference, target difference and clinical threshold distinct. Use the prepared curves above to view all three scenarios together.
 
 Explain. Which assumptions make the target feasible? How do you distinguish 200 recruited patients from 180 expected analyzable patients?
 
@@ -763,7 +763,7 @@ The custom-simulation approach in chapter 15 of @superpowerbook2022 starts from 
 
 ### Step 1: generate one trial
 
-Generate 60 independent patients per group, with relief probabilities of 30% and 60%. The simulation evaluates the 30-percentage-point planning effect; the expected effect is 40 points and the clinical threshold is 20 points. Each patient's outcome is zero or one. Setting the seed makes this example reproducible.
+Generate 60 independent patients per group, with relief probabilities of 30% and 60%. The simulation evaluates the 30-percentage-point target difference; the expected difference is 40 points and the clinical threshold is 20 points. Each patient's outcome is zero or one. Setting the seed makes this example reproducible.
 
 ```{r generate-trial}
 set.seed(20260921)
@@ -913,7 +913,7 @@ To allow for 10% expected loss, divide the required analyzable count by 0.90 rat
 
 <div class="route-label core"><span>Core</span> Basic two-arm study planning and interpretation.</div>
 
-For the continuous improvement-score case, the expected benefit is 4 units, the planning difference is 3 units and the clinical threshold is 2 units. Compare three hypothetical 95% confidence intervals:
+For the continuous improvement-score case, the expected difference is 4 units, the target difference is 3 units and the clinical threshold is 2 units. Compare three hypothetical 95% confidence intervals:
 
 | Interval | Interpretation |
 |:--|:--|
@@ -938,7 +938,7 @@ A study can detect a difference from zero while leaving considerable uncertainty
 
 <div class="route-label advanced"><span>Advanced</span> Extension beyond the basic calculations.</div>
 
-The lab offers *Estimate with a target interval width* alongside testing and fixed-resource goals. Specify the full width, in the outcome's original units. For the continuous improvement score, keep the expected benefit at 4 units, planning difference at 3 units and clinical threshold at 2 units. Use SD 5 and a target full width of 4 units:
+The lab offers *Estimate with a target interval width* alongside testing and fixed-resource goals. Specify the full width, in the outcome's original units. For the continuous improvement score, keep the expected difference at 4 units, target difference at 3 units and clinical threshold at 2 units. Use SD 5 and a target full width of 4 units:
 
 ```{r precision-plan}
 precision_spec <- study_spec(outcome = "means", delta = 3, sd = 5,
@@ -953,13 +953,13 @@ knitr::kable(display_simulation_summary(simulation_summary(precision_batch)),
 ```
 
 ```{r precision-plan-formatted, echo=FALSE}
-knitr::kable(data.frame(`Analyzable per group`=precision_spec$n, `Anticipated full interval width`=round(anticipated_width(precision_spec),2), `Power at the planning effect`=percent(spec_power(precision_spec)),check.names=FALSE), caption="Sample size, anticipated precision and power for the improvement-score comparison.")
+knitr::kable(data.frame(`Analyzable per group`=precision_spec$n, `Anticipated full interval width`=round(anticipated_width(precision_spec),2), `Power at the target difference`=percent(spec_power(precision_spec)),check.names=FALSE), caption="Sample size, anticipated precision and power for the improvement-score comparison.")
 ```
 
 For normal data, the curve gives expected full t-interval width. For binary data, it uses a plug-in Newcombe-Wilson width at the assumed probabilities, not exact expected width. Neither criterion guarantees that each realized interval will meet the target; the simulation reports the fraction that does so separately [@sandoval2025; @newcombe1998].
 
 ::: {.activity}
-Compare goals. [Open the precision activity](http://127.0.0.1:8769/study/?activity=mean_precision). In the lab choose *Continuous outcome*, expected benefit 4, planning difference 3, SD 5, clinical threshold 2, Type I error rate 5% and full width 4. The outcome here is an improvement score. Compare the sample selected for estimation with the sample selected for 80% power. Explain why the same research question might require considering both criteria.
+Compare goals. [Open the precision activity](http://127.0.0.1:8769/study/?activity=mean_precision). In the lab choose *Continuous outcome*, expected difference 4, target difference 3, SD 5, clinical threshold 2, Type I error rate 5% and full width 4. The outcome here is an improvement score. Compare the sample selected for estimation with the sample selected for 80% power. Explain why the same research question might require considering both criteria.
 :::
 
 ## Estimate one proportion: a prevalence survey {#prevalence}
@@ -1053,7 +1053,7 @@ knitr::kable(data.frame(
 
 Low power makes inconclusive results more likely under the planning alternative. Among selected statistically significant results, effects can be exaggerated. Larger samples reduce sampling variation but do not automatically remove bias.
 
-For the chronic-pain trial, a study with low power at the 30-percentage-point planning effect would often fail to detect that benefit even if it were real. A non-significant result would not establish that the treatments are equally effective. Examine the estimated benefit and confidence interval against zero and the 20-percentage-point clinical threshold.
+For the chronic-pain trial, a study with low power at the 30-percentage-point target difference would often fail to detect that benefit even if it were real. A non-significant result would not establish that the treatments are equally effective. Examine the estimated benefit and confidence interval against zero and the 20-percentage-point clinical threshold.
 
 ## Ways to increase power {#increase-power}
 
@@ -1073,7 +1073,7 @@ Before collecting data, consider whether you can obtain more information about t
 
 Table: (\#tab:increase-power) Options for increasing power and the assumptions or tradeoffs they require.
 
-A larger true benefit is easier to detect, but entering a larger assumed benefit into a calculator does not make the treatment more effective. Keep the chronic-pain expected benefit (40 percentage points), planning benefit (30 points) and clinical threshold (20 points) distinct and justified. Changing the clinical threshold alone does not increase power for a test of zero difference. Likewise, running more simulations improves the precision of the estimated power; it does not increase the study's power.
+A larger true benefit is easier to detect, but entering a larger assumed benefit into a calculator does not make the treatment more effective. Keep the chronic-pain expected difference (40 percentage points), target difference (30 points) and clinical threshold (20 points) distinct and justified. Changing the clinical threshold alone does not increase power for a test of zero difference. Likewise, running more simulations improves the precision of the estimated power; it does not increase the study's power.
 
 ::: {.activity}
 Compare plans. [Open the chronic-pain activity](http://127.0.0.1:8769/study/?activity=pain_one_many). Keep standard-treatment relief at 30%, novel-treatment relief at 60% and the Type I error rate at 5%. Compare 50 and 80 analyzable patients per group. Which plan detects the specified benefit more often? What would obtaining the larger sample require in practice? Record the recruitment implications in your study plan.
@@ -1152,7 +1152,7 @@ Learning outcomes. After this section, you should be able to:
 
 <div class="route-label core"><span>Core</span> Basic two-arm study planning and interpretation.</div>
 
-Standard care discharges 80% of patients by a specified time point. Suppose comparable evidence suggests an 18-percentage-point expected benefit (98% versus 80%), use a more conservative 16-percentage-point planning benefit (96% versus 80%), and patients judge an 8-percentage-point benefit worthwhile. Consider a 20% relative increase, an alternative planning benefit of 10 percentage points, and a higher power target. Use the simple approximation from equation \@ref(eq:proportions).
+Standard care discharges 80% of patients by a specified time point. Suppose comparable evidence suggests an 18-percentage-point expected difference (98% versus 80%), use a more conservative 16-percentage-point target difference (96% versus 80%), and patients judge an 8-percentage-point benefit worthwhile. Consider a 20% relative increase, an alternative target difference of 10 percentage points, and a higher power target. Use the simple approximation from equation \@ref(eq:proportions).
 
 Before revealing the answers:
 
@@ -1174,10 +1174,10 @@ discharge$per_group <- mapply(function(p, power) {
 }, discharge$treatment, discharge$power)
 discharge$total <- 2 * discharge$per_group
 knitr::kable(display_probabilities(discharge, c("control", "treatment", "power")),
-  caption = "Analyzable discharge-study sample sizes for alternative planning benefits and power targets, using the simple normal approximation.")
+  caption = "Analyzable discharge-study sample sizes for alternative target differences and power targets, using the simple normal approximation.")
 ```
 
-The treatment percentages are 96%, 90% and 96%. The approximate totals are 122, 394 and 164. The latter two are even because each group is rounded up separately. The expected benefit remains 18 points and the clinical threshold remains 8 points in each comparison.
+The treatment percentages are 96%, 90% and 96%. The approximate totals are 122, 394 and 164. The latter two are even because each group is rounded up separately. The expected difference remains 18 points and the clinical threshold remains 8 points in each comparison.
 
 <details class="misconception" id="misconception-percentage-points">
 <summary>Common misconception: percentages and percentage points are interchangeable</summary>
@@ -1233,7 +1233,7 @@ Apply the statistical, clinical, ethical and logistic questions introduced earli
 
 Question. Does probiotic supplementation reduce the occurrence of gestational diabetes in pregnant women with overweight or obesity (BMI at least 25 kg/m²), compared with no probiotic supplementation? The proposed outcome is gestational diabetes diagnosed using a 75 g oral glucose tolerance test (OGTT) at approximately 20–24 weeks of pregnancy. This project investigates a possible preventive strategy; its benefit must be established rather than assumed.
 
-Planning focus. If supplementation is randomly allocated to individual women, this is a two-arm trial with a binary outcome. Specify the supplement, start and duration of use, comparator care, diagnostic criteria and assessment time. Then justify the expected event rates, planning difference and clinically meaningful threshold, and allow for missing outcomes. If supplementation is observed rather than allocated, this becomes an observational comparison that needs to account for confounding. Check the proposed OGTT timing against applicable clinical guidance: NICE, for example, generally recommends risk-based testing at 24–28 weeks, so an earlier research assessment needs justification [@nicegdm].
+Planning focus. If supplementation is randomly allocated to individual women, this is a two-arm trial with a binary outcome. Specify the supplement, start and duration of use, comparator care, diagnostic criteria and assessment time. Then justify the expected event rates, target difference and clinically meaningful threshold, and allow for missing outcomes. If supplementation is observed rather than allocated, this becomes an observational comparison that needs to account for confounding. Check the proposed OGTT timing against applicable clinical guidance: NICE, for example, generally recommends risk-based testing at 24–28 weeks, so an earlier research assessment needs justification [@nicegdm].
 
 ### Student project example: speech features and Parkinson's medication state {#student-parkinson-speech}
 

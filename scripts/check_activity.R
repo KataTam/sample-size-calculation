@@ -34,7 +34,7 @@ check_activity <- function() {
   stopifnot(restored$inputs$fixed_n == 37, restored$inputs$goal == "fixed",
     restored$inputs$expected_p == .18,
     identical(restored$study$justification, document$study$justification))
-  # Plans saved before the expected-effect fields were introduced still load.
+  # Plans saved before the expected-difference fields were introduced still load.
   older <- document; older$inputs$expected_m <- NULL; older$inputs$expected_p <- NULL
   migrated <- read_study_plan(jsonlite::toJSON(older, auto_unbox = TRUE, digits = 16))
   stopifnot(migrated$inputs$expected_m == defaults$expected_m,

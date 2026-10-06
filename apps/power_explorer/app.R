@@ -66,28 +66,28 @@ ui <- fluidPage(
     selectInput("goal", "Planning goal", c("Test a difference from zero" = "testing", "Estimate with a target interval width" = "precision", "Assess a fixed number of available participants" = "fixed")),
     p("Two independent groups, equal allocation. Differences are treatment minus control; positive values mean benefit in these cases."),
     conditionalPanel("input.outcome == 'means'",
-      numericInput("expected_m", "Expected treatment effect: best current estimate (outcome units)", 4, step = .5),
-      numericInput("plan_delta", "Planning difference: used in the sample size calculation (outcome units)", 3, step = .5),
+      numericInput("expected_m", "Expected difference: best current estimate (outcome units)", 4, step = .5),
+      numericInput("plan_delta", "Target difference: used in the sample size calculation (outcome units)", 3, step = .5),
       numericInput("plan_sd", "Standard deviation: variation between patients (outcome units)", 5, min = .1),
-      helpText("The expected benefit records your best current expectation. Only the planning difference enters the sample size calculation; SD describes variation between patients."),
+      helpText("The expected difference records your best current expectation. Only the target difference enters the sample size calculation; SD describes variation between patients."),
       tagList(
       numericInput("threshold_m", "Clinically important difference (outcome units)", 2, min = .1),
-      helpText("This clinical threshold is a separate judgment from the planning difference.")),
+      helpText("This clinical threshold is a separate judgment from the target difference.")),
       conditionalPanel("input.show_advanced || input.goal == 'precision'",
       numericInput("width_m", "Target full confidence interval width (outcome units)", 4, min = .1),
       helpText("Full width 4 means a symmetric interval extending approximately 2 units on each side."))),
     conditionalPanel("input.outcome == 'proportions'",
-      percent_slider("expected_p", "Expected treatment effect (percentage points)", value = .4, min = -1, max = 1, step = .01, suffix = " percentage points"),
+      percent_slider("expected_p", "Expected difference (percentage points)", value = .4, min = -1, max = 1, step = .01, suffix = " percentage points"),
       percent_slider("plan_p0", "Standard treatment: event rate used for planning (%)", .01, .99, .3, step = .01),
       percent_slider("plan_p1", "Novel treatment: event rate used for planning (%)", .01, .99, .6, step = .01),
       textOutput("probability_inputs"),
-      helpText("Event rates are displayed as percentages. An increase from 30% to 60% is 30 percentage points. Expected benefit is recorded separately and does not enter the calculation."),
+      helpText("Event rates are displayed as percentages. An increase from 30% to 60% is 30 percentage points. Expected difference is recorded separately and does not enter the calculation."),
       tagList(
       percent_slider("threshold_p", "Clinically important difference (percentage points)", value = .2, min = .001, max = 1, step = .01, suffix = " percentage points"),
       helpText("Clinical importance is separate from statistical significance.")),
       conditionalPanel("input.show_advanced || input.goal == 'precision'",
       percent_slider("width_p", "Target full confidence interval width (percentage points)", value = .2, min = .001, max = 2, step = .01, suffix = " percentage points"))),
-    helpText("Expected, planning and clinically important effects are separate judgments. Record sources and uncertainty in your case worksheet."),
+    helpText("The expected difference, target difference and clinical threshold answer separate questions. Record sources and uncertainty in your case worksheet."),
     percent_slider("alpha", tags$span(tags$a(href = "../book/Sample_size_open_module.html#alpha", target = "_blank", rel = "noopener", "Type I error rate"),
       " (%)"), .001, .1, .05, step = .001),
     conditionalPanel("input.show_advanced", helpText("Type I error rate is the test's long-run false-positive probability under its null model. The test is two-sided; Type I error rate of 5% corresponds to 95% confidence for the interval.")),
@@ -118,14 +118,14 @@ ui <- fluidPage(
       tags$a(href = "../book/Sample_size_open_module.html#common-mistakes", target = "_blank", rel = "noopener", "Common mistakes and FAQ"))),
   mainPanel(width = 8, tabsetPanel(id = "stage",
     tabPanel("Explore assumptions", h3("Your planned design"), tableOutput("planning"),
-      p(class = "caption", "Table 1. Expected benefit, planning benefit, clinical threshold and sample requirements for the current design."),
+      p(class = "caption", "Table 1. Expected difference, target difference, clinical threshold and sample requirements for the current design."),
       p("Predict a change before moving a control. Compare testing, precision and fixed-resource goals."),
       plotOutput("planning_plot", height = "430px"), textOutput("planning_text"),
       p(class = "caption", "Figure 1. Power and anticipated full confidence interval width across sample sizes. Dashed lines show the selected targets; points mark the current plan."),
       conditionalPanel("input.show_advanced", h4("Advanced: compare smaller effects"),
-      p("Curves compare the planning difference with two smaller differences. Predict which curve will reach the target first. Clinical importance is a separate judgment."),
+      p("Curves compare the target difference with two smaller differences. Predict which curve will reach the target first. Clinical importance is a separate judgment."),
       plotOutput("comparison_plot", height = "360px"),
-      p(class = "caption", "Figure 2. Power curves at half, two-thirds and the full planning benefit, with the power target and expected analyzable recruitment limit."),
+      p(class = "caption", "Figure 2. Power curves at half, two-thirds and the full target difference, with the power target and expected analyzable recruitment limit."),
       tableOutput("comparison_table"),
       p(class = "caption", "Table 2. Power at the expected analyzable recruitment limit for each assumed benefit."),
       h4("Power across effects at the planned sample size"),
@@ -222,10 +222,10 @@ server <- function(input, output, session) {
   })
   output$probability_inputs <- renderText({
     values <- current_lab_inputs()
-    paste0("Expected benefit: ", effect_text(values$expected_p, "proportions"),
+    paste0("Expected difference: ", effect_text(values$expected_p, "proportions"),
       "; event rates used for planning: control ", format_percent(values$plan_p0, 1),
       ", treatment ", format_percent(values$plan_p1, 1),
-      "; planning benefit: ", effect_text(values$plan_p1 - values$plan_p0, "proportions"),
+      "; target difference: ", effect_text(values$plan_p1 - values$plan_p0, "proportions"),
       "; clinical threshold: ", effect_text(values$threshold_p, "proportions"), ".")
   })
   output$error_target_inputs <- renderText({
@@ -394,8 +394,8 @@ server <- function(input, output, session) {
     ". ", if (!identical(saved$meta, snapshot())) "Inputs changed. These are saved results; run again to update." else "Results match current inputs.")
   output$planning <- renderTable({
     x <- planned(); recruit <- adjust_for_dropout(x$n, input$dropout)
-    data.frame(Item = c("Expected benefit (recorded judgment)", "Planning benefit (used in calculation)", "Clinical threshold (meaningful benefit)",
-      "Participants for analysis, per group", "Participants for analysis, total", "Recruit per group", "Recruitment total", "Power at the planning effect", "Expected full interval width"),
+    data.frame(Item = c("Expected difference (recorded judgment)", "Target difference (used in calculation)", "Clinical threshold (meaningful benefit)",
+      "Participants for analysis, per group", "Participants for analysis, total", "Recruit per group", "Recruitment total", "Power at the target difference", "Expected full interval width"),
       Value = c(effect_text(expected_effect(), x$outcome), effect_text(true_difference(x), x$outcome), effect_text(x$threshold, x$outcome),
         x$n, 2*x$n, recruit, 2*recruit, format_percent(spec_power(x), 1), effect_text(anticipated_width(x), x$outcome)))
   })
@@ -443,7 +443,7 @@ server <- function(input, output, session) {
     abline(v = z$cap_n, lty = 3, col = "#555555")
     legend("bottomright", legend = effect_text(z$effects, x$outcome, 1),
       col = colors, lty = 1:3, lwd = 2, bty = "n")
-  }, alt = "Power curves compare half, two-thirds and the full planning difference. The table gives power at the expected analyzable recruitment limit.")
+  }, alt = "Power curves compare half, two-thirds and the full target difference. The table gives power at the expected analyzable recruitment limit.")
   output$comparison_table <- renderTable({
     z <- comparison()
     data.frame(Difference = effect_text(z$effects, z$spec$outcome), `Participants for analysis per group` = z$cap_n,
@@ -510,7 +510,8 @@ server <- function(input, output, session) {
     for (k in names(meta$plan)) rows[[paste0("plan_", k)]] <- meta$plan[[k]]
     for (k in names(meta$generating)) rows[[paste0("generating_", k)]] <- meta$generating[[k]]
     rows$planning_goal <- meta$goal; rows$target_power <- meta$target_power
-    rows$expected_effect <- meta$expected_effect
+    rows$expected_difference <- meta$expected_effect
+    rows$target_difference <- true_difference(meta$plan)
     rows$dropout_fraction <- meta$dropout
     if (!is.null(meta$recruitment_cap)) rows$recruitment_cap <- meta$recruitment_cap
     rows$method <- method_label(meta$plan$outcome); rows

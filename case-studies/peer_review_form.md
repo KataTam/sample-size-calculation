@@ -91,7 +91,7 @@ Why?
 
 ## Additional reasoning prompts
 
-Does the goal match the proposed conclusion? Are clinical importance and expected/planning effects distinct? Does the writer interpret one study separately from repeated-study performance? Is full interval width clear? Are uncertainty, sources, fixed-n sensitivity and missing-data limitations adequately explained?
+Does the goal match the proposed conclusion? Are clinical importance and expected/target differences distinct? Does the writer interpret one study separately from repeated-study performance? Is full interval width clear? Are uncertainty, sources, fixed-n sensitivity and missing-data limitations adequately explained?
 
 ## Review the consolidated tutorial activities
 

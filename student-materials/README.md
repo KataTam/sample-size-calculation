@@ -10,4 +10,4 @@ Send your notes to your teacher using the course's agreed channel. Taking part d
 
 ## Develop a clinical case
 
-Use the existing [case and assumption-map template](../case-studies/student_case_template.md). It helps you distinguish expected effects, clinical thresholds and planning assumptions. You can work through a [prepared example](../teaching/static_activity.md) if the app is unavailable.
+Use the existing [case and assumption-map template](../case-studies/student_case_template.md). It helps you distinguish expected differences, clinical thresholds and planning assumptions. You can work through a [prepared example](../teaching/static_activity.md) if the app is unavailable.
