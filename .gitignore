@@ -33,3 +33,5 @@ module/*.xdv
 !module/pdf-header.tex
 !site/study/index.html
 !site/assumptions_report/index.html
+
+__pycache__/

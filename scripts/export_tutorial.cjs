@@ -2,6 +2,7 @@
 // Browser printing keeps computed tables, figures and mathematical notation together.
 const fs = require('node:fs');
 const path = require('node:path');
+const {execFileSync} = require('node:child_process');
 const {chromium} = require('playwright');
 const base = (process.argv[2] || 'http://127.0.0.1:8769').replace(/\/$/, '');
 if (!['127.0.0.1', 'localhost'].includes(new URL(base).hostname)) throw Error('Use the private loopback preview.');
@@ -19,7 +20,13 @@ caption, .caption { text-align: left; font-size: 14px; color: #465562; margin: .
 img, svg { max-width: 100%; } .figure { margin: 1.5em 0; } pre { white-space: pre-wrap; overflow-wrap: anywhere; font-size: 12px; }
 a { color: #17658a; } .tutorial-downloads { display: none; }
 @media print {
- body { padding: 0; font-size: 10pt; line-height: 1.5; max-width: none; }
+ body { padding: 0; font-family: 'Times New Roman', 'Liberation Serif', serif; font-size: 11pt; line-height: 1.45; color: #202020; max-width: none; }
+ #header { display: none; }
+ p { orphans: 3; widows: 3; }
+ h1,h2,h3 { font-family: 'Times New Roman', 'Liberation Serif', serif; }
+ .print-chapter > h1, .print-chapter > div > h1 { margin-top: 12mm; margin-bottom: 10mm; }
+ table, caption, .caption { font-family: Arial, sans-serif; }
+ a { text-decoration: none; }
  h1 { font-size: 22pt; } h2 { font-size: 16pt; } h3 { font-size: 13pt; }
  h1, h2, h3, h4, summary, caption { break-after: avoid; }
  table { font-size: 8pt; } thead { display: table-header-group; } tr { break-inside: avoid; }
@@ -38,6 +45,7 @@ let browser;
   const page = await browser.newPage();
   const sections = [];
   const contents = [];
+  const pdfHeadings = [];
   for (const slug of chapters) {
     const response = await page.goto(`${base}/book/${slug}.html`, {waitUntil:'networkidle'});
     if (!response.ok()) throw Error(`Missing chapter ${slug}`);
@@ -60,9 +68,10 @@ let browser;
       const mathCSS=Array.from(document.querySelectorAll('style')).map(el=>el.textContent).filter(text=>/MathJax|MJX_Assistive/.test(text)).join('\n');
       const glyphSVG=glyphs && glyphs.closest('svg').cloneNode(true);
       if(glyphSVG) { glyphSVG.setAttribute('style','position:absolute;width:0;height:0;overflow:hidden'); glyphSVG.setAttribute('aria-hidden','true'); }
-      return {title: clone.querySelector('h1').textContent.trim(), mathCSS, html: (glyphSVG ? glyphSVG.outerHTML : '')+clone.innerHTML};
+      return {headings: Array.from(clone.querySelectorAll('h1,h2')).filter(el => !el.closest('#header')).map(el => ({title: el.textContent.trim(), level: el.tagName === 'H1' ? 0 : 1})), title: clone.querySelector('h1').textContent.trim(), mathCSS, html: (glyphSVG ? glyphSVG.outerHTML : '')+clone.innerHTML};
     }, publicBase);
 
+    pdfHeadings.push(...extracted.headings);
     const safeTitle=extracted.title.replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
     const chapterActivities = activityContents.find(entry => entry.chapter === slug);
     const activityLinks = (chapterActivities?.activities || []).map(activity => `<li><a href="${publicBase}/${escapeHTML(activity.path)}" target="_blank" rel="noopener">Activity: ${escapeHTML(activity.label)}</a> <span class="contents-route">${escapeHTML(activity.route)}</span></li>`).join('');
@@ -77,7 +86,12 @@ let browser;
     await Promise.all(Array.from(document.images).map(img => img.decode().catch(() => {})));
     await document.fonts.ready;
   });
-  const pdf = await page.pdf({format:'A4',printBackground:true,margin:{top:'16mm',right:'16mm',bottom:'18mm',left:'16mm'},displayHeaderFooter:true,headerTemplate:'<span></span>',footerTemplate:'<div style="font:9px Arial;width:100%;text-align:center;color:#586572">Katalin Tamási · Sample size calculation tutorial · <span class="pageNumber"></span> / <span class="totalPages"></span></div>'});
+  const bodyPdf = await page.pdf({outline:true,tagged:true,format:'A4',printBackground:true,margin:{top:'20mm',right:'22mm',bottom:'22mm',left:'22mm'},displayHeaderFooter:true,headerTemplate:'<span></span>',footerTemplate:'<div style="font:9px Arial;width:100%;text-align:center;color:#586572">Katalin Tamási · Sample size calculation tutorial · <span class="pageNumber"></span> / <span class="totalPages"></span></div>'});
+  fs.mkdirSync('build/pdf', {recursive:true});
+  fs.writeFileSync('build/pdf/tutorial-body.pdf', bodyPdf);
+  fs.writeFileSync('build/pdf/headings.json', JSON.stringify(pdfHeadings));
+  execFileSync(process.env.PYTHON || (process.platform === 'win32' ? 'python' : 'python3'), ['scripts/assemble_book_pdf.py'], {stdio:'inherit'});
+  const pdf = fs.readFileSync('build/pdf/tutorial-complete.pdf');
   for (const folder of ['module','docs/book','_site/book']) {
     fs.writeFileSync(`${folder}/Sample_size_open_module.html`, html);
     fs.writeFileSync(`${folder}/Sample_size_open_module.pdf`, pdf);

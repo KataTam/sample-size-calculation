@@ -98,3 +98,10 @@ body :where(h1,h2,h3,h4,h5,h6,summary,legend) :where(a,span,strong,b,code) { fon
 @media print { .csl-entry { break-inside: avoid; } }
 /* Model answers stay optional; the print edition shows their label only. */
 @media print { details.model-answer > :not(summary) { display: none !important; } }
+
+/* Sidebar sizes stay consistent; indentation carries the section hierarchy. */
+.book .book-summary ul.summary li a { font-size: 14px; line-height: 1.4; white-space: normal; overflow-wrap: break-word; text-overflow: clip; padding-top: 7px; padding-bottom: 7px; }
+.book .book-summary ul.summary li li a { font-size: 13px; }
+.book .book-summary ul.summary li a b { font-size: inherit; }
+.book .book-summary ul.summary .activity-toc a { font-size: 13px; line-height: 1.4; }
+.book .book-summary .contents-route { font-size: 11px; }

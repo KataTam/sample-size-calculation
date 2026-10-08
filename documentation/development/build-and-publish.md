@@ -66,3 +66,5 @@ From the maintained repository root, run `Rscript scripts/render_resource.R` to 
 ## Complete tutorial downloads
 
 Only the Welcome page offers the complete HTML/PDF download pair. The chapter-based website navigation remains available. Run `node scripts/export_tutorial.cjs` after each finished tutorial update. The exporter uses Microsoft Edge on Windows and Playwright Chromium elsewhere, and removes the known generated chapter download files and manifest. Generated files are ignored by Git.
+
+The complete PDF uses a serif print layout with a separate title page, a linked chapter/section contents list with page numbers, and PDF bookmarks. Install its Python dependencies with `python -m pip install -r scripts/pdf-requirements.txt`. `scripts/assemble_book_pdf.py` derives contents destinations from the browser-rendered PDF outline, so pagination is recalculated on each build. Front matter uses Roman page labels and the tutorial body starts at page 1. Set `PYTHON` to a specific interpreter when needed.
