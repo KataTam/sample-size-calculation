@@ -2,7 +2,7 @@
 
 This repository contains both teaching materials and code.
 
-[Download the source package](../sample-size-calculation-source.zip) or [browse the GitHub source](https://github.com/KataTam/sample-size-calculation). The guidance below explains attribution, licensing and adaptation.
+[Download the source package](../sample-size-oer-source.zip) or [browse the GitHub source](https://github.com/KataTam/sample-size-calculation). The guidance below explains attribution, licensing and adaptation.
 
 ## Teaching Materials
 
@@ -36,7 +36,7 @@ See `LICENSE-code.md`.
 
 Citation metadata is provided in `CITATION.cff`. Until a DOI is added, cite the GitHub repository:
 
-> Tamasi, K. (2026). Sample Size Calculation OER. GitHub. https://github.com/KataTam/sample-size-calculation
+> Tamasi, K. (2026). *Sample size calculation OER* [Teaching materials and software]. GitHub. https://github.com/KataTam/sample-size-calculation
 
 If you cite a specific version, use the release tag once releases are created.
 
@@ -68,4 +68,4 @@ See [third-party notices](third-party-notices.md) before importing external figu
 
 ## Consolidated release 0.2.0
 
-The public edition is https://katatam.github.io/sample-size-calculation/book/ and its source download is https://katatam.github.io/sample-size-calculation/sample-size-oer-source.zip . See the [build and publish guide](development/build-and-publish.md) for the coordinated release procedure. Both HTML editions derive from module/Sample_size_open_module.Rmd and share module/references.bib with the maintained resource. The source and website now share the public sample-size-calculation repository.
+See the [build and publish guide](development/build-and-publish.md) for the build procedure and the local preview. Both HTML editions derive from `module/Sample_size_open_module.Rmd` and share `module/references.bib`. External papers and the author's local reading collection retain their own terms and are not included in the source package.

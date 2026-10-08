@@ -88,6 +88,11 @@ it.</p>
 contents rather than this book toolbar. Use your browser’s
 <strong>Find</strong> command (<strong>Ctrl+F</strong> on Windows,
 <strong>Command+F</strong> on Mac) to search that edition.</p>
+<h2>Figures, tables and optional details</h2>
+<p>Hover over a figure or table reference, or select its Preview button, to inspect it while reading. Select an amber Common misconception title to read its explanation.</p>
+<p>R code and raw console output are collapsed initially. Select R code, R code and output, or R output to inspect the contents indicated by the label. Formatted results, tables and figures remain visible. In code, lines starting with <code>#</code> are comments; <code>##</code> marks console output, and <code>[1]</code> identifies the first printed element of an R output.</p>
+<h2>Complete tutorial downloads</h2>
+<p>The Welcome page provides a single HTML download and a single PDF download of the complete tutorial. HTML retains the expandable explanations and code. PDF expands the teaching explanations and keeps technical code hidden.</p>
 </template>
 <script>
 (function () {
@@ -137,11 +142,17 @@ contents rather than this book toolbar. Use your browser’s
       var details = document.createElement('details');
       details.className = 'r-code-output';
       var summary = document.createElement('summary');
-      summary.textContent = 'R code and output';
+      summary.textContent = source ? 'R code' : 'R output';
       block.before(details); details.append(summary, block);
       while (details.nextElementSibling && details.nextElementSibling.matches('pre') && /^\s*##/m.test(details.nextElementSibling.textContent)) {
         details.append(details.nextElementSibling);
       }
+    });
+    content.querySelectorAll('details.r-code-output').forEach(function (details) {
+      var blocks = Array.from(details.querySelectorAll('pre'));
+      var hasCode = blocks.some(function (pre) { return pre.matches('.r, .sourceCode') || pre.closest('div.sourceCode'); });
+      var hasOutput = blocks.some(function (pre) { return !(pre.matches('.r, .sourceCode') || pre.closest('div.sourceCode')) && /^\s*##/m.test(pre.textContent); });
+      details.querySelector('summary').textContent = hasCode && hasOutput ? 'R code and output' : hasCode ? 'R code' : 'R output';
     });
   }
   function closePreview() {

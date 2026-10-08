@@ -7,6 +7,9 @@ const base = (process.argv[2] || 'http://127.0.0.1:8769').replace(/\/$/, '');
 if (!['127.0.0.1', 'localhost'].includes(new URL(base).hostname)) throw Error('Use the private loopback preview.');
 const allChapters = ['index', 'clinical-question', 'power', 'calculations', 'curves', 'simulation', 'feasibility', 'exercises', 'study-designs', 'glossary', 'common-mistakes', 'appendix', 'references'];
 const chapters = allChapters;
+const publicBase = 'https://katatam.github.io/sample-size-calculation';
+const activityContents = JSON.parse(fs.readFileSync('module/activity-contents.json', 'utf8'));
+const escapeHTML = text => text.replace(/[&<>"']/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
 const css = fs.readFileSync('module/styles.css', 'utf8') + `
 body { font: 16px/1.65 Arial, sans-serif; color: #26343d; margin: 0 auto; padding: 28px; max-width: 920px; }
 h1 { font-size: 30px; line-height: 1.3; } h2 { font-size: 23px; margin-top: 1.8em; } h3 { font-size: 19px; }
@@ -42,7 +45,7 @@ let browser;
       if (window.MathJax && MathJax.Hub) await new Promise(resolve => MathJax.Hub.Queue(['setRenderer', MathJax.Hub, 'SVG'], ['Rerender', MathJax.Hub], resolve));
       await Promise.all(Array.from(document.images).map(img => img.decode().catch(() => {})));
     });
-    const extracted = await page.evaluate(async () => {
+    const extracted = await page.evaluate(async (publicBase) => {
       const normal = document.querySelector('.page-inner .normal');
       if (!normal) throw Error('Chapter body not found');
       const clone = normal.cloneNode(true);
@@ -52,23 +55,25 @@ let browser;
         const blob = await response.blob();
         img.src = await new Promise(resolve => { const reader = new FileReader(); reader.onload = () => resolve(reader.result); reader.readAsDataURL(blob); });
       }
-      clone.querySelectorAll('a[href]').forEach(a => { const url=new URL(a.getAttribute('href'), location.href); a.setAttribute('href', url.origin===location.origin && url.pathname.startsWith(new URL(location.href).pathname.replace(/[^/]+$/, '')) && /(?:index|clinical-question|power|calculations|curves|simulation|feasibility|exercises|study-designs|glossary|common-mistakes|appendix|references)\.html$/.test(url.pathname) && url.hash ? url.hash : url.href); a.target='_blank'; a.rel='noopener'; });
+      clone.querySelectorAll('a[href]').forEach(a => { const url=new URL(a.getAttribute('href'), location.href); a.setAttribute('href', url.origin===location.origin && url.pathname.startsWith(new URL(location.href).pathname.replace(/[^/]+$/, '')) && /(?:index|clinical-question|power|calculations|curves|simulation|feasibility|exercises|study-designs|glossary|common-mistakes|appendix|references)\.html$/.test(url.pathname) && url.hash ? url.hash : url.origin === location.origin ? publicBase + url.pathname + url.search + url.hash : url.href); a.target='_blank'; a.rel='noopener'; });
       const glyphs = document.querySelector('#MathJax_SVG_glyphs');
       const mathCSS=Array.from(document.querySelectorAll('style')).map(el=>el.textContent).filter(text=>/MathJax|MJX_Assistive/.test(text)).join('\n');
       const glyphSVG=glyphs && glyphs.closest('svg').cloneNode(true);
       if(glyphSVG) { glyphSVG.setAttribute('style','position:absolute;width:0;height:0;overflow:hidden'); glyphSVG.setAttribute('aria-hidden','true'); }
       return {title: clone.querySelector('h1').textContent.trim(), mathCSS, html: (glyphSVG ? glyphSVG.outerHTML : '')+clone.innerHTML};
-    });
+    }, publicBase);
 
     const safeTitle=extracted.title.replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
-    contents.push(`<li><a href="#tutorial-${slug}">${safeTitle}</a></li>`);
+    const chapterActivities = activityContents.find(entry => entry.chapter === slug);
+    const activityLinks = (chapterActivities?.activities || []).map(activity => `<li><a href="${publicBase}/${escapeHTML(activity.path)}" target="_blank" rel="noopener">Activity: ${escapeHTML(activity.label)}</a> <span class="contents-route">${escapeHTML(activity.route)}</span></li>`).join('');
+    contents.push(`<li><a href="#tutorial-${slug}">${safeTitle}</a>${activityLinks ? '<ul>'+activityLinks+'</ul>' : ''}</li>`);
     sections.push(`<section id="tutorial-${slug}" class="print-chapter"><style>${extracted.mathCSS}</style>${extracted.html}</section>`);
     console.log(`Included ${slug} in the complete tutorial`);
   }
   const html = `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>How many patients do you need for your study? Sample size calculation tutorial</title><style>${css}\n@media print {.tutorial-contents {display:none;} .print-chapter + .print-chapter {break-before:page;}}</style></head><body><nav class="tutorial-contents" aria-label="Tutorial contents"><h2>Contents</h2><ol>${contents.join('')}</ol></nav><main>${sections.join('\n')}</main>${readerScripts}</body></html>`;
   await page.setContent(html, {waitUntil:'load'});
   await page.evaluate(async () => {
-    document.querySelectorAll('details:not(.r-code-output)').forEach(el => el.open=true);
+    document.querySelectorAll('details:not(.r-code-output):not(.model-answer)').forEach(el => el.open=true);
     await Promise.all(Array.from(document.images).map(img => img.decode().catch(() => {})));
     await document.fonts.ready;
   });

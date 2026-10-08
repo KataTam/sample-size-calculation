@@ -1,0 +1,140 @@
+[
+  {
+    "chapter": "clinical-question",
+    "anchor": "clinical-question",
+    "title": "Clinical question and assumptions",
+    "route": "Core",
+    "activities": [
+      {
+        "label": "Record and justify your assumptions",
+        "path": "study/?activity=assumptions_report",
+        "route": "Core"
+      }
+    ]
+  },
+  {
+    "chapter": "power",
+    "anchor": "power",
+    "title": "Power and error rates",
+    "route": "Core and advanced",
+    "activities": [
+      {
+        "label": "Explore Type I and Type II error rates and power",
+        "path": "study/?activity=alpha_beta",
+        "route": "Core"
+      },
+      {
+        "label": "Chronic pain: one study and many studies",
+        "path": "study/?activity=pain_one_many",
+        "route": "Core"
+      }
+    ]
+  },
+  {
+    "chapter": "calculations",
+    "anchor": "calculations",
+    "title": "Basic sample size calculations",
+    "route": "Core",
+    "activities": [
+      {
+        "label": "Gestational-diabetes prevention trial",
+        "path": "study/?activity=adherence",
+        "route": "Core"
+      },
+      {
+        "label": "Rehabilitation: compare two means",
+        "path": "study/?activity=rehabilitation",
+        "route": "Core"
+      },
+      {
+        "label": "Two-proportion calculator",
+        "path": "two_proportions/",
+        "route": "Core"
+      },
+      {
+        "label": "Two-mean calculator",
+        "path": "two_means/",
+        "route": "Core"
+      }
+    ]
+  },
+  {
+    "chapter": "curves",
+    "anchor": "curves",
+    "title": "Read power curves",
+    "route": "Advanced",
+    "activities": [
+      {
+        "label": "Chronic pain: explore power and recruitment",
+        "path": "study/?activity=pain_curves",
+        "route": "Advanced"
+      }
+    ]
+  },
+  {
+    "chapter": "simulation",
+    "anchor": "simulation",
+    "title": "Repeated-study simulation",
+    "route": "Advanced",
+    "activities": [
+      {
+        "label": "Simulate repeated chronic-pain trials",
+        "path": "study/?activity=pain_simulation",
+        "route": "Advanced"
+      }
+    ]
+  },
+  {
+    "chapter": "feasibility",
+    "anchor": "feasibility",
+    "title": "Recruitment, precision and feasibility",
+    "route": "Core and advanced",
+    "activities": [
+      {
+        "label": "Adjust recruitment for loss to follow-up",
+        "path": "dropout_adjustment/",
+        "route": "Core"
+      },
+      {
+        "label": "Plan the precision of a mean difference",
+        "path": "study/?activity=mean_precision",
+        "route": "Advanced"
+      },
+      {
+        "label": "Estimate a percentage with useful precision",
+        "path": "study/?activity=prevalence",
+        "route": "Advanced"
+      },
+      {
+        "label": "Pilot study: estimate retention",
+        "path": "study/?activity=pilot_feasibility",
+        "route": "Advanced"
+      }
+    ]
+  },
+  {
+    "chapter": "exercises",
+    "anchor": "own-study",
+    "title": "Plan and justify your own study",
+    "route": "Core",
+    "activities": [
+      {
+        "label": "Build your own study calculation",
+        "path": "study/?activity=own_study",
+        "route": "Core"
+      },
+      {
+        "label": "Complete your assumptions report",
+        "path": "study/?activity=assumptions_report",
+        "route": "Core"
+      }
+    ]
+  },
+  {
+    "chapter": "study-designs",
+    "anchor": "study-designs",
+    "title": "Where does my study fit?",
+    "route": "Advanced",
+    "activities": []
+  }
+]

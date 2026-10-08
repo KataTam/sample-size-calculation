@@ -34,10 +34,10 @@ To replace the chronic pain example:
 1. Choose a clinical context students will recognize.
 2. Decide whether the primary outcome is binary or continuous.
 3. State the standard-treatment result.
-4. State the expected novel-treatment result or clinically relevant difference.
-5. Decide Type I error rate and power.
-6. Add expected dropout if relevant.
-7. Check that the required sample size is plausible enough for discussion.
+4. Distinguish the expected difference, target difference and smallest clinically important difference; justify importance, realism and any gap between them.
+5. Specify the analysis, Type I error rate and power, or useful precision if the aim is estimation.
+6. Record evidence sources, uncertain ranges and anticipated missing outcomes; assess recruitment separately.
+7. Compare plausible assumptions and the information available. Do not choose a larger unsupported target simply to make the number affordable.
 
 For a binary outcome, use `apps/two_proportions`. For a continuous outcome, use `apps/two_means`.
 
@@ -45,7 +45,7 @@ Keep the case specific. A case such as "a new treatment improves recovery" is to
 
 ## Changing App Defaults
 
-The app defaults should match the example students see in the module or in class.
+The app defaults should match the example students see in the module or in class. Matched activities are maintained in `R/teaching_cases.R`; update the shared case there, the narrative and prepared outputs together. The written report activity is in `site/assumptions_report/`. Keep one learner source in R Markdown rather than maintaining a separate short tutorial.
 
 For example, in `apps/two_proportions/app.R`, these values control the starting assumptions:
 
@@ -119,6 +119,8 @@ Teachers may need to add local requirements, for example:
 Add these as a short local note rather than rewriting the whole module.
 
 ## Sharing An Adapted Version
+
+Keep editable source, dependency instructions, reviewed changes and rendered outputs together. Bothmann et al.'s [open-source educational-resource manuscript](https://arxiv.org/abs/2107.14330) supports this development approach; it does not require publishing an unfinished review edition. The current repository and website are private. Make an external release only when the author chooses to publish.
 
 Before sharing an adapted version publicly:
 

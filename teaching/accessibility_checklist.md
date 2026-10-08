@@ -58,7 +58,7 @@ Use this checklist when editing, adapting, or sharing the module.
 - The Shiny apps include text output alongside plots.
 - The app plots use high-contrast lines and point markers rather than color-only interpretation.
 
-## New lab and static route
+## New [lab](https://katatam.github.io/sample-size-calculation/study/?activity=own_study) and static route
 
 - [ ] All controls are keyboard reachable and have meaningful labels.
 - [ ] Run status and stale-output messages are readable.

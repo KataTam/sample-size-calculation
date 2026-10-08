@@ -13,6 +13,14 @@ This package combines a clinical question, explicit assumptions, deterministic e
 
 The initial pilot should focus on one outcome, even though both outcomes are implemented. The 90-minute plan is a proposed local adaptation. Measure conceptual reasoning with paired tasks and transfer separately from confidence and usability. The OEIF proposal's 20–25 learner pilot is intended for refinement, not a definitive comparative efficacy claim.
 
+## Literature-informed planning narrative
+
+The chronic-pain example now links the question, outcome and analysis to target selection, power, calculation, recruitment, sensitivity and a written recommendation. DELTA² supports importance and realism of the target difference; it does not require three different values or equate every target with the minimum clinically important difference. The tutorial explicitly evaluates smaller worthwhile differences. Fong and Wang and Ji support the question-to-analysis sequence; CONSORT supports documenting the calculation and avoiding observed-effect post hoc power.
+
+Ying and Eldridge inform objective-specific pilot planning and progression; Lakens informs fixed-resource and existing-dataset justification. Candel informs conditional design efficiency, and Riley informs the distinction between treatment comparisons and prediction development. Pargent informs the advanced simulation workflow. The core assessment requires a sensitivity calculation and interpretation, while simulation and its Monte Carlo uncertainty remain advanced. The reading guide separates entry points, design-specific sources, methods and educator evidence.
+
+Local summaries vary in coverage. Full methodological claims should not be attributed to sources represented only by a bibliographic record or publisher description. Clayton's exact historical notes have not been recovered; Althouse and Moyé/Tita reading notes do not establish a full-text review. The cited FDA natural-history and external-control documents are explicitly drafts. Unverified local manuscript metadata is not added as a formal learner citation. Educational design sources motivate the approach without proving learning gains.
+
 ## Supplemental code review
 
 The DICE supplement was consulted but not copied. Its expression `2*pnorm(z)` is not a general two-sided normal p-value for positive z; the symmetric expression is `2*pnorm(-abs(z))`. A seed can be set once for a whole batch while retaining independent draws; deleting the seed is unnecessary. The new code uses its own implementation and documented methods. Normal outcomes use t rather than normal-reference p-values when variance is estimated.

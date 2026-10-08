@@ -10,7 +10,7 @@
 <body>
   <header>
     <h1>Record the assumptions</h1>
-    <p>Write a plan for a two-arm clinical trial. Your answers build a report on the right. Use the calculation activities to obtain sample sizes, <a href="../student-materials/glossary.html#statistical-power" target="_blank" rel="noopener">power</a> or precision, then record and interpret those results here.</p>
+    <p>Build a justified study plan, starting with the question and evidence. Your answers form a report on the right. Use the calculation activities to obtain sample sizes, <a href="../student-materials/glossary.html#statistical-power" target="_blank" rel="noopener">power</a> or precision, then record the method, results and limitations here.</p>
     <p><a href="../book/clinical-question.html#record-assumptions" target="_blank" rel="noopener">Read the tutorial</a> · <a href="../student-materials/glossary.html" target="_blank" rel="noopener">Check the terminology</a> · <a href="../study/?activity=own_study" target="_blank" rel="noopener">Explore the calculations</a></p>
     <div class="actions">
       <button id="example" type="button">Load pain-relief example</button>
@@ -27,8 +27,9 @@
       <h2 id="form-title">Your study plan</h2>
       <form id="plan-form">
         <div class="choices">
+          <label for="study_type">Study structure<select id="study_type" name="study_type"><option value="comparison">Two-group comparison</option><option value="single">One population percentage or mean</option><option value="other">Another design: specify the method</option></select></label>
           <label for="outcome">Primary outcome type<select id="outcome" name="outcome"><option value="binary">Binary outcome</option><option value="continuous">Continuous outcome</option></select></label>
-          <label for="goal">Planning goal<select id="goal" name="goal"><option value="testing">Testing</option><option value="precision">Estimation with a precision target</option><option value="fixed">Fixed resources</option><option value="both">Testing and estimation</option></select></label>
+          <label for="goal">Planning goal<select id="goal" name="goal"><option value="testing">Testing</option><option value="precision">Estimation with a precision target</option><option value="fixed">Fixed resources or existing data</option><option value="both">Testing and estimation</option><option value="feasibility">Pilot or feasibility decision</option></select></label>
         </div>
         <p id="outcome-scale-help" class="note"></p>
         <div id="fields"></div>

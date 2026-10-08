@@ -6,7 +6,7 @@ Two independent, equally sized groups; no clustering, covariate adjustment, sequ
 
 ## Planning calculations
 
-The simple means/proportions apps retain transparent normal sample-size approximations, rounding per group before doubling. These are labeled approximate and are not guaranteed to achieve the desired finite-sample power. The reasoning lab searches integer n using `power.t.test(..., strict=TRUE)` or `power.prop.test(..., strict=TRUE)`. Both count both tails. Binary power remains a normal approximation. Null effects are valid for power/Type I error exploration; sample size for detecting a zero effect is undefined. An explicit guard prevents requesting such a testing design.
+The two-proportion calculator and tutorial use `power.prop.test(..., strict=TRUE)`, rounding its per-group result upward before doubling; the chronic-pain example requires 56 per group. The two-mean calculator retains its normal sample-size approximation. Planning approximations are not guaranteed to achieve the desired finite-sample power. The reasoning lab searches integer n using `power.t.test(..., strict=TRUE)` or `power.prop.test(..., strict=TRUE)`. Both count both tails. Binary power remains a normal approximation. Null effects are valid for power/Type I error exploration; sample size for detecting a zero effect is undefined. An explicit guard prevents requesting such a testing design.
 
 The known-variance normal benchmark is Phi(signal − critical) + Phi(−signal − critical), so zero signal gives alpha. Normal simulation instead estimates variance and uses the t distribution. This distinction is tested rather than hidden.
 

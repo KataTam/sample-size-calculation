@@ -2,7 +2,7 @@
 
 Reasoning about study design in clinical research
 
-Private working edition (5 October 2026). The GitHub repository is private, the teaching website is offline, and automatic publishing is disabled at the author's request. Website links below identify the intended publication URLs; use the [local build and preview](documentation/development/build-and-publish.md#build-locally) while developing the material.
+The [GitHub repository](https://github.com/KataTam/sample-size-calculation) is public. The [local build and preview](documentation/development/build-and-publish.md#build-locally) remains available for developing and reviewing the material.
 
 Open teaching materials for medical students, by Katalin Tamási (UMCG). Work from a clinical question to the assumptions behind a sample size, explore what different studies could show, and explain what a feasible design could establish.
 
@@ -25,4 +25,4 @@ Clinical questions and assumptions; two means and two proportions; power and pre
 
 Original teaching materials are CC BY 4.0; original code is MIT. See [reuse and citation](documentation/reuse-and-citation.md), [third-party notices](documentation/third-party-notices.md), and [contribution guidance](CONTRIBUTING.md). Student contributions are reviewed and published only with permission. The resource has not yet been evaluated in a student pilot.
 
-To update the tutorial, edit `module/Sample_size_open_module.Rmd`. Commit and push to save changes to the private repository; this does not publish them while the deployment workflow is disabled. Detailed maintenance instructions are in [documentation/development/](documentation/development/build-and-publish.md).
+To update the tutorial, edit `module/Sample_size_open_module.Rmd`. Commit and push to save changes to the public repository. Website deployment is controlled separately by the publishing workflow. Detailed maintenance instructions are in [documentation/development/](documentation/development/build-and-publish.md).

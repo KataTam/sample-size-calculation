@@ -9,6 +9,7 @@ import re
 import shutil
 import stat
 import subprocess
+import sys
 import zipfile
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -35,6 +36,27 @@ if SITE.exists():
         shutil.rmtree(SITE)
 shutil.copytree(ROOT / "docs/apps", SITE)
 shutil.copytree(ROOT / "docs/book", SITE / "book")
+# Bookdown can retain a 404 page from an older table of contents.
+(SITE / "book/404.html").write_text('<!doctype html><html lang="en"><head><meta charset="utf-8">'
+    '<title>Page not found</title></head><body><h1>Page not found</h1>'
+    '<p><a href="index.html">Open the current tutorial contents</a></p></body></html>', encoding="utf-8")
+# Add the same activity entries to each book sidebar without changing chapter order.
+activity_contents = json.loads((ROOT / "module/activity-contents.json").read_text(encoding="utf-8"))
+for target in (SITE / "book").glob("*.html"):
+    text = target.read_text(encoding="utf-8")
+    for chapter in activity_contents:
+        items = ''.join('<li><a href="../' + html.escape(activity["path"], quote=True)
+            + '" target="_blank" rel="noopener">Activity: ' + html.escape(activity["label"])
+            + ' <span class="contents-route">' + html.escape(activity["route"]) + '</span></a></li>'
+            for activity in chapter["activities"])
+        if not items:
+            continue
+        pattern = r'(<li class="chapter" data-level="[0-9]+" data-path="' + re.escape(chapter["chapter"]) + r'\.html"><a\b[^>]*>.*?</a>)'
+        text, count = re.subn(pattern, lambda match: match.group(1)
+            + '<ul class="activity-toc" aria-label="Chapter activities">' + items + '</ul>', text, count=1)
+        if 'class="book-summary"' in text and count != 1:
+            raise RuntimeError(f"Missing sidebar chapter {chapter['chapter']} in {target.name}")
+    target.write_text(text, encoding="utf-8")
 # Only the full tutorial is downloadable; do not copy retired chapter artifacts.
 retired = SITE / "book/downloads"
 if retired.exists():
@@ -250,3 +272,4 @@ for current_page in SITE.rglob("*.html"):
 if errors:
     raise RuntimeError("Broken local website targets:\n" + "\n".join(sorted(set(errors))))
 print(f"Website assembled and local links checked: {SITE}")
+subprocess.run([sys.executable, str(ROOT / "scripts/check_links.py")], cwd=ROOT, check=True)

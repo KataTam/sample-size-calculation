@@ -6,17 +6,19 @@
   const status = document.getElementById('status');
   const groups = [
     ['Question and design', [
-      ['question', 'Clinical question', 'State the population, intervention and comparator.', 'The clinical question is'],
+      ['question', 'Research question', 'State the population and question. Include the intervention and comparator when relevant.', 'The research question is'],
       ['outcome_detail', 'Primary outcome and time point', 'Define what will be measured and when.', 'The primary outcome and time point are'],
-      ['design', 'Design and allocation', 'Describe two independent treatment groups, randomization and the allocation ratio.', 'The design and allocation are']
+      ['design', 'Design, sampling and allocation', 'Describe how participants or records are selected, how observations are related, and any treatment allocation.', 'The design, sampling and allocation are']
     ]],
     ['Effects and supporting evidence', [
       ['scale', 'Effect scale and direction of benefit', 'Use treatment minus control. Specify whether a positive or negative difference is beneficial.', 'The effect scale and direction of benefit are'],
       ['expected', 'Expected difference', 'Give the best current expectation, its evidence source and uncertainty.', 'The expected difference and supporting evidence are'],
-      ['clinical', 'Clinically important difference (clinical threshold)', 'Give the smallest benefit that matters to patients and justify that judgment.', 'The clinical threshold and its justification are'],
+      ['clinical', 'Clinically important difference (clinical threshold)', 'Give the smallest between-group benefit that matters to patients and justify that judgment.', 'The clinical threshold and its justification are', 'comparison'],
       ['planning', 'Target difference: used in the calculation', 'Give the difference used to evaluate power and explain why it is appropriate.', 'The target difference and its justification are', 'power'],
-      ['variation', 'Variation or event rates', 'For a continuous outcome, give the common standard deviation. For a binary outcome, give control and treatment percentages.', 'The variation or event rates used for planning are'],
-      ['sensitivity', 'Sensitivity analysis: alternative assumptions', 'Give plausible alternative effects, standard deviations or event rates and their sources.', 'The sensitivity scenarios and their evidence are']
+      ['variation', 'Variation or event rates', 'Give the standard deviation or anticipated event rates, their evidence sources, population and time point.', 'The variation or event rates used for planning are'],
+      ['evidence_review', 'Evidence relevance and uncertainty', 'Which assumptions are least certain? Explain whether previous evidence fits this population, outcome and follow-up time.', 'The relevance and uncertainty of the evidence are'],
+      ['sensitivity', 'Sensitivity analysis: alternative assumptions', 'Give plausible alternative differences, standard deviations or event rates and their sources. Distinguish recalculating required counts from evaluating the original sample held fixed.', 'The sensitivity scenarios and their evidence are'],
+      ['progression', 'Feasibility objectives and progression criteria', 'State each feasibility outcome and denominator, unacceptable and desirable levels, and the decisions to proceed, amend or stop.', 'The feasibility objectives and progression criteria are', 'feasibility']
     ]],
     ['Analysis and information target', [
       ['analysis', 'Planned analysis', 'Name the test and confidence interval method. State the sidedness and relevant assumptions.', 'The planned analysis is'],
@@ -24,21 +26,21 @@
       ['precision', 'Precision: desired confidence interval width', 'State the desired full confidence interval width, its units and the confidence level. With fixed resources, record attainable precision.', 'The precision specification is', 'precision']
     ]],
     ['Sample size, recruitment and conclusion', [
-      ['counts', 'Sample size needed for analysis', 'Record patients per group and total analyzable patients, the calculation method and its result. Mark calculations still to be completed.', 'The analyzable sample size and calculation are'],
-      ['recruitment', 'Losses and recruitment target', 'State expected losses as a percentage, recruitment counts per group and total, and how the adjustment was made.', 'The loss allowance and recruitment target are'],
+      ['counts', 'Sample size needed or available for analysis', 'Record analyzable participants per group and total, or one total for a single-population estimate. State the method, result and rounding. For existing data, explain why the sample is fixed.', 'The analyzable sample size and calculation are'],
+      ['recruitment', 'Losses, missing data and recruitment', 'State expected losses and adjusted recruitment counts, or completeness and missing observations in an existing dataset. Explain possible bias separately from the count adjustment.', 'The loss allowance, missing data and recruitment are'],
       ['resources', 'Feasibility and resources', 'Record the recruitment rate and period, available patients, costs or constraints, and whether the target is feasible.', 'The recruitment feasibility and resources are'],
       ['conclusion', 'Intended conclusion and limitations', 'Explain what the design could establish, what remains uncertain and which planning decisions still need to be resolved.', 'The intended conclusion and limitations are']
     ]]
   ];
   const fields = groups.flatMap(group => group[1]);
-  const names = ['outcome', 'goal', ...fields.map(field => field[0])];
-  const choices = {outcome: ['binary', 'continuous'], goal: ['testing', 'precision', 'fixed', 'both']};
-  const goalText = {testing: 'testing for a treatment difference', precision: 'estimating the treatment difference with a precision target', fixed: 'assessing what fixed resources could establish', both: 'testing and estimating the treatment difference'};
+  const names = ['study_type', 'outcome', 'goal', ...fields.map(field => field[0])];
+  const choices = {study_type: ['comparison', 'single', 'other'], outcome: ['binary', 'continuous'], goal: ['testing', 'precision', 'fixed', 'both', 'feasibility']};
+  const goalText = {testing: 'testing a specified hypothesis', precision: 'estimation with a precision target', fixed: 'assessing what fixed resources or existing data could establish', both: 'testing and estimation', feasibility: 'supporting a pilot or feasibility decision'};
   function validate(value) {
     if (!value || typeof value !== 'object' || Array.isArray(value) || Object.keys(value).some(key => !names.includes(key))) throw Error('Choose a supported assumptions-report file.');
     const clean = {};
     for (const name of names) {
-      const text = value[name] ?? (name === 'outcome' ? 'binary' : name === 'goal' ? 'testing' : '');
+      const text = value[name] ?? (name === 'study_type' ? 'comparison' : name === 'outcome' ? 'binary' : name === 'goal' ? 'testing' : '');
       if (typeof text !== 'string' || text.length > 5000 || (choices[name] && !choices[name].includes(text))) throw Error('The file contains an invalid answer or selection.');
       clean[name] = text;
     }
@@ -64,18 +66,39 @@
     document.getElementById('fields').append(group);
   }
   const snapshot = () => Object.fromEntries(names.map(name => [name, form.elements[name].value]));
-  function active(field, goal) { return field[4] === 'power' ? goal !== 'precision' : field[4] === 'precision' ? goal !== 'testing' : true; }
+  function active(field, value) {
+    if (field[4] === 'comparison') return value.study_type !== 'single';
+    if (field[4] === 'power') return !['precision', 'feasibility'].includes(value.goal) && !(value.study_type === 'single' && value.goal === 'fixed');
+    if (field[4] === 'precision') return value.goal !== 'testing';
+    if (field[4] === 'feasibility') return value.goal === 'feasibility';
+    return true;
+  }
   const sentence = text => /[.!?]$/.test(text.trim()) ? text.trim() : text.trim() + '.';
   function notifyParent(type, extra = {}) { if (parent !== window) parent.postMessage({type: 'sample-size:' + type, app, ...extra}, location.origin); }
   function render(persist = true) {
     const value = snapshot(), article = document.getElementById('report'); article.replaceChildren();
-    document.getElementById('outcome-scale-help').textContent = value.outcome === 'binary' ? 'Report event rates as percentages (e.g. 60%) and absolute differences in percentage points (e.g. 30 percentage points).' : 'Report treatment differences and standard deviations in the primary outcome’s units.';
-    const intro = document.createElement('p'); intro.textContent = 'This two-arm clinical trial has a ' + value.outcome + ' primary outcome. Its planning goal is ' + goalText[value.goal] + '.'; article.append(intro);
+    const single = value.study_type === 'single';
+    for (const option of form.elements.goal.options) option.disabled = single && ['testing', 'both'].includes(option.value);
+    if (single && ['testing', 'both'].includes(value.goal)) { value.goal = 'precision'; form.elements.goal.value = 'precision'; }
+    document.getElementById('outcome-scale-help').textContent = value.outcome === 'binary' ? 'Report event rates as percentages (e.g. 60%) and absolute differences or interval widths in percentage points. State the denominator.' : 'Report means, differences, interval widths and standard deviations in the outcome’s units.';
+    const wording = single ? {
+      scale: ['Outcome scale and interpretation', 'State the percentage or mean to estimate and its units; there is no treatment difference for a descriptive estimate.', 'The outcome scale and interpretation are'],
+      expected: ['Anticipated percentage or mean', 'Give an anticipated value and its evidence, if available. Distinguish it from the result observed in existing data.', 'The anticipated value and supporting evidence are']
+    } : {};
+    for (const id of ['scale', 'expected']) {
+      const field = fields.find(field => field[0] === id), copy = wording[id];
+      document.querySelector('label[for="' + id + '"]').textContent = copy ? copy[0] : field[1];
+      document.getElementById(id + '-help').textContent = copy ? copy[1] : field[2];
+    }
+    const intro = document.createElement('p');
+    const structure = {comparison: 'a two-group comparison', single: 'an estimate of one population percentage or mean', other: 'another design requiring a specified planning method'};
+    intro.textContent = 'This study concerns ' + structure[value.study_type] + ' with a ' + value.outcome + ' outcome. Its planning goal is ' + goalText[value.goal] + '.'; article.append(intro);
     let completed = 0, required = 0;
     for (const [title, definitions] of groups) {
-      const heading = document.createElement('h3'); heading.textContent = title; article.append(heading);
+      const heading = document.createElement('h3'); heading.textContent = single && title === 'Effects and supporting evidence' ? 'Outcome and supporting evidence' : title; article.append(heading);
       for (const field of definitions) {
-        const [id, label, , prefix] = field, enabled = active(field, value.goal);
+        const [id, originalLabel, , originalPrefix] = field, enabled = active(field, value);
+        const label = wording[id] ? wording[id][0] : originalLabel, prefix = wording[id] ? wording[id][2] : originalPrefix;
         document.getElementById('field-' + id).hidden = !enabled;
         if (!enabled) continue;
         required++;
@@ -121,14 +144,15 @@
       const response = await fetch('../teaching-cases.json'); if (!response.ok) throw Error('Example unavailable.');
       const cases = await response.json(), input = cases.pain_one_many.inputs;
       const percent = value => Number((100 * value).toFixed(8));
-      apply({outcome: 'binary', goal: 'fixed', question: 'Does a novel treatment improve pain relief compared with standard treatment in adults with chronic pain?',
+      apply({study_type: 'comparison', outcome: 'binary', goal: 'fixed', question: 'Does a novel treatment improve pain relief compared with standard treatment in adults with chronic pain?',
         outcome_detail: 'Pain relief (yes/no) at four weeks',
         design: 'An individually randomized superiority trial with two independent groups and equal allocation',
         scale: 'Treatment minus control, in percentage points; a positive difference favors treatment',
         expected: percent(input.expected_p) + ' percentage points. The hypothetical pilot observed relief in 7/10 treated patients (70%) and 3/10 controls (30%); this small pilot gives an uncertain expectation',
         clinical: percent(input.threshold_p) + ' percentage points. This is an illustrative judgment about meaningful benefit that needs justification with patients and clinicians',
-        planning: percent(input.plan_p1 - input.plan_p0) + ' percentage points, smaller than the expected difference to allow for uncertainty in the pilot effect',
+        planning: percent(input.plan_p1 - input.plan_p0) + ' percentage points, an illustrative difference judged worthwhile and realistic. Power at the smaller 20-point clinical threshold will be lower; a real plan must justify accepting that uncertainty',
         variation: percent(input.plan_p0) + '% relief in controls and ' + percent(input.plan_p1) + '% in the treatment group',
+        evidence_review: 'The pilot contains only 10 patients per group. Check comparable studies, outcome definitions and follow-up times; the event rates and expected difference remain uncertain',
         sensitivity: 'Compare smaller true benefits while keeping the original sample size fixed. Specify plausible ranges using evidence beyond the pilot',
         analysis: 'A two-sided pooled score test without continuity correction, with a Newcombe-Wilson confidence interval; independent observations and allocation are assumed',
         power: 'Type I error rate ' + percent(input.alpha) + '%. Evaluate attainable power at the ' + percent(input.plan_p1 - input.plan_p0) + '-percentage-point target difference using the matched pain-relief activity',

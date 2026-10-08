@@ -83,7 +83,7 @@ ui <- fluidPage(
     tags$details(tags$summary("Calculation and sources"),
       p("Approximate n = z² × p × (1 − p) / d², where d is the margin of error (half the interval width). Required n is rounded upward; recruitment is ceiling(n / (1 − loss)). All calculation functions and app code are included in the open source download."),
       tags$ul(tags$li(tags$a(href = "https://www.who.int/docs/default-source/ncds/ncd-surveillance/steps/steps-manual.pdf", "WHO STEPS manual: sample planning and the conservative p = 0.50 choice.")),
-        tags$li(tags$a(href = "https://www.nihr.ac.uk/funding-programs/research-for-patient-benefit/scope-eligibility/feasibility-studies", "NIHR: match feasibility work to the uncertainty needing resolution.")),
+        tags$li(tags$a(href = "https://njl-admin.nihr.ac.uk/document/download/2023130", "NIHR: feasibility and pilot study guidance (archived).")),
         tags$li(tags$a(href = "https://doi.org/10.1080/01621459.1927.10502953", "Wilson (1927): score confidence intervals.")))))))
 
 server <- function(input, output, session) {

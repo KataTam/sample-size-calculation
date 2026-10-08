@@ -19,18 +19,20 @@ pre:not(.sourceCode):not(.r) { background: #fff; border-left: 3px solid #b5c8ce;
   background: #fff; border-left: 3px solid #b5c8ce;
 }
 p.caption { color: #505b64; font-size: .92em; margin: 10px 0 24px; }
-.activity { border-left: 4px solid var(--accent); background: #f1f7f8; padding: 12px 20px; margin: 22px 0; }
+.activity { border-left: 4px solid var(--accent); background: #deefee; padding: 12px 20px; margin: 22px 0; }
 .activity p:last-child { margin-bottom: 0; }
-.learning-goals { border-left: 4px solid #3263a0; background: #edf3fc; color: #25313b; padding: 12px 20px; margin: 20px 0 26px; }
+.learning-goals { border-left: 4px solid #3263a0; background: #dbe9fb; color: #25313b; padding: 12px 20px; margin: 20px 0 26px; }
+.learning-goals.advanced-outcomes { border-left-color: #69509a; background: #e7dcf6; }
 .learning-goals p:last-child { margin-bottom: 0; }
 .learning-goals ul { padding-left: 1.4em; margin-bottom: 0; }
 .learning-goals li + li { margin-top: .3em; }
-.learning-goals strong { color: #244f86; }
+.learning-goals strong { color: inherit; }
 .book.color-theme-2 .learning-goals { background: #25364d; color: #eef3fa; border-left-color: #8ab6f0; }
-.book.color-theme-2 .learning-goals strong { color: #b9d5fa; }
+.book.color-theme-2 .learning-goals.advanced-outcomes { background: #352c49; border-left-color: #c7afea; }
+.book.color-theme-2 .learning-goals strong { color: inherit; }
 details { border: 1px solid var(--line); padding: 12px 18px; margin: 20px 0; }
 summary { color: var(--accent); cursor: pointer; font-weight: 600; }
-details.misconception { border: 0; border-left: 4px solid #b7790b; background: #fff4d6; color: #513600; padding: 12px 18px; }
+details.misconception { border: 0; border-left: 4px solid #b7790b; background: #ffe7ac; color: #513600; padding: 12px 18px; }
 details.misconception summary { display: list-item; color: #694900; line-height: 1.5; }
 details.misconception p:last-child { margin-bottom: 0; }
 .book.color-theme-2 details.misconception { background: #493b20; color: #fff1cf; border-left-color: #d8a950; }
@@ -38,12 +40,15 @@ details.misconception p:last-child { margin-bottom: 0; }
 table { font-size: .92em; }
 th, td { padding: 8px 10px; vertical-align: top; }
 img { max-width: 100%; height: auto; }
-.route-label { margin: .7em 0 1.2em; padding: .55em .8em; border-left: 4px solid #176675; background: #eef7f6; font-size: .9em; }
-.route-label span { display: inline-block; font-weight: bold; margin-right: .5em; }
-.route-label.advanced { border-color: #635493; background: #f2eef8; }
-.core-next { margin: 1.5em 0; padding: .8em; border: 1px solid #9abfbc; border-radius: 4px; background: #eef7f6; }
-@media print { .core-next { display: none !important; } .route-label { break-after: avoid; } }
-.color-theme-2 .route-label, .color-theme-2 .core-next { background: #263442; color: #e9eef2; }
+h1.core-heading, .core-heading > h1 { background: #dbe9fb; padding: .4em .6em; border-left: 4px solid #3263a0; }
+h1.advanced-heading, .advanced-heading > h1 { background: #e7dcf6; padding: .4em .6em; border-left: 4px solid #69509a; }
+.color-theme-2 h1.core-heading, .color-theme-2 .core-heading > h1 { background: #25364d; border-left-color: #8ab6f0; }
+.color-theme-2 h1.advanced-heading, .color-theme-2 .advanced-heading > h1 { background: #352c49; border-left-color: #c7afea; }
+/* Outcome titles share their box background, without a second band. */
+.learning-goals :is(h1,h2,h3,h4,h5,h6) { background: transparent !important; border: 0 !important; padding: 0 !important; }
+.core-next { margin: 1.5em 0; padding: .8em; border: 1px solid #9abfbc; border-radius: 4px; background: #deefee; }
+@media print { .core-next { display: none !important; } }
+.color-theme-2 .core-next { background: #263442; color: #e9eef2; }
 #refs > div { margin-bottom: 1em; }
 a:focus-visible, summary:focus-visible { outline: 3px solid #a45115; outline-offset: 3px; }
 .question-map { margin: 1.5em 0 1em; }
@@ -59,22 +64,37 @@ a:focus-visible, summary:focus-visible { outline: 3px solid #a45115; outline-off
 @media print { .question-map-info { break-inside: avoid; } .question-map-info > * { display: block; } .question-map-info summary { list-style: none; } }
 @media (max-width: 700px) { body { font-size: 16px; } pre { font-size: 13px; } }
 @media print { .book-summary, .book-header, .navigation, #TOC { display: none; } .book-body { left: 0 !important; } }
-details.r-code-output { margin: 1.2em 0; border: 1px solid #c9d4df; border-radius: 5px; background: #f5f7fa; }
-details.r-code-output > summary { cursor: pointer; padding: .65em .9em; font-weight: 600; color: #274b67; }
-details.r-code-output pre { margin: .5em; }
+details.r-code-output { margin: 1.2em 0; border: 1px solid #d79ab7; border-radius: 5px; background: #f8dce9; }
+details.r-code-output > summary { cursor: pointer; padding: .65em .9em; font-weight: 600; color: #62324a; }
+details.r-code-output pre { margin: .5em; background: #fff1f7 !important; }
 .reference-preview { position: fixed; z-index: 10000; max-height: 65vh; overflow: auto; padding: 16px; background: white; color: #26343d; border: 1px solid #8b9ca9; border-radius: 7px; box-shadow: 0 6px 30px #0004; font: 15px/1.5 sans-serif; }
 .reference-preview[hidden] { display: none; }
 .reference-preview img, .reference-preview svg { max-width: 100%; height: auto; }
 .reference-preview table { width: 100%; border-collapse: collapse; font-size: 13px; }
 .reference-preview th, .reference-preview td { padding: 6px; border-bottom: 1px solid #d9e2e6; }
 .reference-preview button { float: right; cursor: pointer; }
-.reference-preview-button { font: inherit; font-size: .75em; margin-left: .3em; cursor: pointer; color: #17658a; border: 1px solid #b6c9d3; border-radius: 3px; background: #eef5f8; }
-.tutorial-downloads { display: flex; flex-wrap: wrap; gap: .8em; margin: 1em 0 1.5em; padding: .75em; background: #eef5f8; border-radius: 4px; font-size: .9em; }
-.color-theme-2 details.r-code-output { background: #263442; }
-.color-theme-2 details.r-code-output > summary { color: #b8dcee; }
+.reference-preview-button { font: inherit; font-size: .75em; margin-left: .3em; cursor: pointer; color: #17658a; border: 1px solid #b6c9d3; border-radius: 3px; background: #dfedf7; }
+.tutorial-downloads { display: flex; flex-wrap: wrap; gap: .8em; margin: 1em 0 1.5em; padding: .75em; background: #dfedf7; border-radius: 4px; font-size: .9em; }
+.color-theme-2 details.r-code-output { background: #482d3c; border-color: #b77797; }
+.color-theme-2 details.r-code-output pre { background: #35222c !important; color: #f6e7ef; }
+.color-theme-2 details.r-code-output > summary { color: #f0bfd7; }
 @media print { .tutorial-downloads, .reference-preview, .reference-preview-button, details.r-code-output { display: none !important; } }
 
 /* Normal-weight content; headings and disclosure titles keep their hierarchy. */
 body :where(p, li, td, th, label, button, a, span, strong, b, code, pre, input, textarea, select) { font-weight: 400 !important; }
 body :where(h1,h2,h3,h4,h5,h6,summary,legend) :where(a,span,strong,b,code) { font-weight: inherit !important; }
 .reference-preview > strong { font-weight: 600 !important; }
+.activity-contents { margin: 1em 0; padding: .8em 1em; background: #dfedf7; border-radius: 5px; }
+.activity-contents li { margin: .35em 0; }
+.contents-route { display: inline-block; font-size: .78em; color: #465562; background: #e3eaf0; border-radius: 3px; padding: .1em .4em; margin-left: .3em; }
+.book-summary .summary .activity-toc { display: block !important; }
+.book-summary .summary .activity-toc a { white-space: normal !important; text-overflow: clip !important; overflow: visible !important; font-size: 13px; line-height: 1.45; color: #17658a; padding-left: 28px; }
+.color-theme-2 .activity-contents { background: #263442; }
+.color-theme-2 .contents-route { color: #d6e4ef; background: #374957; }
+.csl-entry { display: flow-root; margin-bottom: .8em; }
+.csl-left-margin { float: left; min-width: 2.5em; }
+.csl-right-inline { margin-left: 2.5em; overflow-wrap: anywhere; }
+.csl-bib-body.hanging-indent .csl-entry { margin-left: 2em; text-indent: -2em; overflow-wrap: anywhere; }
+@media print { .csl-entry { break-inside: avoid; } }
+/* Model answers stay optional; the print edition shows their label only. */
+@media print { details.model-answer > :not(summary) { display: none !important; } }

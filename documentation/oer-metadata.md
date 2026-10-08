@@ -103,7 +103,7 @@ Student-generated cases should be reviewed and reused publicly only with consent
 
 ## Suggested Citation
 
-Tamasi, K. (2026). *Sample Size Calculation OER*. GitHub. https://github.com/KataTam/sample-size-calculation
+Tamasi, K. (2026). *Sample size calculation OER* [Teaching materials and software]. GitHub. https://github.com/KataTam/sample-size-calculation
 
 
 ## Revised learning scope

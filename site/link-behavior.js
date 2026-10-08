@@ -8,7 +8,7 @@
     if (!href || href === '#' || /^(?:javascript:|mailto:|tel:|data:|blob:)/i.test(href)) return false;
     if (link.hasAttribute('download') || link.hasAttribute('data-question') || link.getAttribute('role') === 'button') return false;
     if (link.matches('.anchor-section, .anchor, .shiny-download-link, .shiny-tab-input, .action-button, .dropdown-toggle, .toggle-dropdown, [data-toggle], [data-bs-toggle]')) return false;
-    return !link.closest(controls);
+    return !!link.closest('.activity-toc') || !link.closest(controls);
   }
   function apply(root = document) {
     root.querySelectorAll('a[href]').forEach(link => {

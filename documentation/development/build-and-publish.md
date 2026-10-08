@@ -2,13 +2,13 @@
 
 The source is maintained in [KataTam/sample-size-calculation](https://github.com/KataTam/sample-size-calculation).
 
-Current status: private working edition (5 October 2026). At the author's request, the repository is private, GitHub Pages is unpublished and the publishing workflow is disabled. Commit and push to save work privately; preview the website locally. Do not change repository visibility, enable Pages or re-enable deployment unless the author explicitly asks to publish again. The publication procedure below applies after that decision.
+The repository is public again at the author's request (8 October 2026). Website deployment is configured separately through GitHub Pages and the publishing workflow.
 
 ## Edit and publish
 
 Open `sample-size-calculation.Rproj`. Edit `module/Sample_size_open_module.Rmd` for the tutorial and `module/references.bib` for references. Shared statistical functions live in `R/sample_size_functions.R`; the six app sources live in `apps/`. Matched activity settings are maintained once in `R/teaching_cases.R`. The glossary, FAQ and study-design guide in `student-materials/` are also included in the complete tutorial from those same sources.
 
-Save, commit and push to `main` to save work privately while publication is disabled. When publication is authorized again, the GitHub Actions workflow checks source encoding, runs the statistical/server checks, renders chaptered and complete HTML and the complete PDF, exports the browser apps, renders the supporting pages, checks local website links, refreshes the source download and deploys GitHub Pages. Knitting alone updates local files and does not publish. A failed deployment leaves the previous successful site online.
+Save, commit and push to `main` to update the public source. When enabled, the GitHub Actions workflow checks source encoding, runs the statistical/server checks, renders chaptered and complete HTML and the complete PDF, exports the browser apps, renders the supporting pages, checks local website links, refreshes the source download and deploys GitHub Pages. Knitting alone updates local files and does not publish. A failed deployment leaves the previous successful site online.
 
 PDF update policy (5 October 2026): after tutorial changes, refresh the complete tutorial HTML and PDF downloads. Check their content and rendered layout before delivery. The complete PDF keeps formatted tables and figures while omitting R code and raw console output.
 
@@ -25,7 +25,7 @@ python scripts/build_site.py
 python -m http.server 8769 --bind 127.0.0.1 --directory _site
 ```
 
-Then open http://127.0.0.1:8769/study/ . Binding to 127.0.0.1 keeps the preview on this computer. Activity links in the R Markdown source use this full local address so they also work from an RStudio preview under `/rmd_output/`. Keep this server running while testing those links. The website build converts same-project links to relative paths for the complete site. Browser apps require HTTP, not `file://`. Shinylive downloads dependencies during export, so the build needs network access. The tutorial render builds HTML and the complete PDF by default. Refresh the complete tutorial downloads after the site build.
+Then open http://127.0.0.1:8769/study/ . Binding to 127.0.0.1 keeps the preview on this computer. Activity links in the R Markdown source use the published website address. The assembled local site keeps navigation local; keep this server running while testing it. The website build converts same-project links to relative paths for the complete site. Browser apps require HTTP, not `file://`. Shinylive downloads dependencies during export, so the build needs network access. The tutorial render builds HTML and the complete PDF by default. Refresh the complete tutorial downloads after the site build.
 
 To rebuild HTML and the PDF locally, run:
 
@@ -49,9 +49,13 @@ The main tutorial narrative is in `module/Sample_size_open_module.Rmd`. Some sec
 
 The written study-plan activity lives in `site/assumptions_report/`. Its labels and report prompts use the tutorial's terminology. The hypothetical pain-relief example reads the shared case registry; it does not calculate a new sample size. Students record calculator results and their interpretation. Entries persist in browser storage and can be saved and reopened as JSON; the report downloads as plain text. The activity is available through the same two-panel study view as the calculation apps.
 
+The report also supports a single-population estimate, existing data and pilot feasibility. Study structure and goal control the relevant prompts; single-population estimation omits treatment thresholds and power fields, while feasibility adds objectives, denominators and progression criteria. Earlier version-1 saved entries remain supported and default to a two-group comparison when the structure is absent. Calculations for another design must come from an appropriate external method.
+
 The writing-style notes are kept outside the public repository, in the project's local `working/` folder. They are excluded from the website and downloadable source package.
 
 ## Editing references
+
+APA 7 formatting is set by `csl: apa.csl` in the tutorial YAML. Keep `module/apa.csl` beside the tutorial; citations use author and year, and the reference list is alphabetized automatically. Supporting-page links in the R Markdown use the local preview server's HTML addresses so they work from RStudio's temporary `/rmd_output/` location. Site assembly makes these links relative for the complete website.
 
 Edit `module/Sample_size_open_module.Rmd` and `module/references.bib` together in the maintained `sample-size-calculation` project. The YAML setting `bibliography: references.bib` refers to the bibliography beside that R Markdown file. For example, add the entry with key `kunzmann2021review` there and cite it with `[@kunzmann2021review]` in the R Markdown text. Save both files before rendering.
 

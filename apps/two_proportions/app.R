@@ -16,14 +16,14 @@ ui <- fluidPage(
       percent_slider("dropout", "Expected loss to follow-up (%)", min = 0, max = 0.50, value = 0, step = 0.01)
     ),
     mainPanel(
-      p("Introductory normal approximation; two independent groups with equal allocation. The reasoning lab uses explicitly specified test-based power and may give a different answer."),
+      p("Normal approximation for two independent groups with equal allocation and a two-sided test, using the same planning method as the tutorial and ", tags$a(href = "../power_explorer/", target = "_blank", rel = "noopener", "reasoning lab"), "."),
       p("Dropout is inflated and rounded within each arm. It changes recruitment targets, not missing-data bias."),
       h3("Approximate sample size"),
       verbatimTextOutput("result"),
       h3("Interpretation"),
       textOutput("interpretation"),
       uiOutput("lab_link"),
-      helpText("The lab receives this calculated analyzable count as a fixed sample, together with your event rates, Type I error rate, power target and losses. Its test-based power may differ from this approximation."),
+      helpText("The ", tags$a(href = "../power_explorer/", target = "_blank", rel = "noopener", "lab"), " receives this calculated analyzable count as a fixed sample, together with your event rates, Type I error rate, power target and losses. Simulation lets you examine the planned test's performance under these assumptions."),
       h3("Effect size and sample size"),
       plotOutput("sample_size_plot", height = "320px"),
       p(class = "caption", "Figure. Approximate total analyzable sample size across absolute target differences, holding the control event rate, Type I error rate and target power fixed."),

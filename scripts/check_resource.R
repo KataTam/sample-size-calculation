@@ -72,8 +72,14 @@ check_resource <- function(render_module = FALSE) {
     alpha = 0.05,
     power = 0.80
   )
-  stopifnot(prop_result$n_per_group == 167)
-  stopifnot(prop_result$total_n == 334)
+  stopifnot(prop_result$n_per_group == 170)
+  stopifnot(prop_result$total_n == 340)
+  # Upward rounding should select the first integer meeting the planning target.
+  pain_n <- sample_size_two_proportions(.60, .30, power = .90)
+  stopifnot(pain_n == 56,
+    power_two_proportions(pain_n, .60, .30) >= .90,
+    power_two_proportions(pain_n - 1, .60, .30) < .90,
+    sample_size_two_proportions(.30, .60, power = .90) == pain_n)
 
   mean_result <- sample_size_two_means_details(
     sd = 20,

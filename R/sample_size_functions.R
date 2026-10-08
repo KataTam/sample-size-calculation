@@ -34,8 +34,10 @@ sample_size_two_proportions_raw <- function(pi1, pi2, alpha = 0.05, power = 0.90
   if (pi1 == pi2) {
     stop("pi1 and pi2 must be different.", call. = FALSE)
   }
-  f_ab <- multiplier_alpha_power(alpha, power)
-  f_ab * (pi1 * (1 - pi1) + pi2 * (1 - pi2)) / (pi1 - pi2)^2
+  check_probability(alpha, "alpha")
+  check_probability(power, "power")
+  stats::power.prop.test(p1 = pi1, p2 = pi2, sig.level = alpha,
+    power = power, alternative = "two.sided", strict = TRUE)$n
 }
 
 sample_size_two_proportions <- function(pi1, pi2, alpha = 0.05, power = 0.90) {
@@ -98,8 +100,8 @@ sample_size_two_means_details <- function(delta, sd, alpha = 0.05, power = 0.90,
   )
 }
 
-# Both rejection tails are counted. These methods differ from the simple
-# normal sample-size approximations above; see teaching/statistical_methods.md.
+# Both rejection tails are counted. Binary planning uses the same approximation
+# as the calculator above; mean planning uses the t test. See documentation/statistical-methods.md.
 power_two_proportions <- function(n_per_group, pi1, pi2, alpha = 0.05) {
   check_integer(n_per_group, "n_per_group", 2)
   check_probability(pi1, "pi1")

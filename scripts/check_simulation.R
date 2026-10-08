@@ -8,8 +8,8 @@ check_simulation <- function() {
   expect_error(study_spec(seed = -1)); expect_error(study_spec(B = NA_real_))
   expect_error(plan_n(study_spec(delta = 0)))
   expect_error(plan_n(study_spec(width_target = 1e-10), "precision"))
-  stopifnot(2 * sample_size_two_proportions(.9, .8, power = .8) == 394,
-            2 * sample_size_two_proportions(.96, .8, power = .9) == 164)
+  stopifnot(2 * sample_size_two_proportions(.9, .8, power = .8) == 398,
+            2 * sample_size_two_proportions(.96, .8, power = .9) == 170)
   x <- sample_size_two_means_details(10, 20, power = .8, dropout_rate = .15)
   stopifnot(x$total_with_dropout == 150)
 
