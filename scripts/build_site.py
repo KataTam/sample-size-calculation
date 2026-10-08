@@ -3,6 +3,7 @@ from pathlib import Path
 from html.parser import HTMLParser
 from urllib.parse import urlsplit, unquote
 import html
+import argparse
 import json
 import os
 import re
@@ -11,6 +12,10 @@ import stat
 import subprocess
 import sys
 import zipfile
+
+parser = argparse.ArgumentParser()
+parser.add_argument("--defer-link-checks", action="store_true", help="Check links after the complete tutorial downloads have been exported.")
+args = parser.parse_args()
 
 ROOT = Path(__file__).resolve().parents[1]
 SITE = ROOT / "_site"
@@ -251,25 +256,28 @@ for target in SITE.rglob("*.html"):
     text = text.replace("</body>", script + "\n</body>") if "</body>" in text else text + script
     target.write_text(text, encoding="utf-8")
 
-# Validate local links and images in maintained pages, not third-party runtime internals.
-errors = []
-class LocalLinks(HTMLParser):
-    def handle_starttag(self, tag, attrs):
-        for key, value in attrs:
-            if key not in {"href", "src"} or not value:
-                continue
-            url = urlsplit(value)
-            if url.scheme or url.netloc or not url.path:
-                continue
-            path = (SITE / unquote(url.path.lstrip("/"))) if url.path.startswith("/") else current_page.parent / unquote(url.path)
-            if not path.exists():
-                errors.append(f"{current_page.relative_to(SITE)}: {value}")
-for current_page in SITE.rglob("*.html"):
-    rel = current_page.relative_to(SITE)
-    if rel.parts[0] in {"shinylive", "two_means", "two_proportions", "power_explorer", "dropout_adjustment", "prevalence_precision", "sampling_distributions"} or "libs" in rel.parts:
-        continue
-    LocalLinks().feed(current_page.read_text(encoding="utf-8"))
-if errors:
-    raise RuntimeError("Broken local website targets:\n" + "\n".join(sorted(set(errors))))
-print(f"Website assembled and local links checked: {SITE}")
-subprocess.run([sys.executable, str(ROOT / "scripts/check_links.py")], cwd=ROOT, check=True)
+if args.defer_link_checks:
+    print(f"Website assembled: {SITE}; run scripts/check_links.py after exporting downloads.")
+else:
+    # Validate local links and images in maintained pages, not third-party runtime internals.
+    errors = []
+    class LocalLinks(HTMLParser):
+        def handle_starttag(self, tag, attrs):
+            for key, value in attrs:
+                if key not in {"href", "src"} or not value:
+                    continue
+                url = urlsplit(value)
+                if url.scheme or url.netloc or not url.path:
+                    continue
+                path = (SITE / unquote(url.path.lstrip("/"))) if url.path.startswith("/") else current_page.parent / unquote(url.path)
+                if not path.exists():
+                    errors.append(f"{current_page.relative_to(SITE)}: {value}")
+    for current_page in SITE.rglob("*.html"):
+        rel = current_page.relative_to(SITE)
+        if rel.parts[0] in {"shinylive", "two_means", "two_proportions", "power_explorer", "dropout_adjustment", "prevalence_precision", "sampling_distributions"} or "libs" in rel.parts:
+            continue
+        LocalLinks().feed(current_page.read_text(encoding="utf-8"))
+    if errors:
+        raise RuntimeError("Broken local website targets:\n" + "\n".join(sorted(set(errors))))
+    print(f"Website assembled and local links checked: {SITE}")
+    subprocess.run([sys.executable, str(ROOT / "scripts/check_links.py")], cwd=ROOT, check=True)

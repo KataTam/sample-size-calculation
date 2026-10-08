@@ -30,7 +30,7 @@ jobs:
       - name: Export browser apps
         run: Rscript scripts/export_shinylive.R
       - name: Assemble website and source download
-        run: python3 scripts/build_site.py
+        run: python3 scripts/build_site.py --defer-link-checks
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
@@ -42,6 +42,7 @@ jobs:
         run: |
           python3 -m http.server 8769 --bind 127.0.0.1 --directory _site > /tmp/tutorial-preview.log 2>&1 &
           node scripts/export_tutorial.cjs
+          python3 scripts/check_links.py
           node scripts/check_reader_tools.cjs
       - uses: actions/upload-pages-artifact@v3
         with:
