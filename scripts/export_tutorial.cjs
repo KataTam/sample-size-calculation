@@ -29,7 +29,7 @@ a { color: #17658a; } .tutorial-downloads { display: none; }
  a { text-decoration: none; }
  h1 { font-size: 22pt; } h2 { font-size: 16pt; } h3 { font-size: 13pt; }
  h1, h2, h3, h4, summary, caption { break-after: avoid; }
- table { font-size: 8pt; } thead { display: table-header-group; } tr { break-inside: avoid; }
+ table { font-size: 8pt; break-inside: avoid; } thead { display: table-header-group; } tr { break-inside: avoid; }
  .figure { break-inside: avoid; } .figure img { max-height: 210mm; object-fit: contain; }
  .learning-goals, .misconception { break-inside: avoid; }
  details:not(.r-code-output) > summary { list-style: none; font-weight: bold; }
