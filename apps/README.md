@@ -4,7 +4,7 @@ Each app has one teaching purpose and can be run independently from its own fold
 
 ## Apps
 
-- `two_proportions`: sample size for a binary outcome comparing two event rates.
+- `two_proportions`: sample size for a binary outcome comparing two event probabilities.
 - `two_means`: sample size for a continuous outcome comparing two means.
 - `power_explorer`: approximate achievable power for a fixed sample size.
 - `dropout_adjustment`: recruitment target after expected dropout or loss to follow-up.

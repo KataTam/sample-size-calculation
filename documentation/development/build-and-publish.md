@@ -10,7 +10,7 @@ Open `sample-size-calculation.Rproj`. Edit `module/Sample_size_open_module.Rmd` 
 
 Save, commit and push to `main` to update the public source. When enabled, the GitHub Actions workflow checks source encoding, runs the statistical/server checks, renders chaptered and complete HTML and the complete PDF, exports the browser apps, renders the supporting pages, checks local website links, refreshes the source download and deploys GitHub Pages. Knitting alone updates local files and does not publish. A failed deployment leaves the previous successful site online.
 
-PDF update policy (5 October 2026): after tutorial changes, refresh the complete tutorial HTML and PDF downloads. Check their content and rendered layout before delivery. The complete PDF keeps formatted tables and figures while omitting R code and raw console output.
+PDF update policy (5 October 2026): after tutorial changes, refresh the complete tutorial HTML and PDF downloads. Check their content and rendered layout before delivery. The complete PDF expands all disclosure boxes, including model answers, R code and raw output, alongside formatted tables and figures.
 
 ## Build locally
 
@@ -33,7 +33,7 @@ To rebuild HTML and the PDF locally, run:
 Rscript scripts/render_resource.R --pdf
 ```
 
-PDF generation remains required after tutorial changes. Render HTML with `Rscript scripts/render_resource.R --html`, assemble the site and start the loopback preview, then run `node scripts/export_tutorial.cjs`. The exporter combines all chapters into one self-contained HTML and one browser-printed PDF, retaining formatted results, figures and equations. HTML keeps code and output expandable; PDF hides them. It writes complete downloads to `module/`, `docs/book/`, `_site/book/`, and the PDF to `output/pdf/`. No chapter downloads are generated. Use the browser export as the final print edition; the optional LaTeX render is an intermediate alternative.
+PDF generation remains required after tutorial changes. Render HTML with `Rscript scripts/render_resource.R --html`, assemble the site and start the loopback preview, then run `node scripts/export_tutorial.cjs`. The exporter combines all chapters into one self-contained HTML and one browser-printed PDF, retaining formatted results, figures and equations. HTML keeps boxes collapsible; PDF expands all boxes, including code, output and model answers. It writes complete downloads to `module/`, `docs/book/`, `_site/book/`, and the PDF to `output/pdf/`. No chapter downloads are generated. Use the browser export as the final print edition; the optional LaTeX render is an intermediate alternative.
 
 ## Sources and generated files
 

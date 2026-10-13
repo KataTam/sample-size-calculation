@@ -143,19 +143,19 @@
   },
   {
     "id": "alpha",
-    "label": "Type I error rate",
+    "label": "Type I error probability",
     "aliases": [
-      "Type I error rate",
-      "Type 1 error rate"
+      "Type I error probability",
+      "Type 1 error probability"
     ],
     "definition": "The probability of falsely rejecting the null hypothesis: a false positive. Here, it means finding a statistically significant difference when population outcomes are equal."
   },
   {
     "id": "beta",
-    "label": "Type II error rate",
+    "label": "Type II error probability",
     "aliases": [
-      "Type II error rate",
-      "Type 2 error rate"
+      "Type II error probability",
+      "Type 2 error probability"
     ],
     "definition": "The probability of missing a specified true treatment difference: a false negative. It depends on the true difference, sample size and analysis."
   },
@@ -166,7 +166,7 @@
       "statistical power",
       "power"
     ],
-    "definition": "The probability that the planned test detects a specified true difference: the true-positive rate. It equals 1 minus the Type II error rate."
+    "definition": "The probability that the planned test detects a specified true difference: the true-positive probability. It equals 1 minus the Type II error probability."
   },
   {
     "id": "p-value",
@@ -250,7 +250,7 @@
     "label": "False positive",
     "aliases": [
       "false positive",
-      "false-positive rate"
+      "false-positive probability"
     ],
     "definition": "A statistically significant finding when the population outcomes are equal: a Type I error. Here, positive refers to the study conclusion, not a patient diagnosis."
   },
@@ -259,7 +259,7 @@
     "label": "False negative",
     "aliases": [
       "false negative",
-      "false-negative rate"
+      "false-negative probability"
     ],
     "definition": "A non-significant finding despite a specified true population difference: a Type II error."
   },
@@ -268,7 +268,7 @@
     "label": "True positive",
     "aliases": [
       "true positive",
-      "true-positive rate"
+      "true-positive probability"
     ],
     "definition": "A statistically significant finding when a population difference exists. Its probability at the specified true difference is power."
   },
@@ -277,7 +277,7 @@
     "label": "True negative",
     "aliases": [
       "true negative",
-      "true-negative rate"
+      "true-negative probability"
     ],
     "definition": "A non-significant finding when population outcomes are equal. A real non-significant result alone cannot establish that this is the case."
   },

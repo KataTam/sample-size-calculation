@@ -45,17 +45,17 @@
     },
     {
       "id": "q6",
-      "question": "What degree of Type I error risk are you willing to accept?",
+      "question": "What Type I error probability is acceptable for your study?",
       "original_excerpt": "$\\alpha$ is the probability of detecting a treatment difference when it does not exist (conventionally set at 0.05 or equivalently at 5%). In other words, you can think about $\\alpha$ as the risk of committing a type I error, i.e., when a treatment difference is found based on a statistically significant observed result when in reality there is no difference (false positive result).",
       "original_line": 114,
-      "explanation": "[Type I error rate ($\\alpha$)](#alpha) is the probability of falsely rejecting the null hypothesis: a [false positive](#false-positive). Here, that means finding a statistically significant treatment difference when population outcomes are equal. A 5% rate means about 5 false positives per 100 repeated studies when no true difference exists, under the test's assumptions."
+      "explanation": "[Type I error probability ($\\alpha$)](#alpha) is the probability of falsely rejecting the null hypothesis: a [false positive](#false-positive). Here, that means finding a statistically significant treatment difference when population outcomes are equal. A 5% probability means about 5 false positives per 100 repeated studies when no true difference exists, under the test's assumptions."
     },
     {
       "id": "q7",
-      "question": "What degree of Type II error risk are you willing to accept?",
+      "question": "What Type II error probability is acceptable for the target difference?",
       "original_excerpt": "$\\beta$ is defined as the risk of committing a type II error, i.e., when the null hypothesis is retained by error because a true treatment difference was not detected (false negative result).\n\nThe power of a study is the complement of committing a type II error: Provided the true difference exists, there can again logically only be two study outcomes. With power set at 90%, you have a 90% chance that you detect the true difference and 10% that you don’t.",
       "original_line": 116,
-      "explanation": "[Type II error rate ($\\beta$)](#beta) is the probability of missing a specified true treatment difference: a [false negative](#false-negative). [Power](#statistical-power) is the probability of detecting that difference, equal to $1-\\beta$.\n\nAt 90% power, about 90 of 100 repetitions of the planned trial would detect the specified difference (true positives) and 10 would miss it (false negatives). A non-significant result does not establish that the treatments are equally effective."
+      "explanation": "[Type II error probability ($\\beta$)](#beta) is the probability of missing a specified true treatment difference: a [false negative](#false-negative). [Power](#statistical-power) is the probability of detecting that difference, equal to $1-\\beta$.\n\nAt 90% power, about 90 of 100 repetitions of the planned trial would detect the specified difference (true positives) and 10 would miss it (false negatives). A non-significant result does not establish that the treatments are equally effective."
     }
   ]
 }

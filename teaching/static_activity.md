@@ -1,6 +1,6 @@
 # Static sample size activity
 
-Use these prepared synthetic results when the live app is unavailable. All studies use equal allocation and a two-sided Type I error rate of 5%. Full reproducible results and assumptions accompany the activity.
+Use these prepared synthetic results when the live app is unavailable. All studies use equal allocation and a two-sided Type I error probability of 5%. Full reproducible results and assumptions accompany the activity.
 
 ## Before viewing the results
 
@@ -28,9 +28,9 @@ The test rejects a zero difference. The interval excludes zero in the beneficial
 
 Table 2. Rejection, confidence interval coverage and full-width attainment across 1000 independent studies under the planned scenario. Monte Carlo intervals describe simulation uncertainty.
 
-|Measure               |Rate  |Monte Carlo SE (percentage points) |95% lower limit |95% upper limit |
+|Measure               |Percentage |Monte Carlo SE (percentage points) |95% lower limit |95% upper limit |
 |:---------------------|:-----|:----------------------------------|:---------------|:---------------|
-|Rejection rate        |79.8% |1.27                               |77.2%           |82.2%           |
+|Statistically significant simulated results        |79.8% |1.27                               |77.2%           |82.2%           |
 |CI coverage           |94.1% |0.75                               |92.5%           |95.4%           |
 |Full width target met |31.5% |1.47                               |28.7%           |34.4%           |
 
@@ -62,9 +62,9 @@ The test does not reject a zero difference; this does not establish no effect. T
 
 Table 4. Rejection, confidence interval coverage and full-width attainment across 1000 independent studies under the null scenario. Monte Carlo intervals describe simulation uncertainty.
 
-|Measure               |Rate  |Monte Carlo SE (percentage points) |95% lower limit |95% upper limit |
+|Measure               |Percentage |Monte Carlo SE (percentage points) |95% lower limit |95% upper limit |
 |:---------------------|:-----|:----------------------------------|:---------------|:---------------|
-|Rejection rate        |5.9%  |0.75                               |4.6%            |7.5%            |
+|Statistically significant simulated results        |5.9%  |0.75                               |4.6%            |7.5%            |
 |CI coverage           |94.1% |0.75                               |92.5%           |95.4%           |
 |Full width target met |31.5% |1.47                               |28.7%           |34.4%           |
 
@@ -96,9 +96,9 @@ The test does not reject a zero difference; this does not establish no effect. T
 
 Table 6. Rejection, confidence interval coverage and full-width attainment across 1000 independent studies under the smaller effect scenario. Monte Carlo intervals describe simulation uncertainty.
 
-|Measure               |Rate  |Monte Carlo SE (percentage points) |95% lower limit |95% upper limit |
+|Measure               |Percentage |Monte Carlo SE (percentage points) |95% lower limit |95% upper limit |
 |:---------------------|:-----|:----------------------------------|:---------------|:---------------|
-|Rejection rate        |16.7% |1.18                               |14.5%           |19.1%           |
+|Statistically significant simulated results        |16.7% |1.18                               |14.5%           |19.1%           |
 |CI coverage           |94.1% |0.75                               |92.5%           |95.4%           |
 |Full width target met |31.5% |1.47                               |28.7%           |34.4%           |
 
@@ -130,9 +130,9 @@ The test does not reject a zero difference; this does not establish no effect. T
 
 Table 8. Rejection, confidence interval coverage and full-width attainment across 1000 independent studies under the higher variability scenario. Monte Carlo intervals describe simulation uncertainty.
 
-|Measure               |Rate  |Monte Carlo SE (percentage points) |95% lower limit |95% upper limit |
+|Measure               |Percentage |Monte Carlo SE (percentage points) |95% lower limit |95% upper limit |
 |:---------------------|:-----|:----------------------------------|:---------------|:---------------|
-|Rejection rate        |54.2% |1.58                               |51.1%           |57.3%           |
+|Statistically significant simulated results        |54.2% |1.58                               |51.1%           |57.3%           |
 |CI coverage           |94.1% |0.75                               |92.5%           |95.4%           |
 |Full width target met |0.0%  |0.00                               |0.0%            |0.4%            |
 
@@ -164,9 +164,9 @@ The test rejects a zero difference. The interval excludes zero in the beneficial
 
 Table 10. Rejection, confidence interval coverage and full-width attainment across 1000 independent studies under the binary scenario. Monte Carlo intervals describe simulation uncertainty.
 
-|Measure               |Rate  |Monte Carlo SE (percentage points) |95% lower limit |95% upper limit |
+|Measure               |Percentage |Monte Carlo SE (percentage points) |95% lower limit |95% upper limit |
 |:---------------------|:-----|:----------------------------------|:---------------|:---------------|
-|Rejection rate        |91.9% |0.86                               |90.0%           |93.4%           |
+|Statistically significant simulated results        |91.9% |0.86                               |90.0%           |93.4%           |
 |CI coverage           |95.6% |0.65                               |94.1%           |96.7%           |
 |Full width target met |0.0%  |0.00                               |0.0%            |0.4%            |
 

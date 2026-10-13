@@ -15,11 +15,11 @@
   {
     "chapter": "power",
     "anchor": "power",
-    "title": "Power and error rates",
+    "title": "Power and error probabilities",
     "route": "Core and advanced",
     "activities": [
       {
-        "label": "Explore Type I and Type II error rates and power",
+        "label": "Explore Type I and Type II error probabilities and power",
         "path": "study/?activity=alpha_beta",
         "route": "Core"
       },

@@ -8,7 +8,7 @@ For calculation practice, assume disease occurs in 20% without probiotics, an ex
 
 The [lab](https://katatam.github.io/sample-size-calculation/study/?activity=adherence) uses a positive difference for benefit. Enter remaining free of gestational diabetes as the favorable event: 80% without probiotics versus 90% with probiotics. The resulting 10-point increase equals the 10-point reduction in disease. Specify the event and direction in the report.
 
-Use Type I error rate 5%, target power 90%, equal independent groups and 15% expected loss per arm. The recruitment cap is 240. The [lab](https://katatam.github.io/sample-size-calculation/study/?activity=adherence) uses score-test power approximation and assesses finite-sample performance by simulation, with Newcombe-Wilson intervals. The shared definition is `adherence` in `R/teaching_cases.R`.
+Use Type I error probability 5%, target power 90%, equal independent groups and 15% expected loss per arm. The recruitment cap is 240. The [lab](https://katatam.github.io/sample-size-calculation/study/?activity=adherence) uses score-test power approximation and assesses finite-sample performance by simulation, with Newcombe-Wilson intervals. The shared definition is `adherence` in `R/teaching_cases.R`.
 
 [Open the tutorial and app](https://katatam.github.io/sample-size-calculation/study/?activity=adherence).
 
@@ -16,6 +16,6 @@ Use Type I error rate 5%, target power 90%, equal independent groups and 15% exp
 2. Predict whether the plan fits the recruitment cap after allowing for losses.
 3. Hold planned n fixed and reduce the percentage remaining disease-free with probiotics from 90% to 85%, with 80% in the comparison group.
 4. Compare rejection frequency with the interval's ability to distinguish small and clinically important benefits.
-5. Discuss the evidence needed to justify event rates, clinical importance, diagnostic criteria and assessment time.
+5. Discuss the evidence needed to justify event probabilities, clinical importance, diagnostic criteria and assessment time.
 
 The case assumes individual randomization and independent outcomes. Observed supplementation rather than allocated treatment requires attention to confounding and different planning methods. Recruitment inflation cannot remove bias from missing diagnostic outcomes.

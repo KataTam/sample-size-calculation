@@ -10,7 +10,7 @@ Use the [full references](references.md) for bibliographic details and publisher
 | Choose and justify the target difference | [DELTA²: Cook et al. (2018)](https://doi.org/10.1136/bmj.k3750) | Explain importance and realism, then compare the target with the expected difference and clinical threshold |
 | Select a defensible planning goal | [Lakens (2022)](https://doi.org/10.1525/collabra.33267) | Explain whether testing, useful precision or fixed resources drives the plan |
 | Assess prior evidence | Albers and Lakens (2018); Caldwell and Vigotsky (2020) | Treat small pilot differences as uncertain; use clinically interpretable units and plausible ranges |
-| Report the calculation | [CONSORT 2025 explanation and elaboration](https://doi.org/10.1136/bmj-2024-081124) | Record target justification, event rates or SD, error rates, method, counts and losses in the assumptions report |
+| Report the calculation | [CONSORT 2025 explanation and elaboration](https://doi.org/10.1136/bmj-2024-081124) | Record target justification, event probabilities or SD, error probabilities, method, counts and losses in the assumptions report |
 
 Table: Reading that supports decisions in the core study plan.
 

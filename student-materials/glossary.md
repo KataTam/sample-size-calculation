@@ -1,18 +1,24 @@
-# Key parameters and prerequisites {#glossary .core-heading}
+# Glossary {#glossary .core-heading}
 
 ::: {.learning-goals .core-outcomes}
 Learning outcomes. After this section, you should be able to:
 
 - Interpret the effect scale.
 - Distinguish individual variability from uncertainty in an estimate.
-- Explain the error rates, precision targets and participant counts used in planning.
+- Explain the error probabilities, precision targets and participant counts used in planning.
 :::
 
-Use this section when a term in the tutorial or app needs a reminder. The main tutorial includes formulas and expandable R code blocks.
+This glossary provides reminders of terms used in the tutorial and apps. The main tutorial includes formulas and expandable R code blocks.
+
+## Probability, percentages and rates {.core-heading}
+
+A probability describes how likely an event is under stated assumptions. It lies between zero and one and can be expressed as a percentage: a probability of 0.60 is 60%. An observed proportion describes the fraction of observations with an outcome, such as 6 of 10 patients reporting relief; the observed percentage is 60%. That percentage estimates the population probability but need not equal it.
+
+In this tutorial, Type I and Type II error probabilities and power describe how the planned test behaves under specified population assumptions. Simulation estimates these probabilities using the percentage of repeated studies with each result. A time-based rate has a different denominator, such as new cases per 1,000 person-years or patients recruited per month. The binary-outcome calculators use probabilities at a specified follow-up time, not person-time rates.
 
 ## Population, sample and planning values {.core-heading}
 
-<span id="population-parameter"></span>A population parameter is a feature of the population you want to learn about, such as its mean, proportion, or treatment difference. <span id="sample-estimate"></span>A sample estimate is calculated from the observations you obtained. In the pain pilot, 7/10 is a sample proportion, expressed as 70%. The treatment probability of 60% used in the sample size calculation is a planning assumption supported with evidence and sensitivity analysis, rather than a known truth. Use proportion for a fraction such as 7/10 and percentage for its expression as 70%.
+<span id="population-parameter"></span>A population parameter is a feature of the population you want to learn about, such as its mean, proportion, or treatment difference. <span id="sample-estimate"></span>A sample estimate is calculated from the observations you obtained. In the pain pilot, 7/10 is a sample proportion, expressed as 70%. The treatment probability of 60% used in the sample size calculation is a planning assumption supported with evidence and sensitivity analysis, rather than a known truth. A proportion such as 7/10 can also be written as 0.70 or expressed as a percentage, 70%.
 
 <span id="expected-difference"></span>The [expected difference](#between-group-differences) is the anticipated between-group population difference based on current evidence, with uncertainty. An observed difference is calculated from a particular sample, such as the pilot. <span id="target-difference"></span>The [target difference](#between-group-differences) is the between-group difference used in the sample size calculation, at which you calculate [power](#statistical-power); it is not a result the study must achieve. <span id="clinical-threshold"></span>The [clinical threshold](#between-group-differences) is the smallest between-group benefit judged worthwhile, considering the treatment's burdens, risks, costs, and alternatives. These judgments may coincide in practice, but the worked examples use distinct values to show their different roles. For the pain trial, they are 40, 30, and 20 percentage points, respectively.
 
@@ -28,7 +34,7 @@ A threshold for meaningful improvement within an individual patient is therefore
 
 ## Effect scale and direction {.core-heading}
 
-<span id="percentage-points"></span>An absolute difference between two percentages is expressed in percentage points: 60% - 30% = 30 percentage points. A relative increase divides the change by the baseline: (60 - 30)/30 = 1, or 100%. An increase from 80% to 96% is 16 percentage points and a 20% relative increase. State which scale you mean. Formulas and R inputs represent these probabilities as proportions between zero and one, such as 0.60 and 0.30.
+<span id="percentage-points"></span>An absolute difference between two percentages is expressed in percentage points: 60% - 30% = 30 percentage points. A relative increase divides the change by the baseline: (60 - 30)/30 = 1, or 100%. An increase from 80% to 96% is 16 percentage points and a 20% relative increase. Your report should make clear which scale you mean. Formulas and R inputs represent these probabilities as proportions between zero and one, such as 0.60 and 0.30.
 
 <span id="mean-difference"></span>A mean difference is in the outcome's own units, such as mmHg or score units. The [lab](https://katatam.github.io/sample-size-calculation/study/?activity=own_study) uses treatment minus control. Positive is beneficial in the prepared improvement/relief cases; an outcome such as pain severity or mortality needs an explicit decision about beneficial direction.
 
@@ -70,7 +76,7 @@ An estimand is the precisely defined population quantity the study aims to estim
 
 In sample size planning, a sensitivity analysis examines plausible alternative assumptions. Before choosing a sample size, you can recalculate how many patients would be needed under each assumption. After choosing a sample size, you can keep it fixed and ask how the same study would perform if the true difference were smaller or variability were greater. These answer different questions. Sensitivity analyses can also examine how a completed study's conclusions depend on assumptions, for example about missing data.
 
-## Hypotheses, Type I error rate, Type II error rate and power {.core-heading}
+## Hypotheses, Type I error probability, Type II error probability and power {.core-heading}
 
 <span id="null-hypothesis"></span>The null hypothesis in these treatment comparisons says that the population outcomes are equal: the between-group difference is zero. Rejecting it means that the chosen test provides sufficient statistical evidence of a difference. Not rejecting it means that the evidence is insufficient; it does not establish equality. <span id="alternative-hypothesis"></span>The two-sided alternative hypothesis allows a difference in either direction. The target difference is an input for the power calculation, not the minimum difference required for statistical significance.
 
@@ -81,29 +87,29 @@ These terms describe the statistical conclusion about a treatment difference her
 - <span id="false-positive"></span>False positive (Type I error): the test finds a difference when the population outcomes are equal.
 - <span id="false-negative"></span>False negative (Type II error): the test misses a difference that exists in the population.
 - <span id="true-positive"></span>True positive: the test detects a difference that exists in the population. Its probability at the specified difference is power.
-- <span id="true-negative"></span>True negative: the test does not find a difference when the population outcomes are equal. Its probability is 1 minus the Type I error rate. However, after a real study, a non-significant result alone cannot tell you whether it is a true negative or a false negative.
+- <span id="true-negative"></span>True negative: the test does not find a difference when the population outcomes are equal. Its probability is 1 minus the Type I error probability. However, after a real study, a non-significant result alone cannot tell you whether it is a true negative or a false negative.
 
-### Type I error rate {#alpha .core-heading}
+### Type I error probability {#alpha .core-heading}
 
-Type I error rate ($\alpha$) is the probability of falsely rejecting the null hypothesis: the [false-positive rate](#false-positive). Here, that means finding a statistically significant treatment difference when the population outcomes are actually equal. A 5% rate means about 5 false positives per 100 repeated studies when there is no true difference, under the test's assumptions. It does not mean that 5% of all significant findings are false positives.
+Type I error probability ($\alpha$) is the probability of falsely rejecting the null hypothesis: the [false-positive probability](#false-positive). Here, that means finding a statistically significant treatment difference when the population outcomes are actually equal. A 5% probability means about 5 false positives per 100 repeated studies when there is no true difference, under the test's assumptions. It does not mean that 5% of all significant findings are false positives.
 
-### Type II error rate {#beta .core-heading}
+### Type II error probability {#beta .core-heading}
 
-Type II error rate ($\beta$) is the probability of failing to reject a false null hypothesis: the [false-negative rate](#false-negative). Here, that means missing a specified true treatment difference. For example, a 10% Type II error rate at a true 30-percentage-point difference means about 10 missed differences per 100 repetitions of that trial. The rate depends on the true difference, sample size and analysis; it is not the same for every possible effect.
+Type II error probability ($\beta$) is the probability of failing to reject a false null hypothesis: the [false-negative probability](#false-negative). Here, that means missing a specified true treatment difference. For example, a 10% Type II error probability at a true 30-percentage-point difference means about 10 missed differences per 100 repetitions of that trial. This probability depends on the true difference, sample size and analysis; it is not the same for every possible effect.
 
 ### Statistical power {#statistical-power .core-heading}
 
-Power is the probability of detecting a specified true treatment difference with the planned test: the [true-positive rate](#true-positive). It equals $1-\beta$, or 1 minus the Type II error rate. With 90% power, about 90 of 100 repetitions of the planned trial would detect that difference and 10 would miss it. Each repetition involves new patients. Power is not the probability that the treatment works, and a non-significant result does not establish equivalence.
+Power is the probability of detecting a specified true treatment difference with the planned test: the [true-positive probability](#true-positive). It equals $1-\beta$, or 1 minus the Type II error probability. With 90% power, about 90 of 100 repetitions of the planned trial would detect that difference and 10 would miss it. Each repetition involves new patients. Power is not the probability that the treatment works, and a non-significant result does not establish equivalence.
 
 ### P-value {#p-value .core-heading}
 
-A p-value is the probability, assuming the null hypothesis and statistical model are correct, of a test result at least as extreme as the observed result. In the two-sided pain comparison, it asks how likely a result at least as far from equal relief rates would be, in either direction, if the population rates were equal. A small p-value provides evidence against equality; it does not measure clinical benefit or give the probability that a hypothesis is true.
+A p-value is the probability, assuming the null hypothesis and statistical model are correct, of a test result at least as extreme as the observed result. In the two-sided pain comparison, it asks how likely a result at least as far from equal relief probabilities would be, in either direction, if the population probabilities were equal. A small p-value provides evidence against equality; it does not measure clinical benefit or give the probability that a hypothesis is true.
 
 ## Normal distribution and z-values {.core-heading}
 
 <span id="z-value"></span>The standard normal distribution is a bell-shaped curve with a mean of zero and a standard deviation of one. A z-value gives a position on that curve in standard-deviation units. For example, 1.96 is 1.96 standard deviations above its center.
 
-<span id="quantile"></span>A quantile is a cutoff below which a stated proportion of a distribution lies. For the standard normal distribution, $z_{0.975}=1.96$ means that 97.5% lies below 1.96. The sample size multiplier uses these cutoffs to translate the Type I error rate and target power into numbers for the formula. You can use the tutorial's multiplier table without calculating the cutoffs yourself.
+<span id="quantile"></span>A quantile is a cutoff below which a stated proportion of a distribution lies. For the standard normal distribution, $z_{0.975}=1.96$ means that 97.5% lies below 1.96. The sample size multiplier uses these cutoffs to translate the Type I error probability and target power into numbers for the formula. You can use the tutorial's multiplier table without calculating the cutoffs yourself.
 
 ## Tests and designs {.core-heading}
 
@@ -125,8 +131,8 @@ B is the number of independent simulated studies, not the number of patients per
 
 Monte Carlo error is the random difference between a result estimated from a finite simulation and the value you would obtain from indefinitely many repetitions under the same assumptions. For example, one batch of 1,000 simulated trials might estimate power at 80%, while another gives 79% or 81%, even though the population assumptions, sample size and analysis stay the same. This variation between batches is Monte Carlo uncertainty.
 
-The Monte Carlo standard error (MCSE) describes how much the simulation estimate varies between independent batches. For an estimated rejection fraction $\hat p$ from $B$ independent simulated trials, $\mathrm{MCSE}=\sqrt{\hat p(1-\hat p)/B}$. At estimated power of 80% with 1,000 trials, the MCSE is about 1.3 percentage points. Monte Carlo intervals describe uncertainty in the simulation estimate, rather than a treatment-effect confidence interval from one clinical trial.
+The Monte Carlo standard error (MCSE) describes how much the simulation estimate varies between independent batches. For an observed proportion of statistically significant simulated results $\hat p$ from $B$ independent simulated trials, $\mathrm{MCSE}=\sqrt{\hat p(1-\hat p)/B}$. At estimated power of 80% with 1,000 trials, the MCSE is about 1.3 percentage points. Monte Carlo intervals describe uncertainty in the simulation estimate, rather than a treatment-effect confidence interval from one clinical trial.
 
-Increasing the number of simulations reduces Monte Carlo error; quadrupling the repetitions approximately halves the MCSE. It does not increase the power of each trial, remove error from an analytical approximation, or establish that the assumed population rates fit a real study. You should distinguish simulation uncertainty from sampling uncertainty within a trial and uncertainty about the clinical assumptions. The [simulation-precision section](#precision-of-a-simulation) provides a worked example.
+Increasing the number of simulations reduces Monte Carlo error; quadrupling the repetitions approximately halves the MCSE. It does not increase the power of each trial, remove error from an analytical approximation, or establish that the assumed population probabilities fit a real study. You should distinguish simulation uncertainty from sampling uncertainty within a trial and uncertainty about the clinical assumptions. The [simulation-precision section](#precision-of-a-simulation) provides a worked example.
 
 For more detail, return to the [power chapter](#power), [sampling-distribution illustration](#alpha-beta), [precision examples](#feasibility), or [common mistakes](#common-mistakes). Methodological sources include Kirkwood and Sterne (2003), Whitley and Ball (2002), and the R documentation cited in the tutorial.

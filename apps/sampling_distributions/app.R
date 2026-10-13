@@ -42,9 +42,9 @@ ui <- fluidPage(
   tags$head(tags$script(HTML(activity_bridge_script("sampling_distributions"))),
     tags$script(HTML(activity_download_script())),
     tags$style(HTML("body{font-size:17px;line-height:1.55}.well{background:#f4f7fa}.shiny-output-error-validation{color:#8a3410}"))),
-  titlePanel("Type I error rate, Type II error rate and power on a sampling distribution", windowTitle = "Type I error rate, Type II error rate and power"),
-  p("Definitions: ", tags$a(href = "../book/Sample_size_open_module.html#alpha", target = "_blank", rel = "noopener", "Type I error rate"), ", ",
-    tags$a(href = "../book/Sample_size_open_module.html#beta", target = "_blank", rel = "noopener", "Type II error rate"), " and ",
+  titlePanel("Type I error probability, Type II error probability and power on a sampling distribution", windowTitle = "Type I error probability, Type II error probability and power"),
+  p("Definitions: ", tags$a(href = "../book/Sample_size_open_module.html#alpha", target = "_blank", rel = "noopener", "Type I error probability"), ", ",
+    tags$a(href = "../book/Sample_size_open_module.html#beta", target = "_blank", rel = "noopener", "Type II error probability"), " and ",
     tags$a(href = "../book/Sample_size_open_module.html#statistical-power", target = "_blank", rel = "noopener", "power"), "."),
   p("Explore a one-sample mean with independent normal observations and a known population standard deviation. This simplified reference model makes the error regions visible."),
   sidebarLayout(sidebarPanel(width = 4,
@@ -53,7 +53,7 @@ ui <- fluidPage(
     sliderInput("effect", "True mean difference assumed for power (mmHg)", -30, 30, 5, step = .5),
     sliderInput("n", "Independent observations in the sample", 1, 1000, 25, step = 1),
     sliderInput("sigma", "Known population standard deviation (mmHg)", .1, 100, 15, step = .1),
-    percent_slider("alpha", "Type I error rate (%)", .001, .20, .05, step = .001),
+    percent_slider("alpha", "Type I error probability (%)", .001, .20, .05, step = .001),
     selectInput("sidedness", "Direction of the test, chosen before analysis",
       c("Mean greater than the null (one-sided)" = "greater", "Mean less than the null (one-sided)" = "less", "Either direction (two-sided)" = "two.sided"))),
   mainPanel(width = 8,
@@ -61,20 +61,20 @@ ui <- fluidPage(
     textOutput("bridge_status"),
     p("Predict what happens when n doubles, the alternative moves towards the null, or the SD increases. Keep one control fixed while exploring another."),
     plotOutput("distributions", height = "470px"),
-    p(class = "caption", "Figure. Sampling distributions under the null and specified alternative, with Type I error rate and Type II error rate shaded."),
+    p(class = "caption", "Figure. Sampling distributions under the null and specified alternative, with Type I error probability and Type II error probability shaded."),
     tableOutput("operating_table"),
     p(class = "caption", "Table. Standard error, rejection boundaries and error probabilities under the selected design."),
     textOutput("explanation"),
-    p("Type I error rate is the probability of falsely rejecting the null (a false positive). Type II error rate is the probability of missing the specified true difference (a false negative). Power is the true-positive probability: 1 minus Type II error rate. These describe the study conclusion, not a patient diagnosis. The shaded areas refer to different assumed populations; their overlap on the page is not an extra probability."),
-    p("The vertical boundaries are fixed by the null distribution and chosen Type I error rate. Greater sample size narrows the distribution of the mean; it does not shrink the population SD shown in the controls."),
+    p("Type I error probability is the probability of falsely rejecting the null (a false positive). Type II error probability is the probability of missing the specified true difference (a false negative). Power is the true-positive probability: 1 minus Type II error probability. These describe the study conclusion, not a patient diagnosis. The shaded areas refer to different assumed populations; their overlap on the page is not an extra probability."),
+    p("The vertical boundaries are fixed by the null distribution and chosen Type I error probability. Greater sample size narrows the distribution of the mean; it does not shrink the population SD shown in the controls."),
     h3("Power across sample sizes"), plotOutput("power_curve", height = "280px"),
-    p(class = "caption", "Figure. Power at the specified alternative across independent sample sizes. The point marks the current sample; the reference line marks Type I error rate."),
-    p("A one-sided alternative in the wrong direction can have power below Type I error rate. Direction should follow the prespecified scientific question. A realized non-significant result does not establish that the null is true."),
+    p(class = "caption", "Figure. Power at the specified alternative across independent sample sizes. The point marks the current sample; the reference line marks Type I error probability."),
+    p("A one-sided alternative in the wrong direction can have power below Type I error probability. Direction should follow the prespecified scientific question. A realized non-significant result does not establish that the null is true."),
     textAreaInput("interpretation", "Explain the two shaded regions and one design choice.", rows = 4, width = "100%"),
     activity_download_button("download_assumptions", "Download assumptions and explanation"),
     tags$p(id = "download-status", role = "status", "aria-live" = "polite"),
     tags$details(tags$summary("Reference calculation and scope"),
-      p("SE = sigma / sqrt(n). For a greater-than test, c = mu0 + qnorm(1 − Type I error rate) × SE, and power = P(mean > c | mu1). Two-sided power counts both rejection tails. The shared open R functions calculate these probabilities directly; no lookup table is needed."),
+      p("SE = sigma / sqrt(n). For a greater-than test, c = mu0 + qnorm(1 − Type I error probability) × SE, and power = P(mean > c | mu1). Two-sided power counts both rejection tails. The shared open R functions calculate these probabilities directly; no lookup table is needed."),
       p("These curves are exact under independent normal sampling with known SD. The main reasoning lab estimates SD and uses a two-sample t test; its power calculation and intervals use that different model."),
       tags$a(href = "https://stat.ethz.ch/R-manual/R-devel/library/stats/html/Normal.html", "R documentation: the normal distribution, quantiles and probabilities.")))))
 
@@ -105,10 +105,10 @@ server <- function(input, output, session) {
   operating <- reactive(safe(do.call(normal_sampling_operating_characteristics, snapshot())))
   output$bridge_status <- renderText(bridge_status())
   output$distributions <- renderPlot(plot_sample_mean_distributions(operating()),
-    alt = "Distributions of the sample mean under the null and specified alternative. Rejection tails under the null show Type I error rate; the non-rejection region under the alternative shows Type II error rate. Values and boundaries are listed below.")
+    alt = "Distributions of the sample mean under the null and specified alternative. Rejection tails under the null show Type I error probability; the non-rejection region under the alternative shows Type II error probability. Values and boundaries are listed below.")
   output$operating_table <- renderTable({
     x <- operating()
-    data.frame(Quantity = c("Standard error of the mean", "Rejection boundary or boundaries", "Type I error rate under null", "Type II error rate at the specified alternative", "Power at the specified alternative"),
+    data.frame(Quantity = c("Standard error of the mean", "Rejection boundary or boundaries", "Type I error probability under null", "Type II error probability at the specified alternative", "Power at the specified alternative"),
       Value = c(round(x$se, 4), paste(round(x$critical, 4), collapse = " and "),
         format_percent(x$type1, 2), format_percent(x$beta, 2), format_percent(x$power, 2)))
   })
@@ -129,7 +129,7 @@ server <- function(input, output, session) {
     axis(2, at = seq(0, 1, .2), labels = paste0(seq(0, 100, 20), "%"))
     abline(h = x$alpha, lty = 3, col = "#a34724")
     points(x$n, operating()$power, pch = 19)
-  }, alt = "Power at the specified alternative across independent sample sizes, with current power given in the table and a line at Type I error rate.")
+  }, alt = "Power at the specified alternative across independent sample sizes, with current power given in the table and a line at Type I error probability.")
   output$download_assumptions <- downloadHandler(filename = function() "sampling_distribution_assumptions.txt", content = function(file) {
     writeLines(c("Known-SD one-sample normal reference model", capture.output(dput(snapshot())),
       "Operating characteristics", capture.output(dput(operating())), "Learner explanation:", input$interpretation,

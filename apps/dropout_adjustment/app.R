@@ -24,8 +24,8 @@ ui <- fluidPage(
         conditionalPanel("input.lab_outcome == 'means'",
           numericInput("lab_delta", "Difference used for planning", 3), numericInput("lab_sd", "Standard deviation used for planning", 5, min = .1)),
         conditionalPanel("input.lab_outcome == 'proportions'",
-          percent_slider("lab_p0", "Standard treatment: event rate used for planning (%)", .01, .99, .3, step = .01),
-          percent_slider("lab_p1", "Novel treatment: event rate used for planning (%)", .01, .99, .6, step = .01)),
+          percent_slider("lab_p0", "Standard treatment: event probability used for planning (%)", .01, .99, .3, step = .01),
+          percent_slider("lab_p1", "Novel treatment: event probability used for planning (%)", .01, .99, .6, step = .01)),
         uiOutput("lab_link"),
         helpText("This transfers the entered analyzable count per group, without recalculating it from a power target."))
     )

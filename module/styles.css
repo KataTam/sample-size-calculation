@@ -78,7 +78,7 @@ details.r-code-output pre { margin: .5em; background: #fff1f7 !important; }
 .color-theme-2 details.r-code-output { background: #482d3c; border-color: #b77797; }
 .color-theme-2 details.r-code-output pre { background: #35222c !important; color: #f6e7ef; }
 .color-theme-2 details.r-code-output > summary { color: #f0bfd7; }
-@media print { .tutorial-downloads, .reference-preview, .reference-preview-button, details.r-code-output { display: none !important; } }
+@media print { .tutorial-downloads, .reference-preview, .reference-preview-button { display: none !important; } }
 
 /* Normal-weight content; headings and disclosure titles keep their hierarchy. */
 body :where(p, li, td, th, label, button, a, span, strong, b, code, pre, input, textarea, select) { font-weight: 400 !important; }
@@ -96,8 +96,8 @@ body :where(h1,h2,h3,h4,h5,h6,summary,legend) :where(a,span,strong,b,code) { fon
 .csl-right-inline { margin-left: 2.5em; overflow-wrap: anywhere; }
 .csl-bib-body.hanging-indent .csl-entry { margin-left: 2em; text-indent: -2em; overflow-wrap: anywhere; }
 @media print { .csl-entry { break-inside: avoid; } }
-/* Model answers stay optional; the print edition shows their label only. */
-@media print { details.model-answer > :not(summary) { display: none !important; } }
+/* All disclosure contents are visible in the print edition. */
+@media print { details > * { display: block; } details { break-inside: auto; } }
 
 /* Sidebar sizes stay consistent; indentation carries the section hierarchy. */
 .book .book-summary ul.summary li a { font-size: 14px; line-height: 1.4; white-space: normal; overflow-wrap: break-word; text-overflow: clip; padding-top: 7px; padding-bottom: 7px; }

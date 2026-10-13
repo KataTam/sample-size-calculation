@@ -112,7 +112,7 @@ app_labels <- function(apps) {
     power_explorer = "Sample size reasoning lab",
     dropout_adjustment = "Dropout adjustment",
     prevalence_precision = "Estimate one proportion",
-    sampling_distributions = "Type I and Type II error rates and power"
+    sampling_distributions = "Type I and Type II error probabilities and power"
   )
   unname(ifelse(apps %in% names(labels), labels[apps], apps))
 }

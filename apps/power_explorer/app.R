@@ -78,24 +78,24 @@ ui <- fluidPage(
       helpText("Full width 4 means a symmetric interval extending approximately 2 units on each side."))),
     conditionalPanel("input.outcome == 'proportions'",
       percent_slider("expected_p", "Expected difference (percentage points)", value = .4, min = -1, max = 1, step = .01, suffix = " percentage points"),
-      percent_slider("plan_p0", "Standard treatment: event rate used for planning (%)", .01, .99, .3, step = .01),
-      percent_slider("plan_p1", "Novel treatment: event rate used for planning (%)", .01, .99, .6, step = .01),
+      percent_slider("plan_p0", "Standard treatment: event probability used for planning (%)", .01, .99, .3, step = .01),
+      percent_slider("plan_p1", "Novel treatment: event probability used for planning (%)", .01, .99, .6, step = .01),
       textOutput("probability_inputs"),
-      helpText("Event rates are displayed as percentages. An increase from 30% to 60% is 30 percentage points. Expected difference is recorded separately and does not enter the calculation."),
+      helpText("Event probabilities are displayed as percentages. An increase from 30% to 60% is 30 percentage points. Expected difference is recorded separately and does not enter the calculation."),
       tagList(
       percent_slider("threshold_p", "Clinically important difference (percentage points)", value = .2, min = .001, max = 1, step = .01, suffix = " percentage points"),
       helpText("Clinical importance is separate from statistical significance.")),
       conditionalPanel("input.show_advanced || input.goal == 'precision'",
       percent_slider("width_p", "Target full confidence interval width (percentage points)", value = .2, min = .001, max = 2, step = .01, suffix = " percentage points"))),
     helpText("The expected difference, target difference and clinical threshold answer separate questions. Record sources and uncertainty in your case worksheet."),
-    percent_slider("alpha", tags$span(tags$a(href = "../book/Sample_size_open_module.html#alpha", target = "_blank", rel = "noopener", "Type I error rate"),
+    percent_slider("alpha", tags$span(tags$a(href = "../book/Sample_size_open_module.html#alpha", target = "_blank", rel = "noopener", "Type I error probability"),
       " (%)"), .001, .1, .05, step = .001),
-    conditionalPanel("input.show_advanced", helpText("Type I error rate is the probability of falsely rejecting the null: a false positive when population outcomes are equal. The test is two-sided; a 5% error-rate setting is paired with a 95% confidence interval.")),
+    conditionalPanel("input.show_advanced", helpText("Type I error probability is the probability of falsely rejecting the null: a false positive when population outcomes are equal. The test is two-sided; a 5% error-probability setting is paired with a 95% confidence interval.")),
     percent_slider("target_power", tags$span("Target ", tags$a(href = "../book/Sample_size_open_module.html#statistical-power", target = "_blank", rel = "noopener", "power"),
       " (%)"), .5, .99, .8, step = .01),
     textOutput("error_target_inputs"),
-    conditionalPanel("input.show_advanced", helpText("Power is 1 minus ", tags$a(href = "../book/Sample_size_open_module.html#beta", target = "_blank", rel = "noopener", "Type II error rate"),
-      ": the probability of detecting a specified true difference (a true positive). The Type II error rate is the probability of missing that difference (a false negative).")),
+    conditionalPanel("input.show_advanced", helpText("Power is 1 minus ", tags$a(href = "../book/Sample_size_open_module.html#beta", target = "_blank", rel = "noopener", "Type II error probability"),
+      ": the probability of detecting a specified true difference (a true positive). The Type II error probability is the probability of missing that difference (a false negative).")),
     conditionalPanel("input.goal == 'fixed'", numericInput("fixed_n", "Participants needed for analysis, per group", 60, min = 2, max = 100000, step = 1)),
     percent_slider("dropout", "Expected loss to follow-up in each group (%)", 0, .5, .1, step = .01),
     textOutput("dropout_input"),
@@ -108,8 +108,8 @@ ui <- fluidPage(
       numericInput("true_delta", "True treatment effect assumed for simulation (outcome units; zero or negative allowed)", 1, step = .5),
       numericInput("true_sd", "Standard deviation assumed for simulation (outcome units)", 7, min = .1)),
     conditionalPanel("input.reality == 'custom' && input.outcome == 'proportions'",
-      percent_slider("true_p0", "Control event rate assumed for simulation (%)", .01, .99, .3, step = .01),
-      percent_slider("true_p1", "Treatment event rate assumed for simulation (%)", .01, .99, .4, step = .01),
+      percent_slider("true_p0", "Control event probability assumed for simulation (%)", .01, .99, .3, step = .01),
+      percent_slider("true_p1", "Treatment event probability assumed for simulation (%)", .01, .99, .4, step = .01),
       textOutput("generating_inputs")),
     numericInput("seed", "Random seed (to reproduce the simulation)", 20260914, min = 0, max = 2147483647, step = 1),
     numericInput("B", "Number of simulated studies (B)", 1000, min = 100, max = 10000, step = 100),
@@ -150,15 +150,15 @@ ui <- fluidPage(
       textOutput("many_status"), tableOutput("many_summary"),
       p(class = "caption", "Table 6. Rejection, confidence interval coverage and the percentage meeting the target width across the saved simulation batch, with Monte Carlo uncertainty."),
       textOutput("many_text"),
-      p("Monte Carlo uncertainty comes from simulating a limited number of studies. Confidence interval coverage is the percentage of intervals containing the assumed true effect; rejection rate is the percentage of statistically significant results."),
+      p("Monte Carlo uncertainty comes from simulating a limited number of studies. Confidence interval coverage is the percentage of intervals containing the assumed true effect; the percentage of statistically significant results estimates the probability of rejecting the null."),
       plotOutput("many_plot", height = "480px"),
       p(class = "caption", "Figure 5. The first 30 saved trial intervals. Filled dots show statistically significant results; open dots do not. Line styles distinguish zero, the clinical threshold and the true effect assumed for simulation."),
       plotOutput("distribution", height = "300px"),
       p(class = "caption", "Figure 6. Distribution of estimated treatment effects across the saved independent studies; the dashed line marks the true effect assumed for simulation."),
       h4("How often is the result statistically significant?"),
       plotOutput("p_values", height = "300px"),
-      p(class = "caption", "Figure 7. Saved p-values across independent studies; the dashed line marks the Type I error rate used for that simulation batch."),
-      p("The fraction of p-values below the saved Type I error rate estimates power under an alternative or Type I error under the null."),
+      p(class = "caption", "Figure 7. Saved p-values across independent studies; the dashed line marks the Type I error probability used for that simulation batch."),
+      p("The percentage of p-values below the chosen significance level estimates power when a true difference is assumed, or the Type I error probability when no difference is assumed."),
       downloadButton("download_many", "Download replications and assumptions")),
     tabPanel("My study", h3("Apply this to your question"),
       textAreaInput("study_question", "Research question and primary outcome", rows = 2, width = "100%"),
@@ -171,7 +171,7 @@ ui <- fluidPage(
       textAreaInput("participant_burden", "Participant burden, benefits and ethical considerations", rows = 3, width = "100%"),
       textAreaInput("evidence_sources", "Evidence sources and uncertainty in the planning inputs", rows = 3, width = "100%"),
       fluidRow(column(6, numericInput("eligible_monthly", "Eligible participants per month", 20, min = 0)),
-        column(6, percent_slider("consent_fraction", "Expected consent rate (%)", 0, 1, .7, step = .01))),
+        column(6, percent_slider("consent_fraction", "Expected percentage consenting (%)", 0, 1, .7, step = .01))),
       fluidRow(column(4, numericInput("recruitment_months", "Months available for recruitment", 12, min = 0)),
         column(4, numericInput("cost_base", "Fixed study costs (your currency)", 0, min = 0)),
         column(4, numericInput("cost_per_patient", "Cost per recruited participant", 0, min = 0))),
@@ -223,21 +223,21 @@ server <- function(input, output, session) {
   output$probability_inputs <- renderText({
     values <- current_lab_inputs()
     paste0("Expected difference: ", effect_text(values$expected_p, "proportions"),
-      "; event rates used for planning: control ", format_percent(values$plan_p0, 1),
+      "; event probabilities used for planning: control ", format_percent(values$plan_p0, 1),
       ", treatment ", format_percent(values$plan_p1, 1),
       "; target difference: ", effect_text(values$plan_p1 - values$plan_p0, "proportions"),
       "; clinical threshold: ", effect_text(values$threshold_p, "proportions"), ".")
   })
   output$error_target_inputs <- renderText({
     values <- current_lab_inputs()
-    paste0("Type I error rate: ", format_percent(values$alpha, 1), "; target power: ",
+    paste0("Type I error probability: ", format_percent(values$alpha, 1), "; target power: ",
       format_percent(values$target_power, 1), "; interval confidence: ",
       format_percent(1 - values$alpha, 1), ".")
   })
   output$dropout_input <- renderText(paste0("Expected dropout: ", format_percent(current_lab_inputs()$dropout, 1), "."))
   output$generating_inputs <- renderText({
     values <- current_lab_inputs()
-    paste0("Event rates assumed for simulation: control ", format_percent(values$true_p0, 1),
+    paste0("Event probabilities assumed for simulation: control ", format_percent(values$true_p0, 1),
       ", treatment ", format_percent(values$true_p1, 1), ".")
   })
   study_details <- reactive({
@@ -402,7 +402,7 @@ server <- function(input, output, session) {
   output$method <- renderText(method_label(planned()$outcome))
   output$planning_text <- renderText(paste(if (planned()$outcome == "means")
     "The width curve is the expected full t-interval width under normal equal-variance sampling." else
-    "The width curve uses the Newcombe-Wilson method with the assumed event rates (a plug-in approximation). It does not give an exact average width across repeated studies.",
+    "The width curve uses the Newcombe-Wilson method with the assumed event probabilities (a plug-in approximation). It does not give an exact average width across repeated studies.",
     "Reaching the target on this curve does not guarantee every interval meets it. Check the fraction meeting the width target under Many studies."))
   output$planning_plot <- renderPlot({
     x <- planned(); ns <- unique(round(seq(2, min(100000, max(40, 2*x$n)), length.out = 70)))
@@ -489,11 +489,11 @@ server <- function(input, output, session) {
   })
   output$many_text <- renderText({
     x <- many(); r <- x$results
-    paste0(if (abs(true_difference(x$spec)) < 1e-12) "Null scenario: rejection rate estimates Type I error. " else "Effect scenario: rejection rate estimates power. ",
+    paste0(if (abs(true_difference(x$spec)) < 1e-12) "No-difference scenario: the percentage of significant results estimates Type I error probability. " else "True-difference scenario: the percentage of significant results estimates power. ",
       "Mean full interval width = ", effect_text(mean(r$width), x$spec$outcome), "; mean estimate = ", effect_text(mean(r$estimate), x$spec$outcome),
       "; truth = ", effect_text(true_difference(x$spec), x$spec$outcome), ". The separate single-study draw is not the first row of this batch.")
   })
-  output$many_plot <- renderPlot(plot_trial_intervals(many()$results, many()$spec), alt = "First 30 study intervals; summary rates and downloadable data provide a text alternative.")
+  output$many_plot <- renderPlot(plot_trial_intervals(many()$results, many()$spec), alt = "First 30 study intervals; summary percentages and downloadable data provide a text alternative.")
   output$distribution <- renderPlot({
     x <- many(); scale <- if (x$spec$outcome == "proportions") 100 else 1
     hist(scale * x$results$estimate, breaks = 25, col = "#dbeafe", border = "white", main = "Sampling distribution of effects",
@@ -505,7 +505,7 @@ server <- function(input, output, session) {
     hist(x$results$p_value, breaks = seq(0,1,.025), col = "#d2e6e9", border = "white",
       xlab = "p-value", ylab = "Number of studies", main = "Saved repeated-study p-values")
     abline(v = x$spec$alpha, lty = 2, lwd = 2, col = "#923d20")
-  }, alt = "Histogram of saved simulation p-values. The rejection rate and Monte Carlo interval are reported in the summary table.")
+  }, alt = "Histogram of saved simulation p-values. The percentage of significant results and Monte Carlo interval are reported in the summary table.")
   export_rows <- function(rows, meta) {
     for (k in names(meta$plan)) rows[[paste0("plan_", k)]] <- meta$plan[[k]]
     for (k in names(meta$generating)) rows[[paste0("generating_", k)]] <- meta$generating[[k]]

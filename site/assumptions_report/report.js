@@ -15,14 +15,14 @@
       ['expected', 'Expected difference', 'Give the best current expectation, its evidence source and uncertainty.', 'The expected difference and supporting evidence are'],
       ['clinical', 'Clinically important difference (clinical threshold)', 'Give the smallest between-group benefit that matters to patients and justify that judgment.', 'The clinical threshold and its justification are', 'comparison'],
       ['planning', 'Target difference: used in the calculation', 'Give the difference used to evaluate power and explain why it is appropriate.', 'The target difference and its justification are', 'power'],
-      ['variation', 'Variation or event rates', 'Give the standard deviation or anticipated event rates, their evidence sources, population and time point.', 'The variation or event rates used for planning are'],
+      ['variation', 'Variation or event probabilities', 'Give the standard deviation or anticipated event probabilities, their evidence sources, population and time point.', 'The variation or event probabilities used for planning are'],
       ['evidence_review', 'Evidence relevance and uncertainty', 'Which assumptions are least certain? Explain whether previous evidence fits this population, outcome and follow-up time.', 'The relevance and uncertainty of the evidence are'],
-      ['sensitivity', 'Sensitivity analysis: alternative assumptions', 'Give plausible alternative differences, standard deviations or event rates and their sources. Distinguish recalculating required counts from evaluating the original sample held fixed.', 'The sensitivity scenarios and their evidence are'],
+      ['sensitivity', 'Sensitivity analysis: alternative assumptions', 'Give plausible alternative differences, standard deviations or event probabilities and their sources. Distinguish recalculating required counts from evaluating the original sample held fixed.', 'The sensitivity scenarios and their evidence are'],
       ['progression', 'Feasibility objectives and progression criteria', 'State each feasibility outcome and denominator, unacceptable and desirable levels, and the decisions to proceed, amend or stop.', 'The feasibility objectives and progression criteria are', 'feasibility']
     ]],
     ['Analysis and information target', [
       ['analysis', 'Planned analysis', 'Name the test and confidence interval method. State the sidedness and relevant assumptions.', 'The planned analysis is'],
-      ['power', 'Type I error rate and target power', 'State Type I error rate and target power as percentages. With fixed resources, record attainable power and the effect at which it is evaluated.', 'The Type I error rate and power specification is', 'power'],
+      ['power', 'Type I error probability and target power', 'State Type I error probability and target power as percentages. With fixed resources, record attainable power and the effect at which it is evaluated.', 'The Type I error probability and power specification is', 'power'],
       ['precision', 'Precision: desired confidence interval width', 'State the desired full confidence interval width, its units and the confidence level. With fixed resources, record attainable precision.', 'The precision specification is', 'precision']
     ]],
     ['Sample size, recruitment and conclusion', [
@@ -54,7 +54,7 @@
       const label = document.createElement('label'); label.htmlFor = id; label.textContent = title;
       if (id === 'power') {
         const alpha = document.createElement('a'), power = document.createElement('a');
-        alpha.href = '../student-materials/glossary.html#alpha'; alpha.textContent = 'Type I error rate';
+        alpha.href = '../student-materials/glossary.html#alpha'; alpha.textContent = 'Type I error probability';
         power.href = '../student-materials/glossary.html#statistical-power'; power.textContent = 'power';
         for (const link of [alpha, power]) { link.target = '_blank'; link.rel = 'noopener'; }
         label.replaceChildren(alpha, ' and target ', power);
@@ -80,7 +80,7 @@
     const single = value.study_type === 'single';
     for (const option of form.elements.goal.options) option.disabled = single && ['testing', 'both'].includes(option.value);
     if (single && ['testing', 'both'].includes(value.goal)) { value.goal = 'precision'; form.elements.goal.value = 'precision'; }
-    document.getElementById('outcome-scale-help').textContent = value.outcome === 'binary' ? 'Report event rates as percentages (e.g. 60%) and absolute differences or interval widths in percentage points. State the denominator.' : 'Report means, differences, interval widths and standard deviations in the outcome’s units.';
+    document.getElementById('outcome-scale-help').textContent = value.outcome === 'binary' ? 'Report event probabilities as percentages (e.g. 60%) and absolute differences or interval widths in percentage points. State the denominator.' : 'Report means, differences, interval widths and standard deviations in the outcome’s units.';
     const wording = single ? {
       scale: ['Outcome scale and interpretation', 'State the percentage or mean to estimate and its units; there is no treatment difference for a descriptive estimate.', 'The outcome scale and interpretation are'],
       expected: ['Anticipated percentage or mean', 'Give an anticipated value and its evidence, if available. Distinguish it from the result observed in existing data.', 'The anticipated value and supporting evidence are']
@@ -152,10 +152,10 @@
         clinical: percent(input.threshold_p) + ' percentage points. This is an illustrative judgment about meaningful benefit that needs justification with patients and clinicians',
         planning: percent(input.plan_p1 - input.plan_p0) + ' percentage points, an illustrative difference judged worthwhile and realistic. Power at the smaller 20-point clinical threshold will be lower; a real plan must justify accepting that uncertainty',
         variation: percent(input.plan_p0) + '% relief in controls and ' + percent(input.plan_p1) + '% in the treatment group',
-        evidence_review: 'The pilot contains only 10 patients per group. Check comparable studies, outcome definitions and follow-up times; the event rates and expected difference remain uncertain',
+        evidence_review: 'The pilot contains only 10 patients per group. Check comparable studies, outcome definitions and follow-up times; the event probabilities and expected difference remain uncertain',
         sensitivity: 'Compare smaller true benefits while keeping the original sample size fixed. Specify plausible ranges using evidence beyond the pilot',
         analysis: 'A two-sided pooled score test without continuity correction, with a Newcombe-Wilson confidence interval; independent observations and allocation are assumed',
-        power: 'Type I error rate ' + percent(input.alpha) + '%. Evaluate attainable power at the ' + percent(input.plan_p1 - input.plan_p0) + '-percentage-point target difference using the matched pain-relief activity',
+        power: 'Type I error probability ' + percent(input.alpha) + '%. Evaluate attainable power at the ' + percent(input.plan_p1 - input.plan_p0) + '-percentage-point target difference using the matched pain-relief activity',
         precision: 'Evaluate the attainable 95% confidence interval width at the fixed sample size. The activity compares it with a full width of ' + percent(input.width_p) + ' percentage points',
         counts: input.fixed_n + ' analyzable patients per group, ' + (2 * input.fixed_n) + ' in total; the illustrative sample size is held fixed to assess power and precision rather than selected to meet a target power',
         recruitment: percent(input.dropout) + '% expected losses. Recruit ' + Math.ceil(input.fixed_n / (1 - input.dropout)) + ' per group, ' + (2 * Math.ceil(input.fixed_n / (1 - input.dropout))) + ' in total using the expected-loss adjustment; this does not guarantee the final analyzable count',

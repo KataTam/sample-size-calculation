@@ -12,7 +12,7 @@ Binary outcome: patient reports whether the painkiller was effective.
 - Planning event percentages: standard treatment 30%, novel treatment 60%
 - Target difference: 30 percentage points
 - Clinical threshold: 20 percentage points
-- Type I error rate: 5%
+- Type I error probability: 5%
 - Target power: 90%
 - Dropout: to be determined
 

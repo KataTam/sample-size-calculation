@@ -50,13 +50,13 @@ ui <- fluidPage(
     selectInput("case_id", "Teaching case", c("Prevalence survey" = "prevalence", "Pilot retention" = "pilot_feasibility")),
     actionButton("load_case", "Load case assumptions"),
     selectInput("goal", "Planning goal", c("Plan for a target width" = "precision", "Assess an available sample" = "fixed")),
-    percent_slider("anticipated_p", "Expected event rate (%)", .001, .999, .20, step = .001),
+    percent_slider("anticipated_p", "Anticipated percentage (%)", .001, .999, .20, step = .001),
     checkboxInput("unknown_p", "No previous estimate: use 50% for conservative planning", FALSE),
-    helpText("This choice maximises the usual single-proportion sample requirement at fixed absolute margin of error. It does not supply an assumed treatment effect."),
+    helpText("This choice maximizes the usual single-proportion sample requirement at fixed absolute margin of error. It does not supply an assumed treatment effect."),
     percent_slider("full_width", "Target full confidence interval width (percentage points)", value = .10, min = .01, max = .50, step = .01, suffix = " percentage points"),
     percent_slider("confidence", "Confidence level (%)", .80, .99, .95, step = .01),
     conditionalPanel("input.goal == 'fixed'", numericInput("fixed_n", "Available participants for analysis (one sample)", 246, min = 1, max = 1e7, step = 1)),
-    percent_slider("dropout", "Expected loss or nonresponse rate (%)", 0, .80, 0, step = .01),
+    percent_slider("dropout", "Expected loss or nonresponse (%)", 0, .80, 0, step = .01),
     helpText("When retention is the outcome, retained and non-retained participants belong in its denominator. Apply extra loss adjustment only when the outcome status itself will be unavailable."),
     numericInput("seed", "Seed for the illustrative study", 20260942, min = 0, max = 2147483647, step = 1)),
   mainPanel(width = 8,
@@ -70,7 +70,7 @@ ui <- fluidPage(
     p("Both reference curves use 95% confidence and fixed absolute margins: ±5 versus ±2.5 percentage points. The dot and separate curve show your chosen confidence and width."),
     h3("One simulated confidence interval"),
     actionButton("simulate", "Draw one illustrative sample", class = "btn-primary"),
-    p("The sample uses the expected event rate as the assumed true population rate. Choosing 50% for conservative planning changes the sample size calculation; it does not make the population rate known."),
+    p("The simulated sample uses the anticipated percentage as its assumed population probability. Choosing 50% for conservative planning changes the sample size calculation; it does not make the population probability known."),
     textOutput("saved_status"), tableOutput("study_table"),
     p(class = "caption", "Table. Event count, observed percentage and Wilson confidence limits from one illustrative sample, with the realized width and target assessment."),
     plotOutput("interval_plot", height = "220px"),
@@ -135,7 +135,7 @@ server <- function(input, output, session) {
   output$plan_table <- renderTable({
     p <- plan(); n <- analysable_n(); x <- snapshot()
     anticipated_width <- 2 * qnorm((1+x$confidence)/2) * sqrt(p$planning_p * (1-p$planning_p) / n)
-    data.frame(Item = c("Event rate used for planning", "Target full interval width", "Target margin of error (half width)",
+    data.frame(Item = c("Anticipated percentage used for planning", "Target full interval width", "Target margin of error (half width)",
       "Approximate participants needed for analysis", "Current participants for analysis", "Recruitment target", "Approximate full interval width at the current sample size"),
       Value = c(format_percent(p$planning_p, 1), paste0(100*p$full_width, " percentage points"),
         paste0("±", 100*p$half_width, " percentage points"), p$n, n,
@@ -188,10 +188,10 @@ server <- function(input, output, session) {
   output$interval_plot <- renderPlot({
     y <- study(); r <- y$result
     plot(r$estimate*100, 1, xlim = c(0,100), ylim = c(.5,1.5), yaxt = "n", pch = 19,
-      xlab = "Event rate (%)", ylab = "", main = paste(round(100*y$confidence), "% Wilson interval"))
+      xlab = "Percentage (%)", ylab = "", main = paste(round(100*y$confidence), "% Wilson interval"))
     segments(r$lower*100, 1, r$upper*100, 1, lwd = 3, col = "#176675")
     abline(v = y$p*100, lty = 2, col = "#a34724")
-    legend("topright", "True rate assumed for simulation", lty = 2, col = "#a34724", bty = "n", cex = .8)
+    legend("topright", "Population percentage assumed for simulation", lty = 2, col = "#a34724", bty = "n", cex = .8)
   }, alt = "Saved one-sample Wilson interval; observed events, estimate and limits are supplied in the table.")
   output$download_plan <- downloadHandler(filename = function() "proportion_precision_plan.txt", content = function(file) {
     writeLines(c("Single proportion: planning assumptions", capture.output(dput(snapshot())),

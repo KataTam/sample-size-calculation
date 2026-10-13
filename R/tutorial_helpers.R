@@ -8,14 +8,14 @@ display_probabilities <- function(x, probabilities = character(), points = chara
   for (column in probabilities) x[[column]] <- percent(x[[column]])
   for (column in points) x[[column]] <- paste0(formatC(100 * x[[column]],
     format = "f", digits = 1), " percentage points")
-  names(x)[names(x) == "alpha"] <- "Type I error rate"
-  names(x)[names(x) == "beta"] <- "Type II error rate"
+  names(x)[names(x) == "alpha"] <- "Type I error probability"
+  names(x)[names(x) == "beta"] <- "Type II error probability"
   names(x) <- gsub("_", " ", names(x), fixed = TRUE)
   x
 }
 
 display_simulation_summary <- function(x) {
-  data.frame(Measure = c("Statistically significant results (rejection rate)", "Intervals containing the true effect (coverage)", "Intervals meeting the target width"), Rate = percent(x$estimate),
+  data.frame(Measure = c("Statistically significant simulated results", "Intervals containing the true effect (coverage)", "Intervals meeting the target width"), Percentage = percent(x$estimate),
     `Simulation uncertainty: Monte Carlo SE (percentage points)` = formatC(100 * x$MCSE,
       format = "f", digits = 2),
     `95% lower limit` = percent(x$MC_lower_95),

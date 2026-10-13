@@ -11,7 +11,7 @@ ui <- fluidPage(
       numericInput("delta", "Target difference: used in the sample size calculation", value = 3, min = 0.01),
       helpText("The score example expects a 4-unit benefit, plans for 3 units and uses a 2-unit clinical threshold."),
       numericInput("sd", "Assumed standard deviation (SD)", value = 5, min = 0.01),
-      percent_slider("alpha", tags$a(href = "../book/Sample_size_open_module.html#alpha", target = "_blank", rel = "noopener", "Type I error rate (%)"), min = 0.001, max = 0.10, value = 0.05, step = 0.001),
+      percent_slider("alpha", tags$a(href = "../book/Sample_size_open_module.html#alpha", target = "_blank", rel = "noopener", "Type I error probability (%)"), min = 0.001, max = 0.10, value = 0.05, step = 0.001),
       percent_slider("power", tags$a(href = "../book/Sample_size_open_module.html#statistical-power", target = "_blank", rel = "noopener", "Target power (%)"), min = 0.50, max = 0.99, value = 0.90, step = 0.01),
       percent_slider("dropout", "Expected loss to follow-up (%)", min = 0, max = 0.50, value = 0, step = 0.01)
     ),
@@ -23,10 +23,10 @@ ui <- fluidPage(
       h3("Interpretation"),
       textOutput("interpretation"),
       uiOutput("lab_link"),
-      helpText("The ", tags$a(href = "../power_explorer/", target = "_blank", rel = "noopener", "lab"), " receives this calculated analyzable count as a fixed sample, together with your difference, SD, Type I error rate, power target and losses. Its test-based power may differ from this approximation."),
+      helpText("The ", tags$a(href = "../power_explorer/", target = "_blank", rel = "noopener", "lab"), " receives this calculated analyzable count as a fixed sample, together with your difference, SD, Type I error probability, power target and losses. Its test-based power may differ from this approximation."),
       h3("Difference and sample size"),
       plotOutput("sample_size_plot", height = "320px"),
-      p(class = "caption", "Figure. Approximate total analyzable sample size across target differences, holding the common SD, Type I error rate and target power fixed."),
+      p(class = "caption", "Figure. Approximate total analyzable sample size across target differences, holding the common SD, Type I error probability and target power fixed."),
       h3("Assumptions"),
       tableOutput("assumptions"),
       p(class = "caption", "Table. Current target difference, common SD, error targets and expected losses.")
@@ -100,7 +100,7 @@ server <- function(input, output, session) {
       Assumption = c(
         "Target difference",
         "Assumed standard deviation (SD)",
-        "Type I error rate",
+        "Type I error probability",
         "Power",
         "Dropout"
       ),

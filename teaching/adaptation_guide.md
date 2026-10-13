@@ -35,7 +35,7 @@ To replace the chronic pain example:
 2. Decide whether the primary outcome is binary or continuous.
 3. State the standard-treatment result.
 4. Distinguish the expected difference, target difference and smallest clinically important difference; justify importance, realism and any gap between them.
-5. Specify the analysis, Type I error rate and power, or useful precision if the aim is estimation.
+5. Specify the analysis, Type I error probability and power, or useful precision if the aim is estimation.
 6. Record evidence sources, uncertain ranges and anticipated missing outcomes; assess recruitment separately.
 7. Compare plausible assumptions and the information available. Do not choose a larger unsupported target simply to make the number affordable.
 
@@ -102,7 +102,7 @@ If translating the module:
 
 - translate the learner-facing text first
 - keep statistical notation consistent
-- check whether terms such as Type I error rate, Type II error rate, power, and clinically relevant difference have accepted local translations
+- check whether terms such as Type I error probability, Type II error probability, power, and clinically relevant difference have accepted local translations
 - re-knit the module and check all figures and tables
 - update license and attribution notes in the translated version
 

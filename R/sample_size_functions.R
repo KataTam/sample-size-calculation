@@ -318,7 +318,7 @@ simulation_summary <- function(batch) {
   x <- batch$results; B <- nrow(x)
   rates <- c(mean(x$reject), mean(x$cover), mean(x$width_met))
   intervals <- wilson_interval(rates, B)
-  data.frame(measure = c("Rejection rate", "CI coverage", "Full width target met"),
+  data.frame(measure = c("Statistically significant simulated results", "CI coverage", "Full width target met"),
     estimate = rates, MCSE = sqrt(rates * (1 - rates) / B),
     MC_lower_95 = intervals[, 1], MC_upper_95 = intervals[, 2])
 }
@@ -437,7 +437,7 @@ single_proportion_interval <- function(events, n, confidence = .95) {
 
 simulate_proportion_study <- function(n, p, confidence = .95, seed = 20260942) {
   check_integer(n, "Analyzable sample size", 1, 1e7)
-  check_unit_probability(p, "Event rate assumed for simulation")
+  check_unit_probability(p, "Event probability assumed for simulation")
   check_probability(confidence, "Confidence level")
   check_integer(seed, "Seed", 0, .Machine$integer.max)
   result <- with_study_seed(seed, {

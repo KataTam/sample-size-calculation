@@ -32,8 +32,10 @@ a { color: #17658a; } .tutorial-downloads { display: none; }
  table { font-size: 8pt; break-inside: avoid; } thead { display: table-header-group; } tr { break-inside: avoid; }
  .figure { break-inside: avoid; } .figure img { max-height: 210mm; object-fit: contain; }
  .learning-goals, .misconception { break-inside: avoid; }
- details:not(.r-code-output) > summary { list-style: none; font-weight: bold; }
- .reference-preview-button, .tutorial-downloads, details.r-code-output { display: none !important; }
+ details > summary { list-style: none; font-weight: bold; }
+ .reference-preview-button, .tutorial-downloads, .copy-to-clipboard-button { display: none !important; }
+ details { break-inside: auto; }
+ pre { white-space: pre-wrap !important; overflow-wrap: anywhere; break-inside: auto; }
  .MathJax_SVG_Display { overflow: visible !important; }
 }
 `;
@@ -84,10 +86,26 @@ let browser;
   const html = `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>How many patients do you need for your study? Sample size calculation tutorial</title><style>${css}\n@media print {.tutorial-contents {display:none;} .print-chapter + .print-chapter {break-before:page;}}</style></head><body><nav class="tutorial-contents" aria-label="Tutorial contents"><h2>Contents</h2><ol>${contents.join('')}</ol></nav><main>${sections.join('\n')}</main>${readerScripts}</body></html>`;
   await page.setContent(html, {waitUntil:'load'});
   await page.evaluate(async () => {
-    document.querySelectorAll('details:not(.r-code-output):not(.model-answer)').forEach(el => el.open=true);
+    document.querySelectorAll('details').forEach(el => el.open=true);
+    if (Array.from(document.querySelectorAll('details')).some(el => !el.open)) throw Error('A PDF box remained closed');
     await Promise.all(Array.from(document.images).map(img => img.decode().catch(() => {})));
     await document.fonts.ready;
   });
+  await page.emulateMedia({media:'print'});
+  const disclosureCounts = await page.evaluate(() => {
+    const boxes = Array.from(document.querySelectorAll('main details'));
+    for (const box of boxes) {
+      if (!box.open || getComputedStyle(box).display === 'none') throw Error('Hidden PDF disclosure');
+      for (const child of box.children) {
+        if (child.tagName !== 'SCRIPT' && child.textContent.trim() && getComputedStyle(child).display === 'none') {
+          throw Error('Hidden PDF disclosure content: '+box.querySelector('summary')?.textContent);
+        }
+      }
+    }
+    return {all:boxes.length, answers:document.querySelectorAll('main details.model-answer').length,
+      code:document.querySelectorAll('main details.r-code-output').length};
+  });
+  console.log('Expanded PDF boxes:', JSON.stringify(disclosureCounts));
   const bodyPdf = await page.pdf({outline:true,tagged:true,format:'A4',printBackground:true,margin:{top:'20mm',right:'22mm',bottom:'22mm',left:'22mm'},displayHeaderFooter:true,headerTemplate:'<span></span>',footerTemplate:'<div style="font:9px Arial;width:100%;text-align:center;color:#586572">Katalin Tamási · Sample size calculation tutorial · <span class="pageNumber"></span> / <span class="totalPages"></span></div>'});
   fs.mkdirSync('build/pdf', {recursive:true});
   fs.writeFileSync('build/pdf/tutorial-body.pdf', bodyPdf);

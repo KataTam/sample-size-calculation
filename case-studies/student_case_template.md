@@ -20,10 +20,10 @@ Intended conclusion and what would make the information useful:
 | Expected difference | | | |
 | Smallest clinically important benefit | | Patient or clinical rationale | |
 | Target difference | | Explain importance, realism and differences from the expected difference or clinical threshold | |
-| Expected event rates in control and treatment groups, if binary | Percentages; difference in percentage points | | |
+| Expected event probabilities in control and treatment groups, if binary | Percentages; difference in percentage points | | |
 | Common SD, if continuous | | | |
 | Two-sided test and CI method | | | |
-| Type I error rate and power target, if testing | | | |
+| Type I error probability and power target, if testing | | | |
 | Confidence level and full interval-width target, if estimating | | Explain why this precision is useful | |
 | Analyzable sample available, if fixed resources | | | |
 | Allocation | Equal groups | Core implementation restriction | |

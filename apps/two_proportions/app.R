@@ -8,10 +8,10 @@ ui <- fluidPage(
   titlePanel("Sample Size: Two Proportions", windowTitle = "Two proportions sample size"),
   sidebarLayout(
     sidebarPanel(
-      percent_slider("pi1", "Novel treatment: expected event rate for the calculation (%)", min = 0.01, max = 0.99, value = 0.60, step = 0.01),
-      percent_slider("pi2", "Standard treatment: expected event rate for the calculation (%)", min = 0.01, max = 0.99, value = 0.30, step = 0.01),
-      helpText("These assumed event rates determine the target difference. The pain example expects a 40-percentage-point benefit, plans for 30 points and uses a 20-point clinical threshold."),
-      percent_slider("alpha", tags$a(href = "../book/Sample_size_open_module.html#alpha", target = "_blank", rel = "noopener", "Type I error rate (%)"), min = 0.001, max = 0.10, value = 0.05, step = 0.001),
+      percent_slider("pi1", "Novel treatment: assumed event probability for planning (%)", min = 0.01, max = 0.99, value = 0.60, step = 0.01),
+      percent_slider("pi2", "Standard treatment: assumed event probability for planning (%)", min = 0.01, max = 0.99, value = 0.30, step = 0.01),
+      helpText("These assumed event probabilities determine the target difference. The pain example expects a 40-percentage-point benefit, plans for 30 points and uses a 20-point clinical threshold."),
+      percent_slider("alpha", tags$a(href = "../book/Sample_size_open_module.html#alpha", target = "_blank", rel = "noopener", "Type I error probability (%)"), min = 0.001, max = 0.10, value = 0.05, step = 0.001),
       percent_slider("power", tags$a(href = "../book/Sample_size_open_module.html#statistical-power", target = "_blank", rel = "noopener", "Target power (%)"), min = 0.50, max = 0.99, value = 0.90, step = 0.01),
       percent_slider("dropout", "Expected loss to follow-up (%)", min = 0, max = 0.50, value = 0, step = 0.01)
     ),
@@ -23,10 +23,10 @@ ui <- fluidPage(
       h3("Interpretation"),
       textOutput("interpretation"),
       uiOutput("lab_link"),
-      helpText("The ", tags$a(href = "../power_explorer/", target = "_blank", rel = "noopener", "lab"), " receives this calculated analyzable count as a fixed sample, together with your event rates, Type I error rate, power target and losses. Simulation lets you examine the planned test's performance under these assumptions."),
+      helpText("The ", tags$a(href = "../power_explorer/", target = "_blank", rel = "noopener", "lab"), " receives this calculated analyzable count as a fixed sample, together with your event probabilities, Type I error probability, power target and losses. Simulation lets you examine the planned test's performance under these assumptions."),
       h3("Effect size and sample size"),
       plotOutput("sample_size_plot", height = "320px"),
-      p(class = "caption", "Figure. Approximate total analyzable sample size across absolute target differences, holding the control event rate, Type I error rate and target power fixed."),
+      p(class = "caption", "Figure. Approximate total analyzable sample size across absolute target differences, holding the control event probability, Type I error probability and target power fixed."),
       h3("Assumptions"),
       tableOutput("assumptions"),
       p(class = "caption", "Table. Current event percentages, absolute target difference, error targets and expected losses.")
@@ -36,7 +36,7 @@ ui <- fluidPage(
 
 server <- function(input, output, session) {
   result <- reactive({
-    validate(need(input$pi1 != input$pi2, "Choose different event rates for planning. Required sample size for detecting zero is undefined; the lab allows null scenarios."))
+    validate(need(input$pi1 != input$pi2, "Choose different event probabilities for planning. Required sample size for detecting zero is undefined; the lab allows null scenarios."))
     sample_size_two_proportions_details(
       pi1 = input$pi1,
       pi2 = input$pi2,
@@ -100,10 +100,10 @@ server <- function(input, output, session) {
     x <- result()
     data.frame(
       Assumption = c(
-        "Novel treatment event rate",
-        "Standard treatment event rate",
+        "Novel treatment event probability",
+        "Standard treatment event probability",
         "Absolute difference",
-        "Type I error rate",
+        "Type I error probability",
         "Power",
         "Dropout"
       ),
