@@ -128,8 +128,12 @@ for target in (SITE / "book").glob("*.html"):
 
 # Resolve case links to chapters without maintaining duplicate chapter filenames.
 chapter_anchors = {}
+chapter_tops = {}
 class ChapterAnchors(HTMLParser):
     def handle_starttag(self, tag, attrs):
+        attr = dict(attrs)
+        if tag == "div" and "level1" in attr.get("class", "").split() and attr.get("id"):
+            chapter_tops[attr["id"]] = (SITE / chapter.relative_to(SITE)).resolve()
         for key, value in attrs:
             if key == "id" and value:
                 chapter_anchors.setdefault(value, str(chapter.relative_to(SITE)).replace("\\", "/") + "#" + value)
@@ -247,6 +251,20 @@ for target in SITE.rglob("*.html"):
             relative += "#" + url.fragment
         return 'href="' + html.escape(relative, quote=True) + '"'
     text = re.sub(r'href="([^"]+)"', local_project_link, text)
+    # A chapter-entry link should start at the page top. Section links retain
+    # their fragments, including deliberate shortcuts within the core route.
+    def chapter_entry_link(match):
+        url = urlsplit(html.unescape(match.group(1)))
+        if url.scheme or url.netloc or url.fragment not in chapter_tops:
+            return match.group(0)
+        linked = (target.parent / unquote(url.path)).resolve() if url.path else target.resolve()
+        if linked != chapter_tops[url.fragment]:
+            return match.group(0)
+        href = url.path or target.name
+        if url.query:
+            href += '?' + url.query
+        return 'href="' + html.escape(href, quote=True) + '"'
+    text = re.sub(r'href="([^"]+)"', chapter_entry_link, text)
     parser = NewTabLinks(text)
     parser.feed(text)
     for offset, original, updated in reversed(parser.replacements):

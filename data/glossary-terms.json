@@ -98,7 +98,7 @@
       "confidence interval",
       "confidence intervals"
     ],
-    "definition": "A range showing uncertainty around an estimate under the analysis assumptions. A 95% method captures the true population value in about 95% of repeated studies."
+    "definition": "A range showing uncertainty around an estimate under the analysis assumptions. A 95% confidence interval captures the true population value in about 95% of repeated studies, when recalculated for each study under the method's assumptions."
   },
   {
     "id": "precision",

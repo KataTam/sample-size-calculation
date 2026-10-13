@@ -67,7 +67,15 @@ let browser;
         const blob = await response.blob();
         img.src = await new Promise(resolve => { const reader = new FileReader(); reader.onload = () => resolve(reader.result); reader.readAsDataURL(blob); });
       }
-      clone.querySelectorAll('a[href]').forEach(a => { const url=new URL(a.getAttribute('href'), location.href); a.setAttribute('href', url.origin===location.origin && url.pathname.startsWith(new URL(location.href).pathname.replace(/[^/]+$/, '')) && /(?:index|clinical-question|power|calculations|curves|simulation|feasibility|exercises|study-designs|glossary|common-mistakes|appendix|references)\.html$/.test(url.pathname) && url.hash ? url.hash : url.origin === location.origin ? publicBase + url.pathname + url.search + url.hash : url.href); a.target='_blank'; a.rel='noopener'; });
+      clone.querySelectorAll('a[href]').forEach(a => {
+        const url = new URL(a.getAttribute('href'), location.href);
+        const chapter = url.pathname.match(/\/(index|clinical-question|power|calculations|curves|simulation|feasibility|exercises|study-designs|glossary|common-mistakes|appendix|references)\.html$/);
+        const internal = url.origin === location.origin && chapter &&
+          url.pathname.startsWith(new URL(location.href).pathname.replace(/[^/]+$/, ''));
+        a.setAttribute('href', internal ? (url.hash || '#tutorial-' + chapter[1]) :
+          url.origin === location.origin ? publicBase + url.pathname + url.search + url.hash : url.href);
+        a.target = '_blank'; a.rel = 'noopener';
+      });
       const glyphs = document.querySelector('#MathJax_SVG_glyphs');
       const mathCSS=Array.from(document.querySelectorAll('style')).map(el=>el.textContent).filter(text=>/MathJax|MJX_Assistive/.test(text)).join('\n');
       const glyphSVG=glyphs && glyphs.closest('svg').cloneNode(true);

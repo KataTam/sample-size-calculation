@@ -35,13 +35,27 @@
     popup.style.top = Math.max(12, Math.min(rect.bottom + 8, innerHeight - popup.offsetHeight - 12)) + 'px';
   }
   function init() {
-    document.querySelectorAll('.page-inner a[href], .main-container a[href], main a[href]').forEach(link => {
-      if (bound.has(link) || link.closest('pre, code, .csl-entry, .tutorial-contents')) return;
+    const seenByChapter = new Map();
+    // Optional boxes must not consume the first definition link in the main text.
+    const links = Array.from(document.querySelectorAll('.page-inner a[href], .main-container a[href], main a[href]'));
+    links.sort((a, b) => Number(!!a.closest('details')) - Number(!!b.closest('details')));
+    links.forEach(link => {
+      if (link.closest('pre, code, .csl-entry, .tutorial-contents, #TOC, .core-next')) return;
       const url = new URL(link.href, location.href);
       const entry = byId.get(decodeURIComponent(url.hash.slice(1)));
       if (!entry) return;
       // Shared explanatory anchors can cover multiple terms; use the term's own short definition.
       const specific = byLabel.get(link.textContent.trim().toLowerCase()) || entry;
+      const chapter = link.closest('.print-chapter') || link.closest('.section.level1') ||
+        link.closest('.page-inner, .main-container, main');
+      if (!seenByChapter.has(chapter)) seenByChapter.set(chapter, new Set());
+      const seen = seenByChapter.get(chapter);
+      if (seen.has(specific.id)) {
+        link.replaceWith(...link.childNodes);
+        return;
+      }
+      seen.add(specific.id);
+      if (bound.has(link)) return;
       bound.add(link);
       link.dataset.glossaryTerm = specific.id;
       link.addEventListener('mouseenter', () => show(link, specific));

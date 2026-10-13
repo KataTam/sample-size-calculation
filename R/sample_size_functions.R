@@ -475,6 +475,10 @@ normal_sampling_operating_characteristics <- function(mu0 = 120, mu1 = 125,
 }
 
 plot_sample_mean_distributions <- function(x) {
+  old_par <- par(no.readonly = TRUE)
+  on.exit(par(old_par), add = TRUE)
+  # Reserve a separate top margin so the key never covers either density curve.
+  par(mar = c(5.1, 4.1, 8.5, 2.1))
   limits <- range(c(x$mu0, x$mu1, x$critical)) + c(-4.5, 4.5) * x$se
   grid <- seq(limits[1], limits[2], length.out = 1200)
   null_density <- dnorm(grid, x$mu0, x$se)
@@ -482,7 +486,8 @@ plot_sample_mean_distributions <- function(x) {
   ymax <- max(null_density, alt_density) * 1.17
   plot(grid, null_density, type = "n", ylim = c(0, ymax),
     xlab = "Sample mean (not individual observations)", ylab = "Density",
-    main = paste0("Sampling distributions of the mean: n = ", x$n))
+    main = "")
+  title(main = paste0("Sampling distributions of the mean: n = ", x$n), line = 6.5)
   shade <- function(from, to, mean, color) {
     left <- max(from, limits[1]); right <- min(to, limits[2])
     if (left >= right) return(invisible(NULL))
@@ -496,9 +501,11 @@ plot_sample_mean_distributions <- function(x) {
   lines(grid, null_density, col = "#a34724", lwd = 2, lty = 1)
   lines(grid, alt_density, col = "#176675", lwd = 2, lty = 2)
   abline(v = x$critical, col = "#555555", lty = 3)
-  legend("topright", c("Null distribution", "Specified alternative", "Type I error: reject under null",
-    "Type II error: do not reject under alternative", "Rejection boundary"),
+  legend("top", inset = c(0, -5.5 * par("csi") * par("mex") / par("pin")[2]),
+    xpd = NA, bty = "n",
+    legend = c("Null distribution", "Specified alternative", "Type I error: false positive",
+    "Type II error: false negative", "Rejection boundary"),
     col = c("#a34724", "#176675", "#a34724", "#176675", "#555555"),
     lty = c(1, 2, NA, NA, 3), pch = c(NA, NA, 15, 15, NA),
-    lwd = c(2, 2, NA, NA, 1), cex = .75, bg = "white")
+    lwd = c(2, 2, NA, NA, 1), cex = .75)
 }
