@@ -41,6 +41,8 @@ c.setFont('Times-Roman',15); c.drawString(margin,height-380,'Sample size calcula
 c.setFont('Times-Roman',12); c.drawString(margin,height-410,'For healthcare professionals')
 c.setFont('Times-Roman',14); c.drawString(margin,210,'Katalin Tamasi'.replace('Tamasi','Tamási'))
 c.setFont('Times-Roman',11); c.drawString(margin,188,'University Medical Center Groningen')
+metadata=json.loads((ROOT/'build/pdf/metadata.json').read_text(encoding='utf-8'))
+c.setFont('Times-Roman',11); c.drawString(margin,167,'Updated '+metadata['date'])
 c.setFont('Times-Roman',10); c.drawString(margin,95,'Teaching materials: CC BY 4.0  |  Code: MIT')
 c.showPage()
 links=[]; toc_page=1; y=height-margin

@@ -105,3 +105,10 @@ body :where(h1,h2,h3,h4,h5,h6,summary,legend) :where(a,span,strong,b,code) { fon
 .book .book-summary ul.summary li a b { font-size: inherit; }
 .book .book-summary ul.summary .activity-toc a { font-size: 13px; line-height: 1.4; }
 .book .book-summary .contents-route { font-size: 11px; }
+
+.glossary-tooltip { position: fixed; z-index: 10020; box-sizing: border-box; padding: 14px 16px; background: #f0f5fc; color: #25313b; border: 1px solid #9bb6d4; border-radius: 6px; box-shadow: 0 4px 20px #0003; font: 15px/1.5 Arial, sans-serif; max-height: calc(100vh - 24px); overflow-y: auto; }
+.glossary-tooltip[hidden] { display: none; }
+.glossary-tooltip p { margin: .4em 0 0; }
+.glossary-tooltip > strong { font-weight: 600 !important; }
+a[data-glossary-term] { text-decoration: underline dotted; text-underline-offset: 3px; }
+@media print { .glossary-tooltip { display: none !important; } a[data-glossary-term] { text-decoration: none; } }

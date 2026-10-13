@@ -2,7 +2,7 @@ bookdown::gitbook:
   css: styles.css
   code_folding: none
   includes:
-    after_body: toolbar-help.html
+    after_body: [toolbar-help.html, glossary-support.html]
   split_by: chapter
   split_bib: false
   config:

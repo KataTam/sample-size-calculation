@@ -4,12 +4,16 @@ render_resource <- function(include_pdf = TRUE) {
   root <- normalizePath(".", winslash = "/", mustWork = TRUE)
   stopifnot(file.exists("module/Sample_size_open_module.Rmd"))
   on.exit(setwd(root), add = TRUE)
+  glossary_json <- paste(readLines("data/glossary-terms.json", encoding = "UTF-8"), collapse = "\n")
+  glossary_js <- paste(readLines("module/glossary-tooltips.js", encoding = "UTF-8"), collapse = "\n")
+  writeLines(paste0('<script type="application/json" id="glossary-definitions">', glossary_json,
+    '</script>\n<script>', glossary_js, '</script>'), "module/glossary-support.html", useBytes = TRUE)
   setwd("module")
   input <- "Sample_size_open_module.Rmd"
   rmarkdown::render(input, output_format = bookdown::html_document2(
     toc = TRUE, toc_float = TRUE, number_sections = TRUE,
     self_contained = TRUE, css = "styles.css", highlight = "pygments",
-    code_folding = "none", includes = rmarkdown::includes(after_body = "toolbar-help.html")),
+    code_folding = "none", includes = rmarkdown::includes(after_body = c("toolbar-help.html", "glossary-support.html"))),
     output_file = "Sample_size_open_module.html", quiet = TRUE,
     envir = new.env(parent = globalenv()))
   file.copy(input, "index.Rmd", overwrite = TRUE)

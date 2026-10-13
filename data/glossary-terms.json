@@ -1,0 +1,248 @@
+[
+  {
+    "id": "population-parameter",
+    "label": "Population parameter",
+    "aliases": [
+      "population parameter",
+      "population parameters"
+    ],
+    "definition": "A numerical feature of the population, such as its mean or treatment difference. It is distinguished from an estimate calculated from a sample."
+  },
+  {
+    "id": "sample-estimate",
+    "label": "Sample estimate",
+    "aliases": [
+      "sample estimate",
+      "sample estimates"
+    ],
+    "definition": "A value calculated from observed data to estimate a population parameter. It varies from sample to sample."
+  },
+  {
+    "id": "expected-difference",
+    "label": "Expected difference",
+    "aliases": [
+      "expected difference"
+    ],
+    "definition": "The between-group population difference anticipated from current evidence, with uncertainty. It is not the benefit guaranteed to an individual patient."
+  },
+  {
+    "id": "target-difference",
+    "label": "Target difference",
+    "aliases": [
+      "target difference"
+    ],
+    "definition": "The between-group difference used to calculate the sample size at the chosen power. It is not a result the trial must achieve."
+  },
+  {
+    "id": "clinical-threshold",
+    "label": "Clinical threshold",
+    "aliases": [
+      "clinical threshold"
+    ],
+    "definition": "The smallest between-group benefit judged worthwhile, considering burdens, risks, costs and alternatives. It is not automatically an individual improvement threshold."
+  },
+  {
+    "id": "between-group-differences",
+    "label": "Between-group difference",
+    "aliases": [
+      "between-group difference",
+      "between-group differences"
+    ],
+    "definition": "A comparison of population outcomes under two treatments, such as a difference in means or event percentages. It does not describe each patient's treatment effect."
+  },
+  {
+    "id": "percentage-points",
+    "label": "Percentage points",
+    "aliases": [
+      "percentage points",
+      "percentage-point"
+    ],
+    "definition": "The absolute difference between two percentages: 60% minus 30% equals 30 percentage points. This differs from a relative percentage change."
+  },
+  {
+    "id": "mean-difference",
+    "label": "Mean difference",
+    "aliases": [
+      "mean difference"
+    ],
+    "definition": "The difference between two population means, expressed in the outcome's original units. Here, treatment minus control."
+  },
+  {
+    "id": "effect-size",
+    "label": "Effect size",
+    "aliases": [
+      "effect size"
+    ],
+    "definition": "A numerical description of the size of a difference or association. Its meaning depends on the outcome, comparison and scale; a standardized size alone does not establish clinical importance."
+  },
+  {
+    "id": "standard-deviation",
+    "label": "Standard deviation",
+    "aliases": [
+      "standard deviation"
+    ],
+    "definition": "A measure of variability between individual observations, in the outcome's units. It differs from uncertainty about a group mean."
+  },
+  {
+    "id": "standard-error",
+    "label": "Standard error",
+    "aliases": [
+      "standard error"
+    ],
+    "definition": "A measure of how an estimate varies across repeated samples. It describes sampling uncertainty rather than variability between patients."
+  },
+  {
+    "id": "confidence-interval",
+    "label": "Confidence interval",
+    "aliases": [
+      "confidence interval",
+      "confidence intervals"
+    ],
+    "definition": "An interval estimating a population quantity, constructed by a procedure with stated long-run coverage. For a treatment difference, it is not the range of individual benefits."
+  },
+  {
+    "id": "precision",
+    "label": "Precision",
+    "aliases": [
+      "precision"
+    ],
+    "definition": "How little an estimate varies across repeated samples. It is commonly assessed using its standard error or confidence-interval width: smaller values indicate greater precision, not necessarily less bias."
+  },
+  {
+    "id": "margin-of-error",
+    "label": "Margin of error",
+    "aliases": [
+      "margin of error",
+      "half-width"
+    ],
+    "definition": "For a symmetric confidence interval, its half-width: the distance from the estimate to either limit. It depends on the confidence level and sampling uncertainty."
+  },
+  {
+    "id": "full-width",
+    "label": "Full interval width",
+    "aliases": [
+      "full width"
+    ],
+    "definition": "The upper confidence limit minus the lower limit. For a symmetric interval, it is twice the margin of error."
+  },
+  {
+    "id": "null-hypothesis",
+    "label": "Null hypothesis",
+    "aliases": [
+      "null hypothesis"
+    ],
+    "definition": "The hypothesis assessed by the test. In these ordinary superiority comparisons it specifies no population difference between treatments."
+  },
+  {
+    "id": "alternative-hypothesis",
+    "label": "Alternative hypothesis",
+    "aliases": [
+      "alternative hypothesis"
+    ],
+    "definition": "The set of effects outside the null hypothesis. A two-sided superiority alternative permits a nonzero difference in either direction."
+  },
+  {
+    "id": "alpha",
+    "label": "Type I error rate",
+    "aliases": [
+      "Type I error rate",
+      "Type 1 error rate"
+    ],
+    "definition": "The probability of rejecting a true null hypothesis under the test's assumptions. It is not the probability that the null is true after seeing the data."
+  },
+  {
+    "id": "beta",
+    "label": "Type II error rate",
+    "aliases": [
+      "Type II error rate",
+      "Type 2 error rate"
+    ],
+    "definition": "The probability of failing to reject the null at a specified true alternative, with the design and analysis fixed."
+  },
+  {
+    "id": "statistical-power",
+    "label": "Statistical power",
+    "aliases": [
+      "statistical power",
+      "power"
+    ],
+    "definition": "The probability of rejecting the null at a specified true effect, using the planned design and analysis. Power equals one minus the Type II error rate."
+  },
+  {
+    "id": "p-value",
+    "label": "P-value",
+    "aliases": [
+      "p-value",
+      "p-values"
+    ],
+    "definition": "Assuming the null hypothesis and model, the probability of a test statistic at least as extreme as the observed one, in the direction or directions specified by the test."
+  },
+  {
+    "id": "two-sided-test",
+    "label": "Two-sided test",
+    "aliases": [
+      "two-sided test",
+      "two-sided tests"
+    ],
+    "definition": "A test that can reject the null for sufficiently strong differences in either direction."
+  },
+  {
+    "id": "independent-groups",
+    "label": "Independent groups",
+    "aliases": [
+      "independent groups"
+    ],
+    "definition": "Groups consisting of different independent experimental units. Paired or clustered observations require methods that account for dependence."
+  },
+  {
+    "id": "analyzable-sample-size",
+    "label": "Analyzable sample size",
+    "aliases": [
+      "analyzable sample size",
+      "analyzable sample"
+    ],
+    "definition": "The number of participants included in the stated analysis. In the two-group examples, distinguish per-group counts from the total and from the recruitment target."
+  },
+  {
+    "id": "sampling-variability",
+    "label": "Sampling variability",
+    "aliases": [
+      "sampling variability",
+      "sampling variation"
+    ],
+    "definition": "Differences between estimates from repeated samples drawn under the same population assumptions. Larger independent samples generally reduce this variability."
+  },
+  {
+    "id": "bias",
+    "label": "Bias",
+    "aliases": [
+      "bias"
+    ],
+    "definition": "Systematic deviation of an estimation procedure from the quantity it aims to estimate. A larger sample or narrower interval does not automatically remove bias."
+  },
+  {
+    "id": "sensitivity-analysis",
+    "label": "Sensitivity analysis",
+    "aliases": [
+      "sensitivity analysis"
+    ],
+    "definition": "Examining how conclusions or planning results change under plausible alternative assumptions. Recalculating sample size and evaluating one fixed design answer different questions."
+  },
+  {
+    "id": "estimand",
+    "label": "Estimand",
+    "aliases": [
+      "estimand"
+    ],
+    "definition": "The precisely defined population quantity the study aims to estimate: which treatments, population and outcome are compared, on what scale, and how relevant events such as treatment discontinuation are handled."
+  },
+  {
+    "id": "monte-carlo-error",
+    "label": "Monte Carlo error",
+    "aliases": [
+      "Monte Carlo error",
+      "Monte Carlo uncertainty"
+    ],
+    "definition": "Random variation caused by using a finite number of simulated studies. More repetitions reduce this uncertainty without increasing the power of each trial."
+  }
+]

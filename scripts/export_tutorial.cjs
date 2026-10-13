@@ -37,7 +37,7 @@ a { color: #17658a; } .tutorial-downloads { display: none; }
  .MathJax_SVG_Display { overflow: visible !important; }
 }
 `;
-const readerScripts = fs.readFileSync('module/toolbar-help.html', 'utf8');
+const readerScripts = fs.readFileSync('module/toolbar-help.html', 'utf8') + fs.readFileSync('module/glossary-support.html', 'utf8');
 let browser;
 (async () => {
   fs.mkdirSync('output/pdf', {recursive: true});
@@ -46,6 +46,7 @@ let browser;
   const sections = [];
   const contents = [];
   const pdfHeadings = [];
+  let renderedDate;
   for (const slug of chapters) {
     const response = await page.goto(`${base}/book/${slug}.html`, {waitUntil:'networkidle'});
     if (!response.ok()) throw Error(`Missing chapter ${slug}`);
@@ -53,6 +54,7 @@ let browser;
       if (window.MathJax && MathJax.Hub) await new Promise(resolve => MathJax.Hub.Queue(['setRenderer', MathJax.Hub, 'SVG'], ['Rerender', MathJax.Hub], resolve));
       await Promise.all(Array.from(document.images).map(img => img.decode().catch(() => {})));
     });
+    if (slug === 'index') renderedDate = await page.locator('#header .date').innerText();
     const extracted = await page.evaluate(async (publicBase) => {
       const normal = document.querySelector('.page-inner .normal');
       if (!normal) throw Error('Chapter body not found');
@@ -90,6 +92,7 @@ let browser;
   fs.mkdirSync('build/pdf', {recursive:true});
   fs.writeFileSync('build/pdf/tutorial-body.pdf', bodyPdf);
   fs.writeFileSync('build/pdf/headings.json', JSON.stringify(pdfHeadings));
+  fs.writeFileSync('build/pdf/metadata.json', JSON.stringify({date:renderedDate}));
   execFileSync(process.env.PYTHON || (process.platform === 'win32' ? 'python' : 'python3'), ['scripts/assemble_book_pdf.py'], {stdio:'inherit'});
   const pdf = fs.readFileSync('build/pdf/tutorial-complete.pdf');
   for (const folder of ['module','docs/book','_site/book']) {
