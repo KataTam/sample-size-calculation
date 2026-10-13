@@ -81,7 +81,7 @@
     "aliases": [
       "standard deviation"
     ],
-    "definition": "A measure of variability between individual observations, in the outcome's units. It differs from uncertainty about a group mean."
+    "definition": "How much individual patients differ, measured in the outcome's units. It describes the spread of observations, not the uncertainty in their mean."
   },
   {
     "id": "standard-error",
@@ -89,7 +89,7 @@
     "aliases": [
       "standard error"
     ],
-    "definition": "A measure of how an estimate varies across repeated samples. It describes sampling uncertainty rather than variability between patients."
+    "definition": "How much an estimate would vary across studies with new patients. For a mean, SE = SD divided by the square root of the sample size."
   },
   {
     "id": "confidence-interval",
@@ -98,7 +98,7 @@
       "confidence interval",
       "confidence intervals"
     ],
-    "definition": "An interval estimating a population quantity, constructed by a procedure with stated long-run coverage. For a treatment difference, it is not the range of individual benefits."
+    "definition": "A range showing uncertainty around an estimate under the analysis assumptions. A 95% method captures the true population value in about 95% of repeated studies."
   },
   {
     "id": "precision",
@@ -131,7 +131,7 @@
     "aliases": [
       "null hypothesis"
     ],
-    "definition": "The hypothesis assessed by the test. In these ordinary superiority comparisons it specifies no population difference between treatments."
+    "definition": "In these treatment comparisons, the claim that population outcomes are equal. Not rejecting it means insufficient evidence of a difference, not proof of equality."
   },
   {
     "id": "alternative-hypothesis",
@@ -139,7 +139,7 @@
     "aliases": [
       "alternative hypothesis"
     ],
-    "definition": "The set of effects outside the null hypothesis. A two-sided superiority alternative permits a nonzero difference in either direction."
+    "definition": "In these two-sided comparisons, a population difference in either direction: the novel treatment could perform better or worse."
   },
   {
     "id": "alpha",
@@ -148,7 +148,7 @@
       "Type I error rate",
       "Type 1 error rate"
     ],
-    "definition": "The probability of rejecting a true null hypothesis under the test's assumptions. It is not the probability that the null is true after seeing the data."
+    "definition": "The probability of falsely rejecting the null hypothesis: a false positive. Here, it means finding a statistically significant difference when population outcomes are equal."
   },
   {
     "id": "beta",
@@ -157,7 +157,7 @@
       "Type II error rate",
       "Type 2 error rate"
     ],
-    "definition": "The probability of failing to reject the null at a specified true alternative, with the design and analysis fixed."
+    "definition": "The probability of missing a specified true treatment difference: a false negative. It depends on the true difference, sample size and analysis."
   },
   {
     "id": "statistical-power",
@@ -166,7 +166,7 @@
       "statistical power",
       "power"
     ],
-    "definition": "The probability of rejecting the null at a specified true effect, using the planned design and analysis. Power equals one minus the Type II error rate."
+    "definition": "The probability that the planned test detects a specified true difference: the true-positive rate. It equals 1 minus the Type II error rate."
   },
   {
     "id": "p-value",
@@ -175,7 +175,7 @@
       "p-value",
       "p-values"
     ],
-    "definition": "Assuming the null hypothesis and model, the probability of a test statistic at least as extreme as the observed one, in the direction or directions specified by the test."
+    "definition": "Assuming the null hypothesis and model are correct, the probability of a test result at least as extreme as the one observed. It is not the probability that the treatment works."
   },
   {
     "id": "two-sided-test",
@@ -184,7 +184,7 @@
       "two-sided test",
       "two-sided tests"
     ],
-    "definition": "A test that can reject the null for sufficiently strong differences in either direction."
+    "definition": "A test that allows evidence of a difference in either direction: the novel treatment could perform better or worse than the comparator."
   },
   {
     "id": "independent-groups",
@@ -192,7 +192,7 @@
     "aliases": [
       "independent groups"
     ],
-    "definition": "Groups consisting of different independent experimental units. Paired or clustered observations require methods that account for dependence."
+    "definition": "Here, different patients contribute one outcome each to one of two groups, with observations treated as independent. Paired or clustered data need other methods."
   },
   {
     "id": "analyzable-sample-size",
@@ -226,7 +226,7 @@
     "aliases": [
       "sensitivity analysis"
     ],
-    "definition": "Examining how conclusions or planning results change under plausible alternative assumptions. Recalculating sample size and evaluating one fixed design answer different questions."
+    "definition": "Checking plausible alternative assumptions. You can recalculate the required sample, or keep the chosen sample fixed and examine how that study would perform."
   },
   {
     "id": "estimand",
@@ -243,6 +243,60 @@
       "Monte Carlo error",
       "Monte Carlo uncertainty"
     ],
-    "definition": "Random variation caused by using a finite number of simulated studies. More repetitions reduce this uncertainty without increasing the power of each trial."
+    "definition": "Random variation caused by using a limited number of simulated studies. More repetitions improve the precision of estimated power, not the power of each trial."
+  },
+  {
+    "id": "false-positive",
+    "label": "False positive",
+    "aliases": [
+      "false positive",
+      "false-positive rate"
+    ],
+    "definition": "A statistically significant finding when the population outcomes are equal: a Type I error. Here, positive refers to the study conclusion, not a patient diagnosis."
+  },
+  {
+    "id": "false-negative",
+    "label": "False negative",
+    "aliases": [
+      "false negative",
+      "false-negative rate"
+    ],
+    "definition": "A non-significant finding despite a specified true population difference: a Type II error."
+  },
+  {
+    "id": "true-positive",
+    "label": "True positive",
+    "aliases": [
+      "true positive",
+      "true-positive rate"
+    ],
+    "definition": "A statistically significant finding when a population difference exists. Its probability at the specified true difference is power."
+  },
+  {
+    "id": "true-negative",
+    "label": "True negative",
+    "aliases": [
+      "true negative",
+      "true-negative rate"
+    ],
+    "definition": "A non-significant finding when population outcomes are equal. A real non-significant result alone cannot establish that this is the case."
+  },
+  {
+    "id": "z-value",
+    "label": "Z-value",
+    "aliases": [
+      "z-value",
+      "z-values"
+    ],
+    "definition": "A position on the standard normal bell-shaped curve, measured in standard deviations from its center. For example, 1.96 is 1.96 standard deviations above zero."
+  },
+  {
+    "id": "quantile",
+    "label": "Quantile",
+    "aliases": [
+      "quantile",
+      "quantiles"
+    ],
+    "definition": "A cutoff below which a stated proportion of a distribution lies. For example, 97.5% of the standard normal distribution lies below 1.96."
   }
 ]

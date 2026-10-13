@@ -65,7 +65,7 @@ ui <- fluidPage(
     tableOutput("operating_table"),
     p(class = "caption", "Table. Standard error, rejection boundaries and error probabilities under the selected design."),
     textOutput("explanation"),
-    p("Type I error rate is the rejection probability under the null. Type II error rate is the non-rejection probability under the specified alternative; power is 1 − Type II error rate. The shaded areas refer to different assumed populations, so their overlap on the page is not an extra probability."),
+    p("Type I error rate is the probability of falsely rejecting the null (a false positive). Type II error rate is the probability of missing the specified true difference (a false negative). Power is the true-positive probability: 1 minus Type II error rate. These describe the study conclusion, not a patient diagnosis. The shaded areas refer to different assumed populations; their overlap on the page is not an extra probability."),
     p("The vertical boundaries are fixed by the null distribution and chosen Type I error rate. Greater sample size narrows the distribution of the mean; it does not shrink the population SD shown in the controls."),
     h3("Power across sample sizes"), plotOutput("power_curve", height = "280px"),
     p(class = "caption", "Figure. Power at the specified alternative across independent sample sizes. The point marks the current sample; the reference line marks Type I error rate."),

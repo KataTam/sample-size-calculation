@@ -9,7 +9,7 @@ Learning outcomes. After this section, you should be able to:
 
 ## Does "20% better" mean 20 percentage points? {.core-heading}
 
-State the baseline and scale. From a baseline of 80%, a 20% relative increase gives 96%; an absolute increase of 20 percentage points gives 100%. The two-proportion calculator needs the probabilities in each group, entered as proportions between zero and one. The [discharge example](#discharge) lets you compare these interpretations.
+State the baseline and scale. From a baseline of 80%, a 20% relative increase gives 96%; an absolute increase of 20 percentage points gives 100%. The two-proportion calculator needs the event percentage in each group. R code represents these percentages as probabilities between zero and one, such as 0.80 for 80%. The [discharge example](#discharge) lets you compare these interpretations.
 
 ## Can I put a clinically important difference directly into the alternative hypothesis? {.core-heading}
 
@@ -25,7 +25,7 @@ No. An interval might include both negligible and important effects. Assess the 
 
 ## Are Type I error rate and Type II error rate probabilities that the hypotheses are true? {.core-heading}
 
-No. [Type I error rate](#alpha) concerns rejection when the null is true. [Type II error rate](#beta) concerns failure to reject at a specified true alternative. Both condition on a population scenario and a procedure. They are not posterior probabilities after observing the data. The [sampling distributions](#alpha-beta) and simulated independent studies illustrate this conditioning.
+No. The [Type I error rate](#alpha) is the probability of falsely rejecting the null: a false positive when no population difference exists. The [Type II error rate](#beta) is the probability of missing a specified true difference: a false negative. These rates describe how the test performs when you assume what is true in the population. They do not tell you the probability that a hypothesis is true after seeing your result. The [sampling-distribution example](#alpha-beta) illustrates the distinction.
 
 ## Does 90% power guarantee a useful result? {.core-heading}
 

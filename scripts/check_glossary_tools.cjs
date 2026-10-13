@@ -24,7 +24,7 @@ const base=process.argv[2]||'http://127.0.0.1:8769';
   await page.setViewportSize({width:1280,height:900});
  }
  await page.goto(base+'/book/clinical-question.html');
- await page.locator('a[data-glossary-term="clinical-threshold"]').first().hover();
+ await page.locator('a[data-glossary-term="clinical-threshold"]:visible').first().hover();
  await page.screenshot({path:'build/browser-checks/glossary-tooltip.png'});
  const definitions=JSON.parse(fs.readFileSync('data/glossary-terms.json','utf8'));
  await page.goto(base+'/book/glossary.html');
