@@ -136,15 +136,17 @@ The examples use frequentist methods: two-sided significance tests for superiori
 
 ## What do you expect, what will you plan for, and what matters clinically? {#what-do-we-expect-what-will-we-plan-for-and-what-matters-clinically .core-heading}
 
+In this tutorial, the expected difference, target difference, and clinical threshold all refer to differences between treatment groups in the population of interest. They describe what you anticipate, what you use in the sample size calculation, and what additional benefit would be clinically worthwhile. Their values may coincide; the examples use different values to illustrate their roles. These group-level differences should not be interpreted as the benefit each individual patient would experience. See [Between-group differences and individual benefit](#between-group-differences).
+
 Suppose the pilot and other relevant evidence support an expected difference of 40 percentage points. For the sample size calculation, use a target difference of 30 percentage points: 60% relief with the novel treatment versus 30% with standard treatment. Separately, after consulting with patients and clinicians, you set the minimally clinically relevant difference (i.e., the clinical threshold) at 20 percentage points.
 
-The expected difference is the anticipated population difference based on current evidence, with uncertainty. The target difference is the between-group difference used in the sample size calculation: the assumed true difference at which you evaluate power. It is not a result the study must achieve. The clinical threshold is the smallest treatment benefit judged worthwhile by patients and clinicians. These terms identify different decisions and may have the same value in a study. DELTA² guidance distinguishes realistic and important differences and explains that the target difference need not equal the smallest clinically important difference [@cook2018delta2; @lakens2022]. Event rates in this particular trial are defined as the the percentage of patients reporting pain relief at the specified four-week follow-up.
+The target difference is the assumed true between-group difference at which you evaluate power; it is not a result the study must achieve. Its choice should reflect evidence about plausible effects and judgments about clinical importance [@cook2018delta2; @cook2019delta2]. Event rates in this trial are the percentages of patients reporting pain relief at the specified four-week follow-up.
 
 | Quantity | Value | Role in this study |
 |:--|:--|:--|
-| Expected difference | 40 percentage points | Best current expectation, with uncertainty |
-| Target difference | 30 percentage points: 60% versus 30% | Assumed true difference at which you evaluate power |
-| Clinical threshold | 20 percentage points | Smallest benefit judged worthwhile by patients and clinicians |
+| Expected between-group difference | 40 percentage points | Best current expectation, with uncertainty |
+| Target between-group difference | 30 percentage points: 60% versus 30% | Assumed true difference at which you evaluate power |
+| Clinically worthwhile between-group difference (clinical threshold) | 20 percentage points | Smallest additional benefit judged worthwhile, considering burdens, risks, costs, and alternatives |
 
 Table: (\#tab:pain-planning-values) Three distinct decisions for the chronic pain trial.
 
@@ -162,8 +164,6 @@ A defensible choice in this illustration is a target difference of 30 percentage
 
 </details>
 :::
-
-The target difference should describe an absolute difference between groups. An important improvement within one patient needs to be translated into the study's outcome before it can inform this choice. For example, the criterion used to classify a patient as reporting pain relief and the smallest worthwhile difference in relief percentages between treatments are separate decisions [@cook2018delta2].
 
 <details class="misconception" id="misconception-pilot-effect">
 <summary>Common misconception: the pilot reveals the true treatment effect</summary>
@@ -196,7 +196,7 @@ Before choosing a sample size, your study plan should distinguish what you expec
 
 Table: (\#tab:planning-assumptions) Assumptions to record before planning the sample size.
 
-The target difference tells the calculation where to evaluate power. The standard deviation describes variation between individuals; the standard error describes sampling variation of an estimate. For binary outcomes, you should report each group's event rate as a percentage and their absolute difference in percentage points. [The glossary](#glossary) explains these terms.
+The target difference tells the calculation where to evaluate power. The standard deviation describes variation between individuals; the standard error describes sampling variation of an estimate. For binary outcomes, you should report each group's event rate as a percentage and their absolute difference in percentage points. The section [Key parameters and prerequisites](#glossary) explains these terms in more detail.
 
 For each numerical assumption, you should record the source, its relevance to these patients and this outcome, and a plausible range. Evidence from a different follow-up time or patient population may not transfer directly. For a clinical threshold, you should record the reasoning. DELTA² and CONSORT emphasize explaining the assumptions and calculation as opposed to reporting the final number [@cook2018delta2; @consortee2025].
 
@@ -1072,7 +1072,7 @@ To allow for 10% expected loss, divide the required analyzable count by 0.90 rat
 
 ## Interpret a confidence interval clinically {.core-heading}
 
-
+This interval describes uncertainty about the population-level difference between groups, not the range of benefits individual patients would experience; see [Between-group differences and individual benefit](#between-group-differences).
 
 For the continuous improvement-score case, the expected difference is 4 units, the target difference is 3 units and the clinical threshold is 2 units. Compare three hypothetical 95% confidence intervals:
 

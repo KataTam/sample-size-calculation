@@ -4,7 +4,7 @@ Open teaching materials for reasoning about sample size in medical studies.
 
 <nav class="start-routes" aria-label="Choose where to start">
   <a class="start-route" href="book/">
-    <span>I am a student</span>
+    <span>I am a student or researcher</span>
     <strong><span aria-hidden="true">→ </span>Start here</strong>
   </a>
   <a class="start-route" href="teaching/TEACHING_GUIDE.md">
