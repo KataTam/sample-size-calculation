@@ -35,7 +35,7 @@
   const fields = groups.flatMap(group => group[1]);
   const names = ['study_type', 'outcome', 'goal', ...fields.map(field => field[0])];
   const choices = {study_type: ['comparison', 'single', 'other'], outcome: ['binary', 'continuous'], goal: ['testing', 'precision', 'fixed', 'both', 'feasibility']};
-  const goalText = {testing: 'testing a specified hypothesis', precision: 'estimation with a precision target', fixed: 'assessing what fixed resources or existing data could establish', both: 'testing and estimation', feasibility: 'supporting a pilot or feasibility decision'};
+  const goalText = {testing: 'planning sample size to achieve specified power', precision: 'estimation with a precision target', fixed: 'assessing what fixed resources or existing data could establish', both: 'meeting both power and precision requirements', feasibility: 'supporting a pilot or feasibility decision'};
   function validate(value) {
     if (!value || typeof value !== 'object' || Array.isArray(value) || Object.keys(value).some(key => !names.includes(key))) throw Error('Choose a supported assumptions-report file.');
     const clean = {};

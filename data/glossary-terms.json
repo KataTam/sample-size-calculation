@@ -89,7 +89,7 @@
     "aliases": [
       "standard error"
     ],
-    "definition": "How much an estimate would vary across studies with new patients. For a mean, SE = SD divided by the square root of the sample size."
+    "definition": "How much an estimate would vary across repeated samples. For a mean from n independent observations, SE = SD / sqrt(n); the population SD is usually estimated from the sample. Other estimates and dependent observations need different formulas."
   },
   {
     "id": "confidence-interval",
@@ -192,7 +192,7 @@
     "aliases": [
       "independent groups"
     ],
-    "definition": "Here, different patients contribute one outcome each to one of two groups, with observations treated as independent. Paired or clustered data need other methods."
+    "definition": "Different patients belong to the two groups, each contributing one outcome. The analysis assumes their outcomes are independent: one outcome does not provide information about another beyond what the model accounts for. Paired, repeated, or clustered observations need methods that account for their relationships."
   },
   {
     "id": "analyzable-sample-size",
@@ -298,5 +298,27 @@
       "quantiles"
     ],
     "definition": "A cutoff below which a stated proportion of a distribution lies. For example, 97.5% of the standard normal distribution lies below 1.96."
+  },
+  {
+    "id": "wmo",
+    "label": "WMO",
+    "aliases": [
+      "Medical Research Involving Human Subjects Act (WMO)"
+    ],
+    "definition": "Dutch legislation governing medical research involving human participants within its scope. Applicable studies require prior review; the appropriate route depends on the study and legal framework."
+  },
+  {
+    "id": "metc",
+    "label": "METC",
+    "aliases": [
+      "medical research ethics committee (METC, or MREC in English)"
+    ],
+    "definition": "An accredited medical research ethics committee (MREC in English). It reviews most research subject to the Dutch WMO, including scientific value, participant protection, and the balance of risks and benefits."
+  },
+  {
+    "id": "ccmo",
+    "label": "CCMO",
+    "aliases": [],
+    "definition": "The Central Committee on Research Involving Human Subjects in the Netherlands. It directly reviews specified categories of research and has national oversight responsibilities. It is distinct from a local accredited METC."
   }
 ]

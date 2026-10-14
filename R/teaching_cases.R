@@ -16,7 +16,7 @@ teaching_cases <- function() {
       goal = if (is.null(goal)) values$goal else goal, inputs = values, ...)
   }
   list(
-    assumptions_report = case("assumptions_report", "Record the assumptions: study-plan report",
+    assumptions_report = case("assumptions_report", "Develop and justify your study plan",
       "Write your clinical question, justify the expected difference, target difference and clinical threshold, and record the analysis, sample size and recruitment plan. Your entries build a report alongside the form.",
       "record-assumptions", app = "assumptions_report"),
     pain_one_many = case("pain_one_many", "Pain relief: one study and many",

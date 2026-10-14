@@ -73,6 +73,17 @@ check_activity <- function() {
       feasibility()$recruits == 100, feasibility()$budget == 6000)
     session$setInputs(fixed_n = 40)
     stopifnot(identical(before, one()), grepl("Inputs changed", output$one_status))
+    original_limit <- plot_limit()
+    session$setInputs(plan_delta = 1)
+    stopifnot(plot_limit() == original_limit)
+    session$setInputs(activity_request = list(activity = "pain_one_many", reset = TRUE, nonce = 6))
+    stopifnot(is.null(one_saved()), is.null(many_saved()),
+      get("fixed_n", messages)$value == 20,
+      get("justification", messages)$value == "", grepl("results cleared", import_status()))
+    # A second reset must still be delivered even when the activity is unchanged.
+    one_saved(before)
+    session$setInputs(activity_request = list(activity = "pain_one_many", reset = TRUE, nonce = 7))
+    stopifnot(is.null(one_saved()), get("fixed_n", messages)$value == 20)
     session$setInputs(study_design = "paired")
     stopifnot(inherits(tryCatch(planned(), error = identity), "error"),
       !is.null(output$design_route))

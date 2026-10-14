@@ -9,6 +9,8 @@ Learning outcomes. After this section, you should be able to:
 - Explain why larger samples, more simulations and different calculation methods address different sources of uncertainty.
 :::
 
+
+
 ## Does "20% better" mean 20 percentage points? {.core-heading}
 
 The meaning depends on the starting percentage and whether the change is relative or absolute. From a baseline of 80%, a 20% relative increase gives 96%; an absolute increase of 20 percentage points gives 100%. The two-proportion calculator needs the event percentage in each group. R code represents these percentages as probabilities between zero and one, such as 0.80 for 80%. The [discharge example](#discharge) lets you compare these interpretations.
@@ -68,3 +70,33 @@ A larger sample reduces sampling variation under the model. It does not automati
 ## Is a reporting checklist a sample-size method? {.core-heading}
 
 No. CONSORT, STROBE, STARD, ARRIVE and TRIPOD help document different studies. They prompt you to report how sample size was chosen, but do not provide one universal formula. The [study-design guide](#study-designs) separates reporting resources from planning methods.
+
+<div class="chapter-recap">
+
+### Take-home points {.unnumbered}
+
+- Statistical significance, clinical importance, and precision answer different questions.
+- Power concerns a design under specified assumptions; it does not establish that those assumptions are true.
+- More patients cannot automatically remove bias or repair an inappropriate analysis.
+
+### Check your understanding {.unnumbered}
+
+1. Does a non-significant treatment comparison establish equivalence?
+
+<details class="model-answer">
+<summary>Model answer</summary>
+
+No. The study may be inconclusive. Equivalence needs an appropriate design and analysis with justified equivalence margins.
+
+</details>
+
+2. If a large study detects a very small difference, what else matters for interpretation?
+
+<details class="model-answer">
+<summary>Model answer</summary>
+
+The size and uncertainty of the difference, its clinical importance, harms and burden, and the credibility of the design and analysis.
+
+</details>
+
+</div>

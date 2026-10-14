@@ -117,7 +117,7 @@ A p-value is the probability, assuming the null hypothesis and statistical model
 
 A normal approximation uses the bell-shaped normal distribution to simplify a calculation. A t-test calculation also accounts for estimating variability from the study's patients. The simple calculators use labeled normal sample-size approximations; the [lab](https://katatam.github.io/sample-size-calculation/study/?activity=own_study)'s mean planning uses pooled two-sample t-test power. See the [statistical methods](../documentation/statistical-methods.md) for exact implementation details.
 
-<span id="independent-groups"></span>In the core examples, independent groups contain different patients, with each patient contributing one outcome to one group and observations treated as independent. Paired/within-subject data include linked measurements, such as both eyes or before/after observations from the same person. Clustered data include participants linked within allocated practices or wards. Correlation affects information and therefore planning; counting every measurement as independent can overstate the sample size.
+<span id="independent-groups"></span>In the core examples, different patients belong to the two groups, with each patient contributing one outcome. The analysis assumes that one patient's outcome does not provide information about another patient's outcome beyond what the model accounts for. Different participants are not sufficient to establish independence: outcomes may still be related within clinics or families. Paired/within-subject data include linked measurements, such as both eyes or before/after observations from the same person. Clustered data include participants linked within allocated practices or wards. Correlation affects information and therefore planning; counting every measurement as independent can overstate the information available.
 
 ## Counts, losses and simulation {.core-heading}
 
@@ -136,3 +136,17 @@ The Monte Carlo standard error (MCSE) describes how much the simulation estimate
 Increasing the number of simulations reduces Monte Carlo error; quadrupling the repetitions approximately halves the MCSE. It does not increase the power of each trial, remove error from an analytical approximation, or establish that the assumed population probabilities fit a real study. You should distinguish simulation uncertainty from sampling uncertainty within a trial and uncertainty about the clinical assumptions. The [simulation-precision section](#precision-of-a-simulation) provides a worked example.
 
 For more detail, return to the [power chapter](#power), [sampling-distribution illustration](#alpha-beta), [precision examples](#feasibility), or [common mistakes](#common-mistakes). Methodological sources include Kirkwood and Sterne (2003), Whitley and Ball (2002), and the R documentation cited in the tutorial.
+
+## Research ethics review in the Netherlands
+
+### WMO {#wmo}
+
+The Medical Research Involving Human Subjects Act is Dutch legislation governing research within its scope. Such research needs prior ethical review. The applicable framework depends on the study; the [CCMO guidance](https://english.ccmo.nl/investigators) explains the review routes.
+
+### METC {#metc}
+
+An accredited medical research ethics committee, or MREC in English, reviews most WMO research. Review considers scientific value, participant protection, and the balance of risks and potential benefits.
+
+### CCMO {#ccmo}
+
+The Central Committee on Research Involving Human Subjects directly reviews specified categories of research and has national oversight responsibilities. It is not interchangeable with a local accredited METC; the [official review guidance](https://english.ccmo.nl/investigators/primary-submission-to-the-review-committee) explains which committee reviews a study.

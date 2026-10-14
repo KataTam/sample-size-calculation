@@ -7,7 +7,7 @@ Choose an activity or calculation tool. Start with the [core tutorial route](boo
 - [Two proportions](two_proportions/): compare event percentages in two independent groups.
 - [Two means](two_means/): compare mean outcomes in two independent groups.
 - [Dropout adjustment](dropout_adjustment/): allow for expected losses when setting recruitment targets.
-- [Record the assumptions](study/?activity=assumptions_report): write a study plan and generate a report.
+- [Develop and justify your study plan](study/?activity=assumptions_report): write a study plan and generate a report.
 
 ## Explore further
 

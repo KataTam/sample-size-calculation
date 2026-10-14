@@ -8,6 +8,10 @@ render_resource <- function(include_pdf = TRUE) {
   glossary_js <- paste(readLines("module/glossary-tooltips.js", encoding = "UTF-8"), collapse = "\n")
   writeLines(paste0('<script type="application/json" id="glossary-definitions">', glossary_json,
     '</script>\n<script>', glossary_js, '</script>'), "module/glossary-support.html", useBytes = TRUE)
+  menu_json <- paste(readLines("module/activity-contents.json", encoding = "UTF-8"), collapse = "\n")
+  reading_js <- paste(readLines("module/reading-support.js", encoding = "UTF-8"), collapse = "\n")
+  cat(paste0('<script type="application/json" id="activity-menu-data">', menu_json,
+    '</script>\n<script>', reading_js, '</script>'), file = "module/glossary-support.html", append = TRUE)
   setwd("module")
   input <- "Sample_size_open_module.Rmd"
   rmarkdown::render(input, output_format = bookdown::html_document2(

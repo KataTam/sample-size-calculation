@@ -6,7 +6,7 @@
     "route": "Core",
     "activities": [
       {
-        "label": "Record and justify your assumptions",
+        "label": "Develop and justify your study plan",
         "path": "study/?activity=assumptions_report",
         "route": "Core"
       }
@@ -21,7 +21,7 @@
       {
         "label": "Explore Type I and Type II error probabilities and power",
         "path": "study/?activity=alpha_beta",
-        "route": "Core"
+        "route": "Advanced"
       },
       {
         "label": "Chronic pain: one study and many studies",

@@ -210,7 +210,7 @@ activity_bridge_script <- function(app = "power_explorer") {
   const apply = (payload) => {
     if (!connected || !window.Shiny) return;
     if (payload.type === 'sample-size:activity' && typeof payload.activity === 'string') {
-      Shiny.setInputValue('activity_request', {activity: payload.activity, nonce: Date.now()}, {priority: 'event'});
+      Shiny.setInputValue('activity_request', {activity: payload.activity, reset: payload.reset === true, nonce: Date.now()}, {priority: 'event'});
     } else if (payload.type === 'sample-size:state' && payload.state && typeof payload.state === 'object') {
       Shiny.setInputValue('state_request', {state: payload.state, nonce: Date.now()}, {priority: 'event'});
     }

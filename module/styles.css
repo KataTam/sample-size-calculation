@@ -112,3 +112,15 @@ body :where(h1,h2,h3,h4,h5,h6,summary,legend) :where(a,span,strong,b,code) { fon
 .glossary-tooltip > strong { font-weight: 600 !important; }
 a[data-glossary-term] { text-decoration: underline dotted; text-underline-offset: 3px; }
 @media print { .glossary-tooltip { display: none !important; } a[data-glossary-term] { text-decoration: none; } }
+
+details.advanced-explanation { background:#e9dff5; border-left:4px solid #8062a6; padding:12px 16px; margin:1em 0; }
+details.activity-practice { background:#dfedf7; padding:10px 14px; margin:1em 0; }
+.chapter-recap { border-top:1px solid #b7c9d8; margin-top:2em; padding-top:1em; }
+#activity-menu-button { position:fixed; right:18px; top:8px; z-index:1001; background:#e1edf8; color:#173d5b; border:1px solid #91afc9; border-radius:5px; padding:7px 12px; font:14px Arial,sans-serif; cursor:pointer; }
+.book-header #activity-menu-button { position:absolute; }
+#activity-menu { background:#fff; color:#26343d; border:1px solid #91afc9; border-radius:8px; padding:22px; width:min(580px,calc(100vw - 32px)); max-height:85vh; overflow:auto; font:16px/1.5 Arial,sans-serif; }
+#activity-menu::backdrop { background:#0005; }
+#activity-menu > button { float:right; }
+#activity-menu h3 { font-size:17px; margin-bottom:.3em; }
+.reference-number { color:#405a70; }
+@media print { #activity-menu, #activity-menu-button, #citation-tooltip { display:none!important; } }

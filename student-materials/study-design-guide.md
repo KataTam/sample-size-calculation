@@ -63,3 +63,33 @@ Observational research may use the same outcome types as a trial, but an unadjus
 If funding guidance applies, read the current program/call rather than assuming an old example is a current requirement. [NIHR funding opportunities](https://www.nihr.ac.uk/funding-opportunities) is one starting point. The archived [NIHR HTA feasibility/pilot guidance](https://njl-admin.nihr.ac.uk/document/download/2023130) illustrates why a pilot's numbers can be justified by precision for feasibility parameters rather than efficacy-test power.
 
 For an unsupported design, take the question, assumptions, desired conclusion and analysis plan to a methodological collaborator before choosing a calculator. The [own-study guide](#own-study) and case template organize that information. All numerical cases in this teaching resource are hypothetical; their inputs are not clinical recommendations.
+
+<div class="chapter-recap">
+
+### Take-home points {.unnumbered}
+
+- The design and planned analysis determine which sample size method applies.
+- Paired measurements, clusters, and prediction models require appropriate methods.
+- Reporting guidance helps document decisions; it does not replace a calculation.
+
+### Check your understanding {.unnumbered}
+
+1. Do 100 measurements from 50 patients provide the same information as 100 independent patients?
+
+<details class="model-answer">
+<summary>Model answer</summary>
+
+Not generally. Measurements within a patient are related, and the analysis and planning method should account for that relationship.
+
+</details>
+
+2. Is following CONSORT sufficient to determine a trial's sample size?
+
+<details class="model-answer">
+<summary>Model answer</summary>
+
+No. CONSORT identifies information to report. The calculation still needs a suitable method, a planned analysis, and justified numerical assumptions.
+
+</details>
+
+</div>

@@ -477,35 +477,34 @@ normal_sampling_operating_characteristics <- function(mu0 = 120, mu1 = 125,
 plot_sample_mean_distributions <- function(x) {
   old_par <- par(no.readonly = TRUE)
   on.exit(par(old_par), add = TRUE)
-  # Reserve a separate top margin so the key never covers either density curve.
-  par(mar = c(5.1, 4.1, 8.5, 2.1))
+  par(mfrow = c(2, 1), mar = c(3.8, 4.2, 3.2, 1), mgp = c(2.3, .7, 0))
   limits <- range(c(x$mu0, x$mu1, x$critical)) + c(-4.5, 4.5) * x$se
   grid <- seq(limits[1], limits[2], length.out = 1200)
-  null_density <- dnorm(grid, x$mu0, x$se)
-  alt_density <- dnorm(grid, x$mu1, x$se)
-  ymax <- max(null_density, alt_density) * 1.17
-  plot(grid, null_density, type = "n", ylim = c(0, ymax),
-    xlab = "Sample mean (not individual observations)", ylab = "Density",
-    main = "")
-  title(main = paste0("Sampling distributions of the mean: n = ", x$n), line = 6.5)
+  ymax <- dnorm(x$mu0, x$mu0, x$se) * 1.12
   shade <- function(from, to, mean, color) {
     left <- max(from, limits[1]); right <- min(to, limits[2])
     if (left >= right) return(invisible(NULL))
     g <- seq(left, right, length.out = 400)
-    polygon(c(left, g, right), c(0, dnorm(g, mean, x$se), 0),
-      col = color, border = NA)
+    polygon(c(left, g, right), c(0, dnorm(g, mean, x$se), 0), col = color, border = NA)
   }
-  shade(-Inf, x$lower, x$mu0, adjustcolor("#a34724", alpha.f = .38))
-  shade(x$upper, Inf, x$mu0, adjustcolor("#a34724", alpha.f = .38))
-  shade(x$lower, x$upper, x$mu1, adjustcolor("#176675", alpha.f = .32))
-  lines(grid, null_density, col = "#a34724", lwd = 2, lty = 1)
-  lines(grid, alt_density, col = "#176675", lwd = 2, lty = 2)
+  panel <- function(mean, title) {
+    plot(grid, dnorm(grid, mean, x$se), type = "n", ylim = c(0, ymax),
+      xlab = "Sample mean (not individual observations)", ylab = "Density", main = title)
+  }
+  panel(x$mu0, paste0("Null hypothesis: population mean = ", x$mu0, "; n = ", x$n))
+  shade(-Inf, x$lower, x$mu0, "#e5b59f")
+  shade(x$upper, Inf, x$mu0, "#e5b59f")
+  lines(grid, dnorm(grid, x$mu0, x$se), col = "#a34724", lwd = 2)
   abline(v = x$critical, col = "#555555", lty = 3)
-  legend("top", inset = c(0, -5.5 * par("csi") * par("mex") / par("pin")[2]),
-    xpd = NA, bty = "n",
-    legend = c("Null distribution", "Specified alternative", "Type I error: false positive",
-    "Type II error: false negative", "Rejection boundary"),
-    col = c("#a34724", "#176675", "#a34724", "#176675", "#555555"),
-    lty = c(1, 2, NA, NA, 3), pch = c(NA, NA, 15, 15, NA),
-    lwd = c(2, 2, NA, NA, 1), cex = .75)
+  mtext(paste0("Shaded: Type I error = ", round(100*x$alpha, 1), "% (false positive)"), side = 3, line = .25, cex = .8, col = "#8d3b1e")
+  panel(x$mu1, paste0("Specified alternative: population mean = ", x$mu1, "; n = ", x$n))
+  shade(x$lower, x$upper, x$mu1, "#d5c4eb")
+  shade(-Inf, x$lower, x$mu1, "#a7d7cc")
+  shade(x$upper, Inf, x$mu1, "#a7d7cc")
+  lines(grid, dnorm(grid, x$mu1, x$se), col = "#176675", lwd = 2)
+  abline(v = x$critical, col = "#555555", lty = 3)
+  mtext(paste0("Purple: Type II error = ", round(100*x$beta,1), "%"),
+    side = 3, line = .25, adj = .05, cex = .8, col = "#67448c")
+  mtext(paste0("Green: power = ", round(100*x$power,1), "%"),
+    side = 3, line = .25, adj = .95, cex = .8, col = "#176675")
 }

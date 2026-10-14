@@ -120,7 +120,8 @@ ui <- fluidPage(
     tabPanel("Explore assumptions", h3("Your planned design"), tableOutput("planning"),
       p(class = "caption", "Table 1. Expected difference, target difference, clinical threshold and sample requirements for the current design."),
       p("Predict a change before moving a control. Compare testing, precision and fixed-resource goals."),
-      plotOutput("planning_plot", height = "430px"), textOutput("planning_text"),
+      textOutput("axis_note"), actionButton("fit_axis", "Fit axis to results"),
+    plotOutput("planning_plot", height = "430px"), textOutput("planning_text"),
       p(class = "caption", "Figure 1. Power and anticipated full confidence interval width across sample sizes. Dashed lines show the selected targets; points mark the current plan."),
       conditionalPanel("input.show_advanced", h4("Advanced: compare smaller effects"),
       p("Curves compare the target difference with two smaller differences. Predict which curve will reach the target first. Clinical importance is a separate judgment."),
@@ -210,6 +211,9 @@ server <- function(input, output, session) {
   activity_selection <- reactiveVal("")
   routed_case <- reactiveVal(NULL)
   import_status <- reactiveVal("")
+  one_saved <- reactiveVal(NULL)
+  many_saved <- reactiveVal(NULL)
+  axis_limit <- reactiveVal(NULL)
   current_lab_inputs <- reactive({
     defaults <- lab_input_defaults()
     values <- lapply(names(defaults), function(name) if (is.null(input[[name]])) defaults[[name]] else input[[name]])
@@ -246,9 +250,10 @@ server <- function(input, output, session) {
     names(values) <- names(defaults)
     safe(validate_study_inputs(values))
   })
-  apply_case <- function(id) {
+  apply_case <- function(id, reset = FALSE) {
     x <- teaching_case(id)
     current_activity(id)
+    axis_limit(NULL)
     if (x$app != "power_explorer") {
       routed_case(x)
       import_status("This activity uses a different study design. Follow its activity link below.")
@@ -256,12 +261,16 @@ server <- function(input, output, session) {
     }
     routed_case(NULL)
     apply_lab_inputs(session, x$inputs[names(x$inputs) %in% names(lab_input_defaults())])
+    if (isTRUE(reset)) {
+      one_saved(NULL); many_saved(NULL)
+      apply_study_inputs(session, study_input_defaults())
+    }
     activity_selection(id)
     updateSelectInput(session, "activity_choice", selected = id)
     updateSelectInput(session, "study_design", selected = "two_groups")
     updateCheckboxInput(session, "show_advanced", value =
       x$inputs$stage %in% c("One study", "Many studies") || identical(id, "pain_curves"))
-    import_status("Activity assumptions loaded. Any earlier simulation results remain labeled with their saved assumptions.")
+    import_status(if (isTRUE(reset)) "Activity reset: example inputs restored and earlier simulation results cleared." else "Activity assumptions loaded. Any earlier simulation results remain labeled with their saved assumptions.")
     invisible(x)
   }
   handle <- function(expr) tryCatch(expr, error = function(e) import_status(conditionMessage(e)))
@@ -272,7 +281,7 @@ server <- function(input, output, session) {
     else { current_activity(""); routed_case(NULL) }
   }, ignoreInit = TRUE)
   observeEvent(input$activity_request, {
-    handle(apply_case(input$activity_request$activity))
+    handle(apply_case(input$activity_request$activity, isTRUE(input$activity_request$reset)))
   }, ignoreInit = FALSE)
   observeEvent(input$state_request, {
     handle({
@@ -380,13 +389,15 @@ server <- function(input, output, session) {
   snapshot <- reactive(list(plan = planned(), generating = generating(), goal = input$goal,
                             target_power = input$target_power, dropout = input$dropout,
                             recruitment_cap = input$recruit_cap, expected_effect = expected_effect()))
-  one <- eventReactive(input$run_one, {
-    meta <- snapshot(); x <- simulate_one_study(meta$generating); x$meta <- meta; x
+  one <- reactive({ req(one_saved()); one_saved() })
+  observeEvent(input$run_one, {
+    meta <- snapshot(); x <- simulate_one_study(meta$generating); x$meta <- meta; one_saved(x)
   }, ignoreInit = TRUE)
-  many <- eventReactive(input$run_many, {
+  many <- reactive({ req(many_saved()); many_saved() })
+  observeEvent(input$run_many, {
     meta <- snapshot()
     withProgress(message = "Simulating independent studies", value = .2, {
-      x <- simulate_trials(meta$generating); incProgress(.8); x$meta <- meta; x
+      x <- simulate_trials(meta$generating); incProgress(.8); x$meta <- meta; many_saved(x)
     })
   }, ignoreInit = TRUE)
   status <- function(saved, label) paste0(label, ": n = ", saved$spec$n,
@@ -404,8 +415,22 @@ server <- function(input, output, session) {
     "The width curve is the expected full t-interval width under normal equal-variance sampling." else
     "The width curve uses the Newcombe-Wilson method with the assumed event probabilities (a plug-in approximation). It does not give an exact average width across repeated studies.",
     "Reaching the target on this curve does not guarantee every interval meets it. Check the fraction meeting the width target under Many studies."))
+  observeEvent(input$outcome, { axis_limit(NULL) }, ignoreInit = TRUE)
+  plot_limit <- reactive({
+    x <- planned()
+    limit <- axis_limit()
+    if (is.null(limit)) { limit <- min(100000, max(200, 2*x$n)); axis_limit(limit) }
+    limit
+  })
+  observeEvent(input$fit_axis, { axis_limit(min(100000, max(200, 2*planned()$n, input$recruit_cap))) })
+  output$axis_note <- renderText({
+    limit <- plot_limit(); n <- planned()$n
+    paste0("The horizontal range stays at 2 to ", limit, " patients per group while you compare inputs. ",
+      if (n > limit) paste0("The required ", n, " per group is outside this range. ") else "",
+      "Fit the axis to results if you need a different range.")
+  })
   output$planning_plot <- renderPlot({
-    x <- planned(); ns <- unique(round(seq(2, min(100000, max(40, 2*x$n)), length.out = 70)))
+    x <- planned(); ns <- unique(round(seq(2, plot_limit(), length.out = 100)))
     scale <- if (x$outcome == "proportions") 100 else 1
     par(mfrow = c(2, 1), mar = c(4, 4, 2, 1))
     plot(ns, 100 * vapply(ns, function(n) spec_power(x, n), numeric(1)), type = "l", lwd = 2,
@@ -433,7 +458,7 @@ server <- function(input, output, session) {
   })
   output$comparison_plot <- renderPlot({
     z <- comparison(); x <- z$spec
-    ns <- unique(round(seq(2, min(100000, max(40, 2*x$n, z$cap_n)), length.out = 80)))
+    ns <- unique(round(seq(2, plot_limit(), length.out = 100)))
     colors <- c("#176675", "#a04a24", "#635493")
     plot(range(ns), c(0, 100), type = "n", xlab = "Participants for analysis, per group", ylab = "Power (%)")
     for (i in seq_along(z$scenarios)) lines(ns,
