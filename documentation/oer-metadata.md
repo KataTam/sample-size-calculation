@@ -13,8 +13,8 @@ Use this file when registering or sharing the resource through GitHub, SURFshare
 | Resource type | Open educational resource; interactive module; teaching package |
 | Version | 0.3.0 (22 September 2026) |
 | Language | English |
-| License for teaching materials | CC BY 4.0 |
-| License for code | MIT License |
+| License for teaching materials | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/) |
+| License for code | [MIT License](https://opensource.org/license/mit) |
 | Repository | https://github.com/KataTam/sample-size-calculation |
 | DOI | To be added after archival release |
 

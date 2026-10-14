@@ -22,6 +22,6 @@ Open teaching materials for reasoning about sample size in medical studies.
 </nav>
 
 <footer class="landing-footer">
-Katalin Tamási, UMCG. Teaching materials: CC BY 4.0. Code: MIT.
+Katalin Tamási, UMCG. Teaching materials: <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>. Code: <a href="https://opensource.org/license/mit">MIT</a>.
 <a href="documentation/third-party-notices.md">Third-party notices</a>.
 </footer>

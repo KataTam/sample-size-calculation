@@ -4,7 +4,7 @@ Use the same case and assumptions through the module, [lab](https://katatam.gith
 
 | Outcome | Learning activity | Evidence | Rubric criterion |
 |---|---|---|---|
-| Select and justify a planning goal | Compare testing, precision and fixed-resource routes | Goal and intended conclusion in case map | 1 |
+| Select and justify a planning goal | Compare testing with a power target, estimation with a precision target, and fixed-resource planning | Goal and intended conclusion in case map | 1 |
 | Core: distinguish differences and assess evidence | Justify the chronic-pain target using importance and realism | Expected difference, target difference, clinical threshold; sources and uncertain ranges | 2–3 |
 | Calculate under explicit methods | Compare approximation and [lab](https://katatam.github.io/sample-size-calculation/study/?activity=own_study) planning outputs | Method, assumptions and reproducible counts | 4 |
 | Plan recruitment | Inflate within each arm; discuss missing-data limits | Analyzable and recruitment counts | 5 |
@@ -26,6 +26,6 @@ For the core route assess criteria 1–8 and 10; add criterion 9 only after teac
 | 1: One study, then many (chapter 2) | Explain p-value histogram, null rejection, and n versus B | 7, 9 |
 | 2: Power curves (chapter 4) | Interpret plausible effects, recruitment cap and fixed-n sensitivity | 5, 6, 10 |
 | 3: Simulated trial (chapter 5) | State generating process and analysis; report operating characteristics and uncertainty | 4, 7, 8, 9 |
-| Precision and feasibility (chapter 6) | Compare power goal with full-width criterion; explain why expected width is not a guarantee | 1, 8, 10 |
+| Estimation and feasibility (chapter 6) | Compare power goal with full-width criterion; explain why expected width is not a guarantee | 1, 8, 10 |
 
 Use prepared results from the same book when apps are unavailable. The content and assessment expectations are the same.

@@ -63,7 +63,7 @@ ui <- fluidPage(
   sidebarLayout(sidebarPanel(width = 4,
     checkboxInput("show_advanced", "Explore further: advanced controls and explanations", FALSE),
     selectInput("outcome", "Outcome", c("Continuous (numerical) outcome" = "means", "Binary (yes/no) outcome" = "proportions")),
-    selectInput("goal", "Planning goal", c("Test a difference from zero" = "testing", "Estimate with a target interval width" = "precision", "Assess a fixed number of available participants" = "fixed")),
+    selectInput("goal", "Planning goal", c("Test a difference from zero" = "testing", "Estimation with a target interval width" = "precision", "Assess a fixed number of available participants" = "fixed")),
     p("Two independent groups, equal allocation. Differences are treatment minus control; positive values mean benefit in these cases."),
     conditionalPanel("input.outcome == 'means'",
       numericInput("expected_m", "Expected difference: best current estimate (outcome units)", 4, step = .5),
@@ -119,7 +119,7 @@ ui <- fluidPage(
   mainPanel(width = 8, tabsetPanel(id = "stage",
     tabPanel("Explore assumptions", h3("Your planned design"), tableOutput("planning"),
       p(class = "caption", "Table 1. Expected difference, target difference, clinical threshold and sample requirements for the current design."),
-      p("Predict a change before moving a control. Compare testing, precision and fixed-resource goals."),
+      p("Predict a change before moving a control. Compare testing with a power target, estimation with an interval-width target, and fixed-resource planning. Both testing and estimation plans produce estimates and confidence intervals."),
       textOutput("axis_note"), actionButton("fit_axis", "Fit axis to results"),
     plotOutput("planning_plot", height = "430px"), textOutput("planning_text"),
       p(class = "caption", "Figure 1. Power and anticipated full confidence interval width across sample sizes. Dashed lines show the selected targets; points mark the current plan."),
@@ -318,7 +318,7 @@ server <- function(input, output, session) {
     design <- study_details()$study_design
     if (design == "two_groups") return(p("The lab calculations apply to two independent, equally sized groups. Check that the outcome and intended analysis match your study."))
     tagList(p("The two-group lab does not calculate a sample size for this design. Your notes and feasibility calculation can still be saved."),
-      if (design == "single_proportion") p(tags$a(href = "../prevalence_precision/?activity=prevalence", target = "_blank", rel = "noopener", "Open the single-proportion precision activity")),
+      if (design == "single_proportion") p(tags$a(href = "../prevalence_precision/?activity=prevalence", target = "_blank", rel = "noopener", "Open the proportion estimation activity")),
       p(tags$a(href = "../book/Sample_size_open_module.html#study-designs", target = "_blank", rel = "noopener", "Choose the appropriate planning approach")))
   })
   feasibility <- reactive({

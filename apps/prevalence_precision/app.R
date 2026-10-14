@@ -15,7 +15,7 @@ validate_precision_inputs <- function(values, complete = TRUE) {
     value <- x[[name]]
     if (name == "goal") {
       if (!is.character(value) || length(value) != 1 || is.na(value) || !value %in% c("precision", "fixed"))
-        stop("Choose a precision or fixed-sample goal.", call. = FALSE)
+        stop("Choose estimation with a target width or assessment of an available sample.", call. = FALSE)
     } else if (name == "unknown_p") {
       if (!is.logical(value) || length(value) != 1 || is.na(value)) stop("Invalid unknown-proportion choice.", call. = FALSE)
     } else {
@@ -49,7 +49,7 @@ ui <- fluidPage(
   sidebarLayout(sidebarPanel(width = 4,
     selectInput("case_id", "Teaching case", c("Prevalence survey" = "prevalence", "Pilot retention" = "pilot_feasibility")),
     actionButton("load_case", "Load case assumptions"),
-    selectInput("goal", "Planning goal", c("Plan for a target width" = "precision", "Assess an available sample" = "fixed")),
+    selectInput("goal", "Planning goal", c("Estimation with a target interval width" = "precision", "Assess an available sample" = "fixed")),
     percent_slider("anticipated_p", "Anticipated percentage (%)", .001, .999, .20, step = .001),
     checkboxInput("unknown_p", "No previous estimate: use 50% for conservative planning", FALSE),
     helpText("This choice maximizes the usual single-proportion sample requirement at fixed absolute margin of error. It does not supply an assumed treatment effect."),
@@ -62,6 +62,7 @@ ui <- fluidPage(
   mainPanel(width = 8,
     h3(textOutput("case_title")), textOutput("case_prompt"), textOutput("bridge_status"),
     h3("Predict, explore and interpret"),
+    p("Estimation uses the sample to estimate a population percentage. Precision describes uncertainty around that estimate; here it is assessed by confidence interval width. A narrower target width requires more participants under the same assumptions."),
     p("Predict the recruitment change when the margin of error is halved. Explain why required precision should follow the intended clinical or planning decision."),
     tableOutput("plan_table"), textOutput("precision_text"), textOutput("approximation_note"),
     p(class = "caption", "Table. Planning prevalence, requested margin of error, approximate analyzable counts and recruitment target."),
@@ -195,7 +196,7 @@ server <- function(input, output, session) {
   }, alt = "Saved one-sample Wilson interval; observed events, estimate and limits are supplied in the table.")
   output$download_plan <- downloadHandler(filename = function() "proportion_precision_plan.txt", content = function(file) {
     writeLines(c("Single proportion: planning assumptions", capture.output(dput(snapshot())),
-      "Approximate precision plan", capture.output(dput(plan())),
+      "Approximate sample size plan for estimation with a precision target", capture.output(dput(plan())),
       paste("Current participants for analysis:", analysable_n()), "Learner explanation:", input$justification,
       "Planning approximation is not a guarantee for realized interval width or protection against sampling bias."), file)
   })

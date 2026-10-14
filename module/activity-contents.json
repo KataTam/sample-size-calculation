@@ -87,7 +87,7 @@
   {
     "chapter": "feasibility",
     "anchor": "feasibility",
-    "title": "Recruitment, precision and feasibility",
+    "title": "Recruitment, estimation and feasibility",
     "route": "Core and advanced",
     "activities": [
       {
@@ -96,7 +96,7 @@
         "route": "Core"
       },
       {
-        "label": "Plan the precision of a mean difference",
+        "label": "Estimate a mean difference with a precision target",
         "path": "study/?activity=mean_precision",
         "route": "Advanced"
       },

@@ -61,7 +61,7 @@ Edit `module/Sample_size_open_module.Rmd` and `module/references.bib` together i
 
 The older `sample-size-calculation-oer` and archived `pre2026` folders are not publication sources. Bibliographies in generated website folders are output copies; editing them does not update the tutorial.
 
-From the maintained repository root, run `Rscript scripts/render_resource.R` to rebuild the book and standalone HTML. Add `--pdf` when you also want to update the printable edition. Commit and push to save changes in the private repository. Public deployment remains disabled until the author explicitly asks to publish again.
+From the maintained repository root, run `Rscript scripts/render_resource.R` to rebuild the book and standalone HTML. Add `--pdf` when you also want to update the printable edition. Commit and push to `main` to publish through GitHub Pages. From 14 October 2026, the author has requested publication of completed, checked tutorial and resource updates by default. Monitor the workflow and verify the live site before reporting publication complete.
 
 ## Complete tutorial downloads
 

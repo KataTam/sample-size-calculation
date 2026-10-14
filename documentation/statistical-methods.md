@@ -20,9 +20,11 @@ Binary datasets use independent Bernoulli draws, or binomial counts for repeated
 
 Binary intervals use Newcombe's combination of uncorrected Wilson intervals. If Wilson limits are LT, UT, LC, UC and d=pT−pC, the limits are d−sqrt((pT−LT)²+(UC−pC)²) and d+sqrt((UT−pT)²+(pC−LC)²). This is not inversion of the pooled score test; interval exclusion and test decisions can occasionally differ. The tests check finite limits at all-success/all-failure extremes and validate coverage in selected settings; they do not establish universal coverage guarantees.
 
-## Precision
+## Estimation with a precision target
 
-All targets mean FULL confidence interval width at confidence 1−alpha. For normal data, expected width is 2*tCritical*sigma*sqrt(2/n)*c4(df), where c4(df)=sqrt(2/df)*Gamma((df+1)/2)/Gamma(df/2). For binary data the anticipated curve plugs assumed probabilities into the Newcombe formula. It is not exact expected width. Estimation planning searches this expected or plug-in criterion. Neither is a probability-of-width guarantee; simulations report mean width and the fraction attaining the target separately.
+Estimation is the process of estimating a population quantity. Precision describes its sampling uncertainty, assessed here by interval width at a specified confidence level. Both power-based and width-based plans produce estimates and intervals; the distinction is the criterion used to select sample size.
+
+All targets mean FULL confidence interval width at confidence 1−alpha. For normal data, expected width is 2*tCritical*sigma*sqrt(2/n)*c4(df), where c4(df)=sqrt(2/df)*Gamma((df+1)/2)/Gamma(df/2). For binary data the anticipated curve plugs assumed probabilities into the Newcombe formula. It is not exact expected width. Planning for a precision target searches this expected or plug-in width criterion. Neither is a probability-of-width guarantee; simulations report mean width and the fraction attaining the target separately.
 
 ## Reproducibility and uncertainty
 

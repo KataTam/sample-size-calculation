@@ -80,3 +80,7 @@ Do not add:
 
 Contributors should be acknowledged in a way that matches their preference and the nature of the contribution. Student cases should only be publicly attributed with consent.
 
+
+## Licensing contributions
+
+Original teaching-material contributions intended for inclusion should be available under [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/); original code contributions should use the [MIT License](https://opensource.org/license/mit). Third-party materials retain their own terms and require compatible permissions. Student contributions still require the review and consent described above.

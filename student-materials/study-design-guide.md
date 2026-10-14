@@ -56,6 +56,8 @@ For paired, crossover and cluster designs, the relevant correlation and independ
 
 Observational research may use the same outcome types as a trial, but an unadjusted two-group calculation does not account for confounding, covariate adjustment or causal identification. In a preclinical study, identify the allocated experimental unit before counting animals, cages, cultures or measurements.
 
+Two further examples illustrate the need for specialized planning. In a sequential multiple assignment randomized trial (SMART), treatment can be randomized again at a later stage according to response; [Dey et al. (2026)](https://doi.org/10.1177/09622802261485814) develops calculations for skewed outcomes in this setting. Sequential treatment assignment does not itself mean that the total sample size adapts during recruitment. For a meta-analysis containing several related effect estimates from each study, [Vembye et al. (2024)](https://doi.org/10.1002/jrsm.1752) provides power guidance and the POMADE R package. Neither task is covered by the basic two-group calculators.
+
 ## Use guidance for its stated purpose {.advanced-heading}
 
 [SPIRIT 2025 and CONSORT 2025](https://www.consort-spirit.org/) address trial protocol and results reporting. STROBE addresses observational reporting; STARD diagnostic-accuracy reporting; ARRIVE animal experiments; TRIPOD+AI prediction-model reporting. These resources help you document assumptions and decisions. They are not interchangeable sample-size calculators or universal minimum-n rules.

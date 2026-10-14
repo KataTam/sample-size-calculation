@@ -1,11 +1,16 @@
-Creative Commons Attribution 4.0 International
+Creative Commons Attribution-ShareAlike 4.0 International
 
-The teaching materials in this repository, including the learner module, teaching guide, cases, rubrics, and documentation, are licensed under the Creative Commons Attribution 4.0 International License.
+Except where otherwise noted, the original teaching materials in this repository, including the learner module, teaching guide, cases, rubrics, and documentation, are licensed under the Creative Commons Attribution-ShareAlike 4.0 International License.
 
-The R and Shiny source code is licensed separately under the MIT License; see `LICENSE-code.md`.
+The R and Shiny source code is licensed separately under the MIT License; see [LICENSE-code.md](LICENSE-code.md) and the [MIT License](https://opensource.org/license/mit).
 
 You are free to share and adapt the material for any purpose, including commercially, provided that appropriate credit is given, a link to the license is provided, and changes are indicated.
 
-License text: https://creativecommons.org/licenses/by/4.0/
+License: [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/)
+Legal text: https://creativecommons.org/licenses/by-sa/4.0/legalcode.en
+
+If you share an adaptation, your contributions must be licensed under CC BY-SA 4.0 or a compatible license. No additional legal or technological restrictions may prevent uses permitted by the license.
+
+This licensing policy applies to this edition and future revisions from 14 October 2026. It does not revoke permissions already granted for earlier editions under CC BY 4.0. Third-party materials retain their stated terms.
 
 Copyright 2026 Katalin Tamasi

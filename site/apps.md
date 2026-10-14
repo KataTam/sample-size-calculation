@@ -1,6 +1,6 @@
 # Apps
 
-Choose an activity or calculation tool. Start with the [core tutorial route](book/#core-route), or [open the tutorial and an activity together](study/). The [advanced route](book/#advanced-route) adds simulations, precision planning and other designs.
+Choose an activity or calculation tool. Start with the [core tutorial route](book/#core-route), or [open the tutorial and an activity together](study/). The [advanced route](book/#advanced-route) adds simulations, estimation with a precision target and other designs.
 
 ## Core: basic calculations and justification
 
@@ -12,7 +12,7 @@ Choose an activity or calculation tool. Start with the [core tutorial route](boo
 ## Explore further
 
 - [Sample size reasoning lab](power_explorer/): starts with basic calculation controls; select Explore further for advanced controls, sensitivity analyses and simulation settings. One study and Many studies are simulation extensions.
-- [Estimate a proportion or pilot retention percentage](prevalence_precision/): plan and interpret confidence interval precision.
+- [Estimate a proportion or pilot retention percentage](prevalence_precision/): estimate a population percentage and assess precision using confidence interval width.
 - [Type I error probability, Type II error probability and power](sampling_distributions/): compare sampling distributions under the null and an alternative.
 
 [Back to the start page](./)

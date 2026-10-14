@@ -23,6 +23,6 @@ Clinical questions and assumptions; two means and two proportions; power and pre
 
 ## Reuse and contribute
 
-Original teaching materials are CC BY 4.0; original code is MIT. See [reuse and citation](documentation/reuse-and-citation.md), [third-party notices](documentation/third-party-notices.md), and [contribution guidance](CONTRIBUTING.md). Student contributions are reviewed and published only with permission. The resource has not yet been evaluated in a student pilot.
+Original teaching materials are [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/); original code is [MIT](https://opensource.org/license/mit). See [reuse and citation](documentation/reuse-and-citation.md), [third-party notices](documentation/third-party-notices.md), and [contribution guidance](CONTRIBUTING.md). Student contributions are reviewed and published only with permission. The resource has not yet been evaluated in a student pilot.
 
 To update the tutorial, edit `module/Sample_size_open_module.Rmd`. Commit and push to save changes to the public repository. Website deployment is controlled separately by the publishing workflow. Detailed maintenance instructions are in [documentation/development/](documentation/development/build-and-publish.md).

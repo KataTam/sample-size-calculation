@@ -1,6 +1,6 @@
 ---
 title: "How many patients do you need for your study?"
-license: "CC BY 4.0 for original teaching material; MIT for original code"
+license: "CC BY-SA 4.0 for original teaching material; MIT for original code"
 subtitle: "Sample size calculation tutorial for healthcare professionals"
 author: "Katalin Tamási"
 affiliation: "University Medical Center Groningen"
@@ -42,7 +42,7 @@ How many patients would you need to compare a new pain treatment with standard t
 
 ## How to use this tutorial {-}
 
-This tutorial is intended for both students and researchers. Students may find the core route sufficient for planning a basic two-arm clinical trial. Researchers and other readers can deepen their understanding through the advanced sections on [power](#statistical-power) curves, simulation methods, [precision](#precision) planning and other study designs. You can choose a route according to your experience and study question. Blue backgrounds identify core material; purple backgrounds advanced extensions. Advanced indicates scope beyond the basic calculations, not technical difficulty.
+This tutorial is intended for both students and researchers. Students may find the core route sufficient for planning a basic two-arm clinical trial. Researchers and other readers can deepen their understanding through the advanced sections on [power](#statistical-power) curves, simulation methods, estimation with a [precision](#precision) target and other study designs. You can choose a route according to your experience and study question. Blue backgrounds identify core material; purple backgrounds advanced extensions. Advanced indicates scope beyond the basic calculations, not technical difficulty.
 
 The main example compares two treatments in different groups of patients, with equal numbers assigned to each treatment. Each patient receives one of the two treatments. The analysis allows for a difference in either direction: the novel treatment could perform better or worse than standard treatment. These are called [independent groups](#independent-groups), equal allocation, and a [two-sided test](#two-sided-test). Later sections consider other planning goals and designs.
 
@@ -71,7 +71,7 @@ The extensions below may be relevant to your study question. They should help yo
 - Distinguish [an observed significance boundary from planned power](#critical-observed-difference) and explore [sampling distributions and error regions](#alpha-beta).
 - [Read power curves](#curves) and evaluate what a fixed sample can establish.
 - [Build a simulated clinical trial](#simulation) to examine power, coverage and precision, accounting for [Monte Carlo uncertainty](#monte-carlo-error).
-- Plan for [estimation](#plan-for-precision), [prevalence](#prevalence), [existing-data reuse](#dataset-reuse) or [pilot feasibility](#pilot-feasibility), including constraints in [rare diseases](#rare-diseases).
+- Plan [estimation with a precision target](#plan-for-precision), [prevalence](#prevalence), [existing-data reuse](#dataset-reuse) or [pilot feasibility](#pilot-feasibility), including constraints in [rare diseases](#rare-diseases).
 - Recognize [study designs that need another method](#study-designs), including paired measurements and prediction models.
 - [Reproduce calculations and simulations](#appendix) with their assumptions and methods documented.
 
@@ -141,7 +141,7 @@ The map below gathers the remaining decisions. The chronic pain plan has two ind
 knitr::asis_output(render_question_map())
 ```
 
-The examples use frequentist methods: two-sided significance tests for superiority and [confidence intervals](#confidence-interval) for estimation. Non-inferiority, equivalence and clustered trials require different hypotheses or calculations; [Where does my study fit?](#study-designs) helps identify these designs. For Bayesian planning, see [@kunzmann2021review].
+The examples use frequentist methods: two-sided significance tests for superiority and [confidence intervals](#confidence-interval) for estimation. [Estimation](#estimation) uses sample data to estimate a population quantity, such as a between-group difference. Precision describes how much uncertainty remains around that estimate, assessed here by interval width at a specified confidence level. A trial planned for power can also estimate the treatment difference; choosing a precision target changes how its sample size is determined. Non-inferiority, equivalence and clustered trials require different hypotheses or calculations; [Where does my study fit?](#study-designs) helps identify these designs. For Bayesian planning, see [@kunzmann2021review].
 
 ## What do you expect, what will you plan for, and what matters clinically? {#what-do-we-expect-what-will-we-plan-for-and-what-matters-clinically .core-heading}
 
@@ -197,7 +197,7 @@ Before choosing a sample size, your study plan should distinguish what you expec
 | Decision | What to make explicit |
 |---|---|
 | Research question: PICO | Population, Intervention, Comparator, and Outcome, including the measurement time point |
-| Planning objective and constraints | Power, precision, both requirements, or a feasibility objective; whether the available sample is fixed |
+| Planning objective and constraints | Hypothesis testing with a power target, estimation with a precision target, both requirements, or a feasibility objective; whether the available sample is fixed |
 | Effect scale | Treatment minus control; score units or percentage points; direction of benefit |
 | Expected difference | Best current expectation, supporting evidence and uncertainty |
 | Clinical threshold | Smallest benefit that matters to patients, with justification |
@@ -217,6 +217,8 @@ PICO connects the clinical question to the calculation: Population, Intervention
 The target difference tells the calculation where to evaluate power. The [standard deviation](#standard-deviation) describes variation between individuals; the [standard error](#standard-error) describes [sampling variation](#sampling-variability) of an estimate. For binary outcomes, you should report each group's event probability as a percentage and their absolute difference in percentage points. The section [Glossary](#glossary) explains these terms in more detail.
 
 For each numerical assumption, you should record the source, its relevance to these patients and this outcome, and a plausible range. Evidence from a different follow-up time or patient population may not transfer directly. For a clinical threshold, you should record the reasoning. DELTA² and CONSORT emphasize explaining the assumptions and calculation as opposed to reporting the final number [@cook2018delta2; @consortee2025].
+
+A useful check is whether another researcher could reproduce your calculation from the description. In a review of 185 studies using the BREAST-Q Reconstruction Module, only 17 reported a sample-size calculation [@gallo2022]. This illustrates a reporting gap in that literature; it does not establish that the other studies performed no calculation or were underpowered. Your [assumptions report](https://katatam.github.io/sample-size-calculation/study/?activity=assumptions_report) should make both the calculation and its justification traceable.
 
 ::: {.activity}
 Which count belongs in the protocol: analyzable patients or patients to recruit? Your report should record both and explain the adjustment for expected losses when you complete the calculation.
@@ -677,7 +679,7 @@ After this section, you should be able to:
 - Distinguish per-group from total counts.
 :::
 
-You can now apply these ideas to two-arm treatment comparisons. The formulas below assume two [independent groups](#independent-groups) with equal allocation and a [two-sided test](#two-sided-test). Later, [Recruitment, precision and feasibility](#feasibility) extends planning to estimation and single-proportion examples, and [Where does my study fit?](#study-designs) considers other designs.
+You can now apply these ideas to two-arm treatment comparisons. The formulas below assume two [independent groups](#independent-groups) with equal allocation and a [two-sided test](#two-sided-test). Later, [Recruitment, estimation and feasibility](#feasibility) extends planning to estimation and single-proportion examples, and [Where does my study fit?](#study-designs) considers other designs.
 
 Having specified the chronic pain target difference and acceptable error risks, you can calculate the required number of analyzable patients. The first calculation concerns that trial; the next concerns a continuous-outcome comparison.
 
@@ -845,6 +847,22 @@ n\approx10.51\times\frac{2\times5^2}{3^2}\approx58.4.
 
 You therefore round upward to `r n_per_group` patients per group, or `r 2 * n_per_group` in total. Smaller differences are harder to distinguish from patient-to-patient variation and require larger samples.
 
+<details>
+<summary>Raw and standardized differences</summary>
+
+The target difference of 3 score units is a raw between-group difference. Dividing it by the common SD gives the standardized difference: $d=3/5=0.60$. If the SD were 10 units, the same 3-unit difference would give $d=0.30$. The clinical difference is unchanged, but it is smaller relative to patient-to-patient variation and requires more patients to detect. A standardized effect is therefore not, by itself, a measure of clinical importance. Keeping the difference in the outcome's original units helps you explain what it would mean clinically; standardized measures can help compare results across scales [@kallogjeri2023].
+
+</details>
+
+<details>
+<summary>Where does the assumed SD come from?</summary>
+
+Previous studies can inform the SD, but their patients, measurement scale, follow-up time and analysis should be relevant to your study. The SD of change from baseline is not interchangeable with the SD of final scores. A review of knee osteoarthritis trials found substantial variation in pain-score variability across studies [@bentin2026]. Its estimates concern continuous WOMAC pain scores, not the percentage of patients achieving pain relief in the binary example.
+
+Your study plan should identify the source of the assumed SD and explore a plausible range. Table \@ref(tab:mean-changes) shows what happens when the SD doubles; a published pooled SD should not be treated as a universal value for every pain study.
+
+</details>
+
 The simple formula helps explain how sample size depends on the target difference and variability. A calculation for the planned t test also accounts for the fact that the study must estimate variability from its patients. It therefore gives a slightly different sample size:
 
 ```{r t-test-planning}
@@ -910,7 +928,7 @@ knitr::kable(data.frame(`Analyzable per group`=rehabilitation_plan$n, `Analyzabl
 
 The expected-loss adjustment gives a recruitment total of `r 2 * adjust_for_dropout(rehabilitation_plan$n, rehabilitation_case$inputs$dropout)`, below this example's cap of 200. Meeting the cap and power target still leaves questions about the credibility of the assumptions, measurement quality and the [precision](#precision) needed for a clinical decision.
 
-<div class="core-next">Continue along the core route: <a href="#feasibility">Recruitment, precision and feasibility</a>.</div>
+<div class="core-next">Continue along the core route: <a href="#feasibility">Recruitment, estimation and feasibility</a>.</div>
 
 
 <div class="chapter-recap">
@@ -1302,7 +1320,7 @@ You can complete the longer exploration after reading, or return to the relevant
 
 </div>
 
-# Recruitment, precision and feasibility {#feasibility .core-heading}
+# Recruitment, estimation and feasibility {#feasibility .core-heading}
 
 ::: {.learning-goals .core-outcomes}
 After this section, you should be able to:
@@ -1316,7 +1334,7 @@ After this section, you should be able to:
 
 The chronic pain trial needs enough analyzable outcomes, but recruitment is only part of its plan. You should also allow for losses and consider whether the resulting estimates would guide a clinical decision.
 
-The core route follows recruitment, clinical interpretation, sensitivity and feasibility. The advanced sections ask what changes when useful precision, an existing dataset or a feasibility decision becomes the main planning goal. They extend the same question-to-analysis reasoning rather than introduce unrelated calculations.
+The core route follows recruitment, clinical interpretation, sensitivity and feasibility. The advanced sections ask what changes when estimation with a precision target, an existing dataset or a feasibility decision determines the sample size. They extend the same question-to-analysis reasoning rather than introduce unrelated calculations.
 
 ## Account for expected losses {.core-heading}
 
@@ -1388,7 +1406,7 @@ A study can detect a difference from zero while leaving considerable uncertainty
 
 <div class="core-next">Continue along the core route: <a href="#stress-test-the-study-plan">Sensitivity analysis and feasibility</a>.</div>
 
-## Plan for precision {.advanced-heading}
+## Estimation with a precision target {#plan-for-precision .advanced-heading}
 
 <details class="advanced-explanation">
 <summary>Advanced explanation and exploration</summary>
@@ -1396,7 +1414,9 @@ A study can detect a difference from zero while leaving considerable uncertainty
 
 
 
-The [lab](https://katatam.github.io/sample-size-calculation/study/?activity=mean_precision) offers *Estimate with a target interval width* alongside testing and fixed-resource goals. Your plan should specify the [full width](#full-width), in the outcome's original units. For the continuous improvement score, the expected difference remains 4 units, the target difference 3 units and the clinical threshold 2 units. You can use SD 5 and a target full width of 4 units:
+Estimation answers "How large is the population quantity?" Precision answers "How narrowly can it be estimated?" For example, estimating a symptom prevalence is the task; seeking a 95% confidence interval with a margin of error of 5 percentage points sets the precision target. Estimation itself does not guarantee a narrow interval [@wang2020; @lakens2022].
+
+The [lab](https://katatam.github.io/sample-size-calculation/study/?activity=mean_precision) offers *Estimation with a target interval width* alongside testing and fixed-resource goals. Your plan should specify the [full width](#full-width), in the outcome's original units. For the continuous improvement score, the expected difference remains 4 units, the target difference 3 units and the clinical threshold 2 units. You can use SD 5 and a target full width of 4 units:
 
 ```{r precision-plan}
 precision_spec <- study_spec(outcome = "means", delta = 3, sd = 5,
@@ -1407,7 +1427,7 @@ c(per_group = precision_spec$n,
   power_at_planning_effect = spec_power(precision_spec))
 precision_batch <- simulate_trials(precision_spec)
 knitr::kable(display_simulation_summary(simulation_summary(precision_batch)),
-  caption = "Precision planning and realized interval performance are different quantities.")
+  caption = "Simulated performance of a study planned for estimation with a specified interval-width target.")
 ```
 
 ```{r precision-plan-formatted, echo=FALSE}
@@ -1417,12 +1437,12 @@ knitr::kable(data.frame(`Analyzable per group`=precision_spec$n, `Anticipated fu
 For normal data, the curve gives expected full t-interval width. For binary data, it uses a plug-in Newcombe-Wilson width at the assumed probabilities, not exact expected width. Neither criterion guarantees that each realized interval will meet the target; the simulation reports the fraction that does so separately [@sandoval2025; @newcombe1998].
 
 ::: {.activity}
-You can compare planning goals in [Activity: Plan the precision of a mean difference](https://katatam.github.io/sample-size-calculation/study/?activity=mean_precision). In the [lab](https://katatam.github.io/sample-size-calculation/study/?activity=mean_precision), you can choose *Continuous outcome*, expected difference 4, target difference 3, SD 5, clinical threshold 2, [Type I error probability](#alpha) 5% and full width 4. The outcome here is an improvement score. You can compare the sample selected for estimation with the sample selected for 80% power. Your explanation should address why the same research question might require considering both criteria.
+You can compare planning goals in [Activity: Estimate a mean difference with a precision target](https://katatam.github.io/sample-size-calculation/study/?activity=mean_precision). In the [lab](https://katatam.github.io/sample-size-calculation/study/?activity=mean_precision), you can choose *Continuous outcome*, expected difference 4, target difference 3, SD 5, clinical threshold 2, [Type I error probability](#alpha) 5% and full width 4. The outcome here is an improvement score. You can compare the sample selected for the specified interval-width target with the sample selected for 80% power. Your explanation should address why the same research question might require considering both criteria.
 
 <details class="model-answer" id="model-answer-precision-versus-power">
 <summary>Model answer</summary>
 
-With SD 5 and the same two-group analysis, the expected full-width target of 4 units requires `r precision_spec$n` analyzable patients per group; the 80% power target at a 3-unit difference requires `r plan_n(precision_spec, goal = "testing", target_power = .80)` per group. Precision planning concerns how precisely the difference can be estimated; power planning concerns how often the test rejects zero at the specified true difference. Your study question may require both a useful interval width and an adequate probability of detecting a worthwhile effect. If both are requirements, the plan should satisfy both under justified assumptions. An expected interval-width target does not guarantee that every realized interval meets it.
+With SD 5 and the same two-group analysis, the expected full-width target of 4 units requires `r precision_spec$n` analyzable patients per group; the 80% power target at a 3-unit difference requires `r plan_n(precision_spec, goal = "testing", target_power = .80)` per group. Both plans allow estimation of the difference. The precision criterion concerns how narrow its confidence interval is expected to be; the power criterion concerns how often the test rejects zero at the specified true difference. Your study question may require both a useful interval width and an adequate probability of detecting a worthwhile effect. If both are requirements, the plan should satisfy both under justified assumptions. An expected interval-width target does not guarantee that every realized interval meets it.
 
 </details>
 
@@ -1952,6 +1972,8 @@ The core calculations evaluate power at specified values. More specialized appro
 
 These are extensions to discuss with a methodological collaborator, not automatic ways to reduce recruitment. [Where does my study fit?](#study-designs) and the references below provide routes to design-specific methods.
 
+A review of Bayesian randomized trials found that hybrid sample-size methods were common and fully Bayesian methods were rarely used [@marks2026]. A Bayesian analysis does not automatically imply a fully Bayesian sample-size calculation or an adaptive design. Bayesian trials can have a fixed sample size; adaptive designs also require prespecified rules and evaluation of their operating characteristics.
+
 <details>
 <summary>R version and package information for this build</summary>
 
@@ -1977,9 +1999,11 @@ The development of the epidemiology and medical statistics e-learning environmen
 
 Further statistical background comes from @clayton2019, @kirkwood2003, @whitley2002, @pourhoseingholi2013 and @wang2020.
 
-Original teaching materials are shared under CC BY 4.0 and original code under MIT; see the [reuse and citation guidance](https://katatam.github.io/sample-size-calculation/documentation/reuse-and-citation.html) for attribution and third-party exceptions. Consent is required before publishing student work, identifiable feedback or named student acknowledgments. This consent requirement concerns student contributions, rather than reuse of the licensed teaching materials.
+Except where otherwise noted, original teaching materials are shared under [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/) and original code under the [MIT License](https://opensource.org/license/mit); see the [reuse and citation guidance](https://katatam.github.io/sample-size-calculation/documentation/reuse-and-citation.html) for attribution and third-party exceptions. Shared adaptations of the teaching materials must use the same or a compatible license. Consent is required before publishing student work, identifiable feedback or named student acknowledgments. This consent requirement concerns student contributions, rather than reuse of the licensed teaching materials.
 
 The [teaching guide](https://katatam.github.io/sample-size-calculation/teaching/TEACHING_GUIDE.html), [case template](https://katatam.github.io/sample-size-calculation/case-studies/student_case_template.html) and [assessment rubric](https://katatam.github.io/sample-size-calculation/teaching/assessment_rubric.html) support classroom use.
+
+For evaluation, @chan2019 cautions that access counts and time online may not represent meaningful learning. The teaching guide therefore emphasizes explanations and transfer to a new case alongside usability feedback.
 
 ## Further reading {-}
 
@@ -1991,6 +2015,8 @@ Your choice of reading can follow the decision you need to make; the [reading gu
 - Advanced methods and reference books: @pargent2024 explains mixed-model simulation, and @superpowerbook2022 supports exploring repeated studies. @julious2004 reviews normal-outcome trial calculations; @julious2023 provides broader design-specific sample size methods. @piantadosi2024 places planning within broader trial methodology. These books are references rather than prerequisites.
 
 For readers exploring prediction models, @shamsutdinova2026 describes recent simulation-based approaches (currently in preprint).
+
+For specialized designs, @vembye2024 provides guidance and the POMADE R package for power analysis of meta-analyses with dependent effect estimates. @dey2026 develops calculations for sequential multiple assignment randomized trials (SMARTs) with skewed outcomes. These are further-reading options, not prerequisites for the core calculations. @marks2026 complements the Bayesian planning methods with evidence about their use and reporting in trials.
 
 ## Sources {-}
 

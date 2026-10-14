@@ -101,12 +101,20 @@
     "definition": "A range showing uncertainty around an estimate under the analysis assumptions. A 95% confidence interval captures the true population value in about 95% of repeated studies, when recalculated for each study under the method's assumptions."
   },
   {
+    "id": "estimation",
+    "label": "Estimation",
+    "aliases": [
+      "estimation"
+    ],
+    "definition": "Using sample data to estimate a population quantity, such as a mean, prevalence or treatment difference. A point estimate gives a value; an interval estimate expresses uncertainty. Precision describes how narrowly the quantity is estimated."
+  },
+  {
     "id": "precision",
     "label": "Precision",
     "aliases": [
       "precision"
     ],
-    "definition": "How little an estimate varies across repeated samples. It is commonly assessed using its standard error or confidence-interval width: smaller values indicate greater precision, not necessarily less bias."
+    "definition": "How little an estimate varies across repeated samples, assessed using its standard error or interval width at a specified confidence level. Smaller values indicate greater precision, not necessarily less bias. Estimation is the process of estimating; precision is a property of the estimate."
   },
   {
     "id": "margin-of-error",

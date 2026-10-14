@@ -6,7 +6,7 @@ This repository contains both teaching materials and code.
 
 ## Teaching Materials
 
-The teaching materials are licensed under CC BY 4.0. This includes:
+The teaching materials are licensed under [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/). This includes:
 
 - learner-facing module text
 - teaching guide
@@ -16,21 +16,21 @@ The teaching materials are licensed under CC BY 4.0. This includes:
 - accessibility checklist
 - case templates and case review materials
 
-You may share and adapt these materials if you give appropriate credit, link to the license, and indicate whether changes were made.
+You may share and adapt these materials if you give appropriate credit, link to the license, and indicate whether changes were made. When sharing an adaptation, you must license your contributions under CC BY-SA 4.0 or a compatible license. You may not impose additional legal or technological restrictions on uses the license permits. Commercial use is allowed.
 
 Suggested attribution:
 
-> Adapted from "Sample Size Calculation OER" by Katalin Tamasi, licensed under CC BY 4.0.
+> Adapted from "Sample Size Calculation OER" by Katalin Tamasi, licensed under [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/).
 
 ## Code
 
-The R and Shiny code is licensed under the MIT License. This includes:
+The R and Shiny code is licensed under the [MIT License](https://opensource.org/license/mit). This includes:
 
 - functions in `R/`
 - Shiny apps in `apps/`
 - code chunks used to generate examples and figures
 
-See `LICENSE-code.md`.
+The full project-specific notice is in [LICENSE-code.md](../LICENSE-code.md).
 
 ## Citation
 
@@ -62,6 +62,8 @@ If you adapt the resource, briefly describe what you changed. This can be done i
 
 
 ## External sources and earlier versions
+
+From 14 October 2026, this edition and future revisions use CC BY-SA 4.0 for original teaching materials. Permissions already granted for earlier editions under CC BY 4.0 remain valid; this change does not revoke them. See the [Creative Commons explanation](https://creativecommons.org/faq/#what-if-i-change-my-mind-about-using-a-cc-license).
 
 See [third-party notices](third-party-notices.md) before importing external figures or code, or releasing historical revisions. The separate [References](references.md) section records conceptual and statistical sources without relicensing their material.
 

@@ -1,6 +1,6 @@
 # Third-party notices and provenance
 
-The current learner prose combines the author's original tutorial with explanations and simulation code written for this revision. The seven-question map adapts selected passages from Katalin Tamási's tutorial dated 14 May 2021, supplied by the author, into integrated explanations. Its caption credits the underlying illustration to Sieben Medical Art. External papers informed the concepts; no paper figures, PDF pages, or supplemental code were copied into the package. Original code remains MIT and original teaching material CC BY 4.0.
+The current learner prose combines the author's original tutorial with explanations and simulation code written for this revision. The seven-question map adapts selected passages from Katalin Tamási's tutorial dated 14 May 2021, supplied by the author, into integrated explanations. Its caption credits the underlying illustration to Sieben Medical Art. External papers informed the concepts; no paper figures, PDF pages, or supplemental code were copied into the package. Original code remains MIT and original teaching material [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/).
 
 | Source | Use in this package | License or provenance note |
 |---|---|---|

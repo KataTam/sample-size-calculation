@@ -5,7 +5,7 @@ preserved in archive/2026-10-02/tutorial-draft/mind_map.png beside this project.
 The Type II error label uses the current module's precise description of
 non-rejection at a specified true difference. The archived image is untouched.
 
-Figure content: CC BY 4.0. Generator code: MIT (see project licenses).
+Figure content: CC BY-SA 4.0. Generator code: MIT (see project licenses).
 Run from any directory with Python and Pillow installed.
 """
 

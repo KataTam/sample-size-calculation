@@ -43,7 +43,10 @@ c.setFont('Times-Roman',14); c.drawString(margin,210,'Katalin Tamasi'.replace('T
 c.setFont('Times-Roman',11); c.drawString(margin,188,'University Medical Center Groningen')
 metadata=json.loads((ROOT/'build/pdf/metadata.json').read_text(encoding='utf-8'))
 c.setFont('Times-Roman',11); c.drawString(margin,167,'Updated '+metadata['date'])
-c.setFont('Times-Roman',10); c.drawString(margin,95,'Teaching materials: CC BY 4.0  |  Code: MIT')
+license_style = ParagraphStyle('licenses', fontName='Times-Roman', fontSize=10, leading=14)
+license_note = Paragraph('Teaching materials: <a href="https://creativecommons.org/licenses/by-sa/4.0/" color="#17658a">CC BY-SA 4.0</a> | Code: <a href="https://opensource.org/license/mit" color="#17658a">MIT</a>', license_style)
+license_note.wrap(width-2*margin, 40)
+license_note.drawOn(c, margin, 95)
 c.showPage()
 links=[]; toc_page=1; y=height-margin
 chapter_style=ParagraphStyle('chapter',fontName='Times-Bold',fontSize=11,leading=14)

@@ -126,7 +126,7 @@ Before sharing an adapted version publicly:
 
 - remove any copyrighted figures or papers that cannot be redistributed
 - check that student cases contain no identifiable patient information
-- keep the CC BY 4.0 teaching-material license visible
+- keep the [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/) teaching-material license visible
 - keep the MIT code license visible
 - cite the original repository
 - note what you changed

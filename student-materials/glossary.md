@@ -50,11 +50,15 @@ A standardized difference, often called Cohen's d for a mean comparison, express
 
 <span id="full-width"></span>Full width is the upper confidence limit minus the lower. For a symmetric interval its half-width, or margin of error, is half the full width. <span id="margin-of-error"></span>A margin of five percentage points means a full width of ten percentage points. For asymmetric intervals, the two distances from the estimate to the limits need not be equal.
 
-## Precision, sampling variability and bias {.core-heading}
+## Estimation, precision, sampling variability and bias {.core-heading}
+
+### Estimation {#estimation .core-heading}
+
+Estimation uses sample data to learn about a population quantity, such as a mean, a prevalence, or a between-group difference. A point estimate gives a single value; an interval estimate expresses uncertainty around it. Precision describes how variable the estimate would be across repeated samples, rather than the act of estimating. For example, estimating prevalence is the task; seeking a 95% confidence interval with a margin of error of 5 percentage points sets a precision target. A study planned for hypothesis testing can also provide estimates and confidence intervals.
 
 ### Precision {#precision .core-heading}
 
-Precision describes how little an estimate varies across repeated samples. You can assess it using the standard error or, at a specified confidence level, the confidence-interval width. A smaller standard error or narrower interval indicates greater precision. A larger independent sample generally improves precision, but does not guarantee that an estimate is close to the truth if the study is biased. Precision is also distinct from power, which concerns how often a specified test rejects the null under an assumed effect.
+Precision describes how little an estimate varies across repeated samples; estimation is the process that produces the estimate. You can assess it using the standard error or, at a specified confidence level, the confidence-interval width. A smaller standard error or narrower interval indicates greater precision. A larger independent sample generally improves precision, but does not guarantee that an estimate is close to the truth if the study is biased. Precision is also distinct from power, which concerns how often a specified test rejects the null under an assumed effect.
 
 ### Sampling variability {#sampling-variability .core-heading}
 

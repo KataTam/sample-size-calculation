@@ -32,7 +32,7 @@ Use this checklist before sharing the resource with students, colleagues, or an 
 
 - [ ] Remove any copyrighted PDFs, articles, screenshots, or third-party assets that cannot be redistributed.
 - [ ] Check that no student, patient, or local project information is identifiable.
-- [ ] Confirm that teaching materials are covered by CC BY 4.0.
+- [ ] Confirm that teaching materials are covered by [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/).
 - [ ] Confirm that R/Shiny code is covered by the MIT License.
 - [ ] Check `CITATION.cff`.
 - [ ] Check [reuse and citation](../reuse-and-citation.md).

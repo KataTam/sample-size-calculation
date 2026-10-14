@@ -8,8 +8,10 @@ Use the [full references](references.md) for bibliographic details and publisher
 |---|---|---|
 | Connect the question, outcome and analysis | Fong et al. (2026); Wang and Ji (2020); Zrineh et al. (2026) | Check the chronic-pain question before using a calculator; distinguish sampling quality from sample size |
 | Choose and justify the target difference | [DELTA²: Cook et al. (2018)](https://doi.org/10.1136/bmj.k3750) | Explain importance and realism, then compare the target with the expected difference and clinical threshold |
-| Select a defensible planning goal | [Lakens (2022)](https://doi.org/10.1525/collabra.33267) | Explain whether testing, useful precision or fixed resources drives the plan |
+| Select a defensible planning goal | [Lakens (2022)](https://doi.org/10.1525/collabra.33267) | Explain whether a power target, a precision target for estimation, or fixed resources determines the sample size |
 | Assess prior evidence | Albers and Lakens (2018); Caldwell and Vigotsky (2020) | Treat small pilot differences as uncertain; use clinically interpretable units and plausible ranges |
+| Interpret raw and standardized differences | [Kallogjeri and Piccirillo (2023)](https://doi.org/10.1001/jamaoto.2023.0159) | Keep clinical units visible; distinguish clinical importance from a difference relative to the SD |
+| Choose an SD from prior evidence | [Bentin et al. (2026)](https://doi.org/10.1002/ejp.70283) | Match population, outcome scale, follow-up and change versus final scores; explore plausible SD values |
 | Report the calculation | [CONSORT 2025 explanation and elaboration](https://doi.org/10.1136/bmj-2024-081124) | Record target justification, event probabilities or SD, error probabilities, method, counts and losses in the assumptions report |
 
 Table: Reading that supports decisions in the core study plan.
@@ -29,6 +31,8 @@ Complete the [assumptions report](https://katatam.github.io/sample-size-calculat
 
 Table: Design-specific reading and its use in the advanced route.
 
+The BREAST-Q review by [Gallo et al. (2022)](https://doi.org/10.1097/PRS.0000000000009401) illustrates incomplete reporting in a specific clinical literature. It supports checking whether a reader can reproduce a plan, not inferring that every study without a reported calculation was underpowered.
+
 ## Advanced methods and reference books
 
 *Power Analysis with Superpower* and Lakens and Caldwell (2021) support exploring repeated studies and power curves; Pargent et al. (2024) provides a structured mixed-model simulation workflow. Use these with the one-study, power-curve and repeated-trial activities, preserving the clinical tutorial's stated analysis methods. Sandoval, DICE and Rudolph provide complementary teaching examples. More simulation repetitions improve Monte Carlo precision, not the proposed study's power.
@@ -37,11 +41,15 @@ Perugini et al. (2014) introduces safeguard power; Kunzmann et al. (2021) and Pe
 
 Julious (2023) is a reference for design-specific sample size methods; the earlier Julious (2004) review focuses on normal data. Piantadosi (2024) covers broader trial methodology, and Kirkwood and Sterne (2003) supplies general statistical background. Book descriptions and reading notes identify useful scope; consult the relevant chapters before adopting a formula. R documentation and Newcombe (1998) support implementation details in the methods appendix.
 
+The review by [Marks et al. (2026)](https://doi.org/10.1186/s12874-026-02854-9) describes sample-size planning in Bayesian trials in practice; it complements methodological guidance rather than promising smaller samples. For specialist questions, [Vembye et al. (2024)](https://doi.org/10.1002/jrsm.1752) addresses meta-analysis with dependent effect estimates, and [Dey et al. (2026)](https://doi.org/10.1177/09622802261485814) addresses SMART designs with skewed outcomes. These require assumptions beyond the core calculators.
+
 ## Teaching, feedback and adaptation
 
 Our account in Wieringa et al. (2025) informs learner and teacher involvement in development. Paskevicius, Paskevicius and Irvine, and Cronin and MacLaren support aligning learning outcomes, activities, assessment and opportunities to contribute. Orsini et al. (2024) motivates preparation and guided simulation discussion, while its reported workshop feedback is not evidence that this local module improves attainment.
 
 Use the [teaching guide](../teaching/TEACHING_GUIDE.md), [alignment table](../teaching/constructive_alignment_table.md) and [assessment rubric](../teaching/assessment_rubric.md) together. Evaluate conceptual reasoning and transfer separately from satisfaction. The [adaptation guide](../teaching/adaptation_guide.md) explains how to keep source, app settings and assessment consistent; Bothmann et al.'s open-source educational-resource manuscript provides a useful development perspective.
+
+[Chan et al. (2019)](https://doi.org/10.2196/11241) highlights the limits of learning analytics: clicks and time online do not necessarily measure understanding. Explanations and transfer tasks should be evaluated alongside usability; the review does not establish that adding videos or a dashboard improves this tutorial.
 
 See [evidence and design rationale](evidence-and-design-rationale.md) for how these sources informed the teaching design and what remains to be evaluated locally. External papers retain their own terms; use publisher or library access rather than expecting copies in this repository.
 
