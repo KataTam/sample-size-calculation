@@ -45,22 +45,25 @@ shutil.copytree(ROOT / "docs/book", SITE / "book")
 (SITE / "book/404.html").write_text('<!doctype html><html lang="en"><head><meta charset="utf-8">'
     '<title>Page not found</title></head><body><h1>Page not found</h1>'
     '<p><a href="index.html">Open the current tutorial contents</a></p></body></html>', encoding="utf-8")
-# Add the same activity entries to each book sidebar without changing chapter order.
+# Nest each activity under its relevant section in every book sidebar.
 activity_contents = json.loads((ROOT / "module/activity-contents.json").read_text(encoding="utf-8"))
 for target in (SITE / "book").glob("*.html"):
     text = target.read_text(encoding="utf-8")
     for chapter in activity_contents:
-        items = ''.join('<li><a href="../' + html.escape(activity["path"], quote=True)
-            + '" target="_blank" rel="noopener">Activity: ' + html.escape(activity["label"])
-            + ' <span class="contents-route">' + html.escape(activity["route"]) + '</span></a></li>'
-            for activity in chapter["activities"])
-        if not items:
-            continue
-        pattern = r'(<li class="chapter" data-level="[0-9]+" data-path="' + re.escape(chapter["chapter"]) + r'\.html"><a\b[^>]*>.*?</a>)'
-        text, count = re.subn(pattern, lambda match: match.group(1)
-            + '<ul class="activity-toc" aria-label="Chapter activities">' + items + '</ul>', text, count=1)
-        if 'class="book-summary"' in text and count != 1:
-            raise RuntimeError(f"Missing sidebar chapter {chapter['chapter']} in {target.name}")
+        sections = {}
+        for activity in chapter["activities"]:
+            sections.setdefault(activity["section"], []).append(activity)
+        for section, activities in sections.items():
+            items = ''.join('<li><a href="../' + html.escape(activity["path"], quote=True)
+                + '" target="_blank" rel="noopener">Activity: ' + html.escape(activity["label"])
+                + ' <span class="contents-route">' + html.escape(activity["route"]) + '</span></a></li>'
+                for activity in activities)
+            href = chapter["chapter"] + '.html#' + section
+            pattern = r'(<li class="chapter"[^>]*><a href="' + re.escape(href) + r'"[^>]*>.*?</a>)'
+            text, count = re.subn(pattern, lambda match: match.group(1)
+                + '<ul class="activity-toc" aria-label="Section activities">' + items + '</ul>', text, count=1)
+            if 'class="book-summary"' in text and count != 1:
+                raise RuntimeError(f"Missing sidebar section {href} in {target.name}")
     target.write_text(text, encoding="utf-8")
 from number_citations import number_citations
 number_citations(SITE / "book")

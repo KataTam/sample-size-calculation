@@ -8,7 +8,8 @@
       {
         "label": "Develop and justify your study plan",
         "path": "study/?activity=assumptions_report",
-        "route": "Core"
+        "route": "Core",
+        "section": "record-assumptions"
       }
     ]
   },
@@ -21,12 +22,14 @@
       {
         "label": "Explore Type I and Type II error probabilities and power",
         "path": "study/?activity=alpha_beta",
-        "route": "Advanced"
+        "route": "Advanced",
+        "section": "alpha-beta"
       },
       {
         "label": "Chronic pain: one study and many studies",
         "path": "study/?activity=pain_one_many",
-        "route": "Core"
+        "route": "Core",
+        "section": "activity-1-one-study-then-many"
       }
     ]
   },
@@ -39,22 +42,26 @@
       {
         "label": "Gestational-diabetes prevention trial",
         "path": "study/?activity=adherence",
-        "route": "Core"
+        "route": "Core",
+        "section": "adherence"
       },
       {
         "label": "Rehabilitation: compare two means",
         "path": "study/?activity=rehabilitation",
-        "route": "Core"
+        "route": "Core",
+        "section": "rehabilitation"
       },
       {
         "label": "Two-proportion calculator",
         "path": "two_proportions/",
-        "route": "Core"
+        "route": "Core",
+        "section": "two-proportions"
       },
       {
         "label": "Two-mean calculator",
         "path": "two_means/",
-        "route": "Core"
+        "route": "Core",
+        "section": "two-means"
       }
     ]
   },
@@ -67,7 +74,8 @@
       {
         "label": "Chronic pain: explore power and recruitment",
         "path": "study/?activity=pain_curves",
-        "route": "Advanced"
+        "route": "Advanced",
+        "section": "activity-2-can-the-feasible-study-answer-the-question"
       }
     ]
   },
@@ -80,7 +88,8 @@
       {
         "label": "Simulate repeated chronic-pain trials",
         "path": "study/?activity=pain_simulation",
-        "route": "Advanced"
+        "route": "Advanced",
+        "section": "activity-3-generate-analyze-repeat-summarize"
       }
     ]
   },
@@ -93,22 +102,26 @@
       {
         "label": "Adjust recruitment for loss to follow-up",
         "path": "dropout_adjustment/",
-        "route": "Core"
+        "route": "Core",
+        "section": "account-for-expected-losses"
       },
       {
         "label": "Estimate a mean difference with a precision target",
         "path": "study/?activity=mean_precision",
-        "route": "Advanced"
+        "route": "Advanced",
+        "section": "plan-for-precision"
       },
       {
         "label": "Estimate a percentage with useful precision",
         "path": "study/?activity=prevalence",
-        "route": "Advanced"
+        "route": "Advanced",
+        "section": "prevalence"
       },
       {
         "label": "Pilot study: estimate retention",
         "path": "study/?activity=pilot_feasibility",
-        "route": "Advanced"
+        "route": "Advanced",
+        "section": "pilot-feasibility"
       }
     ]
   },
@@ -121,12 +134,14 @@
       {
         "label": "Build your own study calculation",
         "path": "study/?activity=own_study",
-        "route": "Core"
+        "route": "Core",
+        "section": "own-study"
       },
       {
         "label": "Complete your assumptions report",
         "path": "study/?activity=assumptions_report",
-        "route": "Core"
+        "route": "Core",
+        "section": "write-a-sample-size-justification"
       }
     ]
   },

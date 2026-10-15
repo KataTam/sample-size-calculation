@@ -11,6 +11,17 @@ let browser;
  await page.goto(base+'/');
  assert.equal(await page.locator('a.start-route').first().getAttribute('href'),'book/');
  await page.goto(base+'/book/clinical-question.html');
+ const activityGroups=JSON.parse(fs.readFileSync('module/activity-contents.json','utf8'));
+ for(const group of activityGroups) for(const activity of group.activities) {
+  const section=page.locator('.book-summary li.chapter').filter({has:page.locator(':scope > a[href="'+group.chapter+'.html#'+activity.section+'"]')});
+  const link=section.locator(':scope > .activity-toc > li > a[href="../'+activity.path+'"]');
+  assert.equal(await link.count(),1,'Activity belongs to '+activity.section);
+  assert(await link.isVisible());
+ }
+ const hiddenLists=await page.locator('.book-summary .summary ul').evaluateAll(lists=>lists.filter(el=>getComputedStyle(el).display==='none').length);
+ assert.equal(hiddenLists,0,'All chapter and subsection lists remain expanded');
+ assert(await page.locator('.book-summary a[href="calculations.html#adherence"]').isVisible());
+
  assert.equal(await page.locator('.book-summary ul.summary > li.chapter > a').first().evaluate(el=>getComputedStyle(el).fontSize),'14px');
  assert.equal(await page.locator('.book-summary .activity-toc a').first().evaluate(el=>getComputedStyle(el).fontSize),'13px');
  assert.match(await page.locator('.page-inner h2').first().innerText(), /chronic[- ]pain/i);

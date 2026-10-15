@@ -1,5 +1,6 @@
 bookdown::gitbook:
   css: styles.css
+  toc_depth: 3
   code_folding: none
   includes:
     after_body: [toolbar-help.html, glossary-support.html]
@@ -7,7 +8,7 @@ bookdown::gitbook:
   split_bib: false
   config:
     toc:
-      collapse: section
+      collapse: none
       scroll_highlight: true
       before: |
         <li><a href="./">Sample size for clinical studies</a></li>
