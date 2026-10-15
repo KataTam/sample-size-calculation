@@ -113,7 +113,11 @@ body :where(h1,h2,h3,h4,h5,h6,summary,legend) :where(a,span,strong,b,code) { fon
 a[data-glossary-term] { text-decoration: underline dotted; text-underline-offset: 3px; }
 @media print { .glossary-tooltip { display: none !important; } a[data-glossary-term] { text-decoration: none; } }
 
-details.advanced-explanation { background:#e9dff5; border-left:4px solid #8062a6; padding:12px 16px; margin:1em 0; }
+/* Advanced content stays neutral; only its disclosure heading carries the route color. */
+details.advanced-explanation { background:transparent; border:1px solid var(--line); padding:12px 16px; margin:1em 0; }
+details.advanced-explanation > summary { background:#e7dcf6; color:var(--ink); border-left:4px solid #69509a; margin:-12px -16px; padding:12px 16px; }
+details.advanced-explanation[open] > summary { margin-bottom:12px; }
+.color-theme-2 details.advanced-explanation > summary { background:#352c49; color:#eef3fa; border-left-color:#c7afea; }
 details.activity-practice { background:#dfedf7; padding:10px 14px; margin:1em 0; }
 .chapter-recap { border-top:1px solid #b7c9d8; margin-top:2em; padding-top:1em; }
 #activity-menu-button { position:fixed; right:18px; top:8px; z-index:1001; background:#e1edf8; color:#173d5b; border:1px solid #91afc9; border-radius:5px; padding:7px 12px; font:14px Arial,sans-serif; cursor:pointer; }

@@ -65,7 +65,7 @@ Increasing B, the number of simulated studies, estimates power, interval coverag
 
 ## Will a larger sample solve bias? {.core-heading}
 
-A larger sample reduces sampling variation under the model. It does not automatically repair selection bias, confounding, unreliable measurements, missing-data bias or an inappropriate analysis. A defensible design is necessary before a sample size calculation can be useful.
+A larger sample reduces sampling variability under the model. It does not automatically repair selection bias, confounding, unreliable measurements, missing-data bias or an inappropriate analysis. A defensible design is necessary before a sample size calculation can be useful.
 
 ## Is a reporting checklist a sample-size method? {.core-heading}
 

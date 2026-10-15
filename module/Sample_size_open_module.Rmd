@@ -214,7 +214,7 @@ Table: (\#tab:planning-assumptions) Decisions and assumptions to record in a sam
 
 PICO connects the clinical question to the calculation: Population, Intervention, Comparator, and Outcome [@richardson1995]. Here these are patients with chronic pain, the novel treatment, standard treatment, and pain relief at four weeks.
 
-The target difference tells the calculation where to evaluate power. The [standard deviation](#standard-deviation) describes variation between individuals; the [standard error](#standard-error) describes [sampling variation](#sampling-variability) of an estimate. For binary outcomes, you should report each group's event probability as a percentage and their absolute difference in percentage points. The section [Glossary](#glossary) explains these terms in more detail.
+The target difference tells the calculation where to evaluate power. The [standard deviation](#standard-deviation) describes variation between individuals; the [standard error](#standard-error) describes [sampling variability](#sampling-variability) of an estimate. For binary outcomes, you should report each group's event probability as a percentage and their absolute difference in percentage points. The section [Glossary](#glossary) explains these terms in more detail.
 
 For each numerical assumption, you should record the source, its relevance to these patients and this outcome, and a plausible range. Evidence from a different follow-up time or patient population may not transfer directly. For a clinical threshold, you should record the reasoning. DELTA² and CONSORT emphasize explaining the assumptions and calculation as opposed to reporting the final number [@cook2018delta2; @consortee2025].
 
@@ -409,7 +409,7 @@ local({
 })
 ```
 
-Figure \@ref(fig:sample-differences) shows [sampling variation](#sampling-variability); the table shows how often the planned test detects the specified population difference. The assumed true difference here equals the 30-point [target difference](#target-difference) used to evaluate power. These population probabilities are assumptions for the simulation, not findings from the pilot.
+Figure \@ref(fig:sample-differences) shows [sampling variability](#sampling-variability); the table shows how often the planned test detects the specified population difference. The assumed true difference here equals the 30-point [target difference](#target-difference) used to evaluate power. These population probabilities are assumptions for the simulation, not findings from the pilot.
 
 ::: {.activity}
 <details class="activity-practice">
@@ -426,7 +426,7 @@ Which quantities stay fixed across trials, and which change? Why does a larger s
 
 Within a batch of trials, the specified population relief probabilities stay at 30% and 60%, so their true difference stays at 30 percentage points. The sample size, allocation, analysis, Type I error probability and clinical threshold also stay fixed. The patients sampled, observed relief counts and percentages, estimated difference, confidence interval, [p-value](#p-value) and testing decision can change from trial to trial.
 
-A larger sample gives each trial more information, which generally reduces the sampling variation of its estimate and narrows its confidence interval. Increasing the sample size deliberately changes the design; it can also increase power at the same true effect. More simulation repetitions instead give you a more precise estimate of that design's performance, reducing [Monte Carlo error](#monte-carlo-error). Each individual trial still has the same number of patients and the same power.
+A larger sample gives each trial more information, which generally reduces the sampling variability of its estimate and narrows its confidence interval. Increasing the sample size deliberately changes the design; it can also increase power at the same true effect. More simulation repetitions instead give you a more precise estimate of that design's performance, reducing [Monte Carlo error](#monte-carlo-error). Each individual trial still has the same number of patients and the same power.
 
 </details>
 
@@ -773,9 +773,9 @@ knitr::kable(display_probabilities(proportion_cases,
   caption = "Analyzable sample sizes under alternative binary-outcome assumptions, using the same normal planning approximation as the tutorial and apps.")
 ```
 
-For a yes/no outcome, the calculation needs both group percentages, not just their difference. For example, 30% versus 15% and 60% versus 45% both differ by 15 percentage points, but they need not require the same sample size. The amount of [sampling variation](#sampling-variability) also depends on where those percentages lie. Halving the difference therefore does not necessarily multiply the required sample size by exactly four. The table lets you compare these assumptions directly.
+For a yes/no outcome, the calculation needs both group percentages, not just their difference. For example, 30% versus 15% and 60% versus 45% both differ by 15 percentage points, but they need not require the same sample size. The amount of [sampling variability](#sampling-variability) also depends on where those percentages lie. Halving the difference therefore does not necessarily multiply the required sample size by exactly four. The table lets you compare these assumptions directly.
 
-Read a row as a conditional statement: if those event probabilities and that analysis are reasonable, then this is the approximate number required for the specified error targets. The row is not evidence that the intervention will achieve that benefit. The smaller-difference row needs more participants because sampling variation makes that difference harder to distinguish from zero.
+Read a row as a conditional statement: if those event probabilities and that analysis are reasonable, then this is the approximate number required for the specified error targets. The row is not evidence that the intervention will achieve that benefit. The smaller-difference row needs more participants because sampling variability makes that difference harder to distinguish from zero.
 
 ### Preventing gestational diabetes {#adherence .core-heading}
 
@@ -946,7 +946,7 @@ The expected-loss adjustment gives a recruitment total of `r 2 * adjust_for_drop
 <details class="model-answer">
 <summary>Model answer</summary>
 
-The required sample size generally increases: a smaller difference is harder to distinguish from sampling variation.
+The required sample size generally increases: a smaller difference is harder to distinguish from sampling variability.
 
 </details>
 
@@ -1050,7 +1050,7 @@ Predict. Which effect assumption is most demanding at the same power target?
 <details class="model-answer" id="model-answer-curves-predict">
 <summary>Model answer</summary>
 
-The 15-percentage-point difference requires the largest sample for the same power target, followed by 20 points and then 30 points. With control relief fixed at 30% and the analysis and error targets unchanged, smaller differences are harder to distinguish from [sampling variation](#sampling-variability). This comparison concerns true treatment differences; changing the clinical threshold alone does not change the power of a test of zero difference.
+The 15-percentage-point difference requires the largest sample for the same power target, followed by 20 points and then 30 points. With control relief fixed at 30% and the analysis and error targets unchanged, smaller differences are harder to distinguish from [sampling variability](#sampling-variability). This comparison concerns true treatment differences; changing the clinical threshold alone does not change the power of a test of zero difference.
 
 </details>
 
@@ -1595,9 +1595,9 @@ knitr::kable(data.frame(
 
 
 
-A study with low power often misses the specified true difference. A small study also produces more variable estimates. When its power is low, the studies that achieve statistical significance are often those in which sampling variation makes the observed difference unusually large. If you look only at significant findings, you can therefore get an exaggerated impression of the treatment benefit.
+A study with low power often misses the specified true difference. A small study also produces more variable estimates. When its power is low, the studies that achieve statistical significance are often those in which sampling variability makes the observed difference unusually large. If you look only at significant findings, you can therefore get an exaggerated impression of the treatment benefit.
 
-Larger samples reduce [sampling variation](#sampling-variability) but do not automatically remove bias from problems in design, measurement or analysis.
+Larger samples reduce [sampling variability](#sampling-variability) but do not automatically remove bias from problems in design, measurement or analysis.
 
 For the chronic pain trial, a study with low power at the 30-percentage-point target difference would often fail to detect that benefit even if it were real. A non-significant result would not establish that the treatments are equally effective. You should interpret the estimated benefit and confidence interval in relation to zero and the 20-percentage-point clinical threshold.
 
