@@ -129,7 +129,7 @@ A normal approximation uses the bell-shaped normal distribution to simplify a ca
 
 The planning scenario contains the assumptions used to choose the sample size. A generating scenario contains the population values assumed to be true when simulating studies. Keeping the planned sample size fixed while changing those population values shows how the same study could perform if reality differed from the plan. Recalculating the sample size each time instead asks how the plan would need to change.
 
-B counts independent simulated studies; n gives the number of patients in each study or group. A random seed is a starting value for the computer's random-number generator. Using the same seed and code reproduces the simulation.
+B counts independent simulated studies; n gives the number of patients in each study or group.
 
 ### Monte Carlo error {#monte-carlo-error .advanced-heading}
 

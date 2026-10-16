@@ -61,7 +61,7 @@ With 10% expected loss, you should divide the required analyzable count by 1 - 0
 
 ## Is more simulation the same as a larger study? {.core-heading}
 
-Increasing B, the number of simulated studies, estimates power, interval coverage and other performance measures more precisely. Increasing n, the patients per study, changes the amount of patient information in each study and therefore changes its power and precision. Your report should distinguish these quantities and include both, along with the random seed.
+Increasing B, the number of simulated studies, estimates power, interval coverage and other performance measures more precisely. Increasing n, the patients per study, changes the amount of patient information in each study and therefore changes its power and precision. Your report should distinguish these quantities and include both.
 
 ## Will a larger sample solve bias? {.core-heading}
 

@@ -58,7 +58,7 @@ ui <- fluidPage(
     conditionalPanel("input.goal == 'fixed'", numericInput("fixed_n", "Available participants for analysis (one sample)", 246, min = 1, max = 1e7, step = 1)),
     percent_slider("dropout", "Expected loss or nonresponse (%)", 0, .80, 0, step = .01),
     helpText("When retention is the outcome, retained and non-retained participants belong in its denominator. Apply extra loss adjustment only when the outcome status itself will be unavailable."),
-    numericInput("seed", "Seed for the illustrative study", 20260942, min = 0, max = 2147483647, step = 1)),
+    tags$details(tags$summary("Reproducibility settings"), numericInput("seed", "Random seed", 20260942, min = 0, max = 2147483647, step = 1))),
   mainPanel(width = 8,
     h3(textOutput("case_title")), textOutput("case_prompt"), textOutput("bridge_status"),
     h3("Predict, explore and interpret"),
@@ -71,7 +71,7 @@ ui <- fluidPage(
     p("Both reference curves use 95% confidence and fixed absolute margins: ±5 versus ±2.5 percentage points. The dot and separate curve show your chosen confidence and width."),
     h3("One simulated confidence interval"),
     actionButton("simulate", "Draw one illustrative sample", class = "btn-primary"),
-    p("A different seed gives another illustrative sample; unchanged inputs and seed reproduce the same sample. The simulated sample uses the anticipated percentage as its assumed population probability. Choosing 50% for conservative planning changes the sample size calculation; it does not make the population probability known."),
+    p("The simulated sample uses the anticipated percentage as its assumed population probability. Choosing 50% for conservative planning changes the sample size calculation; it does not make the population probability known."),
     textOutput("saved_status"), tableOutput("study_table"),
     p(class = "caption", "Table. Event count, observed percentage and Wilson confidence limits from one illustrative sample, with the realized width and target assessment."),
     plotOutput("interval_plot", height = "220px"),
@@ -175,7 +175,7 @@ server <- function(input, output, session) {
   }, ignoreInit = TRUE)
   output$saved_status <- renderText({
     y <- study()
-    paste("Saved sample: n =", y$n, "and seed =", y$seed,
+    paste("Saved sample: n =", y$n,
       if (!identical(y$inputs, snapshot())) "Inputs changed. Draw again to update the saved interval."
       else "Interval matches the current assumptions.")
   })

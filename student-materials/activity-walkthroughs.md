@@ -2,7 +2,7 @@
 
 These walkthroughs connect each activity to the question it helps answer. The clinical values are hypothetical teaching assumptions. The simulations generate hypothetical patient outcomes from specified population assumptions.
 
-In the reasoning lab, planning tables and curves update when inputs change. Simulated results update only when you run the relevant simulation again and retain their saved assumptions until then. The same inputs and random seed reproduce the same result; a different seed gives another possible result. More patients change a study's information; more simulation repetitions improve the numerical precision of the estimated performance.
+In the reasoning lab, planning tables and curves update when inputs change. Simulated results update only when you run the relevant simulation again and retain their saved assumptions until then. More patients change a study's information; more simulation repetitions improve the numerical precision of the estimated performance.
 
 The expected difference records your best expectation. With “Same as planning assumptions” selected, the simulations use the target difference and planning event probabilities. A custom population scenario lets you examine another true difference without changing the original plan. All treatment differences here are between-group differences.
 
@@ -25,9 +25,9 @@ Purpose: connect the calculation to a clinical question, evidence and a defensib
 Purpose: see why sample estimates differ from population values, and why one trial cannot display a design's power.
 
 1. The starting population has 30% relief with standard treatment and 60% with novel treatment, with 20 analyzable patients per group and a 5% Type I error probability.
-2. In “One study,” “Simulate one study” generates patient outcomes. You can compare the observed percentages, difference and interval with the specified population values. The animation follows the patient outcomes into the estimated difference and then the sampling distribution. “Animate 20 trials” builds a short sequence; pause, replay and reduced motion support closer inspection. Each accumulated dot represents one complete trial.
-3. After changing only the random seed, another run shows another possible trial. The population probabilities have not changed.
-4. In “Many studies,” “Simulate many studies” generates 5,000 independent trials. The distribution shows sampling variability; the percentage of significant results estimates power for this population scenario.
+2. In “One study and many studies,” “Simulate one study” generates patient outcomes. You can compare the observed percentages, difference and interval with the specified population values. The animation follows the patient outcomes into the estimated difference and then the sampling distribution. “Animate 20 trials” builds a short sequence; pause, replay and reduced motion support closer inspection. Each accumulated dot represents one complete trial.
+3. The 20-trial animation shows different possible trials while the population probabilities remain fixed.
+4. Further down the same page, “Simulate many studies” generates 5,000 independent trials. The distribution shows sampling variability; the percentage of significant results estimates power for this population scenario.
 5. You can repeat at 50 and 80 patients per group while holding the population assumptions and repetition count fixed. Larger trials usually give narrower intervals and greater power. Coverage and Monte Carlo summaries can wait until the advanced chapter.
 
 ## Type I and Type II error probabilities and power — advanced
@@ -84,7 +84,7 @@ Purpose: connect a continuous-outcome calculation with the interpretation of a p
 
 1. The hypothetical score has expected between-group improvement difference 4 units, target difference 3, clinical threshold 2 and common SD 5.
 2. “Explore assumptions” uses a pooled two-sample t-test plan with 90% target power. You can compare recruitment after 10% losses with the limit of 200.
-3. In “One study,” a run generates independent normal improvement scores using the planning difference of 3 units. The observed difference and interval vary across seeds.
+3. In “One study,” a run generates independent normal improvement scores using the planning difference of 3 units. The observed difference and interval vary across simulated trials.
 4. You can compare the interval with zero and the 2-unit threshold. A significant result does not necessarily establish a benefit above that threshold.
 5. “Many studies” shows how often conclusions vary across repetitions. Each patient contributes one improvement score to the comparison of two independent treatment groups.
 
@@ -110,7 +110,7 @@ Purpose: extend the core simulation from power to confidence interval coverage, 
 2. You can first visit “One study” to inspect one generated dataset, its estimated difference, interval and test result.
 3. After “Simulate many studies,” you can examine the rejection percentage, coverage of the specified true difference and percentage meeting the width target. These answer different questions.
 4. A custom treatment probability of 45%, with control still 30%, tests the plan under a 15-point true difference. A no-effect scenario estimates the false-positive probability.
-5. You can vary the repetition count while leaving patients per group fixed. More repetitions reduce Monte Carlo uncertainty while each trial's design stays fixed. A report should retain the seed, generating assumptions, analysis and repetition count.
+5. You can vary the repetition count while leaving patients per group fixed. More repetitions reduce Monte Carlo uncertainty while each trial's design stays fixed. A report should retain the generating assumptions, analysis and repetition count.
 
 ## Recruitment adjustment — core
 
@@ -144,7 +144,7 @@ Purpose: connect the precision needed for a descriptive decision with survey siz
 1. The example anticipates 20% prevalence and a 95% interval with full width 10 percentage points, equivalent to a margin of 5 points.
 2. The formula gives 246 completed observations. Reducing full width to 5 points, a margin of 2.5, requires about four times as many.
 3. The 50% conservative-planning option changes the probability used for sample size planning. The anticipated percentage remains the generating probability for the illustrative simulation.
-4. “Draw one illustrative sample” generates a binomial count and a Wilson interval. A different seed gives another sample; the realized interval need not meet the planning width.
+4. “Draw one illustrative sample” generates a binomial count and a Wilson interval. The realized interval need not meet the planning width.
 5. Your explanation should distinguish interval precision from representativeness. Here, n is the total number of participants in the sample.
 
 ## Pilot study: retention — advanced
@@ -155,7 +155,7 @@ Purpose: assess whether a limited pilot provides useful information for a feasib
 
 1. The starting goal is to assess a fixed sample of 40 participants with anticipated retention of 80%.
 2. “Draw one illustrative sample” generates a possible retained count and its Wilson interval. The simulated retention count varies around its expected value of 32.
-3. You can compare another seed and then a fixed sample of 80. More participants generally provide more information about retention, but obtaining them requires a feasible plan.
+3. You can compare the illustrative result with a fixed sample of 80. More participants generally provide more information about retention, but obtaining them requires a feasible plan.
 4. Retained and non-retained participants both belong in the denominator when their status is known. Loss adjustment is appropriate only for participants whose outcome status itself cannot be established.
 5. Your report should relate the interval and its uncertainty to the prespecified feasibility decision.
 

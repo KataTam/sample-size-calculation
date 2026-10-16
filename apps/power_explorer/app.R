@@ -111,9 +111,9 @@ ui <- fluidPage(
       percent_slider("true_p0", "Control event probability assumed for simulation (%)", .01, .99, .3, step = .01),
       percent_slider("true_p1", "Treatment event probability assumed for simulation (%)", .01, .99, .4, step = .01),
       textOutput("generating_inputs")),
-    numericInput("seed", "Random seed (to reproduce the simulation)", 20260914, min = 0, max = 2147483647, step = 1),
+    tags$details(tags$summary("Reproducibility settings"), numericInput("seed", "Random seed", 20260914, min = 0, max = 2147483647, step = 1)),
     numericInput("B", "Number of simulated studies (B)", 1000, min = 100, max = 10000, step = 100),
-    helpText("More participants change study performance. More replications improve simulation precision. Same inputs and seed reproduce results.")),
+    helpText("More participants change study performance. More replications improve simulation precision.")),
     p(tags$a(href = "../book/Sample_size_open_module.html#glossary", target = "_blank", rel = "noopener", "Key terms and assumptions"), " · ",
       tags$a(href = "../book/Sample_size_open_module.html#common-mistakes", target = "_blank", rel = "noopener", "Common mistakes and FAQ"))),
   mainPanel(width = 8, tabsetPanel(id = "stage",
@@ -139,26 +139,26 @@ ui <- fluidPage(
       h4("Analysis assumptions"), textOutput("method"),
       p("Normal outcomes use a pooled-variance t test and interval. Binary outcomes use a pooled score test without continuity correction and a Newcombe-Wilson difference interval. Binary analytical power and precision are approximations; check finite-sample behavior with simulations."))),
     tabPanel("One study", h3("One simulated study"), actionButton("run_one", "Simulate one study", class = "btn-primary"),
-      p("Change the seed for another simulated study. High planned power does not guarantee a conclusive result."),
+      p("High planned power does not guarantee a conclusive result."),
       textOutput("one_status"),
       conditionalPanel("input.outcome == 'proportions'",
         h4("From patients to a sampling distribution"),
-        p("Filled circles represent patients with the event; open circles represent patients without it. In the chronic pain case, the event is pain relief. Each dot in the bottom panel summarizes one complete trial."),
+        p("Filled circles represent patients with the event; open circles represent patients without it. In the chronic pain case, the event is pain relief. The pink dot starts at this trial’s estimated difference on the upper axis. It moves straight down to the same value on the lower axis, joining estimates from earlier trials. Each dot there summarizes one complete trial."),
         actionButton("run_journey", "Animate 20 trials"),
         tags$button(id = "journey-pause", type = "button", "Pause", disabled = NA),
         tags$button(id = "journey-replay", type = "button", "Replay", disabled = NA),
         tags$label(tags$input(id = "journey-motion", type = "checkbox"), " Reduced motion"),
         tags$div(id = "sampling-journey"),
         tags$p(id = "journey-status", role = "status", `aria-live` = "polite", "A single study or 20-trial sequence will appear here after simulation."),
-        p("The population probabilities stay fixed during a sequence. Patient outcomes and estimated differences vary across trials. Twenty trials illustrate this variation; the Many studies tab provides a larger batch for estimating power."),
-        p("The animated connection between samples, estimates, and sampling distributions was inspired by Douwe Postmus’s ", tags$a(href = "https://postmus.github.io/sampling-simulator/", target = "_blank", rel = "noopener", "Statistical Concepts Lab"), ".")),
+        p("The population probabilities stay fixed during a sequence. Patient outcomes and estimated differences vary across trials. Twenty trials illustrate this variation; Simulate many studies provides a larger batch for estimating power.")),
       tableOutput("one_result"),
       p(class = "caption", "Table 4. Effect estimate, interval, p-value and decisions from the saved single-study simulation."),
       textOutput("one_interpretation"), plotOutput("one_plot", height = "300px"),
       p(class = "caption", "Figure 4. The saved study's estimate and interval compared with zero, the clinical threshold and the true effect assumed for simulation."),
       h4("First 12 participant records"), tableOutput("one_data"),
       p(class = "caption", "Table 5. The first 12 simulated participant records from the saved study; binary outcomes use 0 for no event and 1 for an event."),
-      downloadButton("download_one", "Download study and assumptions")),
+      downloadButton("download_one", "Download study and assumptions"),
+      tags$div(id = "journey-credit", tags$hr(), p("The animated connection between samples, estimates, and sampling distributions was inspired by Douwe Postmus’s ", tags$a(href = "https://postmus.github.io/sampling-simulator/", target = "_blank", rel = "noopener", "Statistical Concepts Lab"), "."))),
     tabPanel("Many studies", p("Core exploration: compare estimated differences and the percentage of significant results across simulated studies. Advanced exploration: examine confidence interval coverage, interval width and Monte Carlo uncertainty."), h3("Repeated independent studies"), actionButton("run_many", "Simulate many studies", class = "btn-primary"),
       textOutput("many_status"), tableOutput("many_summary"),
       p(class = "caption", "Table 6. Rejection, confidence interval coverage and the percentage meeting the target width across the saved simulation batch, with Monte Carlo uncertainty."),
@@ -289,6 +289,7 @@ server <- function(input, output, session) {
   })
   apply_case <- function(id, reset = FALSE) {
     x <- teaching_case(id)
+    session$sendCustomMessage("combine-pain-panels", list(combine = identical(id, "pain_one_many")))
     current_activity(id)
     axis_limit(NULL)
     if (x$app != "power_explorer") {
@@ -439,7 +440,7 @@ server <- function(input, output, session) {
     })
   }, ignoreInit = TRUE)
   status <- function(saved, label) paste0(label, ": n = ", saved$spec$n,
-    " per group; true difference assumed for simulation = ", effect_text(true_difference(saved$spec), saved$spec$outcome), "; seed = ", saved$spec$seed,
+    " per group; true difference assumed for simulation = ", effect_text(true_difference(saved$spec), saved$spec$outcome),
     ". ", if (!identical(saved$meta, snapshot())) "Inputs changed. These are saved results; run again to update." else "Results match current inputs.")
   output$planning <- renderTable({
     x <- planned(); recruit <- adjust_for_dropout(x$n, input$dropout)
