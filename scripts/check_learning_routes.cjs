@@ -18,7 +18,7 @@ let browser;
  }
  await page.goto(base+'/book/power.html');
  assert(await page.locator('#alpha-beta .route-label.advanced').isVisible());
- const continuation=await page.locator('.core-next a').getAttribute('href');
+ const continuation=await page.locator('.chapter-end-nav a').first().getAttribute('href');
  assert(continuation.includes('calculations'), 'The core route should skip error-region and simulation extensions');
  await page.goto(base+'/');
  assert((await page.locator('.start-route').first().getAttribute('href')).includes('#core-route'));
