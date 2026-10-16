@@ -35,3 +35,4 @@ module/*.xdv
 !site/assumptions_report/index.html
 
 __pycache__/
+!site/design_questionnaire/index.html
