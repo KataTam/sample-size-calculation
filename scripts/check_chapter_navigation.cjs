@@ -17,6 +17,10 @@ const assert=require('node:assert/strict');
    assert.equal(await page.locator('.page-inner .learning-goals, .page-inner .chapter-recap').count(),0);
   }
   const nav=page.locator('.chapter-end-nav');assert.equal(await nav.count(),1);
+  assert.equal(await nav.locator('ul,ol,li').count(),0);
+  assert(await nav.isVisible());
+  assert(await nav.evaluate(n=>{const recap=document.querySelector('.chapter-recap');const closing=recap||[...document.querySelectorAll('.page-inner .section.level2')].at(-1);return Boolean(n.compareDocumentPosition(closing)&Node.DOCUMENT_POSITION_FOLLOWING);}));
+  assert.equal(await nav.evaluate(n=>getComputedStyle(n).display),'grid');
   assert.deepEqual(await nav.locator('a').evaluateAll(a=>a.map(x=>x.getAttribute('href'))),expected.map(x=>x+'.html'));
   assert(await nav.locator('a').evaluateAll(a=>a.every(x=>x.target!=='_blank')));
  }
@@ -29,6 +33,6 @@ const assert=require('node:assert/strict');
  await page.locator('.chapter-end-nav a').nth(1).click();
  await page.waitForURL('**/feasibility.html');
  assert.equal(new URL(page.url()).hash,'');
- console.log('All 13 chapter footers verified: destinations, core shortcuts, same-pane navigation and mobile layout.');
+ console.log('All 13 reading panels verified: consistent styling, no bullets, placement before closing content, destinations, core shortcuts and mobile navigation.');
  }finally{await browser.close();}
 })().catch(e=>{console.error(e);process.exit(1)});
