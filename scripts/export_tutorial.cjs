@@ -61,7 +61,7 @@ let browser;
       const normal = document.querySelector('.page-inner .normal');
       if (!normal) throw Error('Chapter body not found');
       const clone = normal.cloneNode(true);
-      clone.querySelectorAll('.chapter-downloads, .tutorial-downloads, .reference-preview-button, script, .MathJax_Preview').forEach(el => el.remove());
+      clone.querySelectorAll('.chapter-end-nav, .chapter-downloads, .tutorial-downloads, .reference-preview-button, script, .MathJax_Preview').forEach(el => el.remove());
       for (const img of clone.querySelectorAll('img')) {
         const response = await fetch(img.src); if (!response.ok) throw Error('Missing image '+img.src);
         const blob = await response.blob();

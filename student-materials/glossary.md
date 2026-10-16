@@ -1,13 +1,5 @@
 # Glossary {#glossary .core-heading}
 
-::: {.learning-goals .core-outcomes}
-Learning outcomes. After this section, you should be able to:
-
-- Interpret the effect scale.
-- Distinguish individual variability from uncertainty in an estimate.
-- Explain the error probabilities, precision targets and participant counts used in planning.
-:::
-
 This glossary provides reminders of terms used in the tutorial and apps. The main tutorial includes formulas and expandable R code blocks.
 
 ## Probability, percentages and rates {.core-heading}

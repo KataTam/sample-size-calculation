@@ -65,6 +65,8 @@ for target in (SITE / "book").glob("*.html"):
             if 'class="book-summary"' in text and count != 1:
                 raise RuntimeError(f"Missing sidebar section {href} in {target.name}")
     target.write_text(text, encoding="utf-8")
+from chapter_navigation import add_chapter_navigation
+add_chapter_navigation(SITE / "book")
 from number_citations import number_citations
 number_citations(SITE / "book")
 # Only the full tutorial is downloadable; do not copy retired chapter artifacts.

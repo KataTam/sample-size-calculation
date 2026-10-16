@@ -129,3 +129,10 @@ details.activity-practice { background:#dfedf7; padding:10px 14px; margin:1em 0;
 #activity-menu h3 { font-size:17px; margin-bottom:.3em; }
 .reference-number { color:#405a70; }
 @media print { #activity-menu, #activity-menu-button, #citation-tooltip { display:none!important; } }
+
+/* Chapter-page reading choices; complete downloads follow a continuous sequence. */
+.chapter-end-nav { margin-top: 3rem; padding: 1.1rem 1.3rem; border-top: 2px solid #b7cbd9; background: #edf4f9; border-radius: 4px; }
+.chapter-end-nav ul { margin: 0 !important; padding-left: 1.2rem !important; }
+.chapter-end-nav li + li { margin-top: .7rem; }
+.chapter-end-nav a { overflow-wrap: anywhere; }
+@media print { .chapter-end-nav { display: none; } }
