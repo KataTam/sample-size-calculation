@@ -1,16 +1,16 @@
 # Activity walkthroughs
 
-These walkthroughs connect each activity to the question it helps answer. The clinical values are hypothetical teaching assumptions. The simulation activities generate patient outcomes from specified populations; they do not analyze real patient records or establish that those assumptions are correct.
+These walkthroughs connect each activity to the question it helps answer. The clinical values are hypothetical teaching assumptions. The simulations generate hypothetical patient outcomes from specified population assumptions.
 
 In the reasoning lab, planning tables and curves update when inputs change. Simulated results update only when you run the relevant simulation again and retain their saved assumptions until then. The same inputs and random seed reproduce the same result; a different seed gives another possible result. More patients change a study's information; more simulation repetitions improve the numerical precision of the estimated performance.
 
-The expected difference records your best expectation. With “Same as planning assumptions” selected, the simulations use the target difference and planning event probabilities, not the separate expected-difference field. A custom population scenario lets you examine another true difference without changing the original plan. All treatment differences here are between-group differences.
+The expected difference records your best expectation. With “Same as planning assumptions” selected, the simulations use the target difference and planning event probabilities. A custom population scenario lets you examine another true difference without changing the original plan. All treatment differences here are between-group differences.
 
 ## Develop and justify your study plan
 
 [Open activity](../study/?activity=assumptions_report) · [Matching explanation](../book/clinical-question.html#record-assumptions)
 
-Purpose: connect the calculation to a clinical question, evidence and a defensible recommendation. This is a report builder, not a calculator or simulation.
+Purpose: connect the calculation to a clinical question, evidence and a defensible recommendation.
 
 1. You can select the study structure, outcome and planning goal, then describe the question and why it matters.
 2. Your assumptions should include their sources and uncertainty. For a treatment comparison, the expected difference, target difference and clinical threshold have separate roles.
@@ -34,7 +34,7 @@ Purpose: see why sample estimates differ from population values, and why one tri
 
 [Open activity](../study/?activity=alpha_beta) · [Matching explanation](../book/power.html#alpha-beta)
 
-Purpose: connect false positives, false negatives and power with the distributions that underlie repeated-study behavior. This tool calculates normal-distribution areas; it does not draw random samples.
+Purpose: connect false positives, false negatives and power with the distributions that underlie repeated-study behavior. The tool calculates the shaded areas from the normal distribution.
 
 1. The example compares a null mean of 120 with an alternative mean of 125 mmHg, known population SD 15 and 25 independent observations.
 2. You can locate the rejection boundary and the shaded false-positive area under the null distribution.
@@ -46,12 +46,12 @@ Purpose: connect false positives, false negatives and power with the distributio
 
 [Open calculator](../two_proportions/) · [Matching explanation](../book/calculations.html#two-proportions)
 
-Purpose: reproduce the binary-outcome sample size calculation. The results and curve come from a normal approximation, not simulated patient data.
+Purpose: reproduce the binary-outcome sample size calculation. The calculator uses a normal approximation.
 
 1. For the chronic pain example, you can enter 60% and 30%, Type I error probability 5%, target power 90% and initially no losses.
 2. The result is 56 analyzable patients per group. The total and any recruitment adjustment have different denominators and should be recorded separately.
-3. Changing one input at a time shows how the required sample responds. Both group percentages matter, not just their difference.
-4. The link to the lab transfers this calculated count as a fixed sample. “Many studies” then lets you estimate the performance of the planned test through simulation rather than assuming the approximation is exact.
+3. Changing one input at a time shows how the required sample responds. The calculation uses the event percentage in each group.
+4. The link to the lab transfers this calculated count as a fixed sample. “Many studies” then lets you estimate the performance of the planned test through simulation and compare the estimated power with the planning target.
 
 ## Gestational-diabetes prevention trial — core
 
@@ -86,7 +86,7 @@ Purpose: connect a continuous-outcome calculation with the interpretation of a p
 2. “Explore assumptions” uses a pooled two-sample t-test plan with 90% target power. You can compare recruitment after 10% losses with the limit of 200.
 3. In “One study,” a run generates independent normal improvement scores using the planning difference of 3 units. The observed difference and interval vary across seeds.
 4. You can compare the interval with zero and the 2-unit threshold. A significant result does not necessarily establish a benefit above that threshold.
-5. “Many studies” shows how often conclusions vary across repetitions. This is a comparison of independent treatment groups, not a one-group paired analysis.
+5. “Many studies” shows how often conclusions vary across repetitions. Each patient contributes one improvement score to the comparison of two independent treatment groups.
 
 ## Chronic pain: power and recruitment — advanced
 
@@ -97,7 +97,7 @@ Purpose: assess whether the feasible study can answer the intended question unde
 1. The activity fixes the analyzable sample at 90 per group: 200 recruited with 10% expected loss gives 180 expected analyzable participants.
 2. “Explore assumptions” shows analytical curves for the 30-point target difference and smaller 20- and 15-point differences. You can compare their power with the 90% target.
 3. With advanced controls visible, a custom simulation scenario of control 30% and treatment 50% or 45% keeps the original sample fixed while changing the true difference.
-4. “Many studies” estimates power from generated patient data for the selected scenario. The analytical curves themselves are not simulation output.
+4. “Many studies” estimates power from generated patient data for the selected scenario.
 5. Your recommendation should address what the recruitment ceiling could establish and the uncertainty in the assumptions. Changing the clinical threshold alone does not change power for a test of zero difference.
 
 ## Repeated chronic-pain trials — advanced
@@ -109,19 +109,19 @@ Purpose: extend the core simulation from power to confidence interval coverage, 
 1. The activity starts in “Many studies,” with 60 analyzable patients per group, relief probabilities 30% and 60%, 5,000 repetitions and target full interval width 30 percentage points.
 2. You can first visit “One study” to inspect one generated dataset, its estimated difference, interval and test result.
 3. After “Simulate many studies,” you can examine the rejection percentage, coverage of the specified true difference and percentage meeting the width target. These answer different questions.
-4. A custom treatment probability of 45%, with control still 30%, tests the plan under a 15-point true difference. A no-effect scenario instead estimates the false-positive probability.
-5. You can vary the repetition count while leaving patients per group fixed. More repetitions reduce Monte Carlo uncertainty; they do not improve the power or precision of an individual trial. A report should retain the seed, generating assumptions, analysis and repetition count.
+4. A custom treatment probability of 45%, with control still 30%, tests the plan under a 15-point true difference. A no-effect scenario estimates the false-positive probability.
+5. You can vary the repetition count while leaving patients per group fixed. More repetitions reduce Monte Carlo uncertainty while each trial's design stays fixed. A report should retain the seed, generating assumptions, analysis and repetition count.
 
 ## Recruitment adjustment — core
 
 [Open calculator](../dropout_adjustment/) · [Matching explanation](../book/feasibility.html#account-for-expected-losses)
 
-Purpose: translate an analyzable requirement into a recruitment allowance. This is arithmetic, not a missing-data simulation.
+Purpose: translate an analyzable requirement into a recruitment allowance.
 
-1. For the chronic pain calculation, you should enter 56 required analyzable patients per group rather than use the calculator's generic starting value of 100.
+1. For the chronic-pain example, the analyzable requirement is 56 patients per group.
 2. At 10% expected loss, the result is 63 recruits per group, or 126 total, after rounding upward within each group.
 3. Comparing 0%, 10% and 20% losses shows how recruitment changes while the analyzable requirement stays fixed.
-4. Your interpretation should acknowledge that actual retention varies and that recruiting more participants does not remove missing-data bias. An optional transfer to the lab carries the analyzable count, not the inflated recruitment count.
+4. Your interpretation should acknowledge that actual retention varies and that recruiting more participants does not remove missing-data bias. The lab link transfers the analyzable count per group.
 
 ## Estimate a mean difference with a precision target — advanced
 
@@ -145,19 +145,19 @@ Purpose: connect the precision needed for a descriptive decision with survey siz
 2. The formula gives 246 completed observations. Reducing full width to 5 points, a margin of 2.5, requires about four times as many.
 3. The 50% conservative-planning option changes the probability used for sample size planning. The anticipated percentage remains the generating probability for the illustrative simulation.
 4. “Draw one illustrative sample” generates a binomial count and a Wilson interval. A different seed gives another sample; the realized interval need not meet the planning width.
-5. Your explanation should distinguish interval precision from representativeness. The sample size is a single total, not a count per treatment group.
+5. Your explanation should distinguish interval precision from representativeness. Here, n is the total number of participants in the sample.
 
 ## Pilot study: retention — advanced
 
 [Open activity](../study/?activity=pilot_feasibility) · [Matching explanation](../book/feasibility.html#pilot-feasibility)
 
-Purpose: assess whether a limited pilot can inform a feasibility decision, rather than test treatment efficacy.
+Purpose: assess whether a limited pilot provides useful information for a feasibility decision.
 
 1. The starting goal is to assess a fixed sample of 40 participants with anticipated retention of 80%.
-2. “Draw one illustrative sample” generates a possible retained count and its Wilson interval; the count is not forced to equal the expected 32.
+2. “Draw one illustrative sample” generates a possible retained count and its Wilson interval. The simulated retention count varies around its expected value of 32.
 3. You can compare another seed and then a fixed sample of 80. More participants generally provide more information about retention, but obtaining them requires a feasible plan.
 4. Retained and non-retained participants both belong in the denominator when their status is known. Loss adjustment is appropriate only for participants whose outcome status itself cannot be established.
-5. Your report should relate the interval to a prespecified feasibility decision, acknowledging uncertainty rather than presenting a small pilot as a definitive treatment trial.
+5. Your report should relate the interval and its uncertainty to the prespecified feasibility decision.
 
 ## Discharge percentages — core calculation, optional simulation extension
 

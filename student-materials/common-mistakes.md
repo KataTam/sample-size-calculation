@@ -45,11 +45,11 @@ Its conservative role here is limited to absolute precision for one proportion u
 
 ## My study is retrospective: should I calculate observed power instead of sample size? {.core-heading}
 
-If the records already exist, your report should explain why that sample is available and present the estimate, confidence interval and limitations. Using the same data's observed effect in a power calculation adds no evidence about that result. At independently justified effects, sensitivity analysis can describe the fixed design's performance. For example, 200 existing records may be useful for estimating a prevalence even when they do not support a precise adjusted treatment effect. "Retrospective" describes timing; it does not by itself select a statistical test. See [Althouse (2021)](https://pubmed.ncbi.nlm.nih.gov/32814615/) and [Lakens (2022)](https://doi.org/10.1525/collabra.33267).
+If the records already exist, your report should explain why that sample is available and present the estimate, confidence interval and limitations. Using the same data's observed effect in a power calculation adds no evidence about that result. At independently justified effects, sensitivity analysis can describe the fixed design's performance. For example, 200 existing records may be useful for estimating a prevalence even when they do not support a precise adjusted treatment effect. "Retrospective" describes when the data were obtained. The research question, outcome and data structure determine the analysis. See [Althouse (2021)](https://pubmed.ncbi.nlm.nih.gov/32814615/) and [Lakens (2022)](https://doi.org/10.1525/collabra.33267).
 
 ## Why do the hand formula, R and another calculator give different numbers? {.core-heading}
 
-Differences can arise from the outcome, allocation, whether the test is one-sided or two-sided, effect scale, Type I error probability, target power, test assumptions, continuity correction or rounding. These settings should match before you compare calculator results. The simple mean calculator uses a normal approximation; the [lab](https://katatam.github.io/sample-size-calculation/study/?activity=own_study) plans for a pooled t test. Binary analytical power remains an approximation and can differ from finite-sample simulation. A numerical difference is not automatically a software error.
+Differences can arise from the outcome, allocation, whether the test is one-sided or two-sided, effect scale, Type I error probability, target power, test assumptions, continuity correction or rounding. These settings should match before you compare calculator results. The simple mean calculator uses a normal approximation; the [lab](https://katatam.github.io/sample-size-calculation/study/?activity=own_study) plans for a pooled t test. Binary analytical power remains an approximation and can differ from finite-sample simulation.
 
 ## Can I count two visits, two eyes or patients in one allocated ward as independent observations? {.core-heading}
 
@@ -76,7 +76,7 @@ No. CONSORT, STROBE, STARD, ARRIVE and TRIPOD help document different studies. T
 ### Take-home points {.unnumbered}
 
 - Statistical significance, clinical importance, and precision answer different questions.
-- Power concerns a design under specified assumptions; it does not establish that those assumptions are true.
+- Power describes a design's performance under specified assumptions. Those assumptions require supporting evidence.
 - More patients cannot automatically remove bias or repair an inappropriate analysis.
 
 ### Check your understanding {.unnumbered}

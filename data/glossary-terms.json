@@ -81,7 +81,7 @@
     "aliases": [
       "standard deviation"
     ],
-    "definition": "How much individual patients differ, measured in the outcome's units. It describes the spread of observations, not the uncertainty in their mean."
+    "definition": "SD describes the spread of individual observations, measured in the outcome's units."
   },
   {
     "id": "standard-error",
@@ -114,7 +114,7 @@
     "aliases": [
       "precision"
     ],
-    "definition": "How little an estimate varies across repeated samples, assessed using its standard error or interval width at a specified confidence level. Smaller values indicate greater precision, not necessarily less bias. Estimation is the process of estimating; precision is a property of the estimate."
+    "definition": "How little an estimate varies across repeated samples, assessed using its standard error or interval width at a specified confidence level. Smaller standard errors and narrower intervals indicate greater precision. Bias concerns systematic error in the estimate. Estimation is the process of estimating; precision is a property of the estimate."
   },
   {
     "id": "margin-of-error",
@@ -139,7 +139,7 @@
     "aliases": [
       "null hypothesis"
     ],
-    "definition": "In these treatment comparisons, the claim that population outcomes are equal. Not rejecting it means insufficient evidence of a difference, not proof of equality."
+    "definition": "In these treatment comparisons, the claim that population outcomes are equal. A non-significant result leaves uncertainty about the population difference; its confidence interval helps describe that uncertainty."
   },
   {
     "id": "alternative-hypothesis",
@@ -251,7 +251,7 @@
       "Monte Carlo error",
       "Monte Carlo uncertainty"
     ],
-    "definition": "Random variation caused by using a limited number of simulated studies. More repetitions improve the precision of estimated power, not the power of each trial."
+    "definition": "Random variation caused by using a limited number of simulated studies. More repetitions improve the precision of estimated power while each trial's design stays fixed."
   },
   {
     "id": "false-positive",
@@ -260,7 +260,7 @@
       "false positive",
       "false-positive probability"
     ],
-    "definition": "A statistically significant finding when the population outcomes are equal: a Type I error. Here, positive refers to the study conclusion, not a patient diagnosis."
+    "definition": "A statistically significant treatment difference when the population outcomes are equal: a Type I error."
   },
   {
     "id": "false-negative",

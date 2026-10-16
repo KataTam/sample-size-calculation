@@ -22,7 +22,7 @@ const base=process.argv[2]||'http://127.0.0.1:8769';
   assert.deepEqual(repeated,[], 'Glossary terms should be linked only once per chapter');
   const term=page.locator('a[data-glossary-term="precision"]').first();
   await term.hover();await page.locator('#glossary-tooltip:not([hidden])').waitFor();
-  assert((await page.locator('#glossary-tooltip').innerText()).includes('not necessarily less bias'));
+  assert((await page.locator('#glossary-tooltip').innerText()).includes('Bias concerns systematic error in the estimate.'));
   await page.keyboard.press('Escape');assert(await page.locator('#glossary-tooltip').isHidden());
   await term.focus();assert(await page.locator('#glossary-tooltip').isVisible());
   const bounds=await page.locator('#glossary-tooltip').boundingBox();
