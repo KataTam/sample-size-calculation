@@ -2015,6 +2015,8 @@ sessionInfo()
 
 ## Acknowledgments {-}
 
+The animated connection between samples, estimates, and sampling distributions was inspired by Douwe Postmus’s *[Statistical Concepts Lab](https://postmus.github.io/sampling-simulator/)* [@postmus2026].
+
 This project was supported by the Open Education Incubator Fund by the University of Groningen. The author thanks Carlotta Drewer and Bert van der Leest who reviewed the materials and user interface from a student's perspective and provided feedback on their clarity and usability. OpenAI Codex [@openaicodex] assisted with developing the website and interactive applications, reviewing code, and managing the GitHub repository. The author remains fully responsible for the content and accuracy of the teaching materials and software.
 
 The tutorial is written in R Markdown [@allaire2021rmarkdown] and compiled with bookdown [@xie2021bookdown]. The cited 2021 releases acknowledge these tools; the build environment records the versions used for the current edition.
