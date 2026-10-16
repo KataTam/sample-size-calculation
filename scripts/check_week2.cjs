@@ -30,10 +30,14 @@ const base=(process.argv[2]||'http://127.0.0.1:8769').replace(/\/$/,'');
  await page.keyboard.press('Escape');assert(await page.locator('#activity-menu').isHidden());
  await page.goto(base+'/book/power.html#eq:mcse');
  assert(await page.locator('[id="eq:mcse"]').isVisible());
- for(const chapter of ['clinical-question','power','calculations','curves','simulation','feasibility','exercises','study-designs','common-mistakes']) {
+ for(const chapter of ['clinical-question','power','calculations','curves','simulation','feasibility','exercises','study-designs']) {
   await page.goto(base+'/book/'+chapter+'.html');
   assert.equal(await page.locator('.chapter-recap').count(),1,chapter);
   assert(await page.locator('.chapter-recap').isVisible(),chapter);
+ }
+ for(const chapter of ['glossary','common-mistakes']) {
+  await page.goto(base+'/book/'+chapter+'.html');
+  assert.equal(await page.locator('.page-inner .chapter-recap, .page-inner .learning-goals').count(),0,chapter);
  }
  await page.goto(base+'/book/glossary.html');
  assert.equal(await page.locator('.section.level1').count(),1);
