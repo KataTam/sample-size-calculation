@@ -3,13 +3,24 @@
 ::: {.learning-goals .advanced-outcomes}
 Learning outcomes. After this section, you should be able to:
 
+- Use the study-design questionnaire to identify suitable design families and unresolved decisions.
 - Choose a planning method from the research question, outcome and dependency between observations.
 - Recognize designs that need methods beyond the two-independent-group examples.
 :::
 
-Choose a method from the research question, outcome, sampling structure and intended analysis. "Clinical," "retrospective," "diagnostic" and "within-subject" describe different aspects of a study and can apply together. A diagnostic study can be clinical and retrospective, and a preclinical experiment can have repeated measurements.
+The study design and planning method should follow the research question, outcome, sampling structure and intended analysis. "Clinical," "retrospective," "diagnostic" and "within-subject" describe different aspects of a study and can apply together. A diagnostic study can be clinical and retrospective, and a preclinical experiment can have repeated measurements.
 
-Start with two questions: what are you trying to estimate or compare, and are the observations independent, paired or clustered? Use your answers to find the relevant rows below; you do not need to read every design before choosing a route.
+The questionnaire below provides a starting point. The rest of this chapter explains the design dimensions and planning resources behind its suggestions.
+
+## Activity: Which study design fits your question? {#design-questionnaire .advanced-heading}
+
+[Open the study-design questionnaire with this chapter](https://katatam.github.io/sample-size-calculation/study/?activity=design_questionnaire).
+
+Your answers cover the study aim, available data, outcome and relationships between observations. Follow-up questions address intervention allocation, treatment comparisons, observational sampling, diagnostic reference standards or prediction models as appropriate. The tool suggests a design family, explains why it fits, and identifies decisions still needed before sample size planning. Existing data can support different designs depending on how participants were selected and when measurements were made.
+
+Several designs may be reasonable for the same question. The suggestion should support discussion of feasibility, ethics and the intended analysis. Links lead to a matching calculation activity when its assumptions fit, or to design-specific resources. The questionnaire uses the distinctions explained in this chapter; it does not rank designs by a score.
+
+The [CDC Field Epidemiology Manual](https://www.cdc.gov/field-epi-manual/php/chapters/design-conduct-analyze-field-studies.html) discusses cohort and case-control design considerations [@jackson2024]. The reporting and sample-size sources below support the other routes.
 
 ## Describe these dimensions first {.advanced-heading}
 

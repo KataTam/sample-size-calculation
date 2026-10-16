@@ -45,6 +45,8 @@ jobs:
           node scripts/export_tutorial.cjs
           python3 scripts/check_book_pdf.py
           python3 scripts/check_links.py
+          node scripts/check_design_rules.cjs
+          node scripts/check_design_browser.cjs
           node scripts/check_chapter_navigation.cjs
           node scripts/check_reader_tools.cjs
           node scripts/check_glossary_tools.cjs

@@ -88,6 +88,7 @@ shutil.copy2(ROOT / "site/styles.css", SITE / "styles.css")
 shutil.copy2(ROOT / "site/link-behavior.js", SITE / "link-behavior.js")
 shutil.copytree(ROOT / "site/study", SITE / "study")
 shutil.copytree(ROOT / "site/assumptions_report", SITE / "assumptions_report")
+shutil.copytree(ROOT / "site/design_questionnaire", SITE / "design_questionnaire")
 (SITE / ".nojekyll").touch()
 
 # The lesson and apps use one registry, including the same seed and replications.
@@ -106,7 +107,10 @@ def page(source, target):
     title = re.sub(r"\s+\{#[^}]+\}\s*$", "", title)
     css = os.path.relpath(SITE / "styles.css", target.parent).replace(os.sep, "/")
     reader = "markdown" if source.name in {"glossary.md", "common-mistakes.md", "study-design-guide.md"} else "gfm"
-    subprocess.run([pandoc, str(source), "--from=" + reader, "--to=html5", "--standalone",
+    citation_args = (["--citeproc", "--bibliography=" + str(ROOT / "module/references.bib"),
+                      "--csl=" + str(ROOT / "module/apa.csl")]
+                     if source.name == "study-design-guide.md" else [])
+    subprocess.run([pandoc, str(source), *citation_args, "--from=" + reader, "--to=html5", "--standalone",
         "--metadata", "pagetitle=" + title, "--css", css, "--mathjax", "--output", str(target)], check=True)
     text = target.read_text(encoding="utf-8")
     # Website readers get HTML; repository readers keep Markdown links.

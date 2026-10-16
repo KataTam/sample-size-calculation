@@ -60,8 +60,6 @@
     }
     dialog.append(list);
   }
-  const extra = document.createElement('a'); extra.textContent = 'Where does my study fit?';
-  extra.href = new URL('book/study-designs.html',root).href; extra.target = '_blank'; extra.rel='noopener'; dialog.append(extra);
   const button = document.createElement('button'); button.id = 'activity-menu-button';
   button.type='button'; button.textContent='Activities and tools'; button.setAttribute('aria-haspopup','dialog');
   button.addEventListener('click', () => dialog.showModal());

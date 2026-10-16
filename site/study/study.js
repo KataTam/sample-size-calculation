@@ -10,7 +10,7 @@
   const site = new URL('../', location.href);
   let cases = {}, anchors = {}, selected = '', engine = '', ready = false, state = null;
   let queuedActivity = null;
-  const allowedApps = new Set(['power_explorer', 'prevalence_precision', 'sampling_distributions', 'assumptions_report']);
+  const allowedApps = new Set(['power_explorer', 'prevalence_precision', 'sampling_distributions', 'assumptions_report', 'design_questionnaire']);
   const send = value => app.contentWindow.postMessage(value, location.origin);
   function setView(view) {
     if (!['lesson', 'app', 'both'].includes(view)) return;

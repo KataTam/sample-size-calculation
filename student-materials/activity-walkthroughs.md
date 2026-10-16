@@ -184,3 +184,14 @@ Purpose: bring together the clinical question, numerical requirements and practi
 5. In “Justify and communicate,” you can save inputs and explanations, download reproducible code or simulation results, and transfer the relevant findings into the assumptions report. A saved plan is distinct from saved simulation output.
 
 Teaching text: [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/). Original software code: [MIT](https://opensource.org/license/mit). Third-party attributions and exceptions remain applicable.
+
+## Which study design fits your question? — advanced
+
+[Open questionnaire](../study/?activity=design_questionnaire) · [Matching explanation](../book/study-designs.html#design-questionnaire)
+
+Purpose: identify a suitable design family and the decisions that determine its planning method.
+
+1. The main aim determines which follow-up questions appear. The data, outcome and relationships between observations describe the study setting.
+2. Treatment questions address allocation, comparisons and the intended claim. Observational, diagnostic and prediction questions use their own follow-ups.
+3. “Show design suggestions” presents a candidate design, the reasoning, unresolved choices and sample-size implications.
+4. The resource links provide a relevant activity or specialist guidance. Changing an answer clears the previous suggestion until you request an update. “Start again” clears the form.

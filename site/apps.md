@@ -12,6 +12,8 @@ Choose an activity or calculation tool. Start with the [core tutorial route](boo
 
 ## Explore further
 
+- [Which study design fits your question?](study/?activity=design_questionnaire): answer a short questionnaire for design suggestions, reasoning and relevant planning resources.
+
 - [Sample size reasoning lab](power_explorer/): starts with basic calculation controls; select Explore further for advanced controls, sensitivity analyses and simulation settings. One study and Many studies support the core exploration; coverage and Monte Carlo uncertainty provide advanced extensions.
 - [Estimate a proportion or pilot retention percentage](prevalence_precision/): estimate a population percentage and assess precision using confidence interval width.
 - [Type I error probability, Type II error probability and power](sampling_distributions/): compare sampling distributions under the null and an alternative.

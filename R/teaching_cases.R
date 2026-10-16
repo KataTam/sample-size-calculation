@@ -16,6 +16,9 @@ teaching_cases <- function() {
       goal = if (is.null(goal)) values$goal else goal, inputs = values, ...)
   }
   list(
+    design_questionnaire = case("design_questionnaire", "Which study design fits your question?",
+      "Describe your research aim, data, treatment allocation and relationships between observations. The questionnaire suggests a design family and explains what still needs to be decided.",
+      "design-questionnaire", app = "design_questionnaire"),
     assumptions_report = case("assumptions_report", "Develop and justify your study plan",
       "Write your clinical question, justify the expected difference, target difference and clinical threshold, and record the analysis, sample size and recruitment plan. Your entries build a report alongside the form.",
       "record-assumptions", app = "assumptions_report"),

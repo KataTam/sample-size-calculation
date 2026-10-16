@@ -156,6 +156,13 @@
     "anchor": "study-designs",
     "title": "Where does my study fit?",
     "route": "Advanced",
-    "activities": []
+    "activities": [
+      {
+        "label": "Which study design fits your question?",
+        "path": "study/?activity=design_questionnaire",
+        "route": "Advanced",
+        "section": "design-questionnaire"
+      }
+    ]
   }
 ]
