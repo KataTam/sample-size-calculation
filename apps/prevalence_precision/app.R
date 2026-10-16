@@ -71,7 +71,7 @@ ui <- fluidPage(
     p("Both reference curves use 95% confidence and fixed absolute margins: ±5 versus ±2.5 percentage points. The dot and separate curve show your chosen confidence and width."),
     h3("One simulated confidence interval"),
     actionButton("simulate", "Draw one illustrative sample", class = "btn-primary"),
-    p("The simulated sample uses the anticipated percentage as its assumed population probability. Choosing 50% for conservative planning changes the sample size calculation; it does not make the population probability known."),
+    p("A different seed gives another illustrative sample; unchanged inputs and seed reproduce the same sample. The simulated sample uses the anticipated percentage as its assumed population probability. Choosing 50% for conservative planning changes the sample size calculation; it does not make the population probability known."),
     textOutput("saved_status"), tableOutput("study_table"),
     p(class = "caption", "Table. Event count, observed percentage and Wilson confidence limits from one illustrative sample, with the realized width and target assessment."),
     plotOutput("interval_plot", height = "220px"),

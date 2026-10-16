@@ -14,11 +14,11 @@ Binary outcome: patient reports whether the painkiller was effective.
 - Clinical threshold: 20 percentage points
 - Type I error probability: 5%
 - Target power: 90%
-- Dropout: to be determined
+- Expected loss to follow-up: 10% for recruitment planning; simulations use fixed analyzable counts
 
 ## Teaching Use
 
-Use this case to discuss how the smallest clinically relevant difference affects sample size and feasibility.
+This case distinguishes the clinical threshold from the target difference used to calculate sample size. You can examine power at each hypothetical true difference without changing the clinical threshold.
 
 
 ## Revised teaching specification

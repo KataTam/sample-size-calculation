@@ -1,5 +1,8 @@
 # Teaching guide
 
+The [activity walkthroughs](../student-materials/activity-walkthroughs.html) describe each tool's purpose, steps and connection to the narrative, distinguishing analytical calculations from simulated patient outcomes.
+
+
 The module teaches sample size as a justified research-design decision. The app is a tool for testing predictions, not the activity by itself. Begin with a clinical question and end with an explanation of what the planned study could establish.
 
 ## Preparation and access

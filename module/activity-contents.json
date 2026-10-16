@@ -129,12 +129,18 @@
     "chapter": "exercises",
     "anchor": "own-study",
     "title": "Plan and justify your own study",
-    "route": "Core",
+    "route": "Core and advanced",
     "activities": [
+      {
+        "label": "Discharge: an absolute probability difference",
+        "path": "study/?activity=discharge",
+        "route": "Core",
+        "section": "discharge"
+      },
       {
         "label": "Build your own study calculation",
         "path": "study/?activity=own_study",
-        "route": "Core",
+        "route": "Advanced",
         "section": "own-study"
       },
       {

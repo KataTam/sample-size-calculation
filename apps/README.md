@@ -6,8 +6,13 @@ Each app has one teaching purpose and can be run independently from its own fold
 
 - `two_proportions`: sample size for a binary outcome comparing two event probabilities.
 - `two_means`: sample size for a continuous outcome comparing two means.
-- `power_explorer`: approximate achievable power for a fixed sample size.
+- `power_explorer`: analytical planning, one-study and repeated-study simulations, and study justification.
 - `dropout_adjustment`: recruitment target after expected dropout or loss to follow-up.
+- `prevalence_precision`: analytical precision planning and a simulated one-sample interval.
+- `sampling_distributions`: analytical normal-distribution areas for error probabilities and power.
+- The report builder in `site/assumptions_report/` assembles written study plans without calculating or simulating results.
+
+See the [activity walkthroughs](../student-materials/activity-walkthroughs.html) for matched lesson links and steps.
 
 ## Teaching Use
 

@@ -48,6 +48,8 @@ The main example compares two treatments in different groups of patients, with e
 
 You can use the activity links to open [the tutorial and matching apps together](https://katatam.github.io/sample-size-calculation/study/?activity=pain_one_many). The figures and worked results also let you follow the reasoning without opening an app. For a reminder of a term, see [Glossary](#glossary). If you have a project in mind, check [Where does my study fit?](#study-designs) before choosing a calculator.
 
+The tutorial uses simulation to connect a study plan with the results it could produce. You first specify a hypothetical population, then generate patient outcomes and analyze them as you would in a study. One simulated study makes sampling variability visible; many studies show how the design performs across repetitions. The calculators and smooth planning curves instead use formulas, and the report activity organizes your reasoning. The [activity walkthroughs](https://katatam.github.io/sample-size-calculation/student-materials/activity-walkthroughs.html) explain the purpose and steps for each tool.
+
 ::: {.learning-goals .core-outcomes}
 ## Core learning outcomes {#core-route .unnumbered .core-heading}
 
@@ -224,6 +226,8 @@ A useful check is whether another researcher could reproduce your calculation fr
 Which count belongs in the protocol: analyzable patients or patients to recruit? Your report should record both and explain the adjustment for expected losses when you complete the calculation.
 
 You can develop your report in the [Activity: Develop and justify your study plan](https://katatam.github.io/sample-size-calculation/study/?activity=assumptions_report). The text boxes let you build a study-plan report alongside your answers. Your clinical question and evidence come first; the sample size and recruitment counts can be added after the calculation activities. You can load a hypothetical two-arm example, save your entries, and download the report. Your report should clarify the role of the expected difference, target difference and clinical threshold, and explain what your study could establish.
+
+This activity connects the numerical result to a defensible study decision. It assembles the text you enter; it does not run calculations, generate patient data or verify your assumptions. Results from a calculator or simulation should therefore be recorded with their method and inputs, rather than copied as an unexplained sample size.
 
 <details class="model-answer" id="model-answer-protocol-counts">
 <summary>Model answer</summary>
@@ -417,6 +421,8 @@ Figure \@ref(fig:sample-differences) shows [sampling variability](#sampling-vari
 
 You can try [Activity: Chronic pain: one study and many studies](https://katatam.github.io/sample-size-calculation/study/?activity=pain_one_many) with 20 patients per group, standard-treatment relief 30%, novel-treatment relief 60%, and Type I error probability 5%. One study, followed by another, lets you compare sample estimates with the specified population probabilities. Many studies shows the range of results and how often the test detects the difference. You can then compare 50 and 80 patients per group.
 
+In *One study*, Simulate one study generates hypothetical patient outcomes. A different random seed gives another possible trial; clicking again with unchanged inputs and seed reproduces the same trial. In *Many studies*, Simulate many studies generates a batch of independent trials. The core task focuses on the distribution of estimated differences and the percentage of significant results; coverage and interval-width summaries are advanced extensions. After changing inputs, you should rerun the simulation: displayed results retain the assumptions under which they were generated.
+
 </details>
 
 Which quantities stay fixed across trials, and which change? Why does a larger sample give a more precise estimate, while more simulation repetitions do not increase the power of each trial?
@@ -589,6 +595,8 @@ plot_sample_mean_distributions(sampling_example)
 Here the critical mean is about 124.9 mmHg and power is about 51%. Repeating the study at the specified alternative would produce a mean above that threshold about half the time. This does not mean that the alternative has a 51% probability of being true.
 
 [Activity: Explore Type I and Type II error probabilities and power](https://katatam.github.io/sample-size-calculation/study/?activity=alpha_beta). You can increase n while holding the two population means and SD fixed. The curves become narrower because the standard error decreases. Your explanation should address how the rejection rule still controls Type I error probability while Type II error probability changes. You can also compare one-sided and two-sided rules; sidedness should follow the research question before data collection.
+
+This activity explains why the patterns seen in repeated simulations occur. Its areas are calculated from a normal model, rather than estimated from randomly generated trials. It uses one sample with a known population SD to isolate the concepts; it is not the two-arm clinical-trial calculation.
 
 
 </details>
@@ -777,6 +785,8 @@ For a yes/no outcome, the calculation needs both group percentages, not just the
 
 Read a row as a conditional statement: if those event probabilities and that analysis are reasonable, then this is the approximate number required for the specified error targets. The row is not evidence that the intervention will achieve that benefit. The smaller-difference row needs more participants because sampling variability makes that difference harder to distinguish from zero.
 
+The [Activity: Two-proportion calculator](https://katatam.github.io/sample-size-calculation/two_proportions/) lets you reproduce this calculation and change one assumption at a time. It calculates an approximate sample size without generating patients. Its link to the reasoning lab carries that count across as a fixed analyzable sample, so you can simulate the planned test and compare its performance with the power target.
+
 ### Preventing gestational diabetes {#adherence .core-heading}
 
 Suppose you want to find out whether probiotic supplementation prevents gestational diabetes in pregnant women with overweight or obesity (BMI at least 25 kg/m²). Randomly allocate women to probiotics or no probiotics, with otherwise comparable care, and assess gestational diabetes using a 75 g oral glucose tolerance test (OGTT). Your plan should specify the supplement, diagnostic criteria and assessment time before planning. An assessment at 20–24 weeks needs justification against applicable clinical guidance: NICE generally recommends risk-based testing at 24–28 weeks [@nicegdm]. If supplementation is observed rather than randomized, confounding needs a different analysis and planning method.
@@ -811,6 +821,8 @@ knitr::kable(data.frame(`Analyzable per group`=adherence_plan$n, `Recruit per gr
 ```
 
 [Activity: Gestational-diabetes prevention trial](https://katatam.github.io/sample-size-calculation/study/?activity=adherence). You can compare recruitment with a limit of 240 women and 15% expected loss per arm. With the planned sample fixed, you can then reduce the percentage remaining free of gestational diabetes with probiotics from 90% to 85%, while keeping the comparison at 80%. This corresponds to a smaller disease reduction, from 20% to 15%. Your explanation should address why power changes while the original recruitment plan and clinical threshold remain fixed.
+
+The purpose is to test whether an apparently modest preventive benefit would require more recruitment than is available. The event in the app is remaining free of disease, so higher percentages are favorable. Under *Assumptions for the simulated studies*, *Custom effect or variability* changes the generating probabilities without recalculating the original plan. One study shows a possible result; many studies estimate how often the planned test detects the smaller benefit. Editing the planning probabilities instead would answer a different question: how large a newly planned study should be.
 
 Under these assumptions, the required recruitment total is `r 2 * adjust_for_dropout(adherence_plan$n, adherence_case$inputs$dropout)`, exceeding the proposed limit of 240. This is a reason to reconsider recruitment, collaboration or the study's aim. Increasing the assumed benefit merely to obtain a smaller n would not supply the missing evidence.
 
@@ -905,6 +917,8 @@ knitr::kable(display_probabilities(mean_cases, c("alpha", "power")),
 
 Before rounding, halving the difference or doubling the SD multiplies the required sample size by four. You can explain this relationship using equation \@ref(eq:means).
 
+The [Activity: Two-mean calculator](https://katatam.github.io/sample-size-calculation/two_means/) makes these relationships visible before you simulate any outcomes. Its normal approximation gives 59 analyzable patients per group for the example. The rehabilitation activity plans using a pooled two-sample t test, which accounts for estimating the common variance and can require a slightly larger sample. You can transfer the calculator's count to the lab as a fixed sample to investigate that difference.
+
 ### A rehabilitation case {#rehabilitation .core-heading}
 
 The same calculation could compare two rehabilitation programs, rather than two drugs. Suppose the primary outcome is improvement at six weeks on a hypothetical continuous mobility score. The expected difference is 4 units, the target difference is 3 units, and patients and clinicians judge a 2-unit benefit clinically meaningful. The assumed common SD is 5 units. For this illustration, independent patients are randomized to the two programs and the improvement scores are approximately normal.
@@ -924,7 +938,9 @@ c(analyzable_per_group = rehabilitation_plan$n,
 knitr::kable(data.frame(`Analyzable per group`=rehabilitation_plan$n, `Analyzable total`=2*rehabilitation_plan$n, `Recruit total`=2*adjust_for_dropout(rehabilitation_plan$n, rehabilitation_case$inputs$dropout), check.names=FALSE), caption="Sample size and recruitment requirements for the rehabilitation comparison.")
 ```
 
-[Activity: Rehabilitation: compare two means](https://katatam.github.io/sample-size-calculation/study/?activity=rehabilitation). You can ask whether 10% expected loss and a recruitment limit of 200 make this plan feasible. You can compare the [confidence interval](#confidence-interval) with the 2-unit clinical threshold. Although an improvement score uses before/after information within each patient, this example analyses one score per patient across two independent groups. A single-group paired comparison, repeated-measures model, or baseline-adjusted analysis needs its own planning method.
+[Activity: Rehabilitation: compare two means](https://katatam.github.io/sample-size-calculation/study/?activity=rehabilitation). You can ask whether 10% expected loss and a recruitment limit of 200 make this plan feasible. You can compare the [confidence interval](#confidence-interval) with the 2-unit clinical threshold. Although an improvement score uses before/after information within each patient, this example analyzes one score per patient across two independent groups. A single-group paired comparison, repeated-measures model, or baseline-adjusted analysis needs its own planning method.
+
+This activity connects the continuous-outcome calculation with a possible clinical interpretation. After reviewing the planned sample, *One study* generates independent, normally distributed improvement scores using the stated difference and SD. Its interval shows whether that particular simulated study is compatible with zero, the clinical threshold, or both. *Many studies* shows why a well-powered plan does not guarantee the same conclusion in every trial.
 
 The expected-loss adjustment gives a recruitment total of `r 2 * adjust_for_dropout(rehabilitation_plan$n, rehabilitation_case$inputs$dropout)`, below this example's cap of 200. Meeting the cap and power target still leaves questions about the credibility of the assumptions, measurement quality and the [precision](#precision) needed for a clinical decision.
 
@@ -1056,6 +1072,8 @@ The 15-percentage-point difference requires the largest sample for the same powe
 
 You can explore these scenarios in [Activity: Chronic pain: explore power and recruitment](https://katatam.github.io/sample-size-calculation/study/?activity=pain_curves). In the [lab](https://katatam.github.io/sample-size-calculation/study/?activity=pain_curves), you can set a fixed sample of 90 per group, control 30%, and treatment 60%. You can compare true treatment relief of 50% and 45% while keeping the [expected difference](#expected-difference), [target difference](#target-difference) and clinical threshold distinct. You can use the prepared curves above to view all three scenarios together.
 
+The curves in *Explore assumptions* are analytical planning results, not a set of simulated trials. They help you choose scenarios worth investigating. With advanced controls visible, *Custom effect or variability* lets you specify control relief of 30% and treatment relief of 50% or 45% while retaining 90 patients per group. The sensitivity table updates immediately; *Simulate many studies* then estimates performance from generated patient outcomes for the selected scenario.
+
 Explain. Which assumptions make the target feasible? How do you distinguish 200 recruited patients from 180 expected analyzable patients?
 
 <details class="model-answer" id="model-answer-curve-assumptions">
@@ -1151,6 +1169,8 @@ Simulation is especially useful when the planned analysis or dependency between 
 The custom-simulation approach in chapter 15 of @superpowerbook2022 starts from the planned trial and its analysis. The binary example uses the same score test as the [existing reasoning lab](https://katatam.github.io/sample-size-calculation/study/?activity=pain_simulation). This is an adaptation of the workflow, not a reproduction of the book's logistic-regression example.
 
 [Activity: Simulate repeated chronic pain trials](https://katatam.github.io/sample-size-calculation/study/?activity=pain_simulation) to connect these four steps with one study and repeated studies in the app. The prepared batch and app use the same seed, sample size and analysis.
+
+This extends the core simulation: the question is now whether the analysis has useful power, confidence interval coverage and interval width under the specified population. The activity opens in *Many studies*. You can first select *One study* to follow one generated dataset through its analysis, then return to *Many studies* and run 5,000 repetitions. The 60 patients are per group in each trial, not the number of simulation repetitions.
 
 ### Step 1: generate one trial {.advanced-heading}
 
@@ -1363,6 +1383,8 @@ For the chronic pain trial, 5% expected loss means approximately 95% of recruits
 
 The simulations start with the stated number of patients available for analysis. They do not simulate patients being lost to follow-up.
 
+The [Activity: Adjust recruitment for loss to follow-up](https://katatam.github.io/sample-size-calculation/dropout_adjustment/) connects the analyzable count to the number you need to approach recruitment with. You should enter the per-group analyzable requirement, then compare expected loss percentages. This is an arithmetic adjustment, not a simulation of who drops out: the result is an expected recruitment allowance, not a guarantee of complete data.
+
 <details class="misconception" id="misconception-dropout">
 <summary>Common misconception: adding the expected dropout percentage solves missing data</summary>
 
@@ -1438,6 +1460,8 @@ For normal data, the curve gives expected full t-interval width. For binary data
 
 ::: {.activity}
 You can compare planning goals in [Activity: Estimate a mean difference with a precision target](https://katatam.github.io/sample-size-calculation/study/?activity=mean_precision). In the [lab](https://katatam.github.io/sample-size-calculation/study/?activity=mean_precision), you can choose *Continuous outcome*, expected difference 4, target difference 3, SD 5, clinical threshold 2, [Type I error probability](#alpha) 5% and full width 4. The outcome here is an improvement score. You can compare the sample selected for the specified interval-width target with the sample selected for 80% power. Your explanation should address why the same research question might require considering both criteria.
+
+The motivation is that detecting a difference and estimating it precisely need not require the same sample size. The planning curve calculates anticipated interval width. *One study* generates a realized interval, and *Many studies* estimates how often intervals meet the requested full width. A target width of 4 units is not a margin of error of 4 units; it is approximately 2 units on either side for a symmetric interval.
 
 <details class="model-answer" id="model-answer-precision-versus-power">
 <summary>Model answer</summary>
@@ -1723,6 +1747,8 @@ A pilot may primarily investigate recruitment, retention or whether procedures a
 
 [Activity: Pilot study: estimate retention](https://katatam.github.io/sample-size-calculation/study/?activity=pilot_feasibility). It starts with a fixed total of 40 and anticipated retention of 80%. You can compare illustrative intervals at 40 and 80 observations; make clear whether another recruitment period or collaboration could obtain the larger sample. This is descriptive estimation of retention, not a treatment-effect power calculation.
 
+The app can generate one hypothetical retention count from the assumed 80% probability. It will not necessarily produce exactly 32 of 40. Both retained and non-retained participants belong in the denominator when their retention status is known; non-retention is the outcome being measured, rather than a reason to remove those participants from this calculation.
+
 Before writing the protocol, you should check relevant guidance and the current funder's requirements. For examples, [NIHR HTA guidance on feasibility and pilot studies](https://njl-admin.nihr.ac.uk/document/download/2023130) distinguishes feasibility questions from definitive efficacy questions; this is an archived guidance example. The [CONSORT extension for randomized pilot and feasibility trials](https://www.bmj.com/content/355/bmj.i5239) asks for a rationale for pilot numbers and criteria for progression [@nihrfeasibility; @eldridge2016]. Reporting guidance helps you document the design; it does not supply one sample-size formula for every study.
 
 
@@ -1817,6 +1843,8 @@ From a baseline of 80%, a 20% relative increase gives 96% ($0.80\times1.20=0.96$
 These planning results use the same approximation as the [reasoning lab](https://katatam.github.io/sample-size-calculation/study/?activity=discharge). Simulated performance can help you assess whether the approximation is adequate for the proposed event probabilities and sample size.
 
 [Activity: Open the discharge activity](https://katatam.github.io/sample-size-calculation/study/?activity=discharge). The 80% versus 96% scenario starts with 80% target power. You can consider whether an outcome so close to 100% makes the simple approximation adequate, and examine simulated performance. A shorter time-to-discharge outcome or clustered ward allocation would require a different method.
+
+This activity tests the planning approximation in a setting where few participants remain without the favorable event. After checking the plan, repeated simulations estimate the rejection probability of the specified binary test. A null scenario can also reveal whether its false-positive probability is close to the chosen 5%. Neither one simulated result nor agreement with a power target establishes that the clinical assumptions are credible.
 
 </details>
 
