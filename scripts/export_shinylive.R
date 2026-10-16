@@ -59,6 +59,8 @@ export_shinylive_apps <- function(
 
     writeLines(app_lines, file.path(staged_app, "app.R"), useBytes = TRUE)
     file.copy(helper_files, file.path(staged_app, basename(helper_files)), overwrite = TRUE)
+    assets <- file.path(app_dir, "www")
+    if (dir.exists(assets)) file.copy(assets, staged_app, recursive = TRUE, overwrite = TRUE)
 
     message(sprintf("Exporting %s to %s", app, file.path(output_dir, app)))
     shinylive::export(

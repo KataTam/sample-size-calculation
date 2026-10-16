@@ -50,7 +50,11 @@ def internal_check():
             target = (SITE / unquote(url.path.lstrip("/"))).resolve()
             if target.is_dir(): target /= "index.html"
             issue = None
-            if not target.is_file(): issue = "missing target"
+            if not target.is_file():
+                # Shiny www assets are served from the app virtual filesystem.
+                virtual_asset = ROOT / "apps" / path.parent.name / "www" / value
+                if not (path.parent.name in RUNTIMES and virtual_asset.is_file()):
+                    issue = "missing target"
             elif url.fragment and target.suffix == ".html" and target.relative_to(SITE).parts[0] not in RUNTIMES:
                 if target not in pages: pages[target] = Page(target)
                 if unquote(url.fragment) not in pages[target].ids: issue = "missing fragment"

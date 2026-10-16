@@ -51,7 +51,7 @@ document.addEventListener('click', async function(event) {
 }, true);)---"
 
 ui <- fluidPage(
-  tags$head(tags$script(HTML(download_script)), tags$script(HTML(activity_bridge_script()))),
+  tags$head(tags$script(src = "sampling-journey.js"), tags$link(rel = "stylesheet", href = "sampling-journey.css"), tags$script(HTML(download_script)), tags$script(HTML(activity_bridge_script()))),
   tags$p(id = "download-status", role = "status", `aria-live` = "polite"),
   tags$head(tags$style(HTML("body{font-size:17px;line-height:1.55}.well{background:#f4f7fa}table{font-size:15px}.shiny-html-output{overflow-x:auto}.shiny-output-error-validation{color:#8a3410}.caption{font-size:.9em;color:#505b64;margin:8px 0 20px}"))),
   titlePanel("Sample size reasoning lab", windowTitle = "Sample size reasoning lab"),
@@ -140,7 +140,19 @@ ui <- fluidPage(
       p("Normal outcomes use a pooled-variance t test and interval. Binary outcomes use a pooled score test without continuity correction and a Newcombe-Wilson difference interval. Binary analytical power and precision are approximations; check finite-sample behavior with simulations."))),
     tabPanel("One study", h3("One simulated study"), actionButton("run_one", "Simulate one study", class = "btn-primary"),
       p("Change the seed for another simulated study. High planned power does not guarantee a conclusive result."),
-      textOutput("one_status"), tableOutput("one_result"),
+      textOutput("one_status"),
+      conditionalPanel("input.outcome == 'proportions'",
+        h4("From patients to a sampling distribution"),
+        p("Filled circles represent patients with the event; open circles represent patients without it. In the chronic pain case, the event is pain relief. Each dot in the bottom panel summarizes one complete trial."),
+        actionButton("run_journey", "Animate 20 trials"),
+        tags$button(id = "journey-pause", type = "button", "Pause", disabled = NA),
+        tags$button(id = "journey-replay", type = "button", "Replay", disabled = NA),
+        tags$label(tags$input(id = "journey-motion", type = "checkbox"), " Reduced motion"),
+        tags$div(id = "sampling-journey"),
+        tags$p(id = "journey-status", role = "status", `aria-live` = "polite", "A single study or 20-trial sequence will appear here after simulation."),
+        p("The population probabilities stay fixed during a sequence. Patient outcomes and estimated differences vary across trials. Twenty trials illustrate this variation; the Many studies tab provides a larger batch for estimating power."),
+        p("The animated connection between samples, estimates, and sampling distributions was inspired by Douwe Postmus’s ", tags$a(href = "https://postmus.github.io/sampling-simulator/", target = "_blank", rel = "noopener", "Statistical Concepts Lab"), ".")),
+      tableOutput("one_result"),
       p(class = "caption", "Table 4. Effect estimate, interval, p-value and decisions from the saved single-study simulation."),
       textOutput("one_interpretation"), plotOutput("one_plot", height = "300px"),
       p(class = "caption", "Figure 4. The saved study's estimate and interval compared with zero, the clinical threshold and the true effect assumed for simulation."),
@@ -212,6 +224,31 @@ server <- function(input, output, session) {
   routed_case <- reactiveVal(NULL)
   import_status <- reactiveVal("")
   one_saved <- reactiveVal(NULL)
+  journey_payload <- function(trials) {
+    x <- trials[[1]]
+    list(n = x$spec$n, p0 = x$spec$p_control, p1 = x$spec$p_treatment,
+      seed = x$spec$seed, trials = lapply(trials, function(t) list(
+        control = as.list(head(t$data$outcome[t$data$group == "Control"], 80)),
+        treatment = as.list(head(t$data$outcome[t$data$group == "Treatment"], 80)),
+        counts = as.list(c(sum(t$data$outcome[t$data$group == "Control"]),
+                          sum(t$data$outcome[t$data$group == "Treatment"]))),
+        estimate = t$result$estimate[[1]])))
+  }
+  observeEvent(input$run_journey, {
+    spec <- generating()
+    req(spec$outcome == "proportions")
+    trials <- lapply(0:19, function(i) {
+      next_spec <- spec; next_spec$seed <- (as.double(spec$seed) + i) %% 2147483647
+      simulate_one_study(next_spec)
+    })
+    session$sendCustomMessage("sampling-journey", journey_payload(trials))
+  }, ignoreInit = TRUE)
+  observeEvent(one_saved(), {
+    x <- one_saved()
+    if (is.null(x)) session$sendCustomMessage("sampling-journey", list(clear = TRUE))
+    else if (x$spec$outcome == "proportions")
+      session$sendCustomMessage("sampling-journey", journey_payload(list(x)))
+  }, ignoreNULL = FALSE)
   many_saved <- reactiveVal(NULL)
   axis_limit <- reactiveVal(NULL)
   current_lab_inputs <- reactive({
@@ -263,6 +300,7 @@ server <- function(input, output, session) {
     apply_lab_inputs(session, x$inputs[names(x$inputs) %in% names(lab_input_defaults())])
     if (isTRUE(reset)) {
       one_saved(NULL); many_saved(NULL)
+      session$sendCustomMessage("sampling-journey", list(clear = TRUE))
       apply_study_inputs(session, study_input_defaults())
     }
     activity_selection(id)

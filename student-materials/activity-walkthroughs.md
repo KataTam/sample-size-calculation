@@ -25,7 +25,7 @@ Purpose: connect the calculation to a clinical question, evidence and a defensib
 Purpose: see why sample estimates differ from population values, and why one trial cannot display a design's power.
 
 1. The starting population has 30% relief with standard treatment and 60% with novel treatment, with 20 analyzable patients per group and a 5% Type I error probability.
-2. In “One study,” “Simulate one study” generates patient outcomes. You can compare the observed percentages, difference and interval with the specified population values.
+2. In “One study,” “Simulate one study” generates patient outcomes. You can compare the observed percentages, difference and interval with the specified population values. The animation follows the patient outcomes into the estimated difference and then the sampling distribution. “Animate 20 trials” builds a short sequence; pause, replay and reduced motion support closer inspection. Each accumulated dot represents one complete trial.
 3. After changing only the random seed, another run shows another possible trial. The population probabilities have not changed.
 4. In “Many studies,” “Simulate many studies” generates 5,000 independent trials. The distribution shows sampling variability; the percentage of significant results estimates power for this population scenario.
 5. You can repeat at 50 and 80 patients per group while holding the population assumptions and repetition count fixed. Larger trials usually give narrower intervals and greater power. Coverage and Monte Carlo summaries can wait until the advanced chapter.
