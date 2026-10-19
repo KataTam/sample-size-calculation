@@ -24,6 +24,8 @@ If you edit cards yourself, check Anki's update options before reimporting a lat
 
 ## Quizlet import
 
+Quizlet answers include a compact reference such as “(cf. Section 8.1)”, without URLs. Attribution and licensing are provided below and should accompany shared sets.
+
 The text files are ready for later use; an account is only needed when creating a set in Quizlet. On the Quizlet website, create a flashcard set and choose Import. Open the downloaded text file, copy all its contents, and paste it into the import box. Select a tab between question and answer and a new line between cards. Check the preview and set both languages to English before creating the set. There is no heading row to remove. [Quizlet import instructions](https://help.quizlet.com/hc/en-us/articles/360029977151-Creating-sets-by-importing-content).
 
 The combined Quizlet set contains the complete core set plus the advanced questions. Use it as an alternative to the Core set to avoid studying the same core questions in two separate sets.

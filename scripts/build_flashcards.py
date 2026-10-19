@@ -5,8 +5,9 @@ Install scripts/flashcard-requirements.txt before running.
 """
 from collections import Counter
 from contextlib import closing
-from html import escape
+from html import escape, unescape
 import json
+import re
 from pathlib import Path
 import sqlite3
 import tempfile
@@ -21,6 +22,23 @@ MODEL_ID = 2026101901
 ROOT_ID, CORE_ID, ADVANCED_ID = 2026101902, 2026101903, 2026101904
 BASE = 'https://katatam.github.io/sample-size-calculation/book/'
 LICENSE = 'https://creativecommons.org/licenses/by-sa/4.0/'
+
+
+def section_reference(source):
+    url = urlsplit(source)
+    html = (ROOT / 'docs/book' / Path(url.path).name).read_text(encoding='utf-8')
+    if url.fragment:
+        html = html.split('id="' + unquote(url.fragment) + '"', 1)[1]
+    else:
+        chapter = re.search(r'<div\b[^>]*class="section level1\b[^>]*>', html)
+        assert chapter, f'Missing chapter heading: {source}'
+        html = html[chapter.end():]
+    heading = re.search(r'<h[1-6]\b[^>]*>(.*?)</h[1-6]>', html, re.S)
+    assert heading, f'Missing section heading: {source}'
+    number = re.search(r'<span class="header-section-number">([^<]+)</span>', heading[1])
+    if number:
+        return 'Section ' + unescape(number[1]).strip()
+    return ' '.join(unescape(re.sub(r'<[^>]+>', '', heading[1])).split())
 
 
 def build():
@@ -84,11 +102,13 @@ def build():
             decks[c['level']].add_note(note)
         genanki.Package(list(decks.values())).write_to_file(str(OUT / (stem + '.apkg')))
         # Quizlet import requires exactly two columns with no heading row.
-        # Keep attribution and a source link with each answer when cards are reused.
-        text = '\n'.join(c['front'] + '\t' + c['back'] + ' [Katalin Tamási; CC BY-SA 4.0: '
-                         + LICENSE + '; tutorial: ' + c['source'] + ']' for c in chosen) + '\n'
+        # Plain section references keep Quizlet answers readable without URLs.
+        text = '\n'.join(c['front'] + '\t' + c['back'] + ' (cf. '
+                         + section_reference(c['source']) + ')'
+                         for c in chosen) + '\n'
         (OUT / (stem + '-quizlet.txt')).write_text(text, encoding='utf-8')
         assert all(len(line.split('\t')) == 2 for line in text.splitlines())
+        assert 'http://' not in text and 'https://' not in text
         packages[stem] = validate_package(OUT / (stem + '.apkg'), chosen)
     core = packages['sample-size-core']
     combined = packages['sample-size-core-and-advanced']
