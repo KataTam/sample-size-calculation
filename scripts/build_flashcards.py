@@ -47,10 +47,9 @@ def build():
         sort_field_index=1,
         templates=[{
             'name': 'Question and answer',
-            'qfmt': '<div class="level {{Level}}">{{Level}}</div><div class="question">{{Question}}</div>',
+            'qfmt': '<div class="level {{Level}}">{{Level}}</div><div class="question"><a href="{{Source}}">{{Question}}</a></div>',
             'afmt': '{{FrontSide}}<hr id="answer"><div class="answer">{{Answer}}</div>'
-                    '<div class="source"><a href="{{Source}}">Explanation in the tutorial</a>'
-                    '<br>Katalin Tamási · <a href="' + LICENSE + '">CC BY-SA 4.0</a></div>',
+                    '<div class="source">Katalin Tamási · <a href="' + LICENSE + '">CC BY-SA 4.0</a></div>',
         }],
         css='.card { font-family:Arial,sans-serif; font-size:21px; text-align:left; '
             'line-height:1.5; color:#243746; background:#fff; max-width:750px; margin:24px auto; padding:0 18px; }'
@@ -96,7 +95,7 @@ def build():
     assert core.items() <= combined.items(), 'Core notes must retain GUIDs and content in the combined package'
     review = ['# Sample size flashcards: all cards', '',
               'These cards summarize the tutorial. Numerical examples are hypothetical. '
-              'Each answer links to its explanation; the linked chapter supplies the supporting references.', '',
+              'Each question links to its explanation; the linked chapter supplies the supporting references.', '',
               '[Downloads and import instructions](index.md)', '',
               'Katalin Tamási. Teaching content: [CC BY-SA 4.0](' + LICENSE + '). '
               'Original build software: [MIT](https://opensource.org/license/mit).', '']
@@ -104,8 +103,7 @@ def build():
     for level in ('core', 'advanced'):
         review += ['## ' + level.capitalize() + ' (' + str(counts[level]) + ' cards)', '']
         for c in cards:
-            review += ['### ' + c['id'] + '. ' + c['front'], '', c['back'], '',
-                       '[Explanation in the tutorial](' + c['source'] + ')', '']
+            review += ['### ' + c['id'] + '. [' + c['front'] + '](' + c['source'] + ')', '', c['back'], '']
     (OUT / 'cards.md').write_text('\n'.join(review), encoding='utf-8')
     print(f"Built and checked {len(cards)} cards: {counts['core']} core and {counts['advanced']} advanced; two Anki and two Quizlet imports.")
 

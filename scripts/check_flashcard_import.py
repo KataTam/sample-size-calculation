@@ -60,6 +60,8 @@ with tempfile.TemporaryDirectory(prefix='anki-', dir=QA) as tmp:
             assert escape(c['front']) in q
             assert escape(c['back']) in a
             assert c['source'] in a
+            assert '<a href="' + c['source'] + '">' + escape(c['front']) + '</a>' in q
+            assert 'Explanation in the tutorial' not in q + a
             assert '{{' not in q + a, c['id']
             if c['id'] in ('C001', 'C049', 'A014', 'A050'):
                 examples.append('<section>' + a + '</section>')

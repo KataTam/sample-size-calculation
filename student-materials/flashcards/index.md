@@ -1,6 +1,6 @@
 # Flashcards
 
-Short question-and-answer cards accompany the tutorial. Core covers the basic planning route; Core + Advanced includes the additional designs and methods. The cards are grouped by level. Each Anki answer includes a link to the relevant tutorial explanation. All numerical examples are hypothetical.
+Short question-and-answer cards accompany the tutorial. Core covers the basic planning route; Core + Advanced includes the additional designs and methods. The cards are grouped by level. Each question in Anki and the preview links to the relevant tutorial explanation. All numerical examples are hypothetical.
 
 | Platform | Core: 88 cards | Core + Advanced: 168 cards |
 |---|---|---|
