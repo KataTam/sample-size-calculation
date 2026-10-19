@@ -153,3 +153,7 @@ details.activity-practice { background:#dfedf7; padding:10px 14px; margin:1em 0;
 .book.color-theme-2 .book-body .page-wrapper .page-inner section.normal .chapter-end-nav { background: #263442; border-color: #587186; }
 .book.color-theme-2 .book-body .page-wrapper .page-inner section.normal .chapter-end-nav a { background: #1c2732; color: #add8ff; border-color: #587186; }
 @media print { .chapter-end-nav { display: none; } }
+
+.tutorial-roadmap { margin:1.5em 0; break-inside:avoid; }
+.tutorial-roadmap svg { display:block; width:100%; height:auto; }
+.tutorial-roadmap figcaption { font-size:0.9em; color:#465562; margin-top:0.5em; }

@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 640" role="img" aria-labelledby="roadmap-title roadmap-desc">
+<title id="roadmap-title">Your route through the sample size tutorial: Core and Advanced</title>
+<desc id="roadmap-desc">Two learning routes connect tutorial explanations, activities and apps. Core covers basic planning, calculations and simple simulation. Advanced extends these to further methods and designs. Flashcards support both routes. Each block links to its resource.</desc>
+<defs><marker id="roadmap-arrow" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto-start-reverse"><path d="M0 0L8 4L0 8" fill="none" stroke="#64778a" stroke-width="1.4"/></marker></defs>
+<style>.roadmap-label{font-family:Arial,sans-serif;fill:#21394d}.roadmap-block:hover rect,.roadmap-block:focus rect{stroke:#163c66;stroke-width:3}.roadmap-block:focus{outline:2px solid #163c66}.roadmap-title{font-size:24px;font-weight:700}.roadmap-copy{font-size:18px}.roadmap-small{font-size:16px}</style>
+<rect width="960" height="640" rx="16" fill="#f7f9fc"/>
+<g class="roadmap-label" text-anchor="middle"><text x="480" y="36" class="roadmap-title">Your route through the tutorial</text>
+<text x="32" y="82" text-anchor="start" class="roadmap-title">Core</text>
+<a class="roadmap-block" href="https://katatam.github.io/sample-size-calculation/book/index.html#core-route" target="_blank" rel="noopener" aria-label="Core: Tutorial"><rect x="24" y="100" width="266" height="146" rx="12" fill="#dbeafa" stroke="#9bb9d6"/><text x="157" y="136" class="roadmap-title">Tutorial</text>
+<text x="157" y="174" class="roadmap-small">Basic study planning</text>
+<text x="157" y="202" class="roadmap-small">and calculations</text>
+</a>
+<a class="roadmap-block" href="https://katatam.github.io/sample-size-calculation/student-materials/activity-walkthroughs.html#chronic-pain-one-study-and-many-studies--core" target="_blank" rel="noopener" aria-label="Core: Activities"><rect x="347" y="100" width="266" height="146" rx="12" fill="#dbeafa" stroke="#9bb9d6"/><text x="480" y="136" class="roadmap-title">Activities</text>
+<text x="480" y="174" class="roadmap-small">Predict, explore and interpret</text>
+<text x="480" y="202" class="roadmap-small">Justify your study plan</text>
+</a>
+<a class="roadmap-block" href="https://katatam.github.io/sample-size-calculation/apps.html#core-calculations-simulation-and-justification" target="_blank" rel="noopener" aria-label="Core: Apps"><rect x="670" y="100" width="266" height="146" rx="12" fill="#dbeafa" stroke="#9bb9d6"/><text x="803" y="136" class="roadmap-title">Apps</text>
+<text x="803" y="174" class="roadmap-small">Calculators and simple simulation</text>
+<text x="803" y="202" class="roadmap-small">Assumptions report builder</text>
+</a>
+<g stroke="#64778a" stroke-width="2" fill="none" marker-start="url(#roadmap-arrow)" marker-end="url(#roadmap-arrow)"><path d="M295 170H332"/><path d="M619 170H655"/></g>
+<text x="32" y="302" text-anchor="start" class="roadmap-title">Advanced</text>
+<a class="roadmap-block" href="https://katatam.github.io/sample-size-calculation/book/index.html#advanced-route" target="_blank" rel="noopener" aria-label="Advanced: Tutorial"><rect x="24" y="320" width="266" height="146" rx="12" fill="#e9e0f5" stroke="#bba5d4"/><text x="157" y="356" class="roadmap-title">Tutorial</text>
+<text x="157" y="394" class="roadmap-small">Further planning methods</text>
+<text x="157" y="422" class="roadmap-small">and study designs</text>
+</a>
+<a class="roadmap-block" href="https://katatam.github.io/sample-size-calculation/student-materials/activity-walkthroughs.html#type-i-and-type-ii-error-probabilities-and-power--advanced" target="_blank" rel="noopener" aria-label="Advanced: Activities"><rect x="347" y="320" width="266" height="146" rx="12" fill="#e9e0f5" stroke="#bba5d4"/><text x="480" y="356" class="roadmap-title">Activities</text>
+<text x="480" y="394" class="roadmap-small">Investigate assumptions</text>
+<text x="480" y="422" class="roadmap-small">Compare methods and designs</text>
+</a>
+<a class="roadmap-block" href="https://katatam.github.io/sample-size-calculation/apps.html#explore-further" target="_blank" rel="noopener" aria-label="Advanced: Apps"><rect x="670" y="320" width="266" height="146" rx="12" fill="#e9e0f5" stroke="#bba5d4"/><text x="803" y="356" class="roadmap-title">Apps</text>
+<text x="803" y="394" class="roadmap-small">Extended simulation and precision</text>
+<text x="803" y="422" class="roadmap-small">Study-design questionnaire</text>
+</a>
+<g stroke="#64778a" stroke-width="2" fill="none" marker-start="url(#roadmap-arrow)" marker-end="url(#roadmap-arrow)"><path d="M295 390H332"/><path d="M619 390H655"/></g>
+<path d="M480 472V494" stroke="#64778a" stroke-width="2" marker-end="url(#roadmap-arrow)"/><text x="480" y="525" class="roadmap-title">Flashcards: review and recall</text>
+<a class="roadmap-block" href="https://katatam.github.io/sample-size-calculation/student-materials/flashcards/cards.html#core-88-cards" target="_blank" rel="noopener"><rect x="208" y="542" width="256" height="45" rx="10" fill="#dbeafa" stroke="#9bb9d6"/><text x="336" y="571" class="roadmap-copy">Core</text></a>
+<a class="roadmap-block" href="https://katatam.github.io/sample-size-calculation/student-materials/flashcards/index.html" target="_blank" rel="noopener"><rect x="496" y="542" width="256" height="45" rx="10" fill="#e9e0f5" stroke="#bba5d4"/><text x="624" y="571" class="roadmap-copy">Core + Advanced</text></a>
+<text x="480" y="622" class="roadmap-small">Some activities use an app; others involve reflection or written answers.</text></g></svg>

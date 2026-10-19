@@ -49,11 +49,11 @@
       targetApp.searchParams.set('activity', id);
       targetApp.searchParams.set('guided', '1');
       app.src = targetApp.href;
-      status.textContent = 'Loading the activity. You can read the lesson while it starts.';
+      status.textContent = 'Loading the app. You can read the lesson while it starts.';
     } else if (ready) {
       send({type: 'sample-size:activity', activity: id, reset});
       queuedActivity = null;
-      status.textContent = 'Activity loaded. Chapter navigation keeps the app open.';
+      status.textContent = 'App loaded. Chapter navigation keeps the app open.';
     }
     updateSeparate();
   }
@@ -73,7 +73,7 @@
       ready = true;
       if (queuedActivity) send({type: 'sample-size:activity', ...queuedActivity});
       queuedActivity = null;
-      status.textContent = 'Activity loaded. Chapter navigation keeps the app open.';
+      status.textContent = 'App loaded. Chapter navigation keeps the app open.';
     } else if (message.type === 'sample-size:state' && message.state && typeof message.state === 'object') {
       state = message.state;
       updateSeparate();
@@ -100,7 +100,7 @@
     document.documentElement.style.setProperty('--app-width', (100 - lessonWidth) + 'fr');
     const rounded = Math.round(lessonWidth);
     separator.setAttribute('aria-valuenow', rounded);
-    separator.setAttribute('aria-valuetext', `Lesson ${rounded}%, activity ${100 - rounded}%`);
+    separator.setAttribute('aria-valuetext', `Lesson ${rounded}%, app ${100 - rounded}%`);
   }
   function resizeAt(event) {
     const bounds = panels.getBoundingClientRect();

@@ -22,7 +22,7 @@ function render(){
  const a=answers(),r=recommend(a);result.replaceChildren();
  const title=document.createElement('h3');title.id='suggested-design';title.textContent=r.title;result.append(title);
  list('Why this fits your answers',r.why);list('Decisions still needed',r.decisions);list('Implications for sample size',r.planning);
- const heading=document.createElement('h3');heading.textContent='Related tools and guidance';const ul=document.createElement('ul');
+ const heading=document.createElement('h3');heading.textContent='Related apps and guidance';const ul=document.createElement('ul');
  for(const key of r.resources){const li=document.createElement('li'),a=document.createElement('a');a.textContent=links[key][0];a.href=links[key][1];a.target='_blank';a.rel='noopener';li.append(a);ul.append(li);}result.append(heading,ul);
  const details=document.createElement('details'),summary=document.createElement('summary');summary.textContent='Your answers';details.append(summary);const dl=document.createElement('dl');
  for(const [id,title,options] of fields){if(!relevant(fields.find(f=>f[0]===id),a)||!a[id])continue;const dt=document.createElement('dt'),dd=document.createElement('dd');dt.textContent=title;dd.textContent=options.find(o=>o[0]===a[id])?.[1]||'';dl.append(dt,dd);}details.append(dl);result.append(details);

@@ -106,7 +106,7 @@ let browser;
   const activityURL = 'http://127.0.0.1:8769/study/?activity=assumptions_report';
   assert.equal(await activityLink.getAttribute('href'), activityURL);
   await Promise.all([page.waitForURL(activityURL), activityLink.click()]);
-  await page.waitForFunction(() => document.getElementById('app-status').textContent.startsWith('Activity loaded.'));
+  await page.waitForFunction(() => document.getElementById('app-status').textContent.startsWith('App loaded.'));
   assert(page.frames().some(frame => frame.url().includes('/assumptions_report/')));
   assert.deepEqual(errors, []);
   console.log('DISCLOSURE CHECK PASSED: learning-outcome lists, thirteen closed amber boxes, keyboard controls, folded R code and raw output with visible formatted results, nested exercise answer, night theme, mobile width, standalone HTML, local activity links, RStudio-style /rmd_output/ activity launch.');

@@ -61,9 +61,9 @@ Suggested wording:
 If you adapt the resource, briefly describe what you changed. This can be done in your README, course notes, or local teaching documentation.
 
 
-## External sources and earlier versions
+## External sources
 
-From 14 October 2026, this edition and future revisions use CC BY-SA 4.0 for original teaching materials. Permissions already granted for earlier editions under CC BY 4.0 remain valid; this change does not revoke them. See the [Creative Commons explanation](https://creativecommons.org/faq/#what-if-i-change-my-mind-about-using-a-cc-license).
+Teaching materials: [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/).
 
 See [third-party notices](third-party-notices.md) before importing external figures or code, or releasing historical revisions. The separate [References](references.md) section records conceptual and statistical sources without relicensing their material.
 

@@ -34,7 +34,7 @@ Purpose: see why sample estimates differ from population values, and why one tri
 
 [Open activity](../study/?activity=alpha_beta) · [Matching explanation](../book/power.html#alpha-beta)
 
-Purpose: connect false positives, false negatives and power with the distributions that underlie repeated-study behavior. The tool calculates the shaded areas from the normal distribution.
+Purpose: connect false positives, false negatives and power with the distributions that underlie repeated-study behavior. The app calculates the shaded areas from the normal distribution.
 
 1. The example compares a null mean of 120 with an alternative mean of 125 mmHg, known population SD 15 and 25 independent observations.
 2. You can locate the rejection boundary and the shaded false-positive area under the null distribution.

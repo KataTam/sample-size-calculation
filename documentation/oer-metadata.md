@@ -24,7 +24,7 @@ An open educational resource for teaching sample size calculation in clinical re
 
 ## Long Description
 
-This modular teaching package helps students understand sample size calculation as part of research design. Students work with clinical scenarios, R code, static figures, and Shiny apps to explore how assumptions about event probabilities, clinically relevant differences, standard deviation, alpha, power, and dropout affect required sample size and achievable power. The resource includes teaching documentation for constructive alignment between learning outcomes, tool interaction, and assessment.
+This modular teaching package helps students understand sample size calculation as part of research design. Students work with clinical scenarios, R code, static figures, and Shiny apps to explore how assumptions about event probabilities, clinically relevant differences, standard deviation, alpha, power, and dropout affect required sample size and achievable power. The resource includes teaching documentation for constructive alignment between learning outcomes, app-based exploration, and assessment.
 
 ## Keywords
 

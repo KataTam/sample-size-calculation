@@ -16,7 +16,7 @@ The questionnaire below provides a starting point. The rest of this chapter expl
 
 [Open the study-design questionnaire with this chapter](https://katatam.github.io/sample-size-calculation/study/?activity=design_questionnaire).
 
-Your answers cover the study aim, available data, outcome and relationships between observations. Follow-up questions address intervention allocation, treatment comparisons, observational sampling, diagnostic reference standards or prediction models as appropriate. The tool suggests a design family, explains why it fits, and identifies decisions still needed before sample size planning. Existing data can support different designs depending on how participants were selected and when measurements were made.
+Your answers cover the study aim, available data, outcome and relationships between observations. Follow-up questions address intervention allocation, treatment comparisons, observational sampling, diagnostic reference standards or prediction models as appropriate. The questionnaire app suggests a design family, explains why it fits, and identifies decisions still needed before sample size planning. Existing data can support different designs depending on how participants were selected and when measurements were made.
 
 Several designs may be reasonable for the same question. The suggestion should support discussion of feasibility, ethics and the intended analysis. Links lead to a matching calculation activity when its assumptions fit, or to design-specific resources. The questionnaire uses the distinctions explained in this chapter; it does not rank designs by a score.
 

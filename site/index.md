@@ -12,7 +12,7 @@ Open teaching materials for reasoning about sample size in medical studies.
     <strong><span aria-hidden="true">→ </span>Teaching guide</strong>
   </a>
   <a class="start-route" href="apps.html">
-    <span>I want to try the tools</span>
+    <span>I want to try the apps</span>
     <strong><span aria-hidden="true">→ </span>Open the apps</strong>
   </a>
   <a class="start-route" href="documentation/reuse-and-citation.md">

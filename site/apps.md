@@ -1,6 +1,6 @@
 # Apps
 
-Choose an activity or calculation tool. Start with the [core tutorial route](book/#core-route), or [open the tutorial and an activity together](study/). The [advanced route](book/#advanced-route) extends the core simulation with coverage, Monte Carlo uncertainty, estimation with a precision target and other designs. See the [step-by-step activity walkthroughs](student-materials/activity-walkthroughs.html).
+Choose an app. Apps are interactive software; activities are learning exercises that may use an app. Start with the [core tutorial route](book/#core-route), or [open the tutorial and an app together](study/). The [advanced route](book/#advanced-route) extends the core simulation with coverage, Monte Carlo uncertainty, estimation with a precision target and other designs. See the [step-by-step activity walkthroughs](student-materials/activity-walkthroughs.html).
 
 ## Core: calculations, simulation and justification
 
