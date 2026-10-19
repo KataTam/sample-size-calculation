@@ -37,7 +37,8 @@ def section_reference(source):
     assert heading, f'Missing section heading: {source}'
     number = re.search(r'<span class="header-section-number">([^<]+)</span>', heading[1])
     if number:
-        return 'Section ' + unescape(number[1]).strip()
+        label = unescape(number[1]).strip()
+        return label if label.startswith(('Chapter ', 'Appendix ')) else 'Section ' + label
     return ' '.join(unescape(re.sub(r'<[^>]+>', '', heading[1])).split())
 
 
