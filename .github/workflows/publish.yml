@@ -30,7 +30,9 @@ jobs:
       - name: Export browser apps
         run: Rscript scripts/export_shinylive.R
       - name: Assemble website and source download
-        run: python3 scripts/build_site.py --defer-link-checks
+        run: |
+          python3 -m pip install -r scripts/flashcard-requirements.txt
+          python3 scripts/build_site.py --defer-link-checks
       - uses: actions/setup-node@v4
         with:
           node-version: '22'

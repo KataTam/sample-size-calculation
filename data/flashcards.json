@@ -1,0 +1,1184 @@
+{
+  "title": "Sample size tutorial flashcards",
+  "author": "Katalin Tamási",
+  "license": "CC BY-SA 4.0",
+  "license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+  "cards": [
+    {
+      "id": "C001",
+      "level": "core",
+      "front": "What is the purpose of a sample size calculation?",
+      "back": "To plan a study with a specified probability of detecting a difference, or enough precision to estimate a population quantity usefully.",
+      "source": "https://katatam.github.io/sample-size-calculation/book/clinical-question.html"
+    },
+    {
+      "id": "C002",
+      "level": "core",
+      "front": "What four considerations should inform a sample size plan?",
+      "back": "Statistical information, clinical importance, ethical justification, and practical feasibility.",
+      "source": "https://katatam.github.io/sample-size-calculation/book/clinical-question.html"
+    },
+    {
+      "id": "C003",
+      "level": "core",
+      "front": "Why is sample size an ethical issue?",
+      "back": "An inadequately informative study may expose participants to burden without resolving its question. Unnecessary recruitment adds avoidable burden.",
+      "source": "https://katatam.github.io/sample-size-calculation/book/clinical-question.html"
+    },
+    {
+      "id": "C004",
+      "level": "core",
+      "front": "What does PICO stand for?",
+      "back": "Population, Intervention, Comparator, and Outcome. The outcome should include its measurement time point.",
+      "source": "https://katatam.github.io/sample-size-calculation/book/clinical-question.html#record-assumptions"
+    },
+    {
+      "id": "C005",
+      "level": "core",
+      "front": "What is a two-arm randomized superiority trial?",
+      "back": "A study that randomly assigns participants to two treatment groups to investigate whether one treatment performs better than the other.",
+      "source": "https://katatam.github.io/sample-size-calculation/book/clinical-question.html"
+    },
+    {
+      "id": "C006",
+      "level": "core",
+      "front": "What are independent treatment groups?",
+      "back": "Groups containing different participants whose outcomes are assumed independent across participants. Paired or clustered observations require methods that account for their dependence.",
+      "source": "https://katatam.github.io/sample-size-calculation/book/glossary.html#independent-groups"
+    },
+    {
+      "id": "C007",
+      "level": "core",
+      "front": "What does equal allocation mean?",
+      "back": "The study plans to assign the same number of participants to each treatment group.",
+      "source": "https://katatam.github.io/sample-size-calculation/book/clinical-question.html"
+    },
+    {
+      "id": "C008",
+      "level": "core",
+      "front": "What should be specified before choosing sample size inputs?",
+      "back": "The population, design, primary outcome and time point, quantity to estimate, and planned analysis.",
+      "source": "https://katatam.github.io/sample-size-calculation/book/clinical-question.html#how-do-you-determine-the-minimum-required-sample-size"
+    },
+    {
+      "id": "C009",
+      "level": "core",
+      "front": "What do SPIRIT and CONSORT help researchers document?",
+      "back": "SPIRIT addresses trial protocols; CONSORT addresses trial reports. Their relevant extensions address particular designs.",
+      "source": "https://katatam.github.io/sample-size-calculation/book/clinical-question.html#how-do-you-determine-the-minimum-required-sample-size"
+    },
+    {
+      "id": "C010",
+      "level": "core",
+      "front": "What is the expected difference?",
+      "back": "The between-group population difference you anticipate from the available evidence, allowing for uncertainty.",
+      "source": "https://katatam.github.io/sample-size-calculation/book/glossary.html#expected-difference"
+    },
+    {
+      "id": "C011",
+      "level": "core",
+      "front": "What is the target difference?",
+      "back": "The assumed true between-group difference used to evaluate power in the sample size calculation.",
+      "source": "https://katatam.github.io/sample-size-calculation/book/glossary.html#target-difference"
+    },
+    {
+      "id": "C012",
+      "level": "core",
+      "front": "What is the clinical threshold?",
+      "back": "The smallest between-group benefit judged clinically worthwhile, considering harms, burden, costs, and alternatives.",
+      "source": "https://katatam.github.io/sample-size-calculation/book/glossary.html#clinical-threshold"
+    },
+    {
+      "id": "C013",
+      "level": "core",
+      "front": "Must the expected difference, target difference, and clinical threshold have different values?",
+      "back": "No. Their values may coincide, but each has a distinct role and needs justification.",
+      "source": "https://katatam.github.io/sample-size-calculation/book/clinical-question.html"
+    },
+    {
+      "id": "C014",
+      "level": "core",
+      "front": "How should the target difference be chosen?",
+      "back": "Using evidence about plausible differences and judgments about clinical importance, including patient and clinical perspectives.",
+      "source": "https://katatam.github.io/sample-size-calculation/book/clinical-question.html"
+    },
+    {
+      "id": "C015",
+      "level": "core",
+      "front": "Why should you avoid choosing a larger target difference simply to obtain an affordable sample?",
+      "back": "It gives the study high power at a larger difference while potentially leaving smaller, worthwhile differences poorly detected.",
+      "source": "https://katatam.github.io/sample-size-calculation/book/clinical-question.html"
+    },
+    {
+      "id": "C016",
+      "level": "core",
+      "front": "In the hypothetical chronic pain example, what are the expected difference, target difference, and clinical threshold?",
+      "back": "Expected difference: 40 percentage points. Target difference: 30 percentage points. Clinical threshold: 20 percentage points.",
+      "source": "https://katatam.github.io/sample-size-calculation/book/clinical-question.html"
+    },
+    {
+      "id": "C017",
+      "level": "core",
+      "front": "What is the absolute difference between 60% and 30%?",
+      "back": "30 percentage points. Relative to 30%, this is a 100% relative increase.",
+      "source": "https://katatam.github.io/sample-size-calculation/book/glossary.html#percentage-points"
+    },
+    {
+      "id": "C018",
+      "level": "core",
+      "front": "Does a 30-percentage-point difference in pain-relief percentages mean each patient experiences 30% more relief?",
+      "back": "No. It describes a difference in the percentages of patients reporting relief between groups.",
+      "source": "https://katatam.github.io/sample-size-calculation/book/glossary.html#between-group-differences"
+    },
+    {
+      "id": "C019",
+      "level": "core",
+      "front": "Why is a small pilot's observed treatment difference uncertain?",
+      "back": "Sampling variability can produce substantially different estimates in different small samples.",
+      "source": "https://katatam.github.io/sample-size-calculation/book/clinical-question.html"
+    },
+    {
+      "id": "C020",
+      "level": "core",
+      "front": "What can a pilot study help establish?",
+      "back": "Whether recruitment, procedures, measurement, and other feasibility objectives are workable. Its treatment-effect estimate may be highly uncertain.",
+      "source": "https://katatam.github.io/sample-size-calculation/book/clinical-question.html"
+    },
+    {
+      "id": "C021",
+      "level": "core",
+      "front": "Should the clinical threshold change because one additional pilot participant reports relief?",
+      "back": "That result changes the observed estimate. By itself, it does not change what patients and clinicians consider worthwhile.",
+      "source": "https://katatam.github.io/sample-size-calculation/book/clinical-question.html"
+    },
+    {
+      "id": "C022",
+      "level": "core",
+      "front": "What is the null hypothesis in the tutorial's ordinary two-sided superiority comparison?",
+      "back": "The population treatment difference is zero: H₀: δ = 0.",
+      "source": "https://katatam.github.io/sample-size-calculation/book/power.html"
+    },
+    {
+      "id": "C023",
+      "level": "core",
+      "front": "What is the alternative hypothesis in that comparison?",
+      "back": "The population treatment difference is nonzero in either direction: H₁: δ ≠ 0.",
+      "source": "https://katatam.github.io/sample-size-calculation/book/power.html"
+    },
+    {
+      "id": "C024",
+      "level": "core",
+      "front": "What is a Type I error?",
+      "back": "A false positive: rejecting the null hypothesis when it is true.",
+      "source": "https://katatam.github.io/sample-size-calculation/book/glossary.html#alpha"
+    },
+    {
+      "id": "C025",
+      "level": "core",
+      "front": "What is the Type I error probability?",
+      "back": "The probability of rejecting the null hypothesis when it is true, under the test's assumptions. It is denoted by α.",
+      "source": "https://katatam.github.io/sample-size-calculation/book/glossary.html#alpha"
+    },
+    {
+      "id": "C026",
+      "level": "core",
+      "front": "What is a Type II error?",
+      "back": "A false negative: failing to reject the null hypothesis when it is false.",
+      "source": "https://katatam.github.io/sample-size-calculation/book/glossary.html#beta"
+    },
+    {
+      "id": "C027",
+      "level": "core",
+      "front": "What is the Type II error probability?",
+      "back": "The probability of failing to reject the null under a specified true alternative. It is denoted by β.",
+      "source": "https://katatam.github.io/sample-size-calculation/book/glossary.html#beta"
+    },
+    {
+      "id": "C028",
+      "level": "core",
+      "front": "What is statistical power?",
+      "back": "The probability of rejecting the null under a specified true alternative, for a given design and analysis. Power equals 1 − β.",
+      "source": "https://katatam.github.io/sample-size-calculation/book/glossary.html#statistical-power"
+    },
+    {
+      "id": "C029",
+      "level": "core",
+      "front": "If power is 90%, what is the Type II error probability?",
+      "back": "10%, under the same specified alternative and assumptions.",
+      "source": "https://katatam.github.io/sample-size-calculation/book/power.html"
+    },
+    {
+      "id": "C030",
+      "level": "core",
+      "front": "What does 90% power mean across repeated studies?",
+      "back": "About 90% would reject the null under the specified true difference and study assumptions. Individual studies can still be inconclusive.",
+      "source": "https://katatam.github.io/sample-size-calculation/book/power.html"
+    },
+    {
+      "id": "C031",
+      "level": "core",
+      "front": "Does 90% power mean a 90% probability that the treatment works?",
+      "back": "No. Power assumes a particular true difference and describes the test's performance under that assumption.",
+      "source": "https://katatam.github.io/sample-size-calculation/book/power.html"
+    },
+    {
+      "id": "C032",
+      "level": "core",
+      "front": "Does a non-significant result establish that two treatments are equivalent?",
+      "back": "No. The data may be insufficient to establish a difference. Equivalence requires an appropriate design and analysis.",
+      "source": "https://katatam.github.io/sample-size-calculation/book/power.html"
+    },
+    {
+      "id": "C033",
+      "level": "core",
+      "front": "Does statistical significance establish clinical importance?",
+      "back": "No. Interpretation also requires the estimated difference, its confidence interval, the clinical threshold, and relevant harms and burdens.",
+      "source": "https://katatam.github.io/sample-size-calculation/book/power.html"
+    },
+    {
+      "id": "C034",
+      "level": "core",
+      "front": "What is the difference between a population parameter and a sample estimate?",
+      "back": "A parameter describes the population. An estimate is calculated from a sample and varies between samples.",
+      "source": "https://katatam.github.io/sample-size-calculation/book/glossary.html#population-parameter"
+    },
+    {
+      "id": "C035",
+      "level": "core",
+      "front": "What stays fixed across simulated trials of the same study plan?",
+      "back": "The assumed population parameters, planned sample size, allocation, and analysis.",
+      "source": "https://katatam.github.io/sample-size-calculation/book/power.html#activity-1-one-study-then-many"
+    },
+    {
+      "id": "C036",
+      "level": "core",
+      "front": "What changes across those simulated trials?",
+      "back": "The generated patient outcomes, observed percentages or means, estimated differences, confidence intervals, and test results.",
+      "source": "https://katatam.github.io/sample-size-calculation/book/power.html#activity-1-one-study-then-many"
+    },
+    {
+      "id": "C037",
+      "level": "core",
+      "front": "What is sampling variability?",
+      "back": "Variation in an estimate between different samples drawn under the same population conditions.",
+      "source": "https://katatam.github.io/sample-size-calculation/book/glossary.html#sampling-variability"
+    },
+    {
+      "id": "C038",
+      "level": "core",
+      "front": "Why does a larger sample usually give a more precise estimate?",
+      "back": "Random sampling fluctuations have less influence on the estimate, generally reducing its standard error and narrowing its confidence interval.",
+      "source": "https://katatam.github.io/sample-size-calculation/book/power.html#activity-1-one-study-then-many"
+    },
+    {
+      "id": "C039",
+      "level": "core",
+      "front": "Does running more simulation repetitions increase the power of each trial?",
+      "back": "No. It makes the simulation estimate of power more precise. Each trial still has the same design and sample size.",
+      "source": "https://katatam.github.io/sample-size-calculation/book/power.html#activity-1-one-study-then-many"
+    },
+    {
+      "id": "C040",
+      "level": "core",
+      "front": "What is Monte Carlo error?",
+      "back": "Random error caused by estimating a result from a finite number of simulation repetitions. More repetitions reduce it.",
+      "source": "https://katatam.github.io/sample-size-calculation/book/glossary.html#monte-carlo-error"
+    },
+    {
+      "id": "C041",
+      "level": "core",
+      "front": "What assumptions underlie the basic two-group calculations in this tutorial?",
+      "back": "Two independent groups, equal allocation, a specified outcome and analysis, and a two-sided superiority test.",
+      "source": "https://katatam.github.io/sample-size-calculation/book/calculations.html"
+    },
+    {
+      "id": "C042",
+      "level": "core",
+      "front": "Which inputs are needed to calculate sample size for two proportions?",
+      "back": "The assumed event probability in each group, Type I error probability, and target power, together with the design and test assumptions.",
+      "source": "https://katatam.github.io/sample-size-calculation/book/calculations.html"
+    },
+    {
+      "id": "C043",
+      "level": "core",
+      "front": "What sample size does the hypothetical chronic pain calculation give?",
+      "back": "With 60% versus 30% relief, a two-sided Type I error probability of 5%, and 90% target power, the tutorial's normal approximation gives 56 analyzable patients per group: 112 total.",
+      "source": "https://katatam.github.io/sample-size-calculation/book/calculations.html"
+    },
+    {
+      "id": "C044",
+      "level": "core",
+      "front": "Why is the difference alone insufficient for a two-proportion calculation?",
+      "back": "Sampling variability also depends on each group's event probability. Different pairs of percentages can have the same difference but require different sample sizes.",
+      "source": "https://katatam.github.io/sample-size-calculation/book/calculations.html"
+    },
+    {
+      "id": "C045",
+      "level": "core",
+      "front": "Which inputs are needed to calculate sample size for two means?",
+      "back": "The target mean difference, assumed within-group SD, Type I error probability, and target power, together with the design and test assumptions.",
+      "source": "https://katatam.github.io/sample-size-calculation/book/calculations.html"
+    },
+    {
+      "id": "C046",
+      "level": "core",
+      "front": "What does the SD describe in the two-mean calculation?",
+      "back": "Variation in individual outcomes within each group. The simple formula assumes the same population SD in both groups.",
+      "source": "https://katatam.github.io/sample-size-calculation/book/calculations.html"
+    },
+    {
+      "id": "C047",
+      "level": "core",
+      "front": "With other assumptions fixed, how does a smaller target difference affect required sample size?",
+      "back": "It generally increases the required sample size because smaller differences are harder to distinguish from sampling variability.",
+      "source": "https://katatam.github.io/sample-size-calculation/book/calculations.html"
+    },
+    {
+      "id": "C048",
+      "level": "core",
+      "front": "With other assumptions fixed, how do higher target power or a lower Type I error probability affect required sample size?",
+      "back": "Both generally increase the required sample size.",
+      "source": "https://katatam.github.io/sample-size-calculation/book/calculations.html"
+    },
+    {
+      "id": "C049",
+      "level": "core",
+      "front": "What is the approximate per-group sample size formula for two means with equal allocation and common SD?",
+      "back": "n ≈ f(α, β) × 2σ²/δ², where σ is the common SD and δ is the target mean difference.",
+      "source": "https://katatam.github.io/sample-size-calculation/book/calculations.html"
+    },
+    {
+      "id": "C050",
+      "level": "core",
+      "front": "What does the two-mean normal approximation give for a target difference of 3 units, SD 5, 5% Type I error probability, and 90% power?",
+      "back": "Approximately 58.4 analyzable patients per group, rounded upward to 59 per group: 118 total.",
+      "source": "https://katatam.github.io/sample-size-calculation/book/calculations.html"
+    },
+    {
+      "id": "C051",
+      "level": "core",
+      "front": "Under that two-mean formula, what happens if you halve the target difference?",
+      "back": "The required sample size increases fourfold before rounding, with other inputs fixed.",
+      "source": "https://katatam.github.io/sample-size-calculation/book/calculations.html"
+    },
+    {
+      "id": "C052",
+      "level": "core",
+      "front": "Under that two-mean formula, what happens if you double the SD?",
+      "back": "The required sample size increases fourfold before rounding, with other inputs fixed.",
+      "source": "https://katatam.github.io/sample-size-calculation/book/calculations.html"
+    },
+    {
+      "id": "C053",
+      "level": "core",
+      "front": "How should a calculated sample size be rounded?",
+      "back": "Upward to a whole number in each group. Then calculate the total across groups.",
+      "source": "https://katatam.github.io/sample-size-calculation/book/calculations.html"
+    },
+    {
+      "id": "C054",
+      "level": "core",
+      "front": "How do analyzable sample size and recruitment target differ?",
+      "back": "The analyzable sample is the number needed for the analysis. The recruitment target allows for expected losses.",
+      "source": "https://katatam.github.io/sample-size-calculation/book/feasibility.html#account-for-expected-losses"
+    },
+    {
+      "id": "C055",
+      "level": "core",
+      "front": "If you need 60 analyzable patients per group and expect 10% loss, how many should you recruit?",
+      "back": "60/0.90 = 66.67, rounded upward to 67 per group, or 134 total.",
+      "source": "https://katatam.github.io/sample-size-calculation/book/clinical-question.html#record-assumptions"
+    },
+    {
+      "id": "C056",
+      "level": "core",
+      "front": "What should make a sample size justification reproducible?",
+      "back": "The method, numerical assumptions and their sources, planned analysis, error probability, power or precision target, allocation, rounding, and allowance for losses.",
+      "source": "https://katatam.github.io/sample-size-calculation/book/clinical-question.html#record-assumptions"
+    },
+    {
+      "id": "C057",
+      "level": "core",
+      "front": "Why should you examine plausible alternative assumptions?",
+      "back": "Required sample size and achieved power depend on uncertain inputs. Alternative scenarios show how sensitive the plan is to that uncertainty.",
+      "source": "https://katatam.github.io/sample-size-calculation/book/feasibility.html#stress-test-the-study-plan"
+    },
+    {
+      "id": "C058",
+      "level": "core",
+      "front": "Why can two sample size methods give different answers?",
+      "back": "They may use different tests, approximations, variance assumptions, or corrections. The calculation should match the planned analysis.",
+      "source": "https://katatam.github.io/sample-size-calculation/book/calculations.html"
+    },
+    {
+      "id": "C059",
+      "level": "core",
+      "front": "In the prevention example, how are 20% versus 10% developing disease expressed as remaining disease-free?",
+      "back": "80% versus 90% remaining disease-free. Both describe a 10-percentage-point benefit from treatment.",
+      "source": "https://katatam.github.io/sample-size-calculation/book/calculations.html#adherence"
+    },
+    {
+      "id": "C060",
+      "level": "core",
+      "front": "Why can two groups of patients' improvement scores be analyzed as independent groups?",
+      "back": "Each patient contributes one improvement score, and different patients belong to the two groups. Dependence within each patient's original measurements is reflected in that score and its variability; independence between patients must still be justified.",
+      "source": "https://katatam.github.io/sample-size-calculation/book/calculations.html#rehabilitation"
+    },
+    {
+      "id": "A001",
+      "level": "advanced",
+      "front": "Does planning at a 30-percentage-point target difference change the alternative hypothesis to differences of at least 30 points?",
+      "back": "No. The ordinary two-sided test still assesses δ ≠ 0. The 30-point value specifies where power is evaluated.",
+      "source": "https://katatam.github.io/sample-size-calculation/book/power.html"
+    },
+    {
+      "id": "A002",
+      "level": "advanced",
+      "front": "Does a 5% Type I error probability mean that 5% of significant results are false positives?",
+      "back": "No. It describes false positives when the null is true. The proportion of significant findings that are false also depends on how often true alternatives occur and on power.",
+      "source": "https://katatam.github.io/sample-size-calculation/book/power.html"
+    },
+    {
+      "id": "A003",
+      "level": "advanced",
+      "front": "What is a two-sided p-value?",
+      "back": "Under the null hypothesis and statistical model, the probability of a test statistic at least as extreme as observed, in either direction.",
+      "source": "https://katatam.github.io/sample-size-calculation/book/power.html#critical-observed-difference"
+    },
+    {
+      "id": "A004",
+      "level": "advanced",
+      "front": "How does the observed significance boundary differ from the target difference?",
+      "back": "The significance boundary determines which observed results reject the null. The target difference is an assumed population difference used to evaluate power.",
+      "source": "https://katatam.github.io/sample-size-calculation/book/power.html#critical-observed-difference"
+    },
+    {
+      "id": "A005",
+      "level": "advanced",
+      "front": "Why can a larger study find a small observed difference statistically significant?",
+      "back": "Larger samples generally reduce the standard error, allowing smaller differences to be distinguished from zero.",
+      "source": "https://katatam.github.io/sample-size-calculation/book/power.html#critical-observed-difference"
+    },
+    {
+      "id": "A006",
+      "level": "advanced",
+      "front": "How should a treatment difference and its confidence interval be assessed clinically?",
+      "back": "Relative to zero and a justified clinical threshold, alongside harms, burden, study credibility, and patient priorities.",
+      "source": "https://katatam.github.io/sample-size-calculation/book/power.html#critical-observed-difference"
+    },
+    {
+      "id": "A007",
+      "level": "advanced",
+      "front": "What is a sampling distribution of the mean?",
+      "back": "The distribution of sample means across repeated samples of the same size from the same population.",
+      "source": "https://katatam.github.io/sample-size-calculation/book/power.html#alpha-beta"
+    },
+    {
+      "id": "A008",
+      "level": "advanced",
+      "front": "How do SD and SE differ?",
+      "back": "SD describes variation among individual observations. SE describes sampling variability of an estimate.",
+      "source": "https://katatam.github.io/sample-size-calculation/book/power.html#alpha-beta"
+    },
+    {
+      "id": "A009",
+      "level": "advanced",
+      "front": "What is the standard error of a mean based on n independent observations with population SD σ?",
+      "back": "SE = σ/√n. When the population SD is unknown, the sample SD estimates it.",
+      "source": "https://katatam.github.io/sample-size-calculation/book/power.html#alpha-beta"
+    },
+    {
+      "id": "A010",
+      "level": "advanced",
+      "front": "If the population SD is 15 mmHg, what are the SEs for samples of 25 and 100 independent patients?",
+      "back": "15/√25 = 3 mmHg and 15/√100 = 1.5 mmHg.",
+      "source": "https://katatam.github.io/sample-size-calculation/book/power.html#alpha-beta"
+    },
+    {
+      "id": "A011",
+      "level": "advanced",
+      "front": "On sampling-distribution plots, which areas represent Type I error probability, Type II error probability, and power?",
+      "back": "Under the null, the rejection area is Type I error probability. Under a specified alternative, the non-rejection area is Type II error probability and the rejection area is power.",
+      "source": "https://katatam.github.io/sample-size-calculation/book/power.html#alpha-beta"
+    },
+    {
+      "id": "A012",
+      "level": "advanced",
+      "front": "What does z₀.₉₇₅ = 1.96 mean?",
+      "back": "For the standard normal distribution, 97.5% of values lie below 1.96 standard deviations above its mean.",
+      "source": "https://katatam.github.io/sample-size-calculation/book/calculations.html#how-error-rates-and-power-affect-sample-size"
+    },
+    {
+      "id": "A013",
+      "level": "advanced",
+      "front": "What is the normal-approximation sample size multiplier for a two-sided test?",
+      "back": "f(α, β) = (z[1 − α/2] + z[1 − β])². The brackets denote quantile subscripts. At 5% Type I error probability and 90% power, the multiplier is approximately 10.51.",
+      "source": "https://katatam.github.io/sample-size-calculation/book/calculations.html#how-error-rates-and-power-affect-sample-size"
+    },
+    {
+      "id": "A014",
+      "level": "advanced",
+      "front": "What is the Monte Carlo standard error of a simulated rejection proportion p̂ based on B independent trials?",
+      "back": "Approximately √[p̂(1 − p̂)/B]. It measures uncertainty in the simulation estimate.",
+      "source": "https://katatam.github.io/sample-size-calculation/book/glossary.html#monte-carlo-error"
+    },
+    {
+      "id": "A015",
+      "level": "advanced",
+      "front": "How many simulation repetitions are needed to approximately halve Monte Carlo standard error?",
+      "back": "Four times as many, with the underlying scenario unchanged.",
+      "source": "https://katatam.github.io/sample-size-calculation/book/glossary.html#monte-carlo-error"
+    },
+    {
+      "id": "A016",
+      "level": "advanced",
+      "front": "How does a Monte Carlo interval differ from a treatment-effect confidence interval?",
+      "back": "A Monte Carlo interval describes uncertainty in a simulation estimate, such as estimated power. A treatment-effect interval describes uncertainty in the effect estimated from study data.",
+      "source": "https://katatam.github.io/sample-size-calculation/book/glossary.html#monte-carlo-error"
+    },
+    {
+      "id": "A017",
+      "level": "advanced",
+      "front": "Does increasing simulation repetitions establish that the assumed population model is realistic?",
+      "back": "No. Model assumptions need justification from relevant evidence. More repetitions reduce only Monte Carlo error.",
+      "source": "https://katatam.github.io/sample-size-calculation/book/simulation.html"
+    },
+    {
+      "id": "A018",
+      "level": "advanced",
+      "front": "What is a standardized mean difference?",
+      "back": "A mean difference divided by an appropriate SD. With a 3-unit difference and common SD 5, d = 0.60.",
+      "source": "https://katatam.github.io/sample-size-calculation/book/calculations.html"
+    },
+    {
+      "id": "A019",
+      "level": "advanced",
+      "front": "Why does a standardized difference alone not establish clinical importance?",
+      "back": "Its magnitude depends on variability as well as the difference. Clinical meaning also depends on the outcome's original units and relevant benefits and harms.",
+      "source": "https://katatam.github.io/sample-size-calculation/book/calculations.html"
+    },
+    {
+      "id": "A020",
+      "level": "advanced",
+      "front": "Can you substitute the SD of final scores for the SD of change scores?",
+      "back": "They describe different quantities and may differ substantially. The assumed SD should correspond to the outcome used in the planned analysis.",
+      "source": "https://katatam.github.io/sample-size-calculation/book/calculations.html"
+    },
+    {
+      "id": "A021",
+      "level": "advanced",
+      "front": "Why can t-test planning require slightly more participants than the simple normal approximation?",
+      "back": "The t-test calculation accounts for estimating the population variability from the study's observations.",
+      "source": "https://katatam.github.io/sample-size-calculation/book/calculations.html"
+    },
+    {
+      "id": "A022",
+      "level": "advanced",
+      "front": "Why does halving a difference between two event percentages not always quadruple the required sample size?",
+      "back": "Changing the event percentages can also change their variability. The exact fourfold relationship applies to the simple two-mean formula when SD and other inputs stay fixed.",
+      "source": "https://katatam.github.io/sample-size-calculation/book/calculations.html"
+    },
+    {
+      "id": "C061",
+      "level": "core",
+      "front": "What is the recruitment adjustment for an expected loss proportion r?",
+      "back": "Divide the required analyzable count by (1 − r), then round upward within each group.",
+      "source": "https://katatam.github.io/sample-size-calculation/book/feasibility.html#account-for-expected-losses"
+    },
+    {
+      "id": "C062",
+      "level": "core",
+      "front": "Why is adding 10% insufficient when you expect 10% loss?",
+      "back": "Only 90% of recruits are expected to remain. Dividing by 0.90 requires about 11.1% extra before rounding.",
+      "source": "https://katatam.github.io/sample-size-calculation/book/feasibility.html#account-for-expected-losses"
+    },
+    {
+      "id": "C063",
+      "level": "core",
+      "front": "For 56 analyzable patients per group and 5% expected loss, what is the recruitment target?",
+      "back": "56/0.95 ≈ 58.95, rounded upward to 59 per group: 118 total.",
+      "source": "https://katatam.github.io/sample-size-calculation/book/feasibility.html#account-for-expected-losses"
+    },
+    {
+      "id": "C064",
+      "level": "core",
+      "front": "Does a recruitment allowance guarantee enough analyzable outcomes or remove missing-data bias?",
+      "back": "No. Actual retention can vary, and the reasons for missing outcomes may bias the estimate. Follow-up and the analysis of missing data need separate attention.",
+      "source": "https://katatam.github.io/sample-size-calculation/book/feasibility.html#account-for-expected-losses"
+    },
+    {
+      "id": "C065",
+      "level": "core",
+      "front": "What does a 95% confidence interval mean across repeated studies?",
+      "back": "Under the model assumptions, about 95% of intervals calculated by the method would contain the true population value.",
+      "source": "https://katatam.github.io/sample-size-calculation/book/feasibility.html#interpret-a-confidence-interval-clinically"
+    },
+    {
+      "id": "C066",
+      "level": "core",
+      "front": "What does a narrower confidence interval indicate at the same confidence level?",
+      "back": "Greater precision of the estimate under the analysis assumptions.",
+      "source": "https://katatam.github.io/sample-size-calculation/book/feasibility.html#interpret-a-confidence-interval-clinically"
+    },
+    {
+      "id": "C067",
+      "level": "core",
+      "front": "With a clinical threshold of 2 units, how would you interpret a 95% interval from 0.2 to 2.8?",
+      "back": "Zero is excluded, but both benefits below the clinical threshold and clinically worthwhile benefits remain compatible with the data.",
+      "source": "https://katatam.github.io/sample-size-calculation/book/feasibility.html#interpret-a-confidence-interval-clinically"
+    },
+    {
+      "id": "C068",
+      "level": "core",
+      "front": "With a clinical threshold of 2 units, how would you interpret a 95% interval from −0.8 to 3.2?",
+      "back": "Some harm, no difference, and clinically worthwhile benefit remain compatible with the data.",
+      "source": "https://katatam.github.io/sample-size-calculation/book/feasibility.html#interpret-a-confidence-interval-clinically"
+    },
+    {
+      "id": "C069",
+      "level": "core",
+      "front": "With a clinical threshold of 2 units, how would you interpret a 95% interval from 2.2 to 4.2?",
+      "back": "The whole interval lies above the specified clinical threshold, supporting a clinically worthwhile population difference under the analysis assumptions.",
+      "source": "https://katatam.github.io/sample-size-calculation/book/feasibility.html#interpret-a-confidence-interval-clinically"
+    },
+    {
+      "id": "C070",
+      "level": "core",
+      "front": "Does high power guarantee clinically useful precision?",
+      "back": "No. A study can detect a difference from zero while leaving substantial uncertainty about its clinical importance.",
+      "source": "https://katatam.github.io/sample-size-calculation/book/feasibility.html#interpret-a-confidence-interval-clinically"
+    },
+    {
+      "id": "C071",
+      "level": "core",
+      "front": "How do estimation and precision differ?",
+      "back": "Estimation uses sample data to learn about a population quantity. Precision describes how little its estimate varies across repeated samples.",
+      "source": "https://katatam.github.io/sample-size-calculation/book/glossary.html#estimation"
+    },
+    {
+      "id": "C072",
+      "level": "core",
+      "front": "What is bias?",
+      "back": "Systematic deviation of an estimation procedure from the population quantity it aims to estimate.",
+      "source": "https://katatam.github.io/sample-size-calculation/book/glossary.html#bias"
+    },
+    {
+      "id": "C073",
+      "level": "core",
+      "front": "Will increasing sample size automatically fix selection bias or confounding?",
+      "back": "No. Larger samples reduce sampling variability; design, measurement, and analysis problems require appropriate remedies.",
+      "source": "https://katatam.github.io/sample-size-calculation/book/common-mistakes.html"
+    },
+    {
+      "id": "C074",
+      "level": "core",
+      "front": "What are the two main questions in a planning sensitivity analysis?",
+      "back": "How the required sample changes under alternative assumptions, and how a fixed sample performs if reality differs from the planning assumptions.",
+      "source": "https://katatam.github.io/sample-size-calculation/book/feasibility.html#stress-test-the-study-plan"
+    },
+    {
+      "id": "C075",
+      "level": "core",
+      "front": "What does it mean for a study to be underpowered at a specified difference?",
+      "back": "It has a low probability of detecting that true difference with the planned test, relative to the intended power target.",
+      "source": "https://katatam.github.io/sample-size-calculation/book/feasibility.html#what-if-the-study-is-too-small-for-its-purpose"
+    },
+    {
+      "id": "C076",
+      "level": "core",
+      "front": "Why can significant results from low-powered studies exaggerate a benefit?",
+      "back": "Among studies with low power, significance often occurs when sampling variability produces an unusually large observed difference.",
+      "source": "https://katatam.github.io/sample-size-calculation/book/feasibility.html#what-if-the-study-is-too-small-for-its-purpose"
+    },
+    {
+      "id": "C077",
+      "level": "core",
+      "front": "Which practical changes can improve power without relaxing the Type I error probability?",
+      "back": "More analyzable participants, better follow-up, more reliable measurement, and an appropriate efficient design or analysis, each with matching planning assumptions.",
+      "source": "https://katatam.github.io/sample-size-calculation/book/feasibility.html#increase-power"
+    },
+    {
+      "id": "C078",
+      "level": "core",
+      "front": "When is equal allocation efficient for a fixed total sample?",
+      "back": "In the equal-variance, equal-cost comparisons illustrated here. Other costs, variances, or design requirements can justify unequal allocation.",
+      "source": "https://katatam.github.io/sample-size-calculation/book/feasibility.html#increase-power"
+    },
+    {
+      "id": "C079",
+      "level": "core",
+      "front": "What is the tradeoff when the Type I error probability is increased to gain power?",
+      "back": "The test also becomes more likely to reject a true null. The choice needs prospective justification.",
+      "source": "https://katatam.github.io/sample-size-calculation/book/feasibility.html#increase-power"
+    },
+    {
+      "id": "C080",
+      "level": "core",
+      "front": "When should a one-sided test be chosen?",
+      "back": "Before seeing the data, when the scientific question and intended conclusions justify a directional rejection rule.",
+      "source": "https://katatam.github.io/sample-size-calculation/book/feasibility.html#increase-power"
+    },
+    {
+      "id": "C081",
+      "level": "core",
+      "front": "Does lowering the clinical threshold alone increase power for a test of zero difference?",
+      "back": "No. With the true difference, sample size, and test unchanged, the rejection probability is unchanged.",
+      "source": "https://katatam.github.io/sample-size-calculation/book/feasibility.html#increase-power"
+    },
+    {
+      "id": "C082",
+      "level": "core",
+      "front": "What is the difference between increasing discharge from 80% to 96% and increasing it by 20 percentage points?",
+      "back": "80% to 96% is a 16-percentage-point increase and a 20% relative increase. Adding 20 percentage points to 80% gives 100%.",
+      "source": "https://katatam.github.io/sample-size-calculation/book/exercises.html#discharge"
+    },
+    {
+      "id": "C083",
+      "level": "core",
+      "front": "How does an event probability differ from a time-based rate?",
+      "back": "An event probability concerns occurrence over a specified setting or follow-up. A time-based rate has a time denominator, such as cases per 1,000 person-years.",
+      "source": "https://katatam.github.io/sample-size-calculation/book/glossary.html"
+    },
+    {
+      "id": "C084",
+      "level": "core",
+      "front": "Why is an individual improvement threshold not automatically a suitable between-group clinical threshold?",
+      "back": "It concerns a different comparison. A patient-level threshold may define a responder; a separate judgment is needed about the worthwhile difference in responder percentages between groups.",
+      "source": "https://katatam.github.io/sample-size-calculation/book/glossary.html#between-group-differences"
+    },
+    {
+      "id": "C085",
+      "level": "core",
+      "front": "Why does a group mean difference not identify each patient's treatment benefit?",
+      "back": "Group summaries can conceal variation between patients. In a parallel-group trial, you cannot observe the same patient's outcome under both treatments.",
+      "source": "https://katatam.github.io/sample-size-calculation/book/glossary.html#between-group-differences"
+    },
+    {
+      "id": "C086",
+      "level": "core",
+      "front": "Why can't every visit or every eye automatically be counted as an independent participant?",
+      "back": "Measurements from the same patient may be correlated. The planning method must account for the independent units and their dependence.",
+      "source": "https://katatam.github.io/sample-size-calculation/book/common-mistakes.html"
+    },
+    {
+      "id": "C087",
+      "level": "core",
+      "front": "Does a reporting checklist provide a universal sample size formula?",
+      "back": "No. It helps document decisions. The sample size method must match the research question, design, outcome, and analysis.",
+      "source": "https://katatam.github.io/sample-size-calculation/book/common-mistakes.html"
+    },
+    {
+      "id": "C088",
+      "level": "core",
+      "front": "If the required sample exceeds available resources, what should the study plan explain?",
+      "back": "Whether recruitment, collaboration, design, or objectives can change, and what uncertainty will remain at the feasible sample. Assumptions still need evidence.",
+      "source": "https://katatam.github.io/sample-size-calculation/book/exercises.html#write-a-sample-size-justification"
+    },
+    {
+      "id": "A023",
+      "level": "advanced",
+      "front": "What does a power curve show?",
+      "back": "The probability that the specified test rejects the null across a range of sample sizes or true differences, under stated assumptions.",
+      "source": "https://katatam.github.io/sample-size-calculation/book/curves.html"
+    },
+    {
+      "id": "A024",
+      "level": "advanced",
+      "front": "Does the effect at the target-power crossing form a guaranteed detection boundary?",
+      "back": "No. Smaller effects can produce significant results and larger effects can go undetected. Each point describes a probability across repeated studies.",
+      "source": "https://katatam.github.io/sample-size-calculation/book/curves.html"
+    },
+    {
+      "id": "A025",
+      "level": "advanced",
+      "front": "With 200 total recruits, equal allocation, and 10% expected loss, what is the expected analyzable count?",
+      "back": "180 total, or 90 per group. Actual retention can differ.",
+      "source": "https://katatam.github.io/sample-size-calculation/book/curves.html"
+    },
+    {
+      "id": "A026",
+      "level": "advanced",
+      "front": "At fixed sample size, what happens to power when the true positive difference becomes smaller toward zero?",
+      "back": "Power generally decreases when the other assumptions and test remain unchanged.",
+      "source": "https://katatam.github.io/sample-size-calculation/book/curves.html"
+    },
+    {
+      "id": "A027",
+      "level": "advanced",
+      "front": "Why is power calculated from a completed study's observed effect unhelpful for interpreting that same result?",
+      "back": "It adds no useful evidence beyond the observed result. The estimate, confidence interval, design, and limitations guide interpretation.",
+      "source": "https://katatam.github.io/sample-size-calculation/book/curves.html#sensitivity-is-not-observed-post-hoc-power"
+    },
+    {
+      "id": "A028",
+      "level": "advanced",
+      "front": "How can a fixed sample size still be assessed usefully?",
+      "back": "Evaluate power at independently justified hypothetical effects or assess attainable precision for the research question.",
+      "source": "https://katatam.github.io/sample-size-calculation/book/curves.html#sensitivity-is-not-observed-post-hoc-power"
+    },
+    {
+      "id": "A029",
+      "level": "advanced",
+      "front": "What are the four main steps in a simulation study of power?",
+      "back": "Specify and generate trial data, apply the planned analysis, repeat independent trials, and summarize performance.",
+      "source": "https://katatam.github.io/sample-size-calculation/book/simulation.html"
+    },
+    {
+      "id": "A030",
+      "level": "advanced",
+      "front": "What is the difference between a planning scenario and a generating scenario?",
+      "back": "The planning scenario supplies assumptions used to choose the sample. The generating scenario supplies population values used to simulate studies, which can differ from the plan.",
+      "source": "https://katatam.github.io/sample-size-calculation/book/simulation.html"
+    },
+    {
+      "id": "A031",
+      "level": "advanced",
+      "front": "When assessing an existing plan under a smaller true effect, should the sample size be recalculated for each simulation scenario?",
+      "back": "Keep the planned sample fixed to assess that plan's performance. Recalculating asks how the design would need to change.",
+      "source": "https://katatam.github.io/sample-size-calculation/book/simulation.html"
+    },
+    {
+      "id": "A032",
+      "level": "advanced",
+      "front": "When does the percentage of statistically significant simulated trials estimate the Type I error probability?",
+      "back": "When the simulated population satisfies the null hypothesis and the intended test is applied.",
+      "source": "https://katatam.github.io/sample-size-calculation/book/simulation.html"
+    },
+    {
+      "id": "A033",
+      "level": "advanced",
+      "front": "What is confidence interval coverage in a simulation?",
+      "back": "The percentage of simulated intervals containing the population value specified in the generating scenario.",
+      "source": "https://katatam.github.io/sample-size-calculation/book/simulation.html"
+    },
+    {
+      "id": "A034",
+      "level": "advanced",
+      "front": "How does meeting an interval-width target differ from confidence interval coverage?",
+      "back": "Width concerns how narrow an interval is. Coverage concerns whether it contains the true population value.",
+      "source": "https://katatam.github.io/sample-size-calculation/book/simulation.html"
+    },
+    {
+      "id": "A035",
+      "level": "advanced",
+      "front": "Why can simulated power differ from an analytical planning approximation?",
+      "back": "Finite simulations introduce Monte Carlo error, and the analytical approximation may differ from the actual test's performance.",
+      "source": "https://katatam.github.io/sample-size-calculation/book/simulation.html"
+    },
+    {
+      "id": "A036",
+      "level": "advanced",
+      "front": "What should be reported about failed model fits in a simulation?",
+      "back": "How often fitting failed and how failures were handled when summarizing performance.",
+      "source": "https://katatam.github.io/sample-size-calculation/book/simulation.html"
+    },
+    {
+      "id": "A037",
+      "level": "advanced",
+      "front": "Why can test rejection and interval exclusion of zero occasionally disagree in the binary examples?",
+      "back": "The score test and Newcombe-Wilson interval are different procedures. They are not exact inversions of the same method.",
+      "source": "https://katatam.github.io/sample-size-calculation/book/simulation.html"
+    },
+    {
+      "id": "A038",
+      "level": "advanced",
+      "front": "What should a precision-based sample size plan specify?",
+      "back": "The population quantity, confidence level, target interval width or margin of error, method, variability assumptions, and design.",
+      "source": "https://katatam.github.io/sample-size-calculation/book/feasibility.html#plan-for-precision"
+    },
+    {
+      "id": "A039",
+      "level": "advanced",
+      "front": "What is the full width of a confidence interval?",
+      "back": "The upper confidence limit minus the lower confidence limit.",
+      "source": "https://katatam.github.io/sample-size-calculation/book/feasibility.html#plan-for-precision"
+    },
+    {
+      "id": "A040",
+      "level": "advanced",
+      "front": "For a symmetric interval, what does a full width of 4 units imply?",
+      "back": "A margin of error of 2 units on either side of the estimate.",
+      "source": "https://katatam.github.io/sample-size-calculation/book/feasibility.html#plan-for-precision"
+    },
+    {
+      "id": "A041",
+      "level": "advanced",
+      "front": "Does planning for an expected interval width guarantee that every study achieves that width?",
+      "back": "No. Realized intervals vary. The probability of meeting a width target is a separate performance criterion.",
+      "source": "https://katatam.github.io/sample-size-calculation/book/feasibility.html#plan-for-precision"
+    },
+    {
+      "id": "A042",
+      "level": "advanced",
+      "front": "What if the study requires both a power target and a precision target?",
+      "back": "Choose a sample that satisfies both criteria under justified assumptions and the intended methods.",
+      "source": "https://katatam.github.io/sample-size-calculation/book/feasibility.html#plan-for-precision"
+    },
+    {
+      "id": "A043",
+      "level": "advanced",
+      "front": "In a simple prevalence survey, does n denote a per-group count?",
+      "back": "It denotes the total in one sample; there are no treatment and control groups.",
+      "source": "https://katatam.github.io/sample-size-calculation/book/feasibility.html#prevalence"
+    },
+    {
+      "id": "A044",
+      "level": "advanced",
+      "front": "What is the normal-approximation sample size formula for estimating one proportion with absolute margin d?",
+      "back": "n ≈ z[1 − α/2]² × p₀(1 − p₀)/d². Here p₀ is the anticipated proportion, d the half-width, and 1 − α the confidence level.",
+      "source": "https://katatam.github.io/sample-size-calculation/book/feasibility.html#prevalence"
+    },
+    {
+      "id": "A045",
+      "level": "advanced",
+      "front": "Why is 50% conservative for planning absolute precision for one proportion under the normal approximation?",
+      "back": "It maximizes p₀(1 − p₀), producing the largest required sample for the same absolute margin and confidence level.",
+      "source": "https://katatam.github.io/sample-size-calculation/book/feasibility.html#prevalence"
+    },
+    {
+      "id": "A046",
+      "level": "advanced",
+      "front": "Can 50% be used as a universal replacement for unknown event probabilities?",
+      "back": "No. Its conservative role here applies to absolute precision for one proportion under the stated approximation.",
+      "source": "https://katatam.github.io/sample-size-calculation/book/feasibility.html#prevalence"
+    },
+    {
+      "id": "A047",
+      "level": "advanced",
+      "front": "For 95% confidence and a 5-percentage-point margin, what are the approximate sample sizes for anticipated prevalences of 20% and 50%?",
+      "back": "246 and 385 completed observations, respectively, under the simple normal approximation.",
+      "source": "https://katatam.github.io/sample-size-calculation/book/feasibility.html#prevalence"
+    },
+    {
+      "id": "A048",
+      "level": "advanced",
+      "front": "What happens to the one-proportion sample requirement if the absolute margin of error is halved?",
+      "back": "It increases approximately fourfold under the formula, with the confidence level and anticipated proportion fixed.",
+      "source": "https://katatam.github.io/sample-size-calculation/book/feasibility.html#prevalence"
+    },
+    {
+      "id": "A049",
+      "level": "advanced",
+      "front": "Why might a 5-percentage-point margin be unsuitable for a rare outcome?",
+      "back": "It may be very wide relative to the prevalence. Expected event counts, useful relative precision, and the interval method need consideration.",
+      "source": "https://katatam.github.io/sample-size-calculation/book/feasibility.html#prevalence"
+    },
+    {
+      "id": "A050",
+      "level": "advanced",
+      "front": "In the existing-data example, 72 of 180 observed patients report sleep difficulty out of 200 original participants. What percentage is observed?",
+      "back": "72/180 = 40%. Sleep information is missing for 20 participants; using all 200 as the denominator would treat missing information as absence of difficulty.",
+      "source": "https://katatam.github.io/sample-size-calculation/book/feasibility.html#dataset-reuse"
+    },
+    {
+      "id": "A051",
+      "level": "advanced",
+      "front": "Does the original trial's power calculation establish adequacy for a new descriptive question?",
+      "back": "No. Adequacy should be assessed for the new quantity, available observations, and useful precision.",
+      "source": "https://katatam.github.io/sample-size-calculation/book/feasibility.html#dataset-reuse"
+    },
+    {
+      "id": "A052",
+      "level": "advanced",
+      "front": "Does random treatment allocation make a trial sample representative of all patients with the condition?",
+      "back": "No. Allocation supports the treatment comparison; eligibility and recruitment determine whom the sample represents.",
+      "source": "https://katatam.github.io/sample-size-calculation/book/feasibility.html#dataset-reuse"
+    },
+    {
+      "id": "A053",
+      "level": "advanced",
+      "front": "What should be checked before reusing a dataset?",
+      "back": "Permission, available variables and time points, target population, selection, missingness, dependence, and whether the analysis fits the new question.",
+      "source": "https://katatam.github.io/sample-size-calculation/book/feasibility.html#dataset-reuse"
+    },
+    {
+      "id": "A054",
+      "level": "advanced",
+      "front": "Does an ordinary confidence interval account for bias from missing data or unrepresentative recruitment?",
+      "back": "It describes sampling uncertainty under its assumptions. These sources of bias require separate assessment.",
+      "source": "https://katatam.github.io/sample-size-calculation/book/feasibility.html#dataset-reuse"
+    },
+    {
+      "id": "A055",
+      "level": "advanced",
+      "front": "What should rare-disease planning establish about recruitment?",
+      "back": "The number eligible and willing to participate, the recruitment period and centers, and the useful information attainable within that ceiling.",
+      "source": "https://katatam.github.io/sample-size-calculation/book/feasibility.html#rare-diseases"
+    },
+    {
+      "id": "A056",
+      "level": "advanced",
+      "front": "When might a crossover or n-of-1 design be appropriate?",
+      "back": "For a sufficiently stable condition, reversible treatment effects, and manageable carryover, with a suitable analysis and planning method.",
+      "source": "https://katatam.github.io/sample-size-calculation/book/feasibility.html#rare-diseases"
+    },
+    {
+      "id": "A057",
+      "level": "advanced",
+      "front": "What threatens the validity of historical or registry controls?",
+      "back": "Differences in patient characteristics, treatment era, care, and outcome measurement can bias the comparison.",
+      "source": "https://katatam.github.io/sample-size-calculation/book/feasibility.html#rare-diseases"
+    },
+    {
+      "id": "A058",
+      "level": "advanced",
+      "front": "Does disease rarity alone justify a higher Type I error probability?",
+      "back": "No. Error targets and alternative designs require prospective scientific justification.",
+      "source": "https://katatam.github.io/sample-size-calculation/book/feasibility.html#rare-diseases"
+    },
+    {
+      "id": "A059",
+      "level": "advanced",
+      "front": "What should determine a feasibility study's sample size?",
+      "back": "Its feasibility objectives, the decisions they must support, useful precision, and available resources.",
+      "source": "https://katatam.github.io/sample-size-calculation/book/feasibility.html#pilot-feasibility"
+    },
+    {
+      "id": "A060",
+      "level": "advanced",
+      "front": "What are progression criteria in a feasibility study?",
+      "back": "Prespecified criteria for deciding whether and how to proceed to a larger study, informed by outcomes such as recruitment and retention.",
+      "source": "https://katatam.github.io/sample-size-calculation/book/feasibility.html#pilot-feasibility"
+    },
+    {
+      "id": "A061",
+      "level": "advanced",
+      "front": "If 32 of 40 participants complete follow-up, what is the estimated retention percentage and its main limitation?",
+      "back": "80%. With only 40 participants, uncertainty can remain substantial; the interval should be considered against the progression criterion.",
+      "source": "https://katatam.github.io/sample-size-calculation/book/feasibility.html#pilot-feasibility"
+    },
+    {
+      "id": "A062",
+      "level": "advanced",
+      "front": "Which design dimensions guide the choice of sample size method?",
+      "back": "Research aim, allocation or exposure, timing and available data, outcome, independent unit and dependence, and planned analysis.",
+      "source": "https://katatam.github.io/sample-size-calculation/book/study-designs.html"
+    },
+    {
+      "id": "A063",
+      "level": "advanced",
+      "front": "What extra planning information is needed for paired measurements?",
+      "back": "The within-person or within-pair variability and correlation, together with the paired analysis.",
+      "source": "https://katatam.github.io/sample-size-calculation/book/study-designs.html"
+    },
+    {
+      "id": "A064",
+      "level": "advanced",
+      "front": "What matters for sample size in a cluster-randomized study?",
+      "back": "The number and sizes of clusters, within-cluster correlation, allocation, and planned analysis.",
+      "source": "https://katatam.github.io/sample-size-calculation/book/study-designs.html"
+    },
+    {
+      "id": "A065",
+      "level": "advanced",
+      "front": "What are the denominators for diagnostic sensitivity and specificity?",
+      "back": "Sensitivity uses participants with the condition according to the reference standard; specificity uses those without it.",
+      "source": "https://katatam.github.io/sample-size-calculation/book/study-designs.html"
+    },
+    {
+      "id": "A066",
+      "level": "advanced",
+      "front": "Why does a single prevalence calculation not plan a complete diagnostic-accuracy study?",
+      "back": "The study needs adequate information for sensitivity and specificity, with sufficient reference-positive and reference-negative participants.",
+      "source": "https://katatam.github.io/sample-size-calculation/book/study-designs.html"
+    },
+    {
+      "id": "A067",
+      "level": "advanced",
+      "front": "Why must Parkinson ON/OFF recordings from the same patient stay together when separating model-development and evaluation data?",
+      "back": "Splitting a patient's recordings across those datasets can leak patient-specific information and make predictive performance appear better than it is.",
+      "source": "https://katatam.github.io/sample-size-calculation/book/study-designs.html"
+    },
+    {
+      "id": "A068",
+      "level": "advanced",
+      "front": "What affects sample size for prediction-model development beyond the total number of patients?",
+      "back": "Outcome frequency, predictor parameters, overfitting, intended model performance, and useful precision.",
+      "source": "https://katatam.github.io/sample-size-calculation/book/study-designs.html"
+    },
+    {
+      "id": "A069",
+      "level": "advanced",
+      "front": "Does a fixed rule of ten events per variable provide a sufficient prediction-model sample size justification?",
+      "back": "No. Model-development planning should reflect the model, outcome, anticipated performance, and overfitting risk.",
+      "source": "https://katatam.github.io/sample-size-calculation/book/study-designs.html"
+    },
+    {
+      "id": "A070",
+      "level": "advanced",
+      "front": "Why do equivalence and noninferiority require separate planning methods?",
+      "back": "They test hypotheses involving justified, prespecified margins and require matching analyses and error control.",
+      "source": "https://katatam.github.io/sample-size-calculation/book/study-designs.html"
+    },
+    {
+      "id": "A071",
+      "level": "advanced",
+      "front": "Why is an unadjusted two-group calculation often insufficient for an observational association study?",
+      "back": "It does not account for the intended confounder adjustment, model, exposure distribution, or causal identification assumptions.",
+      "source": "https://katatam.github.io/sample-size-calculation/book/study-designs.html"
+    },
+    {
+      "id": "A072",
+      "level": "advanced",
+      "front": "What is the experimental unit in a preclinical study?",
+      "back": "The unit independently assigned to a condition or intervention. Repeated measurements or wells may not represent separate independent units.",
+      "source": "https://katatam.github.io/sample-size-calculation/book/study-designs.html"
+    },
+    {
+      "id": "A073",
+      "level": "advanced",
+      "front": "What is an estimand?",
+      "back": "The precisely defined population quantity of interest, specifying treatments, population, outcome, summary measure, and handling of events such as treatment discontinuation.",
+      "source": "https://katatam.github.io/sample-size-calculation/book/glossary.html#estimand"
+    },
+    {
+      "id": "A074",
+      "level": "advanced",
+      "front": "What should match when comparing results from different software?",
+      "back": "Hypotheses, outcome and effect scale, input values, allocation, sidedness, test, variance assumptions, corrections, and rounding.",
+      "source": "https://katatam.github.io/sample-size-calculation/book/appendix.html"
+    },
+    {
+      "id": "A075",
+      "level": "advanced",
+      "front": "For the same two-sided test, what happens if the treatment-minus-control subtraction is reversed?",
+      "back": "The sign of the difference changes; the test's power is preserved when the comparison and assumptions are otherwise unchanged.",
+      "source": "https://katatam.github.io/sample-size-calculation/book/appendix.html"
+    },
+    {
+      "id": "A076",
+      "level": "advanced",
+      "front": "How does assurance or expected power differ from power at one fixed difference?",
+      "back": "It averages performance over a justified distribution of plausible parameter values, according to the specified planning framework.",
+      "source": "https://katatam.github.io/sample-size-calculation/book/appendix.html#further-planning-approaches"
+    },
+    {
+      "id": "A077",
+      "level": "advanced",
+      "front": "What does safeguard power account for?",
+      "back": "Uncertainty in a previous effect estimate when planning; weak evidence can imply a much larger required sample.",
+      "source": "https://katatam.github.io/sample-size-calculation/book/appendix.html#further-planning-approaches"
+    },
+    {
+      "id": "A078",
+      "level": "advanced",
+      "front": "Why do multiple outcomes or comparisons need a prespecified success rule?",
+      "back": "Power for each comparison separately does not determine the probability that all required comparisons succeed. Appropriate error control is also needed.",
+      "source": "https://katatam.github.io/sample-size-calculation/book/appendix.html#further-planning-approaches"
+    },
+    {
+      "id": "A079",
+      "level": "advanced",
+      "front": "Does using a Bayesian analysis automatically make a trial adaptive?",
+      "back": "No. Bayesian trials can have fixed sample sizes. Adaptive designs need prespecified adaptation rules and evaluation of their performance.",
+      "source": "https://katatam.github.io/sample-size-calculation/book/appendix.html#further-planning-approaches"
+    },
+    {
+      "id": "A080",
+      "level": "advanced",
+      "front": "What should be retained to reproduce or adapt the tutorial's calculations?",
+      "back": "Editable source, shared case settings and functions, analysis code, software/package versions, and build instructions.",
+      "source": "https://katatam.github.io/sample-size-calculation/book/appendix.html"
+    }
+  ]
+}

@@ -18,6 +18,7 @@ parser.add_argument("--defer-link-checks", action="store_true", help="Check link
 args = parser.parse_args()
 
 ROOT = Path(__file__).resolve().parents[1]
+subprocess.run([sys.executable, str(ROOT / "scripts/build_flashcards.py")], cwd=ROOT, check=True)
 SITE = ROOT / "_site"
 if SITE.is_symlink() or SITE.resolve().parent != ROOT:
     raise RuntimeError("Unsafe site output path")

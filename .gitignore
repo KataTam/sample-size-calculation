@@ -35,4 +35,7 @@ module/*.xdv
 !site/assumptions_report/index.html
 
 __pycache__/
+student-materials/flashcards/*.apkg
+student-materials/flashcards/*-quizlet.txt
+student-materials/flashcards/cards.md
 !site/design_questionnaire/index.html

@@ -37,6 +37,8 @@ PDF generation remains required after tutorial changes. Render HTML with `Rscrip
 
 ## Sources and generated files
 
+Flashcards are maintained in `data/flashcards.json`, using stable card IDs. Install `scripts/flashcard-requirements.txt` for the Python interpreter used to assemble the site. Site assembly runs `scripts/build_flashcards.py`, which validates explanation links against the rendered book and generates the Anki packages, Quizlet tab-separated imports, and readable card preview in `student-materials/flashcards/`. The generated files are Git-ignored and rebuilt in CI. Preserve IDs when revising existing cards so Anki recognizes them. The two Anki packages share the same Core subdeck and note identifiers; the combined package adds Advanced. After changes, check the deck counts in the maintained import guide.
+
 `documentation/`, `teaching/`, `case-studies/` and `student-materials/` contain maintained Markdown. They are rendered to readable HTML pages on the teaching website. `site/` contains the homepage and shared page styling; `site/study/` contains the two-panel lesson/app view. Its case selector reads the exported case registry, and the build resolves lesson anchors to chapter filenames. Generated output stays in the Git-ignored `docs/` and `_site/` folders; do not edit it by hand.
 
 When moving a file, update Markdown links, script paths and compatibility aliases in `scripts/build_site.py`. Old case-study and documentation URLs are retained as aliases where possible. Deleted collaborator files are not included in the build or source download. The old separate repositories are private archives; use this repository for all current work.

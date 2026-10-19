@@ -50,6 +50,8 @@ You can use the activity links to open [the tutorial and matching apps together]
 
 The tutorial uses simulation to connect a study plan with the results it could produce. You first specify a hypothetical population, then generate patient outcomes and analyze them as you would in a study. One simulated study makes sampling variability visible; many studies show how the design performs across repetitions. The calculators and planning curves use formulas, and the report activity organizes your reasoning. The [activity walkthroughs](https://katatam.github.io/sample-size-calculation/student-materials/activity-walkthroughs.html) explain the purpose and steps for each tool.
 
+For review, [flashcards for Anki and Quizlet](https://katatam.github.io/sample-size-calculation/student-materials/flashcards/index.html) are available as Core and Core + Advanced sets, with short questions and answers linked to the explanations.
+
 Ideas, questions, or problems with the tutorial or activities are welcome through the [Ideas and feedback form](https://forms.cloud.microsoft/e/j00AMibqi5). An email address is optional if you would like a reply.
 
 ::: {.learning-goals .core-outcomes}
