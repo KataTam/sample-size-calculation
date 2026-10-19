@@ -68,6 +68,12 @@
     }
     dialog.append(list);
   }
+  const flashcards = document.createElement('p');
+  const flashcardLink = document.createElement('a');
+  flashcardLink.textContent = 'Flashcards';
+  flashcardLink.href = new URL('student-materials/flashcards/index.html', root).href;
+  flashcardLink.target = '_blank'; flashcardLink.rel = 'noopener';
+  flashcards.append(flashcardLink); dialog.append(flashcards);
   const button = document.createElement('button'); button.id = 'activity-menu-button';
   button.type='button'; button.textContent='Activities'; button.setAttribute('aria-haspopup','dialog');
   button.addEventListener('click', () => dialog.showModal());
