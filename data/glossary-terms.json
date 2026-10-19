@@ -328,5 +328,22 @@
     "label": "CCMO",
     "aliases": [],
     "definition": "The Central Committee on Research Involving Human Subjects in the Netherlands. It directly reviews specified categories of research and has national oversight responsibilities. It is distinct from a local accredited METC."
+  },
+  {
+    "id": "research-ethics-committee",
+    "label": "Research ethics committee",
+    "aliases": [
+      "research ethics committee (REC)"
+    ],
+    "definition": "An independent committee that reviews the scientific justification and participant protections of research. Its name and legal responsibilities depend on the country."
+  },
+  {
+    "id": "institutional-review-board",
+    "label": "Institutional review board",
+    "aliases": [
+      "institutional review board (IRB)",
+      "IRB"
+    ],
+    "definition": "The usual US term for a committee reviewing research involving human participants under the applicable regulatory framework."
   }
 ]

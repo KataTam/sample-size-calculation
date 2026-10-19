@@ -133,7 +133,17 @@ Increasing the number of simulations reduces Monte Carlo error; quadrupling the 
 
 For more detail, return to the [power chapter](#power), [sampling-distribution illustration](#alpha-beta), [precision examples](#feasibility), or [common mistakes](#common-mistakes). Methodological sources include Kirkwood and Sterne (2003), Whitley and Ball (2002), and the R documentation cited in the tutorial.
 
-## Research ethics review in the Netherlands
+## Research ethics review
+
+### Research ethics committee (REC) {#research-ethics-committee}
+
+An independent committee that reviews research involving human participants, including its scientific justification and protection of participants. Names and legal responsibilities vary by country. The [Declaration of Helsinki](https://www.wma.net/policies-post/wma-declaration-of-helsinki/) describes the international ethical principles; applicable national requirements determine the review process.
+
+### Institutional review board (IRB) {#institutional-review-board}
+
+The usual US term for a committee that reviews research involving human participants. Applicable FDA or HHS rules define its responsibilities and the studies requiring review. See the [FDA guidance](https://www.fda.gov/regulatory-information/search-fda-guidance-documents/institutional-review-boards-frequently-asked-questions) and [HHS overview](https://www.hhs.gov/ohrp/regulations-and-policy/guidance/faq/45-cfr-46/index.html).
+
+The following three terms describe the Netherlands specifically.
 
 ### WMO {#wmo}
 

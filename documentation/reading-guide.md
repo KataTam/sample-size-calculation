@@ -61,6 +61,12 @@ For pilot planning, begin with the [CONSORT randomized pilot/feasibility extensi
 
 For prerequisite reminders and common questions, use the [glossary](../student-materials/glossary.md) and [common mistakes](../student-materials/common-mistakes.md), also included in the tutorial. Formulas and formatted results remain visible; R code and raw output can be expanded together.
 
+## International ethics and protocol planning
+
+The [Declaration of Helsinki (2024)](https://www.wma.net/policies-post/wma-declaration-of-helsinki/) connects scientific validity, a justified protocol and independent ethics review. [ICH E9, section 3.5](https://www.fda.gov/regulatory-information/search-fda-guidance-documents/e9-statistical-principles-clinical-trials), also [adopted by EMA](https://www.ema.europa.eu/en/scientific-guidelines/ich-e9-statistical-principles-clinical-trials), explains sample-size assumptions and their justification in trials of medicines.
+
+For the review context, the [European Commission's MedEthicsEU overview](https://health.ec.europa.eu/medicinal-products/clinical-trials/medethicseu_en) describes ethical review under the EU Clinical Trials Regulation. The [FDA IRB guidance (2025)](https://www.fda.gov/regulatory-information/search-fda-guidance-documents/institutional-review-boards-frequently-asked-questions) and [HHS overview of 45 CFR 46](https://www.hhs.gov/ohrp/regulations-and-policy/guidance/faq/45-cfr-46/index.html) explain the US frameworks. Their scopes differ: your institution should confirm which requirements apply to your study. Netherlands-specific WMO, METC and CCMO terms remain in the glossary as a local example.
+
 ## Source coverage and access
 
 The author's literature folder contains papers and separate reading notes. Some notes cover only an abstract, bibliographic record, book contents or selected passages; they are not substitutes for reading the full source before adopting a method. Verify unresolved manuscript metadata before a formal citation. Original e-learning materials provide historical provenance, while clinical guidance and methodological papers support current claims. Software acknowledgments are separate from statistical evidence.

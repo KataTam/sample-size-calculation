@@ -38,29 +38,25 @@ source("../R/question_map.R")
 
 # Welcome {-}
 
-How many patients would you need to compare a new pain treatment with standard treatment? A sample size calculation helps you plan a study with a specified probability of detecting a treatment difference, or with enough precision to estimate an outcome usefully. The result depends on the assumptions you make about the patients, outcomes, and analysis. Through clinical examples and interactive apps, you will develop and justify a study plan.
+How many patients would you need to compare a new pain treatment with standard treatment? This tutorial helps you justify a sample size that can answer your research question, using clinical examples, calculations and simulation.
 
 ## How to use this tutorial {-}
 
-This tutorial is intended for both students and researchers. Students may find the core route sufficient for planning a basic two-arm clinical trial. Researchers and other readers can deepen their understanding through the advanced sections on [power](#statistical-power) curves, simulation methods, estimation with a [precision](#precision) target and other study designs. You can choose a route according to your experience and study question. Blue backgrounds identify core material; purple backgrounds advanced extensions. Advanced sections extend the basic calculations to additional planning questions and methods.
+This tutorial is for students and researchers. Students may find the Core route sufficient for basic two-arm trial planning; researchers can deepen their understanding through the Advanced sections. The roadmap shows both routes.
 
-The tutorial provides explanations and worked examples. Activities are learning exercises: they may involve an app, a questionnaire, reflection, or written answers. Apps are interactive software, including the calculators, simulations, study-design questionnaire and assumptions report builder. Flashcards support review and recall.
+Activities are learning exercises. Apps are the interactive software used in some activities, such as calculators, simulations and the report builder.
 
 ```{r tutorial-roadmap, echo=FALSE, results='asis'}
 cat('<figure class="tutorial-roadmap">',
     paste(readLines("../figures/tutorial-roadmap.svg", encoding="UTF-8", warn=FALSE), collapse="\n"),
-    '<figcaption>Your route through the tutorial: explanations, practice, interactive apps and review. Each block links to its resource.</figcaption></figure>')
+    '<figcaption>Roadmap. Each block links to its resource.</figcaption></figure>')
 ```
 
-The main example compares two treatments in different groups of patients, with equal numbers assigned to each treatment. Each patient receives one of the two treatments. The analysis allows for a difference in either direction: the novel treatment could perform better or worse than standard treatment. These are called [independent groups](#independent-groups), equal allocation, and a [two-sided test](#two-sided-test). Later sections consider other planning goals and designs.
+The core examples begin with two independent treatment groups of equal size. Simulation shows how results vary between studies under the same assumptions. Later chapters extend the reasoning to other planning goals and designs.
 
-You can use the activity links to open [the tutorial and matching apps together](https://katatam.github.io/sample-size-calculation/study/?activity=pain_one_many). The figures and worked results also let you follow the reasoning without opening an app. For a reminder of a term, see [Glossary](#glossary). If you have a project in mind, check [Where does my study fit?](#study-designs) before choosing a calculator.
+You can open [the tutorial and an app together](https://katatam.github.io/sample-size-calculation/study/?activity=pain_one_many), consult the [activity walkthroughs](https://katatam.github.io/sample-size-calculation/student-materials/activity-walkthroughs.html), or review terms in the [Glossary](#glossary). For your own project, [Where does my study fit?](#study-designs) helps you choose an approach.
 
-The tutorial uses simulation to connect a study plan with the results it could produce. You first specify a hypothetical population, then generate patient outcomes and analyze them as you would in a study. One simulated study makes sampling variability visible; many studies show how the design performs across repetitions. The calculators and planning curves use formulas, and the report activity organizes your reasoning. The [activity walkthroughs](https://katatam.github.io/sample-size-calculation/student-materials/activity-walkthroughs.html) explain the purpose and steps for each activity.
-
-For review, [flashcards for Anki and Quizlet](https://katatam.github.io/sample-size-calculation/student-materials/flashcards/index.html) are available as Core and Core + Advanced sets, with a [question-and-answer preview](https://katatam.github.io/sample-size-calculation/student-materials/flashcards/cards.html) linked to the explanations.
-
-Ideas, questions, or problems with the tutorial or activities are welcome through the [Feedback form](https://forms.cloud.microsoft/e/j00AMibqi5). An email address is optional if you would like a reply.
+[Flashcards](https://katatam.github.io/sample-size-calculation/student-materials/flashcards/index.html) are available for Core and Core + Advanced, with a [question-and-answer preview](https://katatam.github.io/sample-size-calculation/student-materials/flashcards/cards.html) and Anki/Quizlet downloads. Questions and suggestions are welcome through [Feedback](https://forms.cloud.microsoft/e/j00AMibqi5).
 
 ::: {.learning-goals .core-outcomes}
 ## Core learning outcomes {#core-route .unnumbered .core-heading}
@@ -74,7 +70,6 @@ The linked sections should help you develop a sample size justification for a ba
 - [Examine plausible alternative assumptions](#stress-test-the-study-plan), recognize [underpowered studies](#what-if-the-study-is-too-small-for-its-purpose) and assess [ways to increase power](#increase-power).
 - [Write a sample size justification](#write-a-sample-size-justification) addressing evidence, feasibility and limitations, and complete the [Activity: Develop and justify your study plan](https://katatam.github.io/sample-size-calculation/study/?activity=assumptions_report).
 
-Before using a calculator for your own project, you should check [Where does my study fit?](#study-designs).
 :::
 
 ::: {.learning-goals .advanced-outcomes}
@@ -129,14 +124,21 @@ The final plan should address all four. A statistical target alone does not esta
 
 ### Ethical review and the study protocol {.core-heading}
 
-In the Netherlands, research that falls under the [Medical Research Involving Human Subjects Act (WMO)](#wmo) requires prior review and a positive decision from an accredited [medical research ethics committee (METC, or MREC in English)](#metc) or the [CCMO](#ccmo) before it starts [@ccmowmo]. The study protocol should explain the proposed sample size, the evidence supporting its assumptions and what the study can establish. This connects the statistical justification to the clinical question, participant burden and feasibility. When designing a study, consult the relevant review committee's requirements and the applicable [CCMO protocol template](https://english.ccmo.nl/documents/2018/09/19/standard-research-file-c1-template-research-protocol).
+A scientifically sound study is an ethical requirement. The Declaration of Helsinki links reliable, valuable research to a justified protocol and prior [research ethics committee](#research-ethics-committee) review [@wmahelsinki2024]. Your protocol should explain the proposed sample size, the evidence behind its assumptions, and the information expected in relation to participants' burden and risk.
+
+For clinical trials of medicines, ICH E9 provides a shared statistical framework used in Europe and the United States. Its sample-size guidance calls for an explicit outcome, target difference, analysis, error probabilities and assumptions, with sensitivity to uncertainty considered [@iche91998]. The statistical justification should follow your study question and planned analysis.
+
+Review procedures depend on the country and study type:
+
+- European Union: clinical trials of medicines within the scope of Regulation (EU) No 536/2014 require scientific and ethical review; ethics committees operate under the law of the relevant member state [@ecethicsreview]. Other study types follow their applicable frameworks.
+- United States: an [institutional review board (IRB)](#institutional-review-board) reviews studies subject to the relevant human-participant protections. FDA requirements apply to covered clinical investigations; HHS regulations apply to covered HHS-conducted or supported research [@fdairb2025; @hhsresearchreview].
+
+Your institution's research office or ethics committee should help identify the applicable review route and protocol requirements. The Netherlands is one national example: research within the [WMO](#wmo) framework is reviewed by an accredited [METC](#metc) or the [CCMO](#ccmo), as applicable [@ccmowmo].
 
 <details class="misconception" id="ethics-sample-size">
 <summary>Why sample size is an ethical issue</summary>
 
 A study should provide useful information in relation to the burdens and risks participants accept. An inadequate design may expose participants to those burdens without resolving its question; unnecessary recruitment adds avoidable burden. Scientific value, informed consent, fair recruitment, and the balance of potential benefits and harms all matter. A small feasibility study or rare-disease study may be ethically justified when its size supports a clearly defined objective. Its conclusions should match the information it can provide.
-
-Most WMO research is reviewed by an accredited METC. The CCMO directly reviews specified categories and also has national oversight responsibilities. The applicable legal framework and study type determine the review route; the [CCMO guidance](https://english.ccmo.nl/investigators/primary-submission-to-the-review-committee) explains which route applies.
 
 </details>
 
