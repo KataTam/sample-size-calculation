@@ -21,6 +21,8 @@ Open teaching materials for reasoning about sample size in medical studies.
   </a>
 </nav>
 
+Ideas, questions, or problems with the tutorial or activities? [Ideas and feedback](https://forms.cloud.microsoft/e/j00AMibqi5). You can leave an email address if you would like a reply.
+
 <footer class="landing-footer">
 Katalin Tamási, UMCG. Teaching materials: <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>. Code: <a href="https://opensource.org/license/mit">MIT</a>.
 <a href="documentation/third-party-notices.md">Third-party notices</a>.

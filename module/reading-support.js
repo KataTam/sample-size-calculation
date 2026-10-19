@@ -1,4 +1,12 @@
 (function () {
+  const header = document.querySelector('.book-header');
+  if (header && !document.getElementById('feedback-link')) {
+    const feedback = document.createElement('a');
+    feedback.id = 'feedback-link'; feedback.textContent = 'Ideas and feedback';
+    feedback.href = 'https://forms.cloud.microsoft/e/j00AMibqi5';
+    feedback.target = '_blank'; feedback.rel = 'noopener';
+    header.append(feedback);
+  }
   const popup = document.createElement('div');
   popup.id = 'citation-tooltip'; popup.className = 'glossary-tooltip';
   popup.setAttribute('role', 'tooltip'); popup.hidden = true; document.body.append(popup);

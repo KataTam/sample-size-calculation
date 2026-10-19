@@ -123,6 +123,11 @@ details.activity-practice { background:#dfedf7; padding:10px 14px; margin:1em 0;
 .chapter-recap { border-top:1px solid #b7c9d8; margin-top:2em; padding-top:1em; }
 #activity-menu-button { position:fixed; right:18px; top:8px; z-index:1001; background:#e1edf8; color:#173d5b; border:1px solid #91afc9; border-radius:5px; padding:7px 12px; font:14px Arial,sans-serif; cursor:pointer; }
 .book-header #activity-menu-button { position:absolute; }
+#feedback-link { position:absolute; right:180px; top:8px; z-index:1001; background:#fff; color:#173d5b; border:1px solid #91afc9; border-radius:5px; padding:7px 12px; font:14px Arial,sans-serif; line-height:normal; text-decoration:none; }
+#feedback-link:hover, #feedback-link:focus-visible { background:#e1edf8; text-decoration:underline; }
+@media (max-width:1000px) { .book .book-header { height:90px; } .book-header #feedback-link, .book-header #activity-menu-button { top:50px; } .book-header #feedback-link { right:170px; padding:7px 8px; } }
+@media (max-width:1000px) { .book .book-body.fixed { top:90px; } .book .book-body.fixed .body-inner { top:auto; } }
+@media print { #feedback-link { display:none!important; } }
 #activity-menu { background:#fff; color:#26343d; border:1px solid #91afc9; border-radius:8px; padding:22px; width:min(580px,calc(100vw - 32px)); max-height:85vh; overflow:auto; font:16px/1.5 Arial,sans-serif; }
 #activity-menu::backdrop { background:#0005; }
 #activity-menu > button { float:right; }
