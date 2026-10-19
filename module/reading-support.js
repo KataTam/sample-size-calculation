@@ -2,7 +2,7 @@
   const header = document.querySelector('.book-header');
   if (header && !document.getElementById('feedback-link')) {
     const feedback = document.createElement('a');
-    feedback.id = 'feedback-link'; feedback.textContent = 'Ideas and feedback';
+    feedback.id = 'feedback-link'; feedback.textContent = 'Feedback';
     feedback.href = 'https://forms.cloud.microsoft/e/j00AMibqi5';
     feedback.target = '_blank'; feedback.rel = 'noopener';
     header.append(feedback);
@@ -50,7 +50,7 @@
   if (!registry || document.getElementById('activity-menu-button')) return;
   const groups = JSON.parse(registry.textContent);
   const dialog = document.createElement('dialog'); dialog.id = 'activity-menu';
-  const heading = document.createElement('h2'); heading.textContent = 'Activities and tools';
+  const heading = document.createElement('h2'); heading.textContent = 'Activities';
   heading.id = 'activity-menu-title'; dialog.setAttribute('aria-labelledby', heading.id);
   const close = document.createElement('button'); close.textContent = 'Close'; close.type = 'button';
   close.addEventListener('click', () => dialog.close()); dialog.append(close, heading);
@@ -69,9 +69,11 @@
     dialog.append(list);
   }
   const button = document.createElement('button'); button.id = 'activity-menu-button';
-  button.type='button'; button.textContent='Activities and tools'; button.setAttribute('aria-haspopup','dialog');
+  button.type='button'; button.textContent='Activities'; button.setAttribute('aria-haspopup','dialog');
   button.addEventListener('click', () => dialog.showModal());
   dialog.addEventListener('click', event => { if (event.target === dialog) { const r=dialog.getBoundingClientRect(); if(event.clientX<r.left || event.clientX>r.right || event.clientY<r.top || event.clientY>r.bottom) dialog.close(); } });
   document.body.append(dialog);
-  (document.querySelector('.book-header') || document.body).append(button);
+  const feedbackLink = document.getElementById('feedback-link');
+  if (feedbackLink) feedbackLink.before(button);
+  else (header || document.body).append(button);
 })();

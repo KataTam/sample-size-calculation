@@ -123,8 +123,14 @@ def build():
     counts = Counter(c['level'] for c in cards)
     for level in ('core', 'advanced'):
         review += ['## ' + level.capitalize() + ' (' + str(counts[level]) + ' cards)', '']
+        review += ['| Question | Answer |', '|---|---|']
         for c in cards:
-            review += ['### ' + c['id'] + '. [' + c['front'] + '](' + c['source'] + ')', '', c['back'], '']
+            if c['level'] != level:
+                continue
+            question = c['front'].replace('|', '&#124;')
+            answer = c['back'].replace('|', '&#124;')
+            review += ['| [' + question + '](' + c['source'] + ') | ' + answer + ' |']
+        review += ['']
     (OUT / 'cards.md').write_text('\n'.join(review), encoding='utf-8')
     print(f"Built and checked {len(cards)} cards: {counts['core']} core and {counts['advanced']} advanced; two Anki and two Quizlet imports.")
 
