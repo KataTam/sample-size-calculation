@@ -2,7 +2,7 @@
 
 Short question-and-answer cards accompany the tutorial. Core covers the basic planning route; Core + Advanced includes the additional designs and methods. The cards are grouped by level. Each question in Anki and the preview links to the relevant tutorial explanation. All numerical examples are hypothetical.
 
-| Platform | Core: 88 cards | Core + Advanced: 168 cards |
+| Platform | Core: 87 cards | Core + Advanced: 168 cards |
 |---|---|---|
 | Anki | [Download Core deck](sample-size-core.apkg) | [Download Core + Advanced deck](sample-size-core-and-advanced.apkg) |
 | Quizlet | [Download Core import text](sample-size-core-quizlet.txt) | [Download Core + Advanced import text](sample-size-core-and-advanced-quizlet.txt) |
@@ -18,7 +18,7 @@ Short question-and-answer cards accompany the tutorial. Core covers the basic pl
 
 Anki may initially show fewer new cards than the full deck contains because of its daily study limit. The Browse window shows all imported cards.
 
-The Core + Advanced package contains the same core cards plus 80 advanced cards. Importing it later adds an Advanced subdeck under the same Sample size tutorial parent. Existing core cards are recognized by stable identifiers. Select the parent deck to study both levels, or select Core alone. Importing Core after the combined package does not remove Advanced. Neither package contains another learner's review history.
+The Core + Advanced package contains the same core cards plus 81 advanced cards. Importing it later adds an Advanced subdeck under the same Sample size tutorial parent. Existing core cards are recognized by stable identifiers. Select the parent deck to study both levels, or select Core alone. Importing Core after the combined package does not remove Advanced. Neither package contains another learner's review history.
 
 If you edit cards yourself, check Anki's update options before reimporting a later release. [Anki's packaged-deck documentation](https://docs.ankiweb.net/importing/packaged-decks.html) explains importing and updating.
 

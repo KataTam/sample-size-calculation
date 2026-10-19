@@ -279,7 +279,7 @@
     },
     {
       "id": "C040",
-      "level": "core",
+      "level": "advanced",
       "front": "What is Monte Carlo error?",
       "back": "Random error caused by estimating a result from a finite number of simulation repetitions. More repetitions reduce it.",
       "source": "https://katatam.github.io/sample-size-calculation/book/glossary.html#monte-carlo-error"

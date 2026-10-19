@@ -33,9 +33,9 @@
 <text x="803" y="422" class="roadmap-small">Study-design questionnaire</text>
 </a>
 <g stroke="#64778a" stroke-width="2" fill="none" marker-start="url(#roadmap-arrow)" marker-end="url(#roadmap-arrow)"><path d="M300 393H337"/><path d="M623 393H660"/></g>
-<path d="M480 254V310" stroke="#64778a" stroke-width="2" stroke-dasharray="5 5" fill="none" marker-end="url(#roadmap-arrow)"><title>Optional progression from Core to Advanced</title></path>
-<text x="496" y="285" text-anchor="start" class="roadmap-small">Optional extension</text>
+<path d="M157 254V310" stroke="#64778a" stroke-width="2" stroke-dasharray="5 5" fill="none" marker-end="url(#roadmap-arrow)"><title>Optional progression from Core to Advanced</title></path>
+<text x="173" y="285" text-anchor="start" class="roadmap-small">Optional extension</text>
 <path d="M480 472V494" stroke="#64778a" stroke-width="2" marker-end="url(#roadmap-arrow)"/><text x="480" y="525" class="roadmap-title">Flashcards: review and recall</text>
-<a class="roadmap-block" href="https://katatam.github.io/sample-size-calculation/student-materials/flashcards/cards.html#core-88-cards" target="_blank" rel="noopener"><rect x="208" y="542" width="256" height="45" rx="10" fill="#dbeafa" stroke="#9bb9d6"/><text x="336" y="571" class="roadmap-copy">Core</text></a>
+<a class="roadmap-block" href="https://katatam.github.io/sample-size-calculation/student-materials/flashcards/cards.html#core-87-cards" target="_blank" rel="noopener"><rect x="208" y="542" width="256" height="45" rx="10" fill="#dbeafa" stroke="#9bb9d6"/><text x="336" y="571" class="roadmap-copy">Core</text></a>
 <a class="roadmap-block" href="https://katatam.github.io/sample-size-calculation/student-materials/flashcards/index.html" target="_blank" rel="noopener"><rect x="496" y="542" width="256" height="45" rx="10" fill="#e9e0f5" stroke="#bba5d4"/><text x="624" y="571" class="roadmap-copy">Core + Advanced</text></a>
 </g></svg>

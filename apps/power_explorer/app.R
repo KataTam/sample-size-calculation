@@ -159,11 +159,11 @@ ui <- fluidPage(
       p(class = "caption", "Table 5. The first 12 simulated participant records from the saved study; binary outcomes use 0 for no event and 1 for an event."),
       downloadButton("download_one", "Download study and assumptions"),
       tags$div(id = "journey-credit", tags$hr(), p("The animated connection between samples, estimates, and sampling distributions was inspired by Douwe Postmus’s ", tags$a(href = "https://postmus.github.io/sampling-simulator/", target = "_blank", rel = "noopener", "Statistical Concepts Lab"), "."))),
-    tabPanel("Many studies", p("Core exploration: compare estimated differences and the percentage of significant results across simulated studies. Advanced exploration: examine confidence interval coverage, interval width and Monte Carlo uncertainty."), h3("Repeated independent studies"), actionButton("run_many", "Simulate many studies", class = "btn-primary"),
+    tabPanel("Many studies", p("Compare estimated differences and the percentage of significant results across simulated studies. Explore further adds advanced performance summaries."), h3("Repeated independent studies"), actionButton("run_many", "Simulate many studies", class = "btn-primary"),
       textOutput("many_status"), tableOutput("many_summary"),
-      p(class = "caption", "Table 6. Rejection, confidence interval coverage and the percentage meeting the target width across the saved simulation batch, with Monte Carlo uncertainty."),
+      p(class = "caption", "Table 6. Summary of the saved simulation batch. Explore further adds coverage, interval-width targets and simulation uncertainty."),
       textOutput("many_text"),
-      p("Monte Carlo uncertainty comes from simulating a limited number of studies. Confidence interval coverage is the percentage of intervals containing the assumed true effect; the percentage of statistically significant results estimates the probability of rejecting the null."),
+      conditionalPanel("input.show_advanced", p("Monte Carlo uncertainty comes from simulating a limited number of studies. Confidence interval coverage is the percentage of intervals containing the assumed true effect; the percentage of statistically significant results estimates the probability of rejecting the null.")),
       plotOutput("many_plot", height = "480px"),
       p(class = "caption", "Figure 5. The first 30 saved trial intervals. Filled dots show statistically significant results; open dots do not. Line styles distinguish zero, the clinical threshold and the true effect assumed for simulation."),
       plotOutput("distribution", height = "300px"),
@@ -549,7 +549,8 @@ server <- function(input, output, session) {
   output$one_data <- renderTable(head(one()$data, 12))
   output$many_status <- renderText({ req(input$run_many > 0); paste(status(many(), "Saved batch"), "B =", many()$spec$B) })
   output$many_summary <- renderTable({
-    display_simulation_summary(simulation_summary(many()))
+    if (isTRUE(input$show_advanced)) display_simulation_summary(simulation_summary(many()))
+    else data.frame(Measure = "Statistically significant simulated results", Percentage = percent(mean(many()$results$reject)), check.names = FALSE)
   })
   output$many_text <- renderText({
     x <- many(); r <- x$results

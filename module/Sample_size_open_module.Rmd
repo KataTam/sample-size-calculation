@@ -49,7 +49,7 @@ Activities are learning exercises. Apps are the interactive software used in som
 ```{r tutorial-roadmap, echo=FALSE, results='asis'}
 cat('<figure class="tutorial-roadmap">',
     paste(readLines("../figures/tutorial-roadmap.svg", encoding="UTF-8", warn=FALSE), collapse="\n"),
-    '<figcaption>Roadmap. Each block links to its resource.</figcaption></figure>')
+    '</figure>')
 ```
 
 The core examples begin with two independent treatment groups of equal size. Simulation shows how results vary between studies under the same assumptions. Later chapters extend the reasoning to other planning goals and designs.
@@ -228,7 +228,7 @@ Before choosing a sample size, your study plan should distinguish what you expec
 
 Table: (\#tab:planning-assumptions) Decisions and assumptions to record in a sample size plan.
 
-PICO connects the clinical question to the calculation: Population, Intervention, Comparator, and Outcome [@richardson1995]. Here these are patients with chronic pain, the novel treatment, standard treatment, and pain relief at four weeks.
+The classic account by @richardson1995 describes a well-built clinical question. Here, PICO connects that question to the calculation: Population, Intervention, Comparator, and Outcome. Here these are patients with chronic pain, the novel treatment, standard treatment, and pain relief at four weeks.
 
 The target difference tells the calculation where to evaluate power. The [standard deviation](#standard-deviation) describes variation between individuals; the [standard error](#standard-error) describes [sampling variability](#sampling-variability) of an estimate. For binary outcomes, you should report each group's event probability as a percentage and their absolute difference in percentage points. The section [Glossary](#glossary) explains these terms in more detail.
 
@@ -395,8 +395,6 @@ The population assumptions stay the same across these trials. Their observed rel
 
 ### Many trials and a larger sample {.core-heading}
 
-Even with unchanged assumptions, another batch of simulated trials will give a slightly different estimated power. This is [Monte Carlo error](#monte-carlo-error): uncertainty caused by using a finite number of simulation repetitions. More repetitions reduce Monte Carlo uncertainty while the number of patients in each trial stays fixed.
-
 Repeating the trial 5,000 times shows a range of possible sample differences. The larger samples generally give estimates closer to the specified population difference, although any individual trial can still differ from it.
 
 ```{r three-samples}
@@ -446,13 +444,13 @@ Which quantities stay fixed across trials, and which change? Why does a larger s
 
 Within a batch of trials, the specified population relief probabilities stay at 30% and 60%, so their true difference stays at 30 percentage points. The sample size, allocation, analysis, Type I error probability and clinical threshold also stay fixed. The patients sampled, observed relief counts and percentages, estimated difference, confidence interval, [p-value](#p-value) and testing decision can change from trial to trial.
 
-A larger sample gives each trial more information, which generally reduces the sampling variability of its estimate and narrows its confidence interval. Increasing the sample size deliberately changes the design; it can also increase power at the same true effect. More simulation repetitions give you a more precise estimate of that design's performance, reducing [Monte Carlo error](#monte-carlo-error). Each individual trial still has the same number of patients and the same power.
+A larger sample gives each trial more information, which generally reduces the sampling variability of its estimate and narrows its confidence interval. Increasing the sample size deliberately changes the design; it can also increase power at the same true effect. More simulation repetitions make the estimated percentage of significant results more stable. Each individual trial still has the same number of patients and the same power.
 
 </details>
 
 :::
 
-This repeated-study approach follows the introductory teaching idea in @superpowerbook2022 and the use of simulation in health-sciences education [@thiesmeier2024; @rudolph2021]. The [advanced simulation explanation](#precision-of-a-simulation) covers p-value distributions, interval coverage and Monte Carlo uncertainty.
+This repeated-study approach follows the introductory teaching idea in @superpowerbook2022 and the use of simulation in health-sciences education [@thiesmeier2024; @rudolph2021]. The [advanced simulation explanation](#precision-of-a-simulation) examines how precisely a simulation estimates study performance.
 
 <div class="core-next">Continue along the core route: <a href="#calculations">Basic sample size calculations</a>.</div>
 
@@ -617,7 +615,7 @@ This activity explains why the patterns seen in repeated simulations occur. The 
 
 ## Precision of a simulation {.advanced-heading}
 
-Simulation estimates power by analyzing many trials generated under the same assumptions. Because only a finite number of trials are simulated, that estimated power is itself uncertain. More patients per trial can change the trial's power; more simulated trials make the estimate of that power more precise. The details below quantify this second source of uncertainty.
+Even with unchanged assumptions, another batch of simulated trials will give a slightly different estimated power. This is [Monte Carlo error](#monte-carlo-error): uncertainty caused by using a finite number of simulation repetitions. More repetitions reduce Monte Carlo uncertainty while the number of patients in each trial stays fixed.
 
 <details class="advanced-explanation">
 <summary>Advanced: Monte Carlo standard error and intervals</summary>
@@ -676,7 +674,7 @@ No. About 10% of repetitions would fail to reject the null under the specified a
 <details class="model-answer">
 <summary>Model answer</summary>
 
-No. It reduces Monte Carlo uncertainty in the estimated power. The sample size and analysis of each trial are unchanged.
+No. It makes the estimated percentage of significant results more stable. The sample size and analysis of each trial are unchanged.
 
 </details>
 
