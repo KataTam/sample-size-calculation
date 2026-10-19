@@ -50,6 +50,11 @@ shutil.copytree(ROOT / "docs/book", SITE / "book")
 activity_contents = json.loads((ROOT / "module/activity-contents.json").read_text(encoding="utf-8"))
 for target in (SITE / "book").glob("*.html"):
     text = target.read_text(encoding="utf-8")
+    # Pandoc closes the final level-three wrapper after this raw details tag.
+    # Close it inside the disclosure so the browser preserves the chapter container.
+    if target.name == 'power.html':
+        text = text.replace('</details>\n</div>\n</div>\n<div id="alpha-beta"',
+                            '</div>\n</details>\n</div>\n<div id="alpha-beta"')
     for chapter in activity_contents:
         sections = {}
         for activity in chapter["activities"]:
@@ -70,6 +75,8 @@ from chapter_navigation import add_chapter_navigation
 add_chapter_navigation(SITE / "book")
 from number_citations import number_citations
 number_citations(SITE / "book")
+from tutorial_search import build_tutorial_search
+build_tutorial_search(SITE / "book", ROOT / "module/tutorial-search.js")
 # Only the full tutorial is downloadable; do not copy retired chapter artifacts.
 retired = SITE / "book/downloads"
 if retired.exists():

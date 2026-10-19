@@ -157,3 +157,14 @@ details.activity-practice { background:#dfedf7; padding:10px 14px; margin:1em 0;
 .tutorial-roadmap { margin:1.5em 0; break-inside:avoid; }
 .tutorial-roadmap svg { display:block; width:100%; height:auto; }
 .tutorial-roadmap figcaption { font-size:0.9em; color:#465562; margin-top:0.5em; }
+/* Search results replace the contents only while a query is active. */
+.book-summary.tutorial-search-active ul.summary { display: none !important; }
+#tutorial-search-results { padding: 0 14px; }
+#tutorial-search-results > p { font-size: 13px; margin: 12px 0; }
+#tutorial-search-results > a { display: block; padding: 12px 0; border-bottom: 1px solid #ccd5df; white-space: normal; color: #243a53; }
+#tutorial-search-results span { display: block; line-height: 1.45; }
+#tutorial-search-results .search-chapter { font-size: 12px; color: #526478; }
+#tutorial-search-results .search-section { font-size: 14px; margin: 3px 0; }
+#tutorial-search-results .search-excerpt { font-size: 12px; color: #454545; }
+.book:not(.with-search) #tutorial-search-results { display: none; }
+.book:not(.with-search) .book-summary.tutorial-search-active ul.summary { display: block !important; }

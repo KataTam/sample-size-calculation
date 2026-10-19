@@ -212,7 +212,7 @@ Before choosing a sample size, your study plan should distinguish what you expec
 
 | Decision | What to make explicit |
 |---|---|
-| Research question: PICO | Population, Intervention, Comparator, and Outcome, including the measurement time point |
+| Research question: PICO | Population, Intervention, Comparator, and Outcome, following @richardson1995; the outcome should include the measurement time point |
 | Planning objective and constraints | Hypothesis testing with a power target, estimation with a precision target, both requirements, or a feasibility objective; whether the available sample is fixed |
 | Effect scale | Treatment minus control; score units or percentage points; direction of benefit |
 | Expected difference | Best current expectation, supporting evidence and uncertainty |
@@ -228,7 +228,7 @@ Before choosing a sample size, your study plan should distinguish what you expec
 
 Table: (\#tab:planning-assumptions) Decisions and assumptions to record in a sample size plan.
 
-The classic account by @richardson1995 describes a well-built clinical question. Here, PICO connects that question to the calculation: Population, Intervention, Comparator, and Outcome. Here these are patients with chronic pain, the novel treatment, standard treatment, and pain relief at four weeks.
+PICO connects the clinical question to the calculation. In this example, its components are patients with chronic pain, the novel treatment, standard treatment, and pain relief at four weeks.
 
 The target difference tells the calculation where to evaluate power. The [standard deviation](#standard-deviation) describes variation between individuals; the [standard error](#standard-error) describes [sampling variability](#sampling-variability) of an estimate. For binary outcomes, you should report each group's event probability as a percentage and their absolute difference in percentage points. The section [Glossary](#glossary) explains these terms in more detail.
 

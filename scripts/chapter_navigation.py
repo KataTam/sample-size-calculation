@@ -1,4 +1,4 @@
-"""Add consistent reading navigation before the closing chapter material using Bookdown's own chapter order and route classes."""
+"""Add consistent reading navigation after the complete chapter content using Bookdown's own chapter order and route classes."""
 from pathlib import Path
 from html import escape, unescape
 import re
@@ -50,13 +50,6 @@ def add_chapter_navigation(book):
             destination = re.search(r'href="([^"#]+)', match.group(0))
             return '' if destination and destination.group(1) in later else match.group(0)
         source = re.sub(r'<div class="core-next">.*?</div>', keep_section_shortcut, source, flags=re.S)
-        recap = source.find('<div class="chapter-recap">')
-        if recap >= 0:
-            position = recap
-        else:
-            sections = list(re.finditer(r'<div[^>]+class="[^"\n]*\bsection level2\b[^"\n]*"[^>]*>', source))
-            if not sections:
-                raise ValueError(f'No closing chapter section in {name}')
-            position = sections[-1].start()
+        position = source.index('</section>')
         source = source[:position] + nav + source[position:]
         chapter['path'].write_text(source, encoding='utf-8')
