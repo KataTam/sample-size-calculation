@@ -18,7 +18,7 @@ const base=(process.argv[2]||'http://127.0.0.1:8769').replace(/\/$/,'');
  const number=await citation.innerText(),ref=(await citation.getAttribute('href')).split('#')[1];
  await page.goto(base+'/book/references.html');
  assert.equal((await page.locator('#'+ref+' .reference-number').innerText()),'['+number+']');
- assert.match(await page.locator('.citation:not(.citation-numbered)').allTextContents().then(x=>x.join(' ')),/Wieringa/);
+ assert.match(await page.locator('.citation:not(.citation-numbered)').allTextContents().then(x=>x.join(' ')),/Kirkwood/);
  assert.match(await page.locator('#ref-richardson1995').innerText(),/1995.*well-built clinical question/s);
  await page.goto(base+'/book/power.html');
  assert.equal(await page.locator('details.advanced-explanation[open]').count(),0);
