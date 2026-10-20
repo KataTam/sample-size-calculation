@@ -54,7 +54,9 @@ cat('<figure class="tutorial-roadmap">',
 
 The core examples begin with two independent treatment groups of equal size. Simulation shows how results vary between studies under the same assumptions. Later chapters extend the reasoning to other planning goals and designs.
 
-You can open [the tutorial and an app together](https://katatam.github.io/sample-size-calculation/study/?activity=pain_one_many), consult the [activity walkthroughs](https://katatam.github.io/sample-size-calculation/student-materials/activity-walkthroughs.html), or review terms in the [Glossary](#glossary). For your own project, [Where does my study fit?](#study-designs) helps you choose an approach.
+Short multiple-choice checks follow the teaching chapters. The [cumulative quiz](#cumulative-quiz) offers Core and Core + advanced routes with feedback at the end.
+
+You can open [the tutorial and an app together](https://katatam.github.io/sample-size-calculation/study/?activity=pain_one_many), consult the [activity walkthroughs](https://katatam.github.io/sample-size-calculation/student-materials/activity-walkthroughs.html), or review terms in the [Glossary](#glossary). For your own project, [Study designs and planning methods](#study-designs) helps you choose an approach.
 
 [Flashcards](https://katatam.github.io/sample-size-calculation/student-materials/flashcards/index.html) are available for Core and Core + Advanced, with a [question-and-answer preview](https://katatam.github.io/sample-size-calculation/student-materials/flashcards/cards.html) and Anki/Quizlet downloads. Questions and suggestions are welcome through [Feedback](https://forms.cloud.microsoft/e/j00AMibqi5).
 
@@ -144,7 +146,7 @@ A study should provide useful information in relation to the burdens and risks p
 
 ## What should you consider before calculating the sample size? {#how-do-you-determine-the-minimum-required-sample-size .core-heading}
 
-Before choosing numerical parameters, you should consult guidance appropriate to the study design and research question. For a randomized trial, SPIRIT 2025 for the protocol and CONSORT 2025, together with relevant extensions, for reporting the results provide relevant guidance [@spiritconsort2025]. For other designs, you should consult the corresponding guidance, such as STROBE for observational studies or STARD for diagnostic accuracy; [Where does my study fit?](#study-designs) provides routes. These are reporting guidelines: they help identify decisions to document. Then you can specify the primary outcome, the expected results in each group, the planned analysis and the acceptable error probabilities. You can follow the question through to the analysis before choosing numbers [@fong2026; @wang2020]:
+Before choosing numerical parameters, you should consult guidance appropriate to the study design and research question. For a randomized trial, SPIRIT 2025 for the protocol and CONSORT 2025, together with relevant extensions, for reporting the results provide relevant guidance [@spiritconsort2025]. For other designs, you should consult the corresponding guidance, such as STROBE for observational studies or STARD for diagnostic accuracy; [Study designs and planning methods](#study-designs) provides routes. These are reporting guidelines: they help identify decisions to document. Then you can specify the primary outcome, the expected results in each group, the planned analysis and the acceptable error probabilities. You can follow the question through to the analysis before choosing numbers [@fong2026; @wang2020]:
 
 - Who are the patients, and how will treatment be allocated?
 - What outcome will be measured, and at what time?
@@ -157,7 +159,7 @@ The map below gathers the remaining decisions. The chronic pain plan has two ind
 knitr::asis_output(render_question_map())
 ```
 
-The examples use frequentist methods: two-sided significance tests for superiority and [confidence intervals](#confidence-interval) for estimation. [Estimation](#estimation) uses sample data to estimate a population quantity, such as a between-group difference. Precision describes how much uncertainty remains around that estimate, assessed here by interval width at a specified confidence level. A trial planned for power can also estimate the treatment difference; choosing a precision target changes how its sample size is determined. Non-inferiority, equivalence and clustered trials require different hypotheses or calculations; [Where does my study fit?](#study-designs) helps identify these designs. For Bayesian planning, see [@kunzmann2021review].
+The examples use frequentist methods: two-sided significance tests for superiority and [confidence intervals](#confidence-interval) for estimation. [Estimation](#estimation) uses sample data to estimate a population quantity, such as a between-group difference. Precision describes how much uncertainty remains around that estimate, assessed here by interval width at a specified confidence level. A trial planned for power can also estimate the treatment difference; choosing a precision target changes how its sample size is determined. Non-inferiority, equivalence and clustered trials require different hypotheses or calculations; [Study designs and planning methods](#study-designs) helps identify these designs. For Bayesian planning, see [@kunzmann2021review].
 
 ## What do you expect, what will you plan for, and what matters clinically? {#what-do-we-expect-what-will-we-plan-for-and-what-matters-clinically .core-heading}
 
@@ -300,6 +302,12 @@ No. The target needs a justification based on evidence and clinical relevance; c
 You can complete the longer exploration after reading, or return to the relevant explanation beside the app.
 
 - [Activity: Develop and justify your study plan](https://katatam.github.io/sample-size-calculation/study/?activity=assumptions_report).
+
+</div>
+
+<div class="chapter-check">
+
+[Activity: Chapter check](https://katatam.github.io/sample-size-calculation/quiz/?chapter=clinical-question). This short multiple-choice check gives your results, explanations and revision links after you finish.
 
 </div>
 
@@ -687,6 +695,12 @@ You can complete the longer exploration after reading, or return to the relevant
 
 </div>
 
+<div class="chapter-check">
+
+[Activity: Chapter check](https://katatam.github.io/sample-size-calculation/quiz/?chapter=power). This short multiple-choice check gives your results, explanations and revision links after you finish.
+
+</div>
+
 # Calculate a sample size {#calculations .core-heading}
 
 
@@ -699,7 +713,7 @@ After this section, you should be able to:
 - Distinguish per-group from total counts.
 :::
 
-You can now apply these ideas to two-arm treatment comparisons. The formulas below assume two [independent groups](#independent-groups) with equal allocation and a [two-sided test](#two-sided-test). Later, [Recruitment, estimation and feasibility](#feasibility) extends planning to estimation and single-proportion examples, and [Where does my study fit?](#study-designs) considers other designs.
+You can now apply these ideas to two-arm treatment comparisons. The formulas below assume two [independent groups](#independent-groups) with equal allocation and a [two-sided test](#two-sided-test). Later, [Recruitment, estimation and feasibility](#feasibility) extends planning to estimation and single-proportion examples, and [Study designs and planning methods](#study-designs) considers other designs.
 
 Having specified the chronic pain target difference and acceptable error risks, you can calculate the required number of analyzable patients. The first calculation concerns that trial; the next concerns a continuous-outcome comparison.
 
@@ -741,6 +755,8 @@ grid$multiplier <- with(grid, (qnorm(1 - alpha / 2) + qnorm(power))^2)
 knitr::kable(display_probabilities(grid, c("alpha", "power")), digits = 2,
   caption = "Normal-approximation sample-size multipliers for different Type I error probability and target-power choices.")
 ```
+
+The [methods and software record](#tutorial-methods) identifies the procedures used here and explains what should accompany an exported calculation.
 
 ## Two proportions {.core-heading}
 
@@ -996,6 +1012,12 @@ You can complete the longer exploration after reading, or return to the relevant
 
 </div>
 
+<div class="chapter-check">
+
+[Activity: Chapter check](https://katatam.github.io/sample-size-calculation/quiz/?chapter=calculations). This short multiple-choice check gives your results, explanations and revision links after you finish.
+
+</div>
+
 # Read power curves {#curves .advanced-heading}
 
 
@@ -1158,6 +1180,12 @@ You can complete the longer exploration after reading, or return to the relevant
 
 </div>
 
+<div class="chapter-check">
+
+[Activity: Chapter check](https://katatam.github.io/sample-size-calculation/quiz/?chapter=curves). This short multiple-choice check gives your results, explanations and revision links after you finish.
+
+</div>
+
 # Build a simulated clinical trial {#simulation .advanced-heading}
 
 
@@ -1175,6 +1203,8 @@ This chapter returns to the two-arm chronic pain trial and its planned analysis.
 The curves in Figure \@ref(fig:power-curves) describe the performance of the chronic pain design across repeated studies. Now generate individual trials under the same assumptions to see why their estimates, intervals and decisions vary.
 
 Simulation is especially useful when the planned analysis or dependency between observations makes a simple formula inadequate. Your simulation plan should define the quantity to estimate, justify the assumed population values, and specify the analysis. You can then generate and analyze repeated studies, summarize their performance with Monte Carlo uncertainty, and examine plausible alternative assumptions [@pargent2024]. For complex models, your report should also describe failed model fits and performance when the null hypothesis is true. A simulation is only as informative as its assumptions and implementation.
+
+The [simulation reproducibility guide](#simulation-reproducibility) explains how the generating assumptions, repetitions, analysis and software should be documented.
 
 ## Activity: Simulate repeated chronic pain trials {#activity-3-generate-analyze-repeat-summarize .advanced-heading}
 
@@ -1349,6 +1379,12 @@ Yes. Many repetitions can estimate performance precisely under assumptions that 
 You can complete the longer exploration after reading, or return to the relevant explanation beside the app.
 
 - [Activity: Simulate repeated chronic pain trials](https://katatam.github.io/sample-size-calculation/study/?activity=pain_simulation).
+
+</div>
+
+<div class="chapter-check">
+
+[Activity: Chapter check](https://katatam.github.io/sample-size-calculation/quiz/?chapter=simulation). This short multiple-choice check gives your results, explanations and revision links after you finish.
 
 </div>
 
@@ -1804,15 +1840,28 @@ You can complete the longer exploration after reading, or return to the relevant
 
 </div>
 
+<div class="chapter-check">
+
+[Activity: Chapter check](https://katatam.github.io/sample-size-calculation/quiz/?chapter=feasibility). This short multiple-choice check gives your results, explanations and revision links after you finish.
+
+</div>
+
 # Test your reasoning {#exercises .core-heading}
 
 ::: {.learning-goals .core-outcomes}
 After this section, you should be able to:
 
+- Identify gaps in your understanding using quiz feedback and the linked explanations.
 - Justify a planning goal in a new clinical case.
 - Assess what a fixed sample can establish.
 - Turn your evidence and assumptions into a complete study-planning report.
 :::
+
+## Activity: Cumulative multiple-choice quiz {#cumulative-quiz .core-heading}
+
+The [cumulative quiz](https://katatam.github.io/sample-size-calculation/quiz/) offers Core and Core + advanced options. It covers the substantive teaching chapters, including study design and reproducibility later in the tutorial. You can return here after those chapters, or use a chapter check while progressing. The glossary and common misconceptions support revision.
+
+Each question has one best answer. You can review your choices before finishing. Results appear at the end, with an overall score, a topic breakdown, explanations and links to the relevant sections. The quiz supports self-assessment; the written study justification below provides practice in making and explaining decisions.
 
 ## Discharge percentages {#discharge .core-heading}
 
@@ -1891,24 +1940,14 @@ You can discuss these review questions with a collaborator:
 - Does the [sensitivity analysis](#sensitivity-analysis) keep the appropriate quantities fixed?
 - Does the interpretation acknowledge what an inconclusive result could mean?
 
-For an advanced extension, you can add a simulation result with its generating assumptions, analysis, repetition count and Monte Carlo interval. Your explanation should address what it adds to the analytical calculation. You can also write a short hypothetical study abstract that distinguishes the planned design, realized results and interpretation, following the broader learning sequence used in DICE [@thiesmeier2024].
-
-<div class="core-next">Continue along the core route: <a href="#record-assumptions">Develop and justify your study plan</a>.</div>
-
-## Plan your own study {#own-study .advanced-heading}
+<span id="own-study"></span>
 
 <details class="advanced-explanation">
-<summary>Advanced explanation and exploration</summary>
+<summary>Advanced extension: your own study</summary>
 
+For an advanced extension, you can add a simulation result with its generating assumptions, analysis, repetition count and Monte Carlo interval. Your explanation should address what it adds to the analytical calculation. You can also write a short hypothetical study abstract that distinguishes the planned design, realized results and interpretation, following the broader learning sequence used in DICE [@thiesmeier2024].
 
-
-
-The statistical, clinical, ethical and logistic questions introduced earlier should help you assess your own project. [Activity: Build your own study calculation](https://katatam.github.io/sample-size-calculation/study/?activity=own_study) and complete the [case and assumption map](https://katatam.github.io/sample-size-calculation/case-studies/student_case_template.html). You can use hypothetical or public values for this exercise; do not put patient records into the teaching app.
-
-1. Your report should describe the question and design. Your report should state the population, comparison, outcome and time point. You should check [the study-design guide](#study-designs): one independent observation per person, paired observations, clustered recruitment and prediction models have different planning needs.
-2. You can choose what the study should establish. Your plan should specify an effect to test, a useful interval width, feasibility criteria, or what an already fixed sample could establish. Your report should record evidence sources, uncertainty and plausible alternative assumptions.
-3. You should connect clinical and ethical value to the design. Who judges the benefit worthwhile? What burden, harm or opportunity cost would participation bring? What would you do if the likely interval still included both trivial and important effects? A sample meeting a conventional power target does not answer all these questions.
-4. You can assess resources and communicate a recommendation. Your report should state recruitment rate, period, per-person cost and expected losses. Your explanation should distinguish available recruitment from expected analyzable counts. Your report should examine sensitivity at the original planned n and justify proceeding, collaborating, redesigning, narrowing the aim, or not proceeding. You can save the assumptions, method and explanation with the app results.
+Your project may involve estimation, a fixed dataset or dependent observations. The [study-design guide](#study-designs) should inform your choice of method. In [Activity: Build your own study calculation](https://katatam.github.io/sample-size-calculation/study/?activity=own_study), you can assess plausible assumptions and resource limits, then explain whether to proceed, collaborate, redesign or narrow the question. The [reproducibility record](#reproducibility-record) should accompany the result.
 
 </details>
 
@@ -1949,6 +1988,12 @@ You can complete the longer exploration after reading, or return to the relevant
 </div>
 
 
+<div class="chapter-check">
+
+[Activity: Chapter 7 check](https://katatam.github.io/sample-size-calculation/quiz/?chapter=exercises) · [Cumulative quiz](https://katatam.github.io/sample-size-calculation/quiz/). Results appear after you finish.
+
+</div>
+
 ```{r study-design-help, echo=FALSE, results='asis'}
 cat(readLines("../student-materials/study-design-guide.md", warn = FALSE, encoding = "UTF-8"),
   sep = "\n")
@@ -1966,29 +2011,101 @@ cat(readLines("../student-materials/common-mistakes.md", warn = FALSE, encoding 
 ```
 
 
-# Reproducibility and further reading {#appendix .advanced-heading}
-
-
+# Reproducibility and open science {#appendix .advanced-heading}
 
 ::: {.learning-goals .advanced-outcomes}
 After this section, you should be able to:
 
-- Reproduce a calculation or simulation using its inputs and method.
-- Explain why results from different software must be compared using matching assumptions and methods.
+- Explain why transparent documentation supports checking and reuse of study plans.
+- Record the inputs, procedures and software needed to reproduce a calculation or simulation.
+- Distinguish computational reproducibility from replication with new data.
+- Compare software results using matching methods and assumptions.
 :::
 
-The current open edition uses reproducible R plots, tables and browser apps. You can compare hypotheses, tests, allocation, continuity corrections and rounding before comparing results across software. Numerical agreement is informative only when the methods and inputs match; methodological validation records belong with the source documentation.
+## Why reproducibility matters {#why-reproducibility-matters .core-heading}
 
-Throughout the tutorial, the difference is novel treatment minus standard treatment: $0.60-0.30=0.30$, or 30 percentage points. For the same [two-sided test](#two-sided-test), reversing the subtraction changes the sign while preserving [power](#statistical-power).
+A sample-size result is useful when another researcher can understand how it was obtained, check the calculation, and assess whether its assumptions fit the proposed study. Numerical inputs, statistical procedures, software settings and rounding rules can all affect the result. Clear documentation makes errors easier to identify and allows you to revisit the plan when new evidence becomes available.
 
-## Reproduce or adapt the examples {.advanced-heading}
+Here, computational reproducibility means obtaining consistent results using the same inputs, computational procedures and conditions. Replicability concerns whether studies collecting new data to address the same scientific question produce consistent findings. These definitions follow @nas2019. Reproducing a calculation helps establish that its implementation can be checked. Its assumptions and the suitability of the study design still require scientific judgment.
 
-The code uses base R and the shared clinical simulation functions. The two-proportion analysis is a pooled score test without continuity correction, with Newcombe-Wilson [confidence intervals](#confidence-interval). Normal-outcome examples assume independent normal observations with a common variance and use a pooled t test. Binary analytical power is a normal approximation; simulation estimates the probability of a statistically significant result for the chosen sample size and test.
+Open science supports scrutiny and reuse by making research methods, outputs and supporting resources accessible. A shared protocol, analysis code, documented assumptions and an identified software version help others understand and build on your work. Data access should respect consent, confidentiality and other legitimate restrictions [@unesco2021]. The synthetic examples here allow you to explore and share the computational workflow without using patient records.
 
-The shared functions are supplied in `../R/sample_size_functions.R`. Presentation helpers are in `../R/tutorial_helpers.R`. The same clinical simulation functions underpin the [existing OER lab](https://katatam.github.io/sample-size-calculation/study/?activity=pain_simulation). A compact demonstration of the repeated-trial algorithm is:
+## What a reproducible justification contains {#reproducibility-record .core-heading}
+
+Your report should connect the clinical question to its numerical result. The record should include:
+
+- The study design, primary outcome and time point, allocation and unit of analysis.
+- The expected difference, target difference and clinical threshold, where relevant, with their evidence and units. These are between-group differences in the treatment-comparison examples.
+- Event probabilities or SD, Type I error probability, target power or confidence level and interval-width target.
+- The planning calculation and the intended analysis, including sidedness, corrections and assumptions.
+- Unrounded calculated values where available, upward rounding within each group, and recruitment adjustments for expected losses.
+- Sensitivity scenarios, numerical results, limitations and the conclusion supported by the plan.
+- Software and relevant package versions, the code version, and saved inputs or data needed for reproduction.
+
+A simulation report should also describe how data were generated, the number of independent studies, the analysis of each study, and how performance was summarized. Your [assumptions report](https://katatam.github.io/sample-size-calculation/study/?activity=assumptions_report) can bring the clinical justification and these computational details together. Each saved result should retain the inputs used to produce it; changed controls require a new calculation or simulation.
+
+## Methods used in this tutorial {#tutorial-methods .advanced-heading}
+
+The table distinguishes the planning calculation from the analysis of simulated data. Equal allocation and independent observations are assumed in the basic two-group examples. Differences are treatment minus control; their units and direction should be explicit.
+
+| App or example | Planning or calculation procedure | Analysis or interval procedure |
+|:--|:--|:--|
+| Two proportions | Normal approximation using R's `stats::power.prop.test()`, two-sided with `strict = TRUE`; required patients rounded upward per group | The reasoning lab uses a two-sided pooled score test without continuity correction and a Newcombe-Wilson interval for the difference |
+| Two means: introductory calculator | Normal approximation using the target difference, common SD and normal quantiles | The reasoning lab uses a pooled-variance t test and t interval; test-based planning uses `stats::power.t.test()` |
+| One population percentage | Normal approximation for the requested margin of error; the unknown-percentage option uses 50% for planning | A simulated binomial count is summarized with a Wilson interval |
+| Sampling distributions | Normal probabilities for one sample mean with a known population SD | Rejection boundaries and probabilities follow the selected one- or two-sided rule |
+| Expected losses | Required analyzable count divided by the expected retained fraction, then rounded upward | The adjustment concerns recruitment counts; the simulation conditions on analyzable sample size |
+
+Table: Statistical procedures used by the tutorial's calculation and simulation apps.
+
+The score test and Newcombe-Wilson interval use different constructions, so their decisions at the null need not coincide exactly. A comparison across software should match the test, interval method, sidedness, allocation, correction and rounding rules. The [statistical methods documentation](https://katatam.github.io/sample-size-calculation/documentation/statistical-methods.html) describes implementation details and limitations.
+
+## How the simulations work {#simulation-reproducibility .advanced-heading}
+
+The reporting framework ADEMP identifies the aims, data-generating mechanisms, estimands (the quantities being estimated), methods and performance measures [@morris2019]. For the chronic-pain activity, these correspond to investigating study performance; generating relief outcomes at specified probabilities; estimating the between-group difference; applying the chosen test and interval; and summarizing rejection, coverage and interval width.
+
+<details class="advanced-explanation">
+<summary>Simulation procedures and random-number settings</summary>
+
+For one binary study, the app generates independent Bernoulli patient outcomes. For many studies, it generates binomial event counts for each group and analyzes each pair of counts. Normal-outcome studies assume independent observations with a common SD. The repeated-study implementation generates normally distributed mean differences and chi-squared pooled variances; under these assumptions, these have the same sampling distributions as the corresponding summaries of complete patient datasets.
+
+Power is estimated by the fraction of studies with p-values below the chosen Type I error probability. Under a null scenario, that fraction estimates the false-positive probability. Interval coverage counts intervals containing the specified population value. The number of studies, Monte Carlo standard error and interval procedure should accompany simulation summaries; the apps use Wilson intervals for the simulated fractions.
+
+The random seed, random-number generator settings and software environment help reproduce a particular simulated batch. Changing the simulation algorithm can change the realized random draws even when its statistical model is equivalent. Agreement of individual random outcomes requires the same computational procedure as well as the same assumptions.
+
+</details>
+
+## Software and saved records {#software-record .advanced-heading}
+
+The calculations use R and the shared functions in `R/sample_size_functions.R`. The interactive R apps use Shiny and are distributed for the browser through Shinylive. R Markdown and Bookdown compile the tutorial. The [source repository](https://github.com/KataTam/sample-size-calculation) supplies the code and `renv.lock`, which records the project package environment.
+
+For a reproducible record, your saved report should identify the actual R and relevant package versions used, the app or script, and the exact repository commit. A tutorial build and a browser app can use different R environments. The build information below describes this tutorial build; an app result should be documented using its own runtime information. A dated screenshot alone cannot supply all these details.
+
+<details>
+<summary>R version and package information for this tutorial build</summary>
+
+```{r session, echo=FALSE}
+sessionInfo()
+```
+
+</details>
+
+## Reproduce or adapt an example {#reproduce-or-adapt-the-examples .advanced-heading}
+
+You can begin with [Activity: Simulate repeated chronic pain trials](https://katatam.github.io/sample-size-calculation/study/?activity=pain_simulation). After running a scenario, you can save its replications and assumptions, study plan and R script using the lab's download controls. The script loads shared functions from a repository checkout, so that checkout's commit should be recorded alongside it.
+
+A practical reproduction follows these steps:
+
+1. The source checkout should match the recorded code version. Its documented environment should be restored before running the saved script.
+2. Saved inputs should match the result being checked, including sample size, population assumptions, test settings and simulation repetitions.
+3. The saved script should run from the repository root. Its summaries can then be compared with the exported result using unrounded values where available.
+4. Any changed method, software version or assumption should be documented before interpreting differences in the output.
+
+For a compact example of the binary repeated-study algorithm:
 
 ```{r algorithm, eval=FALSE}
-set.seed(20260921)  # Set the seed once before generating the batch
+source("R/sample_size_functions.R")
+set.seed(20260921)
 B <- 5000
 n <- 60
 treatment_count <- rbinom(B, n, .60)
@@ -1997,31 +2114,13 @@ results <- analyse_binary(treatment_count, control_count, n, alpha = .05)
 mean(results$p_value < .05)
 ```
 
-The general simulation principle is also described by @lakenscaldwell2021. That paper's factorial examples are not prerequisites for these clinical activities.
+Adaptations should keep the editable R Markdown, shared case settings, app code and build instructions together. You should review changes to assumptions and methods alongside the resulting figures and activities. The [adaptation guide](https://katatam.github.io/sample-size-calculation/teaching/adaptation_guide.html) provides practical steps [@bothmann2021].
 
-For adaptation, you should keep the editable R Markdown, shared case settings, app code and build instructions alongside the rendered tutorial. You should review changes to assumptions and methods together with the resulting figures and activities. This follows the computational-resource development approach described by @bothmann2021; its manuscript provides a perspective on developing computational resources. See the [adaptation guide](https://katatam.github.io/sample-size-calculation/teaching/adaptation_guide.html) for practical steps.
+<div class="chapter-check">
 
-## Further planning approaches {#further-planning-approaches .advanced-heading}
+[Activity: Reproducibility chapter check](https://katatam.github.io/sample-size-calculation/quiz/?chapter=appendix) · [Cumulative quiz](https://katatam.github.io/sample-size-calculation/quiz/). Results appear after you finish.
 
-The core calculations evaluate power at specified values. More specialized approaches account for additional uncertainty or a different research objective:
-
-- Safeguard power uses uncertainty in a previous difference estimate when planning. It can imply a much larger sample when the evidence is weak; it does not establish clinical importance [@perugini2014].
-- Bayesian and hybrid approaches can average performance over a justified distribution of plausible parameter values. Assurance or expected power answers a different question from power at one fixed difference; the distribution and decision rule need justification [@kunzmann2021review; @pezeshk2003].
-- Mixed-model simulation can represent clustered or repeated observations and the intended analysis, but needs credible dependency assumptions, convergence checks and [sensitivity analysis](#sensitivity-analysis) [@pargent2024].
-- Multiple outcomes or treatment comparisons need a prespecified success rule and appropriate error control. Power for each comparison separately does not establish the probability that all required comparisons succeed [@fong2026].
-
-These extensions require design-specific planning with a methodological collaborator. [Where does my study fit?](#study-designs) and the references below provide routes to design-specific methods.
-
-A review of Bayesian randomized trials found that hybrid sample-size methods were common and fully Bayesian methods were rarely used [@marks2026]. A Bayesian analysis does not automatically imply a fully Bayesian sample-size calculation or an adaptive design. Bayesian trials can have a fixed sample size; adaptive designs also require prespecified rules and evaluation of their operating characteristics.
-
-<details>
-<summary>R version and package information for this build</summary>
-
-```{r session, echo=FALSE}
-sessionInfo()
-```
-
-</details>
+</div>
 
 # References {-}
 

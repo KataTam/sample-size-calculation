@@ -1150,28 +1150,28 @@
       "level": "advanced",
       "front": "How does assurance or expected power differ from power at one fixed difference?",
       "back": "It averages performance over a justified distribution of plausible parameter values, according to the specified planning framework.",
-      "source": "https://katatam.github.io/sample-size-calculation/book/appendix.html#further-planning-approaches"
+      "source": "https://katatam.github.io/sample-size-calculation/book/study-designs.html#further-planning-approaches"
     },
     {
       "id": "A077",
       "level": "advanced",
       "front": "What does safeguard power account for?",
       "back": "Uncertainty in a previous effect estimate when planning; weak evidence can imply a much larger required sample.",
-      "source": "https://katatam.github.io/sample-size-calculation/book/appendix.html#further-planning-approaches"
+      "source": "https://katatam.github.io/sample-size-calculation/book/study-designs.html#further-planning-approaches"
     },
     {
       "id": "A078",
       "level": "advanced",
       "front": "Why do multiple outcomes or comparisons need a prespecified success rule?",
       "back": "Power for each comparison separately does not determine the probability that all required comparisons succeed. Appropriate error control is also needed.",
-      "source": "https://katatam.github.io/sample-size-calculation/book/appendix.html#further-planning-approaches"
+      "source": "https://katatam.github.io/sample-size-calculation/book/study-designs.html#further-planning-approaches"
     },
     {
       "id": "A079",
       "level": "advanced",
       "front": "Does using a Bayesian analysis automatically make a trial adaptive?",
       "back": "No. Bayesian trials can have fixed sample sizes. Adaptive designs need prespecified adaptation rules and evaluation of their performance.",
-      "source": "https://katatam.github.io/sample-size-calculation/book/appendix.html#further-planning-approaches"
+      "source": "https://katatam.github.io/sample-size-calculation/book/study-designs.html#further-planning-approaches"
     },
     {
       "id": "A080",

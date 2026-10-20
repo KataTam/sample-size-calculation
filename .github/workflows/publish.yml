@@ -51,6 +51,7 @@ jobs:
           node scripts/check_design_browser.cjs
           node scripts/check_chapter_navigation.cjs
           node scripts/check_tutorial_search.cjs
+          node scripts/check_quiz.cjs
           node scripts/check_reader_tools.cjs
           node scripts/check_glossary_tools.cjs
           node scripts/check_week2.cjs

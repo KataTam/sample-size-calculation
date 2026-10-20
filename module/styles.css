@@ -168,3 +168,4 @@ details.activity-practice { background:#dfedf7; padding:10px 14px; margin:1em 0;
 #tutorial-search-results .search-excerpt { font-size: 12px; color: #454545; }
 .book:not(.with-search) #tutorial-search-results { display: none; }
 .book:not(.with-search) .book-summary.tutorial-search-active ul.summary { display: block !important; }
+.chapter-check { margin: 1.5em 0; padding: 14px 18px; background: #e2ecfc; border-left: 4px solid #4975a5; }

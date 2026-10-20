@@ -127,10 +127,16 @@
   },
   {
     "chapter": "exercises",
-    "anchor": "own-study",
-    "title": "Plan and justify your own study",
+    "anchor": "exercises",
+    "title": "Test your reasoning",
     "route": "Core and advanced",
     "activities": [
+      {
+        "label": "Cumulative multiple-choice quiz",
+        "path": "quiz/",
+        "route": "Core and advanced",
+        "section": "cumulative-quiz"
+      },
       {
         "label": "Discharge: an absolute probability difference",
         "path": "study/?activity=discharge",
@@ -141,7 +147,7 @@
         "label": "Build your own study calculation",
         "path": "study/?activity=own_study",
         "route": "Advanced",
-        "section": "own-study"
+        "section": "write-a-sample-size-justification"
       },
       {
         "label": "Complete your assumptions report",
@@ -154,7 +160,7 @@
   {
     "chapter": "study-designs",
     "anchor": "study-designs",
-    "title": "Where does my study fit?",
+    "title": "Study designs and planning methods",
     "route": "Advanced",
     "activities": [
       {

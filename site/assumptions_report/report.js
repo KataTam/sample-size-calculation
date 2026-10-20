@@ -22,6 +22,7 @@
     ]],
     ['Analysis and information target', [
       ['analysis', 'Planned analysis', 'Name the test and confidence interval method. State the sidedness and relevant assumptions.', 'The planned analysis is'],
+      ['software', 'Calculation procedure and software', 'Your record should identify the calculation method, software and relevant versions, code version or source, and saved inputs. For simulation, it should also include the generating procedure, repetitions and random-number settings. Guidance is linked above.', 'The calculation procedure, software and reproducibility record are'],
       ['power', 'Type I error probability and target power', 'State Type I error probability and target power as percentages. With fixed resources, record attainable power and the effect at which it is evaluated.', 'The Type I error probability and power specification is', 'power'],
       ['precision', 'Precision: desired confidence interval width', 'State the desired full confidence interval width, its units and the confidence level. With fixed resources, record attainable precision.', 'The precision specification is', 'precision']
     ]],

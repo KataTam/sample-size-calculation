@@ -1,4 +1,4 @@
-# Where does my study fit? {#study-designs .advanced-heading}
+# Study designs and planning methods {#study-designs .advanced-heading}
 
 ::: {.learning-goals .advanced-outcomes}
 Learning outcomes. After this section, you should be able to:
@@ -77,6 +77,20 @@ Your plan should follow the current funding program's requirements. [NIHR fundin
 
 For an unsupported design, take the question, assumptions, desired conclusion and analysis plan to a methodological collaborator before choosing a calculator. The [own-study guide](#own-study) and case template organize that information. The numerical examples use hypothetical assumptions for teaching. An actual study requires evidence appropriate to its population, outcome and design.
 
+## Further planning approaches {#further-planning-approaches .advanced-heading}
+
+The core calculations evaluate power at specified values. More specialized approaches account for additional uncertainty or a different research objective:
+
+- Safeguard power uses uncertainty in a previous difference estimate when planning. It can imply a much larger sample when the evidence is weak; it does not establish clinical importance [@perugini2014].
+- Bayesian and hybrid approaches can average performance over a justified distribution of plausible parameter values. Assurance or expected power answers a different question from power at one fixed difference; the distribution and decision rule need justification [@kunzmann2021review; @pezeshk2003].
+- Mixed-model simulation can represent clustered or repeated observations and the intended analysis, but needs credible dependency assumptions, convergence checks and [sensitivity analysis](#sensitivity-analysis) [@pargent2024].
+- Multiple outcomes or treatment comparisons need a prespecified success rule and appropriate error control. Power for each comparison separately does not establish the probability that all required comparisons succeed [@fong2026].
+
+These extensions require design-specific planning with a methodological collaborator. [Study designs and planning methods](#study-designs) and the references below provide routes to design-specific methods.
+
+A review of Bayesian randomized trials found that hybrid sample-size methods were common and fully Bayesian methods were rarely used [@marks2026]. A Bayesian analysis does not automatically imply a fully Bayesian sample-size calculation or an adaptive design. Bayesian trials can have a fixed sample size; adaptive designs also require prespecified rules and evaluation of their operating characteristics.
+
+
 <div class="chapter-recap">
 
 ### Take-home points {.unnumbered}
@@ -104,5 +118,11 @@ Not generally. Measurements within a patient are related, and the analysis and p
 No. CONSORT identifies information to report. The calculation still needs a suitable method, a planned analysis, and justified numerical assumptions.
 
 </details>
+
+</div>
+
+<div class="chapter-check">
+
+[Activity: Study designs chapter check](https://katatam.github.io/sample-size-calculation/quiz/?chapter=study-designs). Results, explanations and revision links appear after you finish.
 
 </div>
