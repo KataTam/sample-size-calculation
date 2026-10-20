@@ -250,3 +250,5 @@ pre code { display: block; }
 .table-scroll table { margin-block: 0 !important; }
 @media print { .table-scroll { overflow: visible; max-width: none; } }
 @media print { .skip-to-content { display: none !important; } }
+.book:not(.color-theme-2) .book-summary ul.summary li > a:hover,
+.book:not(.color-theme-2) .book-summary ul.summary li > a:focus { color: #17547b; }
