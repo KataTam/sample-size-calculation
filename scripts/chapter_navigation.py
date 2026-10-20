@@ -21,23 +21,12 @@ def add_chapter_navigation(book):
             next=next_link.group(1) if next_link else None)
     for name, chapter in chapters.items():
         links = []
-        next_name = chapter['next']
-        if next_name:
-            following = chapters[next_name]
-            route = ' (advanced)' if following['advanced'] else ' (core)' if following['core'] else ''
-            links.append(f'<a href="{escape(next_name)}">Next chapter{route}: {escape(following["title"])}</a>')
-            if chapter['advanced'] or following['advanced']:
-                core_name, visited = next_name, set()
-                while core_name and not chapters[core_name]['core']:
-                    if core_name in visited:
-                        raise ValueError('Circular chapter navigation')
-                    visited.add(core_name)
-                    core_name = chapters[core_name]['next']
-                if core_name and core_name != next_name:
-                    links.append(f'<a href="{escape(core_name)}">Continue with the next core chapter: {escape(chapters[core_name]["title"])}</a>')
-        else:
-            links.append('<a href="index.html">Return to the tutorial overview</a>')
-        nav = '<nav class="chapter-end-nav" aria-label="Continue reading" data-link-navigation="same-tab">' + ''.join(links) + '</nav>\n'
+        previous = re.search(r'<link rel="prev" href="([^"]+)"', chapter['source'])
+        for direction, destination, arrow in [('prev', previous.group(1) if previous else None, '&#8592;'), ('next', chapter['next'], '&#8594;')]:
+            if destination:
+                label = ('Previous chapter: ' if direction == 'prev' else 'Next chapter: ') + chapters[destination]['title']
+                links.append(f'<a class="chapter-arrow chapter-arrow-{direction}" href="{escape(destination)}" aria-label="{escape(label)}" title="{escape(label)}"><span aria-hidden="true">{arrow}</span></a>')
+        nav = '<nav class="chapter-end-nav" aria-label="Chapter navigation" data-link-navigation="same-tab">' + ''.join(links) + '</nav>\n'
         source = chapter['source']
         if source.count('</section>') != 1:
             raise ValueError(f'Expected one chapter content section in {name}')
