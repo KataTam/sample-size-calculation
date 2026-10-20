@@ -189,3 +189,39 @@ details.activity-practice { background:#dfedf7; padding:10px 14px; margin:1em 0;
   .chapter-quiz .quiz-option { border: 0; padding: 0; margin: 4px 0; }
   .chapter-quiz .quiz-answer-key { break-before: page; }
 }
+/* Reader themes and expandable content share explicit, readable foregrounds. */
+.quiz-disclosure > summary h2 { display: inline; font-size: 1.2em; margin: 0; }
+.quiz-disclosure { border-radius: 5px; }
+.book.color-theme-1, .book.color-theme-1 .book-body,
+.book.color-theme-1 .book-summary, .book.color-theme-1 .book-header { background: #faf5e9; }
+.book.color-theme-2 .book-body .page-wrapper .page-inner section.normal { color: #e4e8ed; }
+.book.color-theme-2 .book-body .page-wrapper .page-inner section.normal :is(.activity,.core-next,.quiz-answer) { background: #243e36; color: #edf7f1; }
+.book.color-theme-2 .book-body .page-wrapper .page-inner section.normal .quiz-incorrect { background: #493b20; color: #fff1cf; }
+.book.color-theme-2 .book-body .page-wrapper .page-inner section.normal :is(p.caption,caption,figcaption) { color: #d4dce5; }
+.book.color-theme-2 .book-body .page-wrapper .page-inner section.normal :is(summary,a,.reference-number) { color: #a8d6ff; }
+.book.color-theme-2 .book-summary .summary .activity-toc a { color: #a8d6ff; }
+.book.color-theme-2 .book-body .page-wrapper .page-inner section.normal :is(.question-map-info,.activity-practice) { background: #25364d; color: #edf3fa; }
+.book.color-theme-2 .book-body .page-wrapper .page-inner section.normal .quiz-option:has(input:checked) { background: #304d68; }
+.book.color-theme-2 .chapter-quiz .quiz-level { color: #d7bdf7; }
+.book.color-theme-2 .book-body .page-wrapper .page-inner section.normal :is(pre,code) { background: #35222c !important; color: #f6e7ef !important; }
+.book.color-theme-2 .book-body .page-wrapper .page-inner section.normal code span { color: #f6e7ef !important; }
+.book.color-theme-2 .book-body .page-wrapper .page-inner section.normal code :is(.co,.cv,.an) { color: #c9bfce !important; }
+.book.color-theme-2 .book-body .page-wrapper .page-inner section.normal code :is(.st,.ch) { color: #b9e6be !important; }
+.book.color-theme-2 .book-body .page-wrapper .page-inner section.normal code :is(.dv,.fl,.cn) { color: #ffd7a3 !important; }
+.book.color-theme-2 .book-body .page-wrapper .page-inner section.normal code :is(.fu,.kw) { color: #b9d8ff !important; }
+/* Wrap long lines in the reader and print edition; no scrolling or clipping. */
+pre, pre code, pre code span, div.sourceCode,
+.book .book-body .page-wrapper .page-inner section.normal pre,
+.book .book-body .page-wrapper .page-inner section.normal pre code {
+  white-space: pre-wrap !important; overflow-wrap: anywhere !important;
+  word-break: normal; max-height: none !important; overflow: visible !important;
+}
+pre code { display: block; }
+@media print {
+  pre, pre code, div.sourceCode, details.r-code-output { height: auto !important; max-height: none !important; overflow: visible !important; break-inside: auto !important; }
+  .quiz-disclosure { border: 0; padding: 0; }
+}
+.book.color-theme-1 .book-body .page-wrapper .page-inner section.normal { background: #faf5e9; }
+.book.color-theme-2 .book-header { background: #252a39; }
+.book.color-theme-2 .book-header :is(a,button) { color: #d8e8f7; }
+.book.color-theme-2 #tutorial-search-results :is(a,.search-chapter,.search-excerpt) { color: #d8e8f7; }

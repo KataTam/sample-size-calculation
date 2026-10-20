@@ -18,11 +18,11 @@ const base=process.argv[2] || 'http://127.0.0.1:8769';
   assert(await nav.evaluate(n=>n.parentElement.matches('section.normal') && n.nextElementSibling===null));
   assert.equal(await nav.evaluate(n=>getComputedStyle(n).display),'flex');
   assert.deepEqual(await nav.locator('a').evaluateAll(a=>a.map(x=>x.getAttribute('href'))),expected.map(x=>x+'.html'));
-  assert(await nav.locator('a').evaluateAll(a=>a.every(x=>x.target!=='_blank' && x.getAttribute('aria-label') && x.title)));
+  assert(await nav.locator('a').evaluateAll(a=>a.every(x=>x.target!=='_blank' && x.getAttribute('aria-label') && !x.title)));
  }
  await page.setViewportSize({width:390,height:844});
  await page.goto(`${base}/book/calculations.html`);
- assert.equal((await page.locator('.chapter-end-nav').innerText()).replace(/\s/g,''),'←→');
+ assert.equal((await page.locator('.chapter-end-nav').innerText()).replace(/\s/g,''),'<>');
  await page.locator('.chapter-end-nav').scrollIntoViewIfNeeded();
  await page.locator('.chapter-end-nav').screenshot({path:'build/browser-checks/chapter-navigation-mobile.png'});
  await page.locator('.chapter-arrow-next').click();

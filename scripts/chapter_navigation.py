@@ -22,12 +22,12 @@ def add_chapter_navigation(book):
     for name, chapter in chapters.items():
         links = []
         previous = re.search(r'<link rel="prev" href="([^"]+)"', chapter['source'])
-        for direction, destination, arrow in [('prev', previous.group(1) if previous else None, '&#8592;'), ('next', chapter['next'], '&#8594;')]:
+        for direction, destination, arrow in [('prev', previous.group(1) if previous else None, '&lt;'), ('next', chapter['next'], '&gt;')]:
             if destination:
                 label = ('Previous chapter: ' if direction == 'prev' else 'Next chapter: ') + chapters[destination]['title']
-                links.append(f'<a class="chapter-arrow chapter-arrow-{direction}" href="{escape(destination)}" aria-label="{escape(label)}" title="{escape(label)}"><span aria-hidden="true">{arrow}</span></a>')
+                links.append(f'<a class="chapter-arrow chapter-arrow-{direction}" href="{escape(destination)}" aria-label="{escape(label)}"><span aria-hidden="true">{arrow}</span></a>')
         nav = '<nav class="chapter-end-nav" aria-label="Chapter navigation" data-link-navigation="same-tab">' + ''.join(links) + '</nav>\n'
-        source = chapter['source']
+        source = re.sub(r'(<a[^>]+class="navigation[^"]*"[^>]*?) title="[^"]*"', r'\1', chapter['source'])
         if source.count('</section>') != 1:
             raise ValueError(f'Expected one chapter content section in {name}')
         # Remove older forward chapter shortcuts so there is one consistent control.

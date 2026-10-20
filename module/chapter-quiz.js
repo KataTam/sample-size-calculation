@@ -2,6 +2,14 @@
   function initialize() {
     document.querySelectorAll('.chapter-quiz:not([data-quiz-ready])').forEach(root => {
       root.dataset.quizReady = 'true';
+      if (!root.closest('.quiz-disclosure')) {
+        const heading = root.previousElementSibling;
+        if (heading?.matches('h2')) {
+          const disclosure = document.createElement('details'); disclosure.className = 'quiz-disclosure';
+          const summary = document.createElement('summary');
+          heading.before(disclosure); summary.append(heading); disclosure.append(summary, root);
+        }
+      }
       const form = root.querySelector('form'), results = root.querySelector('.quiz-results');
       const key = root.querySelector('.quiz-answer-key'), route = root.querySelector('.quiz-route');
       const questions = [...form.querySelectorAll('fieldset')], answers = [...key.querySelectorAll('.quiz-answer')];

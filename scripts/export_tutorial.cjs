@@ -110,6 +110,11 @@ let browser;
   });
   await page.emulateMedia({media:'print'});
   const disclosureCounts = await page.evaluate(() => {
+    for (const pre of document.querySelectorAll('main pre')) {
+      if (pre.scrollWidth > pre.clientWidth + 2 || pre.scrollHeight > pre.clientHeight + 2) {
+        throw Error('Clipped PDF code or output: ' + pre.textContent.slice(0, 100));
+      }
+    }
     const boxes = Array.from(document.querySelectorAll('main details'));
     for (const box of boxes) {
       if (!box.open || getComputedStyle(box).display === 'none') throw Error('Hidden PDF disclosure');
