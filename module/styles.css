@@ -225,3 +225,28 @@ pre code { display: block; }
 .book.color-theme-2 .book-header { background: #252a39; }
 .book.color-theme-2 .book-header :is(a,button) { color: #d8e8f7; }
 .book.color-theme-2 #tutorial-search-results :is(a,.search-chapter,.search-excerpt) { color: #d8e8f7; }
+/* WCAG contrast and non-color link identification in every reader theme. */
+.book:not(.color-theme-2) .book-body .page-wrapper .page-inner section.normal a { color: #17547b; }
+.book .book-body .page-wrapper .page-inner section.normal :is(p,li,td,figcaption,caption) a { text-decoration: underline; text-underline-offset: .15em; }
+.book:not(.color-theme-2) .book-summary ul.summary li.active > a { color: #17547b; }
+.book.color-theme-1 .book-summary ul.summary li a { color: #594d37; }
+.book:not(.color-theme-2) .book-body .page-wrapper .page-inner section.normal pre code,
+.book:not(.color-theme-2) .book-body .page-wrapper .page-inner section.normal pre code span { color: #30343b; background: transparent; }
+.book:not(.color-theme-2) .book-body .page-wrapper .page-inner section.normal pre code :is(.co,.cv,.an) { color: #535d66; }
+.book:not(.color-theme-2) .book-body .page-wrapper .page-inner section.normal pre code :is(.dv,.fl,.cn,.at) { color: #345c36; }
+.book:not(.color-theme-2) .book-body .page-wrapper .page-inner section.normal pre code :is(.st,.ch) { color: #8b263d; }
+.book:not(.color-theme-2) .book-body .page-wrapper .page-inner section.normal pre code :is(.fu,.kw) { color: #244c84; }
+.skip-to-content { position: fixed; left: 12px; top: -100px; z-index: 20000; padding: 12px; background: white; color: #17547b; }
+.skip-to-content:focus { top: 8px; }
+.reader-level { display: block; font-size: .6em; font-weight: normal; margin-bottom: .3em; }
+.book :focus-visible { outline: 3px solid #a45115; outline-offset: 3px; }
+.book.color-theme-2 :focus-visible { outline-color: #ffcf70; }
+.book .book-body .page-wrapper .page-inner section.normal summary { min-height: 24px; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto !important; } }
+@media (max-width: 600px) { .book .book-body .page-wrapper .page-inner { padding-inline: 12px; } .book-header { overflow: visible; } }
+.book.color-theme-1 .book-summary ul.summary .contents-route { color: #594d37; }
+.book.color-theme-1 .book-body .page-wrapper .page-inner section.normal :is(p,li,td) code { color: #30343b; }
+.table-scroll { max-width: 100%; overflow-x: auto; margin: 1em 0; }
+.table-scroll table { margin-block: 0 !important; }
+@media print { .table-scroll { overflow: visible; max-width: none; } }
+@media print { .skip-to-content { display: none !important; } }

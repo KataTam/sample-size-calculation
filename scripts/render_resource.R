@@ -14,6 +14,8 @@ render_resource <- function(include_pdf = TRUE) {
     '</script>\n<script>', reading_js, '</script>'), file = "module/glossary-support.html", append = TRUE)
   quiz_js <- paste(readLines("module/chapter-quiz.js", encoding = "UTF-8"), collapse = "\n")
   cat(paste0('<script>', quiz_js, '</script>'), file = "module/glossary-support.html", append = TRUE)
+  accessibility_js <- paste(readLines("module/accessibility.js", encoding = "UTF-8"), collapse = "\n")
+  cat(paste0('<script>', accessibility_js, '</script>'), file = "module/glossary-support.html", append = TRUE)
   setwd("module")
   input <- "Sample_size_open_module.Rmd"
   rmarkdown::render(input, output_format = bookdown::html_document2(

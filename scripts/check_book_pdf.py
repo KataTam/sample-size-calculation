@@ -5,6 +5,8 @@ from pypdf import PdfReader
 root=Path(__file__).resolve().parents[1]
 r=PdfReader(root/'output/pdf/Sample_size_open_module.pdf')
 headings=json.loads((root/'build/pdf/headings.json').read_text(encoding='utf-8'))
+assert '/StructTreeRoot' in r.trailer['/Root'], 'PDF lost its accessibility structure'
+assert r.trailer['/Root'].get('/Lang') == 'en-US'
 labels=r.page_labels
 offset=labels.index('1')
 assert offset>=2

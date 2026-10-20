@@ -6,6 +6,7 @@ import re
 from xml.sax.saxutils import escape
 from pypdf import PdfReader, PdfWriter
 from pypdf.annotations import Link
+from pypdf.generic import NameObject, TextStringObject
 from reportlab.pdfgen.canvas import Canvas
 from reportlab.lib.pagesizes import A4
 from reportlab.lib.styles import ParagraphStyle
@@ -74,7 +75,11 @@ for heading in headings:
     y-=ph
 finish_contents(); c.save()
 front=PdfReader(BytesIO(buffer.getvalue())); offset=len(front.pages)
-writer=PdfWriter(); writer.append(front,import_outline=False); writer.append(body,import_outline=False)
+# Preserve the browser's structure tree and page associations when adding front matter.
+writer=PdfWriter(); writer.clone_document_from_reader(body)
+if '/Outlines' in writer._root_object: del writer._root_object['/Outlines']
+for i, page in enumerate(front.pages): writer.insert_page(page, i)
+writer._root_object[NameObject('/Lang')] = TextStringObject('en-US')
 writer.add_outline_item('Title page',0)
 writer.add_outline_item('Contents',1)
 parent=None

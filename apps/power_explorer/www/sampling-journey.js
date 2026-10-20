@@ -60,6 +60,8 @@
     node(svg,'circle',{cx:point(t.estimate),'data-moving-estimate':'true',cy:320+(positions[index].y-320)*moving,r:5,fill:'#b53c69',stroke:'#fff','stroke-width':1});
   }
   function status() {
+    const t = data.trials[index];
+    el('journey-description').textContent = `Standard treatment: ${t.counts[0]} of ${data.n} patients (${pct(t.counts[0]/data.n)}); novel treatment: ${t.counts[1]} of ${data.n} (${pct(t.counts[1]/data.n)}). The estimated between-group difference is ${Math.round(t.estimate*1000)/10} percentage points. This estimate becomes dot ${index+1} in the sampling distribution. The assumed population difference stays at ${Math.round((data.p1-data.p0)*1000)/10} percentage points.`;
     el('journey-status').textContent = `${paused?'Paused. ':''}Trial ${index+1} of ${data.trials.length}; ${data.n} patients per group. ${stale?'Inputs changed; this sequence retains its saved assumptions. Run again to update.':''}`;
   }
   function tick(now) {
@@ -96,7 +98,7 @@
     });
     Shiny.addCustomMessageHandler('sampling-journey',payload=>{
       cancelAnimationFrame(raf);
-      if(payload.clear){data=null;el('sampling-journey').replaceChildren();el('journey-pause').disabled=true;el('journey-replay').disabled=true;el('journey-status').textContent='A single study or 20-trial sequence will appear here after simulation.';return;}
+      if(payload.clear){data=null;el('sampling-journey').replaceChildren();el('journey-description').textContent='';el('journey-pause').disabled=true;el('journey-replay').disabled=true;el('journey-status').textContent='A single study or 20-trial sequence will appear here after simulation.';return;}
       data=payload;index=0;elapsed=0;stale=false;el('journey-replay').disabled=false;play();
     });
     $(document).on('shiny:inputchanged', event => {

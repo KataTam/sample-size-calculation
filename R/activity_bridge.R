@@ -172,6 +172,8 @@ activity_bridge_script <- function(app = "power_explorer") {
   const typography=document.createElement('style');
   typography.id='teaching-typography';
   typography.textContent="\n/* Normal-weight content; headings and disclosure titles keep their hierarchy. */\nbody :where(p, li, td, th, label, button, a, span, strong, b, code, pre, input, textarea, select) { font-weight: 400 !important; }\nbody :where(h1,h2,h3,h4,h5,h6,summary,legend) :where(a,span,strong,b,code) { font-weight: inherit !important; }\n.reference-preview > strong { font-weight: 600 !important; }\n";
+  typography.textContent += '\n.irs-single,.irs-from,.irs-to{background:#205b89!important;color:#fff!important}.help-block{color:#555}a{color:#17547b}p a,.help-block a,label a{text-decoration:underline} :focus-visible{outline:3px solid #a45115;outline-offset:3px} pre{white-space:pre-wrap;overflow-wrap:anywhere}';
+  document.documentElement.lang='en';
   document.head.append(typography);
   const frames = [];
   let current = window, context = null, origin = null, siteRoot = null;
