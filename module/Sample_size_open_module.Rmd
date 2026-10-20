@@ -1942,29 +1942,15 @@ render_chapter_quiz("appendix")
 
 ## Acknowledgments {-}
 
-This project was supported by the Open Education Incubator Fund by the University of Groningen. The author thanks Carlotta Drewer and Bert van der Leest who reviewed the materials and user interface from a student's perspective and provided feedback on their clarity and usability.
-
-The animated connection between samples, estimates, and sampling distributions was inspired by Douwe Postmus’s *[Statistical Concepts Lab](https://postmus.github.io/sampling-simulator/)* [@postmus2026].
-
-The original tutorial was inspired by Tim Clayton’s *Clinical trials* lecture notes [@clayton2019].
-
-OpenAI Codex [@openaicodex] assisted with developing the website and interactive apps, reviewing code, and managing the GitHub repository. The author remains fully responsible for the content and accuracy of the teaching materials and software.
-
-The tutorial is written in R Markdown [@allaire2021rmarkdown] and compiled with bookdown [@xie2021bookdown]. The cited 2021 releases acknowledge these software packages; the build environment records the versions used for the current edition.
+This project was supported by the University of Groningen’s Open Education Incubator Fund. The author thanks Carlotta Drewer and Bert van der Leest for reviewing the materials and user interface from a student perspective and contributing ideas for clinical scenarios. The animated connection between samples, estimates, and sampling distributions was inspired by Douwe Postmus’s *[Statistical Concepts Lab](https://postmus.github.io/sampling-simulator/)* [@postmus2026], and the original tutorial by Tim Clayton’s *Clinical trials* lecture notes [@clayton2019]. OpenAI Codex [@openaicodex] assisted with developing the website and interactive apps, reviewing code, and managing the GitHub repository. The author remains fully responsible for the content and accuracy of the teaching materials and software.
 
 ## About this resource {-}
 
-This tutorial builds on Katalin Tamási's original e-learning module [@tamasi2021]. The presentation and three simulation activities are inspired by chapters 1, 11 and 15 of *[Power](#statistical-power) Analysis with Superpower* [@superpowerbook2022], and some clinical scenarios are based on the ideas of Carlotta Drewer and Bert van der Leest. The clinical explanations, activities and figures here are tailored to this tutorial. Hans Burgerhof's *Statistics 3: Sample size calculation* e-learning module also informs the discussion of testing and estimation goals [@burgerhof2020].
+This tutorial builds on Katalin Tamási’s original e-learning module [@tamasi2021]. Its presentation and three simulation activities draw on chapters 1, 11 and 15 of *Power Analysis with Superpower* [@superpowerbook2022]. Hans Burgerhof’s *Statistics 3: Sample size calculation* e-learning module informs the discussion of testing and estimation goals [@burgerhof2020], with further statistical background from @kirkwood2003, @whitley2002, @pourhoseingholi2013 and @wang2020.
 
-The development of the epidemiology and medical statistics e-learning environment is described by @wieringa2025. Our account of identifying learner and teacher needs provides background for involving students in reviewing this open edition and combining independent preparation with guided discussion.
+Our account of developing the epidemiology and medical statistics e-learning environment describes the learner and teacher needs underlying this approach [@wieringa2025]. Evaluation emphasizes explanations, application to new cases, and usability feedback, since access counts and time online may not reflect learning [@chan2019]. The [teaching guide](https://katatam.github.io/sample-size-calculation/teaching/TEACHING_GUIDE.html), [case template](https://katatam.github.io/sample-size-calculation/case-studies/student_case_template.html) and [assessment rubric](https://katatam.github.io/sample-size-calculation/teaching/assessment_rubric.html) support classroom use. The tutorial uses R Markdown [@allaire2021rmarkdown] and bookdown [@xie2021bookdown]; the build environment records the versions used for the current edition.
 
-Further statistical background comes from @kirkwood2003, @whitley2002, @pourhoseingholi2013 and @wang2020.
-
-Except where otherwise noted, original teaching materials are shared under [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/) and original code under the [MIT License](https://opensource.org/license/mit); see the [reuse and citation guidance](https://katatam.github.io/sample-size-calculation/documentation/reuse-and-citation.html) for attribution and third-party exceptions. Shared adaptations of the teaching materials must use the same or a compatible license. Consent is required before publishing student work, identifiable feedback or named student acknowledgments. This consent requirement applies to publishing student contributions.
-
-The [teaching guide](https://katatam.github.io/sample-size-calculation/teaching/TEACHING_GUIDE.html), [case template](https://katatam.github.io/sample-size-calculation/case-studies/student_case_template.html) and [assessment rubric](https://katatam.github.io/sample-size-calculation/teaching/assessment_rubric.html) support classroom use.
-
-For evaluation, @chan2019 cautions that access counts and time online may not represent meaningful learning. The teaching guide therefore emphasizes explanations and transfer to a new case alongside usability feedback.
+Except where otherwise noted, original teaching materials are shared under [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/) and original code under the [MIT License](https://opensource.org/license/mit). The [reuse and citation guidance](https://katatam.github.io/sample-size-calculation/documentation/reuse-and-citation.html) explains attribution and third-party exceptions. Shared adaptations of the teaching materials must use the same or a compatible license. Publishing student work, identifiable feedback, or named student acknowledgments requires consent.
 
 ## Further reading {-}
 
