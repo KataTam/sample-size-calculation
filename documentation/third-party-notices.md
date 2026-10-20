@@ -11,17 +11,13 @@ The current learner prose combines the author's original tutorial with explanati
 | Newcombe 1998 | Cited mathematical interval method | Independent R implementation; no publisher content or third-party code copied |
 | R and Shiny | Runtime dependencies | Their own licenses continue to apply; the MIT statement describes this repository's original code |
 
-## Earlier Clayton lecture-note attribution
-
-The original tutorial identified inspiration from Tim Clayton's 2019 clinical-trial lecture notes. The seven-question explanations adapt selected passages from the author's own supplied 2021 tutorial; available local records do not establish that those passages were copied from the lecture notes. No Clayton PDF pages, figures or supplemental code are distributed. This revision does not assert a reusable license for the lecture notes or import the former private repository history. The source excerpts and their locations are recorded in [question-map provenance](development/question-map-provenance.md).
-
 ## References
 
 Full citations: [References](references.md). Keep external material under its own terms if it is ever added, and identify the exact files and license separately.
 
 ## Consolidated tutorial (September 2026)
 
-The book presentation and three core activity ideas acknowledge *Power Analysis with Superpower*, especially chapters 1, 11 and 15. The clinical R plots and activity adaptations were written for this resource. The PASS screenshots remain in the private/local historical archive and are excluded from the public repository. Attribution to Clayton's lecture notes records the history of the original tutorial. Bookdown supplies the GitBook rendering framework under its own license. Historical source and teaching drafts remain private/local; external reading PDFs are not redistributed.
+The book presentation and three core activity ideas acknowledge *Power Analysis with Superpower*, especially chapters 1, 11 and 15. The clinical R plots and activity adaptations were written for this resource. The PASS screenshots remain in the private/local historical archive and are excluded from the public repository. Bookdown supplies the GitBook rendering framework under its own license. Historical source and teaching drafts remain private/local; external reading PDFs are not redistributed.
 
 
 

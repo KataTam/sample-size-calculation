@@ -1942,9 +1942,13 @@ render_chapter_quiz("appendix")
 
 ## Acknowledgments {-}
 
+This project was supported by the Open Education Incubator Fund by the University of Groningen. The author thanks Carlotta Drewer and Bert van der Leest who reviewed the materials and user interface from a student's perspective and provided feedback on their clarity and usability.
+
 The animated connection between samples, estimates, and sampling distributions was inspired by Douwe Postmus’s *[Statistical Concepts Lab](https://postmus.github.io/sampling-simulator/)* [@postmus2026].
 
-This project was supported by the Open Education Incubator Fund by the University of Groningen. The author thanks Carlotta Drewer and Bert van der Leest who reviewed the materials and user interface from a student's perspective and provided feedback on their clarity and usability. OpenAI Codex [@openaicodex] assisted with developing the website and interactive apps, reviewing code, and managing the GitHub repository. The author remains fully responsible for the content and accuracy of the teaching materials and software.
+The original tutorial was inspired by Tim Clayton’s *Clinical trials* lecture notes [@clayton2019].
+
+OpenAI Codex [@openaicodex] assisted with developing the website and interactive apps, reviewing code, and managing the GitHub repository. The author remains fully responsible for the content and accuracy of the teaching materials and software.
 
 The tutorial is written in R Markdown [@allaire2021rmarkdown] and compiled with bookdown [@xie2021bookdown]. The cited 2021 releases acknowledge these software packages; the build environment records the versions used for the current edition.
 
@@ -1954,7 +1958,7 @@ This tutorial builds on Katalin Tamási's original e-learning module [@tamasi202
 
 The development of the epidemiology and medical statistics e-learning environment is described by @wieringa2025. Our account of identifying learner and teacher needs provides background for involving students in reviewing this open edition and combining independent preparation with guided discussion.
 
-Further statistical background comes from @clayton2019, @kirkwood2003, @whitley2002, @pourhoseingholi2013 and @wang2020.
+Further statistical background comes from @kirkwood2003, @whitley2002, @pourhoseingholi2013 and @wang2020.
 
 Except where otherwise noted, original teaching materials are shared under [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/) and original code under the [MIT License](https://opensource.org/license/mit); see the [reuse and citation guidance](https://katatam.github.io/sample-size-calculation/documentation/reuse-and-citation.html) for attribution and third-party exceptions. Shared adaptations of the teaching materials must use the same or a compatible license. Consent is required before publishing student work, identifiable feedback or named student acknowledgments. This consent requirement applies to publishing student contributions.
 
