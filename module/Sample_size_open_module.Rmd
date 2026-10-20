@@ -41,6 +41,8 @@ source("../R/quiz_helpers.R")
 
 How many patients would you need to compare a new pain treatment with standard treatment? This tutorial helps you justify a sample size that can answer your research question, using clinical examples, calculations and simulation.
 
+Although the examples are clinical, the principles of justifying assumptions, choosing a target difference, and examining power and precision also apply in psychology, education, and other quantitative disciplines [@lakens2022]. The tutorial is a suitable starting point for learning these principles and planning comparisons of two independent groups with a continuous or binary outcome, provided the calculation’s assumptions match your study. Later chapters introduce other planning goals and help you recognize when a different method is needed. For factorial experiments and repeated-measures ANOVA, including designs common in psychology, *[Power Analysis with Superpower](https://aaroncaldwell.us/SuperpowerBook/)* provides more directly applicable examples and simulations [@superpowerbook2022]. Studies involving multilevel models, prediction, or time-to-event outcomes need guidance matched to those analyses; [Study designs and planning methods](#study-designs) points you toward relevant resources. What counts as a worthwhile difference should also reflect your field and research question.
+
 ## How to use this tutorial {-}
 
 This tutorial is for students and researchers. Students may find the Core route sufficient for basic two-arm trial planning; researchers can deepen their understanding through the Advanced sections. The roadmap shows both routes.
@@ -52,8 +54,6 @@ cat('<figure class="tutorial-roadmap">',
     paste(readLines("../figures/tutorial-roadmap.svg", encoding="UTF-8", warn=FALSE), collapse="\n"),
     '</figure>')
 ```
-
-The core examples begin with two independent treatment groups of equal size. Simulation shows how results vary between studies under the same assumptions. Later chapters extend the reasoning to other planning goals and designs.
 
 Each teaching chapter ends with an embedded *Check your understanding* quiz. Chapter 7 brings the material together in a [cumulative quiz](#cumulative-quiz), with Core and Core + advanced routes.
 
