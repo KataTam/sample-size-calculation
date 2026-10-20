@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Test your reasoning — sample size quiz</title>
+  <link rel="stylesheet" href="quiz.css"><script src="quiz.js" defer></script>
+</head>
+<body>
+<main>
+  <nav aria-label="Tutorial"><a href="../book/exercises.html" target="_blank" rel="noopener">Test your reasoning</a> · <a href="../book/index.html" target="_blank" rel="noopener">Tutorial</a></nav>
+  <h1>Test your reasoning</h1>
+  <p>Each multiple-choice question has one best answer. You can change your choices before finishing. Your results, explanations and revision links appear together at the end.</p>
+  <section id="setup" aria-labelledby="setup-title">
+    <h2 id="setup-title">Choose your check</h2>
+    <label>Coverage<select id="chapter"><option value="all">Cumulative quiz</option></select></label>
+    <label>Route<select id="route"><option value="core">Core</option><option value="all">Core + advanced</option></select></label>
+    <p id="coverage" aria-live="polite"></p>
+    <button id="start" type="button" disabled>Start</button>
+    <p>The cumulative quiz includes reproducibility and, in the advanced route, study designs and simulation. It is intended for use after the relevant teaching chapters. The glossary and common misconceptions are revision resources.</p>
+  </section>
+  <p id="status" role="status">Loading questions…</p>
+  <form id="quiz" hidden>
+    <h2 id="quiz-title" tabindex="-1"></h2>
+    <p id="progress" aria-live="polite"></p>
+    <div id="questions"></div>
+    <button type="submit">Finish and view results</button>
+  </form>
+  <section id="results" aria-labelledby="results-title" hidden>
+    <h2 id="results-title" tabindex="-1">Your results</h2>
+    <p id="score"></p>
+    <p>This is a self-assessment. The topic breakdown can help you decide what to revisit.</p>
+    <table><caption>Results by topic</caption><thead><tr><th scope="col">Topic</th><th scope="col">Correct</th></tr></thead><tbody id="topics"></tbody></table>
+    <div id="review"></div>
+    <button id="retry" type="button">Retry missed questions</button>
+    <button id="again" type="button">Choose another check</button>
+  </section>
+  <noscript><p>The interactive quiz requires JavaScript. Worked exercises and model answers are available in <a href="../book/exercises.html">Test your reasoning</a>.</p></noscript>
+  <footer><p>Your responses stay in this page and are cleared when it is reloaded. No responses are submitted to a server.</p>
+    <p>Teaching content: <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="noopener">CC BY-SA 4.0</a>. Software: <a href="https://opensource.org/license/mit" target="_blank" rel="noopener">MIT</a>.</p>
+  </footer>
+</main>
+</body></html>

@@ -39,3 +39,4 @@ student-materials/flashcards/*.apkg
 student-materials/flashcards/*-quizlet.txt
 student-materials/flashcards/cards.md
 !site/design_questionnaire/index.html
+!site/quiz/index.html
