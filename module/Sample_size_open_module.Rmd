@@ -34,6 +34,7 @@ source("../R/sample_size_functions.R")
 source("../R/tutorial_helpers.R")
 source("../R/teaching_cases.R")
 source("../R/question_map.R")
+source("../R/quiz_helpers.R")
 ```
 
 # Welcome {-}
@@ -54,7 +55,7 @@ cat('<figure class="tutorial-roadmap">',
 
 The core examples begin with two independent treatment groups of equal size. Simulation shows how results vary between studies under the same assumptions. Later chapters extend the reasoning to other planning goals and designs.
 
-Short multiple-choice checks follow the teaching chapters. The [cumulative quiz](#cumulative-quiz) offers Core and Core + advanced routes with feedback at the end.
+Each teaching chapter ends with an embedded *Check your understanding* quiz. Chapter 7 brings the material together in a [cumulative quiz](#cumulative-quiz), with Core and Core + advanced routes.
 
 You can open [the tutorial and an app together](https://katatam.github.io/sample-size-calculation/study/?activity=pain_one_many), consult the [activity walkthroughs](https://katatam.github.io/sample-size-calculation/student-materials/activity-walkthroughs.html), or review terms in the [Glossary](#glossary). For your own project, [Study designs and planning methods](#study-designs) helps you choose an approach.
 
@@ -277,39 +278,13 @@ The clinical threshold should remain 20 percentage points. Changing one pilot ou
 - Expected difference, target difference, and clinical threshold have different roles.
 - The assumptions need evidence and a clinical justification.
 
-### Check your understanding {.unnumbered}
-
-1. Why can two studies with the same clinical question require different sample sizes?
-
-<details class="model-answer">
-<summary>Model answer</summary>
-
-Their target differences, event probabilities or variability, analysis, error probabilities, allocation, and desired precision may differ.
-
-</details>
-
-2. Does an affordable sample size justify choosing a larger target difference?
-
-<details class="model-answer">
-<summary>Model answer</summary>
-
-No. The target needs a justification based on evidence and clinical relevance; choosing it only to obtain a smaller sample changes the question the design can answer.
-
-</details>
-
-### Practice with the activities {.unnumbered}
-
-You can complete the longer exploration after reading, or return to the relevant explanation beside the app.
-
-- [Activity: Develop and justify your study plan](https://katatam.github.io/sample-size-calculation/study/?activity=assumptions_report).
-
 </div>
 
-<div class="chapter-check">
+## Check your understanding {#check-clinical-question .unnumbered}
 
-[Activity: Chapter check](https://katatam.github.io/sample-size-calculation/quiz/?chapter=clinical-question). This short multiple-choice check gives your results, explanations and revision links after you finish.
-
-</div>
+```{r quiz-clinical-question, echo=FALSE, results="asis"}
+render_chapter_quiz("clinical-question")
+```
 
 # What does statistical power tell you? {#power .core-heading}
 
@@ -666,40 +641,13 @@ With statistically significant results in 80% of simulated studies and $B=5000$,
 - Different samples can give different results even under identical population assumptions.
 - More patients and more simulation repetitions serve different purposes.
 
-### Check your understanding {.unnumbered}
-
-1. If one trial is not statistically significant, does that contradict a design power of 90%?
-
-<details class="model-answer">
-<summary>Model answer</summary>
-
-No. About 10% of repetitions would fail to reject the null under the specified alternative and assumptions.
-
-</details>
-
-2. Does increasing simulation repetitions from 1,000 to 5,000 increase the power of each trial?
-
-<details class="model-answer">
-<summary>Model answer</summary>
-
-No. It makes the estimated percentage of significant results more stable. The sample size and analysis of each trial are unchanged.
-
-</details>
-
-### Practice with the activities {.unnumbered}
-
-You can complete the longer exploration after reading, or return to the relevant explanation beside the app.
-
-- [Activity: Chronic pain: one study and many studies](https://katatam.github.io/sample-size-calculation/study/?activity=pain_one_many).
-- [Activity: Explore Type I and Type II error probabilities and power (advanced)](https://katatam.github.io/sample-size-calculation/study/?activity=alpha_beta).
-
 </div>
 
-<div class="chapter-check">
+## Check your understanding {#check-power .unnumbered}
 
-[Activity: Chapter check](https://katatam.github.io/sample-size-calculation/quiz/?chapter=power). This short multiple-choice check gives your results, explanations and revision links after you finish.
-
-</div>
+```{r quiz-power, echo=FALSE, results="asis"}
+render_chapter_quiz("power")
+```
 
 # Calculate a sample size {#calculations .core-heading}
 
@@ -983,40 +931,13 @@ The expected-loss adjustment gives a recruitment total of `r 2 * adjust_for_drop
 - Sample sizes should be identified as per-group or total counts.
 - The calculated count is for analysis; expected losses are handled separately.
 
-### Check your understanding {.unnumbered}
-
-1. With all other assumptions fixed, what happens if the target difference becomes smaller?
-
-<details class="model-answer">
-<summary>Model answer</summary>
-
-The required sample size generally increases: a smaller difference is harder to distinguish from sampling variability.
-
-</details>
-
-2. If 56 patients per group are needed, is the recruitment target necessarily 112?
-
-<details class="model-answer">
-<summary>Model answer</summary>
-
-No. That is the total analyzable sample. Expected losses may require recruiting more patients.
-
-</details>
-
-### Practice with the activities {.unnumbered}
-
-You can complete the longer exploration after reading, or return to the relevant explanation beside the app.
-
-- [Activity: Gestational-diabetes prevention trial](https://katatam.github.io/sample-size-calculation/study/?activity=adherence).
-- [Activity: Rehabilitation: compare two means](https://katatam.github.io/sample-size-calculation/study/?activity=rehabilitation).
-
 </div>
 
-<div class="chapter-check">
+## Check your understanding {#check-calculations .unnumbered}
 
-[Activity: Chapter check](https://katatam.github.io/sample-size-calculation/quiz/?chapter=calculations). This short multiple-choice check gives your results, explanations and revision links after you finish.
-
-</div>
+```{r quiz-calculations, echo=FALSE, results="asis"}
+render_chapter_quiz("calculations")
+```
 
 # Read power curves {#curves .advanced-heading}
 
@@ -1152,39 +1073,13 @@ With an existing records dataset, explain why that sample is available, assess d
 - The power at a smaller worthwhile difference may be lower than the target power.
 - A recruitment limit can leave an important benefit difficult to detect.
 
-### Check your understanding {.unnumbered}
-
-1. Why should the horizontal scale stay fixed when comparing assumptions?
-
-<details class="model-answer">
-<summary>Model answer</summary>
-
-A common scale makes the movement of the curve and required-sample marker interpretable; automatic rescaling can conceal the size of that change.
-
-</details>
-
-2. Does high power at the target difference guarantee high power at the clinical threshold?
-
-<details class="model-answer">
-<summary>Model answer</summary>
-
-No. If the clinical threshold is smaller, power there will generally be lower. It should be evaluated explicitly.
-
-</details>
-
-### Practice with the activities {.unnumbered}
-
-You can complete the longer exploration after reading, or return to the relevant explanation beside the app.
-
-- [Activity: Chronic pain: explore power and recruitment](https://katatam.github.io/sample-size-calculation/study/?activity=pain_curves).
-
 </div>
 
-<div class="chapter-check">
+## Check your understanding {#check-curves .unnumbered}
 
-[Activity: Chapter check](https://katatam.github.io/sample-size-calculation/quiz/?chapter=curves). This short multiple-choice check gives your results, explanations and revision links after you finish.
-
-</div>
+```{r quiz-curves, echo=FALSE, results="asis"}
+render_chapter_quiz("curves")
+```
 
 # Build a simulated clinical trial {#simulation .advanced-heading}
 
@@ -1354,39 +1249,13 @@ The original plan evaluates power at a true 30-point difference. If the true dif
 - Simulated power and coverage depend on the assumed population and analysis.
 - More repetitions improve the numerical precision of the simulation estimate. Evidence from relevant studies helps assess uncertainty about the population.
 
-### Check your understanding {.unnumbered}
-
-1. What should be checked before interpreting simulated power?
-
-<details class="model-answer">
-<summary>Model answer</summary>
-
-The generating assumptions, analysis, sample size, number of repetitions, and whether the simulation matches the planned study.
-
-</details>
-
-2. Can a precise simulated power estimate still be misleading for a real study?
-
-<details class="model-answer">
-<summary>Model answer</summary>
-
-Yes. Many repetitions can estimate performance precisely under assumptions that do not fit the real study.
-
-</details>
-
-### Practice with the activities {.unnumbered}
-
-You can complete the longer exploration after reading, or return to the relevant explanation beside the app.
-
-- [Activity: Simulate repeated chronic pain trials](https://katatam.github.io/sample-size-calculation/study/?activity=pain_simulation).
-
 </div>
 
-<div class="chapter-check">
+## Check your understanding {#check-simulation .unnumbered}
 
-[Activity: Chapter check](https://katatam.github.io/sample-size-calculation/quiz/?chapter=simulation). This short multiple-choice check gives your results, explanations and revision links after you finish.
-
-</div>
+```{r quiz-simulation, echo=FALSE, results="asis"}
+render_chapter_quiz("simulation")
+```
 
 # Recruitment, estimation and feasibility {#feasibility .core-heading}
 
@@ -1811,40 +1680,13 @@ Before writing the protocol, you should check relevant guidance and the current 
 - A confidence interval helps assess the range of compatible benefits and harms.
 - A feasible study plan should acknowledge uncertainty and what it may leave unresolved.
 
-### Check your understanding {.unnumbered}
-
-1. Why is dividing by the expected retained fraction preferable to simply adding the percentage lost?
-
-<details class="model-answer">
-<summary>Model answer</summary>
-
-Losses apply to the larger recruited group. Dividing the analyzable requirement by the retained fraction targets the expected analyzable count.
-
-</details>
-
-2. If recruitment is limited, should you increase the assumed difference until the calculation fits?
-
-<details class="model-answer">
-<summary>Model answer</summary>
-
-No. You should assess what the feasible sample can establish, improve the design where justified, and state its limitations.
-
-</details>
-
-### Practice with the activities {.unnumbered}
-
-You can complete the longer exploration after reading, or return to the relevant explanation beside the app.
-
-- [Activity: Dropout adjustment](https://katatam.github.io/sample-size-calculation/dropout_adjustment/).
-- [Activity: Estimate a population percentage (optional)](https://katatam.github.io/sample-size-calculation/study/?activity=prevalence).
-
 </div>
 
-<div class="chapter-check">
+## Check your understanding {#check-feasibility .unnumbered}
 
-[Activity: Chapter check](https://katatam.github.io/sample-size-calculation/quiz/?chapter=feasibility). This short multiple-choice check gives your results, explanations and revision links after you finish.
-
-</div>
+```{r quiz-feasibility, echo=FALSE, results="asis"}
+render_chapter_quiz("feasibility")
+```
 
 # Test your reasoning {#exercises .core-heading}
 
@@ -1856,12 +1698,6 @@ After this section, you should be able to:
 - Assess what a fixed sample can establish.
 - Turn your evidence and assumptions into a complete study-planning report.
 :::
-
-## Activity: Cumulative multiple-choice quiz {#cumulative-quiz .core-heading}
-
-The [cumulative quiz](https://katatam.github.io/sample-size-calculation/quiz/) offers Core and Core + advanced options. It covers the substantive teaching chapters, including study design and reproducibility later in the tutorial. You can return here after those chapters, or use a chapter check while progressing. The glossary and common misconceptions support revision.
-
-Each question has one best answer. You can review your choices before finishing. Results appear at the end, with an overall score, a topic breakdown, explanations and links to the relevant sections. The quiz supports self-assessment; the written study justification below provides practice in making and explaining decisions.
 
 ## Discharge percentages {#discharge .core-heading}
 
@@ -1959,44 +1795,24 @@ Your project may involve estimation, a fixed dataset or dependent observations. 
 - The conclusion should match what the study can establish.
 - Sensitivity analysis should show how uncertainty in the inputs affects the recommendation.
 
-### Check your understanding {.unnumbered}
-
-1. What information would be missing from a justification that reports only a total sample size?
-
-<details class="model-answer">
-<summary>Model answer</summary>
-
-The outcome, analysis, assumed effects and variability, error probabilities or precision target, allocation, sources, and allowance for losses.
-
-</details>
-
-2. What should you do if two plausible assumptions give substantially different sample sizes?
-
-<details class="model-answer">
-<summary>Model answer</summary>
-
-Report the sensitivity, explain which assumption supports the proposed plan, and acknowledge the consequences if the alternative is closer to reality.
-
-</details>
-
-### Practice with the activities {.unnumbered}
-
-You can complete the longer exploration after reading, or return to the relevant explanation beside the app.
-
-- [Activity: Develop and justify your study plan](https://katatam.github.io/sample-size-calculation/study/?activity=assumptions_report).
-
 </div>
 
 
-<div class="chapter-check">
+## Check your understanding {#cumulative-quiz .unnumbered}
 
-[Activity: Chapter 7 check](https://katatam.github.io/sample-size-calculation/quiz/?chapter=exercises) · [Cumulative quiz](https://katatam.github.io/sample-size-calculation/quiz/). Results appear after you finish.
-
-</div>
+```{r quiz-all, echo=FALSE, results="asis"}
+render_chapter_quiz("all")
+```
 
 ```{r study-design-help, echo=FALSE, results='asis'}
 cat(readLines("../student-materials/study-design-guide.md", warn = FALSE, encoding = "UTF-8"),
   sep = "\n")
+```
+
+## Check your understanding {#check-study-designs .unnumbered}
+
+```{r quiz-study-designs, echo=FALSE, results="asis"}
+render_chapter_quiz("study-designs")
 ```
 
 The diagnostic, prediction and preclinical resources above are also listed in the tutorial references [@stard2015; @riley2020; @tripodai2024; @arrive2020].
@@ -2116,11 +1932,11 @@ mean(results$p_value < .05)
 
 Adaptations should keep the editable R Markdown, shared case settings, app code and build instructions together. You should review changes to assumptions and methods alongside the resulting figures and activities. The [adaptation guide](https://katatam.github.io/sample-size-calculation/teaching/adaptation_guide.html) provides practical steps [@bothmann2021].
 
-<div class="chapter-check">
+## Check your understanding {#check-appendix .unnumbered}
 
-[Activity: Reproducibility chapter check](https://katatam.github.io/sample-size-calculation/quiz/?chapter=appendix) · [Cumulative quiz](https://katatam.github.io/sample-size-calculation/quiz/). Results appear after you finish.
-
-</div>
+```{r quiz-appendix, echo=FALSE, results="asis"}
+render_chapter_quiz("appendix")
+```
 
 # References {-}
 

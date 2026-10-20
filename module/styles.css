@@ -169,3 +169,25 @@ details.activity-practice { background:#dfedf7; padding:10px 14px; margin:1em 0;
 .book:not(.with-search) #tutorial-search-results { display: none; }
 .book:not(.with-search) .book-summary.tutorial-search-active ul.summary { display: block !important; }
 .chapter-check { margin: 1.5em 0; padding: 14px 18px; background: #e2ecfc; border-left: 4px solid #4975a5; }
+.chapter-quiz { margin: 1.5em 0; }
+.chapter-quiz [hidden] { display: none !important; }
+.chapter-quiz fieldset { min-width: 0; border: 1px solid #bbcddd; border-radius: 6px; padding: 16px; margin: 22px 0; }
+.chapter-quiz legend { font-size: 1em; padding: 0 6px; max-width: 100%; }
+.chapter-quiz .quiz-option { display: flex; align-items: baseline; gap: 10px; margin: 10px 0; padding: 8px; border: 1px solid #d5dfe9; border-radius: 4px; font-weight: normal; cursor: pointer; }
+.chapter-quiz input[type="radio"] { flex: 0 0 auto; margin: 0; }
+.chapter-quiz .quiz-option:has(input:checked) { background: #e0ecfc; }
+.chapter-quiz select, .chapter-quiz button { font: inherit; padding: 8px 12px; border: 1px solid #365d89; border-radius: 4px; margin: 6px 6px 6px 0; }
+.chapter-quiz button { background: #305c88; color: white; cursor: pointer; }
+.chapter-quiz :focus-visible { outline: 3px solid #8b4a9f; outline-offset: 3px; }
+.chapter-quiz .quiz-level { color: #6d4e94; font-size: .9em; }
+.chapter-quiz .quiz-answer { border-left: 4px solid #4a785b; padding: 12px 16px; margin: 16px 0; background: #eef6f0; }
+.chapter-quiz .quiz-incorrect { border-left-color: #b67b13; background: #fff2d2; }
+.chapter-quiz .quiz-answer-title { font-weight: bold; }
+.chapter-quiz .quiz-answer-key { margin-top: 28px; }
+.chapter-quiz .quiz-answer-key > summary { font-weight: bold; }
+@media print {
+  .chapter-quiz .quiz-controls, .chapter-quiz .quiz-results, .chapter-quiz input, .chapter-quiz .quiz-choice { display: none !important; }
+  .chapter-quiz fieldset, .chapter-quiz .quiz-answer { break-inside: avoid; }
+  .chapter-quiz .quiz-option { border: 0; padding: 0; margin: 4px 0; }
+  .chapter-quiz .quiz-answer-key { break-before: page; }
+}

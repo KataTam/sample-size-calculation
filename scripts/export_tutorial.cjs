@@ -61,6 +61,7 @@ let browser;
       const normal = document.querySelector('.page-inner .normal');
       if (!normal) throw Error('Chapter body not found');
       const clone = normal.cloneNode(true);
+      clone.querySelectorAll('.chapter-quiz').forEach(el => el.removeAttribute('data-quiz-ready'));
       clone.querySelectorAll('.chapter-end-nav, .chapter-downloads, .tutorial-downloads, .reference-preview-button, script, .MathJax_Preview').forEach(el => el.remove());
       for (const img of clone.querySelectorAll('img')) {
         const response = await fetch(img.src); if (!response.ok) throw Error('Missing image '+img.src);
@@ -94,6 +95,14 @@ let browser;
   const html = `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>How many patients do you need for your study? Sample size calculation tutorial</title><style>${css}\n@media print {.tutorial-contents {display:none;} .print-chapter + .print-chapter {break-before:page;}}</style></head><body><nav class="tutorial-contents" aria-label="Tutorial contents"><h2>Contents</h2><ol>${contents.join('')}</ol></nav><main>${sections.join('\n')}</main>${readerScripts}</body></html>`;
   await page.setContent(html, {waitUntil:'load'});
   await page.evaluate(async () => {
+    document.querySelectorAll('.chapter-quiz').forEach(root => {
+      root.querySelector('form').hidden = false;
+      root.querySelector('.quiz-results').hidden = true;
+      root.querySelector('.quiz-answer-key').hidden = false;
+      root.querySelectorAll('fieldset, .quiz-answer').forEach((el) => { el.hidden = false; });
+      root.querySelectorAll('fieldset').forEach((el, i) => el.querySelector('.quiz-number').textContent = i + 1);
+      root.querySelectorAll('.quiz-answer').forEach((el, i) => el.querySelector('.quiz-number').textContent = i + 1);
+    });
     document.querySelectorAll('details').forEach(el => el.open=true);
     if (Array.from(document.querySelectorAll('details')).some(el => !el.open)) throw Error('A PDF box remained closed');
     await Promise.all(Array.from(document.images).map(img => img.decode().catch(() => {})));

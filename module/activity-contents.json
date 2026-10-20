@@ -132,8 +132,8 @@
     "route": "Core and advanced",
     "activities": [
       {
-        "label": "Cumulative multiple-choice quiz",
-        "path": "quiz/",
+        "label": "Check your understanding: cumulative quiz",
+        "path": "book/exercises.html#cumulative-quiz",
         "route": "Core and advanced",
         "section": "cumulative-quiz"
       },

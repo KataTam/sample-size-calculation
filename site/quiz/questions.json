@@ -129,15 +129,15 @@
       "level": "core",
       "section": "One study and many studies",
       "link": "power.html#activity-1-one-study-then-many",
-      "question": "Which quantity varies across simulated trials when sample size and population probabilities are held fixed?",
+      "question": "Two simulated studies use the same population probabilities and sample size but give treatment differences of 22 and 34 percentage points. What is the most plausible explanation?",
       "options": [
-        "The chosen Type I error probability",
-        "The planned number of patients per group",
-        "The estimated treatment difference",
-        "The specified population difference"
+        "The population difference must have changed",
+        "One of the two studies must contain a coding error",
+        "Random sampling can produce different estimates under the same population assumptions",
+        "The study with the larger estimate used a different target power"
       ],
       "answer": 2,
-      "explanation": "Random sampling changes the observed outcomes and estimates. The generating population assumptions and study design stay fixed within this batch."
+      "explanation": "Realized estimates vary between independently generated samples even when their population assumptions and designs are identical."
     },
     {
       "id": "q08",
@@ -145,15 +145,15 @@
       "level": "advanced",
       "section": "Precision of a simulation",
       "link": "power.html#precision-of-a-simulation",
-      "question": "What is the main effect of increasing simulation repetitions from 1,000 to 10,000 while leaving each study unchanged?",
+      "question": "A simulation estimates power using 400 studies. Approximately how many studies would halve its Monte Carlo standard error, assuming similar estimated power?",
       "options": [
-        "Uncertainty about the real population assumptions disappears",
-        "The simulation estimates study performance more precisely",
-        "Each individual study gains more patients",
-        "The true power of each study increases"
+        "800",
+        "1,600",
+        "200",
+        "400 with twice as many patients per trial"
       ],
       "answer": 1,
-      "explanation": "More repetitions reduce Monte Carlo uncertainty. The information and power of an individual trial depend on that trial’s design and population assumptions."
+      "explanation": "Monte Carlo standard error is proportional to 1/sqrt(B) at a fixed rejection probability. Four times as many repetitions approximately halves it."
     },
     {
       "id": "q38",
@@ -449,15 +449,15 @@
       "level": "core",
       "section": "Discharge percentages",
       "link": "exercises.html#discharge",
-      "question": "A discharge percentage of 80% increases by 20% relatively. What is the new percentage?",
+      "question": "A service improves its discharge percentage from 40% to 50%. What is the relative increase?",
       "options": [
-        "96%",
-        "100%",
-        "60%",
-        "20%"
+        "25%",
+        "10%",
+        "50%",
+        "125%"
       ],
       "answer": 0,
-      "explanation": "Multiplying 80% by 1.20 gives 96%, an absolute increase of 16 percentage points."
+      "explanation": "The absolute change is 10 percentage points. Relative to the original 40%, the increase is 10/40 = 25%."
     },
     {
       "id": "q26",
@@ -497,15 +497,15 @@
       "level": "advanced",
       "section": "A fixed total of 70 patients",
       "link": "exercises.html#a-fixed-total-of-70-patients",
-      "question": "A project has a fixed total of 70 patients. What should its planning assessment establish?",
+      "question": "A fixed-resource study produces an interval from a 2-point disadvantage to a 15-point benefit. The clinical threshold is a 10-point benefit. Which conclusion is justified?",
       "options": [
-        "That simulation repetitions can substitute for additional patients",
-        "What power or precision the available analyzable sample can achieve under justified assumptions",
-        "That every fixed sample has adequate power",
-        "Which effect would make a retrospective power calculation significant"
+        "The treatment is equivalent to control",
+        "The interval still includes both disadvantage and clinically important benefit",
+        "The clinical threshold has been exceeded with confidence",
+        "The study rules out any worthwhile benefit"
       ],
       "answer": 1,
-      "explanation": "Fixed resources call for evaluating attainable information, expected losses and plausible effects, then considering a narrower aim or revised design where appropriate."
+      "explanation": "The interval spans zero and the clinical threshold. Its full range should inform interpretation; an inconclusive result does not establish equivalence."
     },
     {
       "id": "q29",
