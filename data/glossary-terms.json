@@ -345,5 +345,54 @@
       "IRB"
     ],
     "definition": "The usual US term for a committee reviewing research involving human participants under the applicable regulatory framework."
+  },
+  {
+    "id": "unit-of-randomization",
+    "label": "Unit of randomization",
+    "aliases": [
+      "unit of randomization"
+    ],
+    "definition": "The entity assigned to a treatment, such as a participant, hospital, or body site. The allocation structure determines where independent treatment assignments occur."
+  },
+  {
+    "id": "unit-of-measurement",
+    "label": "Unit of measurement",
+    "aliases": [
+      "unit of measurement"
+    ],
+    "definition": "The entity or occasion for which an outcome is recorded, such as a participant, lesion, or visit. Several measurements can come from the same participant."
+  },
+  {
+    "id": "unit-of-analysis",
+    "label": "Unit of analysis",
+    "aliases": [
+      "unit of analysis"
+    ],
+    "definition": "The entity represented in the analysis. Individual measurements can be analyzed with a model that accounts for dependence within participants or clusters."
+  },
+  {
+    "id": "paired-observations",
+    "label": "Paired observations",
+    "aliases": [
+      "paired observations"
+    ],
+    "definition": "Two linked observations, such as outcomes from two treated sites in one participant. A paired analysis uses the within-pair comparison and accounts for the relationship between the observations."
+  },
+  {
+    "id": "intracluster-correlation",
+    "label": "Intracluster correlation coefficient (ICC)",
+    "aliases": [
+      "intracluster correlation coefficient",
+      "ICC"
+    ],
+    "definition": "A measure of similarity between outcomes within the same cluster. In a simple random-intercept model, it is the proportion of total outcome variance attributable to differences between clusters."
+  },
+  {
+    "id": "design-effect",
+    "label": "Design effect",
+    "aliases": [
+      "design effect"
+    ],
+    "definition": "The ratio of the variance of an estimate under a specified design to that under a comparable independent-observation design. For a simple cluster design with equal cluster size m and ICC rho, it is approximately 1 + (m - 1)rho; this can guide an initial sample size inflation."
   }
 ]

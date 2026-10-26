@@ -6,6 +6,7 @@ Learning outcomes. After this section, you should be able to:
 - Use the study-design questionnaire to identify suitable design families and unresolved decisions.
 - Choose a planning method from the research question, outcome and dependency between observations.
 - Recognize designs that need methods beyond the two-independent-group examples.
+- Distinguish units of randomization, measurement, and analysis, and explain how dependence affects sample size planning.
 :::
 
 The study design and planning method should follow the research question, outcome, sampling structure and intended analysis. "Clinical," "retrospective," "diagnostic" and "within-subject" describe different aspects of a study and can apply together. A diagnostic study can be clinical and retrospective, and a preclinical experiment can have repeated measurements.
@@ -34,6 +35,44 @@ The [CDC Field Epidemiology Manual](https://www.cdc.gov/field-epi-manual/php/cha
 | Outcome/analysis | Continuous, binary, time-to-event, counts; adjusted model or simple comparison | Determines the required distributional and modeling assumptions |
 
 Table: Design dimensions that determine the appropriate planning method.
+
+## Units of randomization, measurement, and analysis {#units-of-analysis .advanced-heading}
+
+The number of measurements in a study does not necessarily equal the number of independent observations. Before choosing a sample size calculation, you should distinguish:
+
+- The [unit of randomization](#unit-of-randomization): what is assigned to a treatment, such as a participant, hospital, or body site.
+- The [unit of measurement](#unit-of-measurement): what an outcome is recorded for, such as a participant, lesion, or measurement occasion.
+- The [unit of analysis](#unit-of-analysis): the entity represented in the analysis, with dependence among entities accounted for by the model.
+
+These units may coincide, as in a trial where participants are individually randomized and each contributes one outcome. They can also differ. An analysis may use individual measurements while accounting for their grouping within hospitals or participants; it does not always require reducing each group to a single observation.
+
+### Treatment assigned to groups {.advanced-heading}
+
+In a cluster-randomized trial, treatment is assigned to whole groups, such as hospitals or schools. This can be useful when an intervention changes clinic practice or when individual allocation could lead to contamination between treatment groups. Outcomes may still be measured in individual participants, but participants in the same cluster often have more similar outcomes than participants in different clusters. The analysis and sample size calculation should account for this dependence [@campbell2012consort].
+
+With positive within-cluster correlation, a study provides less information than an individually randomized trial with the same total number of participants. Consequently, both the number of clusters and the number of participants per cluster matter. Recruiting more participants within a few hospitals cannot fully compensate for having very few randomized hospitals.
+
+For a simple design with approximately equal cluster sizes, an approximate inflation factor is the [design effect](#design-effect) [@campbell2012consort]:
+
+$$
+\text{Design effect}=1+(m-1)\rho,
+$$
+
+where $m$ is the number of participants per cluster and $\rho$ is the [intracluster correlation coefficient (ICC)](#intracluster-correlation). For example, with 20 participants per cluster and an ICC of 0.05, the design effect is $1.95$. An initial calculation based on independent participants would therefore be multiplied by approximately 1.95. This is a starting approximation; the final calculation should also account for the number of clusters, unequal cluster sizes, and the planned analysis [@hayes1999].
+
+### Treatment assigned within participants {.advanced-heading}
+
+Randomization can also occur within a participant. For example, one leg may receive treatment A and the other treatment B. Such designs are suitable when treatment effects are local and treatment at one site does not materially affect the outcome at another site [@pandis2017withinperson].
+
+Here, the treatment comparison is made within participants. When paired outcomes are positively correlated, the within-person difference can be estimated more precisely than a difference between independent groups with the same outcome variability. Sample size planning therefore depends on the variability of the paired differences, or equivalent information about the variability and correlation of the two measurements [@pandis2017withinperson].
+
+A study with 30 participants and two treated sites per participant provides 30 participant-level pairs. Its sample size should be planned using a method for [paired observations](#paired-observations). Designs with several sites or lesions per participant may require a more detailed model of the dependence among measurements.
+
+### What this means for sample size planning {.advanced-heading}
+
+Correlation has different consequences depending on where treatments are assigned. In a cluster-randomized trial, members of the same cluster receive the same treatment, so their correlated outcomes contribute partly overlapping information to the comparison between treatments. In a paired-site trial, the two treatments are compared within the same participant, allowing shared participant characteristics to cancel out in the difference.
+
+The sample size calculation should therefore match the allocation structure and the planned analysis. Your [reproducibility record](#reproducibility-record) should specify what is randomized, what is measured, how many independent units are available, and how dependence among measurements will be handled.
 
 ## Match the question to a method and resource {.advanced-heading}
 

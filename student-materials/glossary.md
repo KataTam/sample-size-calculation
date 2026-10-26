@@ -115,6 +115,34 @@ A normal approximation uses the bell-shaped normal distribution to simplify a ca
 
 <span id="independent-groups"></span>In the core examples, different patients belong to the two groups, with each patient contributing one outcome. The analysis assumes that one patient's outcome does not provide information about another patient's outcome beyond what the model accounts for. Different participants are not sufficient to establish independence: outcomes may still be related within clinics or families. Paired/within-subject data include linked measurements, such as both eyes or before/after observations from the same person. Clustered data include participants linked within allocated practices or wards. Correlation affects information and therefore planning; counting every measurement as independent can overstate the information available.
 
+## Units and dependence {.advanced-heading}
+
+### Unit of randomization {#unit-of-randomization .advanced-heading}
+
+The entity assigned to a treatment, such as a participant, hospital, or body site. The allocation structure determines where independent treatment assignments occur.
+
+### Unit of measurement {#unit-of-measurement .advanced-heading}
+
+The entity or occasion for which an outcome is recorded, such as a participant, lesion, or visit. Several measurements can come from the same participant.
+
+### Unit of analysis {#unit-of-analysis .advanced-heading}
+
+The entity represented in the analysis. Individual measurements can be analyzed with a model that accounts for dependence within participants or clusters.
+
+### Paired observations {#paired-observations .advanced-heading}
+
+Two linked observations, such as outcomes from two treated sites in one participant. A paired analysis uses the within-pair comparison and accounts for the relationship between the observations.
+
+### Intracluster correlation coefficient (ICC) {#intracluster-correlation .advanced-heading}
+
+A measure of similarity between outcomes within the same cluster. In a simple random-intercept model, it is the proportion of total outcome variance attributable to differences between clusters.
+
+### Design effect {#design-effect .advanced-heading}
+
+The ratio of the variance of an estimate under a specified design to that under a comparable independent-observation design. For a simple cluster design with equal cluster size m and ICC rho, it is approximately 1 + (m - 1)rho; this can guide an initial sample size inflation.
+
+The [advanced explanation of units and dependence](#units-of-analysis) compares cluster-randomized and within-person designs [@campbell2012consort; @pandis2017withinperson].
+
 ## Counts, losses and simulation {.core-heading}
 
 <span id="analyzable-sample-size"></span>Analyzable sample size (n) means the number of participants included in the stated analysis; app labels use "participants for analysis". In the [two-group lab](https://katatam.github.io/sample-size-calculation/study/?activity=own_study) it is per group; the total is 2n. Recruitment n is inflated for anticipated losses, rounding within each arm. With expected dropout of 10%, divide by the retention proportion 0.90, rather than multiplying by 1.10. Inflation does not correct missing-data bias.

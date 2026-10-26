@@ -527,17 +527,17 @@
       "id": "q30",
       "chapter": "study-designs",
       "level": "advanced",
-      "section": "Design-specific planning",
-      "link": "study-designs.html#match-the-question-to-a-method-and-resource",
-      "question": "An intervention is allocated to hospital wards. What additional information is important for sample-size planning?",
+      "section": "Units of randomization, measurement, and analysis",
+      "link": "study-designs.html#units-of-analysis",
+      "question": "A cluster-randomized trial already includes many patients in each of a few hospitals. With positive within-hospital correlation, which change would usually provide more independent information if the same number of additional patients can be recruited?",
       "options": [
-        "Only the number of individual patients",
-        "Only whether recruitment is prospective",
-        "Only the expected event percentage",
-        "The number and size of wards and within-ward correlation"
+        "Recruiting all additional patients within the existing hospitals",
+        "Adding hospitals that can be independently randomized, with patients recruited in each",
+        "Recording the same outcome twice for every existing patient",
+        "Treating each patient as independently randomized"
       ],
-      "answer": 3,
-      "explanation": "Cluster allocation affects the amount of independent information. Patient count alone does not describe the design adequately."
+      "answer": 1,
+      "explanation": "Additional independently randomized hospitals provide new clusters. Patients within an existing hospital share cluster characteristics, so adding more patients there has diminishing gains in information. The final calculation still needs the cluster sizes, ICC, and planned analysis."
     },
     {
       "id": "q31",
