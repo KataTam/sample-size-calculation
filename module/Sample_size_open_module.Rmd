@@ -1296,16 +1296,29 @@ knitr::kable(data.frame(`Analyzable per group`=analyzable_per_group, `Recruit pe
   caption = "Chronic-pain recruitment target allowing for 5% expected loss.")
 ```
 
+<details class="misconception" id="misconception-dropout-arithmetic">
+<summary>Common misconception: allowing for 10% dropout means adding 10%</summary>
+
+If you expect 10% of participants to be lost, approximately 90% will remain. You should therefore divide the required analyzable sample size by 0.90. For example, 100 analyzable participants require recruiting 112 participants after rounding up. This allows for the expected loss; the actual number retained may differ.
+
+</details>
+
 For the chronic pain trial, 5% expected loss means approximately 95% of recruits will contribute to the analysis. To obtain `r analyzable_per_group` patients per group with usable outcomes, you would plan to recruit `r analyzable_per_group`/0.95 = `r round(analyzable_per_group / .95, 2)`, rounded upward to `r recruit_per_group` per group.
+
+The percentage of participants lost to follow-up may differ between treatment groups. This is called *differential dropout*. For example, outcomes might be missing for 20% of participants receiving the novel treatment and 10% receiving standard treatment. When such differences are anticipated, sample size planning should account for the expected retention in each group and the planned allocation ratio. A single overall dropout percentage can conceal a shortfall in one group.
+
+The reasons for missing outcomes also matter. In the chronic pain example, patients who experience little relief might be more likely to miss the final assessment. If this happens more often in the novel-treatment group, an analysis restricted to participants with observed outcomes could overestimate its benefit. However, unequal dropout percentages alone do not establish [bias](#bias), and equal percentages do not rule it out. Bias depends on why outcomes are missing, the treatment effect being estimated, and the analysis used [@bell2013dropout].
+
+Your study plan should describe how missing outcomes will be minimized, how their reasons will be recorded in each group, and how the analysis will handle them. Sensitivity analyses should examine whether conclusions change under plausible alternative assumptions about the missing outcomes [@little2012missing].
 
 The simulations start with the stated number of patients available for analysis. They do not simulate patients being lost to follow-up.
 
 The [Activity: Adjust recruitment for loss to follow-up](https://katatam.github.io/sample-size-calculation/dropout_adjustment/) connects the analyzable count to the number you need to approach recruitment with. You should enter the per-group analyzable requirement, then compare expected loss percentages. Actual retention may differ from the assumed percentage.
 
 <details class="misconception" id="misconception-dropout">
-<summary>Common misconception: adding the expected dropout percentage solves missing data</summary>
+<summary>Common misconception: recruiting extra participants resolves missing-data problems</summary>
 
-To allow for 10% expected loss, divide the required analyzable count by 0.90 rather than simply adding 10%. This protects the expected participant count, but does not guarantee it. Recruiting extra participants also does not remove [bias](#bias) caused by missing outcomes or treatment non-adherence.
+Recruiting extra participants can help preserve the analyzable sample size and statistical power. Missing outcomes can also introduce bias, which increasing recruitment does not correct. Prevention, appropriate analysis, and sensitivity analyses are therefore needed alongside the recruitment allowance [@little2012missing].
 
 </details>
 
