@@ -5,6 +5,7 @@
       if (!root.closest('.quiz-disclosure')) {
         const heading = root.previousElementSibling;
         if (heading?.matches('h2')) {
+          heading.querySelectorAll('.anchor-section').forEach(a => a.remove());
           const disclosure = document.createElement('details'); disclosure.className = 'quiz-disclosure';
           const summary = document.createElement('summary');
           heading.before(disclosure); summary.append(heading); disclosure.append(summary, root);

@@ -112,6 +112,15 @@ Purpose: extend the core simulation from power to confidence interval coverage, 
 4. A custom treatment probability of 45%, with control still 30%, tests the plan under a 15-point true difference. A no-effect scenario estimates the false-positive probability.
 5. You can vary the repetition count while leaving patients per group fixed. More repetitions reduce Monte Carlo uncertainty while each trial's design stays fixed. A report should retain the generating assumptions, analysis and repetition count.
 
+Within the same activity, *Explore further* contains *Explore missing outcomes*:
+
+1. You can select *Complete outcomes* and keep recruitment at 60 per group as a reference.
+2. *Equal losses* removes outcomes independently of relief with 10% probability in each group. One study shows recruited and retained counts and the records excluded from analysis.
+3. *Unequal losses* uses 10% expected loss in the standard group and 20% in the novel group. Recruitment and population probabilities stay fixed.
+4. *Outcome-related losses* keeps those expected percentages but makes missingness three times as likely without relief in the novel group. The standard group retains outcome-independent loss.
+5. Across the four scenarios, Many studies compares the mean estimate, bias, coverage, interval width, retained counts, and significance percentage. A high significance percentage can coexist with bias and poor coverage. The model answer is in the [missing-outcome explanation](../book/simulation.html#explore-missing-outcomes).
+6. Downloads retain the scenario assumptions and actual retained counts. The R script reproduces the current scenario; saved simulation CSV files retain the settings used when they were generated. *Usual simulation* restores the original analysis with fixed analyzable counts.
+
 ## Recruitment adjustment — core
 
 [Open calculator](../dropout_adjustment/) · [Matching explanation](../book/feasibility.html#account-for-expected-losses)

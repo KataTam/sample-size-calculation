@@ -4,7 +4,7 @@ lab_input_defaults <- function() list(
   outcome = "means", goal = "testing", expected_m = 4, expected_p = .4, plan_delta = 3, plan_sd = 5,
   plan_p0 = .3, plan_p1 = .6, threshold_m = 2, threshold_p = .2,
   width_m = 4, width_p = .2, alpha = .05, target_power = .8,
-  fixed_n = 60, dropout = .1, recruit_cap = 200, reality = "same",
+  missing_mode = "off", missing_n = 60, fixed_n = 60, dropout = .1, recruit_cap = 200, reality = "same",
   true_delta = 1, true_sd = 7, true_p0 = .3, true_p1 = .4,
   seed = 20260914, B = 1000, stage = "Explore assumptions")
 
@@ -20,10 +20,10 @@ validate_lab_inputs <- function(values, complete = TRUE) {
   defaults <- lab_input_defaults()
   if (any(!names(values) %in% names(defaults)))
     stop("This plan contains unsupported lab inputs.", call. = FALSE)
-  enums <- list(outcome = c("means", "proportions"),
+  enums <- list(missing_mode = c("off", "complete", "equal", "differential", "selective"), outcome = c("means", "proportions"),
     goal = c("testing", "precision", "fixed"), reality = c("same", "null", "custom"),
     stage = c("Explore assumptions", "One study", "Many studies", "My study", "Justify and communicate"))
-  ranges <- list(expected_m = c(-1e6, 1e6), expected_p = c(-1, 1),
+  ranges <- list(missing_n = c(2, 100000), expected_m = c(-1e6, 1e6), expected_p = c(-1, 1),
     plan_delta = c(-1e6, 1e6), plan_sd = c(.1, 1e6),
     plan_p0 = c(.01, .99), plan_p1 = c(.01, .99), threshold_m = c(.1, 1e6),
     threshold_p = c(.001, 1), width_m = c(.1, 1e6), width_p = c(.001, 2),
@@ -41,7 +41,7 @@ validate_lab_inputs <- function(values, complete = TRUE) {
       if (!is.numeric(value) || length(value) != 1 || !is.finite(value) ||
           value < limits[1] || value > limits[2])
         stop(paste("Invalid", name, "value."), call. = FALSE)
-      if (name %in% c("fixed_n", "recruit_cap", "seed", "B") && value != floor(value))
+      if (name %in% c("missing_n", "fixed_n", "recruit_cap", "seed", "B") && value != floor(value))
         stop(paste(name, "must be an integer."), call. = FALSE)
     }
   }
@@ -74,7 +74,7 @@ validate_study_inputs <- function(values, complete = TRUE) {
 apply_lab_inputs <- function(session, values) {
   values <- validate_lab_inputs(values)
   sliders <- c("plan_p0", "plan_p1", "alpha", "target_power", "dropout", "true_p0", "true_p1", "expected_p", "threshold_p", "width_p")
-  selectors <- c("outcome", "goal", "reality")
+  selectors <- c("outcome", "goal", "reality", "missing_mode")
   for (name in names(values)) {
     if (name == "stage") shiny::updateTabsetPanel(session, "stage", selected = values[[name]])
     else if (name %in% sliders) shiny::updateSliderInput(session, name, value = values[[name]])

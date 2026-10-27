@@ -440,7 +440,7 @@ This repeated-study approach follows the introductory teaching idea in @superpow
 ## Does the pilot already answer the clinical question? {#critical-observed-difference .advanced-heading}
 
 <details class="advanced-explanation">
-<summary>Advanced explanation and exploration</summary>
+<summary>Does the pilot already answer the clinical question?</summary>
 
 
 
@@ -549,7 +549,7 @@ You would need the confidence interval and a justified clinical threshold, as we
 ## Type I and Type II error probabilities as areas {#alpha-beta .advanced-heading}
 
 <details class="advanced-explanation">
-<summary>Advanced explanation and exploration</summary>
+<summary>Type I and Type II error probabilities as areas</summary>
 
 
 
@@ -598,10 +598,10 @@ This activity explains why the patterns seen in repeated simulations occur. The 
 
 ## Precision of a simulation {.advanced-heading}
 
-Even with unchanged assumptions, another batch of simulated trials will give a slightly different estimated power. This is [Monte Carlo error](#monte-carlo-error): uncertainty caused by using a finite number of simulation repetitions. More repetitions reduce Monte Carlo uncertainty while the number of patients in each trial stays fixed.
-
 <details class="advanced-explanation">
-<summary>Advanced: Monte Carlo standard error and intervals</summary>
+<summary>Precision of a simulation</summary>
+
+Even with unchanged assumptions, another batch of simulated trials will give a slightly different estimated power. This is [Monte Carlo error](#monte-carlo-error): uncertainty caused by using a finite number of simulation repetitions. More repetitions reduce Monte Carlo uncertainty while the number of patients in each trial stays fixed.
 
 The following histograms count the [p-values](#p-value) from the independent simulated studies. The dashed line marks the chosen significance level. The fraction below the line estimates power under the specified alternative (Figure \@ref(fig:p-values)).
 
@@ -1187,6 +1187,38 @@ Increasing the number of simulated studies makes the estimated probability of a 
 plot_trial_intervals(trials$results, trial_spec)
 ```
 
+## Explore missing outcomes {#explore-missing-outcomes .advanced-heading}
+
+The [repeated chronic-pain trial activity](https://katatam.github.io/sample-size-calculation/study/?activity=pain_simulation) also lets you examine how missing outcomes affect a treatment comparison. Under *Explore further*, the expandable *Explore missing outcomes* controls offer four scenarios. Each uses the same recruited count and the same population relief probabilities, so you can distinguish the consequences of losing information from those of selectively losing particular outcomes.
+
+| Scenario | Assumptions about missing outcomes |
+|:--|:--|
+| Complete outcomes | Every recruited participant has an observed outcome. |
+| Equal losses | 10% expected loss in each group, unrelated to relief. |
+| Unequal losses | 10% expected loss with standard treatment and 20% with novel treatment, unrelated to relief. |
+| Outcome-related losses | The same overall expected losses of 10% and 20%; in the novel-treatment group, participants without relief are three times as likely to have missing outcomes as those with relief. |
+
+Table: Missing-outcome scenarios in the repeated chronic-pain trial activity.
+
+This [sensitivity analysis](#sensitivity-analysis) uses hypothetical teaching assumptions. In the outcome-related scenario, the missingness probabilities are calibrated to preserve 20% expected loss in the novel-treatment group. At 60% population relief, the probabilities of a missing outcome are approximately 11.1% among those with relief and 33.3% among those without it. Actual losses vary between simulated studies. Equal recruitment is retained; group sizes after loss can differ.
+
+In *One study*, you can see recruited, retained, and missing counts in each group, together with example participant records. The simulation shows the underlying outcomes for teaching, including those marked missing. The analysis uses only observed outcomes. In a real study, those missing outcomes would be unknown.
+
+In *Many studies*, the mean estimated difference is compared with the known population difference; their difference estimates bias. Coverage is assessed against that same full-population difference. The table also reports retained counts, interval widths, and statistically significant results. A high significance percentage can accompany biased estimates and poor coverage. Comparisons with no observed outcomes in one group are reported as unavailable; performance summaries use the estimable comparisons.
+
+The available-case analysis uses a two-sided pooled score test and a Newcombe-Wilson interval with the actual retained group sizes. It illustrates the consequences of a simple analysis under different missingness assumptions. Planning an appropriate missing-data analysis for a real trial requires assumptions and methods matched to the intended treatment effect [@bell2013dropout; @little2012missing]. The [recruitment discussion](#account-for-expected-losses) explains differential dropout and recruitment allowances; the [reproducibility chapter](#tutorial-methods) records the simulation procedures.
+
+::: {.activity}
+With 60 recruited participants per group, how do unequal losses unrelated to relief compare with outcome-related losses at the same expected percentages? What happens to the estimated difference, coverage, and significance percentage?
+
+<details class="model-answer" id="model-answer-missing-outcomes">
+<summary>Model answer</summary>
+
+When loss is unrelated to relief, estimates should remain centered approximately on the full-population difference, although fewer observations reduce precision and can lower power. With outcome-related losses in the novel-treatment group, participants with relief are more likely to remain observed. The available-case comparison therefore tends to overestimate the benefit. With population relief of 30% and 60%, the retained novel-treatment population has approximately 66.7% relief, so the estimated difference tends toward 36.7 percentage points instead of the true 30 points. Coverage can fall even when the percentage of significant results rises. More simulation repetitions clarify these patterns; increasing recruitment reduces random uncertainty but leaves this selection bias in place.
+
+</details>
+:::
+
 ## Compare simulation with a planning approximation {.advanced-heading}
 
 ```{r simulation-benchmark}
@@ -1309,9 +1341,9 @@ The percentage of participants lost to follow-up may differ between treatment gr
 
 The reasons for missing outcomes also matter. In the chronic pain example, patients who experience little relief might be more likely to miss the final assessment. If this happens more often in the novel-treatment group, an analysis restricted to participants with observed outcomes could overestimate its benefit. However, unequal dropout percentages alone do not establish [bias](#bias), and equal percentages do not rule it out. Bias depends on why outcomes are missing, the treatment effect being estimated, and the analysis used [@bell2013dropout].
 
-Your study plan should describe how missing outcomes will be minimized, how their reasons will be recorded in each group, and how the analysis will handle them. Sensitivity analyses should examine whether conclusions change under plausible alternative assumptions about the missing outcomes [@little2012missing].
+Your study plan should describe how missing outcomes will be minimized, how their reasons will be recorded in each group, and how the analysis will handle them. [Sensitivity analyses](#sensitivity-analysis) should examine whether conclusions change under plausible alternative assumptions about the missing outcomes [@little2012missing].
 
-The simulations start with the stated number of patients available for analysis. They do not simulate patients being lost to follow-up.
+The usual simulations start with the stated number of patients available for analysis. The advanced [missing-outcome extension](#explore-missing-outcomes) starts with recruited participants and explores equal, unequal, and outcome-related losses in the [repeated-trial activity](https://katatam.github.io/sample-size-calculation/study/?activity=pain_simulation).
 
 The [Activity: Adjust recruitment for loss to follow-up](https://katatam.github.io/sample-size-calculation/dropout_adjustment/) connects the analyzable count to the number you need to approach recruitment with. You should enter the per-group analyzable requirement, then compare expected loss percentages. Actual retention may differ from the assumed percentage.
 
@@ -1361,7 +1393,7 @@ A study can detect a difference from zero while leaving considerable uncertainty
 ## Estimation with a precision target {#plan-for-precision .advanced-heading}
 
 <details class="advanced-explanation">
-<summary>Advanced explanation and exploration</summary>
+<summary>Estimation with a precision target</summary>
 
 
 
@@ -1408,7 +1440,7 @@ With SD 5 and the same two-group analysis, the expected full-width target of 4 u
 ## Estimate one proportion: a prevalence survey {#prevalence .advanced-heading}
 
 <details class="advanced-explanation">
-<summary>Advanced explanation and exploration</summary>
+<summary>Estimate one proportion: a prevalence survey</summary>
 
 
 
@@ -1451,7 +1483,7 @@ The conservative 50% choice concerns absolute precision for one proportion under
 ## Reuse an existing dataset for a different question {#dataset-reuse .advanced-heading}
 
 <details class="advanced-explanation">
-<summary>Advanced explanation and exploration</summary>
+<summary>Reuse an existing dataset for a different question</summary>
 
 
 
@@ -1499,7 +1531,7 @@ Whether this precision is useful depends on a decision specified for the project
 
 </details>
 
-## Stress-test the study plan {.core-heading}
+## Sensitivity analysis and feasibility {#stress-test-the-study-plan .core-heading}
 
 
 
@@ -1596,7 +1628,7 @@ If none of these options makes the study informative and feasible, you may need 
 ## What if the disease is rare? {#rare-diseases .advanced-heading}
 
 <details class="advanced-explanation">
-<summary>Advanced explanation and exploration</summary>
+<summary>What if the disease is rare?</summary>
 
 
 
@@ -1627,7 +1659,7 @@ Rarity does not, by itself, justify increasing the Type I error probability. Alt
 ## What can you do when information is limited? {#pilot-feasibility .advanced-heading}
 
 <details class="advanced-explanation">
-<summary>Advanced explanation and exploration</summary>
+<summary>What can you do when information is limited?</summary>
 
 
 
@@ -1761,7 +1793,7 @@ This activity tests the planning approximation in a setting where few participan
 ## A fixed total of 70 patients {.advanced-heading}
 
 <details class="advanced-explanation">
-<summary>Advanced explanation and exploration</summary>
+<summary>A fixed total of 70 patients</summary>
 
 
 
@@ -1891,10 +1923,10 @@ The score test and Newcombe-Wilson interval use different constructions, so thei
 
 ## How the simulations work {#simulation-reproducibility .advanced-heading}
 
-The reporting framework ADEMP identifies the aims, data-generating mechanisms, estimands (the quantities being estimated), methods and performance measures [@morris2019]. For the chronic-pain activity, these correspond to investigating study performance; generating relief outcomes at specified probabilities; estimating the between-group difference; applying the chosen test and interval; and summarizing rejection, coverage and interval width.
-
 <details class="advanced-explanation">
-<summary>Simulation procedures and random-number settings</summary>
+<summary>How the simulations work</summary>
+
+The reporting framework ADEMP identifies the aims, data-generating mechanisms, estimands (the quantities being estimated), methods and performance measures [@morris2019]. For the chronic-pain activity, these correspond to investigating study performance; generating relief outcomes at specified probabilities; estimating the between-group difference; applying the chosen test and interval; and summarizing rejection, coverage and interval width.
 
 For one binary study, the app generates independent Bernoulli patient outcomes. For many studies, it generates binomial event counts for each group and analyzes each pair of counts. Normal-outcome studies assume independent observations with a common SD. The repeated-study implementation generates normally distributed mean differences and chi-squared pooled variances; under these assumptions, these have the same sampling distributions as the corresponding summaries of complete patient datasets.
 
@@ -1905,6 +1937,8 @@ The random seed, random-number generator settings and software environment help 
 </details>
 
 ## Software and saved records {#software-record .advanced-heading}
+
+The missing-outcome extension uses binary relief outcomes and a fixed recruited count per group. Its four scenarios assume no loss, 10% loss in both groups, 10%/20% loss independent of relief, or 10%/20% loss with outcome-related selection in the novel-treatment group. For population relief probability $p$, overall loss $r$, and missingness risk ratio $k$ for no relief versus relief, the probabilities are $q_{\mathrm{relief}}=r/[p+k(1-p)]$ and $q_{\mathrm{no\ relief}}=kq_{\mathrm{relief}}$. The selective scenario uses $k=3$ in the novel group and $k=1$ in the standard group. One study generates patient outcomes and missingness indicators; repeated studies use mathematically equivalent multinomial counts for observed/missing outcomes with/without relief. Available cases are analyzed using the actual group sizes, the pooled score test without continuity correction, and Newcombe-Wilson intervals. Bias and coverage refer to the full recruited population difference. Unestimable comparisons are counted separately. Downloads record the scenario, recruitment count, loss assumptions, selection multiplier, population probabilities, repetition count, and random seed.
 
 The calculations use R and the shared functions in `R/sample_size_functions.R`. The interactive R apps use Shiny and are distributed for the browser through Shinylive. R Markdown and Bookdown compile the tutorial. The [source repository](https://github.com/KataTam/sample-size-calculation) supplies the code and `renv.lock`, which records the project package environment.
 

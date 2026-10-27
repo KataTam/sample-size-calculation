@@ -33,7 +33,7 @@ teaching_cases <- function() {
         plan_p1 = .60, target_power = .90, recruit_cap = 200, dropout = .10,
         seed = 20260941)),
     pain_simulation = case("pain_simulation", "Pain relief: repeated trial simulation",
-      "The activity opens in Many studies. You can first simulate one study with 60 patients per group, then simulate 5,000 independent studies. Compare the percentage of statistically significant results, intervals containing the true effect (coverage), and intervals meeting the target width.",
+      "The activity opens in Many studies. You can first simulate one study with 60 patients per group, then simulate 5,000 independent studies. Compare the percentage of statistically significant results, intervals containing the true effect (coverage), and intervals meeting the target width. Explore missing outcomes adds scenarios for equal, unequal, and outcome-related losses.",
       "activity-3-generate-analyze-repeat-summarize", list(outcome = "proportions", goal = "fixed", fixed_n = 60,
         plan_p0 = .30, plan_p1 = .60, width_p = .30, seed = 20260921,
         stage = "Many studies")),

@@ -252,3 +252,17 @@ pre code { display: block; }
 @media print { .skip-to-content { display: none !important; } }
 .book:not(.color-theme-2) .book-summary ul.summary li > a:hover,
 .book:not(.color-theme-2) .book-summary ul.summary li > a:focus { color: #17547b; }
+
+/* The heading itself labels an expandable advanced section. */
+details.section-disclosure > summary > :is(h2,h3,h4,h5,h6) {
+  display:inline; margin:0; padding:0; border:0; background:transparent;
+  font-size:1.15em; color:inherit; line-height:1.4;
+}
+/* A long displayed equation must not widen the chapter on a narrow screen. */
+.math.display { display:block; max-width:100%; overflow-x:auto; overflow-y:hidden; }
+.MathJax_Display, .MathJax_CHTML_Display, .MathJax_SVG_Display {
+  max-width:100%; overflow-x:auto; overflow-y:hidden;
+}
+@media print {
+  .math.display, .MathJax_Display, .MathJax_CHTML_Display, .MathJax_SVG_Display { overflow:visible; }
+}

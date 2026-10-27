@@ -133,6 +133,8 @@ check_resource <- function(render_module = FALSE) {
   source("scripts/check_simulation.R", local = TRUE)
   check_simulation()
   check_lab_server()
+  source("scripts/check_missing_outcomes.R", local=TRUE)
+  check_missing_outcomes()
   source("scripts/check_feedback.R", local = TRUE)
   check_feedback_methods()
   check_feedback_servers()

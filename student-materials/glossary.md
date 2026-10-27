@@ -70,7 +70,7 @@ An estimand is the precisely defined population quantity the study aims to estim
 
 ### Sensitivity analysis {#sensitivity-analysis .core-heading}
 
-In sample size planning, a sensitivity analysis examines plausible alternative assumptions. Before choosing a sample size, you can recalculate how many patients would be needed under each assumption. After choosing a sample size, you can keep it fixed and ask how the same study would perform if the true difference were smaller or variability were greater. These answer different questions. Sensitivity analyses can also examine how a completed study's conclusions depend on assumptions, for example about missing data.
+A sensitivity analysis examines how results or conclusions change under plausible alternative assumptions. In sample size planning, you can either recalculate the required sample for each assumption or keep a chosen sample fixed and evaluate its performance. For example, you might vary the treatment difference, variability, or expected loss to follow-up. For a completed study, sensitivity analyses can examine assumptions about missing outcomes. The [sensitivity analysis and feasibility section](#stress-test-the-study-plan) explains the planning questions, and the [missing-outcome activity](https://katatam.github.io/sample-size-calculation/study/?activity=pain_simulation) illustrates how different missingness mechanisms affect an analysis. These comparisons assess robustness to assumptions; they do not identify which assumptions are true.
 
 ## Hypotheses, Type I error probability, Type II error probability and power {.core-heading}
 

@@ -57,6 +57,7 @@ jobs:
           node scripts/check_reader_tools.cjs
           node scripts/check_glossary_tools.cjs
           node scripts/check_week2.cjs
+          node scripts/check_advanced_headings.cjs http://127.0.0.1:8769
       - uses: actions/upload-pages-artifact@v3
         with:
           path: _site

@@ -232,9 +232,10 @@
     "id": "sensitivity-analysis",
     "label": "Sensitivity analysis",
     "aliases": [
-      "sensitivity analysis"
+      "sensitivity analysis",
+      "sensitivity analyses"
     ],
-    "definition": "Checking plausible alternative assumptions. You can recalculate the required sample, or keep the chosen sample fixed and examine how that study would perform."
+    "definition": "Examining how results or conclusions change under plausible alternative assumptions, such as the treatment difference, variability, or reasons for missing outcomes. In planning, you can recalculate the required sample or keep a chosen sample fixed and assess its performance."
   },
   {
     "id": "estimand",

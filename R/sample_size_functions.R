@@ -508,3 +508,99 @@ plot_sample_mean_distributions <- function(x) {
   mtext(paste0("Green: power = ", round(100*x$power,1), "%"),
     side = 3, line = .25, adj = .95, cex = .8, col = "#176675")
 }
+
+
+# Missing-outcome extension: binary relief, fixed recruited counts, available-case analysis.
+missing_scenario <- function(mode = "complete", n = 60) {
+  check_integer(n, "Recruited participants per group", 2, 100000)
+  modes <- c("complete", "equal", "differential", "selective")
+  if (length(mode) != 1 || !mode %in% modes) stop("Unknown missing-outcome scenario.")
+  list(mode = mode, n = n, loss_control = if (mode == "complete") 0 else .1,
+    loss_treatment = switch(mode, complete = 0, equal = .1, differential = .2, selective = .2),
+    failure_multiplier = if (mode == "selective") 3 else 1)
+}
+
+missing_probabilities <- function(p, loss, multiplier = 1) {
+  # Calibrate the marginal missingness probability exactly to loss.
+  relief <- loss / (p + (1 - p) * multiplier)
+  c(no_relief = multiplier * relief, relief = relief)
+}
+
+missing_scenario_label <- function(x) switch(x$mode,
+  complete = "Complete outcomes", equal = "10% expected loss in both groups, unrelated to relief",
+  differential = "10% standard / 20% novel expected loss, unrelated to relief",
+  selective = "10% standard / 20% novel expected loss, related to relief in the novel group")
+
+analyse_binary_unequal <- function(treatment_count, control_count, n_treatment, n_control, alpha) {
+  valid <- n_treatment > 0 & n_control > 0
+  nt <- pmax(n_treatment, 1); nc <- pmax(n_control, 1)
+  p1 <- treatment_count / nt; p0 <- control_count / nc
+  estimate <- p1 - p0; pooled <- (treatment_count + control_count) / (nt + nc)
+  se <- sqrt(pooled * (1 - pooled) * (1 / nt + 1 / nc))
+  z <- ifelse(se > 0, estimate / se, 0)
+  w1 <- wilson_interval(p1, nt, alpha); w0 <- wilson_interval(p0, nc, alpha)
+  out <- data.frame(estimate = estimate,
+    lower = pmax(-1, estimate - sqrt((p1-w1[,1])^2 + (w0[,2]-p0)^2)),
+    upper = pmin(1, estimate + sqrt((w1[,2]-p1)^2 + (p0-w0[,1])^2)),
+    p_value = 2 * pnorm(-abs(z)))
+  out[!valid, ] <- NA_real_
+  out
+}
+
+simulate_missing_one <- function(spec, settings) {
+  stopifnot(spec$outcome == "proportions")
+  settings <- missing_scenario(settings$mode, settings$n)
+  spec$n <- settings$n
+  with_study_seed(spec$seed, {
+    n <- spec$n
+    control <- rbinom(n, 1, spec$p_control); treatment <- rbinom(n, 1, spec$p_treatment)
+    q0 <- missing_probabilities(spec$p_control, settings$loss_control)
+    q1 <- missing_probabilities(spec$p_treatment, settings$loss_treatment, settings$failure_multiplier)
+    missing <- c(runif(n) < q0[control + 1], runif(n) < q1[treatment + 1])
+    values <- c(control, treatment); observed <- values; observed[missing] <- NA
+    nc <- sum(!missing[seq_len(n)]); nt <- sum(!missing[n + seq_len(n)])
+    result <- add_operating_results(analyse_binary_unequal(sum(observed[n+seq_len(n)], na.rm=TRUE),
+      sum(observed[seq_len(n)], na.rm=TRUE), nt, nc, spec$alpha), spec)
+    result$retained_control <- nc; result$retained_treatment <- nt
+    list(data = data.frame(group = rep(c("Control", "Treatment"), each=n),
+      participant = rep(seq_len(n), 2), simulated_outcome = values, missing = missing, outcome = observed),
+      result = result, spec = spec, missing = settings)
+  })
+}
+
+simulate_missing_trials <- function(spec, settings) {
+  stopifnot(spec$outcome == "proportions")
+  settings <- missing_scenario(settings$mode, settings$n); spec$n <- settings$n
+  with_study_seed(spec$seed, {
+    # Exact multinomial sufficient counts: observed/no relief, observed/relief,
+    # missing/no relief, missing/relief. Equivalent to masking full patient records.
+    counts <- function(p, loss, multiplier) {
+      q <- missing_probabilities(p, loss, multiplier)
+      rmultinom(spec$B, spec$n, c((1-p)*(1-q[1]), p*(1-q[2]), (1-p)*q[1], p*q[2]))
+    }
+    c0 <- counts(spec$p_control, settings$loss_control, 1)
+    c1 <- counts(spec$p_treatment, settings$loss_treatment, settings$failure_multiplier)
+    nc <- colSums(c0[1:2,,drop=FALSE]); nt <- colSums(c1[1:2,,drop=FALSE])
+    r <- add_operating_results(analyse_binary_unequal(c1[2,], c0[2,], nt, nc, spec$alpha), spec)
+    r$retained_control <- nc; r$retained_treatment <- nt
+    r$missing_control <- spec$n - nc; r$missing_treatment <- spec$n - nt
+    list(results=r, spec=spec, missing=settings)
+  })
+}
+
+missing_outcome_summary <- function(batch) {
+  r <- batch$results; valid <- is.finite(r$estimate); B <- sum(valid)
+  if (!B) return(data.frame(Measure="Studies with an estimable comparison", Value="0"))
+  mean_effect <- mean(r$estimate[valid]); truth <- true_difference(batch$spec)
+  effect_se <- if (B > 1) sd(r$estimate[valid]) / sqrt(B) else NA_real_
+  data.frame(Measure=c("Simulated studies", "Studies with an estimable comparison",
+    "Mean retained: standard treatment", "Mean retained: novel treatment",
+    "True population difference (percentage points)", "Mean estimated difference (percentage points)",
+    "Estimated bias: mean estimate minus truth (percentage points)",
+    "Monte Carlo SE of estimated bias (percentage points)",
+    "Intervals containing the true population difference (%)", "Statistically significant results (%)",
+    "Mean full interval width (percentage points)"),
+    Value=c(nrow(r), B, round(mean(r$retained_control), 2), round(mean(r$retained_treatment), 2),
+      round(100*c(truth, mean_effect, mean_effect-truth, effect_se,
+        mean(r$cover[valid]), mean(r$reject[valid]), mean(r$width[valid])), 2)))
+}

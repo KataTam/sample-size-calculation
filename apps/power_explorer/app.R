@@ -60,6 +60,7 @@ ui <- fluidPage(
     setNames(names(teaching_cases()), vapply(teaching_cases(), function(x) x$title, character(1)))), width = "100%"),
   uiOutput("activity_context"),
   textOutput("plan_import_status"),
+  textOutput("missing_note"),
   sidebarLayout(sidebarPanel(width = 4,
     checkboxInput("show_advanced", "Explore further: advanced controls and explanations", FALSE),
     selectInput("outcome", "Outcome", c("Continuous (numerical) outcome" = "means", "Binary (yes/no) outcome" = "proportions")),
@@ -111,6 +112,18 @@ ui <- fluidPage(
       percent_slider("true_p0", "Control event probability assumed for simulation (%)", .01, .99, .3, step = .01),
       percent_slider("true_p1", "Treatment event probability assumed for simulation (%)", .01, .99, .4, step = .01),
       textOutput("generating_inputs")),
+    conditionalPanel("input.outcome == 'proportions'",
+      tags$details(id = "missing-controls", tags$summary("Explore missing outcomes"),
+        p("The scenarios use a fixed recruited sample and analyze participants with observed outcomes. A larger significance percentage should be considered alongside bias and coverage."),
+        selectInput("missing_mode", "Missing-outcome scenario", c(
+          "Usual simulation: fixed analyzable counts" = "off",
+          "Complete outcomes" = "complete", "Equal losses: 10% in each group" = "equal",
+          "Unequal losses: 10% standard, 20% novel" = "differential",
+          "Outcome-related losses: 10% standard, 20% novel" = "selective")),
+        numericInput("missing_n", "Recruited participants per group for these scenarios", 60, min=2, max=100000, step=1),
+        p("The first three scenarios have losses unrelated to relief. In the outcome-related scenario, novel-treatment patients without relief are three times as likely to have a missing outcome as those with relief. Probabilities are calibrated to keep the overall expected loss at 20%. Standard-treatment losses remain unrelated to relief."),
+        p("One study and Many studies use this recruited count while the extension is active. Planning curves retain their complete-data assumptions."),
+        p(tags$a(href="../book/simulation.html#explore-missing-outcomes", target="_blank", rel="noopener", "Explanation and model answer")))),
     tags$details(tags$summary("Reproducibility settings"), numericInput("seed", "Random seed", 20260914, min = 0, max = 2147483647, step = 1)),
     numericInput("B", "Number of simulated studies (B)", 1000, min = 100, max = 10000, step = 100),
     helpText("More participants change study performance. More replications improve simulation precision.")),
@@ -135,13 +148,13 @@ ui <- fluidPage(
       p("The point where a curve reaches the target power is not a hard detection boundary. This sensitivity power analysis explores hypothetical effects, not observed post hoc power."),
       h4("Sensitivity analysis: what if the assumptions differ?"), tableOutput("sensitivity"),
       p(class = "caption", "Table 3. Power and anticipated full interval width under the plan, the reality assumed for simulation and a null effect at unchanged sample size."),
-      p("Changing the reality assumed for simulation keeps the planned sample size fixed. Simulations use analyzable counts; dropout only changes recruitment targets and does not remove missing-data bias."),
+      p("Changing the reality assumed for simulation keeps the planned sample size fixed. Usual simulations use analyzable counts. The Explore missing outcomes extension instead starts with recruited participants and generates missing outcomes; its results appear in One study and Many studies."),
       h4("Analysis assumptions"), textOutput("method"),
       p("Normal outcomes use a pooled-variance t test and interval. Binary outcomes use a pooled score test without continuity correction and a Newcombe-Wilson difference interval. Binary analytical power and precision are approximations; check finite-sample behavior with simulations."))),
     tabPanel("One study", h3("One simulated study"), actionButton("run_one", "Simulate one study", class = "btn-primary"),
       p("High planned power does not guarantee a conclusive result."),
       textOutput("one_status"),
-      conditionalPanel("input.outcome == 'proportions'",
+      conditionalPanel("input.outcome == 'proportions' && !output.one_has_missing",
         h4("From patients to a sampling distribution"),
         p("Filled circles represent patients with the event; open circles represent patients without it. In the chronic pain case, the event is pain relief. The pink dot starts at this trial’s estimated difference on the upper axis. It moves straight down to the same value on the lower axis, joining estimates from earlier trials. Each dot there summarizes one complete trial."),
         actionButton("run_journey", "Animate 20 trials"),
@@ -152,12 +165,15 @@ ui <- fluidPage(
         tags$p(id = "journey-description"),
         tags$p(id = "journey-status", role = "status", `aria-live` = "polite", "A single study or 20-trial sequence will appear here after simulation."),
         p("The population probabilities stay fixed during a sequence. Patient outcomes and estimated differences vary across trials. Twenty trials illustrate this variation; Simulate many studies provides a larger batch for estimating power.")),
+      tableOutput("one_retention"),
+      conditionalPanel("output.one_has_missing", p(class="caption", "Recruited, retained, and missing participants in the saved single study.")),
       tableOutput("one_result"),
       p(class = "caption", "Table 4. Effect estimate, interval, p-value and decisions from the saved single-study simulation."),
       textOutput("one_interpretation"), plotOutput("one_plot", height = "300px"),
       p(class = "caption", "Figure 4. The saved study's estimate and interval compared with zero, the clinical threshold and the true effect assumed for simulation."),
-      h4("First 12 participant records"), tableOutput("one_data"),
-      p(class = "caption", "Table 5. The first 12 simulated participant records from the saved study; binary outcomes use 0 for no event and 1 for an event."),
+      h4("Example participant records"), tableOutput("one_data"),
+      textOutput("one_missing_data_note"),
+      p(class = "caption", "Table 5. Up to six records per group, with missing records shown first when present. Binary outcomes use 0 for no relief and 1 for relief."),
       downloadButton("download_one", "Download study and assumptions"),
       tags$div(id = "journey-credit", tags$hr(), p("The animated connection between samples, estimates, and sampling distributions was inspired by Douwe Postmus’s ", tags$a(href = "https://postmus.github.io/sampling-simulator/", target = "_blank", rel = "noopener", "Statistical Concepts Lab"), "."))),
     tabPanel("Many studies", p("Compare estimated differences and the percentage of significant results across simulated studies. Explore further adds advanced performance summaries."), h3("Repeated independent studies"), actionButton("run_many", "Simulate many studies", class = "btn-primary"),
@@ -172,7 +188,7 @@ ui <- fluidPage(
       h4("How often is the result statistically significant?"),
       plotOutput("p_values", height = "300px"),
       p(class = "caption", "Figure 7. Saved p-values across independent studies; the dashed line marks the Type I error probability used for that simulation batch."),
-      p("The percentage of p-values below the chosen significance level estimates power when a true difference is assumed, or the Type I error probability when no difference is assumed."),
+      p("The significance percentage describes this analysis under the simulated assumptions. With selective missingness, bias and coverage are essential to interpreting that percentage."),
       downloadButton("download_many", "Download replications and assumptions")),
     tabPanel("My study", h3("Apply this to your question"),
       textAreaInput("study_question", "Research question and primary outcome", rows = 2, width = "100%"),
@@ -236,6 +252,7 @@ server <- function(input, output, session) {
         estimate = t$result$estimate[[1]])))
   }
   observeEvent(input$run_journey, {
+    req(is.null(missing_settings()))
     spec <- generating()
     req(spec$outcome == "proportions")
     trials <- lapply(0:19, function(i) {
@@ -246,7 +263,7 @@ server <- function(input, output, session) {
   }, ignoreInit = TRUE)
   observeEvent(one_saved(), {
     x <- one_saved()
-    if (is.null(x)) session$sendCustomMessage("sampling-journey", list(clear = TRUE))
+    if (is.null(x) || !is.null(x$missing)) session$sendCustomMessage("sampling-journey", list(clear = TRUE))
     else if (x$spec$outcome == "proportions")
       session$sendCustomMessage("sampling-journey", journey_payload(list(x)))
   }, ignoreNULL = FALSE)
@@ -426,22 +443,39 @@ server <- function(input, output, session) {
     }
     safe(do.call(study_spec, x))
   })
-  snapshot <- reactive(list(plan = planned(), generating = generating(), goal = input$goal,
-                            target_power = input$target_power, dropout = input$dropout,
-                            recruitment_cap = input$recruit_cap, expected_effect = expected_effect()))
+  missing_settings <- reactive({
+    v <- current_lab_inputs()
+    if (v$outcome != "proportions" || v$missing_mode == "off") return(NULL)
+    safe(missing_scenario(v$missing_mode, v$missing_n))
+  })
+  output$missing_note <- renderText({
+    m <- missing_settings(); if (is.null(m)) return("")
+    paste("Missing-outcome simulation active:", missing_scenario_label(m),
+      ". Recruited per group:", m$n, ". Planning curves describe the complete-data plan.")
+  })
+  output$one_has_missing <- reactive(!is.null(missing_settings()) || (!is.null(one_saved()) && !is.null(one_saved()$missing)))
+  outputOptions(output, "one_has_missing", suspendWhenHidden=FALSE)
+  snapshot <- reactive({
+    missing <- missing_settings(); simulated <- generating()
+    if (!is.null(missing)) simulated$n <- missing$n
+    list(missing = missing, plan = planned(), generating = simulated, goal = input$goal,
+      target_power = input$target_power, dropout = input$dropout,
+      recruitment_cap = input$recruit_cap, expected_effect = expected_effect())
+  })
   one <- reactive({ req(one_saved()); one_saved() })
   observeEvent(input$run_one, {
-    meta <- snapshot(); x <- simulate_one_study(meta$generating); x$meta <- meta; one_saved(x)
+    meta <- snapshot(); x <- if (is.null(meta$missing)) simulate_one_study(meta$generating) else simulate_missing_one(meta$generating, meta$missing); x$meta <- meta; one_saved(x)
   }, ignoreInit = TRUE)
   many <- reactive({ req(many_saved()); many_saved() })
   observeEvent(input$run_many, {
     meta <- snapshot()
     withProgress(message = "Simulating independent studies", value = .2, {
-      x <- simulate_trials(meta$generating); incProgress(.8); x$meta <- meta; many_saved(x)
+      x <- if (is.null(meta$missing)) simulate_trials(meta$generating) else simulate_missing_trials(meta$generating, meta$missing); incProgress(.8); x$meta <- meta; many_saved(x)
     })
   }, ignoreInit = TRUE)
   status <- function(saved, label) paste0(label, ": n = ", saved$spec$n,
-    " per group; true difference assumed for simulation = ", effect_text(true_difference(saved$spec), saved$spec$outcome),
+    if (is.null(saved$missing)) " analyzable per group; " else paste0(" recruited per group; ", missing_scenario_label(saved$missing), "; "),
+    "true difference assumed for simulation = ", effect_text(true_difference(saved$spec), saved$spec$outcome),
     ". ", if (!identical(saved$meta, snapshot())) "Inputs changed. These are saved results; run again to update." else "Results match current inputs.")
   output$planning <- renderTable({
     x <- planned(); recruit <- adjust_for_dropout(x$n, input$dropout)
@@ -537,41 +571,64 @@ server <- function(input, output, session) {
       Power = format_percent(vapply(xs, spec_power, numeric(1)), 1), Full_width = effect_text(vapply(xs, anticipated_width, numeric(1)), p$outcome))
   }, digits = 3)
   output$one_status <- renderText({ req(input$run_one > 0); status(one(), "Saved single study") })
+  output$one_retention <- renderTable({
+    x <- one(); req(!is.null(x$missing))
+    n <- x$spec$n; retained <- c(x$result$retained_control, x$result$retained_treatment)
+    data.frame(Group=c("Standard treatment", "Novel treatment"), Recruited=n, Retained=retained, Missing=n-retained)
+  })
   output$one_result <- renderTable({
     saved <- one(); x <- saved$result
+    if (!is.finite(x$estimate)) return(data.frame(Result="Comparison unavailable: no observed outcome in at least one group."))
     data.frame(Measure = c("Effect estimate", "CI lower limit", "CI upper limit", "Two-sided p-value",
       "Full interval width", "Reject zero", "Interval contains the true effect assumed for simulation", "Width target met"),
       Value = c(effect_text(unlist(x[1:3]), saved$spec$outcome), format(round(x$p_value, 4), nsmall = 4),
                 effect_text(x$width, saved$spec$outcome),
                 ifelse(unlist(x[6:8]), "Yes", "No")), row.names = NULL)
   })
-  output$one_interpretation <- renderText(interval_interpretation(one()$result, one()$spec))
-  output$one_plot <- renderPlot(plot_trial_intervals(one()$result, one()$spec), alt = "One study estimate and interval; values and interpretation are stated above.")
-  output$one_data <- renderTable(head(one()$data, 12))
+  output$one_interpretation <- renderText({
+    x <- one(); if (!is.finite(x$result$estimate)) return("This study cannot estimate the treatment difference from the retained records.")
+    paste(interval_interpretation(x$result, x$spec), if (!is.null(x$missing)) "The available-case analysis uses observed outcomes. Selective missingness can bias its estimate of the full-population difference." else "")
+  })
+  output$one_plot <- renderPlot({ validate(need(is.finite(one()$result$estimate), "No estimable comparison in this study.")); plot_trial_intervals(one()$result, one()$spec) }, alt = "One study estimate and interval; values and interpretation are stated above.")
+  output$one_data <- renderTable({
+    d <- one()$data
+    if ("missing" %in% names(d)) d <- d[order(!d$missing), ]
+    do.call(rbind, lapply(split(d, d$group), head, 6))
+  }, na="Missing")
+  output$one_missing_data_note <- renderText({
+    req(!is.null(one()$missing))
+    "Simulated outcomes are shown for teaching. Outcomes marked missing are excluded from the analysis and would be unknown in a real study. All participant records are in the download."
+  })
   output$many_status <- renderText({ req(input$run_many > 0); paste(status(many(), "Saved batch"), "B =", many()$spec$B) })
   output$many_summary <- renderTable({
+    if (!is.null(many()$missing)) return(missing_outcome_summary(many()))
     if (isTRUE(input$show_advanced)) display_simulation_summary(simulation_summary(many()))
     else data.frame(Measure = "Statistically significant simulated results", Percentage = percent(mean(many()$results$reject)), check.names = FALSE)
   })
   output$many_text <- renderText({
     x <- many(); r <- x$results
+    if (!is.null(x$missing)) return(paste0("Available-case analysis; reference truth is the full recruited population difference. Performance percentages, mean estimates and widths use the ", sum(is.finite(r$estimate)), " studies with observed outcomes in both groups; ", sum(!is.finite(r$estimate)), " comparisons were unavailable. A high significance percentage can accompany biased estimates and poor coverage. The simulated truth is known only because these are generated data."))
     paste0(if (abs(true_difference(x$spec)) < 1e-12) "No-difference scenario: the percentage of significant results estimates Type I error probability. " else "True-difference scenario: the percentage of significant results estimates power. ",
       "Mean full interval width = ", effect_text(mean(r$width), x$spec$outcome), "; mean estimate = ", effect_text(mean(r$estimate), x$spec$outcome),
       "; truth = ", effect_text(true_difference(x$spec), x$spec$outcome), ". The separate single-study draw is not the first row of this batch.")
   })
-  output$many_plot <- renderPlot(plot_trial_intervals(many()$results, many()$spec), alt = "First 30 study intervals; summary percentages and downloadable data provide a text alternative.")
+  valid_many <- reactive({
+    x <- many(); x$results <- x$results[is.finite(x$results$estimate), , drop=FALSE]
+    validate(need(nrow(x$results)>0, "No estimable comparisons in this batch.")); x
+  })
+  output$many_plot <- renderPlot(plot_trial_intervals(valid_many()$results, many()$spec), alt = "First 30 study intervals; summary percentages and downloadable data provide a text alternative.")
   output$distribution <- renderPlot({
-    x <- many(); scale <- if (x$spec$outcome == "proportions") 100 else 1
+    x <- valid_many(); scale <- if (x$spec$outcome == "proportions") 100 else 1
     hist(scale * x$results$estimate, breaks = 25, col = "#dbeafe", border = "white", main = "Sampling distribution of effects",
       xlab = if (x$spec$outcome == "proportions") "Treatment minus control (percentage points)" else "Treatment minus control (outcome units)")
     abline(v = scale * true_difference(x$spec), lty = 3, lwd = 2)
   }, alt = "Effect estimate histogram; mean estimate and the true effect assumed for simulation are provided above.")
   output$p_values <- renderPlot({
-    x <- many()
+    x <- valid_many()
     hist(x$results$p_value, breaks = seq(0,1,.025), col = "#d2e6e9", border = "white",
       xlab = "p-value", ylab = "Number of studies", main = "Saved repeated-study p-values")
     abline(v = x$spec$alpha, lty = 2, lwd = 2, col = "#923d20")
-  }, alt = "Histogram of saved simulation p-values. The percentage of significant results and Monte Carlo interval are reported in the summary table.")
+  }, alt = "Histogram of saved simulation p-values. The significance percentage is reported in the summary table.")
   export_rows <- function(rows, meta) {
     for (k in names(meta$plan)) rows[[paste0("plan_", k)]] <- meta$plan[[k]]
     for (k in names(meta$generating)) rows[[paste0("generating_", k)]] <- meta$generating[[k]]
@@ -580,7 +637,9 @@ server <- function(input, output, session) {
     rows$target_difference <- true_difference(meta$plan)
     rows$dropout_fraction <- meta$dropout
     if (!is.null(meta$recruitment_cap)) rows$recruitment_cap <- meta$recruitment_cap
-    rows$method <- method_label(meta$plan$outcome); rows
+    if (!is.null(meta$missing)) for (k in names(meta$missing)) rows[[paste0("missing_", k)]] <- meta$missing[[k]]
+    rows$method <- paste(method_label(meta$plan$outcome), if (!is.null(meta$missing)) "with actual retained group sizes; available cases only" else "")
+    rows
   }
   output$download_one <- downloadHandler(filename = function() "single_study.csv", content = function(file) {
     x <- one(); write.csv(export_rows(x$data, x$meta), file, row.names = FALSE)
@@ -588,6 +647,8 @@ server <- function(input, output, session) {
   output$download_many <- downloadHandler(filename = function() "study_replications.csv", content = function(file) {
     x <- many(); write.csv(export_rows(x$results, x$meta), file, row.names = FALSE)
   })
+  outputOptions(output, "download_one", suspendWhenHidden=FALSE)
+  outputOptions(output, "download_many", suspendWhenHidden=FALSE)
   output$download_plan <- downloadHandler(filename = function() "sample_size_justification.txt", content = function(file) {
     details <- study_details()
     design <- if (details$study_design == "two_groups" && is.null(routed_case()))
@@ -603,10 +664,13 @@ server <- function(input, output, session) {
     writeLines(jsonlite::toJSON(plan, auto_unbox = TRUE, pretty = TRUE, digits = 16, null = "null"), file)
   })
   output$download_code <- downloadHandler(filename = function() "reproduce_studies.R", content = function(file) {
-    x <- snapshot(); writeLines(c('# Run from the repository root.', 'source("R/sample_size_functions.R")',
-      'plan <-', capture.output(dput(x$plan)), 'generating <-', capture.output(dput(x$generating)),
-      'one <- simulate_one_study(generating)', 'many <- simulate_trials(generating)', 'one$result',
-      'simulation_summary(many)', 'plot_trial_intervals(many$results, generating)'), file)
+    x <- snapshot()
+    calls <- if (is.null(x$missing)) c('one <- simulate_one_study(generating)', 'many <- simulate_trials(generating)', 'simulation_summary(many)') else
+      c('settings <-', capture.output(dput(x$missing)), 'one <- simulate_missing_one(generating, settings)', 'many <- simulate_missing_trials(generating, settings)', 'missing_outcome_summary(many)')
+    writeLines(c('# Current inputs. Run from the repository root.', 'source("R/sample_size_functions.R")',
+      'plan <-', capture.output(dput(x$plan)), 'generating <-', capture.output(dput(x$generating)), calls, 'one$result',
+      'valid <- many$results[is.finite(many$results$estimate), , drop=FALSE]',
+      'if (nrow(valid)) plot_trial_intervals(valid, many$spec)'), file)
   })
 }
 shinyApp(ui, server)

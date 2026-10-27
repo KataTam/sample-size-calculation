@@ -1,4 +1,14 @@
 (function () {
+  // Merge each advanced section heading with its native disclosure control.
+  document.querySelectorAll('details.advanced-explanation').forEach(details => {
+    const heading = details.previousElementSibling;
+    if (!heading || !/^H[2-6]$/.test(heading.tagName)) return;
+    const summary = details.querySelector(':scope > summary');
+    if (!summary) return;
+    heading.querySelectorAll('.anchor-section').forEach(a => a.remove());
+    summary.replaceChildren(heading);
+    details.classList.add('section-disclosure');
+  });
   const header = document.querySelector('.book-header');
   if (header && !document.getElementById('feedback-link')) {
     const feedback = document.createElement('a');
@@ -40,6 +50,8 @@
     let target;
     try { target = document.getElementById(decodeURIComponent(location.hash.slice(1))); } catch (_) { return; }
     if (!target) return;
+    const own = target.querySelector(':scope > details.advanced-explanation');
+    if (own) own.open = true;
     let parent = target.closest('details');
     while (parent) { parent.open = true; parent = parent.parentElement.closest('details'); }
     if (location.hash) requestAnimationFrame(() => target.scrollIntoView());
