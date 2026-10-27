@@ -2,9 +2,12 @@
 from pathlib import Path
 import json
 import re
+import sys
 from pypdf import PdfReader
+from collections import Counter
+from urllib.parse import unquote, urlsplit
 root=Path(__file__).resolve().parents[1]
-r=PdfReader(root/'output/pdf/Sample_size_open_module.pdf')
+r=PdfReader(Path(sys.argv[1]) if len(sys.argv)>1 else root/'output/pdf/Sample_size_open_module.pdf')
 headings=json.loads((root/'build/pdf/headings.json').read_text(encoding='utf-8'))
 assert '/StructTreeRoot' in r.trailer['/Root'], 'PDF lost its accessibility structure'
 assert r.trailer['/Root'].get('/Lang') == 'en-US'
@@ -47,3 +50,47 @@ assert len(r.outline)>=13
 assert 'Welcome' in r.pages[offset].extract_text()
 assert len(r.pages)>offset+20
 print(f'PDF checks passed: {len(links)} contents links and matching bookmarks resolve to their headings within the correct chapters; draft title, Roman front matter and body page 1 verified.')
+
+# Check body links against the intended HTML content, not just the existence of
+# a named PDF destination. This includes definitions anchored inside paragraphs.
+audit=json.loads((root/'build/pdf/internal-links.json').read_text(encoding='utf-8'))
+targets={target['id']:target for target in audit['targets']}
+semantic=lambda text: re.sub(r'[^a-z0-9]', '', text.lower())
+page_text=[semantic(page.extract_text()) for page in r.pages]
+chapter_bounds={}
+for pos,start in enumerate(chapter_indices):
+ end=chapter_indices[pos+1] if pos+1<len(chapter_indices) else len(headings)
+ chapter_bounds[compact(headings[start]['title'])]=(target_pages[start],target_pages[end] if end<len(headings) else len(r.pages))
+for key,target in targets.items():
+ destination=r.named_destinations.get('/'+key)
+ assert destination is not None, f'Missing internal PDF destination: #{key}'
+ page=r.get_destination_page_number(destination)
+ first,last=chapter_bounds[compact(target['chapter'])]
+ assert first<=page<last, f'#{key} points outside its chapter'
+ expected=semantic((target.get('referenceNumber','') if target['kind']=='reference' else '')+target['text'])
+ assert expected and expected in page_text[page], f'#{key} points to a page without its intended text: {target["text"]}'
+for link in audit['links']:
+ target=targets[link['target']]
+ if target['kind'] in ('figure','table') and re.fullmatch(r'\d+\.\d+',link['label']):
+  assert target['text'].startswith(target['kind'].title()+' '+link['label']+':'), link
+ if target['kind']=='reference' and link['numberedCitation']:
+  assert target['referenceNumber']=='['+link['label']+']', link
+body_links=0
+for page in r.pages[offset:]:
+ for ref in page.get('/Annots',[]):
+  annotation=ref.get_object()
+  if annotation.get('/Subtype')!='/Link': continue
+  action=annotation.get('/A',{})
+  destination=annotation.get('/Dest') or (action.get('/D') if action.get('/S')=='/GoTo' else None)
+  if destination is not None:
+   assert isinstance(destination,str), f'Unrecorded direct body destination: {destination}'
+   assert unquote(destination.lstrip('/')) in targets, f'Unaudited PDF body link: {destination}'
+   body_links+=1
+  elif action.get('/S')=='/URI':
+   url=urlsplit(action['/URI'])
+   assert url.hostname not in ('127.0.0.1','localhost'), f'Local-only PDF link: {url.geturl()}'
+   assert not (url.hostname=='katatam.github.io' and url.path.startswith('/sample-size-calculation/book/')), f'Tutorial reference leaves the PDF: {url.geturl()}'
+  else: raise AssertionError(f'Unsupported PDF link action: {annotation}')
+assert body_links>0
+counts=Counter(t['kind'] for t in targets.values())
+print(f'Internal PDF checks passed: {body_links} body link annotations; {len(targets)} verified targets ({dict(counts)}). Figure/table labels and citation numbers agree with their destinations.')

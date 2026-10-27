@@ -32,6 +32,9 @@ def number_citations(folder):
             body = re.sub(r'<a ([^>]*?)href="([^"]*#ref-[^"]+)"[^>]*>(.*?)</a>', link, body, flags=re.S)
             return '<span class="citation citation-numbered">' + body + '</span>'
         text = re.sub(r'<span class="citation">(.*?)</span>', compact, text, flags=re.S)
+        # Complete downloads can already contain labels from a previous build.
+        # Replace them so repeated assembly keeps exactly one number per entry.
+        text = re.sub(r'<span class="reference-number">\[\d+\]</span>[ \t]*', '', text)
         for key, number in numbers.items():
             opening = f'<div id="{key}" class="csl-entry"'
             text = re.sub(re.escape(opening) + r'([^>]*>)',

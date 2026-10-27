@@ -44,6 +44,9 @@ const base=(process.argv[2]||'http://127.0.0.1:8769').replace(/\/$/,'');
  assert(await page.locator('.section.level1 > h1').isVisible());
  await page.goto(base+'/book/Sample_size_open_module.html');
  assert((await page.locator('a[data-citation-label]').count())>20);
+ for(const entry of await page.locator('.csl-entry').all()) {
+  assert.equal(await entry.locator('.reference-number').count(),1,'One reference number per entry in the complete HTML');
+ }
  assert.equal(await page.locator('details.advanced-explanation[open]').count(),0);
  assert.deepEqual(errors,[]);
  console.log('Week 2 checks passed: hybrid citations, reference mapping, keyboard popups, activity menu, advanced disclosures, chapter recaps, and complete HTML.');

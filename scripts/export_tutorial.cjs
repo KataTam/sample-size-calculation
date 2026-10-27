@@ -128,11 +128,60 @@ let browser;
       code:document.querySelectorAll('main details.r-code-output').length};
   });
   console.log('Expanded PDF boxes:', JSON.stringify(disclosureCounts));
+  // Record the intended content of each internal target independently of the
+  // browser's PDF destination table, so the finished PDF can be audited.
+  const internalLinks = await page.evaluate(() => {
+    const clean = text => text.trim().replace(/\s+/g, ' ');
+    const links = Array.from(document.querySelectorAll('a[href^="#"]')).map(a => ({
+      target: decodeURIComponent(a.getAttribute('href').slice(1)), label: clean(a.textContent),
+      numberedCitation: a.hasAttribute('data-citation-label')
+    }));
+    const ids = new Map();
+    document.querySelectorAll('[id]').forEach(el => {
+      if (!ids.has(el.id)) ids.set(el.id, []);
+      ids.get(el.id).push(el);
+    });
+    const firstHeading = el => Array.from(el.querySelectorAll('h1,h2,h3,h4,h5,h6,caption,summary'))
+      .find(h => !h.closest('#header'));
+    const targets = Array.from(new Set(links.map(link => link.target))).map(id => {
+      const matches = ids.get(id) || [];
+      if (matches.length !== 1) throw Error(`Internal target #${id} has ${matches.length} matches`);
+      const el = matches[0];
+      const chapter = el.closest('.print-chapter') || el.querySelector('.print-chapter');
+      const kind = id.startsWith('fig:') ? 'figure' : id.startsWith('tab:') ? 'table' : id.startsWith('eq:') ? 'equation' :
+        el.matches('.csl-entry') ? 'reference' : chapter?.id === 'tutorial-glossary' ? 'glossary' : 'section';
+      const heading = /^H[1-6]$/.test(el.tagName) || kind === 'reference' ? el :
+        /^(fig|tab):/.test(id) ? el.parentElement : firstHeading(el);
+      let text;
+      if (heading) {
+        const copy = heading.cloneNode(true);
+        copy.querySelectorAll('.reference-number').forEach(number => number.remove());
+        text = copy.textContent;
+      } else if (el.textContent.trim()) text = el.textContent;
+      else {
+        // Inline glossary anchors precede the definition within a paragraph.
+        const range = document.createRange();
+        range.selectNodeContents(el.parentElement); range.setStartAfter(el);
+        text = range.toString();
+      }
+      if (!text.trim()) {
+        // Legacy section aliases and SVG equations can have empty anchor spans.
+        // Use the following heading or prose as a readable page-level check.
+        let next = el.parentElement.nextElementSibling;
+        while (next && (!next.textContent.trim() || next.matches('.MathJax_SVG_Display'))) next = next.nextElementSibling;
+        text = next ? (firstHeading(next) || next).textContent : '';
+      }
+      return {id, kind, chapter: clean(firstHeading(chapter)?.textContent || ''),
+        text: clean(text).slice(0, 100), referenceNumber: el.querySelector('.reference-number')?.textContent};
+    });
+    return {links, targets};
+  });
   const bodyPdf = await page.pdf({outline:true,tagged:true,format:'A4',printBackground:true,margin:{top:'20mm',right:'22mm',bottom:'22mm',left:'22mm'},displayHeaderFooter:true,headerTemplate:'<span></span>',footerTemplate:'<div style="font:9px Arial;width:100%;text-align:center;color:#586572">Katalin Tamási · Sample size calculation tutorial · <span class="pageNumber"></span> / <span class="totalPages"></span></div>'});
   fs.mkdirSync('build/pdf', {recursive:true});
   fs.writeFileSync('build/pdf/tutorial-body.pdf', bodyPdf);
   fs.writeFileSync('build/pdf/headings.json', JSON.stringify(pdfHeadings));
   fs.writeFileSync('build/pdf/metadata.json', JSON.stringify({date:renderedDate}));
+  fs.writeFileSync('build/pdf/internal-links.json', JSON.stringify(internalLinks, null, 2));
   execFileSync(process.env.PYTHON || (process.platform === 'win32' ? 'python' : 'python3'), ['scripts/assemble_book_pdf.py'], {stdio:'inherit'});
   const pdf = fs.readFileSync('build/pdf/tutorial-complete.pdf');
   for (const folder of ['module','docs/book','_site/book']) {
