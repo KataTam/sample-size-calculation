@@ -22,17 +22,17 @@ Table 1. Estimate, confidence interval and decisions from one simulated study un
 |--------:|-----:|------:|-------:|------:|:------|:-----|:---------|
 |   2.3097| 0.048| 4.5714|  0.0454| 4.5235|TRUE   |TRUE  |FALSE     |
 
-The test rejects a zero difference. The interval excludes zero in the beneficial direction, but includes benefits below the clinical threshold. Interpret uncertainty in context; this is not a prespecified equivalence or non-inferiority test.
+The test rejects a zero difference. The interval excludes zero in the beneficial direction, but includes benefits below the clinical threshold. Equivalence and noninferiority require their own prespecified margins, hypotheses and analyses.
 
 ### Repeated studies
 
 Table 2. Rejection, confidence interval coverage and full-width attainment across 1000 independent studies under the planned scenario. Monte Carlo intervals describe simulation uncertainty.
 
-|Measure               |Percentage |Monte Carlo SE (percentage points) |95% lower limit |95% upper limit |
-|:---------------------|:-----|:----------------------------------|:---------------|:---------------|
-|Statistically significant simulated results        |79.8% |1.27                               |77.2%           |82.2%           |
-|CI coverage           |94.1% |0.75                               |92.5%           |95.4%           |
-|Full width target met |31.5% |1.47                               |28.7%           |34.4%           |
+|Measure                                         |Percentage |Simulation uncertainty: Monte Carlo SE (percentage points) |95% lower limit |95% upper limit |
+|:-----------------------------------------------|:----------|:----------------------------------------------------------|:---------------|:---------------|
+|Statistically significant simulated results     |79.8%      |1.27                                                       |77.2%           |82.2%           |
+|Intervals containing the true effect (coverage) |94.1%      |0.75                                                       |92.5%           |95.4%           |
+|Intervals meeting the target width              |31.5%      |1.47                                                       |28.7%           |34.4%           |
 
 Mean FULL interval width: 4.15 units.
 
@@ -56,17 +56,17 @@ Table 3. Estimate, confidence interval and decisions from one simulated study un
 |--------:|------:|------:|-------:|------:|:------|:-----|:---------|
 |  -0.6903| -2.952| 1.5714|  0.5457| 4.5235|FALSE  |TRUE  |FALSE     |
 
-The test does not reject a zero difference; this does not establish no effect. The interval does not extend to the specified beneficial threshold; consider the full interval, including possible harm. Interpret uncertainty in context; this is not a prespecified equivalence or non-inferiority test.
+The test does not reject a zero difference. The interval does not extend to the specified beneficial threshold; consider the full interval, including possible harm. Equivalence and noninferiority require their own prespecified margins, hypotheses and analyses.
 
 ### Repeated studies
 
 Table 4. Rejection, confidence interval coverage and full-width attainment across 1000 independent studies under the null scenario. Monte Carlo intervals describe simulation uncertainty.
 
-|Measure               |Percentage |Monte Carlo SE (percentage points) |95% lower limit |95% upper limit |
-|:---------------------|:-----|:----------------------------------|:---------------|:---------------|
-|Statistically significant simulated results        |5.9%  |0.75                               |4.6%            |7.5%            |
-|CI coverage           |94.1% |0.75                               |92.5%           |95.4%           |
-|Full width target met |31.5% |1.47                               |28.7%           |34.4%           |
+|Measure                                         |Percentage |Simulation uncertainty: Monte Carlo SE (percentage points) |95% lower limit |95% upper limit |
+|:-----------------------------------------------|:----------|:----------------------------------------------------------|:---------------|:---------------|
+|Statistically significant simulated results     |5.9%       |0.75                                                       |4.6%            |7.5%            |
+|Intervals containing the true effect (coverage) |94.1%      |0.75                                                       |92.5%           |95.4%           |
+|Intervals meeting the target width              |31.5%      |1.47                                                       |28.7%           |34.4%           |
 
 Mean FULL interval width: 4.15 units.
 
@@ -90,17 +90,17 @@ Table 5. Estimate, confidence interval and decisions from one simulated study un
 |--------:|------:|------:|-------:|------:|:------|:-----|:---------|
 |   0.3097| -1.952| 2.5714|  0.7862| 4.5235|FALSE  |TRUE  |FALSE     |
 
-The test does not reject a zero difference; this does not establish no effect. The interval includes both zero or harm and clinically important benefit. Interpret uncertainty in context; this is not a prespecified equivalence or non-inferiority test.
+The test does not reject a zero difference. The interval includes both zero or harm and clinically important benefit. Equivalence and noninferiority require their own prespecified margins, hypotheses and analyses.
 
 ### Repeated studies
 
 Table 6. Rejection, confidence interval coverage and full-width attainment across 1000 independent studies under the smaller effect scenario. Monte Carlo intervals describe simulation uncertainty.
 
-|Measure               |Percentage |Monte Carlo SE (percentage points) |95% lower limit |95% upper limit |
-|:---------------------|:-----|:----------------------------------|:---------------|:---------------|
-|Statistically significant simulated results        |16.7% |1.18                               |14.5%           |19.1%           |
-|CI coverage           |94.1% |0.75                               |92.5%           |95.4%           |
-|Full width target met |31.5% |1.47                               |28.7%           |34.4%           |
+|Measure                                         |Percentage |Simulation uncertainty: Monte Carlo SE (percentage points) |95% lower limit |95% upper limit |
+|:-----------------------------------------------|:----------|:----------------------------------------------------------|:---------------|:---------------|
+|Statistically significant simulated results     |16.7%      |1.18                                                       |14.5%           |19.1%           |
+|Intervals containing the true effect (coverage) |94.1%      |0.75                                                       |92.5%           |95.4%           |
+|Intervals meeting the target width              |31.5%      |1.47                                                       |28.7%           |34.4%           |
 
 Mean FULL interval width: 4.15 units.
 
@@ -124,17 +124,17 @@ Table 7. Estimate, confidence interval and decisions from one simulated study un
 |--------:|-------:|-----:|-------:|------:|:------|:-----|:---------|
 |   2.0336| -1.1328|   5.2|  0.2052| 6.3329|FALSE  |TRUE  |FALSE     |
 
-The test does not reject a zero difference; this does not establish no effect. The interval includes both zero or harm and clinically important benefit. Interpret uncertainty in context; this is not a prespecified equivalence or non-inferiority test.
+The test does not reject a zero difference. The interval includes both zero or harm and clinically important benefit. Equivalence and noninferiority require their own prespecified margins, hypotheses and analyses.
 
 ### Repeated studies
 
 Table 8. Rejection, confidence interval coverage and full-width attainment across 1000 independent studies under the higher variability scenario. Monte Carlo intervals describe simulation uncertainty.
 
-|Measure               |Percentage |Monte Carlo SE (percentage points) |95% lower limit |95% upper limit |
-|:---------------------|:-----|:----------------------------------|:---------------|:---------------|
-|Statistically significant simulated results        |54.2% |1.58                               |51.1%           |57.3%           |
-|CI coverage           |94.1% |0.75                               |92.5%           |95.4%           |
-|Full width target met |0.0%  |0.00                               |0.0%            |0.4%            |
+|Measure                                         |Percentage |Simulation uncertainty: Monte Carlo SE (percentage points) |95% lower limit |95% upper limit |
+|:-----------------------------------------------|:----------|:----------------------------------------------------------|:---------------|:---------------|
+|Statistically significant simulated results     |54.2%      |1.58                                                       |51.1%           |57.3%           |
+|Intervals containing the true effect (coverage) |94.1%      |0.75                                                       |92.5%           |95.4%           |
+|Intervals meeting the target width              |0.0%       |0.00                                                       |0.0%            |0.4%            |
 
 Mean FULL interval width: 5.81 units.
 
@@ -158,17 +158,17 @@ Table 9. Estimate, confidence interval and decisions from one simulated study un
 |:----------------------|:---------------------|:----------------------|-------:|:----------------------|:------|:-----|:---------|
 |25.0 percentage points |7.2 percentage points |40.7 percentage points |   0.006|33.5 percentage points |TRUE   |TRUE  |FALSE     |
 
-The test rejects a zero difference. The interval excludes zero in the beneficial direction, but includes benefits below the clinical threshold. Interpret uncertainty in context; this is not a prespecified equivalence or non-inferiority test.
+The test rejects a zero difference. The interval excludes zero in the beneficial direction, but includes benefits below the clinical threshold. Equivalence and noninferiority require their own prespecified margins, hypotheses and analyses.
 
 ### Repeated studies
 
 Table 10. Rejection, confidence interval coverage and full-width attainment across 1000 independent studies under the binary scenario. Monte Carlo intervals describe simulation uncertainty.
 
-|Measure               |Percentage |Monte Carlo SE (percentage points) |95% lower limit |95% upper limit |
-|:---------------------|:-----|:----------------------------------|:---------------|:---------------|
-|Statistically significant simulated results        |91.9% |0.86                               |90.0%           |93.4%           |
-|CI coverage           |95.6% |0.65                               |94.1%           |96.7%           |
-|Full width target met |0.0%  |0.00                               |0.0%            |0.4%            |
+|Measure                                         |Percentage |Simulation uncertainty: Monte Carlo SE (percentage points) |95% lower limit |95% upper limit |
+|:-----------------------------------------------|:----------|:----------------------------------------------------------|:---------------|:---------------|
+|Statistically significant simulated results     |91.9%      |0.86                                                       |90.0%           |93.4%           |
+|Intervals containing the true effect (coverage) |95.6%      |0.65                                                       |94.1%           |96.7%           |
+|Intervals meeting the target width              |0.0%       |0.00                                                       |0.0%            |0.4%            |
 
 Mean FULL interval width: 32.8 percentage points.
 
@@ -182,7 +182,7 @@ Figure 5. First 30 simulated intervals under the binary scenario. Filled points 
 
 Use the case template to justify the goal and assumptions. Explain one inconclusive result, interpret intervals against the clinical threshold, and compare performance while n stays fixed. Report Monte Carlo uncertainty separately from clinical uncertainty.
 
-The normal batch uses equivalent sufficient-statistic sampling; the single dataset is a separate realization, not the batch's first row. These displays include test/CI differences for binary data described in statistical_methods.md.
+The normal batch uses equivalent sufficient-statistic sampling; the single dataset and the batch are generated separately. These displays include test/CI differences for binary data described in statistical_methods.md.
 
 ## References
 

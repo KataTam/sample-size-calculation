@@ -32,7 +32,7 @@ Intended conclusion and what would make the information useful:
 
 For a single-proportion estimation or pilot process-measure case, replace the two-group fields with the parameter, confidence level, useful margin of error, available total n and sampling plan. For an unsupported design, record the intended method and obtain design-specific advice before using the app.
 
-For every evidence source, check its population, outcome definition, time point and analysis. Identify the least certain assumptions. A clinical threshold needs stakeholder justification; a small pilot's observed treatment difference is not a reliable substitute for that judgment. Choosing a target larger than the clinical threshold means accepting lower power at some worthwhile differences.
+For every evidence source, check its population, outcome definition, time point and analysis. Identify the least certain assumptions. A clinical threshold needs stakeholder justification. Choosing a target larger than the clinical threshold means accepting lower power at some worthwhile differences.
 
 ## Clinical, ethical and resource questions
 
@@ -62,9 +62,9 @@ For existing records: why this sample is available, completeness, selection and 
 
 ## Core interpretation and sensitivity
 
-Interpret a prepared estimate and confidence interval against zero and the clinical threshold. Record plausible alternatives and their sources. Compare required sample sizes, then hold the selected sample fixed to assess how its performance changes. Include a table or curve with a written interpretation; simulation is not required for the core submission.
+Interpret a prepared estimate and confidence interval against zero and the clinical threshold. Record plausible alternatives and their sources. Compare required sample sizes, then hold the selected sample fixed to assess how its performance changes. Your core submission should include a table or curve with a written interpretation. Advanced work can add a simulation.
 
-For a fixed existing dataset, describe the new question, eligible records, missing observations and attainable precision. For a pilot, specify each feasibility outcome's denominator and what findings would support proceeding, amending or stopping. Use the relevant information target rather than forcing either project into a treatment-effect calculation.
+For a fixed existing dataset, describe the new question, eligible records, missing observations and attainable precision. For a pilot, specify each feasibility outcome's denominator and what findings would support proceeding, amending or stopping. The information target should match the project's objective.
 
 ## Advanced extension: one study and repeated studies
 

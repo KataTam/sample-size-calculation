@@ -57,7 +57,7 @@
         "Every treated patient has a 20% improvement"
       ],
       "answer": 2,
-      "explanation": "The threshold concerns a comparison between population percentages. A between-group contrast does not identify each person’s treatment response or individual benefit."
+      "explanation": "The threshold concerns a comparison between population percentages."
     },
     {
       "id": "q04",
@@ -105,7 +105,7 @@
         "Missing a specified real difference in 5% of studies"
       ],
       "answer": 0,
-      "explanation": "Type I error probability describes false-positive performance under the null. It does not give a probability that a hypothesis is true after observing the data."
+      "explanation": "Type I error probability describes false-positive performance under the null."
     },
     {
       "id": "q06",
@@ -185,7 +185,7 @@
         "The population benefit is certainly 25 points"
       ],
       "answer": 2,
-      "explanation": "The interval excludes zero but includes differences below and above the 20-point threshold. The estimate is a between-group population comparison; it does not establish an individual benefit."
+      "explanation": "The interval excludes zero but includes differences below and above the 20-point threshold. The estimate is a between-group population comparison."
     },
     {
       "id": "q09",
@@ -281,7 +281,7 @@
         "The probability that the null hypothesis is true"
       ],
       "answer": 0,
-      "explanation": "This sensitivity analysis evaluates a fixed design across plausible effects. It does not identify which population effect is true."
+      "explanation": "This sensitivity analysis evaluates a fixed design across plausible effects."
     },
     {
       "id": "q14",
@@ -329,7 +329,7 @@
         "Ignore expected losses"
       ],
       "answer": 1,
-      "explanation": "A resource limit does not establish adequate power. The original assumptions should remain explicit while feasibility and alternative plans are assessed."
+      "explanation": "The original assumptions should remain explicit while the attainable power, precision, feasibility, and alternative plans are assessed."
     },
     {
       "id": "q17",
@@ -393,7 +393,7 @@
         "A guarantee that the simulation is wrong"
       ],
       "answer": 1,
-      "explanation": "More repetitions reduce Monte Carlo uncertainty. They do not remove approximation error or establish that the model fits a real population."
+      "explanation": "More repetitions reduce Monte Carlo uncertainty. Analytical-approximation error and the credibility of the population assumptions require separate assessment."
     },
     {
       "id": "q21",
@@ -569,7 +569,7 @@
         "The study rules out any worthwhile benefit"
       ],
       "answer": 1,
-      "explanation": "The interval spans zero and the clinical threshold. Its full range should inform interpretation; an inconclusive result does not establish equivalence."
+      "explanation": "The interval spans zero and the clinical threshold. Its full range should inform interpretation. Equivalence requires prespecified margins and an appropriate analysis."
     },
     {
       "id": "q29",
@@ -713,7 +713,7 @@
         "Whatever slider values happen to be displayed later"
       ],
       "answer": 2,
-      "explanation": "A saved result should retain the assumptions and computational context used to produce it. Later changes to controls should not relabel an earlier result."
+      "explanation": "Saved results retain the assumptions and computational context used to produce them, including after controls change."
     },
     {
       "id": "q36",

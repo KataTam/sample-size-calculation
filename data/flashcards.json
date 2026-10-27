@@ -148,7 +148,7 @@
       "id": "C021",
       "level": "core",
       "front": "Should the clinical threshold change because one additional pilot participant reports relief?",
-      "back": "That result changes the observed estimate. By itself, it does not change what patients and clinicians consider worthwhile.",
+      "back": "No. That result changes the observed estimate. The clinical threshold reflects what patients and clinicians consider worthwhile.",
       "source": "https://katatam.github.io/sample-size-calculation/book/clinical-question.html"
     },
     {
@@ -553,7 +553,7 @@
     {
       "id": "A019",
       "level": "advanced",
-      "front": "Why does a standardized difference alone not establish clinical importance?",
+      "front": "What determines whether a standardized difference is clinically important?",
       "back": "Its magnitude depends on variability as well as the difference. Clinical meaning also depends on the outcome's original units and relevant benefits and harms.",
       "source": "https://katatam.github.io/sample-size-calculation/book/calculations.html"
     },
@@ -742,8 +742,8 @@
     {
       "id": "C084",
       "level": "core",
-      "front": "Why is an individual improvement threshold not automatically a suitable between-group clinical threshold?",
-      "back": "It concerns a different comparison. A patient-level threshold may define a responder; a separate judgment is needed about the worthwhile difference in responder percentages between groups.",
+      "front": "How do an individual improvement threshold and a between-group clinical threshold differ?",
+      "back": "An individual threshold may define a responder; the between-group threshold requires a separate judgment about a worthwhile difference in responder percentages.",
       "source": "https://katatam.github.io/sample-size-calculation/book/glossary.html#between-group-differences"
     },
     {
@@ -876,7 +876,7 @@
       "id": "A037",
       "level": "advanced",
       "front": "Why can test rejection and interval exclusion of zero occasionally disagree in the binary examples?",
-      "back": "The score test and Newcombe-Wilson interval are different procedures. They are not exact inversions of the same method.",
+      "back": "The binary examples combine a score test with a separately constructed Newcombe-Wilson interval, so their decisions at zero can differ.",
       "source": "https://katatam.github.io/sample-size-calculation/book/simulation.html"
     },
     {
@@ -918,7 +918,7 @@
       "id": "A043",
       "level": "advanced",
       "front": "In a simple prevalence survey, does n denote a per-group count?",
-      "back": "It denotes the total in one sample; there are no treatment and control groups.",
+      "back": "It denotes the total number of participants in one independent sample.",
       "source": "https://katatam.github.io/sample-size-calculation/book/study-designs.html#prevalence"
     },
     {
@@ -1078,7 +1078,7 @@
     {
       "id": "A066",
       "level": "advanced",
-      "front": "Why does a single prevalence calculation not plan a complete diagnostic-accuracy study?",
+      "front": "What information does a diagnostic-accuracy study need for sample size planning?",
       "back": "The study needs adequate information for sensitivity and specificity, with sufficient reference-positive and reference-negative participants.",
       "source": "https://katatam.github.io/sample-size-calculation/book/study-designs.html"
     },
@@ -1113,15 +1113,15 @@
     {
       "id": "A071",
       "level": "advanced",
-      "front": "Why is an unadjusted two-group calculation often insufficient for an observational association study?",
-      "back": "It does not account for the intended confounder adjustment, model, exposure distribution, or causal identification assumptions.",
+      "front": "What should sample size planning account for in an observational association study?",
+      "back": "The intended confounder adjustment, analysis model, exposure distribution, and assumptions needed for causal interpretation.",
       "source": "https://katatam.github.io/sample-size-calculation/book/study-designs.html"
     },
     {
       "id": "A072",
       "level": "advanced",
       "front": "What is the experimental unit in a preclinical study?",
-      "back": "The unit independently assigned to a condition or intervention. Repeated measurements or wells may not represent separate independent units.",
+      "back": "The unit independently assigned to a condition or intervention. Planning should account for dependence among repeated measurements or wells within an experimental unit.",
       "source": "https://katatam.github.io/sample-size-calculation/book/study-designs.html"
     },
     {
@@ -1163,7 +1163,7 @@
       "id": "A078",
       "level": "advanced",
       "front": "Why do multiple outcomes or comparisons need a prespecified success rule?",
-      "back": "Power for each comparison separately does not determine the probability that all required comparisons succeed. Appropriate error control is also needed.",
+      "back": "Planning should evaluate the probability of satisfying the prespecified success rule across the required comparisons, with appropriate error control.",
       "source": "https://katatam.github.io/sample-size-calculation/book/study-designs.html#further-planning-approaches"
     },
     {

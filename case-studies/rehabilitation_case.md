@@ -1,6 +1,6 @@
 # Case: Rehabilitation improvement
 
-All values are hypothetical teaching assumptions, not evidence about an actual program or instrument.
+All values are hypothetical teaching assumptions.
 
 Compare two individually allocated rehabilitation programs using improvement at six weeks on an approximately normal continuous mobility score. The expected mean difference is 4 units; use a more cautious target difference of 3 units and common SD 5. Separately, suppose patient and clinical consultation identifies a 2-unit benefit as clinically meaningful. The expected difference, target difference and clinical threshold are distinct; only the target difference enters the sample size calculation.
 
@@ -14,4 +14,4 @@ Use a two-sided pooled t test, Type I error probability 5%, target power 90%, eq
 4. Interpret one interval against zero and the 2-unit clinical threshold.
 5. Explain what evidence would justify SD 5 and a target difference of 3 in an actual study.
 
-Each participant contributes one improvement score to a comparison of independent groups. This illustration does not plan a single-group paired test, a repeated-measures model or an analysis adjusted for baseline; those analyses need suitable planning assumptions and methods.
+Each participant contributes one improvement score to a comparison of independent groups. Single-group paired tests, repeated-measures models and analyses adjusted for baseline need their own planning assumptions and methods.

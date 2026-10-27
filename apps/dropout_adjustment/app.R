@@ -12,14 +12,14 @@ ui <- fluidPage(
       percent_slider("dropout", "Expected loss to follow-up (%)", min = 0, max = 0.50, value = 0.10, step = 0.01)
     ),
     mainPanel(
-      p("Equal allocation. Round recruitment up within each arm, then double. Inflation does not remove missing-data bias or guarantee the realized analyzable count."),
+      p("Equal allocation. Round recruitment up within each arm, then double. Actual retention varies. Missing-data bias requires attention to prevention and analysis."),
       h3("Recruitment target"),
       verbatimTextOutput("result"),
       h3("Dropout and recruitment target"),
       plotOutput("dropout_plot", height = "320px"),
       p(class = "caption", "Figure. Recruitment required per arm at different expected dropout percentages, for the chosen analyzable count."),
       tags$details(tags$summary("Continue with this sample size in the reasoning lab"),
-        p("A count and dropout fraction do not specify an outcome or effect. Add those assumptions below. The initial values are illustrative."),
+        p("A simulation also needs assumptions about the outcome and effect. You can specify those below; the initial values are illustrative."),
         selectInput("lab_outcome", "Outcome for the two-group design", c("Continuous" = "means", "Binary" = "proportions")),
         conditionalPanel("input.lab_outcome == 'means'",
           numericInput("lab_delta", "Target difference (outcome units)", 3), numericInput("lab_sd", "Standard deviation used for planning", 5, min = .1)),

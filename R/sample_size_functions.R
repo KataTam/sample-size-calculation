@@ -362,12 +362,12 @@ interval_interpretation <- function(result, spec) {
   if (spec$benefit_direction == 1) { low <- result$lower; high <- result$upper }
   else { low <- -result$upper; high <- -result$lower }
   test <- if (result$p_value < spec$alpha) "The test rejects a zero difference. "
-          else "The test does not reject a zero difference; this does not establish no effect. "
+          else "The test does not reject a zero difference. "
   clinical <- if (low > spec$threshold) "The interval lies beyond the beneficial clinical threshold."
     else if (low > 0) "The interval excludes zero in the beneficial direction, but includes benefits below the clinical threshold."
     else if (high >= spec$threshold) "The interval includes both zero or harm and clinically important benefit."
     else "The interval does not extend to the specified beneficial threshold; consider the full interval, including possible harm."
-  paste0(test, clinical, " Interpret uncertainty in context; this is not a prespecified equivalence or non-inferiority test.")
+  paste0(test, clinical, " Equivalence and noninferiority require their own prespecified margins, hypotheses and analyses.")
 }
 
 plot_trial_intervals <- function(results, spec, max_display = 30) {
@@ -489,7 +489,7 @@ plot_sample_mean_distributions <- function(x) {
   }
   panel <- function(mean, title) {
     plot(grid, dnorm(grid, mean, x$se), type = "n", ylim = c(0, ymax),
-      xlab = "Sample mean (not individual observations)", ylab = "Density", main = title)
+      xlab = "Mean across one sample", ylab = "Density", main = title)
   }
   panel(x$mu0, paste0("Null hypothesis: population mean = ", x$mu0, "; n = ", x$n))
   shade(-Inf, x$lower, x$mu0, "#e5b59f")

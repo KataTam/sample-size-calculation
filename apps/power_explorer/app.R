@@ -82,7 +82,7 @@ ui <- fluidPage(
       percent_slider("plan_p0", "Standard treatment: event probability used for planning (%)", .01, .99, .3, step = .01),
       percent_slider("plan_p1", "Novel treatment: event probability used for planning (%)", .01, .99, .6, step = .01),
       textOutput("probability_inputs"),
-      helpText("Event probabilities are displayed as percentages. An increase from 30% to 60% is 30 percentage points. Expected difference is recorded separately and does not enter the calculation."),
+      helpText("Event probabilities are displayed as percentages. An increase from 30% to 60% is 30 percentage points. The calculation uses the target difference; the expected difference is recorded separately."),
       tagList(
       percent_slider("threshold_p", "Clinically important difference (percentage points)", value = .2, min = .001, max = 1, step = .01, suffix = " percentage points"),
       helpText("Clinical importance is separate from statistical significance.")),
@@ -101,7 +101,7 @@ ui <- fluidPage(
     percent_slider("dropout", "Expected loss to follow-up in each group (%)", 0, .5, .1, step = .01),
     textOutput("dropout_input"),
     numericInput("recruit_cap", "Maximum recruitment, across both groups", 200, min = 4, max = 200000, step = 2),
-    helpText("The curve marks the expected analyzable limit after losses; this is not a guaranteed final count."),
+    helpText("The curve marks the expected analyzable limit after losses. Actual retention varies."),
     conditionalPanel("input.show_advanced",
     h4("Advanced: what if the assumptions differ?"),
     selectInput("reality", "Assumptions for the simulated studies", c("Same as planning assumptions" = "same", "No true treatment effect" = "null", "Custom effect or variability" = "custom")),
@@ -145,14 +145,14 @@ ui <- fluidPage(
       h4("Power across effects at the planned sample size"),
       plotOutput("effect_plot", height = "320px"),
       p(class = "caption", "Figure 3. Two-sided power across hypothetical true effects, holding the current planned sample size fixed."),
-      p("The point where a curve reaches the target power is not a hard detection boundary. This sensitivity power analysis explores hypothetical effects, not observed post hoc power."),
+      p("Each point on the curve describes the probability of detecting a specified true difference. Smaller differences can produce significant results and larger differences can go undetected. This sensitivity analysis evaluates the fixed design across plausible population differences."),
       h4("Sensitivity analysis: what if the assumptions differ?"), tableOutput("sensitivity"),
       p(class = "caption", "Table 3. Power and anticipated full interval width under the plan, the reality assumed for simulation and a null effect at unchanged sample size."),
       p("Changing the reality assumed for simulation keeps the planned sample size fixed. Usual simulations use analyzable counts. The Explore missing outcomes extension instead starts with recruited participants and generates missing outcomes; its results appear in One study and Many studies."),
       h4("Analysis assumptions"), textOutput("method"),
       p("Normal outcomes use a pooled-variance t test and interval. Binary outcomes use a pooled score test without continuity correction and a Newcombe-Wilson difference interval. Binary analytical power and precision are approximations; check finite-sample behavior with simulations."))),
     tabPanel("One study", h3("One simulated study"), actionButton("run_one", "Simulate one study", class = "btn-primary"),
-      p("High planned power does not guarantee a conclusive result."),
+      p("A study with high planned power can still produce an inconclusive result."),
       textOutput("one_status"),
       conditionalPanel("input.outcome == 'proportions' && !output.one_has_missing",
         h4("From patients to a sampling distribution"),
@@ -207,12 +207,12 @@ ui <- fluidPage(
         column(4, numericInput("cost_per_patient", "Cost per recruited participant", 0, min = 0))),
       tableOutput("feasibility_table"),
       p(class = "caption", "Table 7. Expected recruitment, analyzable counts and costs under the stated eligibility, consent and loss assumptions."),
-      helpText("These are expected recruitment and cost scenarios, not guarantees. Account for other exclusions and costs where relevant."),
+      helpText("These scenarios describe expected recruitment and costs. Actual numbers can vary; your assessment should account for other exclusions and costs where relevant."),
       actionButton("use_feasible_cap", "Use expected recruitment as the lab limit"),
       p(tags$a(href = "../book/Sample_size_open_module.html#own-study", target = "_blank", rel = "noopener", "Read the study justification guidance"))),
     tabPanel("Justify and communicate", h3("Explain your decision"),
       textAreaInput("justification", "State the goal, sources, clinical threshold, sensitivity, feasibility and limits of the intended conclusion.", rows = 8, width = "100%"),
-      p("Use the case template. Increasing the assumed effect simply to reduce recruitment is not a justification."),
+      p("The case template helps you record evidence and clinical reasoning for your assumptions."),
       downloadButton("download_plan", "Download plan and explanation"),
       h4("Save and return to your plan"),
       downloadButton("download_plan_json", "Save study plan (JSON)"),
@@ -358,7 +358,7 @@ server <- function(input, output, session) {
       updateSelectInput(session, "activity_choice", selected = case_id)
       current_activity(case_id); routed_case(NULL)
       updateCheckboxInput(session, "show_advanced", value = TRUE)
-      import_status("Linked inputs loaded. A transferred sample size is assessed as fixed; it is not silently recalculated.")
+      import_status("Linked inputs loaded. The transferred sample size is held fixed for the assessment.")
     })
   }, ignoreInit = FALSE)
   observeEvent(input$bridge_error, import_status(input$bridge_error), ignoreInit = FALSE)
@@ -374,7 +374,7 @@ server <- function(input, output, session) {
   output$design_route <- renderUI({
     design <- study_details()$study_design
     if (design == "two_groups") return(p("The lab calculations apply to two independent, equally sized groups. Check that the outcome and intended analysis match your study."))
-    tagList(p("The two-group lab does not calculate a sample size for this design. Your notes and feasibility calculation can still be saved."),
+    tagList(p("This design needs a method matched to its structure and planned analysis. The notes and feasibility calculation can be saved here."),
       if (design == "single_proportion") p(tags$a(href = "../prevalence_precision/?activity=prevalence", target = "_blank", rel = "noopener", "Open the proportion estimation activity")),
       p(tags$a(href = "../book/Sample_size_open_module.html#study-designs", target = "_blank", rel = "noopener", "Choose the appropriate planning approach")))
   })
@@ -487,8 +487,8 @@ server <- function(input, output, session) {
   output$method <- renderText(method_label(planned()$outcome))
   output$planning_text <- renderText(paste(if (planned()$outcome == "means")
     "The width curve is the expected full t-interval width under normal equal-variance sampling." else
-    "The width curve uses the Newcombe-Wilson method with the assumed event probabilities (a plug-in approximation). It does not give an exact average width across repeated studies.",
-    "Reaching the target on this curve does not guarantee every interval meets it. Check the fraction meeting the width target under Many studies."))
+    "The width curve uses the Newcombe-Wilson method with the assumed event probabilities (a plug-in approximation). The mean realized width is assessed across simulated studies.",
+    "Realized interval widths vary. Many studies reports the fraction that meets the width target."))
   observeEvent(input$outcome, { axis_limit(NULL) }, ignoreInit = TRUE)
   plot_limit <- reactive({
     x <- planned()
@@ -610,7 +610,7 @@ server <- function(input, output, session) {
     if (!is.null(x$missing)) return(paste0("Available-case analysis; reference truth is the full recruited population difference. Performance percentages, mean estimates and widths use the ", sum(is.finite(r$estimate)), " studies with observed outcomes in both groups; ", sum(!is.finite(r$estimate)), " comparisons were unavailable. A high significance percentage can accompany biased estimates and poor coverage. The simulated truth is known only because these are generated data."))
     paste0(if (abs(true_difference(x$spec)) < 1e-12) "No-difference scenario: the percentage of significant results estimates Type I error probability. " else "True-difference scenario: the percentage of significant results estimates power. ",
       "Mean full interval width = ", effect_text(mean(r$width), x$spec$outcome), "; mean estimate = ", effect_text(mean(r$estimate), x$spec$outcome),
-      "; truth = ", effect_text(true_difference(x$spec), x$spec$outcome), ". The separate single-study draw is not the first row of this batch.")
+      "; truth = ", effect_text(true_difference(x$spec), x$spec$outcome), ". The single-study draw and this batch are generated separately.")
   })
   valid_many <- reactive({
     x <- many(); x$results <- x$results[is.finite(x$results$estimate), , drop=FALSE]

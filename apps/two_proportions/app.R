@@ -17,7 +17,7 @@ ui <- fluidPage(
     ),
     mainPanel(
       p("Normal approximation for two independent groups with equal allocation and a two-sided test, using the same planning method as the tutorial and ", tags$a(href = "../power_explorer/", target = "_blank", rel = "noopener", "reasoning lab"), "."),
-      p("Dropout is inflated and rounded within each arm. It changes recruitment targets, not missing-data bias."),
+      p("Dropout is inflated and rounded within each arm. Missing-data bias requires attention to prevention and analysis."),
       h3("Approximate sample size"),
       verbatimTextOutput("result"),
       h3("Interpretation"),

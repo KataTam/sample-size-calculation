@@ -83,7 +83,7 @@
     if (single && ['testing', 'both'].includes(value.goal)) { value.goal = 'precision'; form.elements.goal.value = 'precision'; }
     document.getElementById('outcome-scale-help').textContent = value.outcome === 'binary' ? 'Report event probabilities as percentages (e.g. 60%) and absolute differences or interval widths in percentage points. State the denominator.' : 'Report means, differences, interval widths and standard deviations in the outcome’s units.';
     const wording = single ? {
-      scale: ['Outcome scale and interpretation', 'State the percentage or mean to estimate and its units; there is no treatment difference for a descriptive estimate.', 'The outcome scale and interpretation are'],
+      scale: ['Outcome scale and interpretation', 'Your description should specify the percentage or mean to estimate and its units.', 'The outcome scale and interpretation are'],
       expected: ['Anticipated percentage or mean', 'Give an anticipated value and its evidence, if available. Distinguish it from the result observed in existing data.', 'The anticipated value and supporting evidence are']
     } : {};
     for (const id of ['scale', 'expected']) {
@@ -158,10 +158,10 @@
         analysis: 'A two-sided pooled score test without continuity correction, with a Newcombe-Wilson confidence interval; independent observations and allocation are assumed',
         power: 'Type I error probability ' + percent(input.alpha) + '%. Evaluate attainable power at the ' + percent(input.plan_p1 - input.plan_p0) + '-percentage-point target difference using the matched pain-relief activity',
         precision: 'Evaluate the attainable 95% confidence interval width at the fixed sample size. The activity compares it with a full width of ' + percent(input.width_p) + ' percentage points',
-        counts: input.fixed_n + ' analyzable patients per group, ' + (2 * input.fixed_n) + ' in total; the illustrative sample size is held fixed to assess power and precision rather than selected to meet a target power',
-        recruitment: percent(input.dropout) + '% expected losses. Recruit ' + Math.ceil(input.fixed_n / (1 - input.dropout)) + ' per group, ' + (2 * Math.ceil(input.fixed_n / (1 - input.dropout))) + ' in total using the expected-loss adjustment; this does not guarantee the final analyzable count',
+        counts: input.fixed_n + ' analyzable patients per group, ' + (2 * input.fixed_n) + ' in total; the illustrative sample size is held fixed to assess power and precision',
+        recruitment: percent(input.dropout) + '% expected losses. Recruit ' + Math.ceil(input.fixed_n / (1 - input.dropout)) + ' per group, ' + (2 * Math.ceil(input.fixed_n / (1 - input.dropout))) + ' in total using the expected-loss adjustment; actual retention may vary',
         resources: 'The feasibility of the recruitment target must be assessed from eligible patients, consent, recruitment period and costs',
-        conclusion: 'Assess power and precision at this fixed sample size before deciding what the trial could establish. A significant result alone does not establish a clinically meaningful benefit'});
+        conclusion: 'Assess power and precision at this fixed sample size before deciding what the trial could establish. Clinical interpretation should compare the estimate and confidence interval with zero and the clinical threshold'});
       status.textContent = 'Hypothetical pain-relief example loaded. Replace illustrative assumptions and unresolved decisions with a justified plan.';
     } catch (error) { status.textContent = error.message + ' Your entries were not changed.'; }
   });

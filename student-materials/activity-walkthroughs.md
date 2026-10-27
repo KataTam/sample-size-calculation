@@ -16,7 +16,7 @@ Purpose: connect the calculation to a clinical question, evidence and a defensib
 2. Your assumptions should include their sources and uncertainty. For a treatment comparison, the expected difference, target difference and clinical threshold have separate roles.
 3. After using an appropriate calculator, you can enter its method, analyzable sample and recruitment allowance. A simulation result should include its generating assumptions and repetition count.
 4. The report on the right assembles your entries. You should review it for missing information and distinguish a numerical result from your interpretation.
-5. “Save entries” preserves an editable file; “Download report” saves the written report. The pain-relief example illustrates a completed starting point and does not verify your own plan.
+5. “Save entries” preserves an editable file; “Download report” saves the written report. The pain-relief example illustrates a completed starting point.
 
 ## Chronic pain: one study and many studies — core
 
@@ -63,7 +63,7 @@ Purpose: connect a preventive treatment question to event coding, recruitment fe
 2. In “Explore assumptions,” you can compare the planned count and 15% loss allowance with the recruitment limit of 240.
 3. With advanced controls visible, “Custom effect or variability” lets you keep control at 80% but change the simulation's treatment probability to 85%. The original planning probabilities stay at 80% and 90%.
 4. “One study” gives a possible result; “Many studies” estimates power under the smaller 5-point true benefit at the original sample size. You should rerun after changing assumptions.
-5. Your explanation should distinguish a less favorable true population from a newly calculated study plan. These scenarios are not evidence that probiotics prevent gestational diabetes.
+5. Your explanation should distinguish a less favorable true population from a newly calculated study plan. These scenarios use hypothetical teaching assumptions.
 
 ## Two-mean calculator — core
 
@@ -85,7 +85,7 @@ Purpose: connect a continuous-outcome calculation with the interpretation of a p
 1. The hypothetical score has expected between-group improvement difference 4 units, target difference 3, clinical threshold 2 and common SD 5.
 2. “Explore assumptions” uses a pooled two-sample t-test plan with 90% target power. You can compare recruitment after 10% losses with the limit of 200.
 3. In “One study,” a run generates independent normal improvement scores using the planning difference of 3 units. The observed difference and interval vary across simulated trials.
-4. You can compare the interval with zero and the 2-unit threshold. A significant result does not necessarily establish a benefit above that threshold.
+4. You can compare the interval with zero and the 2-unit threshold. A statistically significant difference can still be too small to matter to patients.
 5. “Many studies” shows how often conclusions vary across repetitions. Each patient contributes one improvement score to the comparison of two independent treatment groups.
 
 ## Chronic pain: power and recruitment — advanced
@@ -98,7 +98,7 @@ Purpose: assess whether the feasible study can answer the intended question unde
 2. “Explore assumptions” shows analytical curves for the 30-point target difference and smaller 20- and 15-point differences. You can compare their power with the 90% target.
 3. With advanced controls visible, a custom simulation scenario of control 30% and treatment 50% or 45% keeps the original sample fixed while changing the true difference.
 4. “Many studies” estimates power from generated patient data for the selected scenario.
-5. Your recommendation should address what the recruitment ceiling could establish and the uncertainty in the assumptions. Changing the clinical threshold alone does not change power for a test of zero difference.
+5. Your recommendation should address what the recruitment ceiling could establish and the uncertainty in the assumptions. Power for a test of zero difference depends on the true difference, sample size, and analysis.
 
 ## Repeated chronic-pain trials — advanced
 
@@ -130,7 +130,7 @@ Purpose: translate an analyzable requirement into a recruitment allowance.
 1. For the chronic-pain example, the analyzable requirement is 56 patients per group.
 2. At 10% expected loss, the result is 63 recruits per group, or 126 total, after rounding upward within each group.
 3. Comparing 0%, 10% and 20% losses shows how recruitment changes while the analyzable requirement stays fixed.
-4. Your interpretation should acknowledge that actual retention varies and that recruiting more participants does not remove missing-data bias. The lab link transfers the analyzable count per group.
+4. Your interpretation should acknowledge that actual retention varies and that missing-data bias requires attention to prevention and analysis. The lab link transfers the analyzable count per group.
 
 ## Estimate a mean difference with a precision target — advanced
 
@@ -140,7 +140,7 @@ Purpose: extend the rehabilitation calculation to planning a useful confidence-i
 
 1. The activity uses expected difference 4 units, target difference 3, common SD 5, clinical threshold 2 and target full interval width 4 units.
 2. “Explore assumptions” calculates the sample for the interval-width goal. You can compare it with the count for 80% target power by switching the planning goal.
-3. Returning to the precision goal, “One study” generates a realized interval. Its width need not equal the anticipated width.
+3. Returning to the precision goal, “One study” generates a realized interval. Realized interval widths vary.
 4. “Many studies” estimates the percentage meeting the full-width target. A full width of 4 corresponds to a margin of about 2 for a symmetric interval.
 5. Your justification should explain which interval widths would be useful and whether both power and precision requirements matter for the question.
 
@@ -153,7 +153,7 @@ Purpose: connect the precision needed for a descriptive decision with survey siz
 1. The example anticipates 20% prevalence and a 95% interval with full width 10 percentage points, equivalent to a margin of 5 points.
 2. The formula gives 246 completed observations. Reducing full width to 5 points, a margin of 2.5, requires about four times as many.
 3. The 50% conservative-planning option changes the probability used for sample size planning. The anticipated percentage remains the generating probability for the illustrative simulation.
-4. “Draw one illustrative sample” generates a binomial count and a Wilson interval. The realized interval need not meet the planning width.
+4. “Draw one illustrative sample” generates a binomial count and a Wilson interval. The realized interval width varies with the observed count.
 5. Your explanation should distinguish interval precision from representativeness. Here, n is the total number of participants in the sample.
 
 ## Pilot study: retention — advanced
@@ -186,9 +186,9 @@ Purpose: distinguish relative changes from percentage-point differences and inve
 
 Purpose: bring together the clinical question, numerical requirements and practical constraints.
 
-1. In “My study,” you can describe the question, design, evidence, participant burden and resources. The numerical model supports two independent, equally sized groups; selecting another design does not make this model suitable for it.
+1. In “My study,” you can describe the question, design, evidence, participant burden and resources. The numerical model supports two independent, equally sized groups. Other designs require calculations matched to their structure and analysis.
 2. For a supported design, you can select testing, interval-width planning or a fixed available sample and enter justified assumptions in “Explore assumptions.” Other designs require an appropriate external calculation.
-3. The recruitment and cost inputs help assess feasibility. Using expected recruitment as the lab limit does not make the resulting count guaranteed.
+3. The recruitment and cost inputs help assess feasibility. Actual recruitment and retention can vary from these expectations.
 4. For a supported design, “One study” and “Many studies” can examine possible results and performance. Sensitivity scenarios should change the assumed population while retaining the original plan when that is the question.
 5. In “Justify and communicate,” you can save inputs and explanations, download reproducible code or simulation results, and transfer the relevant findings into the assumptions report. A saved plan is distinct from saved simulation output.
 

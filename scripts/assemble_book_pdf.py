@@ -18,16 +18,27 @@ headings = json.loads((ROOT / 'build/pdf/headings.json').read_text(encoding='utf
 def normalize(text):
     return re.sub(r'\s+', ' ', text).strip()
 destinations = {}
-def collect(items):
+def collect(items, chapter=None):
+    current_chapter = chapter
     for item in items:
-        if isinstance(item, list): collect(item)
-        else: destinations.setdefault(re.sub(r'\s+', '', item.title), body.get_destination_page_number(item))
+        if isinstance(item, list):
+            collect(item, current_chapter)
+        else:
+            title = re.sub(r'\s+', '', item.title)
+            if chapter is None:
+                current_chapter = title
+            key = (current_chapter, title)
+            destinations.setdefault(key, []).append(body.get_destination_page_number(item))
 collect(body.outline)
+chapter = None
 for heading in headings:
     title = re.sub(r'\s+', '', heading['title'])
-    if title not in destinations:
-        raise RuntimeError(f'No PDF destination for heading: {title}')
-    heading['page'] = destinations[title]
+    if heading['level'] == 0:
+        chapter = title
+    matches = destinations.get((chapter, title), [])
+    if not matches:
+        raise RuntimeError(f'No PDF destination in {chapter} for heading: {title}')
+    heading['page'] = matches.pop(0)
 
 width, height = A4
 margin = 62
@@ -40,6 +51,7 @@ w,h=p.wrap(width-2*margin, height); p.drawOn(c, margin, height-170-h)
 c.setStrokeColorRGB(.2,.35,.5); c.line(margin, height-345, width-margin,height-345)
 c.setFont('Times-Roman',15); c.drawString(margin,height-380,'Sample size calculation tutorial')
 c.setFont('Times-Roman',12); c.drawString(margin,height-410,'For healthcare professionals')
+c.setFont('Times-Roman',12); c.drawString(margin,height-435,'Draft version')
 c.setFont('Times-Roman',14); c.drawString(margin,210,'Katalin Tamasi'.replace('Tamasi','Tamási'))
 c.setFont('Times-Roman',11); c.drawString(margin,188,'University Medical Center Groningen')
 metadata=json.loads((ROOT/'build/pdf/metadata.json').read_text(encoding='utf-8'))

@@ -52,7 +52,7 @@ ui <- fluidPage(
     selectInput("goal", "Planning goal", c("Estimation with a target interval width" = "precision", "Assess an available sample" = "fixed")),
     percent_slider("anticipated_p", "Anticipated percentage (%)", .001, .999, .20, step = .001),
     checkboxInput("unknown_p", "No previous estimate: use 50% for conservative planning", FALSE),
-    helpText("This choice maximizes the usual single-proportion sample requirement at fixed absolute margin of error. It does not supply an assumed treatment effect."),
+    helpText("This choice maximizes the usual single-proportion sample requirement at fixed absolute margin of error."),
     percent_slider("full_width", "Target full confidence interval width (percentage points)", value = .10, min = .01, max = .50, step = .01, suffix = " percentage points"),
     percent_slider("confidence", "Confidence level (%)", .80, .99, .95, step = .01),
     conditionalPanel("input.goal == 'fixed'", numericInput("fixed_n", "Available participants for analysis (one sample)", 246, min = 1, max = 1e7, step = 1)),
@@ -71,12 +71,12 @@ ui <- fluidPage(
     p("Both reference curves use 95% confidence and fixed absolute margins: ±5 versus ±2.5 percentage points. The dot and separate curve show your chosen confidence and width."),
     h3("One simulated confidence interval"),
     actionButton("simulate", "Draw one illustrative sample", class = "btn-primary"),
-    p("The simulated sample uses the anticipated percentage as its assumed population probability. Choosing 50% for conservative planning changes the sample size calculation; it does not make the population probability known."),
+    p("The simulated sample uses the anticipated percentage as its assumed population probability. Choosing 50% for conservative planning changes the sample size calculation. The anticipated percentage remains the population assumption used for the simulation."),
     textOutput("saved_status"), tableOutput("study_table"),
     p(class = "caption", "Table. Event count, observed percentage and Wilson confidence limits from one illustrative sample, with the realized width and target assessment."),
     plotOutput("interval_plot", height = "220px"),
     p(class = "caption", "Figure. One illustrative Wilson confidence interval compared with the assumed population percentage and requested width."),
-    p("Wilson intervals stay between 0% and 100%. Their realized width depends on the observed count; the planning approximation cannot guarantee that this interval meets the target. Recruitment inflation addresses expected numbers and does not correct selection or missing-data bias."),
+    p("Wilson intervals stay between 0% and 100%. Their realized width depends on the observed count. Recruitment inflation addresses expected numbers; selection and missing-data bias require attention to recruitment procedures and analysis."),
     textAreaInput("justification", "Justify the margin, assumptions, sample availability and limits.", rows = 5, width = "100%"),
     activity_download_button("download_plan", "Download assumptions and explanation"),
     activity_download_button("download_study", "Download realized interval and assumptions"),
@@ -198,7 +198,7 @@ server <- function(input, output, session) {
     writeLines(c("Single proportion: planning assumptions", capture.output(dput(snapshot())),
       "Approximate sample size plan for estimation with a precision target", capture.output(dput(plan())),
       paste("Current participants for analysis:", analysable_n()), "Learner explanation:", input$justification,
-      "Planning approximation is not a guarantee for realized interval width or protection against sampling bias."), file)
+      "Realized interval widths vary with the observed count. Sampling bias requires attention to recruitment procedures and analysis."), file)
   })
   output$download_study <- downloadHandler(filename = function() "proportion_realised_interval.csv", content = function(file) {
     y <- study(); r <- y$result

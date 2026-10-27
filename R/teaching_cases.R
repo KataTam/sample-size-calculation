@@ -56,7 +56,7 @@ teaching_cases <- function() {
         plan_p1 = .96, expected_p = .18, threshold_p = .08, target_power = .80, dropout = 0,
         width_p = .20, seed = 20261003)),
     adherence = case("adherence", "Probiotics: preventing gestational diabetes",
-      "Use remaining free of gestational diabetes as the favorable event: 80% without probiotics and 90% with probiotics. The hypothetical expected difference is 12 percentage points, target difference 10 points and clinical threshold 5 points. These are teaching assumptions, not evidence of effectiveness. Examine 15% losses and the recruitment limit.",
+      "Use remaining free of gestational diabetes as the favorable event: 80% without probiotics and 90% with probiotics. The hypothetical expected difference is 12 percentage points, target difference 10 points and clinical threshold 5 points. These are hypothetical teaching assumptions. Examine 15% losses and the recruitment limit.",
       "adherence", list(outcome = "proportions", goal = "testing", plan_p0 = .80,
         plan_p1 = .90, expected_p = .12, threshold_p = .05, target_power = .90, dropout = .15,
         recruit_cap = 240, width_p = .20, seed = 20261002)),

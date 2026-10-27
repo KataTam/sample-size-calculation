@@ -65,8 +65,8 @@ ui <- fluidPage(
     tableOutput("operating_table"),
     p(class = "caption", "Table. Standard error, rejection boundaries and error probabilities under the selected design."),
     textOutput("explanation"),
-    p("Type I error probability is the probability of falsely rejecting the null (a false positive). Type II error probability is the probability of missing the specified true difference (a false negative). Power is the true-positive probability: 1 minus Type II error probability. These describe the study conclusion, not a patient diagnosis. Each panel refers to a different assumed population; the alternative panel separates missed differences from detected differences."),
-    p("The vertical boundaries are fixed by the null distribution and chosen Type I error probability. Greater sample size narrows the distribution of the mean; it does not shrink the population SD shown in the controls."),
+    p("Type I error probability is the probability of falsely rejecting the null (a false positive). Type II error probability is the probability of missing the specified true difference (a false negative). Power is the true-positive probability: 1 minus Type II error probability. These describe the statistical conclusion of a study. Each panel refers to a different assumed population; the alternative panel separates missed differences from detected differences."),
+    p("The vertical boundaries are fixed by the null distribution and chosen Type I error probability. Greater sample size narrows the distribution of the mean while the population SD stays fixed."),
     h3("Power across sample sizes"), plotOutput("power_curve", height = "280px"),
     p(class = "caption", "Figure. Power at the specified alternative across independent sample sizes. The point marks the current sample; the reference line marks Type I error probability."),
     p("A one-sided alternative in the wrong direction can have power below Type I error probability. Direction should follow the prespecified scientific question. A realized non-significant result does not establish that the null is true."),
@@ -118,7 +118,7 @@ server <- function(input, output, session) {
       greater = paste("above", round(x$upper, 3)), less = paste("below", round(x$lower, 3)),
       two.sided = paste("below", round(x$lower, 3), "or above", round(x$upper, 3)))
     paste0("The test rejects when the sample mean is ", reject, ". Under the specified alternative mean of ",
-      x$mu1, ", ", format_percent(x$power, 1), " of repeated samples would reject. This power belongs to that assumed alternative and is not the probability that a hypothesis is true.")
+      x$mu1, ", ", format_percent(x$power, 1), " of repeated samples would reject. This power belongs to that assumed alternative.")
   })
   output$power_curve <- renderPlot({
     x <- snapshot(); ns <- unique(round(seq(1, max(100, min(1000, 2*x$n)), length.out = 100)))

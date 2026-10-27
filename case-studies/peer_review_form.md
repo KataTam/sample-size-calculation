@@ -1,6 +1,6 @@
 # Peer Review Form For Student Cases
 
-Use this form to review another student's clinical case. The aim is to improve the case, not to grade the student.
+Use this form to review another student's clinical case. The aim is to improve the case.
 
 ## Reviewer
 
