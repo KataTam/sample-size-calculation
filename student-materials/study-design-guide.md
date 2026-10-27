@@ -5,13 +5,14 @@ Learning outcomes. After this section, you should be able to:
 
 - Use the study-design questionnaire to identify suitable design families and unresolved decisions.
 - Choose a planning method from the research question, outcome and dependency between observations.
+- Plan an independent prevalence sample for a stated confidence level and margin of error.
 - Recognize designs that need methods beyond the two-independent-group examples.
 - Distinguish units of randomization, measurement, and analysis, and explain how dependence affects sample size planning.
 :::
 
 The study design and planning method should follow the research question, outcome, sampling structure and intended analysis. "Clinical," "retrospective," "diagnostic" and "within-subject" describe different aspects of a study and can apply together. A diagnostic study can be clinical and retrospective, and a preclinical experiment can have repeated measurements.
 
-The questionnaire below provides a starting point. The rest of this chapter explains the design dimensions and planning resources behind its suggestions.
+The questionnaire below provides a starting point. The rest of this chapter explains the design dimensions behind its suggestions, works through prevalence estimation, and links to methods for other designs.
 
 ## Activity: Which study design fits your question? {#design-questionnaire .advanced-heading}
 
@@ -73,6 +74,51 @@ A study with 30 participants and two treated sites per participant provides 30 p
 Correlation has different consequences depending on where treatments are assigned. In a cluster-randomized trial, members of the same cluster receive the same treatment, so their correlated outcomes contribute partly overlapping information to the comparison between treatments. In a paired-site trial, the two treatments are compared within the same participant, allowing shared participant characteristics to cancel out in the difference.
 
 The sample size calculation should therefore match the allocation structure and the planned analysis. Your [reproducibility record](#reproducibility-record) should specify what is randomized, what is measured, how many independent units are available, and how dependence among measurements will be handled.
+
+## Estimate one proportion: a prevalence survey {#prevalence .advanced-heading}
+
+
+
+
+
+
+The design dimensions above also explain why some questions need a different calculation. A prevalence survey estimates one population proportion at a defined time. Each participant contributes a binary outcome to one sample; you choose its size for a useful [margin of error](#margin-of-error).
+
+Such estimates can inform service planning or recruitment and retention assumptions for a future trial. The planning question is how precisely the study should estimate the population percentage [@pourhoseingholi2013; @ying2025].
+
+Suppose a service wants to estimate the percentage of eligible patients reporting a symptom. It wants a 95% confidence interval with an approximate margin of error of 5 [percentage points](#percentage-points): half-width $d=0.05$, or a full width of 10 percentage points. This is a simple independent-sample prevalence example. Here, n is the total number of participants in a single sample.
+
+For an anticipated population proportion $p_0$, the normal approximation gives:
+
+\begin{equation}
+n\approx\frac{z_{1-\alpha/2}^{2}p_0(1-p_0)}{d^2}.
+(\#eq:single-proportion)
+\end{equation}
+
+Here $p_0$ is the anticipated population proportion used to plan the study. If comparable evidence suggests a prevalence of 20% ($p_0=0.20$), the approximate requirement is 246 completed observations. If there is no useful prior estimate, 50% ($p_0=0.50$) gives the largest value of $p_0(1-p_0)$ and an approximate requirement of 385.
+
+```{r single-proportion-precision}
+prevalence_known <- proportion_precision_plan(p = .20,
+  full_width = .10, confidence = .95)
+prevalence_unknown <- proportion_precision_plan(p = .20,
+  full_width = .10, confidence = .95, unknown_p = TRUE)
+knitr::kable(data.frame(
+  Scenario = c("Prior estimate 20%", "Unknown: use 50% for planning"),
+  `Assumed population percentage` = percent(c(prevalence_known$planning_p,
+    prevalence_unknown$planning_p)),
+  `Completed observations` = c(prevalence_known$n, prevalence_unknown$n),
+  check.names = FALSE),
+  caption = "Approximate prevalence sample sizes for a 95% interval with a 5-percentage-point margin of error.")
+```
+
+The conservative 50% choice concerns absolute precision for one proportion under this approximation. It is not a general substitute for unknown control and treatment percentages in a power calculation. For a rare outcome, an absolute margin of five percentage points might be unhelpfully wide; event counts and the chosen interval method also matter.
+
+[Activity: Estimate a percentage with useful precision](https://katatam.github.io/sample-size-calculation/study/?activity=prevalence). You can compare margins of error of 5 and 2.5 percentage points. The latter requires about four times as many completed observations under the formula. The app shows a Wilson interval for an illustrative realized sample; its width can differ from the planning approximation. No formula here guarantees that every realized interval meets the target. Representative recruitment matters as well: a larger convenience sample does not automatically remove selection bias [@whitley2002; @wang2020].
+
+
+
+
+The worked survey illustrates one planning method. The table below places it alongside treatment comparisons and other research objectives.
 
 ## Match the question to a method and resource {.advanced-heading}
 
@@ -136,6 +182,7 @@ A review of Bayesian randomized trials found that hybrid sample-size methods wer
 
 - The design and planned analysis determine which sample size method applies.
 - Paired measurements, clusters, and prediction models require appropriate methods.
+- For prevalence estimation, the confidence level, anticipated percentage, and useful margin of error determine the simple independent-sample calculation.
 - Reporting guidance helps document decisions. The calculation should match the study question and planned analysis.
 
 </div>

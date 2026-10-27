@@ -10,7 +10,8 @@ let browser;
  page.on('pageerror',e=>errors.push(e.message));
  await page.goto(base+'/');
  assert.equal(await page.locator('a.start-route').first().getAttribute('href'),'book/');
- await page.goto(base+'/book/clinical-question.html');
+ // Bookdown initializes chapter collapsing after loading its navigation scripts.
+ await page.goto(base+'/book/clinical-question.html',{waitUntil:'networkidle'});
  const activityGroups=JSON.parse(fs.readFileSync('module/activity-contents.json','utf8'));
  for(const group of activityGroups) for(const activity of group.activities) {
   const section=page.locator('.book-summary li.chapter').filter({has:page.locator(':scope > a[href="'+group.chapter+'.html#'+activity.section+'"]')});

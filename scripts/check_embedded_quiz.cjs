@@ -1,5 +1,6 @@
 const {chromium}=require('playwright'),assert=require('node:assert/strict'),fs=require('node:fs');
 const base=process.argv[2]||'http://127.0.0.1:8769';
+const bank=JSON.parse(fs.readFileSync('site/quiz/questions.json','utf8'));
 (async()=>{
  const browser=await chromium.launch({headless:true,...(process.platform==='win32'?{channel:'msedge'}:{})});
  try{
@@ -39,9 +40,9 @@ const base=process.argv[2]||'http://127.0.0.1:8769';
   assert.match(await quiz.locator('.quiz-score').innerText(),/^1 of 1 correct/);
   await page.goto(`${base}/book/exercises.html`);
   await quiz.evaluate(q=>q.closest('details').open=true);
-  assert.equal(await quiz.locator('fieldset:visible').count(),20);
+  assert.equal(await quiz.locator('fieldset:visible').count(),bank.questions.filter(q=>q.level==='core').length);
   await quiz.locator('select').selectOption('all');
-  assert.equal(await quiz.locator('fieldset:visible').count(),40);
+  assert.equal(await quiz.locator('fieldset:visible').count(),bank.questions.length);
   await page.goto(`${base}/book/Sample_size_open_module.html`);
   assert.equal(await page.locator('.chapter-quiz').count(),9);
   const offline=page.locator('#quiz-clinical-question');

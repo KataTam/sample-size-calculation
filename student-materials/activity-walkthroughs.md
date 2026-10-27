@@ -22,11 +22,11 @@ Purpose: connect the calculation to a clinical question, evidence and a defensib
 
 [Open activity](../study/?activity=pain_one_many) · [Matching explanation](../book/power.html#activity-1-one-study-then-many)
 
-Purpose: see why sample estimates differ from population values, and why one trial cannot display a design's power.
+Purpose: see why sample estimates differ from population values, interpret the uncertainty in one trial, and relate repeated trials to power.
 
 1. The starting population has 30% relief with standard treatment and 60% with novel treatment, with 20 analyzable patients per group and a 5% Type I error probability.
 2. In “One study and many studies,” “Simulate one study” generates patient outcomes. You can compare the observed percentages, difference and interval with the specified population values. The animation follows the patient outcomes into the estimated difference and then the sampling distribution. “Animate 20 trials” builds a short sequence; pause, replay and reduced motion support closer inspection. Each accumulated dot represents one complete trial.
-3. The 20-trial animation shows different possible trials while the population probabilities remain fixed.
+3. The 20-trial animation shows different possible trials while the population probabilities remain fixed. For each interval, you can compare the compatible differences with zero and the 20-percentage-point clinical threshold, following the [interval interpretation](../book/power.html#interpret-a-confidence-interval-clinically).
 4. Further down the same page, “Simulate many studies” generates 5,000 independent trials. The distribution shows sampling variability; the percentage of significant results estimates power for this population scenario.
 5. You can repeat at 50 and 80 patients per group while holding the population assumptions and repetition count fixed. Larger trials usually give narrower intervals and greater power. Coverage and Monte Carlo summaries can wait until the advanced chapter.
 
@@ -90,7 +90,7 @@ Purpose: connect a continuous-outcome calculation with the interpretation of a p
 
 ## Chronic pain: power and recruitment — advanced
 
-[Open activity](../study/?activity=pain_curves) · [Matching explanation](../book/curves.html#activity-2-can-the-feasible-study-answer-the-question)
+[Open activity](../study/?activity=pain_curves) · [Power curves](../book/curves.html#activity-2-can-the-feasible-study-answer-the-question) · [Available sample and feasibility](../book/feasibility.html#available-sample)
 
 Purpose: assess whether the feasible study can answer the intended question under less favorable assumptions.
 
@@ -134,9 +134,9 @@ Purpose: translate an analyzable requirement into a recruitment allowance.
 
 ## Estimate a mean difference with a precision target — advanced
 
-[Open activity](../study/?activity=mean_precision) · [Matching explanation](../book/feasibility.html#plan-for-precision)
+[Open activity](../study/?activity=mean_precision) · [Matching explanation](../book/calculations.html#plan-for-precision)
 
-Purpose: distinguish a goal of detecting a difference from a goal of estimating it precisely.
+Purpose: extend the rehabilitation calculation to planning a useful confidence-interval width and compare that criterion with target power.
 
 1. The activity uses expected difference 4 units, target difference 3, common SD 5, clinical threshold 2 and target full interval width 4 units.
 2. “Explore assumptions” calculates the sample for the interval-width goal. You can compare it with the count for 80% target power by switching the planning goal.
@@ -146,7 +146,7 @@ Purpose: distinguish a goal of detecting a difference from a goal of estimating 
 
 ## Estimate a population percentage — advanced
 
-[Open activity](../study/?activity=prevalence) · [Matching explanation](../book/feasibility.html#prevalence)
+[Open activity](../study/?activity=prevalence) · [Matching explanation](../book/study-designs.html#prevalence)
 
 Purpose: connect the precision needed for a descriptive decision with survey size and a possible realized estimate.
 

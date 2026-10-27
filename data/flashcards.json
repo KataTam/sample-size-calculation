@@ -611,42 +611,42 @@
       "level": "core",
       "front": "What does a 95% confidence interval mean across repeated studies?",
       "back": "Under the model assumptions, about 95% of intervals calculated by the method would contain the true population value.",
-      "source": "https://katatam.github.io/sample-size-calculation/book/feasibility.html#interpret-a-confidence-interval-clinically"
+      "source": "https://katatam.github.io/sample-size-calculation/book/power.html#interpret-a-confidence-interval-clinically"
     },
     {
       "id": "C066",
       "level": "core",
       "front": "What does a narrower confidence interval indicate at the same confidence level?",
       "back": "Greater precision of the estimate under the analysis assumptions.",
-      "source": "https://katatam.github.io/sample-size-calculation/book/feasibility.html#interpret-a-confidence-interval-clinically"
+      "source": "https://katatam.github.io/sample-size-calculation/book/power.html#interpret-a-confidence-interval-clinically"
     },
     {
       "id": "C067",
       "level": "core",
-      "front": "With a clinical threshold of 2 units, how would you interpret a 95% interval from 0.2 to 2.8?",
+      "front": "With a clinical threshold of 20 percentage points, how would you interpret a 95% interval from 2 to 28 percentage points?",
       "back": "Zero is excluded, but both benefits below the clinical threshold and clinically worthwhile benefits remain compatible with the data.",
-      "source": "https://katatam.github.io/sample-size-calculation/book/feasibility.html#interpret-a-confidence-interval-clinically"
+      "source": "https://katatam.github.io/sample-size-calculation/book/power.html#interpret-a-confidence-interval-clinically"
     },
     {
       "id": "C068",
       "level": "core",
-      "front": "With a clinical threshold of 2 units, how would you interpret a 95% interval from −0.8 to 3.2?",
+      "front": "With a clinical threshold of 20 percentage points, how would you interpret a 95% interval from -8 to 32 percentage points?",
       "back": "Some harm, no difference, and clinically worthwhile benefit remain compatible with the data.",
-      "source": "https://katatam.github.io/sample-size-calculation/book/feasibility.html#interpret-a-confidence-interval-clinically"
+      "source": "https://katatam.github.io/sample-size-calculation/book/power.html#interpret-a-confidence-interval-clinically"
     },
     {
       "id": "C069",
       "level": "core",
-      "front": "With a clinical threshold of 2 units, how would you interpret a 95% interval from 2.2 to 4.2?",
+      "front": "With a clinical threshold of 20 percentage points, how would you interpret a 95% interval from 22 to 42 percentage points?",
       "back": "The whole interval lies above the specified clinical threshold, supporting a clinically worthwhile population difference under the analysis assumptions.",
-      "source": "https://katatam.github.io/sample-size-calculation/book/feasibility.html#interpret-a-confidence-interval-clinically"
+      "source": "https://katatam.github.io/sample-size-calculation/book/power.html#interpret-a-confidence-interval-clinically"
     },
     {
       "id": "C070",
       "level": "core",
       "front": "Does high power guarantee clinically useful precision?",
       "back": "No. A study can detect a difference from zero while leaving substantial uncertainty about its clinical importance.",
-      "source": "https://katatam.github.io/sample-size-calculation/book/feasibility.html#interpret-a-confidence-interval-clinically"
+      "source": "https://katatam.github.io/sample-size-calculation/book/power.html#interpret-a-confidence-interval-clinically"
     },
     {
       "id": "C071",
@@ -884,84 +884,84 @@
       "level": "advanced",
       "front": "What should a precision-based sample size plan specify?",
       "back": "The population quantity, confidence level, target interval width or margin of error, method, variability assumptions, and design.",
-      "source": "https://katatam.github.io/sample-size-calculation/book/feasibility.html#plan-for-precision"
+      "source": "https://katatam.github.io/sample-size-calculation/book/calculations.html#plan-for-precision"
     },
     {
       "id": "A039",
       "level": "advanced",
       "front": "What is the full width of a confidence interval?",
       "back": "The upper confidence limit minus the lower confidence limit.",
-      "source": "https://katatam.github.io/sample-size-calculation/book/feasibility.html#plan-for-precision"
+      "source": "https://katatam.github.io/sample-size-calculation/book/calculations.html#plan-for-precision"
     },
     {
       "id": "A040",
       "level": "advanced",
       "front": "For a symmetric interval, what does a full width of 4 units imply?",
       "back": "A margin of error of 2 units on either side of the estimate.",
-      "source": "https://katatam.github.io/sample-size-calculation/book/feasibility.html#plan-for-precision"
+      "source": "https://katatam.github.io/sample-size-calculation/book/calculations.html#plan-for-precision"
     },
     {
       "id": "A041",
       "level": "advanced",
       "front": "Does planning for an expected interval width guarantee that every study achieves that width?",
       "back": "No. Realized intervals vary. The probability of meeting a width target is a separate performance criterion.",
-      "source": "https://katatam.github.io/sample-size-calculation/book/feasibility.html#plan-for-precision"
+      "source": "https://katatam.github.io/sample-size-calculation/book/calculations.html#plan-for-precision"
     },
     {
       "id": "A042",
       "level": "advanced",
       "front": "What if the study requires both a power target and a precision target?",
       "back": "Choose a sample that satisfies both criteria under justified assumptions and the intended methods.",
-      "source": "https://katatam.github.io/sample-size-calculation/book/feasibility.html#plan-for-precision"
+      "source": "https://katatam.github.io/sample-size-calculation/book/calculations.html#plan-for-precision"
     },
     {
       "id": "A043",
       "level": "advanced",
       "front": "In a simple prevalence survey, does n denote a per-group count?",
       "back": "It denotes the total in one sample; there are no treatment and control groups.",
-      "source": "https://katatam.github.io/sample-size-calculation/book/feasibility.html#prevalence"
+      "source": "https://katatam.github.io/sample-size-calculation/book/study-designs.html#prevalence"
     },
     {
       "id": "A044",
       "level": "advanced",
       "front": "What is the normal-approximation sample size formula for estimating one proportion with absolute margin d?",
       "back": "n ≈ z[1 − α/2]² × p₀(1 − p₀)/d². Here p₀ is the anticipated proportion, d the half-width, and 1 − α the confidence level.",
-      "source": "https://katatam.github.io/sample-size-calculation/book/feasibility.html#prevalence"
+      "source": "https://katatam.github.io/sample-size-calculation/book/study-designs.html#prevalence"
     },
     {
       "id": "A045",
       "level": "advanced",
       "front": "Why is 50% conservative for planning absolute precision for one proportion under the normal approximation?",
       "back": "It maximizes p₀(1 − p₀), producing the largest required sample for the same absolute margin and confidence level.",
-      "source": "https://katatam.github.io/sample-size-calculation/book/feasibility.html#prevalence"
+      "source": "https://katatam.github.io/sample-size-calculation/book/study-designs.html#prevalence"
     },
     {
       "id": "A046",
       "level": "advanced",
       "front": "Can 50% be used as a universal replacement for unknown event probabilities?",
       "back": "No. Its conservative role here applies to absolute precision for one proportion under the stated approximation.",
-      "source": "https://katatam.github.io/sample-size-calculation/book/feasibility.html#prevalence"
+      "source": "https://katatam.github.io/sample-size-calculation/book/study-designs.html#prevalence"
     },
     {
       "id": "A047",
       "level": "advanced",
       "front": "For 95% confidence and a 5-percentage-point margin, what are the approximate sample sizes for anticipated prevalences of 20% and 50%?",
       "back": "246 and 385 completed observations, respectively, under the simple normal approximation.",
-      "source": "https://katatam.github.io/sample-size-calculation/book/feasibility.html#prevalence"
+      "source": "https://katatam.github.io/sample-size-calculation/book/study-designs.html#prevalence"
     },
     {
       "id": "A048",
       "level": "advanced",
       "front": "What happens to the one-proportion sample requirement if the absolute margin of error is halved?",
       "back": "It increases approximately fourfold under the formula, with the confidence level and anticipated proportion fixed.",
-      "source": "https://katatam.github.io/sample-size-calculation/book/feasibility.html#prevalence"
+      "source": "https://katatam.github.io/sample-size-calculation/book/study-designs.html#prevalence"
     },
     {
       "id": "A049",
       "level": "advanced",
       "front": "Why might a 5-percentage-point margin be unsuitable for a rare outcome?",
       "back": "It may be very wide relative to the prevalence. Expected event counts, useful relative precision, and the interval method need consideration.",
-      "source": "https://katatam.github.io/sample-size-calculation/book/feasibility.html#prevalence"
+      "source": "https://katatam.github.io/sample-size-calculation/book/study-designs.html#prevalence"
     },
     {
       "id": "A050",

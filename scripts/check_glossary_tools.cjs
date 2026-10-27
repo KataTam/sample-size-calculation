@@ -46,7 +46,7 @@ const base=process.argv[2]||'http://127.0.0.1:8769';
  assert.equal(new URL(await recruitment.getAttribute('href'),page.url()).hash,'');
  assert(new URL(await recruitment.getAttribute('href'),page.url()).pathname.endsWith('/curves.html'));
  await page.goto(base+'/book/feasibility.html');
- assert((await page.locator('.core-next a').first().getAttribute('href')).endsWith('#stress-test-the-study-plan'));
+ assert.equal(await page.locator('.core-next').count(),0);
  await page.goto(base+'/book/Sample_size_open_module.html');
  assert.equal(await page.locator('.chapter-end-nav').count(),0);
  assert((await page.locator('a[href="#tutorial-feasibility"]').count())>0);

@@ -1,4 +1,28 @@
 (function () {
+  // Preserve chapter links shared before the planning sections moved.
+  function redirectMovedSection() {
+    if (!location.pathname.endsWith('/feasibility.html')) return false;
+    const destinations = {
+      'interpret-a-confidence-interval-clinically': 'power',
+      'tab:clinical-intervals': 'power',
+      'misconception-confidence-probability': 'power',
+      'misconception-power-precision': 'power',
+      'plan-for-precision': 'calculations',
+      'model-answer-precision-versus-power': 'calculations',
+      'tab:precision-plan': 'calculations',
+      'tab:precision-plan-formatted': 'calculations',
+      'prevalence': 'study-designs',
+      'eq:single-proportion': 'study-designs',
+      'tab:single-proportion-precision': 'study-designs'
+    };
+    let anchor;
+    try { anchor = decodeURIComponent(location.hash.slice(1)); } catch (_) { return false; }
+    if (!destinations[anchor]) return false;
+    location.replace(new URL(destinations[anchor] + '.html' + location.search + location.hash, location.href));
+    return true;
+  }
+  if (redirectMovedSection()) return;
+  window.addEventListener('hashchange', redirectMovedSection);
   // Merge each advanced section heading with its native disclosure control.
   document.querySelectorAll('details.advanced-explanation').forEach(details => {
     const heading = details.previousElementSibling;

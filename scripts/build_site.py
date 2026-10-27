@@ -119,9 +119,23 @@ def page(source, target):
     citation_args = (["--citeproc", "--bibliography=" + str(ROOT / "module/references.bib"),
                       "--csl=" + str(ROOT / "module/apa.csl")]
                      if source.name == "study-design-guide.md" else [])
-    subprocess.run([pandoc, str(source), *citation_args, "--from=" + reader, "--to=html5", "--standalone",
-        "--metadata", "pagetitle=" + title, "--css", css, "--mathjax", "--output", str(target)], check=True)
+    # Reuse the chapter's evaluated prevalence example on the separate guide.
+    rendered_source = ROOT / "build/study-design-guide.md" if source.name == "study-design-guide.md" else source
+    if not rendered_source.is_file():
+        raise RuntimeError("Render the tutorial before assembling the study-design guide.")
+    guide_text = None
+    if source.name == "study-design-guide.md":
+        # Chapter numbering is supplied by Bookdown only in the tutorial.
+        guide_text = re.sub(r"\(\\#(?:eq|tab):[^)]+\)\s*", "",
+                            rendered_source.read_text(encoding="utf-8"))
+    subprocess.run([pandoc, "-" if guide_text is not None else str(rendered_source), *citation_args,
+        "--from=" + reader, "--to=html5", "--standalone",
+        "--metadata", "pagetitle=" + title, "--css", css, "--mathjax", "--output", str(target)],
+        input=guide_text, text=True, encoding="utf-8", check=True)
     text = target.read_text(encoding="utf-8")
+    if source.name == "study-design-guide.md":
+        text = re.sub(r'(<div class="sourceCode"[^>]*>.*?</div>)',
+                      r'<details class="r-code-output"><summary>R code</summary>\1</details>', text, flags=re.S)
     # Website readers get HTML; repository readers keep Markdown links.
     def web_link(match):
         target_url = match.group(1)

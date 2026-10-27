@@ -23,9 +23,12 @@ For the core route assess criteria 1–8 and 10; add criterion 9 only after teac
 
 | Book activity | Outcome and assessment evidence | Rubric |
 |---|---|---|
-| 1: One study, then many (chapter 2) | Explain p-value histogram, null rejection, and n versus B | 7, 9 |
-| 2: Power curves (chapter 4) | Interpret plausible effects, recruitment cap and fixed-n sensitivity | 5, 6, 10 |
-| 3: Simulated trial (chapter 5) | State generating process and analysis; report operating characteristics and uncertainty | 4, 7, 8, 9 |
-| Estimation and feasibility (chapter 6) | Compare power goal with full-width criterion; explain why expected width is not a guarantee | 1, 8, 10 |
+| One study and many studies (chapter 2) | Interpret an interval against zero and the clinical threshold; explain sampling variability and n versus B | 7, 8, 9 |
+| Power curves (chapter 4) | Interpret plausible effects, recruitment cap and fixed-n sensitivity | 5, 6, 10 |
+| Simulated trial (chapter 5) | State generating process and analysis; report operating characteristics and uncertainty | 4, 7, 8, 9 |
+| Precision planning (chapter 3, advanced) | Compare target power with an interval-width criterion; distinguish anticipated and realized width | 1, 8 |
+| Recruitment and feasibility (chapter 6) | Evaluate expected losses, plausible assumptions, fixed resources, and options for an informative study | 5, 6, 10 |
+| Pilot retention (chapter 6, advanced) | Connect retention precision with justified progression criteria | 1, 8, 10 |
+| Prevalence estimation (chapter 8) | Identify the population, denominator, confidence level and useful margin of error | 1, 8 |
 
 Use prepared results from the same book when apps are unavailable. The content and assessment expectations are the same.

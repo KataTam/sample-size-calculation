@@ -21,3 +21,6 @@ table { border-collapse: collapse; display: block; max-width: 100%; overflow-x: 
 body :where(p, li, td, th, label, button, a, span, strong, b, code, pre, input, textarea, select) { font-weight: 400 !important; }
 body :where(h1,h2,h3,h4,h5,h6,summary,legend) :where(a,span,strong,b,code) { font-weight: inherit !important; }
 .reference-preview > strong { font-weight: 600 !important; }
+details.r-code-output { margin: 1.2em 0; border: 1px solid #d79ab7; border-radius: 5px; background: #f8dce9; }
+details.r-code-output > summary { cursor: pointer; padding: .65em .9em; font-weight: 600; color: #62324a; }
+details.r-code-output pre { margin: .5em; white-space: pre-wrap; overflow-wrap: anywhere; }

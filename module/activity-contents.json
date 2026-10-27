@@ -36,8 +36,8 @@
   {
     "chapter": "calculations",
     "anchor": "calculations",
-    "title": "Basic sample size calculations",
-    "route": "Core",
+    "title": "Calculate a sample size",
+    "route": "Core and advanced",
     "activities": [
       {
         "label": "Gestational-diabetes prevention trial",
@@ -62,6 +62,12 @@
         "path": "two_means/",
         "route": "Core",
         "section": "two-means"
+      },
+      {
+        "label": "Estimate a mean difference with a precision target",
+        "path": "study/?activity=mean_precision",
+        "route": "Advanced",
+        "section": "plan-for-precision"
       }
     ]
   },
@@ -96,7 +102,7 @@
   {
     "chapter": "feasibility",
     "anchor": "feasibility",
-    "title": "Recruitment, estimation and feasibility",
+    "title": "Recruitment and feasibility",
     "route": "Core and advanced",
     "activities": [
       {
@@ -106,16 +112,10 @@
         "section": "account-for-expected-losses"
       },
       {
-        "label": "Estimate a mean difference with a precision target",
-        "path": "study/?activity=mean_precision",
+        "label": "Assess a recruitment limit with power curves",
+        "path": "study/?activity=pain_curves",
         "route": "Advanced",
-        "section": "plan-for-precision"
-      },
-      {
-        "label": "Estimate a percentage with useful precision",
-        "path": "study/?activity=prevalence",
-        "route": "Advanced",
-        "section": "prevalence"
+        "section": "available-sample"
       },
       {
         "label": "Pilot study: estimate retention",
@@ -168,6 +168,12 @@
         "path": "study/?activity=design_questionnaire",
         "route": "Advanced",
         "section": "design-questionnaire"
+      },
+      {
+        "label": "Estimate a percentage with useful precision",
+        "path": "study/?activity=prevalence",
+        "route": "Advanced",
+        "section": "prevalence"
       }
     ]
   }

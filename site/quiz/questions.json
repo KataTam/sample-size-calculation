@@ -5,7 +5,7 @@
     "calculations": "Chapter 3: Calculate a sample size",
     "curves": "Chapter 4: Power curves",
     "simulation": "Chapter 5: Simulated clinical trials",
-    "feasibility": "Chapter 6: Recruitment, estimation and feasibility",
+    "feasibility": "Chapter 6: Recruitment and feasibility",
     "exercises": "Chapter 7: Test your reasoning",
     "study-designs": "Chapter 8: Study designs and planning methods",
     "appendix": "Chapter 11: Reproducibility and open science"
@@ -160,7 +160,7 @@
       "chapter": "power",
       "level": "core",
       "section": "Confidence intervals across repeated studies",
-      "link": "power.html#activity-1-one-study-then-many",
+      "link": "power.html#interpret-a-confidence-interval-clinically",
       "question": "What does 95% confidence interval coverage mean under the method’s assumptions?",
       "options": [
         "95% of individual patients have outcomes inside the interval",
@@ -170,6 +170,22 @@
       ],
       "answer": 3,
       "explanation": "Coverage describes the long-run performance of the interval procedure under its assumptions. It differs from the spread of individual patient outcomes."
+    },
+    {
+      "id": "q22",
+      "chapter": "power",
+      "level": "core",
+      "section": "Clinical interpretation of a confidence interval",
+      "link": "power.html#interpret-a-confidence-interval-clinically",
+      "question": "A trial estimates a 25-percentage-point benefit, with a 95% interval from 5 to 45 points. The clinical threshold is 20 points. What does the interval support?",
+      "options": [
+        "Every treated patient benefits by at least 20 points",
+        "The result provides no evidence of a difference from zero",
+        "Benefits below the clinical threshold remain compatible with the data",
+        "The population benefit is certainly 25 points"
+      ],
+      "answer": 2,
+      "explanation": "The interval excludes zero but includes differences below and above the 20-point threshold. The estimate is a between-group population comparison; it does not establish an individual benefit."
     },
     {
       "id": "q09",
@@ -234,6 +250,22 @@
       ],
       "answer": 1,
       "explanation": "Normal approximations and t-test calculations handle sampling uncertainty differently. Methods and assumptions should be checked before comparing numerical outputs."
+    },
+    {
+      "id": "q23",
+      "chapter": "calculations",
+      "level": "advanced",
+      "section": "Estimation with a precision target",
+      "link": "calculations.html#plan-for-precision",
+      "question": "What is specified when planning estimation with a precision target?",
+      "options": [
+        "The desired number of significant results",
+        "The probability that a fixed population parameter changes",
+        "A useful interval width and confidence level for the quantity being estimated",
+        "Only a p-value cutoff"
+      ],
+      "answer": 2,
+      "explanation": "Estimation concerns the population quantity; precision concerns uncertainty around its estimate. Interval width at a stated confidence level can guide planning."
     },
     {
       "id": "q13",
@@ -380,42 +412,10 @@
       "explanation": "The calculation is 90 divided by 0.90, giving 100 per group. Adding 10% to 90 gives only 99; expected losses apply to the recruited count."
     },
     {
-      "id": "q22",
-      "chapter": "feasibility",
-      "level": "core",
-      "section": "Clinical interpretation of an interval",
-      "link": "feasibility.html#interpret-a-confidence-interval-clinically",
-      "question": "An interval includes zero and clinically important benefits. What is a reasonable interpretation?",
-      "options": [
-        "The treatments have been shown to be equivalent",
-        "No clinically important benefit is possible",
-        "The target power was necessarily miscalculated",
-        "The result remains compatible with both no difference and important benefit"
-      ],
-      "answer": 3,
-      "explanation": "The interval shows the remaining uncertainty. A non-significant result alone cannot establish equivalence or exclude worthwhile effects."
-    },
-    {
-      "id": "q23",
-      "chapter": "feasibility",
-      "level": "advanced",
-      "section": "Estimation with a precision target",
-      "link": "feasibility.html#plan-for-precision",
-      "question": "What is specified when planning estimation with a precision target?",
-      "options": [
-        "The desired number of significant results",
-        "The probability that a fixed population parameter changes",
-        "A useful interval width and confidence level for the quantity being estimated",
-        "Only a p-value cutoff"
-      ],
-      "answer": 2,
-      "explanation": "Estimation concerns the population quantity; precision concerns uncertainty around its estimate. Interval width at a stated confidence level can guide planning."
-    },
-    {
       "id": "q24",
       "chapter": "feasibility",
       "level": "advanced",
-      "section": "Pilot feasibility",
+      "section": "Planning a pilot or feasibility study",
       "link": "feasibility.html#pilot-feasibility",
       "question": "What is an appropriate primary planning focus for a pilot studying retention?",
       "options": [
@@ -442,6 +442,70 @@
       ],
       "answer": 2,
       "explanation": "Limited recruitment calls for realistic information targets and carefully justified design choices. Collaboration and efficient measurements may help; each option retains assumptions and limitations."
+    },
+    {
+      "id": "q41",
+      "chapter": "feasibility",
+      "level": "core",
+      "section": "What can the available sample establish?",
+      "link": "feasibility.html#available-sample",
+      "question": "A study can recruit at most 120 participants and expects 10% loss. What should guide the assessment of whether this cap is adequate?",
+      "options": [
+        "Whether 120 exceeds a universal minimum for clinical research",
+        "The power and precision attainable with about 108 analyzable participants, under justified assumptions",
+        "Whether the assumed benefit can be increased until the calculation fits",
+        "The power calculated from the effect observed after the study"
+      ],
+      "answer": 1,
+      "explanation": "The recruitment cap must first be translated into an expected analyzable count. Its usefulness depends on the research objective, planned analysis, and plausible population assumptions."
+    },
+    {
+      "id": "q42",
+      "chapter": "feasibility",
+      "level": "core",
+      "section": "Sensitivity to planning assumptions",
+      "link": "feasibility.html#stress-test-the-study-plan",
+      "question": "You have selected a sample size and want to know how that same study would perform if the true benefit were smaller. What should remain fixed?",
+      "options": [
+        "The selected sample size and analysis while the assumed true benefit varies",
+        "The power, by automatically increasing sample size for every alternative",
+        "The observed p-value",
+        "The result of every simulated study"
+      ],
+      "answer": 0,
+      "explanation": "This evaluates a fixed design under alternative assumptions. Recalculating the required sample for each benefit answers a separate planning question."
+    },
+    {
+      "id": "q43",
+      "chapter": "feasibility",
+      "level": "advanced",
+      "section": "Reuse an existing dataset",
+      "link": "feasibility.html#dataset-reuse",
+      "question": "A trial dataset is reused to estimate baseline sleep difficulty. Why is the original treatment-effect power calculation insufficient for this new question?",
+      "options": [
+        "Randomization guarantees a representative estimate of all patients",
+        "The new objective requires its own assessment of usable records, precision, and the population represented",
+        "A new objective automatically doubles the sample requirement",
+        "Every descriptive analysis requires 90% treatment-effect power"
+      ],
+      "answer": 1,
+      "explanation": "The available sample is fixed, but the target quantity and intended conclusion have changed. Missing baseline information and the original eligibility criteria also affect what the estimate can establish."
+    },
+    {
+      "id": "q45",
+      "chapter": "feasibility",
+      "level": "core",
+      "section": "Expected losses and missing outcomes",
+      "link": "feasibility.html#account-for-expected-losses",
+      "question": "A team increases recruitment to allow for losses, but participants without relief are more likely to have missing outcomes. What still needs attention?",
+      "options": [
+        "Only whether the final total is even",
+        "Changing the target difference to the observed benefit",
+        "Prevention, reasons for missingness, and an appropriate analysis with sensitivity analyses",
+        "Nothing, provided the recruitment target was met"
+      ],
+      "answer": 2,
+      "explanation": "Recruitment inflation helps preserve the expected analyzable count. Outcome-related missingness can still bias the available-case comparison, so the reasons and analysis assumptions need attention."
     },
     {
       "id": "q25",
@@ -586,6 +650,22 @@
       ],
       "answer": 1,
       "explanation": "Prediction objectives require planning for model performance and validation. Repeated recordings from the same patient remain dependent and should be handled accordingly."
+    },
+    {
+      "id": "q44",
+      "chapter": "study-designs",
+      "level": "advanced",
+      "section": "Estimate one proportion: a prevalence survey",
+      "link": "study-designs.html#prevalence",
+      "question": "A service wants to estimate how common a symptom is at a defined time. Which inputs match the simple independent-sample prevalence calculation?",
+      "options": [
+        "A treatment-control difference and target power",
+        "The number of recordings, regardless of how many people contribute them",
+        "The observed p-value from an earlier treatment trial",
+        "An anticipated population percentage, confidence level, and useful absolute margin of error"
+      ],
+      "answer": 3,
+      "explanation": "A prevalence survey estimates one population percentage. These inputs guide the sample-size approximation; the sampling approach and missing data also matter for a credible estimate."
     },
     {
       "id": "q33",
