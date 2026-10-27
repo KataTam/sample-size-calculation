@@ -23,7 +23,7 @@
     "aliases": [
       "expected difference"
     ],
-    "definition": "The between-group population difference anticipated from current evidence, with uncertainty. It is not the benefit guaranteed to an individual patient."
+    "definition": "The between-group population difference anticipated from current evidence, with uncertainty."
   },
   {
     "id": "target-difference",
@@ -31,7 +31,7 @@
     "aliases": [
       "target difference"
     ],
-    "definition": "The between-group difference used to calculate the sample size at the chosen power. It is not a result the trial must achieve."
+    "definition": "The between-group difference used to calculate the sample size at the chosen power."
   },
   {
     "id": "clinical-threshold",
@@ -39,7 +39,7 @@
     "aliases": [
       "clinical threshold"
     ],
-    "definition": "The smallest between-group benefit judged worthwhile, considering burdens, risks, costs and alternatives. It is not automatically an individual improvement threshold."
+    "definition": "The smallest between-group benefit judged worthwhile, considering burdens, risks, costs and alternatives."
   },
   {
     "id": "between-group-differences",
@@ -48,7 +48,7 @@
       "between-group difference",
       "between-group differences"
     ],
-    "definition": "A comparison of population outcomes under two treatments, such as a difference in means or event percentages. It does not describe each patient's treatment effect."
+    "definition": "A comparison of population outcomes under two treatments, such as a difference in means or event percentages."
   },
   {
     "id": "percentage-points",
@@ -73,7 +73,7 @@
     "aliases": [
       "effect size"
     ],
-    "definition": "A numerical description of the size of a difference or association. Its meaning depends on the outcome, comparison and scale; a standardized size alone does not establish clinical importance."
+    "definition": "A numerical description of the size of a difference or association. Its meaning depends on the outcome, comparison and scale. Clinical importance requires a judgment in the study context."
   },
   {
     "id": "standard-deviation",
@@ -183,7 +183,7 @@
       "p-value",
       "p-values"
     ],
-    "definition": "Assuming the null hypothesis and model are correct, the probability of a test result at least as extreme as the one observed. It is not the probability that the treatment works."
+    "definition": "Assuming the null hypothesis and model are correct, the probability of a test result at least as extreme as the one observed."
   },
   {
     "id": "two-sided-test",
@@ -226,7 +226,7 @@
     "aliases": [
       "bias"
     ],
-    "definition": "Systematic deviation of an estimation procedure from the quantity it aims to estimate. A larger sample or narrower interval does not automatically remove bias."
+    "definition": "Systematic deviation of an estimation procedure from the quantity it aims to estimate. Addressing bias requires attention to design, measurement, and analysis."
   },
   {
     "id": "sensitivity-analysis",
@@ -288,7 +288,7 @@
       "true negative",
       "true-negative probability"
     ],
-    "definition": "A non-significant finding when population outcomes are equal. A real non-significant result alone cannot establish that this is the case."
+    "definition": "A non-significant finding when population outcomes are equal. In a real study, a non-significant result can be either a true negative or a false negative."
   },
   {
     "id": "z-value",

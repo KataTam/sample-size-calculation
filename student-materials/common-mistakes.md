@@ -10,7 +10,7 @@ The meaning depends on the starting percentage and whether the change is relativ
 <details class="misconception" id="can-i-put-a-clinically-important-difference-directly-into-the-alternative-hypothesis">
 <summary>Can I put a clinically important difference directly into the alternative hypothesis?</summary>
 
-For the ordinary two-sided superiority test, the alternative is any nonzero difference. Power is evaluated at a particular planned effect. Rejecting zero does not show that the true benefit exceeds the clinical threshold. You should interpret the effect estimate and confidence interval in relation to both zero and the clinical threshold.
+For the ordinary two-sided superiority test, the alternative is any nonzero difference. Power is evaluated at a particular planned effect. You should interpret the effect estimate and confidence interval in relation to both zero and the clinical threshold.
 
 </details>
 
@@ -31,7 +31,7 @@ No. An interval might include both negligible and important effects. Your interp
 <details class="misconception" id="do-error-probabilities-tell-me-whether-a-hypothesis-is-true">
 <summary>Do error probabilities tell me whether a hypothesis is true?</summary>
 
-No. The [Type I error probability](#alpha) is the probability of falsely rejecting the null: a false positive when no population difference exists. The [Type II error probability](#beta) is the probability of missing a specified true difference: a false negative. These probabilities describe how the test performs when you assume what is true in the population. They do not tell you the probability that a hypothesis is true after seeing your result. The [sampling-distribution example](#alpha-beta) illustrates the distinction.
+No. The [Type I error probability](#alpha) is the probability of falsely rejecting the null: a false positive when no population difference exists. The [Type II error probability](#beta) is the probability of missing a specified true difference: a false negative. These probabilities describe how the test performs when you assume what is true in the population. The [sampling-distribution example](#alpha-beta) illustrates the distinction.
 
 </details>
 
@@ -94,13 +94,13 @@ Increasing B, the number of simulated studies, estimates power, interval coverag
 <details class="misconception" id="will-a-larger-sample-solve-bias">
 <summary>Will a larger sample solve bias?</summary>
 
-A larger sample reduces sampling variability under the model. It does not automatically repair selection bias, confounding, unreliable measurements, missing-data bias or an inappropriate analysis. A defensible design is necessary before a sample size calculation can be useful.
+A larger sample reduces sampling variability under the model. Selection bias, confounding, unreliable measurements and missing-data bias require attention to the design and analysis. A defensible design is necessary before a sample size calculation can be useful.
 
 </details>
 
 <details class="misconception" id="is-a-reporting-checklist-a-sample-size-method">
 <summary>Is a reporting checklist a sample-size method?</summary>
 
-No. CONSORT, STROBE, STARD, ARRIVE and TRIPOD help document different studies. They prompt you to report how sample size was chosen, but do not provide one universal formula. The [study-design guide](#study-designs) separates reporting resources from planning methods.
+No. CONSORT, STROBE, STARD, ARRIVE and TRIPOD help document different studies. They prompt you to report how sample size was chosen. The [study-design guide](#study-designs) separates reporting resources from planning methods.
 
 </details>

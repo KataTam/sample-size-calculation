@@ -30,7 +30,7 @@ A threshold for meaningful improvement within an individual patient is therefore
 
 <span id="mean-difference"></span>A mean difference is in the outcome's own units, such as mmHg or score units. The [lab](https://katatam.github.io/sample-size-calculation/study/?activity=own_study) uses treatment minus control. Positive is beneficial in the prepared improvement/relief cases; an outcome such as pain severity or mortality needs an explicit decision about beneficial direction.
 
-A standardized difference, often called Cohen's d for a mean comparison, expresses the difference in SD units. A difference of 3 with SD 5 gives 3/5 = 0.60. This can help translate between software inputs; a conventional label such as "medium" does not establish clinical relevance.
+A standardized difference, often called Cohen's d for a mean comparison, expresses the difference in SD units. A difference of 3 with SD 5 gives 3/5 = 0.60. This can help translate between software inputs. Clinical relevance depends on the outcome and study context.
 
 ## Variation and uncertainty {.core-heading}
 
@@ -38,7 +38,7 @@ A standardized difference, often called Cohen's d for a mean comparison, express
 
 <span id="standard-error"></span>Standard error (SE) describes how much an estimate would vary if you repeated the study with new patients. For one mean, SE = SD/sqrt(n). If the population SD is 15 mmHg, 25 independent patients give an SE of 3 mmHg; 100 patients give 1.5 mmHg. Increasing the sample size reduces the standard error of the mean while the population SD remains fixed. If the population SD is unknown, the sample SD is used to estimate the SE.
 
-<span id="confidence-interval"></span>A confidence interval shows uncertainty around an estimate under the analysis assumptions. At the same confidence level, a narrower interval indicates greater precision. For a treatment difference, you should compare its limits with zero and the clinical threshold. The 95% refers to the method: across repeated studies, about 95% of intervals calculated this way would contain the true population value, if the assumptions hold. It is not a 95% probability assigned to the particular interval you observed, nor a range of individual patients' benefits.
+<span id="confidence-interval"></span>A confidence interval shows uncertainty around an estimate under the analysis assumptions. At the same confidence level, a narrower interval indicates greater precision. For a treatment difference, you should compare its limits with zero and the clinical threshold. The 95% refers to the method: across repeated studies, about 95% of intervals calculated this way would contain the true population value, if the assumptions hold.
 
 <span id="full-width"></span>Full width is the upper confidence limit minus the lower. For a symmetric interval its half-width, or margin of error, is half the full width. <span id="margin-of-error"></span>A margin of five percentage points means a full width of ten percentage points. For asymmetric intervals, the two distances from the estimate to the limits need not be equal.
 
@@ -50,7 +50,7 @@ Estimation uses sample data to learn about a population quantity, such as a mean
 
 ### Precision {#precision .core-heading}
 
-Precision describes how little an estimate varies across repeated samples; estimation is the process that produces the estimate. You can assess it using the standard error or, at a specified confidence level, the confidence-interval width. A smaller standard error or narrower interval indicates greater precision. A larger independent sample generally improves precision, but does not guarantee that an estimate is close to the truth if the study is biased. Precision is also distinct from power, which concerns how often a specified test rejects the null under an assumed effect.
+Precision describes how little an estimate varies across repeated samples; estimation is the process that produces the estimate. You can assess it using the standard error or, at a specified confidence level, the confidence-interval width. A smaller standard error or narrower interval indicates greater precision. A larger independent sample generally improves precision. Bias can still shift the estimate systematically away from the population value. Precision is also distinct from power, which concerns how often a specified test rejects the null under an assumed effect.
 
 ### Sampling variability {#sampling-variability .core-heading}
 
@@ -58,11 +58,11 @@ Sampling variability is the variation between estimates from repeated samples dr
 
 ### Bias {#bias .core-heading}
 
-Bias is a systematic deviation of an estimation procedure from the population quantity it aims to estimate. For example, selection processes or missing outcomes can distort a treatment comparison. A large sample can produce a precise but biased estimate; increasing sample size does not automatically correct problems in the design, measurement or analysis.
+Bias is a systematic deviation of an estimation procedure from the population quantity it aims to estimate. For example, selection processes or missing outcomes can distort a treatment comparison. A large sample can produce a precise but biased estimate. Addressing bias requires attention to the design, measurement and analysis.
 
 ### Effect size {#effect-size .core-heading}
 
-An effect size describes the magnitude of a difference or association on a stated scale. Examples include a difference in event percentages or group means. A standardized mean difference expresses a difference in standard-deviation units. The term does not itself establish clinical importance or identify an individual patient's benefit.
+An effect size describes the magnitude of a difference or association on a stated scale. Examples include a difference in event percentages or group means. A standardized mean difference expresses a difference in standard-deviation units. Clinical importance requires a judgment about the outcome, comparison and study context.
 
 ### Estimand {#estimand .advanced-heading}
 
@@ -70,7 +70,7 @@ An estimand is the precisely defined population quantity the study aims to estim
 
 ### Sensitivity analysis {#sensitivity-analysis .core-heading}
 
-A sensitivity analysis examines how results or conclusions change under plausible alternative assumptions. In sample size planning, you can either recalculate the required sample for each assumption or keep a chosen sample fixed and evaluate its performance. For example, you might vary the treatment difference, variability, or expected loss to follow-up. For a completed study, sensitivity analyses can examine assumptions about missing outcomes. The [sensitivity analysis and feasibility section](#stress-test-the-study-plan) explains the planning questions, and the [missing-outcome activity](https://katatam.github.io/sample-size-calculation/study/?activity=pain_simulation) illustrates how different missingness mechanisms affect an analysis. These comparisons assess robustness to assumptions; they do not identify which assumptions are true.
+A sensitivity analysis examines how results or conclusions change under plausible alternative assumptions. In sample size planning, you can either recalculate the required sample for each assumption or keep a chosen sample fixed and evaluate its performance. For example, you might vary the treatment difference, variability, or expected loss to follow-up. For a completed study, sensitivity analyses can examine assumptions about missing outcomes. The [Sensitivity to planning assumptions](#stress-test-the-study-plan) section explains the planning questions, and the [missing-outcome activity](https://katatam.github.io/sample-size-calculation/study/?activity=pain_simulation) illustrates how different missingness mechanisms affect an analysis. These comparisons assess robustness to assumptions.
 
 ## Hypotheses, Type I error probability, Type II error probability and power {.core-heading}
 
@@ -83,7 +83,7 @@ A sensitivity analysis examines how results or conclusions change under plausibl
 - <span id="false-positive"></span>False positive (Type I error): the test finds a difference when the population outcomes are equal.
 - <span id="false-negative"></span>False negative (Type II error): the test misses a difference that exists in the population.
 - <span id="true-positive"></span>True positive: the test detects a difference that exists in the population. Its probability at the specified difference is power.
-- <span id="true-negative"></span>True negative: the test does not find a difference when the population outcomes are equal. Its probability is 1 minus the Type I error probability. However, after a real study, a non-significant result alone cannot tell you whether it is a true negative or a false negative.
+- <span id="true-negative"></span>True negative: the test does not find a difference when the population outcomes are equal. Its probability is 1 minus the Type I error probability. In a real study, a non-significant result can be either a true negative or a false negative.
 
 ### Type I error probability {#alpha .core-heading}
 
@@ -91,15 +91,15 @@ Type I error probability ($\alpha$) is the probability of falsely rejecting the 
 
 ### Type II error probability {#beta .core-heading}
 
-Type II error probability ($\beta$) is the probability of failing to reject a false null hypothesis: the [false-negative probability](#false-negative). Here, that means missing a specified true treatment difference. For example, a 10% Type II error probability at a true 30-percentage-point difference means about 10 missed differences per 100 repetitions of that trial. This probability depends on the true difference, sample size and analysis; it is not the same for every possible effect.
+Type II error probability ($\beta$) is the probability of failing to reject a false null hypothesis: the [false-negative probability](#false-negative). Here, that means missing a specified true treatment difference. For example, a 10% Type II error probability at a true 30-percentage-point difference means about 10 missed differences per 100 repetitions of that trial. This probability depends on the true difference, sample size and analysis.
 
 ### Statistical power {#statistical-power .core-heading}
 
-Power is the probability of detecting a specified true treatment difference with the planned test: the [true-positive probability](#true-positive). It equals $1-\beta$, or 1 minus the Type II error probability. With 90% power, about 90 of 100 repetitions of the planned trial would detect that difference and 10 would miss it. Each repetition involves new patients. Power is not the probability that the treatment works, and a non-significant result does not establish equivalence.
+Power is the probability of detecting a specified true treatment difference with the planned test: the [true-positive probability](#true-positive). It equals $1-\beta$, or 1 minus the Type II error probability. With 90% power, about 90 of 100 repetitions of the planned trial would detect that difference and 10 would miss it. Each repetition involves new patients. A non-significant result can remain compatible with both no effect and a worthwhile benefit.
 
 ### P-value {#p-value .core-heading}
 
-A p-value is the probability, assuming the null hypothesis and statistical model are correct, of a test result at least as extreme as the observed result. In the two-sided pain comparison, it asks how likely a result at least as far from equal relief probabilities would be, in either direction, if the population probabilities were equal. A small p-value provides evidence against equality; it does not measure clinical benefit or give the probability that a hypothesis is true.
+A p-value is the probability, assuming the null hypothesis and statistical model are correct, of a test result at least as extreme as the observed result. In the two-sided pain comparison, it asks how likely a result at least as far from equal relief probabilities would be, in either direction, if the population probabilities were equal. A small p-value provides evidence against equality.
 
 ## Normal distribution and z-values {.core-heading}
 
@@ -145,7 +145,7 @@ The [advanced explanation of units and dependence](#units-of-analysis) compares 
 
 ## Counts, losses and simulation {.core-heading}
 
-<span id="analyzable-sample-size"></span>Analyzable sample size (n) means the number of participants included in the stated analysis; app labels use "participants for analysis". In the [two-group lab](https://katatam.github.io/sample-size-calculation/study/?activity=own_study) it is per group; the total is 2n. Recruitment n is inflated for anticipated losses, rounding within each arm. With expected dropout of 10%, divide by the retention proportion 0.90, rather than multiplying by 1.10. Inflation does not correct missing-data bias.
+<span id="analyzable-sample-size"></span>Analyzable sample size (n) means the number of participants included in the stated analysis; app labels use "participants for analysis". In the [two-group lab](https://katatam.github.io/sample-size-calculation/study/?activity=own_study) it is per group; the total is 2n. Recruitment n is inflated for anticipated losses, rounding within each arm. With expected dropout of 10%, divide by the retention proportion 0.90, rather than multiplying by 1.10. Missing-data bias requires attention to prevention and analysis.
 
 The planning scenario contains the assumptions used to choose the sample size. A generating scenario contains the population values assumed to be true when simulating studies. Keeping the planned sample size fixed while changing those population values shows how the same study could perform if reality differed from the plan. Recalculating the sample size each time instead asks how the plan would need to change.
 
@@ -157,9 +157,9 @@ Monte Carlo error is the random difference between a result estimated from a fin
 
 The Monte Carlo standard error (MCSE) describes how much the simulation estimate varies between independent batches. For an observed proportion of statistically significant simulated results $\hat p$ from $B$ independent simulated trials, $\mathrm{MCSE}=\sqrt{\hat p(1-\hat p)/B}$. At estimated power of 80% with 1,000 trials, the MCSE is about 1.3 percentage points. A Monte Carlo interval describes uncertainty in an estimated simulation result, such as power.
 
-Increasing the number of simulations reduces Monte Carlo error; quadrupling the repetitions approximately halves the MCSE. It does not increase the power of each trial, remove error from an analytical approximation, or establish that the assumed population probabilities fit a real study. You should distinguish simulation uncertainty from sampling uncertainty within a trial and uncertainty about the clinical assumptions. The [simulation-precision section](#precision-of-a-simulation) provides a worked example.
+Increasing the number of simulations reduces Monte Carlo error; quadrupling the repetitions approximately halves the MCSE. Each trial retains its original power under the same design and population assumptions. Analytical-approximation error and the credibility of the population assumptions require separate assessment. You should distinguish simulation uncertainty from sampling uncertainty within a trial and uncertainty about the clinical assumptions. The [simulation-precision section](#precision-of-a-simulation) provides a worked example.
 
-For more detail, return to the [power chapter](#power), [sampling-distribution illustration](#alpha-beta), [precision examples](#feasibility), or [common mistakes](#common-mistakes). Methodological sources include Kirkwood and Sterne (2003), Whitley and Ball (2002), and the R documentation cited in the tutorial.
+For more detail, return to the [power chapter](#power), [sampling-distribution illustration](#alpha-beta), [precision planning](#plan-for-precision), or [common mistakes](#common-mistakes). Methodological sources include Kirkwood and Sterne (2003), Whitley and Ball (2002), and the R documentation cited in the tutorial.
 
 ## Research ethics review
 
