@@ -52,7 +52,11 @@ Your planning assumptions should reflect its uncertainty and the wider evidence.
 <details class="misconception" id="is-50-a-safe-default-when-the-event-probability-is-unknown">
 <summary>Is 50% a safe default when the event probability is unknown?</summary>
 
-Its conservative role here is limited to absolute precision for one proportion under the displayed normal approximation: it maximizes p(1-p). It is not a general fallback for unknown treatment/control probabilities, prediction-model planning, relative precision or rare-event questions. See the [single-proportion example](#prevalence).
+Its conservative role here is limited to absolute precision for one proportion under the displayed normal approximation: it maximizes p(1-p). It is not a general fallback for unknown treatment/control probabilities, prediction-model planning, relative precision or rare-event questions. The [single-proportion app](https://katatam.github.io/sample-size-calculation/study/?activity=prevalence) shows how the requirement changes across anticipated percentages.
+
+![Approximate single-proportion sample size at 95% confidence and a fixed margin of error of 5 percentage points. The largest requirement occurs at 50%; the calculation rounds upward to whole participants.](../figures/single-proportion-planning.png)
+
+For a two-group comparison, each event probability should draw on evidence relevant to the population, outcome and follow-up. Comparable studies, routine records or pilot data may help, with particular attention to uncertainty in small pilots. When evidence is limited, your report should describe a plausible range and use [sensitivity analysis](#stress-test-the-study-plan) to show its consequences. The [planning discussion](#what-do-we-expect-what-will-we-plan-for-and-what-matters-clinically) explains how this evidence relates to the target difference.
 
 </details>
 

@@ -11,7 +11,7 @@
       ['design', 'Design, sampling and allocation', 'Describe how participants or records are selected, how observations are related, and any treatment allocation.', 'The design, sampling and allocation are']
     ]],
     ['Effects and supporting evidence', [
-      ['scale', 'Effect scale and direction of benefit', 'Use treatment minus control. Specify whether a positive or negative difference is beneficial.', 'The effect scale and direction of benefit are'],
+      ['scale', 'Effect scale and direction of benefit', 'The effect scale gives the units of the comparison: for example, a difference in event percentages is in percentage points, while a mean difference may be in pain-score units. Use treatment minus control and specify which direction is beneficial.', 'The effect scale and direction of benefit are'],
       ['expected', 'Expected difference', 'Give the best current expectation, its evidence source and uncertainty.', 'The expected difference and supporting evidence are'],
       ['clinical', 'Clinically important difference (clinical threshold)', 'Give the smallest between-group benefit that matters to patients and justify that judgment.', 'The clinical threshold and its justification are', 'comparison'],
       ['planning', 'Target difference: used in the calculation', 'Give the difference used to evaluate power and explain why it is appropriate.', 'The target difference and its justification are', 'power'],
@@ -28,7 +28,7 @@
     ]],
     ['Sample size, recruitment and conclusion', [
       ['counts', 'Sample size needed or available for analysis', 'Record analyzable participants per group and total, or one total for a single-population estimate. State the method, result and rounding. For existing data, explain why the sample is fixed.', 'The analyzable sample size and calculation are'],
-      ['recruitment', 'Losses, missing data and recruitment', 'State expected losses and adjusted recruitment counts, or completeness and missing observations in an existing dataset. Explain possible bias separately from the count adjustment.', 'The loss allowance, missing data and recruitment are'],
+      ['recruitment', 'Losses, missing data and recruitment', 'Your expected losses should draw on comparable studies, routine records or pilot follow-up, with the population, time point and uncertainty recorded. There is no universal default. Give adjusted recruitment counts and plausible alternative losses, or completeness and missing observations in an existing dataset. Explain how missing outcomes could affect the comparison.', 'The loss allowance, missing data and recruitment are'],
       ['resources', 'Feasibility and resources', 'Record the recruitment rate and period, available patients, costs or constraints, and whether the target is feasible.', 'The recruitment feasibility and resources are'],
       ['conclusion', 'Intended conclusion and limitations', 'Explain what the design could establish, what remains uncertain and which planning decisions still need to be resolved.', 'The intended conclusion and limitations are']
     ]]

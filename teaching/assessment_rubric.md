@@ -4,16 +4,16 @@ Assess a case worksheet or assumptions report and a 300–600 word justification
 
 | Criterion | Evidence for 2 points |
 |---|---|
-| Question and goal | Clear outcome/time point and a testing, estimation or fixed-resource aim aligned with the intended conclusion |
-| Differences and clinical importance | Expected difference, target difference and clinical threshold are distinguished; units, sign, patient relevance and consequences of the chosen target are clear |
-| Assumption evidence | Sources or hypothetical status, population and time point are stated; uncertain pilot estimates and plausible ranges are acknowledged |
-| Analysis and calculation | Appropriate stated test/interval and assumptions; reproducible calculation with method limits acknowledged |
-| Sample and recruitment counts | Correct per-group and total rounding; dropout inflation distinguished from fixing missing-data bias |
-| Sensitivity | Plausible alternative effect, SD or risk evaluated at fixed planned n and interpreted |
-| One versus many studies | One result distinguished from conditional power and Type I error across hypothetical studies; no simulation required; non-significance is not proof of no effect |
-| Precision and clinical interpretation | Estimate and interval interpreted against zero and the clinical threshold; for estimation or feasibility, useful precision and the correct denominator are justified |
-| Simulation uncertainty: advanced only | Participants and simulation repetitions distinguished; generating assumptions, seed and analysis recorded; Monte Carlo uncertainty and failed analyses addressed where relevant |
-| Feasibility and communication | Informational value, participant burden, resources and limits support a coherent recommendation |
+| 1. Question and goal | Clear outcome/time point and a testing, estimation or fixed-resource aim aligned with the intended conclusion |
+| 2. Differences and clinical importance | Expected difference, target difference and clinical threshold are distinguished; units, sign, patient relevance and consequences of the chosen target are clear |
+| 3. Assumption evidence | Sources or hypothetical status, population and time point are stated; uncertain pilot estimates and plausible ranges are acknowledged |
+| 4. Analysis and calculation | Appropriate stated test/interval and assumptions; reproducible calculation with method limits acknowledged |
+| 5. Sample and recruitment counts | Correct per-group and total rounding; dropout inflation distinguished from fixing missing-data bias |
+| 6. Sensitivity | Plausible alternative effect, SD or risk evaluated at fixed planned n and interpreted |
+| 7. One versus many studies | One result distinguished from conditional power and Type I error across hypothetical studies; no simulation required; non-significance is not proof of no effect |
+| 8. Precision and clinical interpretation | Estimate and interval interpreted against zero and the clinical threshold; for estimation or feasibility, useful precision and the correct denominator are justified |
+| 9. Simulation uncertainty: advanced only | Participants and simulation repetitions distinguished; generating assumptions, seed and analysis recorded; Monte Carlo uncertainty and failed analyses addressed where relevant |
+| 10. Feasibility and communication | Informational value, participant burden, resources and limits support a coherent recommendation |
 
 For a short activity use criteria 1, 2, 7, 8 and 10 (maximum 10), with prepared outputs if needed. Give criterion-level feedback and request revision of substantive misconceptions regardless of total score. Calibrate scoring between teachers using two sample responses before the pilot. Do not apply unvalidated pass/fail bands as evidence of clinical competence.
 

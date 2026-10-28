@@ -97,7 +97,7 @@ contents rather than this book toolbar. Use your browser’s
 <p>Hover over a figure or table reference, or select its Preview button, to inspect it while reading. Select an amber Common misconception title to read its explanation.</p>
 <p>R code and raw console output are collapsed initially. Select R code, R code and output, or R output to inspect the contents indicated by the label. Formatted results, tables and figures remain visible. In code, lines starting with <code>#</code> are comments; <code>##</code> marks console output, and <code>[1]</code> identifies the first printed element of an R output.</p>
 <h2>Complete tutorial downloads</h2>
-<p>The Welcome page provides a single HTML download and a single PDF download of the complete tutorial. HTML retains the expandable explanations and code. PDF expands the teaching explanations and keeps technical code hidden.</p>
+<p>The Welcome page provides a single HTML download and a single PDF download of the complete tutorial. HTML retains the expandable explanations and code. PDF expands the explanations, model answers, R code and output.</p>
 </template>
 <script>
 (function () {
@@ -211,6 +211,16 @@ contents rather than this book toolbar. Use your browser’s
       if (link.dataset.referencePreview) return;
       var url = new URL(link.href, location.href);
       if (url.origin !== location.origin || !/^#(?:fig|tab)(?::|%3A)/i.test(url.hash)) return;
+      // The preceding reference needs no duplicate preview when its target is next.
+      if (url.pathname === location.pathname) {
+        var target = document.getElementById(decodeURIComponent(url.hash.slice(1)));
+        var block = link.closest('p');
+        var next = block && block.nextElementSibling;
+        for (var nearby = 0; target && next && nearby < 3; nearby++, next = next.nextElementSibling) {
+          if (next.matches('h1,h2,h3,h4,details,.section')) break;
+          if (next === target || next.contains(target)) return;
+        }
+      }
       link.dataset.referencePreview = 'true';
       link.addEventListener('mouseenter', function () { showPreview(link); });
       link.addEventListener('focus', function () { showPreview(link); });

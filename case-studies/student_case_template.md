@@ -1,6 +1,8 @@
 # Student case and assumption map
 
-Draft a hypothetical clinical case or use a topic with public evidence. Do not include identifiable patient data. Label every invented value as a teaching assumption. The core comparison fields support equal independent groups with normal continuous outcomes or binary outcomes. The single-proportion extension supports descriptive/feasibility estimation; use a different validated method for other designs.
+You can develop a hypothetical clinical case or use a topic with public evidence, keeping patient-identifiable information out of the material. Invented values should be labeled as teaching assumptions. The core comparison fields support equal independent groups with normal continuous outcomes or binary outcomes. The single-proportion extension supports descriptive/feasibility estimation; use a different validated method for other designs.
+
+You can enter and save your answers in the [study-plan report activity](https://katatam.github.io/sample-size-calculation/study/?activity=assumptions_report), or copy these prompts into your own document. The report develops across Chapters 1, 2, 3, 6 and 7; unresolved entries can identify the evidence you still need.
 
 ## Question and inferential goal
 
@@ -27,10 +29,10 @@ Intended conclusion and what would make the information useful:
 | Confidence level and full interval-width target, if estimating | | Explain why this precision is useful | |
 | Analyzable sample available, if fixed resources | | | |
 | Allocation | Equal groups | Core implementation restriction | |
-| Dropout per arm | | | |
+| Expected loss per arm | | Comparable studies, records or pilot follow-up; population and time point | Plausible range and reasons for uncertainty |
 | Recruitment period, cap and resources | | | |
 
-For a single-proportion estimation or pilot process-measure case, replace the two-group fields with the parameter, confidence level, useful margin of error, available total n and sampling plan. For an unsupported design, record the intended method and obtain design-specific advice before using the app.
+For a single-proportion estimation or pilot process-measure case, replace the two-group fields with the parameter, confidence level, useful margin of error, available total n and sampling plan. Paired or crossover studies, cluster-randomized trials, time-to-event outcomes and multi-arm comparisons need calculations matched to those designs. You can still use this worksheet to document the question and assumptions. The [study-design guide](../book/study-designs.html) points to relevant methods; the basic two-independent-group calculators cover a narrower scope.
 
 For every evidence source, check its population, outcome definition, time point and analysis. Identify the least certain assumptions. A clinical threshold needs stakeholder justification. Choosing a target larger than the clinical threshold means accepting lower power at some worthwhile differences.
 
@@ -79,7 +81,7 @@ Record the generating assumptions separately from the planning assumptions. Save
 
 Write 300–600 words recommending proceeding, redesigning, changing the aim or not proceeding. Explain patient burden, informational value and limitations. If the goal is feasibility, say so explicitly. Ask a peer to identify one unsupported assumption and one conclusion that goes beyond the design.
 
-Use the [assumptions report activity](https://katatam.github.io/sample-size-calculation/study/?activity=assumptions_report) to develop the same report while working through the tutorial. Select a two-group comparison or a single-population estimate, then the appropriate planning goal. Another design can be documented there, but its calculations need a matching method outside the basic apps.
+Your revision note should record the initial assumption or conclusion, the feedback or evidence considered, the revised decision and why it changed. If you retain the original decision, your explanation should address the feedback. The report activity supports a two-group comparison, a single-population estimate or documentation of another design with its own planning method.
 
 ## Contribution and attribution
 

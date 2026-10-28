@@ -120,7 +120,11 @@ details.advanced-explanation > summary { background:#e7dcf6; color:var(--ink); b
 details.advanced-explanation[open] > summary { margin-bottom:12px; }
 .color-theme-2 details.advanced-explanation > summary { background:#352c49; color:#eef3fa; border-left-color:#c7afea; }
 details.activity-practice { background:#dfedf7; padding:10px 14px; margin:1em 0; }
-.chapter-recap { border-top:1px solid #b7c9d8; margin-top:2em; padding-top:1em; }
+.chapter-recap { border-top:2px solid currentColor; margin-top:3em; padding-top:1.2em; }
+dt { font-style: normal; font-weight: 600; margin-top: .8em; break-after: avoid; }
+dd { margin-bottom: .6em; }
+.float { break-inside: avoid; }
+.figcaption { font-size: .9em; line-height: 1.5; margin: .6em 0 1.2em; }
 #activity-menu-button { position:fixed; right:118px; top:8px; z-index:1001; background:#e1edf8; color:#173d5b; border:1px solid #91afc9; border-radius:5px; padding:7px 12px; font:14px Arial,sans-serif; cursor:pointer; }
 .book-header #activity-menu-button { position:absolute; }
 #feedback-link { position:absolute; right:18px; top:8px; z-index:1001; background:#fff; color:#173d5b; border:1px solid #91afc9; border-radius:5px; padding:7px 12px; font:14px Arial,sans-serif; line-height:normal; text-decoration:none; }
@@ -227,7 +231,7 @@ pre code { display: block; }
 .book.color-theme-2 #tutorial-search-results :is(a,.search-chapter,.search-excerpt) { color: #d8e8f7; }
 /* WCAG contrast and non-color link identification in every reader theme. */
 .book:not(.color-theme-2) .book-body .page-wrapper .page-inner section.normal a { color: #17547b; }
-.book .book-body .page-wrapper .page-inner section.normal :is(p,li,td,figcaption,caption) a { text-decoration: underline; text-underline-offset: .15em; }
+.book .book-body .page-wrapper .page-inner section.normal :is(p,li,td,dd,figcaption,caption) a { text-decoration: underline; text-underline-offset: .15em; }
 .book:not(.color-theme-2) .book-summary ul.summary li.active > a { color: #17547b; }
 .book.color-theme-1 .book-summary ul.summary li a { color: #594d37; }
 .book:not(.color-theme-2) .book-body .page-wrapper .page-inner section.normal pre code,

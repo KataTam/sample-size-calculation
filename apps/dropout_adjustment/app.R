@@ -12,7 +12,7 @@ ui <- fluidPage(
       percent_slider("dropout", "Expected loss to follow-up (%)", min = 0, max = 0.50, value = 0.10, step = 0.01)
     ),
     mainPanel(
-      p("Equal allocation. Round recruitment up within each arm, then double. Actual retention varies. Missing-data bias requires attention to prevention and analysis."),
+      p("This app plans recruitment for two equally sized treatment groups with the same expected loss percentage. Round each group’s recruitment requirement upward to a whole participant, then double it for the total. Actual retention can vary. If patients with poor outcomes are more likely to miss follow-up, recruiting extra patients can leave the observed results biased; prevention and an appropriate analysis are also needed."),
       h3("Recruitment target"),
       verbatimTextOutput("result"),
       h3("Dropout and recruitment target"),

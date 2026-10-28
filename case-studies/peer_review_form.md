@@ -102,3 +102,11 @@ Does the goal match the proposed conclusion? Are clinical importance and expecte
 - Is the full-width target separated from its probability of attainment?
 - Are simulated trials, Monte Carlo uncertainty and clinical assumption uncertainty distinguished?
 - Is each borrowed idea or assumption connected to an appropriate reference?
+
+## Author's response and revision
+
+| Initial decision or assumption | Peer feedback or new evidence | Revised decision | Reason for revising or retaining it |
+|---|---|---|---|
+| | | | |
+
+The reviewer should identify one assumption needing support and one useful next comparison. The author should explain the response in their own words. The teacher can assess the justification using the numbered criteria in the [assessment rubric](../teaching/assessment_rubric.md). Public reuse requires a separate consent decision after review.

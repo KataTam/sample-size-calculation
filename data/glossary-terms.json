@@ -98,7 +98,7 @@
       "confidence interval",
       "confidence intervals"
     ],
-    "definition": "A range showing uncertainty around an estimate under the analysis assumptions. A 95% confidence interval captures the true population value in about 95% of repeated studies, when recalculated for each study under the method's assumptions."
+    "definition": "A range showing uncertainty around an estimate under the analysis assumptions. A 95% confidence interval captures the true population value in about 95% of repeated studies, when recalculated for each study under the method's assumptions. With a matching two-sided test, a 95% interval excluding zero corresponds to significance at 5%; different methods may disagree."
   },
   {
     "id": "estimation",
@@ -226,7 +226,7 @@
     "aliases": [
       "bias"
     ],
-    "definition": "Systematic deviation of an estimation procedure from the quantity it aims to estimate. Addressing bias requires attention to design, measurement, and analysis."
+    "definition": "Systematic deviation from the population quantity being estimated. For example, patients with poor outcomes disproportionately missing follow-up may bias the observed comparison. More participants alone do not correct this mechanism."
   },
   {
     "id": "sensitivity-analysis",
@@ -395,5 +395,31 @@
       "design effect"
     ],
     "definition": "The ratio of the variance of an estimate under a specified design to that under a comparable independent-observation design. For a simple cluster design with equal cluster size m and ICC rho, it is approximately 1 + (m - 1)rho; this can guide an initial sample size inflation."
+  },
+  {
+    "id": "retention",
+    "label": "Retention",
+    "aliases": [
+      "retention",
+      "retention proportion"
+    ],
+    "definition": "The proportion of enrolled participants contributing the required outcome at the specified time. If 180 of 200 contribute, retention is 90% and loss is 10%. Planning should reflect comparable evidence and uncertainty."
+  },
+  {
+    "id": "relative-increase",
+    "label": "Relative increase",
+    "aliases": [
+      "20% relative increase",
+      "relative increase"
+    ],
+    "definition": "The increase divided by the starting value: from 80% to 96%, (96 - 80)/80 = 0.20, a 20% relative increase. The absolute increase is 16 percentage points."
+  },
+  {
+    "id": "covariate-adjustment",
+    "label": "Covariate adjustment",
+    "aliases": [
+      "covariate adjustment"
+    ],
+    "definition": "An analysis using prespecified baseline characteristics. Prognostic characteristics can improve precision in randomized comparisons. Studying variation in treatment effects requires separate treatment-by-characteristic comparisons."
   }
 ]

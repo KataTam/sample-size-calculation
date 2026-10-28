@@ -30,6 +30,7 @@ def number_citations(folder):
                 return (f'<a {attrs}href="{target}" data-citation-label="{html.escape(short, quote=True)}" '
                         f'aria-label="{accessible}">{numbers[key]}</a>')
             body = re.sub(r'<a ([^>]*?)href="([^"]*#ref-[^"]+)"[^>]*>(.*?)</a>', link, body, flags=re.S)
+            body = "[" + body.strip()[1:-1] + "]"
             return '<span class="citation citation-numbered">' + body + '</span>'
         text = re.sub(r'<span class="citation">(.*?)</span>', compact, text, flags=re.S)
         # Complete downloads can already contain labels from a previous build.

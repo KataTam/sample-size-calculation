@@ -2,6 +2,8 @@
 
 These walkthroughs connect each activity to the question it helps answer. The clinical values are hypothetical teaching assumptions. The simulations generate hypothetical patient outcomes from specified population assumptions.
 
+Before changing an input, you can predict what the result will do and identify the quantities you will keep fixed. After exploring, your explanation should compare the result with your prediction and note what it means for the study plan.
+
 In the reasoning lab, planning tables and curves update when inputs change. Simulated results update only when you run the relevant simulation again and retain their saved assumptions until then. More patients change a study's information; more simulation repetitions improve the numerical precision of the estimated performance.
 
 The expected difference records your best expectation. With “Same as planning assumptions” selected, the simulations use the target difference and planning event probabilities. A custom population scenario lets you examine another true difference without changing the original plan. All treatment differences here are between-group differences.
@@ -16,7 +18,7 @@ Purpose: connect the calculation to a clinical question, evidence and a defensib
 2. Your assumptions should include their sources and uncertainty. For a treatment comparison, the expected difference, target difference and clinical threshold have separate roles.
 3. After using an appropriate calculator, you can enter its method, analyzable sample and recruitment allowance. A simulation result should include its generating assumptions and repetition count.
 4. The report on the right assembles your entries. You should review it for missing information and distinguish a numerical result from your interpretation.
-5. “Save entries” preserves an editable file; “Download report” saves the written report. The pain-relief example illustrates a completed starting point.
+5. “Save entries” preserves an editable file; “Download report” saves the written report. The pain-relief example illustrates a completed starting point. You can begin with the question in Chapter 1, add decisions as the tutorial progresses, and record what changed and why in your final justification.
 
 ## Chronic pain: one study and many studies — core
 
@@ -28,7 +30,7 @@ Purpose: see why sample estimates differ from population values, interpret the u
 2. In “One study and many studies,” “Simulate one study” generates patient outcomes. You can compare the observed percentages, difference and interval with the specified population values. The animation follows the patient outcomes into the estimated difference and then the sampling distribution. “Animate 20 trials” builds a short sequence; pause, replay and reduced motion support closer inspection. Each accumulated dot represents one complete trial.
 3. The 20-trial animation shows different possible trials while the population probabilities remain fixed. For each interval, you can compare the compatible differences with zero and the 20-percentage-point clinical threshold, following the [interval interpretation](../book/power.html#interpret-a-confidence-interval-clinically).
 4. Further down the same page, “Simulate many studies” generates 5,000 independent trials. The distribution shows sampling variability; the percentage of significant results estimates power for this population scenario.
-5. You can repeat at 50 and 80 patients per group while holding the population assumptions and repetition count fixed. Larger trials usually give narrower intervals and greater power. Coverage and Monte Carlo summaries can wait until the advanced chapter.
+5. Before repeating at 50 and 80 patients per group, you can predict how the estimates, intervals and power will change, holding the population assumptions and repetition count fixed. Larger trials usually give narrower intervals and greater power. Coverage and Monte Carlo summaries can wait until the advanced chapter.
 
 ## Type I and Type II error probabilities and power — advanced
 

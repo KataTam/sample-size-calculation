@@ -3,6 +3,8 @@ render_resource <- function(include_pdf = TRUE) {
   if (capabilities("cairo")) options(bitmapType = "cairo")
   root <- normalizePath(".", winslash = "/", mustWork = TRUE)
   stopifnot(file.exists("module/Sample_size_open_module.Rmd"))
+  source("R/draw_learning_figures.R")
+  draw_learning_figures()
   on.exit(setwd(root), add = TRUE)
   glossary_json <- paste(readLines("data/glossary-terms.json", encoding = "UTF-8"), collapse = "\n")
   glossary_js <- paste(readLines("module/glossary-tooltips.js", encoding = "UTF-8"), collapse = "\n")
