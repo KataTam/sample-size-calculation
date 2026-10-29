@@ -2,7 +2,7 @@ const {chromium}=require('playwright'),fs=require('fs'),assert=require('node:ass
 const base=process.argv[2]||'http://127.0.0.1:8769';
 const axePath=process.env.AXE_PATH||require.resolve('axe-core/axe.min.js');
 (async()=>{const browser=await chromium.launch({headless:true,...(process.platform==='win32'?{channel:'msedge'}:{})});const page=await browser.newPage({viewport:{width:1280,height:900}});let results=[];
-for(const path of ['book/clinical-question.html','book/power.html','book/calculations.html','study/?activity=pain_one_many']){
+for(const path of ['book/index.html','book/clinical-question.html','book/power.html','book/calculations.html','study/?activity=pain_one_many']){
  await page.goto(base+'/'+path,{waitUntil:'networkidle'});
  await page.evaluate(async()=>{await document.fonts.ready;if(window.MathJax?.Hub)await new Promise(resolve=>MathJax.Hub.Queue(resolve));});
  await page.locator('#MathJax_Message').waitFor({state:'hidden',timeout:30000});

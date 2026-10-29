@@ -50,9 +50,14 @@ This tutorial is for students and researchers. Chapters 1–4 form the Core rout
 Activities are learning exercises. Apps are the interactive software used in some activities, such as calculators, simulations and the report builder. Expandable misconception boxes explain common difficulties; the toolbar help explains the other reading features.
 
 ```{r tutorial-roadmap, echo=FALSE, results='asis'}
+roadmap <- paste(readLines("../figures/tutorial-roadmap.svg",
+  encoding="UTF-8", warn=FALSE), collapse="\n")
+# Numeric entities keep SVG text intact when R uses a non-UTF-8 locale.
+roadmap <- paste(vapply(utf8ToInt(enc2utf8(roadmap)), function(cp) {
+  if (cp > 127L) sprintf("&#%d;", cp) else intToUtf8(cp)
+}, character(1)), collapse="")
 cat('<figure class="tutorial-roadmap">',
-    paste(readLines("../figures/tutorial-roadmap.svg", encoding="UTF-8", warn=FALSE), collapse="\n"),
-    '</figure>')
+    roadmap, '</figure>')
 ```
 
 Each teaching chapter ends with an embedded *Check your understanding* quiz. The material comes together in a [cumulative quiz](#cumulative-quiz), with Core and Core + advanced routes.

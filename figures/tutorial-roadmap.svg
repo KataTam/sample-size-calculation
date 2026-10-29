@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 610" role="img" aria-labelledby="roadmap-title roadmap-desc">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 610" role="group" aria-labelledby="roadmap-title" aria-describedby="roadmap-desc">
 <title id="roadmap-title">Roadmap: Core and Advanced</title>
 <desc id="roadmap-desc">Two learning routes connect tutorial explanations, activities and apps. Core covers basic planning, calculations and simple simulation. Advanced extends these to further methods and designs. Flashcards support both routes. Each block links to its resource.</desc>
 <defs><marker id="roadmap-arrow" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto-start-reverse"><path d="M0 0L8 4L0 8" fill="none" stroke="#64778a" stroke-width="1.4"/></marker></defs>

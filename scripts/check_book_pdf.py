@@ -56,7 +56,13 @@ print(f'PDF checks passed: {len(links)} contents links and matching bookmarks re
 audit=json.loads((root/'build/pdf/internal-links.json').read_text(encoding='utf-8'))
 targets={target['id']:target for target in audit['targets']}
 semantic=lambda text: re.sub(r'[^a-z0-9]', '', text.lower())
-page_text=[semantic(page.extract_text()) for page in r.pages]
+raw_page_text=[page.extract_text() for page in r.pages]
+assert not any(re.search(r'<U\+[0-9A-Fa-f]{4,6}>', text) for text in raw_page_text), 'PDF contains an escaped Unicode label'
+roadmap_pages=[text for text in raw_page_text if 'Roadmap' in text and 'Flashcards' in text]
+assert len(roadmap_pages)==1, 'The roadmap must remain legible text on one page'
+for label in ['Chapters 1-4', 'Chapters 5-8', 'Flashcards: review and recall']:
+ assert label in roadmap_pages[0].replace(chr(0x2013), '-'), f'Missing or damaged roadmap label: {label}'
+page_text=[semantic(text) for text in raw_page_text]
 chapter_bounds={}
 for pos,start in enumerate(chapter_indices):
  end=chapter_indices[pos+1] if pos+1<len(chapter_indices) else len(headings)
