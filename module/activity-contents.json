@@ -72,7 +72,7 @@
     "route": "Core",
     "activities": [
       {
-        "label": "Adjust recruitment for loss to follow-up",
+        "label": "Adjust recruitment",
         "path": "dropout_adjustment/",
         "route": "Core",
         "section": "account-for-expected-losses"

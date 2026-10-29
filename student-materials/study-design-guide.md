@@ -256,7 +256,7 @@ Before writing the protocol, you should check relevant guidance and the current 
 
 ## What if the disease is rare? {#rare-diseases .advanced-heading}
 
-For a rare disease, the number of eligible patients may impose a genuine limit on recruitment. Your plan should document how many patients could realistically participate, over what period and across which centers, and what that sample could establish.
+For a rare disease, the number of eligible patients may limit recruitment. Your plan should document how many patients could realistically participate, over what period and across which centers, and what that sample could establish.
 
 This is the same feasibility problem as the chronic pain plan, with a more restrictive recruitment ceiling. The aim is to obtain useful, valid information within the recruitment limit.
 

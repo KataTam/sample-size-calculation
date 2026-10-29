@@ -198,6 +198,12 @@ The [advanced explanation of units and dependence](#units-of-analysis) compares 
 <span id="retention">Retention</span>
 : The percentage or proportion of enrolled participants who contribute the required outcome at the specified time. If 20 of 200 enrolled participants lack that outcome, 180/200 = 90% are retained and 10% are lost. The [recruitment calculation](#account-for-expected-losses) uses anticipated retention, with uncertainty and potentially different percentages across arms.
 
+<span id="treatment-crossover">Treatment crossover (switching)</span>
+: Receipt of the other treatment after randomization. In an analysis of treatment assignment, participants remain in their randomized groups. Switching may reduce the between-group difference. A planned crossover trial assigns treatment sequences by design and needs its own calculation. See [Allowing for treatment switching](#treatment-switching).
+
+<span id="treatment-contamination">Treatment contamination</span>
+: Receipt of some or all of the intervention by participants assigned to the comparator. This can make the randomized groups' outcomes more similar and affect power. Planning should reflect the expected extent and consequences of contamination. See [Treatment changes](#treatment-changes).
+
 ## Advanced simulation terms {.advanced-heading .unnumbered}
 
 Planning and generating scenarios

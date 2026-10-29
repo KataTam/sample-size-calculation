@@ -34,7 +34,13 @@ Rejection, coverage and width-attainment summaries report MCSE sqrt(p*(1−p)/B)
 
 ## Recruitment
 
-Recruit ceil(n/(1−dropout)) in each arm, then double. Inflation changes expected counts, not missing-data bias. Simulations condition on analyzable n and do not model attrition or non-adherence. The standalone dropout app also uses per-group counts so equal allocation is retained.
+The recruitment app uses `recruitment_plan()` in `R/sample_size_functions.R`. Its optional all-or-none switching approximation sets n_adjusted = n / (1-a-b)^2, where a and b are switching fractions in the two directions and a+b < 1. It assumes comparable outcome distributions among recipients of each treatment and little variance change. When the starting calculation already incorporates switching, the app applies a multiplier of one. Binary outcomes should be replanned with the revised event probabilities in the two-proportion app.
+
+For expected losses r1 and r0, equal recruitment is ceil(max(n_adjusted/(1-r1), n_adjusted/(1-r0))) per group. Intermediate counts remain unrounded. Equal recruitment with unequal losses yields unequal expected retained counts; the larger requirement preserves at least n_adjusted in expectation in each group. This is an allowance, with actual retention and missing-data bias requiring separate attention. A starting count of 100, switching of 10% and 5%, and shared losses of 5% gives 146 recruits per group. This avoids the extra participant produced by rounding at every intermediate step.
+
+The report records applied inputs, intermediate results, method, assumptions, R/Shiny versions, source history and the learner's justification. The lab link carries the starting analyzable count; switching and unequal losses remain specific to this calculation. The main simulations condition on complete outcomes; the advanced missing-outcome extension explicitly models attrition.
+
+Sources: [Wittes (2002)](https://doi.org/10.1093/epirev/24.1.39), [Shardell and El-Kamary (2009)](https://doi.org/10.1111/j.1541-0420.2008.01114.x), and [ICH E9(R1)](https://www.fda.gov/media/148473/download).
 
 ## References
 

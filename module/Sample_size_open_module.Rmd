@@ -843,6 +843,7 @@ After this chapter, you should be able to:
 
 - Adjust an analyzable sample size for expected losses and round within each group.
 - Explain why missing outcomes also require prevention and an appropriate analysis.
+- Explain how treatment changes can affect the difference between randomized groups and the recruitment plan.
 - Assess one plausible alternative assumption and the practical recruitment requirement.
 - Write a short, checkable sample size justification.
 
@@ -892,7 +893,7 @@ Your study plan should describe how missing outcomes will be minimized, how thei
 
 The usual simulations start with the stated number of patients available for analysis. The advanced [missing-outcome extension](#explore-missing-outcomes) starts with recruited participants and explores equal, unequal, and outcome-related losses in the [repeated-trial activity](https://katatam.github.io/sample-size-calculation/study/?activity=pain_simulation).
 
-The [Activity: Adjust recruitment for loss to follow-up](https://katatam.github.io/sample-size-calculation/dropout_adjustment/) connects the analyzable count to the number you need to approach recruitment with. You should enter the per-group analyzable requirement, then compare expected loss percentages. Actual retention may differ from the assumed percentage.
+The [Activity: Adjust recruitment](https://katatam.github.io/sample-size-calculation/dropout_adjustment/) connects the analyzable requirement to the recruitment target. You can compare shared or different expected losses in the two groups. The app retains equal recruitment by using the larger requirement for both groups, so each can meet the analyzable requirement in expectation. Actual retention may differ from the assumed percentage.
 
 <details class="misconception" id="misconception-dropout">
 <summary>Common misconception: recruiting extra participants resolves missing-data problems</summary>
@@ -900,6 +901,58 @@ The [Activity: Adjust recruitment for loss to follow-up](https://katatam.github.
 Recruiting extra participants can help preserve the analyzable sample size and statistical power. Addressing missing-data bias requires prevention, appropriate analysis, and sensitivity analyses alongside the recruitment allowance [@little2012missing].
 
 </details>
+
+## Treatment changes and other anticipated events {#treatment-changes .core-heading}
+
+Participants may stop their assigned treatment, miss doses, switch to the other treatment, or receive additional treatment during follow-up. These changes can affect the difference between randomized groups and the sample size needed for the planned power. For example, patients assigned to standard treatment might start the novel treatment, making the groups' outcomes more similar. This is a form of [treatment contamination](#treatment-contamination) [@wittes2002].
+
+Treatment discontinuation and loss to follow-up should be recorded separately. A patient who stops treatment may still attend the final assessment and contribute an outcome. When your question concerns the effect of assignment to treatment, participants remain in their randomized groups for analysis, and follow-up should continue wherever possible. Excluding patients because they switched treatments can introduce bias [@dodd2017].
+
+Your sample size assumptions should reflect the treatment changes expected in your study and the treatment effect you intend to estimate. If the outcome percentages or mean difference already incorporate realistic adherence, an additional adjustment for the same changes would count their impact twice [@iche9r1]. Table \@ref(tab:anticipated-events) summarizes the implications of common events.
+
+| Anticipated event | Implication for planning |
+|:--|:--|
+| Missing final assessments, unusable samples, or equipment failure | Allow for the expected percentage of unavailable primary outcomes, considering each group separately. |
+| Treatment switching or contamination | Account for the resulting difference between randomized groups when calculating sample size. |
+| Missed doses, early treatment discontinuation, or rescue medication | Consider how the timing and extent of these changes affect outcomes and the treatment effect being estimated. |
+| Death before a planned assessment | Specify how death enters the research question and outcome definition. A pain score after death is undefined; the study design and analysis need an explicit approach. |
+
+Table: (\#tab:anticipated-events) Anticipated events and their implications for sample size planning. Treatment changes and events such as death require an approach matched to the research question [@iche9r1].
+
+<details class="advanced-explanation" id="treatment-switching">
+<summary>Allowing for treatment switching</summary>
+
+[Treatment crossover](#treatment-crossover) here means receiving the other treatment after randomization. A planned crossover trial, in which participants receive treatments in a prespecified sequence, requires a calculation suited to that design.
+
+A simplified model describes complete switching between treatments. Let $a$ be the fraction assigned to the novel treatment who receive standard treatment, and $b$ the fraction assigned to standard treatment who receive the novel treatment. If switchers have the same outcome distribution as other recipients of the treatment they receive, the between-group difference becomes $1-a-b$ times the difference under full adherence. Assuming little change in outcome variance, the approximate per-group requirement is [@wittes2002]:
+
+\begin{equation}
+n_{\mathrm{switching}} \approx \frac{n_{\mathrm{full\ adherence}}}{(1-a-b)^2}.
+(\#eq:switching)
+\end{equation}
+
+With 10% switching from novel to standard and 5% in the other direction, the multiplier is $1/(1-0.10-0.05)^2=1.38$: approximately 38% more participants. The squared denominator reflects the inverse-square relationship between the difference and required sample size. This approximation requires $a+b<1$.
+
+Partial adherence, delayed switching, and switching prompted by poor response need more detailed assumptions. Methods that account for changes in variance and differences between adherence groups are available [@shardell2009].
+
+For binary outcomes, you can recalculate sample size using the revised event percentages. As a separate sensitivity scenario for chronic pain, suppose 60% and 30% describe relief under full adherence. With the switching percentages above, the simplified model gives:
+
+\[
+\begin{aligned}
+\text{Assigned novel treatment: }&0.90(60\%)+0.10(30\%)=57\%,\\
+\text{Assigned standard treatment: }&0.95(30\%)+0.05(60\%)=31.5\%.
+\end{aligned}
+\]
+
+The resulting between-group difference is 25.5 percentage points. The [two-proportion app](https://katatam.github.io/sample-size-calculation/two_proportions/) can calculate the sample needed at these revised percentages. This sensitivity scenario changes the assumed comparison; the main example's expected difference of 40 percentage points, target difference of 30 percentage points and clinical threshold of 20 percentage points retain their stated roles.
+
+In the [recruitment adjustment activity](https://katatam.github.io/sample-size-calculation/dropout_adjustment/), the optional switching calculation starts with a sample size that assumes full adherence. A separate loss allowance then reflects expected outcome completeness. Intermediate values remain unrounded until the final recruitment count. For example, starting with 100 per group, the switching assumptions above and 5% missing outcomes in both groups gives $\lceil100/(0.85^2\times0.95)\rceil=146$ recruits per group. With unequal losses, equal recruitment uses the larger requirement for both groups.
+
+Your report should document the switching assumptions, their evidence, the method used, and sensitivity to alternative assumptions. The downloadable app report includes these calculation steps and your written justification; the [reproducibility chapter](#tutorial-methods) explains the procedures.
+
+</details>
+
+The [recruitment adjustment activity](https://katatam.github.io/sample-size-calculation/dropout_adjustment/) includes a prediction-and-justification question with a model answer. Its advanced option explores how switching and missing assessments affect the same recruitment plan. It calculates expected requirements without generating individual patient outcomes.
 
 ## Sensitivity to planning assumptions {#stress-test-the-study-plan .core-heading}
 
@@ -1642,7 +1695,7 @@ The table distinguishes the planning calculation from the analysis of simulated 
 | Two means: introductory calculator | Normal approximation using the target difference, common SD and normal quantiles | The reasoning lab uses a pooled-variance t test and t interval; test-based planning uses `stats::power.t.test()` |
 | One population percentage | Normal approximation for the requested margin of error; the unknown-percentage option uses 50% for planning | A simulated binomial count is summarized with a Wilson interval |
 | Sampling distributions | Normal probabilities for one sample mean with a known population SD | Rejection boundaries and probabilities follow the selected one- or two-sided rule |
-| Expected losses | Required analyzable count divided by the expected retained fraction, then rounded upward | The adjustment concerns recruitment counts; the simulation conditions on analyzable sample size |
+| Recruitment adjustment | Optional switching multiplier $1/(1-a-b)^2$, followed by division by each group's retained fraction; the larger requirement is rounded upward once and used in both groups | Assumes complete switching and little variance change; equal recruitment with potentially unequal expected retained counts. It calculates requirements without generating patient outcomes |
 
 Table: Statistical procedures used by the tutorial's calculation and simulation apps.
 

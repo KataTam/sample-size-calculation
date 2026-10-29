@@ -127,6 +127,28 @@ adjust_for_dropout <- function(n, dropout_rate) {
   ceiling(n / (1 - dropout_rate))
 }
 
+# Approximate all-or-none switching with unchanged variance; retain 1:1 recruitment.
+# Keep intermediate counts unrounded and meet the retained requirement in both arms.
+recruitment_plan <- function(n, loss_novel = .10, loss_standard = loss_novel,
+                             switch_novel = 0, switch_standard = 0) {
+  check_integer(n, "Starting participants per group", 1)
+  check_nonnegative_probability(loss_novel, "Expected loss in the novel group")
+  check_nonnegative_probability(loss_standard, "Expected loss in the standard group")
+  check_nonnegative_probability(switch_novel, "Switching from novel to standard")
+  check_nonnegative_probability(switch_standard, "Switching from standard to novel")
+  if (switch_novel + switch_standard >= 1)
+    stop("The two switching percentages must add to less than 100% for this approximation.", call. = FALSE)
+  multiplier <- 1 / (1 - switch_novel - switch_standard)^2
+  adjusted <- n * multiplier
+  losses <- c(Novel = loss_novel, Standard = loss_standard)
+  required <- adjusted / (1 - losses)
+  recruited <- ceiling(max(required))
+  list(starting = n, multiplier = multiplier, after_switching = adjusted,
+       losses = losses, unrounded_recruitment = required,
+       minimum_by_group = ceiling(required), per_group = recruited,
+       total = 2 * recruited, expected_retained = recruited * (1 - losses))
+}
+
 format_percent <- function(x, digits = 0) {
   paste0(round(100 * x, digits), "%")
 }

@@ -11,7 +11,14 @@ const base=process.argv[2]||'http://127.0.0.1:8769';
   assert.match(await heading.innerText(),new RegExp('Chapter '+(i+1)+'\\b'));
   assert(await heading.evaluate((h,core)=>h.parentElement.classList.contains(core?'core-heading':'advanced-heading'),i<4));
   for(const id of expected[chapter]||[])assert.equal(await p.locator('[id="'+id+'"]').count(),1,id);
-  if(i<4)assert.equal(await p.locator('.page-inner details.advanced-explanation').count(),0,'Core should have no long advanced disclosures');
+  if(i<4) {
+    const disclosures=p.locator('.page-inner details.advanced-explanation');
+    assert.equal(await disclosures.count(),chapter==='feasibility'?1:0,'Only the optional switching explanation belongs beside core recruitment');
+    if(chapter==='feasibility') {
+      assert.equal(await disclosures.getAttribute('id'),'treatment-switching');
+      assert.equal(await disclosures.getAttribute('open'),null,'Switching explanation starts collapsed');
+    }
+  }
  }
  for(const chapter of ['exercises','glossary','common-mistakes']){
   await p.goto(base+'/book/'+chapter+'.html');

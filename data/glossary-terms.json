@@ -421,5 +421,22 @@
       "covariate adjustment"
     ],
     "definition": "An analysis using prespecified baseline characteristics. Prognostic characteristics can improve precision in randomized comparisons. Studying variation in treatment effects requires separate treatment-by-characteristic comparisons."
+  },
+  {
+    "id": "treatment-crossover",
+    "label": "Treatment crossover",
+    "aliases": [
+      "treatment crossover",
+      "treatment switching"
+    ],
+    "definition": "Receiving the other treatment after randomization. It can reduce the difference between randomized groups; participants retain their original assignment in an analysis of treatment assignment. A planned crossover trial assigns treatment sequences by design."
+  },
+  {
+    "id": "treatment-contamination",
+    "label": "Treatment contamination",
+    "aliases": [
+      "treatment contamination"
+    ],
+    "definition": "Participants assigned to the comparator receive some or all of the intervention, potentially reducing the difference between randomized groups."
   }
 ]

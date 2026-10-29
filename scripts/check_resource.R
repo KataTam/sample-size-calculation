@@ -140,6 +140,8 @@ check_resource <- function(render_module = FALSE) {
   check_feedback_servers()
   source("scripts/check_activity.R", local = TRUE)
   check_activity()
+  source("scripts/check_recruitment.R", local = TRUE)
+  check_recruitment()
   say("All checks passed.")
   invisible(TRUE)
 }

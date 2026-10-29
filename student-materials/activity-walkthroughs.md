@@ -127,12 +127,15 @@ Within the same activity, *Explore further* contains *Explore missing outcomes*:
 
 [Open calculator](../dropout_adjustment/) · [Matching explanation](../book/feasibility.html#account-for-expected-losses)
 
-Purpose: translate an analyzable requirement into a recruitment allowance.
+Purpose: connect the analyzable requirement to anticipated outcome losses and treatment changes. This activity calculates recruitment requirements without generating patients.
 
-1. For the chronic-pain example, the analyzable requirement is 56 patients per group.
-2. At 10% expected loss, the result is 63 recruits per group, or 126 total, after rounding upward within each group.
-3. Comparing 0%, 10% and 20% losses shows how recruitment changes while the analyzable requirement stays fixed.
-4. Your interpretation should acknowledge that actual retention varies and that missing-data bias requires attention to prevention and analysis. The lab link transfers the analyzable count per group.
+1. For the chronic-pain example, the starting analyzable requirement is 56 patients per group.
+2. At 10% expected loss, the result is 63 recruits per group, or 126 total. Comparing 0%, 10% and 20% losses keeps the starting requirement fixed.
+3. With different losses of 20% in the novel group and 10% in the standard group, equal recruitment uses 70 per group (140 total). This gives expected retained counts of 56 and 63. The tables explain why the recruitment counts remain equal.
+4. Your interpretation should consider actual retention and the reasons for missing outcomes. The collapsed activity question provides space for your prediction and justification, followed by a model answer.
+5. For the optional advanced example, a starting count of 100 per group is assumed to require full adherence. With switching of 10% from novel to standard and 5% in the other direction, and 5% missing outcomes in each group, the approximate recruitment target is 146 per group. The intermediate values remain unrounded.
+6. Choosing “Expected switching is already included” applies no additional switching multiplier. For binary outcomes, you should use the revised event percentages in the [two-proportion app](../two_proportions/); the [tutorial's sensitivity example](../book/feasibility.html#treatment-switching) gives 57% and 31.5%.
+7. “Methods and report” explains the approximation and downloads the inputs, method, calculation and your justification. The lab link carries the starting analyzable sample into a complete-outcome scenario; switching and unequal losses remain specific to this recruitment calculation.
 
 ## Estimate a mean difference with a precision target — advanced
 

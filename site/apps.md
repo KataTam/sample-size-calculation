@@ -7,7 +7,7 @@ Choose an app. Apps are interactive software; activities are learning exercises 
 - [Chronic pain: one study and many studies](study/?activity=pain_one_many): generate hypothetical patient outcomes and see how sample estimates vary.
 - [Two proportions](two_proportions/): compare event percentages in two independent groups.
 - [Two means](two_means/): compare mean outcomes in two independent groups.
-- [Dropout adjustment](dropout_adjustment/): allow for expected losses when setting recruitment targets.
+- [Recruitment adjustment](dropout_adjustment/): explore shared or different expected losses, with an optional advanced allowance for treatment switching.
 - [Develop and justify your study plan](study/?activity=assumptions_report): write a study plan and generate a report.
 
 ## Explore further

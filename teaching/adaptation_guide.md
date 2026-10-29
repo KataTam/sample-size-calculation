@@ -69,7 +69,7 @@ Possible combinations:
 | Binary outcome sample size | Two-proportions section, Figure 1, `apps/two_proportions`, short rubric |
 | Continuous outcome sample size | Two-means section, Figure 2, `apps/two_means`, short rubric |
 | Feasibility and power | Power calculation section, Figure 3, `apps/power_explorer` |
-| Dropout adjustment | Adjustments section, Figure 4, `apps/dropout_adjustment` |
+| Recruitment adjustment | Recruitment and feasibility; shared or different losses and the optional treatment-switching approximation in `apps/dropout_adjustment` |
 | Protocol-writing practice | Build-your-own justification section, case template, assessment rubric |
 
 If you remove a section, also remove or revise related assessment tasks.

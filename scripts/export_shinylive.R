@@ -112,7 +112,7 @@ app_labels <- function(apps) {
     two_proportions = "Two proportions sample size",
     two_means = "Two means sample size",
     power_explorer = "Sample size reasoning lab",
-    dropout_adjustment = "Dropout adjustment",
+    dropout_adjustment = "Recruitment adjustment",
     prevalence_precision = "Estimate one proportion",
     sampling_distributions = "Type I and Type II error probabilities and power"
   )
