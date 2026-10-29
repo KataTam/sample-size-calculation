@@ -2,7 +2,7 @@
   {
     "chapter": "clinical-question",
     "anchor": "clinical-question",
-    "title": "Clinical question and assumptions",
+    "title": "Research question and planning assumptions",
     "route": "Core",
     "activities": [
       {
@@ -16,15 +16,9 @@
   {
     "chapter": "power",
     "anchor": "power",
-    "title": "Power and error probabilities",
-    "route": "Core and advanced",
+    "title": "Understanding power and uncertainty",
+    "route": "Core",
     "activities": [
-      {
-        "label": "Explore Type I and Type II error probabilities and power",
-        "path": "study/?activity=alpha_beta",
-        "route": "Advanced",
-        "section": "alpha-beta"
-      },
       {
         "label": "Chronic pain: one study and many studies",
         "path": "study/?activity=pain_one_many",
@@ -36,8 +30,8 @@
   {
     "chapter": "calculations",
     "anchor": "calculations",
-    "title": "Calculate a sample size",
-    "route": "Core and advanced",
+    "title": "Calculating sample size",
+    "route": "Core",
     "activities": [
       {
         "label": "Gestational-diabetes prevention trial",
@@ -64,19 +58,45 @@
         "section": "two-means"
       },
       {
-        "label": "Estimate a mean difference with a precision target",
-        "path": "study/?activity=mean_precision",
-        "route": "Advanced",
-        "section": "plan-for-precision"
+        "label": "Discharge: an absolute probability difference",
+        "path": "study/?activity=discharge",
+        "route": "Core",
+        "section": "discharge"
+      }
+    ]
+  },
+  {
+    "chapter": "feasibility",
+    "anchor": "feasibility",
+    "title": "Recruitment and feasibility",
+    "route": "Core",
+    "activities": [
+      {
+        "label": "Adjust recruitment for loss to follow-up",
+        "path": "dropout_adjustment/",
+        "route": "Core",
+        "section": "account-for-expected-losses"
+      },
+      {
+        "label": "Complete your assumptions report",
+        "path": "study/?activity=assumptions_report",
+        "route": "Core",
+        "section": "write-a-sample-size-justification"
       }
     ]
   },
   {
     "chapter": "curves",
     "anchor": "curves",
-    "title": "Read power curves",
+    "title": "Exploring power and uncertain assumptions",
     "route": "Advanced",
     "activities": [
+      {
+        "label": "Explore Type I and Type II error probabilities and power",
+        "path": "study/?activity=alpha_beta",
+        "route": "Advanced",
+        "section": "alpha-beta"
+      },
       {
         "label": "Chronic pain: explore power and recruitment",
         "path": "study/?activity=pain_curves",
@@ -88,7 +108,7 @@
   {
     "chapter": "simulation",
     "anchor": "simulation",
-    "title": "Repeated-study simulation",
+    "title": "Building and evaluating simulations",
     "route": "Advanced",
     "activities": [
       {
@@ -96,73 +116,33 @@
         "path": "study/?activity=pain_simulation",
         "route": "Advanced",
         "section": "activity-3-generate-analyze-repeat-summarize"
-      }
-    ]
-  },
-  {
-    "chapter": "feasibility",
-    "anchor": "feasibility",
-    "title": "Recruitment and feasibility",
-    "route": "Core and advanced",
-    "activities": [
-      {
-        "label": "Adjust recruitment for loss to follow-up",
-        "path": "dropout_adjustment/",
-        "route": "Core",
-        "section": "account-for-expected-losses"
       },
       {
-        "label": "Assess a recruitment limit with power curves",
-        "path": "study/?activity=pain_curves",
-        "route": "Advanced",
-        "section": "available-sample"
-      },
-      {
-        "label": "Pilot study: estimate retention",
-        "path": "study/?activity=pilot_feasibility",
-        "route": "Advanced",
-        "section": "pilot-feasibility"
-      }
-    ]
-  },
-  {
-    "chapter": "exercises",
-    "anchor": "exercises",
-    "title": "Test your reasoning",
-    "route": "Core and advanced",
-    "activities": [
-      {
-        "label": "Check your understanding: cumulative quiz",
-        "path": "book/exercises.html#cumulative-quiz",
-        "route": "Core and advanced",
-        "section": "cumulative-quiz"
-      },
-      {
-        "label": "Discharge: an absolute probability difference",
+        "label": "Evaluate the discharge calculation",
         "path": "study/?activity=discharge",
-        "route": "Core",
-        "section": "discharge"
-      },
-      {
-        "label": "Build your own study calculation",
-        "path": "study/?activity=own_study",
         "route": "Advanced",
-        "section": "write-a-sample-size-justification"
-      },
-      {
-        "label": "Complete your assumptions report",
-        "path": "study/?activity=assumptions_report",
-        "route": "Core",
-        "section": "write-a-sample-size-justification"
+        "section": "discharge-simulation"
       }
     ]
   },
   {
     "chapter": "study-designs",
     "anchor": "study-designs",
-    "title": "Study designs and planning methods",
+    "title": "Other study goals and designs",
     "route": "Advanced",
     "activities": [
+      {
+        "label": "Estimate a mean difference with a precision target",
+        "path": "study/?activity=mean_precision",
+        "route": "Advanced",
+        "section": "plan-for-precision"
+      },
+      {
+        "label": "Pilot study: estimate retention",
+        "path": "study/?activity=pilot_feasibility",
+        "route": "Advanced",
+        "section": "pilot-feasibility"
+      },
       {
         "label": "Which study design fits your question?",
         "path": "study/?activity=design_questionnaire",
@@ -174,6 +154,34 @@
         "path": "study/?activity=prevalence",
         "route": "Advanced",
         "section": "prevalence"
+      }
+    ]
+  },
+  {
+    "chapter": "appendix",
+    "anchor": "appendix",
+    "title": "Reproducibility and open science",
+    "route": "Advanced",
+    "activities": [
+      {
+        "label": "Build your own study calculation",
+        "path": "study/?activity=own_study",
+        "route": "Advanced",
+        "section": "own-study"
+      }
+    ]
+  },
+  {
+    "chapter": "exercises",
+    "anchor": "exercises",
+    "title": "Test your understanding",
+    "route": "Core and advanced",
+    "activities": [
+      {
+        "label": "Check your understanding: cumulative quiz",
+        "path": "book/exercises.html#cumulative-quiz",
+        "route": "Core and advanced",
+        "section": "cumulative-quiz"
       }
     ]
   }

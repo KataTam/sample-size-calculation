@@ -26,11 +26,12 @@ const base=(process.argv[2]||'http://127.0.0.1:8769').replace(/\/$/,'');
  await page.locator('#activity-menu-button').click();
  assert(await page.locator('#activity-menu').isVisible());
  assert((await page.locator('#activity-menu a[href*="alpha_beta"]').count())>0);
- assert((await page.locator('#activity-menu h3').first().innerText()).includes('Power'));
+ assert((await page.locator('#activity-menu h3').first().innerText()).toLowerCase().includes('power'));
  await page.keyboard.press('Escape');assert(await page.locator('#activity-menu').isHidden());
  await page.goto(base+'/book/power.html#eq:mcse');
+ await page.waitForURL('**/simulation.html#eq:mcse');
  assert(await page.locator('[id="eq:mcse"]').isVisible());
- for(const chapter of ['clinical-question','power','calculations','curves','simulation','feasibility','exercises','study-designs']) {
+ for(const chapter of ['clinical-question','power','calculations','curves','simulation','feasibility','study-designs']) {
   await page.goto(base+'/book/'+chapter+'.html');
   assert.equal(await page.locator('.chapter-recap').count(),1,chapter);
   assert(await page.locator('.chapter-recap').isVisible(),chapter);

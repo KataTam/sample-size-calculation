@@ -34,7 +34,7 @@ Purpose: see why sample estimates differ from population values, interpret the u
 
 ## Type I and Type II error probabilities and power — advanced
 
-[Open activity](../study/?activity=alpha_beta) · [Matching explanation](../book/power.html#alpha-beta)
+[Open activity](../study/?activity=alpha_beta) · [Matching explanation](../book/curves.html#alpha-beta)
 
 Purpose: connect false positives, false negatives and power with the distributions that underlie repeated-study behavior. The app calculates the shaded areas from the normal distribution.
 
@@ -92,7 +92,7 @@ Purpose: connect a continuous-outcome calculation with the interpretation of a p
 
 ## Chronic pain: power and recruitment — advanced
 
-[Open activity](../study/?activity=pain_curves) · [Power curves](../book/curves.html#activity-2-can-the-feasible-study-answer-the-question) · [Available sample and feasibility](../book/feasibility.html#available-sample)
+[Open activity](../study/?activity=pain_curves) · [Power curves](../book/curves.html#activity-2-can-the-feasible-study-answer-the-question) · [Available sample and feasibility](../book/curves.html#available-sample)
 
 Purpose: assess whether the feasible study can answer the intended question under less favorable assumptions.
 
@@ -136,7 +136,7 @@ Purpose: translate an analyzable requirement into a recruitment allowance.
 
 ## Estimate a mean difference with a precision target — advanced
 
-[Open activity](../study/?activity=mean_precision) · [Matching explanation](../book/calculations.html#plan-for-precision)
+[Open activity](../study/?activity=mean_precision) · [Matching explanation](../book/study-designs.html#plan-for-precision)
 
 Purpose: extend the rehabilitation calculation to planning a useful confidence-interval width and compare that criterion with target power.
 
@@ -160,7 +160,7 @@ Purpose: connect the precision needed for a descriptive decision with survey siz
 
 ## Pilot study: retention — advanced
 
-[Open activity](../study/?activity=pilot_feasibility) · [Matching explanation](../book/feasibility.html#pilot-feasibility)
+[Open activity](../study/?activity=pilot_feasibility) · [Matching explanation](../book/study-designs.html#pilot-feasibility)
 
 Purpose: assess whether a limited pilot provides useful information for a feasibility decision.
 
@@ -172,7 +172,7 @@ Purpose: assess whether a limited pilot provides useful information for a feasib
 
 ## Discharge percentages — core calculation, optional simulation extension
 
-[Open activity](../study/?activity=discharge) · [Matching explanation](../book/exercises.html#discharge)
+[Open activity](../study/?activity=discharge) · [Matching explanation](../book/calculations.html#discharge)
 
 Purpose: distinguish relative changes from percentage-point differences and investigate planning close to 100%.
 
@@ -184,7 +184,7 @@ Purpose: distinguish relative changes from percentage-point differences and inve
 
 ## Build your own study calculation — advanced application
 
-[Open activity](../study/?activity=own_study) · [Matching explanation](../book/exercises.html#own-study)
+[Open activity](../study/?activity=own_study) · [Matching explanation](../book/appendix.html#own-study)
 
 Purpose: bring together the clinical question, numerical requirements and practical constraints.
 

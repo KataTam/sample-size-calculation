@@ -17,12 +17,15 @@ let browser;
   const section=page.locator('.book-summary li.chapter').filter({has:page.locator(':scope > a[href="'+group.chapter+'.html#'+activity.section+'"]')});
   const link=section.locator(':scope > .activity-toc > li > a[href="../'+activity.path+'"]');
   assert.equal(await link.count(),1,'Activity belongs to '+activity.section);
-  assert.equal(await link.isVisible(),group.chapter==='clinical-question');
+  assert.equal(await link.isVisible(),false,'Activities start collapsed until their section is selected');
  }
  assert(!(await page.locator('.book-summary a[href="calculations.html#adherence"]').isVisible()));
  await page.locator('.book-summary > nav > ul.summary > li.chapter > a[href="calculations.html"]').click();
  await page.waitForURL('**/calculations.html');
+ assert(!(await page.locator('.book-summary a[href="calculations.html#adherence"]').isVisible()));
+ await page.locator('.book-summary a[href="calculations.html#two-proportions"]').click();
  assert(await page.locator('.book-summary a[href="calculations.html#adherence"]').isVisible());
+ await page.locator('.book-summary a[href="calculations.html#adherence"]').click();
  assert(await page.locator('.book-summary .activity-toc a[href="../study/?activity=adherence"]').isVisible());
  assert(!(await page.locator('.book-summary a[href="clinical-question.html#record-assumptions"]').isVisible()));
  await page.locator('.book-summary > nav > ul.summary > li.chapter > a[href="clinical-question.html"]').click();

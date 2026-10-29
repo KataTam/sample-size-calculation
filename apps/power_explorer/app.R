@@ -209,7 +209,7 @@ ui <- fluidPage(
       p(class = "caption", "Table 7. Expected recruitment, analyzable counts and costs under the stated eligibility, consent and loss assumptions."),
       helpText("These scenarios describe expected recruitment and costs. Actual numbers can vary; your assessment should account for other exclusions and costs where relevant."),
       actionButton("use_feasible_cap", "Use expected recruitment as the lab limit"),
-      p(tags$a(href = "../book/Sample_size_open_module.html#own-study", target = "_blank", rel = "noopener", "Read the study justification guidance"))),
+      p(tags$a(href = "../book/appendix.html#own-study", target = "_blank", rel = "noopener", "Read the study justification guidance"))),
     tabPanel("Justify and communicate", h3("Explain your decision"),
       textAreaInput("justification", "State the goal, sources, clinical threshold, sensitivity, feasibility and limits of the intended conclusion.", rows = 8, width = "100%"),
       p("The case template helps you record evidence and clinical reasoning for your assumptions."),

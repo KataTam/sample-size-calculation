@@ -69,7 +69,7 @@
     $('results').hidden = true; $('setup').hidden = false; describe(); chapter.focus();
   });
   chapter.addEventListener('change', () => {
-    if (['curves','simulation','study-designs'].includes(chapter.value)) route.value = 'all';
+    if (chapter.value !== 'all' && !bank.questions.some(q => q.chapter === chapter.value && q.level === 'core')) route.value = 'all';
     describe();
   });
   route.addEventListener('change', describe);
@@ -83,7 +83,7 @@
     }
     const requested = new URLSearchParams(location.search).get('chapter');
     if (requested && bank.chapters[requested]) chapter.value = requested;
-    if (['curves','simulation','study-designs'].includes(chapter.value)) route.value = 'all';
+    if (chapter.value !== 'all' && !bank.questions.some(q => q.chapter === chapter.value && q.level === 'core')) route.value = 'all';
     $('status').textContent = ''; describe();
   }).catch(() => { $('status').textContent = 'The questions could not load. Please reload the page to try again.'; });
 })();

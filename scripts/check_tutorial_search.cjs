@@ -20,7 +20,7 @@ const base = process.argv[2] || 'http://127.0.0.1:8769';
     const results = page.locator('#tutorial-search-results a');
     await results.first().waitFor();
     const urls = await results.evaluateAll(nodes => nodes.map(n => n.getAttribute('href')));
-    assert(urls.some(u => u.startsWith('power.html#')));
+    assert(urls.some(u => u.startsWith('simulation.html#')));
     assert(urls.some(u => u.startsWith('glossary.html#')));
     assert(await results.first().locator('.search-chapter').isVisible());
     await input.fill('20% better');
@@ -32,6 +32,6 @@ const base = process.argv[2] || 'http://127.0.0.1:8769';
     const pico = page.locator('tr', {hasText:'Research question: PICO'});
     assert((await pico.innerText()).includes('Richardson'));
     assert(await pico.locator('a[href*="ref-richardson1995"]').count());
-    console.log('Chapter 10 disclosures, PICO citation, whole-tutorial search and anchored results verified.');
+    console.log('Reference-page disclosures, PICO citation, whole-tutorial search and anchored results verified.');
   } finally { await browser.close(); }
 })().catch(e => {console.error(e); process.exit(1);});

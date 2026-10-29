@@ -13,7 +13,7 @@ Before a larger classroom session, an initial usability pilot with about five le
 
 ## Selecting a learning route
 
-The [core route](../book/index.html#core-route) covers clinical assumptions, power, a simple one-study/many-studies simulation, two-group calculations, expected losses, interpretation, a short sensitivity analysis and a written justification. The [advanced route](../book/index.html#advanced-route) adds sampling distributions, power curves, repeated-study simulation, estimation with a precision target and other designs. Chapter headings and learning-outcome boxes use blue for core material and purple for advanced material. The [reasoning lab](https://katatam.github.io/sample-size-calculation/study/?activity=own_study) starts with basic controls; clinical importance remains visible. Select Explore further for advanced controls and methods.
+Chapters 1–4 form the core sequence, and Chapters 5–8 provide optional advanced branches. The glossary and common questions support either route. The [core route](../book/index.html#core-route) covers clinical assumptions, power, a simple one-study/many-studies simulation, two-group calculations, expected losses, interpretation, a short sensitivity analysis and a written justification. The [advanced route](../book/index.html#advanced-route) adds sampling distributions, power curves, repeated-study simulation, estimation with a precision target and other designs. Chapter headings and learning-outcome boxes use blue for core material and purple for advanced material. The [reasoning lab](https://katatam.github.io/sample-size-calculation/study/?activity=own_study) starts with basic controls; clinical importance remains visible. Select Explore further for advanced controls and methods.
 
 Keep the chronic-pain case as the narrative thread: question, evidence, target difference, power, calculation, recruitment, sensitivity and recommendation. Students progressively complete one assumptions report rather than repeatedly start new tasks. Later sections change the question while retaining this planning logic: describe a symptom percentage, reuse the trial's baseline data, or plan a pilot's retention estimate. Select extensions that serve the session's aim; the core route includes interpreting one simulated trial and many trials in the app or prepared results; constructing simulations and analyzing Monte Carlo uncertainty remain advanced. Compare binary and continuous outcomes in a later session if time permits.
 
@@ -39,8 +39,8 @@ The [editable report activity](https://katatam.github.io/sample-size-calculation
 | Chapter 1: question and planning decisions | Population, intervention, comparator, outcome/time; scale; expected and target differences; clinical threshold | Which values are evidence-based, hypothetical or judgments about importance? |
 | Chapter 2: possible study results | Error probabilities and power; an example interval and its interpretation | What changes across studies and what stays fixed? |
 | Chapter 3: calculation | Inputs, method, per-group and total counts | Does the calculation match the intended comparison and analysis? |
-| Chapter 6: recruitment and feasibility | Evidence for expected losses, recruitment counts, sensitivity and resource limits | Which uncertain assumption most affects the recommendation? |
-| Chapter 7: justification | A coherent recommendation and a short revision note | What changed in the plan, and what evidence or reasoning led to that change? |
+| Chapter 4: recruitment and feasibility | Evidence for expected losses, recruitment counts, sensitivity and resource limits | Which uncertain assumption most affects the recommendation? |
+| Chapter 4: justification | A coherent recommendation and a short revision note | What changed in the plan, and what evidence or reasoning led to that change? |
 
 The seven planning questions in Chapter 1 can guide short individual decisions within this report. A learner may initially write “evidence needed” for a field and revise it after a relevant chapter. The teacher should assess the reasoning behind revisions.
 
@@ -68,7 +68,7 @@ The chapter quizzes supply individual knowledge checks. A teacher can select one
 - In your own research question, what would a false positive or false negative mean in practice? A strong explanation states what is assumed true and distinguishes the statistical conclusion from a subsequent clinical decision.
 - Two groups recommend different sample sizes. What inputs and methods should be compared first? A strong explanation checks outcome, effect scale, analysis, error probabilities, allocation, loss assumptions and rounding.
 
-Learners can use a hypothetical case when their own project has an unsuitable design or insufficient public evidence. [Study designs and planning methods](../book/study-designs.html) helps identify an appropriate route. Assessment should follow the chosen research objective and the [rubric](assessment_rubric.md).
+Learners can use a hypothetical case when their own project has an unsuitable design or insufficient public evidence. [Other study goals and designs](../book/study-designs.html) helps identify an appropriate route. Assessment should follow the chosen research objective and the [rubric](assessment_rubric.md).
 
 ## Optional learner-created dilemmas
 
@@ -127,3 +127,22 @@ Use the [glossary](../student-materials/glossary.md), [FAQ](../student-materials
 For an own-study exercise, students can complete the [lab](https://katatam.github.io/sample-size-calculation/study/?activity=own_study)'s My study tab, save the plan, and download a draft justification. Check their evidence, clinical threshold, participant burden and recruitment assumptions. A draft needs review against the intended design. The [software validation guide](../documentation/software-validation.md) is optional teacher material.
 
 The separate [assumptions report activity](https://katatam.github.io/sample-size-calculation/study/?activity=assumptions_report) records sources, their relevance, uncertain assumptions and the resulting recommendation. It also supports single-population estimation, fixed data and pilot objectives. It does not compute or validate a new sample size. Students should distinguish the default fixed-sample pain illustration from the sample selected to meet 90% target power in the tutorial.
+
+
+## Extended sample size justification
+
+
+
+For an extended assignment, a 300–600-word justification should cover the clinical question, primary outcome, evidence for assumptions, clinical threshold, target difference, planned analysis, [Type I error probability](https://katatam.github.io/sample-size-calculation/book/glossary.html#alpha), target power, per-group counts, recruitment inflation and feasibility. It should include a sensitivity table or curve and explain the consequences of uncertain assumptions. Advanced work can add a simulation.
+
+You can use the chronic pain report you have developed through the tutorial, or a justified two-arm case of your own. Your explanation should justify the target difference's importance and realism using relevant evidence. The report should identify the calculation method and distinguish required analyzable counts from recruitment. These elements follow [Cook et al. (2018)](https://katatam.github.io/sample-size-calculation/book/references.html#ref-cook2018delta2) and [CONSORT's sample size reporting guidance (2025)](https://katatam.github.io/sample-size-calculation/book/references.html#ref-consortee2025).
+
+You can complete and save your text in [Activity: Develop and justify your study plan](https://katatam.github.io/sample-size-calculation/study/?activity=assumptions_report). The [case template](https://katatam.github.io/sample-size-calculation/case-studies/student_case_template.html) provides the same planning prompts for an offline document. The core [assessment rubric](https://katatam.github.io/sample-size-calculation/teaching/assessment_rubric.html) explains how to review your justification. A brief final note should identify an assumption you revised and the evidence or reasoning that changed it. For an advanced estimation, feasibility or fixed-dataset project, replace the treatment-power requirement with its relevant information target and denominator.
+
+You can discuss these review questions with a collaborator:
+
+- Are the assumptions supported and distinguished from clinical judgments?
+- Does the calculation match the planned analysis?
+- Are per-group, total and recruitment counts unambiguous?
+- Does the [sensitivity analysis](https://katatam.github.io/sample-size-calculation/book/glossary.html#sensitivity-analysis) keep the appropriate quantities fixed?
+- Does the interpretation acknowledge what an inconclusive result could mean?

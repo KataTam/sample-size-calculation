@@ -52,7 +52,7 @@ for target in (SITE / "book").glob("*.html"):
     text = target.read_text(encoding="utf-8")
     # Pandoc closes the final level-three wrapper after this raw details tag.
     # Close it inside the disclosure so the browser preserves the chapter container.
-    if target.name == 'power.html':
+    if target.name == 'curves.html':
         text = text.replace('</details>\n</div>\n</div>\n<div id="alpha-beta"',
                             '</div>\n</details>\n</div>\n<div id="alpha-beta"')
     for chapter in activity_contents:

@@ -443,63 +443,63 @@
       "level": "advanced",
       "front": "What is a two-sided p-value?",
       "back": "Under the null hypothesis and statistical model, the probability of a test statistic at least as extreme as observed, in either direction.",
-      "source": "https://katatam.github.io/sample-size-calculation/book/power.html#critical-observed-difference"
+      "source": "https://katatam.github.io/sample-size-calculation/book/curves.html#critical-observed-difference"
     },
     {
       "id": "A004",
       "level": "advanced",
       "front": "How does the observed significance boundary differ from the target difference?",
       "back": "The significance boundary determines which observed results reject the null. The target difference is an assumed population difference used to evaluate power.",
-      "source": "https://katatam.github.io/sample-size-calculation/book/power.html#critical-observed-difference"
+      "source": "https://katatam.github.io/sample-size-calculation/book/curves.html#critical-observed-difference"
     },
     {
       "id": "A005",
       "level": "advanced",
       "front": "Why can a larger study find a small observed difference statistically significant?",
       "back": "Larger samples generally reduce the standard error, allowing smaller differences to be distinguished from zero.",
-      "source": "https://katatam.github.io/sample-size-calculation/book/power.html#critical-observed-difference"
+      "source": "https://katatam.github.io/sample-size-calculation/book/curves.html#critical-observed-difference"
     },
     {
       "id": "A006",
       "level": "advanced",
       "front": "How should a treatment difference and its confidence interval be assessed clinically?",
       "back": "Relative to zero and a justified clinical threshold, alongside harms, burden, study credibility, and patient priorities.",
-      "source": "https://katatam.github.io/sample-size-calculation/book/power.html#critical-observed-difference"
+      "source": "https://katatam.github.io/sample-size-calculation/book/curves.html#critical-observed-difference"
     },
     {
       "id": "A007",
       "level": "advanced",
       "front": "What is a sampling distribution of the mean?",
       "back": "The distribution of sample means across repeated samples of the same size from the same population.",
-      "source": "https://katatam.github.io/sample-size-calculation/book/power.html#alpha-beta"
+      "source": "https://katatam.github.io/sample-size-calculation/book/curves.html#alpha-beta"
     },
     {
       "id": "A008",
       "level": "advanced",
       "front": "How do SD and SE differ?",
       "back": "SD describes variation among individual observations. SE describes sampling variability of an estimate.",
-      "source": "https://katatam.github.io/sample-size-calculation/book/power.html#alpha-beta"
+      "source": "https://katatam.github.io/sample-size-calculation/book/curves.html#alpha-beta"
     },
     {
       "id": "A009",
       "level": "advanced",
       "front": "What is the standard error of a mean based on n independent observations with population SD σ?",
       "back": "SE = σ/√n. When the population SD is unknown, the sample SD estimates it.",
-      "source": "https://katatam.github.io/sample-size-calculation/book/power.html#alpha-beta"
+      "source": "https://katatam.github.io/sample-size-calculation/book/curves.html#alpha-beta"
     },
     {
       "id": "A010",
       "level": "advanced",
       "front": "If the population SD is 15 mmHg, what are the SEs for samples of 25 and 100 independent patients?",
       "back": "15/√25 = 3 mmHg and 15/√100 = 1.5 mmHg.",
-      "source": "https://katatam.github.io/sample-size-calculation/book/power.html#alpha-beta"
+      "source": "https://katatam.github.io/sample-size-calculation/book/curves.html#alpha-beta"
     },
     {
       "id": "A011",
       "level": "advanced",
       "front": "On sampling-distribution plots, which areas represent Type I error probability, Type II error probability, and power?",
       "back": "Under the null, the rejection area is Type I error probability. Under a specified alternative, the non-rejection area is Type II error probability and the rejection area is power.",
-      "source": "https://katatam.github.io/sample-size-calculation/book/power.html#alpha-beta"
+      "source": "https://katatam.github.io/sample-size-calculation/book/curves.html#alpha-beta"
     },
     {
       "id": "A012",
@@ -730,7 +730,7 @@
       "level": "core",
       "front": "What is the difference between increasing discharge from 80% to 96% and increasing it by 20 percentage points?",
       "back": "80% to 96% is a 16-percentage-point increase and a 20% relative increase. Adding 20 percentage points to 80% gives 100%.",
-      "source": "https://katatam.github.io/sample-size-calculation/book/exercises.html#discharge"
+      "source": "https://katatam.github.io/sample-size-calculation/book/calculations.html#discharge"
     },
     {
       "id": "C083",
@@ -772,7 +772,7 @@
       "level": "core",
       "front": "If the required sample exceeds available resources, what should the study plan explain?",
       "back": "Whether recruitment, collaboration, design, or objectives can change, and what uncertainty will remain at the feasible sample. Assumptions still need evidence.",
-      "source": "https://katatam.github.io/sample-size-calculation/book/exercises.html#write-a-sample-size-justification"
+      "source": "https://katatam.github.io/sample-size-calculation/book/feasibility.html#write-a-sample-size-justification"
     },
     {
       "id": "A023",
@@ -884,35 +884,35 @@
       "level": "advanced",
       "front": "What should a precision-based sample size plan specify?",
       "back": "The population quantity, confidence level, target interval width or margin of error, method, variability assumptions, and design.",
-      "source": "https://katatam.github.io/sample-size-calculation/book/calculations.html#plan-for-precision"
+      "source": "https://katatam.github.io/sample-size-calculation/book/study-designs.html#plan-for-precision"
     },
     {
       "id": "A039",
       "level": "advanced",
       "front": "What is the full width of a confidence interval?",
       "back": "The upper confidence limit minus the lower confidence limit.",
-      "source": "https://katatam.github.io/sample-size-calculation/book/calculations.html#plan-for-precision"
+      "source": "https://katatam.github.io/sample-size-calculation/book/study-designs.html#plan-for-precision"
     },
     {
       "id": "A040",
       "level": "advanced",
       "front": "For a symmetric interval, what does a full width of 4 units imply?",
       "back": "A margin of error of 2 units on either side of the estimate.",
-      "source": "https://katatam.github.io/sample-size-calculation/book/calculations.html#plan-for-precision"
+      "source": "https://katatam.github.io/sample-size-calculation/book/study-designs.html#plan-for-precision"
     },
     {
       "id": "A041",
       "level": "advanced",
       "front": "Does planning for an expected interval width guarantee that every study achieves that width?",
       "back": "No. Realized intervals vary. The probability of meeting a width target is a separate performance criterion.",
-      "source": "https://katatam.github.io/sample-size-calculation/book/calculations.html#plan-for-precision"
+      "source": "https://katatam.github.io/sample-size-calculation/book/study-designs.html#plan-for-precision"
     },
     {
       "id": "A042",
       "level": "advanced",
       "front": "What if the study requires both a power target and a precision target?",
       "back": "Choose a sample that satisfies both criteria under justified assumptions and the intended methods.",
-      "source": "https://katatam.github.io/sample-size-calculation/book/calculations.html#plan-for-precision"
+      "source": "https://katatam.github.io/sample-size-calculation/book/study-designs.html#plan-for-precision"
     },
     {
       "id": "A043",
@@ -968,84 +968,84 @@
       "level": "advanced",
       "front": "In the existing-data example, 72 of 180 observed patients report sleep difficulty out of 200 original participants. What percentage is observed?",
       "back": "72/180 = 40%. Sleep information is missing for 20 participants; using all 200 as the denominator would treat missing information as absence of difficulty.",
-      "source": "https://katatam.github.io/sample-size-calculation/book/feasibility.html#dataset-reuse"
+      "source": "https://katatam.github.io/sample-size-calculation/book/study-designs.html#dataset-reuse"
     },
     {
       "id": "A051",
       "level": "advanced",
       "front": "Does the original trial's power calculation establish adequacy for a new descriptive question?",
       "back": "No. Adequacy should be assessed for the new quantity, available observations, and useful precision.",
-      "source": "https://katatam.github.io/sample-size-calculation/book/feasibility.html#dataset-reuse"
+      "source": "https://katatam.github.io/sample-size-calculation/book/study-designs.html#dataset-reuse"
     },
     {
       "id": "A052",
       "level": "advanced",
       "front": "Does random treatment allocation make a trial sample representative of all patients with the condition?",
       "back": "No. Allocation supports the treatment comparison; eligibility and recruitment determine whom the sample represents.",
-      "source": "https://katatam.github.io/sample-size-calculation/book/feasibility.html#dataset-reuse"
+      "source": "https://katatam.github.io/sample-size-calculation/book/study-designs.html#dataset-reuse"
     },
     {
       "id": "A053",
       "level": "advanced",
       "front": "What should be checked before reusing a dataset?",
       "back": "Permission, available variables and time points, target population, selection, missingness, dependence, and whether the analysis fits the new question.",
-      "source": "https://katatam.github.io/sample-size-calculation/book/feasibility.html#dataset-reuse"
+      "source": "https://katatam.github.io/sample-size-calculation/book/study-designs.html#dataset-reuse"
     },
     {
       "id": "A054",
       "level": "advanced",
       "front": "Does an ordinary confidence interval account for bias from missing data or unrepresentative recruitment?",
       "back": "It describes sampling uncertainty under its assumptions. These sources of bias require separate assessment.",
-      "source": "https://katatam.github.io/sample-size-calculation/book/feasibility.html#dataset-reuse"
+      "source": "https://katatam.github.io/sample-size-calculation/book/study-designs.html#dataset-reuse"
     },
     {
       "id": "A055",
       "level": "advanced",
       "front": "What should rare-disease planning establish about recruitment?",
       "back": "The number eligible and willing to participate, the recruitment period and centers, and the useful information attainable within that ceiling.",
-      "source": "https://katatam.github.io/sample-size-calculation/book/feasibility.html#rare-diseases"
+      "source": "https://katatam.github.io/sample-size-calculation/book/study-designs.html#rare-diseases"
     },
     {
       "id": "A056",
       "level": "advanced",
       "front": "When might a crossover or n-of-1 design be appropriate?",
       "back": "For a sufficiently stable condition, reversible treatment effects, and manageable carryover, with a suitable analysis and planning method.",
-      "source": "https://katatam.github.io/sample-size-calculation/book/feasibility.html#rare-diseases"
+      "source": "https://katatam.github.io/sample-size-calculation/book/study-designs.html#rare-diseases"
     },
     {
       "id": "A057",
       "level": "advanced",
       "front": "What threatens the validity of historical or registry controls?",
       "back": "Differences in patient characteristics, treatment era, care, and outcome measurement can bias the comparison.",
-      "source": "https://katatam.github.io/sample-size-calculation/book/feasibility.html#rare-diseases"
+      "source": "https://katatam.github.io/sample-size-calculation/book/study-designs.html#rare-diseases"
     },
     {
       "id": "A058",
       "level": "advanced",
       "front": "Does disease rarity alone justify a higher Type I error probability?",
       "back": "No. Error targets and alternative designs require prospective scientific justification.",
-      "source": "https://katatam.github.io/sample-size-calculation/book/feasibility.html#rare-diseases"
+      "source": "https://katatam.github.io/sample-size-calculation/book/study-designs.html#rare-diseases"
     },
     {
       "id": "A059",
       "level": "advanced",
       "front": "What should determine a feasibility study's sample size?",
       "back": "Its feasibility objectives, the decisions they must support, useful precision, and available resources.",
-      "source": "https://katatam.github.io/sample-size-calculation/book/feasibility.html#pilot-feasibility"
+      "source": "https://katatam.github.io/sample-size-calculation/book/study-designs.html#pilot-feasibility"
     },
     {
       "id": "A060",
       "level": "advanced",
       "front": "What are progression criteria in a feasibility study?",
       "back": "Prespecified criteria for deciding whether and how to proceed to a larger study, informed by outcomes such as recruitment and retention.",
-      "source": "https://katatam.github.io/sample-size-calculation/book/feasibility.html#pilot-feasibility"
+      "source": "https://katatam.github.io/sample-size-calculation/book/study-designs.html#pilot-feasibility"
     },
     {
       "id": "A061",
       "level": "advanced",
       "front": "If 32 of 40 participants complete follow-up, what is the estimated retention percentage and its main limitation?",
       "back": "80%. With only 40 participants, uncertainty can remain substantial; the interval should be considered against the progression criterion.",
-      "source": "https://katatam.github.io/sample-size-calculation/book/feasibility.html#pilot-feasibility"
+      "source": "https://katatam.github.io/sample-size-calculation/book/study-designs.html#pilot-feasibility"
     },
     {
       "id": "A062",

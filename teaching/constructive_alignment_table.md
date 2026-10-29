@@ -24,11 +24,11 @@ For the core route assess criteria 1–8 and 10; add criterion 9 only after teac
 | Book activity | Outcome and assessment evidence | Rubric |
 |---|---|---|
 | One study and many studies (chapter 2) | Interpret an interval against zero and the clinical threshold; explain sampling variability and n versus B | 7, 8; 9 only in the advanced extension |
-| Power curves (chapter 4) | Interpret plausible effects, recruitment cap and fixed-n sensitivity | 5, 6, 10 |
-| Simulated trial (chapter 5) | State generating process and analysis; report operating characteristics and uncertainty | 4, 7, 8, 9 |
-| Precision planning (chapter 3, advanced) | Compare target power with an interval-width criterion; distinguish anticipated and realized width | 1, 8 |
-| Recruitment and feasibility (chapter 6) | Evaluate expected losses, plausible assumptions, fixed resources, and options for an informative study | 5, 6, 10 |
-| Pilot retention (chapter 6, advanced) | Connect retention precision with justified progression criteria | 1, 8, 10 |
-| Prevalence estimation (chapter 8) | Identify the population, denominator, confidence level and useful margin of error | 1, 8 |
+| Power curves (chapter 5) | Interpret plausible effects, recruitment cap and fixed-n sensitivity | 5, 6, 10 |
+| Simulated trial (chapter 6) | State generating process and analysis; report operating characteristics and uncertainty | 4, 7, 8, 9 |
+| Precision planning (chapter 7, advanced) | Compare target power with an interval-width criterion; distinguish anticipated and realized width | 1, 8 |
+| Recruitment and feasibility (chapter 4) | Evaluate expected losses, plausible assumptions, fixed resources, and options for an informative study | 5, 6, 10 |
+| Pilot retention (chapter 7, advanced) | Connect retention precision with justified progression criteria | 1, 8, 10 |
+| Prevalence estimation (chapter 7) | Identify the population, denominator, confidence level and useful margin of error | 1, 8 |
 
 Use prepared results from the same book when apps are unavailable. The content and assessment expectations are the same.

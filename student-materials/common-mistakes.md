@@ -1,4 +1,6 @@
-# Common misconceptions and questions {#common-mistakes .core-heading}
+# Common misconceptions and questions {#common-mistakes .unnumbered .reference-heading}
+
+These optional explanations support both routes. Each question links to a difficulty that may arise while reading or planning a study.
 
 <details class="misconception" id="does-20-better-mean-20-percentage-points">
 <summary>Does "20% better" mean 20 percentage points?</summary>

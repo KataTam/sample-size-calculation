@@ -41,13 +41,13 @@ source("../R/quiz_helpers.R")
 
 How many patients would you need to compare a new pain treatment with standard treatment? This tutorial helps you justify a sample size that can answer your research question, using clinical examples, calculations and simulation.
 
-Although the examples are clinical, the principles of justifying assumptions, choosing a target difference, and examining power and precision also apply in psychology, education, and other quantitative disciplines [@lakens2022]. The tutorial is a suitable starting point for learning these principles and planning comparisons of two independent groups with a continuous or binary outcome, provided the calculation’s assumptions match your study. Later chapters introduce other planning goals and help you recognize when a different method is needed. For factorial experiments and repeated-measures ANOVA, including designs common in psychology, *[Power Analysis with Superpower](https://aaroncaldwell.us/SuperpowerBook/)* provides more directly applicable examples and simulations [@superpowerbook2022]. Studies involving multilevel models, prediction, or time-to-event outcomes need guidance matched to those analyses; [Study designs and planning methods](#study-designs) points you toward relevant resources. What counts as a worthwhile difference should also reflect your field and research question.
+Although the examples are clinical, the principles of justifying assumptions, choosing a target difference, and examining power and precision also apply in psychology, education, and other quantitative disciplines [@lakens2022]. The tutorial is a suitable starting point for learning these principles and planning comparisons of two independent groups with a continuous or binary outcome, provided the calculation’s assumptions match your study. Later chapters introduce other planning goals and help you recognize when a different method is needed. For factorial experiments and repeated-measures ANOVA, including designs common in psychology, *[Power Analysis with Superpower](https://aaroncaldwell.us/SuperpowerBook/)* provides more directly applicable examples and simulations [@superpowerbook2022]. Studies involving multilevel models, prediction, or time-to-event outcomes need guidance matched to those analyses; [Other study goals and designs](#study-designs) points you toward relevant resources. What counts as a worthwhile difference should also reflect your field and research question.
 
 ## How to use this tutorial {-}
 
-This tutorial is for students and researchers. Students may find the Core route sufficient for basic two-arm trial planning; researchers can deepen their understanding through the Advanced sections. The roadmap shows both routes.
+This tutorial is for students and researchers. Chapters 1–4 form the Core route for basic two-arm trial planning. Chapters 5–8 offer Advanced topics that you can consult according to your study question. The glossary and common questions are reference pages for either route.
 
-Activities are learning exercises. Apps are the interactive software used in some activities, such as calculators, simulations and the report builder. You can follow the Core route first and consult Advanced sections when they fit your question. Expandable misconception boxes explain common difficulties; the toolbar help explains the other reading features.
+Activities are learning exercises. Apps are the interactive software used in some activities, such as calculators, simulations and the report builder. Expandable misconception boxes explain common difficulties; the toolbar help explains the other reading features.
 
 ```{r tutorial-roadmap, echo=FALSE, results='asis'}
 cat('<figure class="tutorial-roadmap">',
@@ -55,9 +55,9 @@ cat('<figure class="tutorial-roadmap">',
     '</figure>')
 ```
 
-Each teaching chapter ends with an embedded *Check your understanding* quiz. Chapter 7 brings the material together in a [cumulative quiz](#cumulative-quiz), with Core and Core + advanced routes.
+Each teaching chapter ends with an embedded *Check your understanding* quiz. The material comes together in a [cumulative quiz](#cumulative-quiz), with Core and Core + advanced routes.
 
-You can open [the tutorial and an app together](https://katatam.github.io/sample-size-calculation/study/?activity=pain_one_many), consult the [activity walkthroughs](https://katatam.github.io/sample-size-calculation/student-materials/activity-walkthroughs.html), or review terms in the [Glossary](#glossary). For your own project, [Study designs and planning methods](#study-designs) helps you choose an approach. Its advanced section on [units of randomization, measurement, and analysis](#units-of-analysis) explains how grouping and paired measurements affect the information a study provides.
+You can open [the tutorial and an app together](https://katatam.github.io/sample-size-calculation/study/?activity=pain_one_many), consult the [activity walkthroughs](https://katatam.github.io/sample-size-calculation/student-materials/activity-walkthroughs.html), or review terms in the [Glossary](#glossary). For your own project, [Other study goals and designs](#study-designs) helps you choose an approach. Its advanced section on [units of randomization, measurement, and analysis](#units-of-analysis) explains how grouping and paired measurements affect the information a study provides.
 
 [Flashcards](https://katatam.github.io/sample-size-calculation/student-materials/flashcards/index.html) are available for Core and Core + Advanced, with a [question-and-answer preview](https://katatam.github.io/sample-size-calculation/student-materials/flashcards/cards.html) and Anki/Quizlet downloads. Questions and suggestions are welcome through [Feedback](https://forms.cloud.microsoft/e/j00AMibqi5).
 
@@ -70,8 +70,8 @@ The linked sections should help you develop a sample size justification for a ba
 - [Explain Type I error probability, Type II error probability and power](#power), and [interpret results using a confidence interval](#interpret-a-confidence-interval-clinically).
 - Use [one simulated study and many studies](#activity-1-one-study-then-many) to distinguish [sample estimates](#sample-estimate) from [population parameters](#population-parameter) and see how results vary.
 - [Calculate sample size for two proportions or two means](#calculations) and [adjust recruitment for expected losses](#account-for-expected-losses), distinguishing analyzable counts from recruitment counts.
-- [Examine plausible alternative assumptions](#stress-test-the-study-plan), recognize [underpowered studies](#what-if-the-study-is-too-small-for-its-purpose) and assess [ways to increase power](#increase-power).
-- [Write a sample size justification](#write-a-sample-size-justification) addressing evidence, feasibility and limitations, and complete the [Activity: Develop and justify your study plan](https://katatam.github.io/sample-size-calculation/study/?activity=assumptions_report).
+- [Examine a plausible alternative assumption](#stress-test-the-study-plan), recognize [underpowered studies](#what-if-the-study-is-too-small-for-its-purpose) and assess [ways to increase power](#increase-power).
+- [Write a short sample size justification](#write-a-sample-size-justification) recording assumptions, calculation and recruitment, using the [Activity: Develop and justify your study plan](https://katatam.github.io/sample-size-calculation/study/?activity=assumptions_report).
 
 :::
 
@@ -91,7 +91,7 @@ The extensions below may be relevant to your study question. They should help yo
 :::
 
 
-# Introduction {#clinical-question .core-heading}
+# Research question and planning assumptions {#clinical-question .core-heading}
 
 
 
@@ -148,7 +148,7 @@ A study should provide useful information in relation to the burdens and risks p
 
 ## What should you consider before calculating the sample size? {#how-do-you-determine-the-minimum-required-sample-size .core-heading}
 
-Before choosing numerical parameters, you should consult guidance appropriate to the study design and research question. For a randomized trial, SPIRIT 2025 for the protocol and CONSORT 2025, together with relevant extensions, for reporting the results provide relevant guidance [@spiritconsort2025]. For other designs, you should consult the corresponding guidance, such as STROBE for observational studies or STARD for diagnostic accuracy; [Study designs and planning methods](#study-designs) provides routes. These are reporting guidelines: they help identify decisions to document. Then you can specify the primary outcome, the expected results in each group, the planned analysis and the acceptable error probabilities. You can follow the question through to the analysis before choosing numbers [@fong2026; @wang2020]:
+Before choosing numerical parameters, you should consult guidance appropriate to the study design and research question. For a randomized trial, SPIRIT 2025 for the protocol and CONSORT 2025, together with relevant extensions, for reporting the results provide relevant guidance [@spiritconsort2025]. For other designs, you should consult the corresponding guidance, such as STROBE for observational studies or STARD for diagnostic accuracy; [Other study goals and designs](#study-designs) provides routes. These are reporting guidelines: they help identify decisions to document. Then you can specify the primary outcome, the expected results in each group, the planned analysis and the acceptable error probabilities. You can follow the question through to the analysis before choosing numbers [@fong2026; @wang2020]:
 
 - Who are the patients, and how will treatment be allocated?
 - What outcome will be measured, and at what time?
@@ -163,7 +163,7 @@ You can begin your [study-plan report](https://katatam.github.io/sample-size-cal
 knitr::asis_output(render_question_map())
 ```
 
-The examples use frequentist methods: two-sided significance tests for superiority and [confidence intervals](#confidence-interval) for estimation. [Estimation](#estimation) uses sample data to estimate a population quantity, such as a between-group difference. Precision describes how much uncertainty remains around that estimate, assessed here by interval width at a specified confidence level. A trial planned for power can also estimate the treatment difference; choosing a precision target changes how its sample size is determined. Non-inferiority, equivalence and clustered trials require different hypotheses or calculations; [Study designs and planning methods](#study-designs) helps identify these designs. For Bayesian planning, see [@kunzmann2021review].
+The examples use frequentist methods: two-sided significance tests for superiority and [confidence intervals](#confidence-interval) for estimation. [Estimation](#estimation) uses sample data to estimate a population quantity, such as a between-group difference. Precision describes how much uncertainty remains around that estimate, assessed here by interval width at a specified confidence level. A trial planned for power can also estimate the treatment difference; choosing a precision target changes how its sample size is determined. Non-inferiority, equivalence and clustered trials require different hypotheses or calculations; [Other study goals and designs](#study-designs) helps identify these designs. For Bayesian planning, see [@kunzmann2021review].
 
 ## What do you expect, what will you plan for, and what matters clinically? {#what-do-we-expect-what-will-we-plan-for-and-what-matters-clinically .core-heading}
 
@@ -214,7 +214,7 @@ The pilot suggests a possible benefit, but its estimate is uncertain. It provide
 
 ## Develop and justify your study plan {#record-assumptions .core-heading}
 
-Your study-plan report develops alongside the tutorial. In this chapter, you can record the clinical question, effect scale and reasons for the three treatment differences. Chapter 2 informs the error probabilities and interpretation; Chapter 3 supplies the calculation; Chapter 6 adds expected losses, sensitivity and feasibility. Chapter 7 brings these decisions into a complete justification. Unresolved entries can remain provisional.
+Your study-plan report develops alongside the tutorial. In this chapter, you can record the clinical question, effect scale and reasons for the three treatment differences. Chapter 2 informs the error probabilities and interpretation; Chapter 3 supplies the calculation; Chapter 4 adds expected losses, a simple sensitivity comparison and feasibility, then brings these decisions into a short justification. Unresolved entries can remain provisional.
 
 When you revise an assumption, a short note about what changed and why will help you explain the final plan.
 
@@ -272,9 +272,6 @@ The clinical threshold should remain 20 percentage points. Changing one pilot ou
 
 </details>
 
-<div class="core-next">Continue along the core route: <a href="#power">Power and error probabilities</a>.</div>
-
-
 <div class="chapter-recap">
 
 ### Take-home points {.unnumbered}
@@ -291,7 +288,7 @@ The clinical threshold should remain 20 percentage points. Changing one pilot ou
 render_chapter_quiz("clinical-question")
 ```
 
-# What does statistical power tell you? {#power .core-heading}
+# Understanding power and uncertainty {#power .core-heading}
 
 
 
@@ -475,193 +472,7 @@ A larger sample gives each trial more information, which generally reduces the s
 
 This repeated-study approach follows the introductory teaching idea in @superpowerbook2022 and the use of simulation in health-sciences education [@thiesmeier2024; @rudolph2021]. The [advanced simulation explanation](#precision-of-a-simulation) examines how precisely a simulation estimates study performance.
 
-<div class="core-next">Continue along the core route: <a href="#calculations">Basic sample size calculations</a>.</div>
-
-## Does the pilot already answer the clinical question? {#critical-observed-difference .advanced-heading}
-
-<details class="advanced-explanation">
-<summary>Does the pilot already answer the clinical question?</summary>
-
-
-
-
-For this two-sided comparison, the p-value answers: if the treatments truly had equal population relief probabilities, how likely would the chosen test be to produce a result at least as far from equality as the one observed, in either direction? This calculation also assumes that the statistical model is appropriate. A small p-value provides evidence against equal population relief probabilities under the statistical model.
-
-The pilot's observed 40-percentage-point difference exceeds the 20-percentage-point [clinical threshold](#clinical-threshold). But the estimate is uncertain. Using a two-sided comparison of proportions gives a p-value of approximately 0.074. With a Type I error probability of 5%, this does not provide sufficient evidence to reject the null hypothesis using the chosen test.
-
-What would happen with one more response? You should keep standard treatment at 3 of 10 patients, but increase novel-treatment relief from 7 to 8 of 10:
-
-```{r pain-critical-p-values, warning=FALSE}
-# Compare the pilot result with one additional treatment response
-pain_p_value <- function(novel, standard, n) {
-  prop.test(
-    x = c(novel, standard),
-    n = c(n, n),
-    alternative = "two.sided",
-    correct = FALSE
-  )$p.value
-}
-
-round(c(
-  "7 versus 3" = pain_p_value(7, 3, 10),
-  "8 versus 3" = pain_p_value(8, 3, 10)
-), 3)
-```
-
-```{r pain-critical-p-values-formatted, echo=FALSE}
-knitr::kable(data.frame(`Novel treatment` = c("7/10 (70%)", "8/10 (80%)"), `Standard treatment` = "3/10 (30%)", `Observed difference` = c("40 percentage points", "50 percentage points"), `p-value` = formatC(c(pain_p_value(7,3,10), pain_p_value(8,3,10)), format="f", digits=3), check.names=FALSE),
-  caption = "Pilot comparisons with seven or eight responses to the novel treatment.")
-```
-
-With 8 rather than 7 patients reporting relief, the result becomes statistically significant. For this particular comparison, the smallest observed difference giving $p<0.05$ is therefore $0.8-0.3=0.5$, or 50 [percentage points](#percentage-points).
-
-Notice that the [clinical threshold](#clinical-threshold) remains 20 percentage points. What patients would consider a worthwhile improvement does not change because your pilot happens to contain only 10 patients per group.
-
-<details class="misconception" id="misconception-significance">
-<summary>Common misconception: statistical significance decides whether a treatment matters</summary>
-
-A non-significant result can remain compatible with both no effect and a worthwhile benefit. A statistically significant difference can still be too small to matter to patients. You can examine the estimated difference and its [confidence interval](#confidence-interval) against both zero and the clinical threshold.
-
-</details>
-
-*The calculation above uses an approximate test without continuity correction, matching the [reasoning lab](https://katatam.github.io/sample-size-calculation/study/?activity=pain_one_many). With such small groups, an exact test may give a different result.*
-
-### What happens if you recruit more patients? {.advanced-heading}
-
-You can repeat this calculation for larger studies. At each sample size, the observed percentage reporting relief with standard treatment stays at 30%. The calculation identifies the smallest number reporting relief with the novel treatment that gives $p<0.05$.
-
-```{r pain-critical-effect, echo=FALSE, warning=FALSE, fig.height=5.8, fig.cap="Smallest observed improvement giving p < 0.05 at each sample size, conditional on an observed control response of 30%. The two-sided score test uses no continuity correction. Points represent attainable patient counts; connecting lines guide the eye. The hypothetical clinical threshold is 20 percentage points. Counts are analyzable patients before adjustment for dropout.", fig.alt="The smallest observed difference giving statistical significance falls from 50 percentage points at 10 patients per group to 14 at 100 per group. A horizontal line marks the clinical threshold of 20 percentage points. The pilot difference of 40 points at 10 patients per group lies below the significance threshold."}
-pain_n <- seq(10, 100, by = 10)
-pain_critical <- vapply(pain_n, function(n) {
-  control <- as.integer(round(0.30 * n))
-  treatment <- seq.int(control + 1L, n)
-  p <- vapply(treatment, function(x) pain_p_value(x, control, n), numeric(1))
-  min((treatment[p < 0.05] - control) / n)
-}, numeric(1))
-
-local({
-  old_par <- par(mar = c(5, 5, 2, 1), las = 1)
-  on.exit(par(old_par))
-  plot(pain_n, 100 * pain_critical, type = "b", pch = 16, lwd = 2,
-       col = "#17658A", ylim = c(0, 66), xaxt = "n",
-       xlab = "Analyzable patients per group (equal allocation)",
-       ylab = "Observed difference in pain relief (percentage points)")
-  axis(1, at = pain_n)
-  abline(h = 20, col = "#A5500C", lty = 2, lwd = 2)
-  points(10, 40, pch = 1, cex = 1.5, lwd = 2, col = "#303A43")
-  legend("topright",
-         c("Smallest observed difference with p < 0.05",
-           "Clinical threshold: 20 percentage points",
-           "Pilot: 7/10 versus 3/10"),
-         col = c("#17658A", "#A5500C", "#303A43"),
-         lty = c(1, 2, NA), pch = c(16, NA, 1),
-         lwd = 2, bty = "n", cex = 0.8)
-})
-```
-
-With 20 patients per group, an observed difference of 35 percentage points is sufficient for statistical significance under these conditions. With 50 patients per group, the corresponding difference is 20 percentage points. As the sample size increases, smaller observed differences can therefore become statistically significant.
-
-Figure \@ref(fig:pain-critical-effect) shows how the observed significance boundary changes. The dashed line shows the clinically meaningful difference chosen for this example. With a larger sample, a result can be statistically significant even when the observed difference is smaller than this clinical threshold. You therefore need to consider the size of the difference and its confidence interval when interpreting the result.
-
-### How does this relate to power? {.advanced-heading}
-
-The significance boundary concerns an observed result. [Power](#statistical-power) concerns the performance of the planned study: *If the true treatment difference is 30 percentage points, how likely is your study to produce a statistically significant result?*
-
-Different samples will give different observed differences, even when the true treatment effect remains the same. Some will be larger and others smaller. A power calculation takes this variation into account. The [simulation activities](https://katatam.github.io/sample-size-calculation/study/?activity=pain_one_many) explore this probability across repeated studies.
-
-The observed significance boundary and the true difference used to evaluate power answer different questions [@lakens2022; @superpowerbook2022]. The [clinical interpretation of the interval](#interpret-a-confidence-interval-clinically) considers whether benefits below the clinical threshold remain compatible with the data.
-
-
-
-
-</details>
-
-## Type I and Type II error probabilities as areas {#alpha-beta .advanced-heading}
-
-<details class="advanced-explanation">
-<summary>Type I and Type II error probabilities as areas</summary>
-
-
-
-
-This separate example uses one group to make the error probabilities easier to draw. Imagine repeatedly sampling 25 patients and calculating their mean systolic blood pressure. The curves show the distribution of sample means across repeated studies. One curve assumes a population mean of 120 mmHg; the other assumes 125 mmHg. These are sampling distributions of the mean.
-
-[Standard deviation](#standard-deviation) (SD) describes how much individual patients differ. [Standard error](#standard-error) (SE) describes how much an estimated mean would vary if you repeated the study with new patients. If individual blood pressures have a known SD of 15 mmHg, the mean from 25 independent patients has an SE of $15/\sqrt{25}=3$ mmHg. With 100 patients, the SE falls to 1.5 mmHg. Increasing the sample size reduces the standard error of the mean while the population SD remains fixed.
-
-For this illustration, the null hypothesis specifies a mean of 120 mmHg. A one-sided test looks for an increase, rejecting the null when the sample mean exceeds a cutoff called the critical value. The [two-arm treatment-comparison activities](https://katatam.github.io/sample-size-calculation/study/?activity=pain_one_many) use [two-sided tests](#two-sided-test).
-
-Under the 120 mmHg curve, the area above the cutoff is the probability of a false positive: the [Type I error probability](#alpha). Under the 125 mmHg curve, the area below the cutoff is the probability of a false negative: the [Type II error probability](#beta). The area under the alternative curve above the cutoff is the true-positive probability, or power. Figure \@ref(fig:sampling-distribution-figure) separates the two assumed populations so that each shaded area has an unambiguous interpretation.
-
-```{r alpha-beta-areas}
-mu0 <- 120
-mu1 <- 125
-sigma <- 15
-n <- 25
-alpha <- .05
-standard_error <- sigma / sqrt(n)
-critical <- mu0 + qnorm(1 - alpha) * standard_error
-beta <- pnorm(critical, mean = mu1, sd = standard_error)
-c(standard_error = standard_error, critical = critical,
-  beta = beta, power = 1 - beta)
-```
-
-```{r alpha-beta-areas-formatted, echo=FALSE}
-knitr::kable(data.frame(Measure=c("Standard error", "Critical mean", "Type I error probability", "Type II error probability", "Power"), Result=c(paste(standard_error,"mmHg"), paste(round(critical,1),"mmHg"), percent(alpha), percent(beta), percent(1-beta))),
-  caption = "Error probabilities and power for the specified sampling distributions.")
-```
-
-```{r sampling-distribution-figure, echo=FALSE, fig.height=7, fig.cap="Sampling distributions of the mean with 25 independent observations and known SD 15 mmHg. In the upper panel, the shaded rejection area is Type I error probability. In the lower panel, the shaded non-rejection area is Type II error probability and the shaded rejection area is power.", fig.alt="The upper null curve is centered at 120 and the lower alternative curve at 125 mmHg. Both have standard error 3. The critical mean is about 124.9; Type I error probability is 5 percent and Type II error probability about 49 percent."}
-sampling_example <- normal_sampling_operating_characteristics(
-  mu0 = mu0, mu1 = mu1, sigma = sigma, n = n, alpha = alpha,
-  sidedness = "greater")
-plot_sample_mean_distributions(sampling_example)
-```
-
-Here the critical mean is about 124.9 mmHg and power is about 51%. Repeating the study at the specified alternative would produce a mean above that threshold about half the time.
-
-[Activity: Explore Type I and Type II error probabilities and power](https://katatam.github.io/sample-size-calculation/study/?activity=alpha_beta). You can increase n while holding the two population means and SD fixed. The curves become narrower because the standard error decreases. Your explanation should address how the rejection rule still controls Type I error probability while Type II error probability changes. You can also compare one-sided and two-sided rules; sidedness should follow the research question before data collection.
-
-This activity explains why the patterns seen in repeated simulations occur. The shaded areas are calculated directly from the normal model. This illustration uses a one-sample model with a known population SD.
-
-
-</details>
-
-## Precision of a simulation {.advanced-heading}
-
-<details class="advanced-explanation">
-<summary>Precision of a simulation</summary>
-
-Even with unchanged assumptions, another batch of simulated trials will give a slightly different estimated power. This is [Monte Carlo error](#monte-carlo-error): uncertainty caused by using a finite number of simulation repetitions. More repetitions reduce Monte Carlo uncertainty while the number of patients in each trial stays fixed.
-
-The following histograms count the [p-values](#p-value) from the independent simulated studies. The dashed line marks the chosen significance level. The fraction below the line estimates power under the specified alternative (Figure \@ref(fig:p-values)).
-
-```{r p-values, echo=FALSE, fig.height=7, fig.cap="P-values from 5,000 independent clinical trials at each sample size. The percentage of p-values below the chosen significance level estimates power for the assumed relief probabilities.", fig.alt="Three histograms compare p-values with 20, 50 and 80 patients per group. The percentages of statistically significant results and their Monte Carlo intervals are in the following table."}
-par(mfrow = c(3, 1), mar = c(4, 4, 2, 1))
-for (batch in batches) plot_p_values(batch)
-```
-
-```{r simulation-monte-carlo-table, echo=FALSE}
-knitr::kable(display_probabilities(power_results,
-  c("simulated_power", "MC_lower_95", "MC_upper_95")),
-  caption = "Estimated power and Monte Carlo intervals for the three simulated sample sizes.")
-```
-
-The observed percentage of statistically significant results summarizes the simulated studies. When the specified population difference is nonzero, it estimates power (the true-positive probability). When there is no population difference, it estimates the Type I error probability (the false-positive probability). Confidence interval coverage is the percentage of intervals containing the assumed true effect. [Monte Carlo uncertainty](#monte-carlo-error) is uncertainty from using a limited number of simulated studies. The app tables pair these established terms with their practical meaning.
-
-A treatment-effect confidence interval describes uncertainty about the between-group difference estimated from one trial. A Monte Carlo interval describes uncertainty in the power estimated from a limited number of simulated trials. More patients can improve the precision of the treatment estimate; more simulation repetitions improve the precision of the estimated power.
-
-Here, $n$ denotes patients per group and $B$ denotes the number of simulated studies. If $\hat p$ is the simulated rejection fraction, its approximate Monte Carlo standard error is:
-
-\begin{equation}
-\mathrm{MCSE}=\sqrt{\hat p(1-\hat p)/B}.
-(\#eq:mcse)
-\end{equation}
-
-With statistically significant results in 80% of simulated studies and $B=5000$, MCSE is about `r round(100 * sqrt(.8 * .2 / 5000), 2)` percentage points. The tables use Wilson intervals for Monte Carlo uncertainty. These intervals remain informative even when a simulation observes no rejections or all rejections. Increasing $B$ does not resolve uncertainty about the real treatment effect.
-
-
-</details>
-
+The advanced chapter on [power and uncertain assumptions](#curves) explains the sampling-distribution diagrams and the pilot's significance boundary. The simple simulation here provides the background needed for the basic calculations.
 
 <div class="chapter-recap">
 
@@ -680,7 +491,7 @@ With statistically significant results in 80% of simulated studies and $B=5000$,
 render_chapter_quiz("power")
 ```
 
-# Calculate a sample size {#calculations .core-heading}
+# Calculating sample size {#calculations .core-heading}
 
 
 
@@ -693,7 +504,7 @@ After this section, you should be able to:
 - In the advanced section, compare planning for target power with planning for a useful confidence-interval width.
 :::
 
-You can now apply these ideas to two-arm treatment comparisons. The formulas below assume two [independent groups](#independent-groups) with equal allocation and a [two-sided test](#two-sided-test). Studies that randomize hospitals, compare body sites within participants, or collect repeated measurements require calculations that account for dependence; see [units of randomization, measurement, and analysis](#units-of-analysis). The advanced section below also plans a two-group comparison for a [precision target](#plan-for-precision). [Recruitment and feasibility](#feasibility) then considers whether you can obtain enough usable outcomes. [Study designs and planning methods](#study-designs) introduces single-population estimation and other designs.
+You can now apply these ideas to two-arm treatment comparisons. The formulas below assume two [independent groups](#independent-groups) with equal allocation and a [two-sided test](#two-sided-test). Studies that randomize hospitals, compare body sites within participants, or collect repeated measurements require calculations that account for dependence; see [units of randomization, measurement, and analysis](#units-of-analysis). The advanced section on [estimation with a precision target](#plan-for-precision) explains another way to plan the comparison. [Recruitment and feasibility](#feasibility) then considers whether you can obtain enough usable outcomes. [Other study goals and designs](#study-designs) introduces single-population estimation and other designs.
 
 Having specified the chronic pain target difference and acceptable error risks, you can calculate the required number of analyzable patients. The first calculation concerns that trial; the next concerns a continuous-outcome comparison.
 
@@ -952,57 +763,56 @@ This activity connects the continuous-outcome calculation with a possible clinic
 
 The expected-loss adjustment gives a recruitment total of `r 2 * adjust_for_dropout(rehabilitation_plan$n, rehabilitation_case$inputs$dropout)`, below this example's cap of 200. Meeting the cap and power target still leaves questions about the credibility of the assumptions, measurement quality and the [precision](#precision) needed for a clinical decision.
 
-<div class="core-next">Continue along the core route: <a href="#feasibility">Recruitment and feasibility</a>.</div>
-
-## Estimation with a precision target {#plan-for-precision .advanced-heading}
-
-<details class="advanced-explanation">
-<summary>Estimation with a precision target</summary>
+## Discharge percentages {#discharge .core-heading}
 
 
 
+Standard care discharges 80% of patients by a specified time point. Comparable evidence suggests an 18-percentage-point [expected difference](#expected-difference): 98% versus 80%. Patients judge an 8-percentage-point between-group benefit worthwhile. Those two values remain fixed while you compare the following sample size plans.
 
-The rehabilitation comparison can also be planned around how precisely it should estimate the population mean difference. Estimation identifies the quantity of interest; precision concerns the uncertainty around its estimate. A useful confidence level and interval width can therefore guide sample size planning alongside the power criterion used above [@wang2020; @lakens2022].
+| Plan | Target difference | Target power |
+|:--|:--|:--|
+| A | A 20% relative increase from the 80% standard-care percentage | 80% |
+| B | An absolute increase of 10 [percentage points](#percentage-points) | 80% |
+| C | The same target difference as Plan A | 90% |
 
-The [lab](https://katatam.github.io/sample-size-calculation/study/?activity=mean_precision) offers *Estimation with a target interval width* alongside testing and fixed-resource goals. Your plan should specify the [full width](#full-width), in the outcome's original units. For the rehabilitation improvement score, the expected difference remains 4 units, the target difference 3 units and the clinical threshold 2 units. You can use SD 5 and a target full width of 4 units:
+Table: (\#tab:discharge-task) Three discharge-study plans with a 5% Type I error probability and a two-sided comparison.
 
-```{r precision-plan}
-precision_spec <- study_spec(outcome = "means", delta = 3, sd = 5,
-  threshold = 2, width_target = 4, B = 5000, seed = 20260922)
-precision_spec$n <- plan_n(precision_spec, goal = "precision")
-c(per_group = precision_spec$n,
-  expected_full_width = anticipated_width(precision_spec),
-  power_at_planning_effect = spec_power(precision_spec))
-precision_batch <- simulate_trials(precision_spec)
-knitr::kable(display_simulation_summary(simulation_summary(precision_batch)),
-  caption = "Simulated performance of a study planned for estimation with a specified interval-width target.")
+### Your task {.unnumbered}
+
+Your answer should contain the treatment percentage for each plan, your prediction of which plan needs the most patients, the calculated per-group and total counts, and a short explanation of the differences. You can use [Two proportions](#two-proportions) or [Activity: Discharge percentages](https://katatam.github.io/sample-size-calculation/study/?activity=discharge). Each calculated per-group count should be rounded upward to a whole patient before doubling for the two equal groups.
+
+The expected difference remains 18 points and the clinical threshold remains 8 points throughout.
+
+<details>
+<summary>Show the calculation and interpretation</summary>
+
+```{r discharge-answers}
+discharge <- data.frame(
+  scenario = c("20% relative increase", "10 percentage points", "Higher power"),
+  control = .80, treatment = c(.80 * 1.20, .80 + .10, .80 * 1.20),
+  power = c(.80, .80, .90))
+discharge$per_group <- mapply(function(p, power) {
+  sample_size_two_proportions(p, .80, alpha = .05, power = power)
+}, discharge$treatment, discharge$power)
+discharge$total <- 2 * discharge$per_group
+knitr::kable(display_probabilities(discharge, c("control", "treatment", "power")),
+  caption = "Analyzable discharge-study sample sizes using the normal planning approximation in power.prop.test().")
 ```
 
-```{r precision-plan-formatted, echo=FALSE}
-knitr::kable(data.frame(`Analyzable per group`=precision_spec$n, `Anticipated full interval width`=round(anticipated_width(precision_spec),2), `Power at the target difference`=percent(spec_power(precision_spec)),check.names=FALSE), caption="Sample size, anticipated precision and power for the improvement-score comparison.")
-```
+The treatment percentages are 96%, 90% and 96%. The approximate totals are `r paste(discharge$total, collapse = ", ")`, respectively. Each per-group count is rounded up before doubling for the total. The expected difference remains 18 points and the [clinical threshold](#clinical-threshold) remains 8 points in each comparison.
 
-For normal data, the curve gives expected full t-interval width. For binary outcomes, the planning width is calculated by inserting the assumed probabilities into the Newcombe-Wilson interval formula. It approximates the width anticipated before observing data. Realized interval widths vary; the simulation reports the fraction that meets the target separately [@sandoval2025; @newcombe1998].
+<details class="misconception" id="misconception-percentage-points">
+<summary>Common misconception: percentages and percentage points are interchangeable</summary>
 
-::: {.activity}
-You can compare planning goals in [Activity: Estimate a mean difference with a precision target](https://katatam.github.io/sample-size-calculation/study/?activity=mean_precision). In the [lab](https://katatam.github.io/sample-size-calculation/study/?activity=mean_precision), you can choose *Continuous outcome*, expected difference 4, target difference 3, SD 5, clinical threshold 2, [Type I error probability](#alpha) 5% and full width 4. The outcome here is an improvement score. You can compare the sample selected for the specified interval-width target with the sample selected for 80% power. Your explanation should address why the same research question might require considering both criteria.
-
-The motivation is that detecting a difference and estimating it precisely need not require the same sample size. The planning curve calculates anticipated interval width. *One study* generates a realized interval, and *Many studies* estimates how often intervals meet the requested full width. A full width of 4 units corresponds to a margin of approximately 2 units on either side for a symmetric interval.
-
-<details class="model-answer" id="model-answer-precision-versus-power">
-<summary>Model answer</summary>
-
-With SD 5 and the same two-group analysis, the expected full-width target of 4 units requires `r precision_spec$n` analyzable patients per group; the 80% power target at a 3-unit difference requires `r plan_n(precision_spec, goal = "testing", target_power = .80)` per group. Both plans allow estimation of the difference. The precision criterion concerns how narrow its confidence interval is expected to be; the power criterion concerns how often the test rejects zero at the specified true difference. Your study question may require both a useful interval width and an adequate probability of detecting a worthwhile effect. If both are requirements, the plan should satisfy both under justified assumptions.
+From a baseline of 80%, a 20% relative increase gives 96% ($0.80\times1.20=0.96$), an increase of 16 percentage points. An increase of 20 percentage points gives 100%. The baseline and whether the change is relative or absolute should be clear before you enter probabilities into a calculator.
 
 </details>
 
-:::
-
-
 </details>
 
+The advanced [discharge simulation](#discharge-simulation) examines how the approximation performs when the assumed event probability is close to 100%.
 
-
+A study can also be planned around a useful confidence-interval width. The advanced section on [estimation with a precision target](#plan-for-precision) develops that alternative planning goal.
 
 <div class="chapter-recap">
 
@@ -1011,7 +821,7 @@ With SD 5 and the same two-group analysis, the expected full-width target of 4 u
 - The target difference, variability or event probabilities, and error probabilities determine the calculation.
 - Sample sizes should be identified as per-group or total counts.
 - The calculated count is for analysis; expected losses are handled separately.
-- A precision target specifies a useful interval width and confidence level; realized intervals can still vary.
+- The assumptions and calculation method should be recorded with the result.
 
 </div>
 
@@ -1021,16 +831,180 @@ With SD 5 and the same two-group analysis, the expected full-width target of 4 u
 render_chapter_quiz("calculations")
 ```
 
-# Read power curves {#curves .advanced-heading}
+# Recruitment and feasibility {#feasibility .core-heading}
+
+::: {.learning-goals .core-outcomes}
+After this chapter, you should be able to:
+
+- Adjust an analyzable sample size for expected losses and round within each group.
+- Explain why missing outcomes also require prevention and an appropriate analysis.
+- Assess one plausible alternative assumption and the practical recruitment requirement.
+- Write a short, checkable sample size justification.
+
+:::
+
+Earlier chapters showed how sample size affects power and [precision](#precision). The next question is whether you can obtain enough usable observations to answer your research question. Following the chronic pain plan, you first translate the analyzable requirement into recruitment, then examine less favorable assumptions and resource limits. A simple sensitivity comparison helps you assess whether a changed assumption would make the recruitment target impractical. Detailed [fixed-sample analyses](#available-sample) and [other study goals and designs](#study-designs) are available in the advanced route.
+
+## Account for expected losses {.core-heading}
+
+
+
+If some recruited patients are expected to have no usable outcome, you will need to recruit more patients than the calculation requires for analysis. Here, $n$ is the required number per group and $r$ is the expected proportion lost, so $1-r$ is the expected [retention proportion](#retention). The brackets mean "round upward to the next whole patient":
+
+\begin{equation}
+n_{\mathrm{recruit,arm}}=\left\lceil\frac{n}{1-r}\right\rceil.
+(\#eq:dropout)
+\end{equation}
+
+The expected loss should draw on studies or records with a comparable population, treatment, outcome and follow-up period. For example, if 20 of 200 enrolled patients in a comparable study lacked the required outcome, the observed loss was 20/200 = 10%. Using $r=0.10$ in a new study assumes that this experience is relevant. Reasons for missing outcomes, differences between arms and uncertainty in a small pilot should inform that judgment. When evidence is limited, your report should identify a plausible range and show how recruitment changes across it; there is no universal default loss percentage.
+
+```{r recruitment}
+analyzable_per_group <- pain_lab_n
+recruit_per_group <- ceiling(analyzable_per_group / (1 - .05))
+c(analyzable_per_group = analyzable_per_group,
+  recruit_per_group = recruit_per_group, recruit_total = 2 * recruit_per_group)
+```
+
+```{r recruitment-formatted, echo=FALSE}
+knitr::kable(data.frame(`Analyzable per group`=analyzable_per_group, `Recruit per group`=recruit_per_group, `Recruit total`=2*recruit_per_group, check.names=FALSE),
+  caption = "Chronic-pain recruitment target allowing for 5% expected loss.")
+```
+
+<details class="misconception" id="misconception-dropout-arithmetic">
+<summary>Common misconception: allowing for 10% dropout means adding 10%</summary>
+
+If you expect 10% of participants to be lost, approximately 90% will remain. You should therefore divide the required analyzable sample size by 0.90. For example, 100 analyzable participants require recruiting 112 participants after rounding up. This allows for the expected loss; the actual number retained may differ.
+
+</details>
+
+For the chronic pain trial, 5% expected loss means approximately 95% of recruits will contribute to the analysis. To obtain `r analyzable_per_group` patients per group with usable outcomes, you would plan to recruit `r analyzable_per_group`/0.95 = `r round(analyzable_per_group / .95, 2)`, rounded upward to `r recruit_per_group` per group.
+
+The percentage of participants lost to follow-up may differ between treatment groups. This is called *differential dropout*. For example, outcomes might be missing for 20% of participants receiving the novel treatment and 10% receiving standard treatment. When such differences are anticipated, sample size planning should account for the expected retention in each group and the planned allocation ratio. A single overall dropout percentage can conceal a shortfall in one group.
+
+The reasons for missing outcomes also matter. In the chronic pain example, patients who experience little relief might be more likely to miss the final assessment. If this happens more often in the novel-treatment group, an analysis restricted to participants with observed outcomes could overestimate its benefit. [Bias](#bias) can occur with equal or unequal dropout percentages. Assessing it requires information about why outcomes are missing, the treatment effect being estimated, and the analysis used [@bell2013dropout].
+
+Your study plan should describe how missing outcomes will be minimized, how their reasons will be recorded in each group, and how the analysis will handle them. [Sensitivity analyses](#sensitivity-analysis) should examine whether conclusions change under plausible alternative assumptions about the missing outcomes [@little2012missing].
+
+The usual simulations start with the stated number of patients available for analysis. The advanced [missing-outcome extension](#explore-missing-outcomes) starts with recruited participants and explores equal, unequal, and outcome-related losses in the [repeated-trial activity](https://katatam.github.io/sample-size-calculation/study/?activity=pain_simulation).
+
+The [Activity: Adjust recruitment for loss to follow-up](https://katatam.github.io/sample-size-calculation/dropout_adjustment/) connects the analyzable count to the number you need to approach recruitment with. You should enter the per-group analyzable requirement, then compare expected loss percentages. Actual retention may differ from the assumed percentage.
+
+<details class="misconception" id="misconception-dropout">
+<summary>Common misconception: recruiting extra participants resolves missing-data problems</summary>
+
+Recruiting extra participants can help preserve the analyzable sample size and statistical power. Addressing missing-data bias requires prevention, appropriate analysis, and sensitivity analyses alongside the recruitment allowance [@little2012missing].
+
+</details>
+
+## Sensitivity to planning assumptions {#stress-test-the-study-plan .core-heading}
+
+A [sensitivity analysis](#sensitivity-analysis) examines what happens when a planning assumption changes within a plausible range. For the chronic pain study, suppose standard-treatment relief remains 30%, but the novel-treatment probability is 50% rather than the planned 60%. The difference is then 20 percentage points rather than 30. Detecting the smaller difference with the same 90% power requires more patients.
+
+```{r pain-core-sensitivity, echo=FALSE}
+knitr::kable(data.frame(
+  `Assumed novel-treatment relief` = c("60%", "50%"),
+  `Difference from 30% standard-treatment relief` = c("30 percentage points", "20 percentage points"),
+  `Analyzable patients per group for 90% power` = c(pain_lab_n,
+    ceiling(power.prop.test(p1=.50, p2=.30, sig.level=.05, power=.90,
+      alternative="two.sided", strict=TRUE)$n)), check.names=FALSE),
+  caption="Required sample sizes under two plausible treatment differences, with other planning assumptions unchanged.")
+```
+
+The smaller difference should have a scientific justification. Your report should identify which assumptions are uncertain and show how a plausible alternative changes the recommendation. The advanced chapter on [power and uncertain assumptions](#curves) also evaluates how the original fixed sample would perform if reality differed from the plan.
+
+## Options when the study provides insufficient information {#what-if-the-study-is-too-small-for-its-purpose .core-heading}
+
+### Underpowered studies {#underpowered-studies .core-heading}
+
+
+
+A study with low power often misses the specified true difference. A small study also produces more variable estimates. When its power is low, the studies that achieve statistical significance are often those in which sampling variability makes the observed difference unusually large. If you look only at significant findings, you can therefore get an exaggerated impression of the treatment benefit.
+
+Larger samples reduce [sampling variability](#sampling-variability). Addressing bias requires attention to the design, measurement and analysis.
+
+For the chronic pain trial, a study with low power at the 30-percentage-point target difference would often fail to detect that benefit even if it were real. A non-significant result can reflect insufficient information to distinguish the treatments. You should interpret the estimated benefit and confidence interval in relation to zero and the 20-percentage-point clinical threshold.
+
+### Ways to increase power {#increase-power .core-heading}
+
+
+
+Before collecting data, you can consider whether the design could provide more information about the treatment effect. Table \@ref(tab:increase-power) separates changes to the study from changes to its error targets.
+
+For continuous outcomes, allocation, baseline information and within-person comparisons can affect efficiency [@candel2023]. These formulas concern continuous outcomes; binary outcomes require methods suited to event probabilities. Your protocol should prespecify useful baseline adjustment and recalculate for the intended model. A crossover design is only appropriate when treatment reversibility, disease stability and carryover permit it.
+
+| Option | Why it can help | What to consider |
+|:--|:--|:--|
+| Increase the analyzable sample | More independent patients reduce sampling uncertainty at the same true effect. | For the pain trial, another recruiting clinic or a longer recruitment period could supply more patients. Your plan should allow for expected losses and assess feasibility. |
+| Improve follow-up and outcome completeness | Retaining more outcomes protects the analyzable sample. | For the pain trial, accessible follow-up appointments and reminders may improve outcome collection. Reasons for missing outcomes still inform the analysis. |
+| Improve measurement | More reliable measurement can reduce unexplained variability in a continuous outcome and improve precision. | For pain relief, a clear, consistent definition and assessment time are important. A different outcome needs its own assumptions and calculation. |
+| Use an appropriate, efficient design and analysis | Prespecified adjustment for informative baseline measures, or a suitable paired or repeated-measures design, can improve precision. | For a continuous pain score, prespecified adjustment for baseline pain may improve precision. A paired design requires a suitable clinical setting. Planning must match the adjusted model or dependent observations. |
+| Keep allocation balanced when appropriate | For the equal-variance, equal-cost comparisons illustrated here, equal group sizes make efficient use of a fixed total. | The pain example assigns equal numbers to novel and standard treatment. Unequal costs, variances or other requirements may justify another allocation and calculation. |
+| Accept a higher Type I error probability | A less stringent rejection rule increases power at the specified alternative. | It also increases the probability of rejecting a true null. The error probability should be justified prospectively; changing it to make a result significant is not sound planning. |
+| Use a one-sided test when the scientific question warrants it | Directing the rejection region to a prespecified direction can increase power for effects in that direction. | It does not test both directions in the same way. Your protocol should specify and justify it before you see the data; a smaller required sample is not sufficient justification [@moye2002]. |
+
+Table: (\#tab:increase-power) Options for increasing power and the assumptions or tradeoffs they require.
+
+Power calculations describe performance under assumed treatment benefits. Those assumptions should be grounded in relevant evidence. You should keep the chronic pain expected difference (40 percentage points), target difference (30 points) and clinical threshold (20 points) distinct and justified. Running more simulations improves the precision of the estimated power.
+
+::: {.activity}
+You can compare plans in [Activity: Chronic pain: one study and many studies](https://katatam.github.io/sample-size-calculation/study/?activity=pain_one_many). You should keep standard-treatment relief at 30%, novel-treatment relief at 60% and the Type I error probability at 5%. You can compare 50 and 80 analyzable patients per group. Which plan detects the specified benefit more often? What would obtaining the larger sample require in practice? Your study plan should explain the recruitment implications.
+
+<details class="model-answer" id="model-answer-larger-study-resources">
+<summary>Model answer</summary>
+
+With the same population assumptions and test, 80 analyzable patients per group should detect the 30-point difference more often than 50 per group. In the prepared simulation, estimated power is `r percent(power_results$simulated_power[3])` and `r percent(power_results$simulated_power[2])`, respectively. At 10% expected loss, the corresponding recruitment targets are 89 per group (178 total) and 56 per group (112 total), after rounding within each arm. The larger design therefore needs capacity for 66 additional recruits, with implications for recruitment time, staffing, funding and participant burden. More information can reduce uncertainty, but the feasibility of obtaining it also needs justification.
+
+</details>
+
+:::
+
+If the study remains infeasible, you may need to reconsider its aim, collaborate, or decide not to proceed with an efficacy study. For example, a small preliminary pain study could estimate whether patients complete the four-week assessment. Its sample size would then follow that feasibility objective; the original treatment comparison would retain its limited power. The [pilot example](#pilot-feasibility) shows how to justify this revised purpose [@lakens2022].
+
+Broader eligibility may make the study more representative of the intended population. If it also increases outcome variability, power at a fixed sample and treatment difference may fall. The calculation should reflect the resulting population and analysis.
+
+Clustered designs, nonparametric analyses and Bayesian planning need methods suited to their assumptions; [Other study goals and designs](#study-designs) provides starting points [@hayes1999; @happ2019; @pezeshk2003]. The advanced [rare-disease section](#rare-diseases) considers a particularly restrictive recruitment ceiling.
+
+
+
+## Sample size justification {#write-a-sample-size-justification .core-heading}
+
+Your justification should connect the research question, assumptions and calculation to a feasible recruitment target. A short paragraph should identify the primary outcome and time point, the target difference and its evidence, the assumed event probabilities or SD, Type I error probability, target power, calculation method, analyzable count and allowance for expected losses. It should also explain what a plausible change in an uncertain assumption would mean for the plan [@cook2018delta2; @consortee2025].
+
+Recording the inputs, procedure and software makes the calculation checkable and allows you to revisit it when evidence changes. You can complete the [assumptions report activity](https://katatam.github.io/sample-size-calculation/study/?activity=assumptions_report) developed through the core chapters. A saved result should retain the assumptions used to obtain it.
+
+The [teaching guide](https://katatam.github.io/sample-size-calculation/teaching/TEACHING_GUIDE.html#extended-sample-size-justification) provides an optional longer assignment and review prompts. [Reproducibility and open science](#appendix) explains the fuller record needed for calculations and simulations.
+
+The four core chapters complete the basic planning route. You can review them in the [cumulative quiz](#cumulative-quiz), or continue with the advanced topics that fit your question.
+
+<div class="chapter-recap">
+
+### Take-home points {.unnumbered}
+
+- Recruitment targets allow for expected losses; prevention and analysis should address missing-data bias.
+- A simple sensitivity comparison shows how an uncertain assumption changes the required sample size.
+- An informative plan identifies what the available sample could establish and what remains uncertain.
+- A short justification records the assumptions, calculation, recruitment target and limitations.
+
+</div>
+
+## Check your understanding {#check-feasibility .unnumbered}
+
+```{r quiz-feasibility, echo=FALSE, results="asis"}
+render_chapter_quiz("feasibility")
+```
+
+# Exploring power and uncertain assumptions {#curves .advanced-heading}
 
 
 
 ::: {.learning-goals .advanced-outcomes}
-After this section, you should be able to:
+After this chapter, you should be able to:
 
-- Read [power](#statistical-power) curves.
-- Compare plausible effects and sample sizes.
-- Assess sensitivity and recruitment limits while keeping the planned sample size fixed when appropriate.
+- Read power curves under specified population assumptions.
+- Compare required sample sizes with performance at a fixed sample size.
+- Assess recruitment limits and smaller plausible treatment differences.
+- Explain how observed significance boundaries and sampling distributions relate to power.
+
 :::
 
 The chronic pain calculation uses one set of assumptions. What if the true benefit is smaller, or recruitment limits the number of patients? Power curves show how the answer changes.
@@ -1131,6 +1105,64 @@ Recruiting 200 patients with 10% expected loss gives 180 expected analyzable pat
 </details>
 :::
 
+## Comparing planning assumptions {#compare-planning-assumptions .advanced-heading}
+
+
+
+The recruitment allowance uses one set of assumptions. A [sensitivity analysis](#sensitivity-analysis) examines what happens when those assumptions change within plausible ranges. It can answer two questions:
+
+- Before choosing your sample size: how many patients would be needed under different plausible assumptions? Here, sample size changes.
+- After choosing a sample size: how would this same study perform if the true difference were smaller or variability were greater? Here, sample size stays fixed.
+
+The next table shows both answers. Its required-count column recalculates the sample size at the clinical threshold, target difference and expected difference. Its power column keeps the original planned sample fixed. In the [lab](https://katatam.github.io/sample-size-calculation/study/?activity=pain_curves), *Reality may differ from the plan* lets you explore this second question [@cook2018delta2; @lakens2022].
+
+```{r pain-target-sensitivity, echo=FALSE}
+pain_target_n <- ceiling(power.prop.test(p1 = .60, p2 = .30,
+  sig.level = .05, power = .90, alternative = "two.sided",
+  strict = TRUE)$n)
+pain_alternatives <- c(.50, .60, .70)
+knitr::kable(data.frame(
+  `True novel-treatment relief` = percent(pain_alternatives),
+  `Difference from 30% standard-treatment relief` = paste(c(20, 30, 40), "percentage points"),
+  `Required per group for 90% power` = vapply(pain_alternatives,
+    function(p) ceiling(power.prop.test(p1 = p, p2 = .30,
+      sig.level = .05, power = .90, alternative = "two.sided",
+      strict = TRUE)$n), numeric(1)),
+  `Power at the original sample size` = percent(vapply(pain_alternatives,
+    function(p) power.prop.test(n = pain_target_n, p1 = p, p2 = .30,
+      sig.level = .05, alternative = "two.sided", strict = TRUE)$power,
+    numeric(1))), check.names = FALSE),
+  caption = paste("Chronic-pain sensitivity: alternative required counts and approximate power with the original", pain_target_n, "patients per group held fixed."))
+```
+
+This comparison keeps standard-treatment relief at 30%, the Type I error probability at 5%, and the analysis unchanged. Your report should record why the alternatives are plausible and which uncertainty matters most for the decision. You can also vary the standard-treatment probability where relevant: the same difference at different event probabilities need not require the same sample. The continuous-outcome example below illustrates the corresponding role of variability.
+
+```{r fixed-plan-sensitivity}
+plan <- study_spec(outcome = "means", n = ceiling(t_plan$n), delta = 3, sd = 5)
+smaller <- plan; smaller$delta <- 1
+more_variable <- plan; more_variable$sd <- 7
+scenarios <- list(plan, smaller, more_variable)
+knitr::kable(data.frame(
+  Scenario = c("Target difference", "Smaller true difference", "Larger standard deviation"),
+  `Analyzable patients per group` = vapply(scenarios, function(x) x$n, numeric(1)),
+  Power = percent(vapply(scenarios, spec_power, numeric(1))),
+  `Expected full interval width (score units)` = vapply(scenarios, anticipated_width, numeric(1)),
+  check.names = FALSE),
+  digits = 3, caption = "Continuous-outcome sensitivity with the sample selected for 90% target power held fixed.")
+```
+
+## What can the available sample establish? {#available-sample .advanced-heading}
+
+After accounting for expected losses, your recruitment period, funding, or available records may impose a fixed analyzable sample. You can use that count to assess power across independently justified treatment differences and the precision anticipated under the planned analysis. The [clinical interpretation of an interval](#interpret-a-confidence-interval-clinically) helps you judge whether the remaining uncertainty would matter for the intended decision.
+
+For the chronic pain example, a cap of 200 recruits with 10% expected loss gives an expected 180 analyzable patients, or 90 per group under equal recruitment and retention. The [power-curve activity](https://katatam.github.io/sample-size-calculation/study/?activity=pain_curves) evaluates this fixed count at the target difference and smaller plausible benefits. A recruitment cap limits what is available; the research objective determines whether that information would be useful.
+
+If you need to estimate a quantity, you can assess the attainable interval width at that fixed count, using the [precision-planning principles](#plan-for-precision). The available data may support a broad description while leaving a more demanding decision unresolved. Your justification should state the resource limit and the conclusions the study could reasonably support.
+
+## A fixed total of 70 patients {#a-fixed-total-of-70-patients .advanced-heading}
+
+Suppose only 70 patients can be recruited in total. What power and [precision](#precision) could the study achieve after expected losses, and what conclusions could it reasonably support? Your answer should specify the research question, assumed outcomes, losses and analysis before assessing the available sample. You can then justify the proposed study or explain how a revised design or narrower objective would make the available information useful.
+
 ## Sensitivity analysis for a fixed sample size {#sensitivity-is-not-observed-post-hoc-power .advanced-heading}
 
 These curves specify hypothetical effects before interpreting a realized study.
@@ -1145,6 +1177,138 @@ Substituting the study's observed effect into a power calculation adds no useful
 For example, suppose a completed study estimates a 1-unit improvement with a 95% confidence interval from -1 to 3, while a 2-unit benefit would matter clinically. The interval includes some harm, zero, a small benefit and a clinically important benefit. The study leaves those possibilities unresolved.
 
 With an existing records dataset, explain why that sample is available, assess data quality and missingness, and report what its estimate and interval support. A [sensitivity analysis](#sensitivity-analysis) at independently justified effects can still describe a fixed design's performance. It should not use the observed effect to create additional evidence for the same study. This distinction follows the sample size justification approach in @lakens2022; [the FAQ](#common-mistakes) gives a short retrospective-study example.
+
+
+Power curves describe the planned study across repeated samples. The next examples examine how an individual result becomes statistically significant and how the rejection rule produces the error probabilities used in planning.
+
+## Does the pilot already answer the clinical question? {#critical-observed-difference .advanced-heading}
+
+For this two-sided comparison, the p-value answers: if the treatments truly had equal population relief probabilities, how likely would the chosen test be to produce a result at least as far from equality as the one observed, in either direction? This calculation also assumes that the statistical model is appropriate. A small p-value provides evidence against equal population relief probabilities under the statistical model.
+
+The pilot's observed 40-percentage-point difference exceeds the 20-percentage-point [clinical threshold](#clinical-threshold). But the estimate is uncertain. Using a two-sided comparison of proportions gives a p-value of approximately 0.074. With a Type I error probability of 5%, this does not provide sufficient evidence to reject the null hypothesis using the chosen test.
+
+What would happen with one more response? You should keep standard treatment at 3 of 10 patients, but increase novel-treatment relief from 7 to 8 of 10:
+
+```{r pain-critical-p-values, warning=FALSE}
+# Compare the pilot result with one additional treatment response
+pain_p_value <- function(novel, standard, n) {
+  prop.test(
+    x = c(novel, standard),
+    n = c(n, n),
+    alternative = "two.sided",
+    correct = FALSE
+  )$p.value
+}
+
+round(c(
+  "7 versus 3" = pain_p_value(7, 3, 10),
+  "8 versus 3" = pain_p_value(8, 3, 10)
+), 3)
+```
+
+```{r pain-critical-p-values-formatted, echo=FALSE}
+knitr::kable(data.frame(`Novel treatment` = c("7/10 (70%)", "8/10 (80%)"), `Standard treatment` = "3/10 (30%)", `Observed difference` = c("40 percentage points", "50 percentage points"), `p-value` = formatC(c(pain_p_value(7,3,10), pain_p_value(8,3,10)), format="f", digits=3), check.names=FALSE),
+  caption = "Pilot comparisons with seven or eight responses to the novel treatment.")
+```
+
+With 8 rather than 7 patients reporting relief, the result becomes statistically significant. For this particular comparison, the smallest observed difference giving $p<0.05$ is therefore $0.8-0.3=0.5$, or 50 [percentage points](#percentage-points).
+
+Notice that the [clinical threshold](#clinical-threshold) remains 20 percentage points. What patients would consider a worthwhile improvement does not change because your pilot happens to contain only 10 patients per group.
+
+<details class="misconception" id="misconception-significance">
+<summary>Common misconception: statistical significance decides whether a treatment matters</summary>
+
+A non-significant result can remain compatible with both no effect and a worthwhile benefit. A statistically significant difference can still be too small to matter to patients. You can examine the estimated difference and its [confidence interval](#confidence-interval) against both zero and the clinical threshold.
+
+</details>
+
+*The calculation above uses an approximate test without continuity correction, matching the [reasoning lab](https://katatam.github.io/sample-size-calculation/study/?activity=pain_one_many). With such small groups, an exact test may give a different result.*
+
+### What happens if you recruit more patients? {.advanced-heading}
+
+You can repeat this calculation for larger studies. At each sample size, the observed percentage reporting relief with standard treatment stays at 30%. The calculation identifies the smallest number reporting relief with the novel treatment that gives $p<0.05$.
+
+```{r pain-critical-effect, echo=FALSE, warning=FALSE, fig.height=5.8, fig.cap="Smallest observed improvement giving p < 0.05 at each sample size, conditional on an observed control response of 30%. The two-sided score test uses no continuity correction. Points represent attainable patient counts; connecting lines guide the eye. The hypothetical clinical threshold is 20 percentage points. Counts are analyzable patients before adjustment for dropout.", fig.alt="The smallest observed difference giving statistical significance falls from 50 percentage points at 10 patients per group to 14 at 100 per group. A horizontal line marks the clinical threshold of 20 percentage points. The pilot difference of 40 points at 10 patients per group lies below the significance threshold."}
+pain_n <- seq(10, 100, by = 10)
+pain_critical <- vapply(pain_n, function(n) {
+  control <- as.integer(round(0.30 * n))
+  treatment <- seq.int(control + 1L, n)
+  p <- vapply(treatment, function(x) pain_p_value(x, control, n), numeric(1))
+  min((treatment[p < 0.05] - control) / n)
+}, numeric(1))
+
+local({
+  old_par <- par(mar = c(5, 5, 2, 1), las = 1)
+  on.exit(par(old_par))
+  plot(pain_n, 100 * pain_critical, type = "b", pch = 16, lwd = 2,
+       col = "#17658A", ylim = c(0, 66), xaxt = "n",
+       xlab = "Analyzable patients per group (equal allocation)",
+       ylab = "Observed difference in pain relief (percentage points)")
+  axis(1, at = pain_n)
+  abline(h = 20, col = "#A5500C", lty = 2, lwd = 2)
+  points(10, 40, pch = 1, cex = 1.5, lwd = 2, col = "#303A43")
+  legend("topright",
+         c("Smallest observed difference with p < 0.05",
+           "Clinical threshold: 20 percentage points",
+           "Pilot: 7/10 versus 3/10"),
+         col = c("#17658A", "#A5500C", "#303A43"),
+         lty = c(1, 2, NA), pch = c(16, NA, 1),
+         lwd = 2, bty = "n", cex = 0.8)
+})
+```
+
+With 20 patients per group, an observed difference of 35 percentage points is sufficient for statistical significance under these conditions. With 50 patients per group, the corresponding difference is 20 percentage points. As the sample size increases, smaller observed differences can therefore become statistically significant.
+
+Figure \@ref(fig:pain-critical-effect) shows how the observed significance boundary changes. The dashed line shows the clinically meaningful difference chosen for this example. With a larger sample, a result can be statistically significant even when the observed difference is smaller than this clinical threshold. You therefore need to consider the size of the difference and its confidence interval when interpreting the result.
+
+### How does this relate to power? {.advanced-heading}
+
+The significance boundary concerns an observed result. [Power](#statistical-power) concerns the performance of the planned study: *If the true treatment difference is 30 percentage points, how likely is your study to produce a statistically significant result?*
+
+Different samples will give different observed differences, even when the true treatment effect remains the same. Some will be larger and others smaller. A power calculation takes this variation into account. The [simulation activities](https://katatam.github.io/sample-size-calculation/study/?activity=pain_one_many) explore this probability across repeated studies.
+
+The observed significance boundary and the true difference used to evaluate power answer different questions [@lakens2022; @superpowerbook2022]. The [clinical interpretation of the interval](#interpret-a-confidence-interval-clinically) considers whether benefits below the clinical threshold remain compatible with the data.
+
+## Type I and Type II error probabilities as areas {#alpha-beta .advanced-heading}
+
+This separate example uses one group to make the error probabilities easier to draw. Imagine repeatedly sampling 25 patients and calculating their mean systolic blood pressure. The curves show the distribution of sample means across repeated studies. One curve assumes a population mean of 120 mmHg; the other assumes 125 mmHg. These are sampling distributions of the mean.
+
+[Standard deviation](#standard-deviation) (SD) describes how much individual patients differ. [Standard error](#standard-error) (SE) describes how much an estimated mean would vary if you repeated the study with new patients. If individual blood pressures have a known SD of 15 mmHg, the mean from 25 independent patients has an SE of $15/\sqrt{25}=3$ mmHg. With 100 patients, the SE falls to 1.5 mmHg. Increasing the sample size reduces the standard error of the mean while the population SD remains fixed.
+
+For this illustration, the null hypothesis specifies a mean of 120 mmHg. A one-sided test looks for an increase, rejecting the null when the sample mean exceeds a cutoff called the critical value. The [two-arm treatment-comparison activities](https://katatam.github.io/sample-size-calculation/study/?activity=pain_one_many) use [two-sided tests](#two-sided-test).
+
+Under the 120 mmHg curve, the area above the cutoff is the probability of a false positive: the [Type I error probability](#alpha). Under the 125 mmHg curve, the area below the cutoff is the probability of a false negative: the [Type II error probability](#beta). The area under the alternative curve above the cutoff is the true-positive probability, or power. Figure \@ref(fig:sampling-distribution-figure) separates the two assumed populations so that each shaded area has an unambiguous interpretation.
+
+```{r alpha-beta-areas}
+mu0 <- 120
+mu1 <- 125
+sigma <- 15
+n <- 25
+alpha <- .05
+standard_error <- sigma / sqrt(n)
+critical <- mu0 + qnorm(1 - alpha) * standard_error
+beta <- pnorm(critical, mean = mu1, sd = standard_error)
+c(standard_error = standard_error, critical = critical,
+  beta = beta, power = 1 - beta)
+```
+
+```{r alpha-beta-areas-formatted, echo=FALSE}
+knitr::kable(data.frame(Measure=c("Standard error", "Critical mean", "Type I error probability", "Type II error probability", "Power"), Result=c(paste(standard_error,"mmHg"), paste(round(critical,1),"mmHg"), percent(alpha), percent(beta), percent(1-beta))),
+  caption = "Error probabilities and power for the specified sampling distributions.")
+```
+
+```{r sampling-distribution-figure, echo=FALSE, fig.height=7, fig.cap="Sampling distributions of the mean with 25 independent observations and known SD 15 mmHg. In the upper panel, the shaded rejection area is Type I error probability. In the lower panel, the shaded non-rejection area is Type II error probability and the shaded rejection area is power.", fig.alt="The upper null curve is centered at 120 and the lower alternative curve at 125 mmHg. Both have standard error 3. The critical mean is about 124.9; Type I error probability is 5 percent and Type II error probability about 49 percent."}
+sampling_example <- normal_sampling_operating_characteristics(
+  mu0 = mu0, mu1 = mu1, sigma = sigma, n = n, alpha = alpha,
+  sidedness = "greater")
+plot_sample_mean_distributions(sampling_example)
+```
+
+Here the critical mean is about 124.9 mmHg and power is about 51%. Repeating the study at the specified alternative would produce a mean above that threshold about half the time.
+
+[Activity: Explore Type I and Type II error probabilities and power](https://katatam.github.io/sample-size-calculation/study/?activity=alpha_beta). You can increase n while holding the two population means and SD fixed. The curves become narrower because the standard error decreases. Your explanation should address how the rejection rule still controls Type I error probability while Type II error probability changes. You can also compare one-sided and two-sided rules; sidedness should follow the research question before data collection.
+
+This activity explains why the patterns seen in repeated simulations occur. The shaded areas are calculated directly from the normal model. This illustration uses a one-sample model with a known population SD.
 
 
 <div class="chapter-recap">
@@ -1163,7 +1327,7 @@ With an existing records dataset, explain why that sample is available, assess d
 render_chapter_quiz("curves")
 ```
 
-# Build a simulated clinical trial {#simulation .advanced-heading}
+# Building and evaluating simulations {#simulation .advanced-heading}
 
 
 
@@ -1269,6 +1433,36 @@ Increasing the number of simulated studies makes the estimated probability of a 
 plot_trial_intervals(trials$results, trial_spec)
 ```
 
+## Precision of a simulation {#precision-of-a-simulation .advanced-heading}
+
+Even with unchanged assumptions, another batch of simulated trials will give a slightly different estimated power. This is [Monte Carlo error](#monte-carlo-error): uncertainty caused by using a finite number of simulation repetitions. More repetitions reduce Monte Carlo uncertainty while the number of patients in each trial stays fixed.
+
+The core activity generated 5,000 trials at each of 20, 50 and 80 patients per group, assuming 30% and 60% relief. Returning to those trials, the following histograms count the [p-values](#p-value) from the independent simulated studies. The dashed line marks the chosen significance level. The fraction below the line estimates power under the specified alternative (Figure \@ref(fig:p-values)).
+
+```{r p-values, echo=FALSE, fig.height=7, fig.cap="P-values from 5,000 independent clinical trials at each sample size. The percentage of p-values below the chosen significance level estimates power for the assumed relief probabilities.", fig.alt="Three histograms compare p-values with 20, 50 and 80 patients per group. The percentages of statistically significant results and their Monte Carlo intervals are in the following table."}
+par(mfrow = c(3, 1), mar = c(4, 4, 2, 1))
+for (batch in batches) plot_p_values(batch)
+```
+
+```{r simulation-monte-carlo-table, echo=FALSE}
+knitr::kable(display_probabilities(power_results,
+  c("simulated_power", "MC_lower_95", "MC_upper_95")),
+  caption = "Estimated power and Monte Carlo intervals for the three simulated sample sizes.")
+```
+
+The observed percentage of statistically significant results summarizes the simulated studies. When the specified population difference is nonzero, it estimates power (the true-positive probability). When there is no population difference, it estimates the Type I error probability (the false-positive probability). Confidence interval coverage is the percentage of intervals containing the assumed true effect. [Monte Carlo uncertainty](#monte-carlo-error) is uncertainty from using a limited number of simulated studies. The app tables pair these established terms with their practical meaning.
+
+A treatment-effect confidence interval describes uncertainty about the between-group difference estimated from one trial. A Monte Carlo interval describes uncertainty in the power estimated from a limited number of simulated trials. More patients can improve the precision of the treatment estimate; more simulation repetitions improve the precision of the estimated power.
+
+Here, $n$ denotes patients per group and $B$ denotes the number of simulated studies. If $\hat p$ is the simulated rejection fraction, its approximate Monte Carlo standard error is:
+
+\begin{equation}
+\mathrm{MCSE}=\sqrt{\hat p(1-\hat p)/B}.
+(\#eq:mcse)
+\end{equation}
+
+With statistically significant results in 80% of simulated studies and $B=5000$, MCSE is about `r round(100 * sqrt(.8 * .2 / 5000), 2)` percentage points. The tables use Wilson intervals for Monte Carlo uncertainty. These intervals remain informative even when a simulation observes no rejections or all rejections. Increasing $B$ does not resolve uncertainty about the real treatment effect.
+
 ## Explore missing outcomes {#explore-missing-outcomes .advanced-heading}
 
 The [repeated chronic-pain trial activity](https://katatam.github.io/sample-size-calculation/study/?activity=pain_simulation) also lets you examine how missing outcomes affect a treatment comparison. Under *Explore further*, the expandable *Explore missing outcomes* controls offer four scenarios. Each uses the same recruited count and the same population relief probabilities, so you can distinguish the consequences of losing information from those of selectively losing particular outcomes.
@@ -1355,6 +1549,19 @@ The original plan evaluates power at a true 30-point difference. If the true dif
 :::
 
 
+## Evaluating the discharge calculation {#discharge-simulation .advanced-heading}
+
+The [discharge exercise](#discharge) compares standard care at 80% with treatment at 96% or 90%, using target power of 80% or 90%. Outcomes near 100% leave few patients without the event, so the test approximation deserves closer examination.
+
+These planning results use the same approximation as the [reasoning lab](https://katatam.github.io/sample-size-calculation/study/?activity=discharge). Simulated performance can help you assess whether the approximation is adequate for the proposed event probabilities and sample size.
+
+[Activity: Open the discharge activity](https://katatam.github.io/sample-size-calculation/study/?activity=discharge). The 80% versus 96% scenario starts with 80% target power. You can consider whether an outcome so close to 100% makes the simple approximation adequate, and examine simulated performance. A shorter time-to-discharge outcome or clustered ward allocation would require a different method.
+
+This activity tests the planning approximation in a setting where few participants remain without the favorable event. After checking the plan, repeated simulations estimate the rejection probability of the specified binary test. A null scenario can also reveal whether its false-positive probability is close to the chosen 5%. Neither one simulated result nor agreement with a power target establishes that the clinical assumptions are credible.
+
+
+
+
 <div class="chapter-recap">
 
 ### Take-home points {.unnumbered}
@@ -1369,466 +1576,6 @@ The original plan evaluates power at a true 30-point difference. If the true dif
 
 ```{r quiz-simulation, echo=FALSE, results="asis"}
 render_chapter_quiz("simulation")
-```
-
-# Recruitment and feasibility {#feasibility .core-heading}
-
-::: {.learning-goals .core-outcomes}
-After this chapter, you should be able to:
-
-- Adjust recruitment for expected losses and explain the limits of that allowance.
-- Examine plausible alternative assumptions, distinguishing a recalculated sample size from performance at a fixed sample size.
-- Assess whether available resources can support the intended power, [precision](#precision), and clinical conclusion.
-- Explain options when a proposed study provides insufficient information.
-- In the advanced sections, assess existing-data reuse, rare-disease constraints, and the objectives of a pilot or feasibility study.
-:::
-
-Earlier chapters showed how sample size affects power and precision. The next question is whether you can obtain enough usable observations to answer your research question. Following the chronic pain plan, you first translate the analyzable requirement into recruitment, then examine less favorable assumptions and resource limits. When the available sample is fixed, you can assess what that study could establish and whether its aims or design need revision. The advanced examples consider existing datasets, rare diseases, and preliminary studies of recruitment, retention, or procedures.
-
-## Account for expected losses {.core-heading}
-
-
-
-If some recruited patients are expected to have no usable outcome, you will need to recruit more patients than the calculation requires for analysis. Here, $n$ is the required number per group and $r$ is the expected proportion lost, so $1-r$ is the expected [retention proportion](#retention). The brackets mean "round upward to the next whole patient":
-
-\begin{equation}
-n_{\mathrm{recruit,arm}}=\left\lceil\frac{n}{1-r}\right\rceil.
-(\#eq:dropout)
-\end{equation}
-
-The expected loss should draw on studies or records with a comparable population, treatment, outcome and follow-up period. For example, if 20 of 200 enrolled patients in a comparable study lacked the required outcome, the observed loss was 20/200 = 10%. Using $r=0.10$ in a new study assumes that this experience is relevant. Reasons for missing outcomes, differences between arms and uncertainty in a small pilot should inform that judgment. When evidence is limited, your report should identify a plausible range and show how recruitment changes across it; there is no universal default loss percentage.
-
-```{r recruitment}
-analyzable_per_group <- pain_lab_n
-recruit_per_group <- ceiling(analyzable_per_group / (1 - .05))
-c(analyzable_per_group = analyzable_per_group,
-  recruit_per_group = recruit_per_group, recruit_total = 2 * recruit_per_group)
-```
-
-```{r recruitment-formatted, echo=FALSE}
-knitr::kable(data.frame(`Analyzable per group`=analyzable_per_group, `Recruit per group`=recruit_per_group, `Recruit total`=2*recruit_per_group, check.names=FALSE),
-  caption = "Chronic-pain recruitment target allowing for 5% expected loss.")
-```
-
-<details class="misconception" id="misconception-dropout-arithmetic">
-<summary>Common misconception: allowing for 10% dropout means adding 10%</summary>
-
-If you expect 10% of participants to be lost, approximately 90% will remain. You should therefore divide the required analyzable sample size by 0.90. For example, 100 analyzable participants require recruiting 112 participants after rounding up. This allows for the expected loss; the actual number retained may differ.
-
-</details>
-
-For the chronic pain trial, 5% expected loss means approximately 95% of recruits will contribute to the analysis. To obtain `r analyzable_per_group` patients per group with usable outcomes, you would plan to recruit `r analyzable_per_group`/0.95 = `r round(analyzable_per_group / .95, 2)`, rounded upward to `r recruit_per_group` per group.
-
-The percentage of participants lost to follow-up may differ between treatment groups. This is called *differential dropout*. For example, outcomes might be missing for 20% of participants receiving the novel treatment and 10% receiving standard treatment. When such differences are anticipated, sample size planning should account for the expected retention in each group and the planned allocation ratio. A single overall dropout percentage can conceal a shortfall in one group.
-
-The reasons for missing outcomes also matter. In the chronic pain example, patients who experience little relief might be more likely to miss the final assessment. If this happens more often in the novel-treatment group, an analysis restricted to participants with observed outcomes could overestimate its benefit. [Bias](#bias) can occur with equal or unequal dropout percentages. Assessing it requires information about why outcomes are missing, the treatment effect being estimated, and the analysis used [@bell2013dropout].
-
-Your study plan should describe how missing outcomes will be minimized, how their reasons will be recorded in each group, and how the analysis will handle them. [Sensitivity analyses](#sensitivity-analysis) should examine whether conclusions change under plausible alternative assumptions about the missing outcomes [@little2012missing].
-
-The usual simulations start with the stated number of patients available for analysis. The advanced [missing-outcome extension](#explore-missing-outcomes) starts with recruited participants and explores equal, unequal, and outcome-related losses in the [repeated-trial activity](https://katatam.github.io/sample-size-calculation/study/?activity=pain_simulation).
-
-The [Activity: Adjust recruitment for loss to follow-up](https://katatam.github.io/sample-size-calculation/dropout_adjustment/) connects the analyzable count to the number you need to approach recruitment with. You should enter the per-group analyzable requirement, then compare expected loss percentages. Actual retention may differ from the assumed percentage.
-
-<details class="misconception" id="misconception-dropout">
-<summary>Common misconception: recruiting extra participants resolves missing-data problems</summary>
-
-Recruiting extra participants can help preserve the analyzable sample size and statistical power. Addressing missing-data bias requires prevention, appropriate analysis, and sensitivity analyses alongside the recruitment allowance [@little2012missing].
-
-</details>
-
-## Sensitivity to planning assumptions {#stress-test-the-study-plan .core-heading}
-
-
-
-The recruitment allowance uses one set of assumptions. A [sensitivity analysis](#sensitivity-analysis) examines what happens when those assumptions change within plausible ranges. It can answer two questions:
-
-- Before choosing your sample size: how many patients would be needed under different plausible assumptions? Here, sample size changes.
-- After choosing a sample size: how would this same study perform if the true difference were smaller or variability were greater? Here, sample size stays fixed.
-
-The next table shows both answers. Its required-count column recalculates the sample size at the clinical threshold, target difference and expected difference. Its power column keeps the original planned sample fixed. In the [lab](https://katatam.github.io/sample-size-calculation/study/?activity=pain_curves), *Reality may differ from the plan* lets you explore this second question [@cook2018delta2; @lakens2022].
-
-```{r pain-target-sensitivity, echo=FALSE}
-pain_target_n <- ceiling(power.prop.test(p1 = .60, p2 = .30,
-  sig.level = .05, power = .90, alternative = "two.sided",
-  strict = TRUE)$n)
-pain_alternatives <- c(.50, .60, .70)
-knitr::kable(data.frame(
-  `True novel-treatment relief` = percent(pain_alternatives),
-  `Difference from 30% standard-treatment relief` = paste(c(20, 30, 40), "percentage points"),
-  `Required per group for 90% power` = vapply(pain_alternatives,
-    function(p) ceiling(power.prop.test(p1 = p, p2 = .30,
-      sig.level = .05, power = .90, alternative = "two.sided",
-      strict = TRUE)$n), numeric(1)),
-  `Power at the original sample size` = percent(vapply(pain_alternatives,
-    function(p) power.prop.test(n = pain_target_n, p1 = p, p2 = .30,
-      sig.level = .05, alternative = "two.sided", strict = TRUE)$power,
-    numeric(1))), check.names = FALSE),
-  caption = paste("Chronic-pain sensitivity: alternative required counts and approximate power with the original", pain_target_n, "patients per group held fixed."))
-```
-
-This comparison keeps standard-treatment relief at 30%, the Type I error probability at 5%, and the analysis unchanged. Your report should record why the alternatives are plausible and which uncertainty matters most for the decision. You can also vary the standard-treatment probability where relevant: the same difference at different event probabilities need not require the same sample. The continuous-outcome example below illustrates the corresponding role of variability.
-
-```{r fixed-plan-sensitivity}
-plan <- study_spec(outcome = "means", n = ceiling(t_plan$n), delta = 3, sd = 5)
-smaller <- plan; smaller$delta <- 1
-more_variable <- plan; more_variable$sd <- 7
-scenarios <- list(plan, smaller, more_variable)
-knitr::kable(data.frame(
-  Scenario = c("Target difference", "Smaller true difference", "Larger standard deviation"),
-  `Analyzable patients per group` = vapply(scenarios, function(x) x$n, numeric(1)),
-  Power = percent(vapply(scenarios, spec_power, numeric(1))),
-  `Expected full interval width (score units)` = vapply(scenarios, anticipated_width, numeric(1)),
-  check.names = FALSE),
-  digits = 3, caption = "Continuous-outcome sensitivity with the sample selected for 90% target power held fixed.")
-```
-
-## What can the available sample establish? {#available-sample .core-heading}
-
-After accounting for expected losses, your recruitment period, funding, or available records may impose a fixed analyzable sample. You can use that count to assess power across independently justified treatment differences and the precision anticipated under the planned analysis. The [clinical interpretation of an interval](#interpret-a-confidence-interval-clinically) helps you judge whether the remaining uncertainty would matter for the intended decision.
-
-For the chronic pain example, a cap of 200 recruits with 10% expected loss gives an expected 180 analyzable patients, or 90 per group under equal recruitment and retention. The [power-curve activity](https://katatam.github.io/sample-size-calculation/study/?activity=pain_curves) evaluates this fixed count at the target difference and smaller plausible benefits. A recruitment cap limits what is available; the research objective determines whether that information would be useful.
-
-If you need to estimate a quantity, you can assess the attainable interval width at that fixed count, using the [precision-planning principles](#plan-for-precision). The available data may support a broad description while leaving a more demanding decision unresolved. Your justification should state the resource limit and the conclusions the study could reasonably support.
-
-### Reuse an existing dataset for a different question {#dataset-reuse .advanced-heading}
-
-<details class="advanced-explanation">
-<summary>Reuse an existing dataset for a different question</summary>
-
-
-
-
-An existing dataset is another fixed-resource setting, common in bachelor projects. Suppose a completed chronic pain trial included 200 patients and also recorded sleep difficulty before treatment. Your new question is: what percentage of these trial participants reported sleep difficulty at baseline? This differs from the trial's original question about treatment effectiveness.
-
-Baseline sleep information is available for 180 participants; 72 reported difficulty. The observed percentage is 72/180 = 40%. With the sample already fixed, the planning task is to assess the precision the available data can provide.
-
-```{r reused-dataset}
-sleep_result <- single_proportion_interval(events = 72, n = 180,
-  confidence = .95)
-sleep_result
-```
-
-```{r reused-dataset-summary, echo=FALSE}
-sleep_limits <- wilson_interval(.40, 180)
-knitr::kable(data.frame(
-  Measure = c("Patients in the dataset", "With baseline sleep information",
-    "Reporting sleep difficulty", "Observed percentage", "95% Wilson confidence interval"),
-  Result = c("200", "180", "72", "40.0%",
-    paste(percent(sleep_limits[1, 1]), "to", percent(sleep_limits[1, 2])))),
-  caption = "A new descriptive question answered using an existing chronic-pain trial dataset.")
-```
-
-The interval describes sampling uncertainty under the model. Possible differences between the 20 patients with missing information and those who answered require separate assessment. The trial's eligibility criteria also restrict whom these results describe: its participants may not represent all patients with chronic pain. Random allocation supports the original treatment comparison.
-
-The new question needs its own assessment of adequacy. You should check that the required variables and time points are available, that reuse is permitted, and that the analysis fits the new objective. For a new association question, you would also need to consider confounding and the relevant model. The estimate, interval and limitations should guide interpretation; observed post hoc power adds no evidence about the same result [@lakens2022; @consortee2025].
-
-Before examining the new results, your report should document why the sample is fixed and what precision would be useful. The available sample sets the resource limit. Its adequacy depends on the precision required for the new question. For a comparison, you can evaluate independently justified differences at that fixed sample size; for this descriptive question, you can examine the attainable interval width. If it is too wide for the intended decision, you should narrow the claim or explain that more data would be needed. Your report should identify analyses developed after examining the data as exploratory.
-
-::: {.activity}
-For your adapted research question, your plan should identify the new outcome, target population, available sample and missing observations. Would an interval of this width answer your project question? Your report should record these decisions in the [Activity: Develop and justify your study plan](https://katatam.github.io/sample-size-calculation/study/?activity=assumptions_report), using a fixed-resource estimation goal.
-
-<details class="model-answer" id="model-answer-existing-data">
-<summary>Model answer</summary>
-
-The new outcome is baseline sleep difficulty. The results directly describe the population defined by the original trial's eligibility criteria. The dataset contains 200 patients, with sleep information for 180 and missing information for 20. Among those with information, 72/180 = 40% reported difficulty; the 95% Wilson interval is `r percent(sleep_limits[1, 1])` to `r percent(sleep_limits[1, 2])`.
-
-Whether this precision is useful depends on a decision specified for the project. It may support a broad descriptive estimate, but would not support a requirement to estimate the percentage within 2 percentage points. The report should explain the fixed sample, missing information and restricted population. Adequacy here depends on precision for the descriptive objective.
-
-</details>
-
-:::
-
-
-</details>
-
-## Options when the study provides insufficient information {#what-if-the-study-is-too-small-for-its-purpose .core-heading}
-
-### Underpowered studies {#underpowered-studies .core-heading}
-
-
-
-A study with low power often misses the specified true difference. A small study also produces more variable estimates. When its power is low, the studies that achieve statistical significance are often those in which sampling variability makes the observed difference unusually large. If you look only at significant findings, you can therefore get an exaggerated impression of the treatment benefit.
-
-Larger samples reduce [sampling variability](#sampling-variability). Addressing bias requires attention to the design, measurement and analysis.
-
-For the chronic pain trial, a study with low power at the 30-percentage-point target difference would often fail to detect that benefit even if it were real. A non-significant result can reflect insufficient information to distinguish the treatments. You should interpret the estimated benefit and confidence interval in relation to zero and the 20-percentage-point clinical threshold.
-
-### Ways to increase power {#increase-power .core-heading}
-
-
-
-Before collecting data, you can consider whether the design could provide more information about the treatment effect. Table \@ref(tab:increase-power) separates changes to the study from changes to its error targets.
-
-For continuous outcomes, allocation, baseline information and within-person comparisons can affect efficiency [@candel2023]. These formulas concern continuous outcomes; binary outcomes require methods suited to event probabilities. Your protocol should prespecify useful baseline adjustment and recalculate for the intended model. A crossover design is only appropriate when treatment reversibility, disease stability and carryover permit it.
-
-| Option | Why it can help | What to consider |
-|:--|:--|:--|
-| Increase the analyzable sample | More independent patients reduce sampling uncertainty at the same true effect. | For the pain trial, another recruiting clinic or a longer recruitment period could supply more patients. Your plan should allow for expected losses and assess feasibility. |
-| Improve follow-up and outcome completeness | Retaining more outcomes protects the analyzable sample. | For the pain trial, accessible follow-up appointments and reminders may improve outcome collection. Reasons for missing outcomes still inform the analysis. |
-| Improve measurement | More reliable measurement can reduce unexplained variability in a continuous outcome and improve precision. | For pain relief, a clear, consistent definition and assessment time are important. A different outcome needs its own assumptions and calculation. |
-| Use an appropriate, efficient design and analysis | Prespecified adjustment for informative baseline measures, or a suitable paired or repeated-measures design, can improve precision. | For a continuous pain score, prespecified adjustment for baseline pain may improve precision. A paired design requires a suitable clinical setting. Planning must match the adjusted model or dependent observations. |
-| Keep allocation balanced when appropriate | For the equal-variance, equal-cost comparisons illustrated here, equal group sizes make efficient use of a fixed total. | The pain example assigns equal numbers to novel and standard treatment. Unequal costs, variances or other requirements may justify another allocation and calculation. |
-| Accept a higher Type I error probability | A less stringent rejection rule increases power at the specified alternative. | It also increases the probability of rejecting a true null. The error probability should be justified prospectively; changing it to make a result significant is not sound planning. |
-| Use a one-sided test when the scientific question warrants it | Directing the rejection region to a prespecified direction can increase power for effects in that direction. | It does not test both directions in the same way. Your protocol should specify and justify it before you see the data; a smaller required sample is not sufficient justification [@moye2002]. |
-
-Table: (\#tab:increase-power) Options for increasing power and the assumptions or tradeoffs they require.
-
-Power calculations describe performance under assumed treatment benefits. Those assumptions should be grounded in relevant evidence. You should keep the chronic pain expected difference (40 percentage points), target difference (30 points) and clinical threshold (20 points) distinct and justified. Running more simulations improves the precision of the estimated power.
-
-::: {.activity}
-You can compare plans in [Activity: Chronic pain: one study and many studies](https://katatam.github.io/sample-size-calculation/study/?activity=pain_one_many). You should keep standard-treatment relief at 30%, novel-treatment relief at 60% and the Type I error probability at 5%. You can compare 50 and 80 analyzable patients per group. Which plan detects the specified benefit more often? What would obtaining the larger sample require in practice? Your study plan should explain the recruitment implications.
-
-<details class="model-answer" id="model-answer-larger-study-resources">
-<summary>Model answer</summary>
-
-With the same population assumptions and test, 80 analyzable patients per group should detect the 30-point difference more often than 50 per group. In the prepared simulation, estimated power is `r percent(power_results$simulated_power[3])` and `r percent(power_results$simulated_power[2])`, respectively. At 10% expected loss, the corresponding recruitment targets are 89 per group (178 total) and 56 per group (112 total), after rounding within each arm. The larger design therefore needs capacity for 66 additional recruits, with implications for recruitment time, staffing, funding and participant burden. More information can reduce uncertainty, but the feasibility of obtaining it also needs justification.
-
-</details>
-
-:::
-
-If the study remains infeasible, you may need to reconsider its aim, collaborate, or decide not to proceed with an efficacy study. For example, a small preliminary pain study could estimate whether patients complete the four-week assessment. Its sample size would then follow that feasibility objective; the original treatment comparison would retain its limited power. The [pilot example](#pilot-feasibility) shows how to justify this revised purpose [@lakens2022].
-
-Broader eligibility may make the study more representative of the intended population. If it also increases outcome variability, power at a fixed sample and treatment difference may fall. The calculation should reflect the resulting population and analysis.
-
-Clustered designs, nonparametric analyses and Bayesian planning need methods suited to their assumptions; [Study designs and planning methods](#study-designs) provides starting points [@hayes1999; @happ2019; @pezeshk2003]. The following advanced explanation considers the particular constraints of rare diseases.
-
-
-
-### What if the disease is rare? {#rare-diseases .advanced-heading}
-
-<details class="advanced-explanation">
-<summary>What if the disease is rare?</summary>
-
-
-
-
-For a rare disease, the number of eligible patients may impose a genuine limit on recruitment. Your plan should document how many patients could realistically participate, over what period and across which centers, and what that sample could establish.
-
-This is the same feasibility problem as the chronic pain plan, with a more restrictive recruitment ceiling. The aim is to obtain useful, valid information within the recruitment limit.
-
-1. You should establish the recruitment ceiling. You can work with specialist centers, registries and patient organizations. You can consider collaboration across countries, eligibility criteria and ways to reduce travel and follow-up burden. Your explanation should distinguish the number of people with the disease from the number eligible and willing to participate [@fdarare2023].
-2. You can use knowledge of the disease's natural course. Previous studies and registries can inform progression, variability, suitable assessment times and meaningful outcomes. You should check whether these data describe the population you intend to study. If this knowledge is insufficient, a natural-history study may be a useful research objective in its own right [@fdanaturalhistory2019].
-3. You can obtain useful information from each participant. You can use reliable, clinically meaningful measurements and minimize missing outcomes. Where clinically appropriate, retaining the continuous outcome can preserve information. Adjustment for informative baseline measurements should be prespecified. These choices require a matching analysis and sample size method [@emasmall2006].
-4. You can consider another design when appropriate. Crossover or n-of-1 designs may suit stable conditions with reversible treatment effects and manageable carryover. They generally do not suit irreversible treatments or rapidly progressing disease. Prespecified adaptive or Bayesian approaches may also help, but require specialist planning; they do not guarantee that fewer patients will suffice [@emasmall2006; @fdarare2023].
-5. Your plan should preserve a credible comparison. Randomization remains valuable. Registry or historical controls can sometimes help, but differences in patient severity, treatment era and outcome measurement can bias the comparison. They are not an automatic replacement for a concurrent control group [@fdaexternal2023].
-6. Your explanation should address the remaining uncertainty. Evaluate attainable power across plausible effects and the anticipated confidence interval width. A small randomized study may still be informative, although inconclusive results remain possible. Your explanation should address what it could establish and what would require further evidence [@emasmall2006].
-
-These recommendations draw on the EMA guideline on clinical trials in small populations (2006) and FDA rare-disease guidance (final, 2023). The FDA natural-history (2019) and external-control (2023) documents cited here are draft guidance. These sources concern medicinal-product development; use the principles that fit your own study's purpose and discuss alternative designs with a methodological collaborator.
-
-<details class="misconception" id="misconception-rare-disease-threshold">
-<summary>Common misconception: rare diseases require a different significance threshold</summary>
-
-In rare-disease studies, the Type I error probability and any alternative design need prospective justification [@emasmall2006].
-
-</details>
-
-
-</details>
-
-<div class="core-next">Continue along the core route: <a href="#exercises">Test your reasoning and write a sample size justification</a>.</div>
-
-## Planning a pilot or feasibility study {#pilot-feasibility .advanced-heading}
-
-<details class="advanced-explanation">
-<summary>Planning a pilot or feasibility study</summary>
-
-
-
-
-So far, feasibility has meant whether you can carry out an informative main study. A preliminary pilot or feasibility study has its own research objectives: investigating whether recruitment, retention, delivery, or other procedures will work. Its sample size should support those decisions.
-
-Suppose a team wants to test a new rehabilitation pathway and needs evidence about recruitment and follow-up. It can recruit 40 patients over three months to investigate these procedures.
-
-You can start with systematic reviews, relevant previous studies, routine service data and clinical expertise. Your report should record the population, outcome, time point and uncertainty of each source. You should agree the main trial's clinically meaningful outcome with patients and clinicians. The pilot can investigate recruitment and retention, measurement procedures, acceptability and variability. Planning the definitive trial should combine these findings with relevant external evidence [@albers2018].
-
-For the pilot, your plan should connect the available resources with the precision needed for these feasibility decisions. The [single-proportion example](#prevalence) explains the corresponding interval-width calculation. Here the hypothetical cap is 40 participants, and expected completion of follow-up is 80%. If 32 of 40 complete follow-up, what would that tell the team about retention?
-
-```{r pilot-retention}
-pilot_retention <- single_proportion_interval(events = 32, n = 40,
-  confidence = .95)
-pilot_retention
-```
-
-```{r pilot-retention-formatted, echo=FALSE}
-knitr::kable(data.frame(`Completed follow-up`="32/40 (80%)", `95% Wilson confidence interval`=paste(percent(pilot_retention$lower), "to", percent(pilot_retention$upper)), check.names=FALSE), caption="Retention and its uncertainty in a 40-participant feasibility study.")
-```
-
-The observed 80% retention still has a wide interval. You can compare it with a prospectively agreed progression criterion and consider reasons for missing outcomes. A point estimate of 80% alone cannot establish that the main trial will retain at least 80%.
-
-Your pilot size should reflect the decision it must support. Ying and colleagues distinguish estimating feasibility with useful precision, assessing progression criteria, detecting practical problems and informing variability for the main trial [@ying2025]. You should specify each outcome's denominator: retention concerns participants enrolled, while a recruitment percentage may concern eligible people approached. Forty enrolled patients do not supply forty observations for every feasibility outcome.
-
-::: {.activity}
-Before seeing retention results, your feasibility plan should specify an unacceptable level, a desirable level and what would lead to proceeding, amending or stopping. You can compare the intervals for 40 and 80 participants. Your explanation should address whether either sample supplies useful information for those decisions, alongside acceptability and reasons for missing follow-up. The progression criteria should have a clinical and operational justification.
-
-<details class="model-answer" id="model-answer-pilot-progression">
-<summary>Model answer</summary>
-
-One possible set of prospectively specified criteria would treat retention below 70% as unacceptable and 80% as desirable. A team could proceed if the estimate is at least 80%, the lower 95% confidence limit exceeds 70%, and delivery and acceptability are satisfactory; amend the pathway if the interval still includes unacceptable retention; and stop or substantially redesign it if the interval lies below 70%. These illustrative thresholds and rules need clinical and operational justification before the results are seen.
-
-For 32/40 retained participants, the 95% Wilson interval is `r percent(wilson_interval(.80, 40)[1, 1])` to `r percent(wilson_interval(.80, 40)[1, 2])`; for 64/80 it is `r percent(wilson_interval(.80, 80)[1, 1])` to `r percent(wilson_interval(.80, 80)[1, 2])`. The 40-person result would lead to amendment or further investigation under these illustrative rules. The 80-person result just meets the numerical progression rule using the unrounded lower limit, but the reasons for missing follow-up and acceptability would still matter. Neither result establishes that true retention is at least 80%. Recruiting 80 would also need its own feasible time and resource plan.
-
-</details>
-
-:::
-
-For another objective, suppose a practical problem independently affects 10% of participants. The probability of observing at least one problem in $n$ participants is $1-(1-0.10)^n$; 29 give at least a 95% probability. Much rarer problems require larger samples for reliable detection. A problem can remain undetected in a small pilot [@ying2025]. Different pilot objectives can therefore imply different numbers.
-
-<details class="misconception" id="misconception-pilot-goal">
-<summary>Common misconception: every pilot needs a treatment-effect power calculation</summary>
-
-A pilot may primarily investigate recruitment, retention or whether procedures are workable. The sample size should support the feasibility questions and provide useful precision for the intended decisions. Planning the definitive trial should combine the pilot findings with relevant external evidence [@albers2018].
-
-</details>
-
-[Activity: Pilot study: estimate retention](https://katatam.github.io/sample-size-calculation/study/?activity=pilot_feasibility). It starts with a fixed total of 40 and anticipated retention of 80%. You can compare illustrative intervals at 40 and 80 observations; make clear whether another recruitment period or collaboration could obtain the larger sample.
-
-The app can generate one hypothetical retention count from the assumed 80% probability. It will not necessarily produce exactly 32 of 40. Both retained and non-retained participants contribute to the retention estimate when their status is known.
-
-Before writing the protocol, you should check relevant guidance and the current funder's requirements. For examples, [NIHR HTA guidance on feasibility and pilot studies](https://njl-admin.nihr.ac.uk/document/download/2023130) distinguishes feasibility questions from definitive efficacy questions; this is an archived guidance example. The [CONSORT extension for randomized pilot and feasibility trials](https://www.bmj.com/content/355/bmj.i5239) asks for a rationale for pilot numbers and criteria for progression [@nihrfeasibility; @eldridge2016]. Reporting guidance helps you document the design. The sample size method should match the study question and planned analysis.
-
-
-</details>
-
-
-<div class="chapter-recap">
-
-### Take-home points {.unnumbered}
-
-- Recruitment targets allow for expected losses; prevention and analysis should address missing-data bias.
-- Plausible assumptions and resource limits should be assessed together using power and precision.
-- An informative plan identifies what the available sample could establish and what remains uncertain.
-- A pilot or feasibility study needs a sample size justified by its own procedural objectives.
-
-</div>
-
-## Check your understanding {#check-feasibility .unnumbered}
-
-```{r quiz-feasibility, echo=FALSE, results="asis"}
-render_chapter_quiz("feasibility")
-```
-
-# Test your reasoning {#exercises .core-heading}
-
-::: {.learning-goals .core-outcomes}
-After this section, you should be able to:
-
-- Identify gaps in your understanding using quiz feedback and the linked explanations.
-- Justify a planning goal in a new clinical case.
-- Assess what a fixed sample can establish.
-- Turn your evidence and assumptions into a complete study-planning report.
-:::
-
-## Discharge percentages {#discharge .core-heading}
-
-
-
-Standard care discharges 80% of patients by a specified time point. Comparable evidence suggests an 18-percentage-point [expected difference](#expected-difference): 98% versus 80%. Patients judge an 8-percentage-point between-group benefit worthwhile. Those two values remain fixed while you compare the following sample size plans.
-
-| Plan | Target difference | Target power |
-|:--|:--|:--|
-| A | A 20% relative increase from the 80% standard-care percentage | 80% |
-| B | An absolute increase of 10 [percentage points](#percentage-points) | 80% |
-| C | The same target difference as Plan A | 90% |
-
-Table: (\#tab:discharge-task) Three discharge-study plans with a 5% Type I error probability and a two-sided comparison.
-
-### Your task {.unnumbered}
-
-Your answer should contain the treatment percentage for each plan, your prediction of which plan needs the most patients, the calculated per-group and total counts, and a short explanation of the differences. You can use [Two proportions](#two-proportions) or [Activity: Discharge percentages](https://katatam.github.io/sample-size-calculation/study/?activity=discharge). Each calculated per-group count should be rounded upward to a whole patient before doubling for the two equal groups.
-
-Your explanation should also address why the calculation and analysis methods matter when event probabilities are close to 100%. The expected difference remains 18 points and the clinical threshold remains 8 points throughout.
-
-<details>
-<summary>Show the calculation and interpretation</summary>
-
-```{r discharge-answers}
-discharge <- data.frame(
-  scenario = c("20% relative increase", "10 percentage points", "Higher power"),
-  control = .80, treatment = c(.80 * 1.20, .80 + .10, .80 * 1.20),
-  power = c(.80, .80, .90))
-discharge$per_group <- mapply(function(p, power) {
-  sample_size_two_proportions(p, .80, alpha = .05, power = power)
-}, discharge$treatment, discharge$power)
-discharge$total <- 2 * discharge$per_group
-knitr::kable(display_probabilities(discharge, c("control", "treatment", "power")),
-  caption = "Analyzable discharge-study sample sizes using the normal planning approximation in power.prop.test().")
-```
-
-The treatment percentages are 96%, 90% and 96%. The approximate totals are `r paste(discharge$total, collapse = ", ")`, respectively. Each per-group count is rounded up before doubling for the total. The expected difference remains 18 points and the [clinical threshold](#clinical-threshold) remains 8 points in each comparison.
-
-<details class="misconception" id="misconception-percentage-points">
-<summary>Common misconception: percentages and percentage points are interchangeable</summary>
-
-From a baseline of 80%, a 20% relative increase gives 96% ($0.80\times1.20=0.96$), an increase of 16 percentage points. An increase of 20 percentage points gives 100%. The baseline and whether the change is relative or absolute should be clear before you enter probabilities into a calculator.
-
-</details>
-
-These planning results use the same approximation as the [reasoning lab](https://katatam.github.io/sample-size-calculation/study/?activity=discharge). Simulated performance can help you assess whether the approximation is adequate for the proposed event probabilities and sample size.
-
-[Activity: Open the discharge activity](https://katatam.github.io/sample-size-calculation/study/?activity=discharge). The 80% versus 96% scenario starts with 80% target power. You can consider whether an outcome so close to 100% makes the simple approximation adequate, and examine simulated performance. A shorter time-to-discharge outcome or clustered ward allocation would require a different method.
-
-This activity tests the planning approximation in a setting where few participants remain without the favorable event. After checking the plan, repeated simulations estimate the rejection probability of the specified binary test. A null scenario can also reveal whether its false-positive probability is close to the chosen 5%. Neither one simulated result nor agreement with a power target establishes that the clinical assumptions are credible.
-
-</details>
-
-## A fixed total of 70 patients {.advanced-heading}
-
-<details class="advanced-explanation">
-<summary>A fixed total of 70 patients</summary>
-
-
-
-
-Suppose only 70 patients can be recruited in total. What power and [precision](#precision) could the study achieve after expected losses, and what conclusions could it reasonably support? Your answer should specify the research question, assumed outcomes, losses and analysis before assessing the available sample. You can then justify the proposed study or explain how a revised design or narrower objective would make the available information useful.
-
-
-</details>
-
-## Write a sample size justification {.core-heading}
-
-
-
-Your 300–600-word justification should cover the clinical question, primary outcome, evidence for assumptions, clinical threshold, target difference, planned analysis, [Type I error probability](#alpha), target power, per-group counts, recruitment inflation and feasibility. It should include a sensitivity table or curve and explain the consequences of uncertain assumptions. Advanced work can add a simulation.
-
-You can use the chronic pain report you have developed through the tutorial, or a justified two-arm case of your own. Your explanation should justify the target difference's importance and realism using relevant evidence. The report should identify the calculation method and distinguish required analyzable counts from recruitment. These elements follow DELTA² and CONSORT's sample size reporting guidance [@cook2018delta2; @consortee2025].
-
-You can complete and save your text in [Activity: Develop and justify your study plan](https://katatam.github.io/sample-size-calculation/study/?activity=assumptions_report). The [case template](https://katatam.github.io/sample-size-calculation/case-studies/student_case_template.html) provides the same planning prompts for an offline document. The core [assessment rubric](https://katatam.github.io/sample-size-calculation/teaching/assessment_rubric.html) explains how to review your justification. A brief final note should identify an assumption you revised and the evidence or reasoning that changed it. For an advanced estimation, feasibility or fixed-dataset project, replace the treatment-power requirement with its relevant information target and denominator.
-
-You can discuss these review questions with a collaborator:
-
-- Are the assumptions supported and distinguished from clinical judgments?
-- Does the calculation match the planned analysis?
-- Are per-group, total and recruitment counts unambiguous?
-- Does the [sensitivity analysis](#sensitivity-analysis) keep the appropriate quantities fixed?
-- Does the interpretation acknowledge what an inconclusive result could mean?
-
-<span id="own-study"></span>
-
-<details class="advanced-explanation">
-<summary>Advanced extension: your own study</summary>
-
-For an advanced extension, you can add a simulation result with its generating assumptions, analysis, repetition count and Monte Carlo interval. Your explanation should address what it adds to the analytical calculation. You can also write a short hypothetical study abstract that distinguishes the planned design, realized results and interpretation, following the broader learning sequence used in DICE [@thiesmeier2024].
-
-Your project may involve estimation, a fixed dataset or dependent observations. The [study-design guide](#study-designs) should inform your choice of method. In [Activity: Build your own study calculation](https://katatam.github.io/sample-size-calculation/study/?activity=own_study), you can assess plausible assumptions and resource limits, then explain whether to proceed, collaborate, redesign or narrow the question. The [reproducibility record](#reproducibility-record) should accompany the result.
-
-</details>
-
-<div class="chapter-recap">
-
-### Take-home points {.unnumbered}
-
-- A sample size justification explains the design, assumptions, calculation, and recruitment allowance.
-- The conclusion should match what the study can establish.
-- Sensitivity analysis should show how uncertainty in the inputs affects the recommendation.
-
-</div>
-
-
-## Check your understanding {#cumulative-quiz .unnumbered}
-
-```{r quiz-all, echo=FALSE, results="asis"}
-render_chapter_quiz("all")
 ```
 
 ```{r study-design-help, echo=FALSE, results='asis'}
@@ -1847,16 +1594,6 @@ render_chapter_quiz("study-designs")
 
 The diagnostic, prediction and preclinical resources above are also listed in the tutorial references [@stard2015; @riley2020; @tripodai2024; @arrive2020].
 
-```{r prerequisite-help, echo=FALSE, results='asis'}
-cat(readLines("../student-materials/glossary.md", warn = FALSE, encoding = "UTF-8"), sep = "\n")
-```
-
-```{r misconceptions-help, echo=FALSE, results='asis'}
-cat(readLines("../student-materials/common-mistakes.md", warn = FALSE, encoding = "UTF-8"),
-  sep = "\n")
-```
-
-
 # Reproducibility and open science {#appendix .advanced-heading}
 
 ::: {.learning-goals .advanced-outcomes}
@@ -1868,7 +1605,7 @@ After this section, you should be able to:
 - Compare software results using matching methods and assumptions.
 :::
 
-## Why reproducibility matters {#why-reproducibility-matters .core-heading}
+## Why reproducibility matters {#why-reproducibility-matters .advanced-heading}
 
 A sample-size result is useful when another researcher can understand how it was obtained, check the calculation, and assess whether its assumptions fit the proposed study. Numerical inputs, statistical procedures, software settings and rounding rules can all affect the result. Clear documentation makes errors easier to identify and allows you to revisit the plan when new evidence becomes available.
 
@@ -1876,7 +1613,7 @@ Here, computational reproducibility means obtaining consistent results using the
 
 Open science supports scrutiny and reuse by making research methods, outputs and supporting resources accessible. A shared protocol, analysis code, documented assumptions and an identified software version help others understand and build on your work. Data access should respect consent, confidentiality and other legitimate restrictions [@unesco2021]. The synthetic examples here allow you to explore and share the computational workflow without using patient records.
 
-## What a reproducible justification contains {#reproducibility-record .core-heading}
+## What a reproducible justification contains {#reproducibility-record .advanced-heading}
 
 Your report should connect the clinical question to its numerical result. The record should include:
 
@@ -1964,11 +1701,39 @@ mean(results$p_value < .05)
 
 Adaptations should keep the editable R Markdown, shared case settings, app code and build instructions together. You should review changes to assumptions and methods alongside the resulting figures and activities. The [adaptation guide](https://katatam.github.io/sample-size-calculation/teaching/adaptation_guide.html) provides practical steps [@bothmann2021].
 
+## Your own study {#own-study .advanced-heading}
+
+Your study report can include a simulation result with its generating assumptions, analysis, repetition count and Monte Carlo interval. Your explanation should address what it adds to the analytical calculation. You can also write a short hypothetical study abstract that distinguishes the planned design, realized results and interpretation, following the broader learning sequence used in DICE [@thiesmeier2024].
+
+Your project may involve estimation, a fixed dataset or dependent observations. The [study-design guide](#study-designs) should inform your choice of method. In [Activity: Build your own study calculation](https://katatam.github.io/sample-size-calculation/study/?activity=own_study), you can assess plausible assumptions and resource limits, then explain whether to proceed, collaborate, redesign or narrow the question. The [reproducibility record](#reproducibility-record) should accompany the result.
+
+
+
 ## Check your understanding {#check-appendix .unnumbered}
 
 ```{r quiz-appendix, echo=FALSE, results="asis"}
 render_chapter_quiz("appendix")
 ```
+
+# Test your understanding {#exercises .unnumbered .reference-heading}
+
+The cumulative quiz offers Core and Core + advanced options. Feedback links to the relevant explanations. The chapter checks remain available beside their teaching material.
+
+## Cumulative quiz {#cumulative-quiz .unnumbered}
+
+```{r quiz-all, echo=FALSE, results="asis"}
+render_chapter_quiz("all")
+```
+
+```{r prerequisite-help, echo=FALSE, results='asis'}
+cat(readLines("../student-materials/glossary.md", warn = FALSE, encoding = "UTF-8"), sep = "\n")
+```
+
+```{r misconceptions-help, echo=FALSE, results='asis'}
+cat(readLines("../student-materials/common-mistakes.md", warn = FALSE, encoding = "UTF-8"),
+  sep = "\n")
+```
+
 
 # References {-}
 

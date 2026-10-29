@@ -4,7 +4,7 @@ const assert=require('node:assert/strict');
 const base=(process.argv[2]||'http://127.0.0.1:8769').replace(/\/$/,'');
 let browser;
 (async()=>{
- browser=await chromium.launch({headless:true,channel:'msedge'});
+ browser=await chromium.launch({headless:true,...(process.platform==='win32'?{channel:'msedge'}:{})});
  const page=await browser.newPage();
  await page.goto(base+'/book/');
  for(const route of ['core-route','advanced-route']) {
@@ -17,11 +17,11 @@ let browser;
   }
  }
  await page.goto(base+'/book/power.html');
- assert(await page.locator('#alpha-beta .route-label.advanced').isVisible());
+ assert.equal(await page.locator('#alpha-beta').count(),0);
  const continuation=await page.locator('.chapter-end-nav .chapter-arrow-next').getAttribute('href');
  assert(continuation.includes('calculations'), 'The core route should skip error-region and simulation extensions');
  await page.goto(base+'/');
- assert((await page.locator('.start-route').first().getAttribute('href')).includes('#core-route'));
+ assert.equal(await page.locator('.start-route').first().getAttribute('href'),'book/');
  console.log('Learning routes passed: section targets, core continuation, advanced labels and student entry point.');
  await browser.close();
 })().catch(async e=>{console.error(e);if(browser)await browser.close();process.exit(1);});

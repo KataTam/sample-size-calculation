@@ -7,7 +7,7 @@
 <g class="roadmap-label" text-anchor="middle"><text x="480" y="36" class="roadmap-title">Roadmap</text>
 <text x="32" y="82" text-anchor="start" class="roadmap-title">Core</text>
 <a class="roadmap-block" href="https://katatam.github.io/sample-size-calculation/book/index.html#core-route" target="_blank" rel="noopener" aria-label="Core: Tutorial"><rect x="24" y="100" width="266" height="146" rx="12" fill="#dbeafa" stroke="#9bb9d6"/><text x="157" y="136" class="roadmap-title">Tutorial</text>
-<text x="157" y="174" class="roadmap-small">Basic study planning</text>
+<text x="157" y="174" class="roadmap-small">Chapters 1–4: study planning</text>
 <text x="157" y="202" class="roadmap-small">and calculations</text>
 </a>
 <a class="roadmap-block" href="https://katatam.github.io/sample-size-calculation/student-materials/activity-walkthroughs.html#chronic-pain-one-study-and-many-studies--core" target="_blank" rel="noopener" aria-label="Core: Activities"><rect x="347" y="100" width="266" height="146" rx="12" fill="#dbeafa" stroke="#9bb9d6"/><text x="480" y="136" class="roadmap-title">Activities</text>
@@ -21,7 +21,7 @@
 <g stroke="#64778a" stroke-width="2" fill="none" marker-start="url(#roadmap-arrow)" marker-end="url(#roadmap-arrow)"><path d="M300 173H337"/><path d="M623 173H660"/></g>
 <text x="32" y="302" text-anchor="start" class="roadmap-title">Advanced</text>
 <a class="roadmap-block" href="https://katatam.github.io/sample-size-calculation/book/index.html#advanced-route" target="_blank" rel="noopener" aria-label="Advanced: Tutorial"><rect x="24" y="320" width="266" height="146" rx="12" fill="#e9e0f5" stroke="#bba5d4"/><text x="157" y="356" class="roadmap-title">Tutorial</text>
-<text x="157" y="394" class="roadmap-small">Further planning methods</text>
+<text x="157" y="394" class="roadmap-small">Chapters 5–8: further methods</text>
 <text x="157" y="422" class="roadmap-small">and study designs</text>
 </a>
 <a class="roadmap-block" href="https://katatam.github.io/sample-size-calculation/student-materials/activity-walkthroughs.html#type-i-and-type-ii-error-probabilities-and-power--advanced" target="_blank" rel="noopener" aria-label="Advanced: Activities"><rect x="347" y="320" width="266" height="146" rx="12" fill="#e9e0f5" stroke="#bba5d4"/><text x="480" y="356" class="roadmap-title">Activities</text>

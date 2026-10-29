@@ -1,28 +1,63 @@
 (function () {
   // Preserve chapter links shared before the planning sections moved.
   function redirectMovedSection() {
-    if (!location.pathname.endsWith('/feasibility.html')) return false;
-    const destinations = {
-      'interpret-a-confidence-interval-clinically': 'power',
-      'tab:clinical-intervals': 'power',
-      'misconception-confidence-probability': 'power',
-      'misconception-power-precision': 'power',
-      'plan-for-precision': 'calculations',
-      'model-answer-precision-versus-power': 'calculations',
-      'tab:precision-plan': 'calculations',
-      'tab:precision-plan-formatted': 'calculations',
-      'prevalence': 'study-designs',
-      'eq:single-proportion': 'study-designs',
-      'tab:single-proportion-precision': 'study-designs'
-    };
+    if (!/\/book\/[\w-]+\.html$/.test(location.pathname)) return false;
+    const data = document.getElementById('moved-section-data');
+    if (!data) return false;
+    const destinations = JSON.parse(data.textContent);
     let anchor;
     try { anchor = decodeURIComponent(location.hash.slice(1)); } catch (_) { return false; }
-    if (!destinations[anchor]) return false;
+    if (!destinations[anchor] || location.pathname.endsWith('/' + destinations[anchor] + '.html')) return false;
     location.replace(new URL(destinations[anchor] + '.html' + location.search + location.hash, location.href));
     return true;
   }
   if (redirectMovedSection()) return;
   window.addEventListener('hashchange', redirectMovedSection);
+  // Follow heading IDs: Bookdown's text-based matching is affected by badges
+  // and heading controls. Only the selected branch exposes its deeper entries.
+  const contents = document.querySelector('.book-summary .summary');
+  if (contents) {
+    const currentPath = location.pathname.endsWith('/') ? location.pathname + 'index.html' : location.pathname;
+    const localEntries = Array.from(contents.querySelectorAll('li.chapter > a')).filter(a =>
+      new URL(a.href).pathname === currentPath);
+    function selectEntry(entry) {
+      contents.querySelectorAll('.reading-current').forEach(li => li.classList.remove('reading-current'));
+      localEntries.forEach(a => a.removeAttribute('aria-current'));
+      if (entry) { entry.parentElement.classList.add('reading-current'); entry.setAttribute('aria-current', 'location'); }
+    }
+    function entryFor(target) {
+      while (target) {
+        const entry = localEntries.find(a => decodeURIComponent(new URL(a.href).hash.slice(1)) === target.id);
+        if (entry) return entry;
+        target = target.parentElement?.closest('.section[id]');
+      }
+      return localEntries.find(a => !new URL(a.href).hash);
+    }
+    function selectHash() {
+      let id; try { id = decodeURIComponent(location.hash.slice(1)); } catch (_) { return; }
+      selectEntry(entryFor(document.getElementById(id)));
+    }
+    contents.addEventListener('click', event => {
+      const link = event.target.closest('a');
+      if (localEntries.includes(link)) selectEntry(link);
+    }, true);
+    let scrollFrame;
+    function followReading() {
+      if (scrollFrame) return;
+      scrollFrame = requestAnimationFrame(() => {
+        scrollFrame = null;
+        let current = document.querySelector('.page-inner .section.level1');
+        for (const heading of document.querySelectorAll('.page-inner h2, .page-inner h3')) {
+          if (heading.getClientRects().length && heading.getBoundingClientRect().top <= 120)
+            current = heading.closest('.section[id]');
+        }
+        selectEntry(entryFor(current));
+      });
+    }
+    document.querySelectorAll('.book-body, .body-inner').forEach(el => el.addEventListener('scroll', followReading, {passive:true}));
+    window.addEventListener('hashchange', selectHash);
+    selectHash();
+  }
   // Merge each advanced section heading with its native disclosure control.
   document.querySelectorAll('details.advanced-explanation').forEach(details => {
     const heading = details.previousElementSibling;

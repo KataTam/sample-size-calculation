@@ -87,8 +87,11 @@ body :where(h1,h2,h3,h4,h5,h6,summary,legend) :where(a,span,strong,b,code) { fon
 .activity-contents { margin: 1em 0; padding: .8em 1em; background: #dfedf7; border-radius: 5px; }
 .activity-contents li { margin: .35em 0; }
 .contents-route { display: inline-block; font-size: .78em; color: #465562; background: #e3eaf0; border-radius: 3px; padding: .1em .4em; margin-left: .3em; }
-/* Bookdown expands only the active chapter; keep all levels within it open. */
-.book-summary .summary > li.chapter > ul ul { display: block !important; }
+/* Bookdown opens the current chapter's sections. Deeper headings and activities
+   follow the selected section instead of expanding the entire chapter. */
+.book-summary .summary li.chapter > ul { display: none !important; }
+.book-summary .summary li.chapter.reading-current > ul,
+.book-summary .summary li.chapter:has(li.chapter.reading-current) > ul { display: block !important; }
 .book-summary .summary .activity-toc a { white-space: normal !important; text-overflow: clip !important; overflow: visible !important; font-size: 13px; line-height: 1.45; color: #17658a; padding-left: 20px; }
 .color-theme-2 .activity-contents { background: #263442; }
 .color-theme-2 .contents-route { color: #d6e4ef; background: #374957; }

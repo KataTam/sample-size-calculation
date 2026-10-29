@@ -5,7 +5,7 @@ const base=process.argv[2] || 'http://127.0.0.1:8769';
  const browser=await chromium.launch({headless:true,...(process.platform==='win32'?{channel:'msedge'}:{})});
  try {
  const page=await browser.newPage({viewport:{width:1200,height:900}});
- const order=['index','clinical-question','power','calculations','curves','simulation','feasibility','exercises','study-designs','glossary','common-mistakes','appendix','references'];
+ const order=['index','clinical-question','power','calculations','feasibility','curves','simulation','study-designs','appendix','exercises','glossary','common-mistakes','references'];
  const cases=Object.fromEntries(order.map((chapter,i)=>[chapter,[order[i-1],order[i+1]].filter(Boolean)]));
  for(const [chapter,expected] of Object.entries(cases)){
   await page.goto(`${base}/book/${chapter}.html`);
@@ -26,7 +26,7 @@ const base=process.argv[2] || 'http://127.0.0.1:8769';
  await page.locator('.chapter-end-nav').scrollIntoViewIfNeeded();
  await page.locator('.chapter-end-nav').screenshot({path:'build/browser-checks/chapter-navigation-mobile.png'});
  await page.locator('.chapter-arrow-next').click();
- await page.waitForURL('**/curves.html');
+ await page.waitForURL('**/feasibility.html');
  assert.equal(new URL(page.url()).hash,'');
  console.log('All 13 chapter arrow controls verified: destinations, accessible labels, placement and mobile navigation.');
  }finally{await browser.close();}

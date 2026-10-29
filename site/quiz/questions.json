@@ -1,14 +1,13 @@
 {
   "chapters": {
-    "clinical-question": "Chapter 1: Introduction",
-    "power": "Chapter 2: Statistical power",
-    "calculations": "Chapter 3: Calculate a sample size",
-    "curves": "Chapter 4: Power curves",
-    "simulation": "Chapter 5: Simulated clinical trials",
-    "feasibility": "Chapter 6: Recruitment and feasibility",
-    "exercises": "Chapter 7: Test your reasoning",
-    "study-designs": "Chapter 8: Study designs and planning methods",
-    "appendix": "Chapter 11: Reproducibility and open science"
+    "clinical-question": "Chapter 1: Research question and planning assumptions",
+    "power": "Chapter 2: Understanding power and uncertainty",
+    "calculations": "Chapter 3: Calculating sample size",
+    "feasibility": "Chapter 4: Recruitment and feasibility",
+    "curves": "Chapter 5: Exploring power and uncertain assumptions",
+    "simulation": "Chapter 6: Building and evaluating simulations",
+    "study-designs": "Chapter 7: Other study goals and designs",
+    "appendix": "Chapter 8: Reproducibility and open science"
   },
   "questions": [
     {
@@ -140,22 +139,6 @@
       "explanation": "Realized estimates vary between independently generated samples even when their population assumptions and designs are identical."
     },
     {
-      "id": "q08",
-      "chapter": "power",
-      "level": "advanced",
-      "section": "Precision of a simulation",
-      "link": "power.html#precision-of-a-simulation",
-      "question": "A simulation estimates power using 400 studies. Approximately how many studies would halve its Monte Carlo standard error, assuming similar estimated power?",
-      "options": [
-        "800",
-        "1,600",
-        "200",
-        "400 with twice as many patients per trial"
-      ],
-      "answer": 1,
-      "explanation": "Monte Carlo standard error is proportional to 1/sqrt(B) at a fixed rejection probability. Four times as many repetitions approximately halves it."
-    },
-    {
       "id": "q38",
       "chapter": "power",
       "level": "core",
@@ -252,20 +235,100 @@
       "explanation": "Normal approximations and t-test calculations handle sampling uncertainty differently. Methods and assumptions should be checked before comparing numerical outputs."
     },
     {
-      "id": "q23",
+      "id": "q25",
       "chapter": "calculations",
-      "level": "advanced",
-      "section": "Estimation with a precision target",
-      "link": "calculations.html#plan-for-precision",
-      "question": "What is specified when planning estimation with a precision target?",
+      "level": "core",
+      "section": "Discharge percentages",
+      "link": "calculations.html#discharge",
+      "question": "A service improves its discharge percentage from 40% to 50%. What is the relative increase?",
       "options": [
-        "The desired number of significant results",
-        "The probability that a fixed population parameter changes",
-        "A useful interval width and confidence level for the quantity being estimated",
-        "Only a p-value cutoff"
+        "25%",
+        "10%",
+        "50%",
+        "125%"
+      ],
+      "answer": 0,
+      "explanation": "The absolute change is 10 percentage points. Relative to the original 40%, the increase is 10/40 = 25%."
+    },
+    {
+      "id": "q21",
+      "chapter": "feasibility",
+      "level": "core",
+      "section": "Expected losses",
+      "link": "feasibility.html#account-for-expected-losses",
+      "question": "If 90 analyzable participants per group are required and 10% loss is expected, how many should be recruited per group?",
+      "options": [
+        "100",
+        "99",
+        "81",
+        "90"
+      ],
+      "answer": 0,
+      "explanation": "The calculation is 90 divided by 0.90, giving 100 per group. Adding 10% to 90 gives only 99; expected losses apply to the recruited count."
+    },
+    {
+      "id": "q42",
+      "chapter": "feasibility",
+      "level": "core",
+      "section": "Sensitivity to planning assumptions",
+      "link": "feasibility.html#stress-test-the-study-plan",
+      "question": "The assumed treatment difference becomes smaller while target power, the analysis and other inputs stay the same. How should the required sample size usually change?",
+      "options": [
+        "It increases because the smaller difference is harder to detect",
+        "It decreases because the treatments are more alike",
+        "It stays the same for every possible difference",
+        "It is determined by the number of simulation repetitions"
+      ],
+      "answer": 0,
+      "explanation": "A smaller true difference requires more patients to achieve the same power under otherwise comparable assumptions. The sensitivity comparison shows how this uncertainty affects the recruitment plan."
+    },
+    {
+      "id": "q45",
+      "chapter": "feasibility",
+      "level": "core",
+      "section": "Expected losses and missing outcomes",
+      "link": "feasibility.html#account-for-expected-losses",
+      "question": "A team increases recruitment to allow for losses, but participants without relief are more likely to have missing outcomes. What still needs attention?",
+      "options": [
+        "Only whether the final total is even",
+        "Changing the target difference to the observed benefit",
+        "Prevention, reasons for missingness, and an appropriate analysis with sensitivity analyses",
+        "Nothing, provided the recruitment target was met"
       ],
       "answer": 2,
-      "explanation": "Estimation concerns the population quantity; precision concerns uncertainty around its estimate. Interval width at a stated confidence level can guide planning."
+      "explanation": "Recruitment inflation helps preserve the expected analyzable count. Outcome-related missingness can still bias the available-case comparison, so the reasons and analysis assumptions need attention."
+    },
+    {
+      "id": "q26",
+      "chapter": "feasibility",
+      "level": "core",
+      "section": "Sample-size justification",
+      "link": "feasibility.html#write-a-sample-size-justification",
+      "question": "Which report best supports checking a sample-size result?",
+      "options": [
+        "Only the final total sample size",
+        "Only the name of a calculator",
+        "Only a statement that power exceeds 80%",
+        "The assumptions, evidence, method, allocation, analyzable counts and recruitment adjustment"
+      ],
+      "answer": 3,
+      "explanation": "A reproducible justification connects the clinical assumptions, procedure and numerical result. A final count alone leaves the reasoning and calculation unclear."
+    },
+    {
+      "id": "q27",
+      "chapter": "feasibility",
+      "level": "core",
+      "section": "Sensitivity and justification",
+      "link": "feasibility.html#write-a-sample-size-justification",
+      "question": "Two plausible sets of assumptions produce substantially different sample sizes. What should the justification do?",
+      "options": [
+        "Average the answers without justification",
+        "Treat the larger answer as evidence that its assumptions are true",
+        "Report the sensitivity and explain which assumptions support the chosen plan",
+        "Report only the smaller answer"
+      ],
+      "answer": 2,
+      "explanation": "The differences reveal uncertainty relevant to planning. The choice and its consequences need clinical and statistical justification."
     },
     {
       "id": "q13",
@@ -332,6 +395,54 @@
       "explanation": "The original assumptions should remain explicit while the attainable power, precision, feasibility, and alternative plans are assessed."
     },
     {
+      "id": "q41",
+      "chapter": "curves",
+      "level": "advanced",
+      "section": "What can the available sample establish?",
+      "link": "curves.html#available-sample",
+      "question": "A study can recruit at most 120 participants and expects 10% loss. What should guide the assessment of whether this cap is adequate?",
+      "options": [
+        "Whether 120 exceeds a universal minimum for clinical research",
+        "The power and precision attainable with about 108 analyzable participants, under justified assumptions",
+        "Whether the assumed benefit can be increased until the calculation fits",
+        "The power calculated from the effect observed after the study"
+      ],
+      "answer": 1,
+      "explanation": "The recruitment cap must first be translated into an expected analyzable count. Its usefulness depends on the research objective, planned analysis, and plausible population assumptions."
+    },
+    {
+      "id": "q28",
+      "chapter": "curves",
+      "level": "advanced",
+      "section": "A fixed total of 70 patients",
+      "link": "curves.html#a-fixed-total-of-70-patients",
+      "question": "A fixed-resource study produces an interval from a 2-point disadvantage to a 15-point benefit. The clinical threshold is a 10-point benefit. Which conclusion is justified?",
+      "options": [
+        "The treatment is equivalent to control",
+        "The interval still includes both disadvantage and clinically important benefit",
+        "The clinical threshold has been exceeded with confidence",
+        "The study rules out any worthwhile benefit"
+      ],
+      "answer": 1,
+      "explanation": "The interval spans zero and the clinical threshold. Its full range should inform interpretation. Equivalence requires prespecified margins and an appropriate analysis."
+    },
+    {
+      "id": "q08",
+      "chapter": "simulation",
+      "level": "advanced",
+      "section": "Precision of a simulation",
+      "link": "simulation.html#precision-of-a-simulation",
+      "question": "A simulation estimates power using 400 studies. Approximately how many studies would halve its Monte Carlo standard error, assuming similar estimated power?",
+      "options": [
+        "800",
+        "1,600",
+        "200",
+        "400 with twice as many patients per trial"
+      ],
+      "answer": 1,
+      "explanation": "Monte Carlo standard error is proportional to 1/sqrt(B) at a fixed rejection probability. Four times as many repetitions approximately halves it."
+    },
+    {
       "id": "q17",
       "chapter": "simulation",
       "level": "advanced",
@@ -396,27 +507,27 @@
       "explanation": "More repetitions reduce Monte Carlo uncertainty. Analytical-approximation error and the credibility of the population assumptions require separate assessment."
     },
     {
-      "id": "q21",
-      "chapter": "feasibility",
-      "level": "core",
-      "section": "Expected losses",
-      "link": "feasibility.html#account-for-expected-losses",
-      "question": "If 90 analyzable participants per group are required and 10% loss is expected, how many should be recruited per group?",
+      "id": "q23",
+      "chapter": "study-designs",
+      "level": "advanced",
+      "section": "Estimation with a precision target",
+      "link": "study-designs.html#plan-for-precision",
+      "question": "What is specified when planning estimation with a precision target?",
       "options": [
-        "100",
-        "99",
-        "81",
-        "90"
+        "The desired number of significant results",
+        "The probability that a fixed population parameter changes",
+        "A useful interval width and confidence level for the quantity being estimated",
+        "Only a p-value cutoff"
       ],
-      "answer": 0,
-      "explanation": "The calculation is 90 divided by 0.90, giving 100 per group. Adding 10% to 90 gives only 99; expected losses apply to the recruited count."
+      "answer": 2,
+      "explanation": "Estimation concerns the population quantity; precision concerns uncertainty around its estimate. Interval width at a stated confidence level can guide planning."
     },
     {
       "id": "q24",
-      "chapter": "feasibility",
+      "chapter": "study-designs",
       "level": "advanced",
       "section": "Planning a pilot or feasibility study",
-      "link": "feasibility.html#pilot-feasibility",
+      "link": "study-designs.html#pilot-feasibility",
       "question": "What is an appropriate primary planning focus for a pilot studying retention?",
       "options": [
         "Assuming a universal sample size applies to every pilot",
@@ -429,10 +540,10 @@
     },
     {
       "id": "q39",
-      "chapter": "feasibility",
+      "chapter": "study-designs",
       "level": "advanced",
       "section": "Rare diseases",
-      "link": "feasibility.html#rare-diseases",
+      "link": "study-designs.html#rare-diseases",
       "question": "How should a small available population in a rare disease influence planning?",
       "options": [
         "The team should increase the assumed benefit until the sample fits",
@@ -444,43 +555,11 @@
       "explanation": "Limited recruitment calls for realistic information targets and carefully justified design choices. Collaboration and efficient measurements may help; each option retains assumptions and limitations."
     },
     {
-      "id": "q41",
-      "chapter": "feasibility",
-      "level": "core",
-      "section": "What can the available sample establish?",
-      "link": "feasibility.html#available-sample",
-      "question": "A study can recruit at most 120 participants and expects 10% loss. What should guide the assessment of whether this cap is adequate?",
-      "options": [
-        "Whether 120 exceeds a universal minimum for clinical research",
-        "The power and precision attainable with about 108 analyzable participants, under justified assumptions",
-        "Whether the assumed benefit can be increased until the calculation fits",
-        "The power calculated from the effect observed after the study"
-      ],
-      "answer": 1,
-      "explanation": "The recruitment cap must first be translated into an expected analyzable count. Its usefulness depends on the research objective, planned analysis, and plausible population assumptions."
-    },
-    {
-      "id": "q42",
-      "chapter": "feasibility",
-      "level": "core",
-      "section": "Sensitivity to planning assumptions",
-      "link": "feasibility.html#stress-test-the-study-plan",
-      "question": "You have selected a sample size and want to know how that same study would perform if the true benefit were smaller. What should remain fixed?",
-      "options": [
-        "The selected sample size and analysis while the assumed true benefit varies",
-        "The power, by automatically increasing sample size for every alternative",
-        "The observed p-value",
-        "The result of every simulated study"
-      ],
-      "answer": 0,
-      "explanation": "This evaluates a fixed design under alternative assumptions. Recalculating the required sample for each benefit answers a separate planning question."
-    },
-    {
       "id": "q43",
-      "chapter": "feasibility",
+      "chapter": "study-designs",
       "level": "advanced",
       "section": "Reuse an existing dataset",
-      "link": "feasibility.html#dataset-reuse",
+      "link": "study-designs.html#dataset-reuse",
       "question": "A trial dataset is reused to estimate baseline sleep difficulty. Why is the original treatment-effect power calculation insufficient for this new question?",
       "options": [
         "Randomization guarantees a representative estimate of all patients",
@@ -490,86 +569,6 @@
       ],
       "answer": 1,
       "explanation": "The available sample is fixed, but the target quantity and intended conclusion have changed. Missing baseline information and the original eligibility criteria also affect what the estimate can establish."
-    },
-    {
-      "id": "q45",
-      "chapter": "feasibility",
-      "level": "core",
-      "section": "Expected losses and missing outcomes",
-      "link": "feasibility.html#account-for-expected-losses",
-      "question": "A team increases recruitment to allow for losses, but participants without relief are more likely to have missing outcomes. What still needs attention?",
-      "options": [
-        "Only whether the final total is even",
-        "Changing the target difference to the observed benefit",
-        "Prevention, reasons for missingness, and an appropriate analysis with sensitivity analyses",
-        "Nothing, provided the recruitment target was met"
-      ],
-      "answer": 2,
-      "explanation": "Recruitment inflation helps preserve the expected analyzable count. Outcome-related missingness can still bias the available-case comparison, so the reasons and analysis assumptions need attention."
-    },
-    {
-      "id": "q25",
-      "chapter": "exercises",
-      "level": "core",
-      "section": "Discharge percentages",
-      "link": "exercises.html#discharge",
-      "question": "A service improves its discharge percentage from 40% to 50%. What is the relative increase?",
-      "options": [
-        "25%",
-        "10%",
-        "50%",
-        "125%"
-      ],
-      "answer": 0,
-      "explanation": "The absolute change is 10 percentage points. Relative to the original 40%, the increase is 10/40 = 25%."
-    },
-    {
-      "id": "q26",
-      "chapter": "exercises",
-      "level": "core",
-      "section": "Sample-size justification",
-      "link": "exercises.html#write-a-sample-size-justification",
-      "question": "Which report best supports checking a sample-size result?",
-      "options": [
-        "Only the final total sample size",
-        "Only the name of a calculator",
-        "Only a statement that power exceeds 80%",
-        "The assumptions, evidence, method, allocation, analyzable counts and recruitment adjustment"
-      ],
-      "answer": 3,
-      "explanation": "A reproducible justification connects the clinical assumptions, procedure and numerical result. A final count alone leaves the reasoning and calculation unclear."
-    },
-    {
-      "id": "q27",
-      "chapter": "exercises",
-      "level": "core",
-      "section": "Sensitivity and justification",
-      "link": "exercises.html#write-a-sample-size-justification",
-      "question": "Two plausible sets of assumptions produce substantially different sample sizes. What should the justification do?",
-      "options": [
-        "Average the answers without justification",
-        "Treat the larger answer as evidence that its assumptions are true",
-        "Report the sensitivity and explain which assumptions support the chosen plan",
-        "Report only the smaller answer"
-      ],
-      "answer": 2,
-      "explanation": "The differences reveal uncertainty relevant to planning. The choice and its consequences need clinical and statistical justification."
-    },
-    {
-      "id": "q28",
-      "chapter": "exercises",
-      "level": "advanced",
-      "section": "A fixed total of 70 patients",
-      "link": "exercises.html#a-fixed-total-of-70-patients",
-      "question": "A fixed-resource study produces an interval from a 2-point disadvantage to a 15-point benefit. The clinical threshold is a 10-point benefit. Which conclusion is justified?",
-      "options": [
-        "The treatment is equivalent to control",
-        "The interval still includes both disadvantage and clinically important benefit",
-        "The clinical threshold has been exceeded with confidence",
-        "The study rules out any worthwhile benefit"
-      ],
-      "answer": 1,
-      "explanation": "The interval spans zero and the clinical threshold. Its full range should inform interpretation. Equivalence requires prespecified margins and an appropriate analysis."
     },
     {
       "id": "q29",
@@ -670,7 +669,7 @@
     {
       "id": "q33",
       "chapter": "appendix",
-      "level": "core",
+      "level": "advanced",
       "section": "Computational reproducibility",
       "link": "appendix.html#why-reproducibility-matters",
       "question": "What is computational reproducibility in this tutorial?",
@@ -686,7 +685,7 @@
     {
       "id": "q34",
       "chapter": "appendix",
-      "level": "core",
+      "level": "advanced",
       "section": "Open science",
       "link": "appendix.html#why-reproducibility-matters",
       "question": "Which approach supports open science for work involving confidential patient data?",
@@ -702,7 +701,7 @@
     {
       "id": "q35",
       "chapter": "appendix",
-      "level": "core",
+      "level": "advanced",
       "section": "Reproducibility records",
       "link": "appendix.html#reproducibility-record",
       "question": "What should accompany an exported numerical result?",
