@@ -128,6 +128,13 @@ def page(source, target):
         # Chapter numbering is supplied by Bookdown only in the tutorial.
         guide_text = re.sub(r"\(\\#(?:eq|tab):[^)]+\)\s*", "",
                             rendered_source.read_text(encoding="utf-8"))
+        # Keep figures usable in this unnumbered guide as well as in Bookdown.
+        guide_text = re.sub(r"Figure \\@ref\((fig:[^)]+)\)",
+                            r"[The illustration](#\1)", guide_text)
+        guide_text = re.sub(r"\(\\#(fig:[^)]+)\)",
+                            r'<span id="\1"></span>', guide_text)
+        guide_text = re.sub(r'src="([^"/]+_files/figure-html/[^\"]+)"',
+                            r'src="../book/\1"', guide_text)
     subprocess.run([pandoc, "-" if guide_text is not None else str(rendered_source), *citation_args,
         "--from=" + reader, "--to=html5", "--standalone",
         "--metadata", "pagetitle=" + title, "--css", css, "--mathjax", "--output", str(target)],

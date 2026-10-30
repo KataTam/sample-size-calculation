@@ -48,6 +48,12 @@ The number of measurements in a study does not necessarily equal the number of i
 
 These units may coincide, as in a trial where participants are individually randomized and each contributes one outcome. They can also differ. An analysis may use individual measurements while accounting for their grouping within hospitals or participants.
 
+Figure \@ref(fig:allocation-units) compares three allocation structures. The group boundaries show which measurements share a hospital or participant, and where the treatment comparison is made.
+
+```{r allocation-units, echo=FALSE, fig.width=8, fig.height=6.2, fig.cap="Individual, cluster and within-person randomization. Treatments A and B are assigned to individual participants, whole hospitals, or sites within participants. The analysis and sample size calculation should reflect this allocation structure and dependence among measurements. The symbols are schematic; actual sample sizes require a design-specific calculation.", fig.alt="Three designs. In individual randomization, separate participants receive A or B and contribute independent outcomes. In cluster randomization, all illustrated participants in hospital 1 receive A and those in hospital 2 receive B; analysis accounts for dependence within hospitals. In within-person randomization, each participant has one site receiving A and another receiving B; the analysis compares outcomes within participant pairs."}
+draw_allocation_units()
+```
+
 ### Treatment assigned to groups {.advanced-heading}
 
 In a cluster-randomized trial, treatment is assigned to whole groups, such as hospitals or schools. This can be useful when an intervention changes clinic practice or when individual allocation could lead to contamination between treatment groups. Outcomes may still be measured in individual participants, but participants in the same cluster often have more similar outcomes than participants in different clusters. The analysis and sample size calculation should account for this dependence [@campbell2012consort].

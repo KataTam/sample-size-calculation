@@ -35,6 +35,7 @@ source("../R/tutorial_helpers.R")
 source("../R/teaching_cases.R")
 source("../R/question_map.R")
 source("../R/quiz_helpers.R")
+source("../R/tutorial_diagrams.R")
 ```
 
 # Welcome {-}
@@ -193,7 +194,11 @@ The event probability here is the assumed probability of pain relief at four wee
 
 Table: (\#tab:pain-planning-values) Three distinct decisions for the chronic pain trial.
 
-The three values in Table \@ref(tab:pain-planning-values) answer different questions. The smaller target difference reflects uncertainty in this pilot estimate. Its choice requires justification from the available evidence. Your choice should be supported by relevant evidence and an examination of plausible alternatives. Absolute differences should be expressed in percentage points. A generic description of an effect as small, medium or large is insufficient justification [@caldwell2020].
+Figure \@ref(fig:planning-differences) places the three values in Table \@ref(tab:pain-planning-values) on the same scale. They answer different questions. The smaller target difference reflects uncertainty in this pilot estimate. Its choice requires justification from the available evidence. Your choice should be supported by relevant evidence and an examination of plausible alternatives. Absolute differences should be expressed in percentage points. A generic description of an effect as small, medium or large is insufficient justification [@caldwell2020].
+
+```{r planning-differences, echo=FALSE, fig.width=8, fig.height=4.2, fig.cap="Expected difference, target difference and clinical threshold for the hypothetical chronic pain trial. All three describe population differences between treatment groups, expressed in percentage points. Their values may coincide in other studies.", fig.alt="Three quantities on a common scale for novel minus standard treatment: the expected difference is 40 percentage points, the best current expectation; the target difference is 30 points, used to evaluate power; the clinical threshold is 20 points, the smallest benefit judged worthwhile."}
+draw_planning_differences()
+```
 
 Choosing 30 rather than 20 percentage points has a consequence: a study planned for high power at 30 will generally have lower power at a 20-point benefit, even though that smaller benefit matters clinically. For this illustration, suppose the team considers a 30-point benefit realistic and large enough to support adopting the treatment. Its plan must acknowledge that a 20-point benefit could remain inconclusive. If reliably detecting the smallest worthwhile benefit is essential, evaluate the sample required at 20 instead. Affordability alone is not a justification for choosing a larger target [@cook2018delta2].
 
@@ -845,6 +850,12 @@ knitr::kable(display_probabilities(discharge, c("control", "treatment", "power")
 
 The treatment percentages are 96%, 90% and 96%. The approximate totals are `r paste(discharge$total, collapse = ", ")`, respectively. Each per-group count is rounded up before doubling for the total. The expected difference remains 18 points and the [clinical threshold](#clinical-threshold) remains 8 points in each comparison.
 
+Figure \@ref(fig:discharge-grids) shows how the relative increase in Plans A and C and the absolute increase in Plan B translate into discharge percentages.
+
+```{r discharge-grids, echo=FALSE, fig.width=8, fig.height=5.3, fig.cap="Discharge percentages in illustrative groups of 100 patients. A 20% relative increase from 80% gives 96%; an increase of 10 percentage points gives 90%. The grids display assumed percentages; the sample size calculation determines how many patients the study requires.", fig.alt="Three grids of 100 squares. Standard care has 80 discharged and 20 not discharged. A 20% relative increase adds 16 discharges, giving 96 of 100. An increase of 10 percentage points adds 10 discharges, giving 90 of 100."}
+draw_discharge_grids()
+```
+
 <details class="misconception" id="misconception-percentage-points">
 <summary>Common misconception: percentages and percentage points are interchangeable</summary>
 
@@ -957,6 +968,12 @@ Your sample size assumptions should reflect the treatment changes expected in yo
 | Death before a planned assessment | Specify how death enters the research question and outcome definition. A pain score after death is undefined; the study design and analysis need an explicit approach. |
 
 Table: (\#tab:anticipated-events) Anticipated events and their implications for sample size planning. Treatment changes and events such as death require an approach matched to the research question [@iche9r1].
+
+Figure \@ref(fig:treatment-followup) separates treatment received from outcome availability within each randomized group. Either treatment path can lead to a recorded or missing final outcome.
+
+```{r treatment-followup, echo=FALSE, fig.width=8, fig.height=5.3, fig.cap="Treatment switching and outcome availability are separate aspects of follow-up. Each randomized group includes patients who receive their assigned treatment or switch to the other treatment; either path can have a recorded or missing outcome. For a question about the effect of treatment assignment, analysis follows the randomized groups.", fig.alt="Two parallel flows retain the novel and standard randomized groups. Within each group, patients may receive the assigned treatment or switch to the other treatment. Both treatment paths lead to the same two possible assessment statuses: outcome recorded or outcome missing. Follow-up should continue after treatment changes."}
+draw_treatment_followup()
+```
 
 <details class="advanced-explanation" id="treatment-switching">
 <summary>Allowing for treatment switching</summary>
@@ -1451,6 +1468,12 @@ The custom-simulation approach in chapter 15 of @superpowerbook2022 starts from 
 [Activity: Simulate repeated chronic pain trials](https://katatam.github.io/sample-size-calculation/study/?activity=pain_simulation) to connect these four steps with one study and repeated studies in the app. The prepared batch and app use the same sample size and analysis.
 
 This extends the core simulation: the question is now whether the analysis has useful power, confidence interval coverage and interval width under the specified population. The activity opens in *Many studies*. You can first select *One study* to follow one generated dataset through its analysis, then return to *Many studies* and run 5,000 repetitions. Each trial contains 60 patients per group; the simulation repeats that trial 5,000 times.
+
+Figure \@ref(fig:simulation-loop) shows how these repetitions surround the generation and analysis of one trial. The population assumptions and analysis stay fixed while each repetition generates new patient outcomes.
+
+```{r simulation-loop, echo=FALSE, fig.width=8, fig.height=5.2, fig.cap="The simulation repeats a complete trial and its analysis 5,000 times. Each trial contains 60 patients per group. Changing the patients per group changes the study design; increasing the repetitions improves the precision of the estimated simulation performance.", fig.alt="A loop connects four steps. Generate one trial with 60 patients per group under standard and novel relief probabilities of 30% and 60%. Analyze its difference, confidence interval and p-value. Repeat generation and analysis for 5,000 independent trials. Summarize power, confidence interval coverage and width across those trials."}
+draw_simulation_loop()
+```
 
 ### Step 1: generate one trial {.advanced-heading}
 
