@@ -390,13 +390,52 @@ To interpret one trial, you can compare its confidence interval with both zero a
 
 The estimated difference summarizes the treatment comparison. Its interval shows uncertainty around that estimate under the analysis assumptions. At the same confidence level, a narrower interval gives a more precise estimate. Three hypothetical 95% intervals illustrate the possible clinical conclusions:
 
-| Interval for the difference in relief | Clinical conclusion and explanation |
-|:--|:--|
-| 2 to 28 percentage points | Evidence of benefit; its clinical importance remains uncertain. The interval excludes zero and includes benefits below and above the 20-point threshold. |
-| -8 to 32 percentage points | An inconclusive comparison. Some harm, no difference, small benefits and clinically important benefits remain compatible with the data. |
-| 22 to 42 percentage points | The interval supports a benefit above the clinical threshold. All values in the interval exceed 20 percentage points, under the analysis assumptions. |
+```{r clinical-intervals, echo=FALSE}
+clinical_intervals <- data.frame(
+  lower_pp = c(2, -8, 22),
+  upper_pp = c(28, 32, 42),
+  interpretation = c(
+    "Evidence of benefit; its clinical importance remains uncertain. The interval excludes zero and includes benefits below and above the 20-point threshold.",
+    "An inconclusive comparison. Some harm, no difference, small benefits and clinically important benefits remain compatible with the data.",
+    "The interval supports a benefit above the clinical threshold. All values in the interval exceed 20 percentage points, under the analysis assumptions."),
+  plot_label = c("Benefit; clinical\nimportance uncertain",
+    "Inconclusive\ncomparison", "Benefit above\nclinical threshold"))
+knitr::kable(data.frame(
+  `Interval for the difference in relief` = paste(clinical_intervals$lower_pp,
+    "to", clinical_intervals$upper_pp, "percentage points"),
+  `Clinical conclusion and explanation` = clinical_intervals$interpretation,
+  check.names = FALSE),
+  caption = "Hypothetical 95% intervals for novel minus standard treatment, compared with zero and a 20-percentage-point clinical threshold.")
+```
 
-Table: (\#tab:clinical-intervals) Hypothetical 95% intervals for novel minus standard treatment, compared with zero and a 20-percentage-point clinical threshold.
+Figure \@ref(fig:clinical-interval-plot) places the intervals in Table \@ref(tab:clinical-intervals) on the same scale. Positive differences favor the novel treatment. You can see whether each interval crosses zero, crosses the clinical threshold, or lies entirely above it.
+
+```{r clinical-interval-plot, echo=FALSE, fig.width=8, fig.height=4.6, fig.cap="Three hypothetical 95% confidence intervals on a common scale. The solid vertical line marks no between-group difference; the dashed line marks the 20-percentage-point clinical threshold. Each horizontal bar spans the stated interval limits.", fig.alt="Three horizontal confidence intervals for novel minus standard treatment. The interval from 2 to 28 percentage points excludes zero but crosses the clinical threshold of 20. The interval from minus 8 to 32 crosses both zero and 20. The interval from 22 to 42 lies entirely above 20."}
+par(mar = c(5, 9.1, 4.3, 1), las = 1, bg = "white",
+  fg = "#26343d", col.axis = "#26343d", col.lab = "#26343d")
+plot(NA, xlim = c(-12, 48), ylim = c(.55, 3.55),
+  xaxs = "i", yaxs = "i", axes = FALSE, xlab = "", ylab = "")
+interval_rows <- 3:1
+abline(h = interval_rows, col = "#e5e9ec", lwd = 1)
+abline(v = 0, col = "#4b5560", lwd = 1.5)
+abline(v = 20, col = "#72428b", lwd = 1.8, lty = 2)
+axis(1, at = seq(-10, 40, 10), cex.axis = .95)
+mtext("Difference in pain-relief percentages", side = 1, line = 2.4)
+mtext("Novel minus standard treatment (percentage points)", side = 1,
+  line = 3.6, cex = .85)
+text(c(0, 20), 3.67, c("No difference\n0", "Clinical threshold\n20"),
+  adj = c(.5, 0), cex = .85, xpd = NA)
+text(-14, interval_rows, clinical_intervals$plot_label,
+  adj = 1, cex = .9, xpd = NA)
+segments(clinical_intervals$lower_pp, interval_rows,
+  clinical_intervals$upper_pp, interval_rows,
+  col = "#17658a", lwd = 3, lend = "butt")
+for (limits in list(clinical_intervals$lower_pp, clinical_intervals$upper_pp)) {
+  segments(limits, interval_rows - .09, limits, interval_rows + .09,
+    col = "#17658a", lwd = 2)
+  text(limits, interval_rows + .19, labels = limits, cex = .85)
+}
+```
 
 For a 95% confidence interval and its corresponding two-sided test, excluding zero corresponds to statistical significance at the 5% level. A test and interval calculated by different methods can disagree near that boundary. The binary app uses a score test and a Newcombe-Wilson interval, so their decisions need not match exactly; the [methods record](#tutorial-methods) explains their roles. Clinical interpretation also depends on where the interval lies relative to the worthwhile-benefit threshold.
 
