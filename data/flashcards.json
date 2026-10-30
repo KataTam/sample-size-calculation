@@ -344,7 +344,7 @@
       "id": "C049",
       "level": "core",
       "front": "What is the approximate per-group sample size formula for two means with equal allocation and common SD?",
-      "back": "n ≈ f(α, β) × 2σ²/δ², where σ is the common SD and δ is the target mean difference.",
+      "back": "n ≈ M × 2σ²/δ², where M is the error-probability and power multiplier, σ is the common SD, and δ is the target mean difference.",
       "source": "https://katatam.github.io/sample-size-calculation/book/calculations.html"
     },
     {
@@ -512,7 +512,7 @@
       "id": "A013",
       "level": "advanced",
       "front": "What is the normal-approximation sample size multiplier for a two-sided test?",
-      "back": "f(α, β) = (z[1 − α/2] + z[1 − β])². The brackets denote quantile subscripts. At 5% Type I error probability and 90% power, the multiplier is approximately 10.51.",
+      "back": "M = (z[1 − α/2] + z[1 − β])². The brackets denote quantile subscripts. At 5% Type I error probability and 90% power, the multiplier is approximately 10.51.",
       "source": "https://katatam.github.io/sample-size-calculation/book/calculations.html#how-error-rates-and-power-affect-sample-size"
     },
     {

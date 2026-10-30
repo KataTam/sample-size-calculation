@@ -45,7 +45,7 @@ PASS 2022 comparison status: NOT RUN. No external PASS result is claimed in this
 
 For each external check, save the software version, procedure, inputs, unrounded sample size where available, rounded analyzable counts per group, recruitment adjustment, output/report and reason for any discrepancy. Do not require agreement between different tests merely because both compare proportions.
 
-G*Power is also a possible reference for methods it supports. It has a statistical manual, a short tutorial and methodological publications; excluding a walkthrough from the core module is a teaching choice, not a lack of documentation. G*Power is free to use, though that is different from providing open reusable source code. [Official G*Power documentation and terms](https://www.psychologie.hhu.de/arbeitsgruppen/allgemeine-psychologie-und-arbeitspsychologie/gpower)
+The tutorial's expandable advanced example, [Beware of your assumptions in G*Power](../book/calculations.html#gpower-assumptions), uses the existing 3-unit target difference and SD 5 to distinguish Cohen's d = 0.60 from Cohen's f = 0.30. Its counts and power are reproduced in R with noncentral t and F distributions for two independent, equally sized groups, a common SD and no covariate adjustment. The example also records the matching G*Power procedures. The software's manual, introductory tutorial and methodological publications provide further details. [Official G*Power documentation and terms](https://www.psychologie.hhu.de/arbeitsgruppen/allgemeine-psychologie-und-arbeitspsychologie/gpower)
 
 ## Reporting a study plan
 

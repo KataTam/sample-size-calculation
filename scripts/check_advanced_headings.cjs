@@ -13,10 +13,11 @@ const base=process.argv[2]||'http://127.0.0.1:8769';
   for(const id of expected[chapter]||[])assert.equal(await p.locator('[id="'+id+'"]').count(),1,id);
   if(i<4) {
     const disclosures=p.locator('.page-inner details.advanced-explanation');
-    assert.equal(await disclosures.count(),chapter==='feasibility'?1:0,'Only the optional switching explanation belongs beside core recruitment');
-    if(chapter==='feasibility') {
-      assert.equal(await disclosures.getAttribute('id'),'treatment-switching');
-      assert.equal(await disclosures.getAttribute('open'),null,'Switching explanation starts collapsed');
+    const optional={calculations:'gpower-assumptions',feasibility:'treatment-switching'}[chapter];
+    assert.equal(await disclosures.count(),optional?1:0,'Optional advanced explanations stay beside their related core calculation');
+    if(optional) {
+      assert.equal(await disclosures.getAttribute('id'),optional);
+      assert.equal(await disclosures.getAttribute('open'),null,'Advanced explanation starts collapsed');
     }
   }
  }

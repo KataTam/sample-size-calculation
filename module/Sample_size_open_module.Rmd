@@ -448,7 +448,7 @@ for (limits in list(clinical_intervals$lower_pp, clinical_intervals$upper_pp)) {
 }
 ```
 
-For a 95% confidence interval and its corresponding two-sided test, excluding zero corresponds to statistical significance at the 5% level. A test and interval calculated by different methods can disagree near that boundary. The binary app uses a score test and a Newcombe-Wilson interval, so their decisions need not match exactly; the [methods record](#tutorial-methods) explains their roles. Clinical interpretation also depends on where the interval lies relative to the worthwhile-benefit threshold.
+For a 95% confidence interval and its corresponding two-sided test, an interval that excludes zero indicates statistical significance at the 5% level. Clinical interpretation also depends on whether the interval lies below, crosses, or lies entirely above the clinical threshold.
 
 These intervals concern the population-level difference between groups; see [Between-group differences and individual benefit](#between-group-differences) for the implications for individual patients.
 
@@ -567,10 +567,10 @@ Having specified the chronic pain target difference and acceptable error risks, 
 
 Your sample size calculation needs to account for two choices: the acceptable Type I error probability and the target power. A lower Type I error probability requires stronger evidence before concluding that the treatments differ. Higher power means a greater probability of detecting the target difference if it is the true population difference. Both generally require more patients when the other assumptions remain unchanged.
 
-For the normal-approximation formulas below, these choices are combined into a sample size multiplier:
+For the normal-approximation formulas below, these choices are combined into a sample size multiplier, $M$:
 
 \begin{equation}
-f(\alpha,\beta)=\left(z_{1-\alpha/2}+z_{1-\beta}\right)^2.
+M=\left(z_{1-\alpha/2}+z_{1-\beta}\right)^2.
 (\#eq:multiplier)
 \end{equation}
 
@@ -589,11 +589,11 @@ This multiplier combines the chosen error probabilities and power. The sample si
 ```{r multiplier}
 alpha <- .05
 target_power <- .90
-f_ab <- (qnorm(1 - alpha / 2) + qnorm(target_power))^2
-f_ab
+M <- (qnorm(1 - alpha / 2) + qnorm(target_power))^2
+M
 ```
 
-For a Type I error probability of 5% and target power of 90%, the multiplier is `r round(f_ab, 2)`.
+For a Type I error probability of 5% and target power of 90%, the multiplier is $M=$ `r round(M, 2)`.
 
 ```{r multiplier-table, echo=FALSE}
 grid <- expand.grid(alpha = c(.05, .01), power = c(.80, .90, .95))
@@ -704,10 +704,10 @@ Under these assumptions, the required recruitment total is `r 2 * adjust_for_dro
 
 For a continuous outcome, you should identify the target difference and the [standard deviation](#standard-deviation) in the same measurement units before calculating.
 
-In the formula below, $n$ is the number of patients needed in each group, $\delta$ is the target difference between the group means, and $\sigma$ is the assumed SD of individual scores within each group. The calculation assumes the same SD in both groups. The multiplier $f(\alpha,\beta)$ combines the error-probability and power choices explained above:
+In the formula below, $n$ is the number of patients needed in each group, $\delta$ is the target difference between the group means, and $\sigma$ is the assumed SD of individual scores within each group. The calculation assumes the same SD in both groups. The multiplier $M$ combines the error-probability and power choices explained above:
 
 \begin{equation}
-n\approx f(\alpha,\beta)\frac{2\sigma^2}{\delta^2}.
+n\approx M\frac{2\sigma^2}{\delta^2}.
 (\#eq:means)
 \end{equation}
 
@@ -716,7 +716,7 @@ Suppose comparable evidence suggests a 4-unit [expected difference](#expected-di
 ```{r means}
 delta <- 3
 sigma <- 5
-n_per_group <- ceiling(f_ab * 2 * sigma^2 / delta^2)
+n_per_group <- ceiling(M * 2 * sigma^2 / delta^2)
 c(per_group = n_per_group, total = 2 * n_per_group)
 ```
 
@@ -767,6 +767,65 @@ knitr::kable(data.frame(Method=c("Normal approximation", "Planned two-sample t t
 For your protocol, you should use the calculation that matches the planned analysis. The two methods give different counts because they use different statistical approximations. You should round upward within each group before doubling the count; recruitment losses are considered separately.
 
 Your study plan should record the input values, software or formula, whether the test is one-sided or two-sided, allocation and rounded counts.
+
+<details class="advanced-explanation" id="gpower-assumptions">
+<summary>Beware of your assumptions in G*Power</summary>
+
+The continuous-outcome example above illustrates why you should understand each software input. The target difference between group means is 3 score units, the common within-group SD is 5, allocation is equal, the two-sided Type I error probability is 5%, and target power is 90%. The expected difference remains 4 units and the clinical threshold remains 2 units.
+
+[G\*Power](https://www.psychologie.hhu.de/arbeitsgruppen/allgemeine-psychologie-und-arbeitspsychologie/gpower) asks for different effect-size measures depending on the selected analysis [@faul2007]. For an independent-samples t test, Cohen's $d$ expresses the target difference relative to the common within-group SD:
+
+\[
+d=\frac{3}{5}=0.60.
+\]
+
+The one-way analysis of variance (ANOVA) procedure asks for Cohen's $f$. It describes the spread of the group means around their overall mean, relative to the within-group SD. With two equally sized groups, a common SD and no covariate adjustment, the group means each lie half the between-group difference from their overall mean. Consequently [@gpowermanual2023]:
+
+\[
+f=\frac{d}{2}=\frac{0.60}{2}=0.30.
+\]
+
+The letter beside the effect-size field changes which value you should enter. Table \@ref(tab:gpower-effect-sizes) shows the consequence of entering $d$ in a field that expects $f$.
+
+```{r gpower-calculation}
+gpower_d <- delta / sigma
+gpower_f <- gpower_d / 2
+anova_power <- function(n_per_group, f) {
+  df_error <- 2 * n_per_group - 2
+  pf(qf(1 - alpha, df1 = 1, df2 = df_error),
+    df1 = 1, df2 = df_error, ncp = 2 * n_per_group * f^2,
+    lower.tail = FALSE)
+}
+anova_n <- function(f) {
+  candidates <- 2:1000
+  candidates[which(anova_power(candidates, f) >= target_power)[1]]
+}
+gpower_correct_n <- anova_n(gpower_f)
+gpower_wrong_n <- anova_n(gpower_d)
+gpower_actual_power <- anova_power(gpower_wrong_n, gpower_f)
+```
+
+```{r gpower-effect-sizes, echo=FALSE}
+knitr::kable(data.frame(
+  Calculation = c("Two-sided independent-samples t test",
+    "Equivalent two-group one-way ANOVA",
+    "ANOVA with d mistakenly entered as f"),
+  `Effect-size input` = c("Correct: d = 0.60", "Correct: f = 0.30",
+    "Incorrect: f = 0.60"),
+  `Analyzable per group` = c(ceiling(t_plan$n), gpower_correct_n,
+    gpower_wrong_n), check.names = FALSE),
+  caption = "Required analyzable patients per group for a 3-unit target difference and SD 5: correctly specified effect sizes and a mistaken input. All calculations use a 5% Type I error probability, 90% target power and equal allocation.")
+```
+
+Entering $0.60$ in the $f$ field makes the software plan for a difference twice as large as intended: 6 units instead of 3. The resulting sample of `r gpower_wrong_n` patients per group would have approximately `r round(100 * gpower_actual_power)`% power to detect the intended 3-unit difference. The expected difference and clinical threshold are unchanged.
+
+These counts were calculated in R using the corresponding noncentral t and F distributions and rounded upward to equal group sizes. They exclude recruitment losses. In G\*Power, the matching procedures are *Means: Difference between two independent means (two groups)* under *t tests*, and *ANOVA: Fixed effects, omnibus, one-way* under *F tests*. Both use an *A priori* calculation; the t test uses two tails and allocation ratio 1, while the ANOVA uses two groups.
+
+Before using a result, you should check that the selected procedure matches the planned analysis and that each input has the meaning the software expects. Recording the target difference and SD in their original units makes the calculation easier to check. The [methods and software record](#tutorial-methods) explains what to retain.
+
+For a planned analysis of covariance (ANCOVA), baseline adjustment introduces further assumptions about how the covariates relate to the outcome and how much variation remains after adjustment. The effect-size input should reflect that analysis. The simple $f=d/2$ conversion above applies to the stated unadjusted two-group comparison. The FDA's guidance discusses planning and prespecifying covariate adjustment [@fda2023covariates].
+
+</details>
 
 <details>
 <summary>Why calculation methods can give different answers</summary>
