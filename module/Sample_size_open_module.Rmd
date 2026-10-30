@@ -115,6 +115,12 @@ Suppose you are planning a trial of a novel pain treatment against standard trea
 
 You plan to randomly allocate patients to two [independent groups](#independent-groups) of equal size. The primary outcome is pain relief at four weeks: yes or no. A small pilot found relief in 7 of 10 patients receiving the novel treatment and 3 of 10 receiving standard treatment: 70% versus 30%, an observed difference of 40 [percentage points](#percentage-points).
 
+Figure \@ref(fig:pain-pilot-patients) illustrates these pilot results.
+
+```{r pain-pilot-patients, echo=FALSE, fig.width=8, fig.height=4.7, fig.cap="Illustration of the hypothetical pilot: ten patients per treatment group start with pain. Downward arrows lead to their outcomes at four weeks. Green figures with raised arms indicate reported pain relief; red figures indicate no reported relief at follow-up. The counts describe this small pilot sample.", fig.alt="Two treatment groups, each shown before treatment and after a downward arrow marking four weeks. All ten patients in each group start red, indicating pain. In the novel-treatment group, seven of ten become green with raised arms, indicating reported pain relief, and three remain red. In the standard-treatment group, three of ten become green and seven remain red: 70% versus 30% reporting relief."}
+draw_pain_pilot_patients()
+```
+
 This looks promising, but twenty patients give you limited information. How many patients would make the main trial informative? In what follows, you will build a plan step by step, then examine what different repetitions of that study could show.
 
 This first section focuses on two-arm randomized superiority trials: patients are assigned by chance to one of two treatment groups, and the aim is to investigate whether one treatment performs better than the other. Later chapters extend the reasoning to other outcomes, estimation, existing datasets and other study designs.

@@ -18,6 +18,45 @@ diagram_arrow <- function(x0, y0, x1, y1, ...) {
     col = "#596773", ...)
 }
 
+draw_pain_pilot_patients <- function() {
+  old <- par(no.readonly = TRUE)
+  on.exit(par(old))
+  diagram_canvas()
+  pain <- "#b43c36"
+  relief <- "#21834a"
+  person <- function(x, y, improved = FALSE) {
+    color <- if (improved) relief else pain
+    points(x, y + 5, pch = 16, cex = 1.15, col = color)
+    segments(x, y + 2.5, x, y - 3, col = color, lwd = 2.2)
+    segments(x, y + 1, x + c(-1.25, 1.25),
+      y + if (improved) 3.2 else -1.5, col = color, lwd = 2.2)
+    segments(x, y - 3, x + c(-1.2, 1.2), y - 6.5,
+      col = color, lwd = 2.2)
+  }
+  centers <- c(25, 75)
+  responders <- c(7L, 3L)
+  text(centers, 96, c("Novel treatment", "Standard treatment"),
+    font = 2, cex = 1.12)
+  text(50, 86, "Before treatment: all 10 patients in each group have pain", cex = 1)
+  segments(50, 23, 50, 79, col = "#e0e5e9")
+  for (group in 1:2) {
+    positions <- centers[group] + seq(-20, 20, length.out = 10)
+    for (i in 1:10) {
+      person(positions[i], 72)
+      person(positions[i], 33, improved = i <= responders[group])
+    }
+    diagram_arrow(centers[group], 61, centers[group], 47)
+  }
+  # Arm position and printed counts supplement the red/green color coding.
+  rect(43, 50, 57, 58, col = "white", border = NA)
+  text(50, 54, "4 weeks", cex = 1.02)
+  text(centers, 19, sprintf("%d of 10 (%d%%) report pain relief",
+    responders, 10L * responders), cex = 1)
+  points(c(15, 57), c(6, 6), pch = 16, cex = 1, col = c(pain, relief))
+  text(c(18, 60), c(6, 6), c("Pain / no reported relief", "Reported pain relief"),
+    adj = 0, cex = .92)
+}
+
 draw_planning_differences <- function() {
   old <- par(no.readonly = TRUE)
   on.exit(par(old))
