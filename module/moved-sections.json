@@ -42,5 +42,7 @@
   "misconception-power-precision": "power",
   "prevalence": "study-designs",
   "eq:single-proportion": "study-designs",
-  "tab:single-proportion-precision": "study-designs"
+  "tab:single-proportion-precision": "study-designs",
+  "gpower-assumptions": "appendix",
+  "tab:gpower-effect-sizes": "appendix"
 }

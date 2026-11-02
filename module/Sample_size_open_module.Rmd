@@ -768,64 +768,7 @@ For your protocol, you should use the calculation that matches the planned analy
 
 Your study plan should record the input values, software or formula, whether the test is one-sided or two-sided, allocation and rounded counts.
 
-<details class="advanced-explanation" id="gpower-assumptions">
-<summary>Beware of your assumptions in G*Power</summary>
-
-The continuous-outcome example above illustrates why you should understand each software input. The target difference between group means is 3 score units, the common within-group SD is 5, allocation is equal, the two-sided Type I error probability is 5%, and target power is 90%. The expected difference remains 4 units and the clinical threshold remains 2 units.
-
-[G\*Power](https://www.psychologie.hhu.de/arbeitsgruppen/allgemeine-psychologie-und-arbeitspsychologie/gpower) asks for different effect-size measures depending on the selected analysis [@faul2007]. For an independent-samples t test, Cohen's $d$ expresses the target difference relative to the common within-group SD:
-
-\[
-d=\frac{3}{5}=0.60.
-\]
-
-The one-way analysis of variance (ANOVA) procedure asks for Cohen's $f$. It describes the spread of the group means around their overall mean, relative to the within-group SD. With two equally sized groups, a common SD and no covariate adjustment, the group means each lie half the between-group difference from their overall mean. Consequently [@gpowermanual2023]:
-
-\[
-f=\frac{d}{2}=\frac{0.60}{2}=0.30.
-\]
-
-The letter beside the effect-size field changes which value you should enter. Table \@ref(tab:gpower-effect-sizes) shows the consequence of entering $d$ in a field that expects $f$.
-
-```{r gpower-calculation}
-gpower_d <- delta / sigma
-gpower_f <- gpower_d / 2
-anova_power <- function(n_per_group, f) {
-  df_error <- 2 * n_per_group - 2
-  pf(qf(1 - alpha, df1 = 1, df2 = df_error),
-    df1 = 1, df2 = df_error, ncp = 2 * n_per_group * f^2,
-    lower.tail = FALSE)
-}
-anova_n <- function(f) {
-  candidates <- 2:1000
-  candidates[which(anova_power(candidates, f) >= target_power)[1]]
-}
-gpower_correct_n <- anova_n(gpower_f)
-gpower_wrong_n <- anova_n(gpower_d)
-gpower_actual_power <- anova_power(gpower_wrong_n, gpower_f)
-```
-
-```{r gpower-effect-sizes, echo=FALSE}
-knitr::kable(data.frame(
-  Calculation = c("Two-sided independent-samples t test",
-    "Equivalent two-group one-way ANOVA",
-    "ANOVA with d mistakenly entered as f"),
-  `Effect-size input` = c("Correct: d = 0.60", "Correct: f = 0.30",
-    "Incorrect: f = 0.60"),
-  `Analyzable per group` = c(ceiling(t_plan$n), gpower_correct_n,
-    gpower_wrong_n), check.names = FALSE),
-  caption = "Required analyzable patients per group for a 3-unit target difference and SD 5: correctly specified effect sizes and a mistaken input. All calculations use a 5% Type I error probability, 90% target power and equal allocation.")
-```
-
-Entering $0.60$ in the $f$ field makes the software plan for a difference twice as large as intended: 6 units instead of 3. The resulting sample of `r gpower_wrong_n` patients per group would have approximately `r round(100 * gpower_actual_power)`% power to detect the intended 3-unit difference. The expected difference and clinical threshold are unchanged.
-
-These counts were calculated in R using the corresponding noncentral t and F distributions and rounded upward to equal group sizes. They exclude recruitment losses. In G\*Power, the matching procedures are *Means: Difference between two independent means (two groups)* under *t tests*, and *ANOVA: Fixed effects, omnibus, one-way* under *F tests*. Both use an *A priori* calculation; the t test uses two tails and allocation ratio 1, while the ANOVA uses two groups.
-
-Before using a result, you should check that the selected procedure matches the planned analysis and that each input has the meaning the software expects. Recording the target difference and SD in their original units makes the calculation easier to check. The [methods and software record](#tutorial-methods) explains what to retain.
-
-For a planned analysis of covariance (ANCOVA), baseline adjustment introduces further assumptions about how the covariates relate to the outcome and how much variation remains after adjustment. The effect-size input should reflect that analysis. The simple $f=d/2$ conversion above applies to the stated unadjusted two-group comparison. The FDA's guidance discusses planning and prespecifying covariate adjustment [@fda2023covariates].
-
-</details>
+Established software can help with straightforward calculations when its procedure and inputs match your study. The advanced [software and statistical support guide](#software-support) reviews free and paid options and explains when early advice from a statistician is useful. Its [worked example](#gpower-assumptions) shows how an effect-size input can change the result.
 
 <details>
 <summary>Why calculation methods can give different answers</summary>
@@ -1787,6 +1730,7 @@ After this section, you should be able to:
 - Explain why transparent documentation supports checking and reuse of study plans.
 - Record the inputs, procedures and software needed to reproduce a calculation or simulation.
 - Distinguish computational reproducibility from replication with new data.
+- Choose software suited to the planned analysis and recognize when statistical advice is useful.
 - Compare software results using matching methods and assumptions.
 :::
 
@@ -1797,6 +1741,97 @@ A sample-size result is useful when another researcher can understand how it was
 Here, computational reproducibility means obtaining consistent results using the same inputs, computational procedures and conditions. Replicability concerns whether studies collecting new data to address the same scientific question produce consistent findings. These definitions follow @nas2019. Reproducing a calculation helps establish that its implementation can be checked. Its assumptions and the suitability of the study design still require scientific judgment.
 
 Open science supports scrutiny and reuse by making research methods, outputs and supporting resources accessible. A shared protocol, analysis code, documented assumptions and an identified software version help others understand and build on your work. Data access should respect consent, confidentiality and other legitimate restrictions [@unesco2021]. The synthetic examples here allow you to explore and share the computational workflow without using patient records.
+
+## Software and statistical support {#software-support .advanced-heading}
+
+For straightforward calculations, such as comparing two independent group means or percentages, established software can help you calculate sample size and explore alternative assumptions. Your choice should reflect the study design, planned analysis, and inputs you can justify. Table \@ref(tab:software-options) summarizes options with different combinations of calculations, explanations, and graphical displays.
+
+<details id="software-options">
+<summary>Software options</summary>
+
+| Resource | Access | Main use |
+|:--|:--|:--|
+| [G\*Power](https://www.psychologie.hhu.de/arbeitsgruppen/allgemeine-psychologie-und-arbeitspsychologie/gpower), [WebPower](https://webpower.psychstat.org/wiki/models/index), and [PAMLj for jamovi](https://pamlj.github.io/) | Free | Power and sample-size calculations for common statistical analyses; the available procedures differ between programs. |
+| [Superpower](https://aaroncaldwell.us/SuperpowerBook/) | Free | Planning factorial experiments using means, SDs, and correlations, with simulations and accompanying explanations [@lakenscaldwell2021]. |
+| [presize](https://github.com/dcr-unibe-ch/presize) | Free | Planning sample size around the desired width of a confidence interval. |
+| [PASS](https://www.ncss.com/software/pass/) | Paid | Dedicated software covering a broad range of power and precision calculations, with documentation of procedures, assumptions, and worked examples [@pass2022]. |
+| [nQuery](https://www.statsols.com/) | Paid | Dedicated clinical-trial planning software, including fixed, adaptive, and Bayesian designs; availability depends on the edition. |
+| [Stata](https://www.stata.com/features/overview/power-and-sample-size/), [SAS](https://support.sas.com/documentation/cdl/en/statug/66103/HTML/default/statug_power_overview.htm), and [IBM SPSS Statistics](https://www.ibm.com/docs/en/spss-statistics/30.0.0?topic=features-power-analysis) | Licensed statistical software | Power and sample-size procedures within an analysis environment your institution may already provide. |
+
+Table: (\#tab:software-options) Selected software for power, sample-size, and precision planning. Available procedures depend on the program, version, and edition.
+
+</details>
+
+The documentation for the version you use should identify the procedure and its assumptions. Your report should record that version and the selected settings so the calculation can be checked.
+
+Real studies often involve additional decisions. Early consultation with a statistician is especially useful when:
+
+- observations are related, as in repeated measurements, crossover studies, or participants grouped within clinics;
+- the study involves several primary outcomes, multiple comparisons, interim analyses, or non-inferiority or equivalence objectives;
+- the target difference or variability is uncertain, recruitment is limited, or missing outcomes and treatment switching may affect the analysis.
+
+Involving a statistician while the research question and protocol are still being developed can help you choose a suitable design and analysis, justify the planning assumptions, and identify information you need to collect. These decisions can prevent costly changes later. Clinical-trial guidance emphasizes statistical collaboration, documentation of assumptions, and investigation of their consequences [@iche91998; @cook2018delta2]. The example below illustrates why the meaning of a software input deserves the same attention as its numerical value.
+
+### Beware of your assumptions in every calculation tool or software you use {#gpower-assumptions .advanced-heading}
+
+Every calculation depends on the selected method and the meaning of its inputs. The [continuous-outcome example](#two-means) illustrates this using G\*Power. The target difference between group means is 3 score units, the common within-group SD is 5, allocation is equal, the two-sided Type I error probability is 5%, and target power is 90%. The expected difference remains 4 units and the clinical threshold remains 2 units.
+
+[G\*Power](https://www.psychologie.hhu.de/arbeitsgruppen/allgemeine-psychologie-und-arbeitspsychologie/gpower) asks for different effect-size measures depending on the selected analysis [@faul2007]. For an independent-samples t test, Cohen's $d$ expresses the target difference relative to the common within-group SD:
+
+\[
+d=\frac{3}{5}=0.60.
+\]
+
+The one-way analysis of variance (ANOVA) procedure asks for Cohen's $f$. It describes the spread of the group means around their overall mean, relative to the within-group SD. With two equally sized groups, a common SD and no covariate adjustment, the group means each lie half the between-group difference from their overall mean. Consequently [@gpowermanual2023]:
+
+\[
+f=\frac{d}{2}=\frac{0.60}{2}=0.30.
+\]
+
+The letter beside the effect-size field changes which value you should enter. Table \@ref(tab:gpower-effect-sizes) shows the consequence of entering $d$ in a field that expects $f$.
+
+```{r gpower-calculation}
+gpower_inputs <- list(difference = 3, sd = 5, alpha = .05, power = .90)
+gpower_d <- gpower_inputs$difference / gpower_inputs$sd
+gpower_f <- gpower_d / 2
+gpower_t_plan <- stats::power.t.test(
+  delta = gpower_inputs$difference, sd = gpower_inputs$sd,
+  sig.level = gpower_inputs$alpha, power = gpower_inputs$power,
+  type = "two.sample", alternative = "two.sided", strict = TRUE)
+anova_power <- function(n_per_group, f) {
+  df_error <- 2 * n_per_group - 2
+  pf(qf(1 - gpower_inputs$alpha, df1 = 1, df2 = df_error),
+    df1 = 1, df2 = df_error, ncp = 2 * n_per_group * f^2,
+    lower.tail = FALSE)
+}
+anova_n <- function(f) {
+  candidates <- 2:1000
+  candidates[which(anova_power(candidates, f) >= gpower_inputs$power)[1]]
+}
+gpower_correct_n <- anova_n(gpower_f)
+gpower_wrong_n <- anova_n(gpower_d)
+gpower_actual_power <- anova_power(gpower_wrong_n, gpower_f)
+```
+
+```{r gpower-effect-sizes, echo=FALSE}
+knitr::kable(data.frame(
+  Calculation = c("Two-sided independent-samples t test",
+    "Equivalent two-group one-way ANOVA",
+    "ANOVA with d mistakenly entered as f"),
+  `Effect-size input` = c("Correct: d = 0.60", "Correct: f = 0.30",
+    "Incorrect: f = 0.60"),
+  `Analyzable per group` = c(ceiling(gpower_t_plan$n), gpower_correct_n,
+    gpower_wrong_n), check.names = FALSE),
+  caption = "Required analyzable patients per group for a 3-unit target difference and SD 5: correctly specified effect sizes and a mistaken input. All calculations use a 5% Type I error probability, 90% target power and equal allocation.")
+```
+
+Entering $0.60$ in the $f$ field makes the software plan for a difference twice as large as intended: 6 units instead of 3. The resulting sample of `r gpower_wrong_n` patients per group would have approximately `r round(100 * gpower_actual_power)`% power to detect the intended 3-unit difference. The expected difference and clinical threshold are unchanged.
+
+These counts were calculated in R using the corresponding noncentral t and F distributions and rounded upward to equal group sizes. They exclude recruitment losses. In G\*Power, the matching procedures are *Means: Difference between two independent means (two groups)* under *t tests*, and *ANOVA: Fixed effects, omnibus, one-way* under *F tests*. Both use an *A priori* calculation; the t test uses two tails and allocation ratio 1, while the ANOVA uses two groups.
+
+Before using a result, you should check that the selected procedure matches the planned analysis and that each input has the meaning the software expects. Recording the target difference and SD in their original units makes the calculation easier to check. The [methods and software record](#tutorial-methods) explains what to retain.
+
+For a planned analysis of covariance (ANCOVA), baseline adjustment introduces further assumptions about how the covariates relate to the outcome and how much variation remains after adjustment. The effect-size input should reflect that analysis. The simple $f=d/2$ conversion above applies to the stated unadjusted two-group comparison. The FDA's guidance discusses planning and prespecifying covariate adjustment [@fda2023covariates].
 
 ## What a reproducible justification contains {#reproducibility-record .advanced-heading}
 

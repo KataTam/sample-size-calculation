@@ -3,7 +3,7 @@ const base=process.argv[2]||'http://127.0.0.1:8769';
 (async()=>{const b=await chromium.launch({headless:true,...(process.platform==='win32'?{channel:'msedge'}:{})});try{
  const p=await b.newPage({viewport:{width:1400,height:1000}});
  const order=['clinical-question','power','calculations','feasibility','curves','simulation','study-designs','appendix'];
- const expected={power:[],calculations:[],feasibility:[],curves:['critical-observed-difference','alpha-beta','available-sample','a-fixed-total-of-70-patients'],simulation:['precision-of-a-simulation','discharge-simulation'], 'study-designs':['plan-for-precision','dataset-reuse','rare-diseases','pilot-feasibility'],appendix:['own-study']};
+ const expected={power:[],calculations:[],feasibility:[],curves:['critical-observed-difference','alpha-beta','available-sample','a-fixed-total-of-70-patients'],simulation:['precision-of-a-simulation','discharge-simulation'], 'study-designs':['plan-for-precision','dataset-reuse','rare-diseases','pilot-feasibility'],appendix:['own-study','software-support','gpower-assumptions']};
  for(const [i,chapter] of order.entries()){
   await p.goto(base+'/book/'+chapter+'.html',{waitUntil:'networkidle'});
   const heading=p.locator('.page-inner .section.level1 > h1');
@@ -13,7 +13,7 @@ const base=process.argv[2]||'http://127.0.0.1:8769';
   for(const id of expected[chapter]||[])assert.equal(await p.locator('[id="'+id+'"]').count(),1,id);
   if(i<4) {
     const disclosures=p.locator('.page-inner details.advanced-explanation');
-    const optional={calculations:'gpower-assumptions',feasibility:'treatment-switching'}[chapter];
+    const optional={feasibility:'treatment-switching'}[chapter];
     assert.equal(await disclosures.count(),optional?1:0,'Optional advanced explanations stay beside their related core calculation');
     if(optional) {
       assert.equal(await disclosures.getAttribute('id'),optional);
@@ -26,7 +26,7 @@ const base=process.argv[2]||'http://127.0.0.1:8769';
   assert.equal(await p.locator('.page-inner h1 .header-section-number').count(),0);
   assert.equal(await p.locator('.page-inner .learning-goals, .page-inner .chapter-recap').count(),0);
  }
- for(const [old,anchor,chapter] of [['power','alpha-beta','curves'],['power','eq:mcse','simulation'],['calculations','plan-for-precision','study-designs'],['feasibility','dataset-reuse','study-designs'],['exercises','discharge','calculations'],['exercises','own-study','appendix']]){
+ for(const [old,anchor,chapter] of [['power','alpha-beta','curves'],['power','eq:mcse','simulation'],['calculations','plan-for-precision','study-designs'],['feasibility','dataset-reuse','study-designs'],['exercises','discharge','calculations'],['exercises','own-study','appendix'],['calculations','gpower-assumptions','appendix'],['calculations','tab:gpower-effect-sizes','appendix']]){
   await p.goto(base+'/book/'+old+'.html#'+anchor);
   await p.waitForURL('**/'+chapter+'.html#'+anchor);
   assert(await p.locator('[id="'+anchor+'"]').isVisible());
