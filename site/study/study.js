@@ -10,10 +10,12 @@
   const site = new URL('../', location.href);
   let cases = {}, anchors = {}, selected = '', engine = '', ready = false, state = null;
   let queuedActivity = null;
+  const narrow = matchMedia('(max-width: 900px)');
   const allowedApps = new Set(['power_explorer', 'prevalence_precision', 'sampling_distributions', 'assumptions_report', 'design_questionnaire']);
   const send = value => app.contentWindow.postMessage(value, location.origin);
   function setView(view) {
     if (!['lesson', 'app', 'both'].includes(view)) return;
+    if (view === 'both' && narrow.matches) view = 'app';
     document.body.dataset.view = view;
     document.querySelectorAll('button[data-view]').forEach(button => button.setAttribute('aria-pressed', String(button.dataset.view === view)));
   }
@@ -45,6 +47,7 @@
     if (engine !== record.app || !engine) {
       engine = record.app;
       ready = false;
+      status.hidden = false;
       const targetApp = new URL(engine + '/', site);
       targetApp.searchParams.set('activity', id);
       targetApp.searchParams.set('guided', '1');
@@ -54,6 +57,7 @@
       send({type: 'sample-size:activity', activity: id, reset});
       queuedActivity = null;
       status.textContent = 'App loaded. Chapter navigation keeps the app open.';
+      status.hidden = true;
     }
     updateSeparate();
   }
@@ -74,6 +78,7 @@
       if (queuedActivity) send({type: 'sample-size:activity', ...queuedActivity});
       queuedActivity = null;
       status.textContent = 'App loaded. Chapter navigation keeps the app open.';
+      status.hidden = true;
     } else if (message.type === 'sample-size:state' && message.state && typeof message.state === 'object') {
       state = message.state;
       updateSeparate();
@@ -82,6 +87,7 @@
   lesson.addEventListener('load', () => {
     try {
       const doc = lesson.contentDocument;
+      doc.querySelector('.book')?.classList.remove('with-summary');
       lessonSeparate.href = lesson.contentWindow.location.href;
       // Content links open separately. Chapter navigation still stays in this pane.
       if (doc.defaultView.sampleSizeLinks) doc.defaultView.sampleSizeLinks.apply(doc);
@@ -90,6 +96,8 @@
   selector.addEventListener('change', () => openActivity(selector.value));
   document.getElementById('reset').addEventListener('click', () => openActivity(selected, true));
   document.querySelectorAll('button[data-view]').forEach(button => button.addEventListener('click', () => setView(button.dataset.view)));
+  narrow.addEventListener('change', () => { if (narrow.matches && document.body.dataset.view === 'both') setView('app'); });
+  if (narrow.matches) setView('app');
   document.getElementById('close-app-panel').addEventListener('click', () => {
     setView('lesson');
     // Keep the iframe and its answers alive; return focus to a visible control.
@@ -144,5 +152,5 @@
       });
       const requested = new URL(location.href).searchParams.get('activity');
       openActivity(cases[requested] ? requested : 'pain_one_many');
-    }).catch(error => { status.textContent = 'The activities could not be loaded. Open the lesson or app separately.'; console.error(error); });
+    }).catch(error => { status.hidden = false; status.textContent = 'The activities could not be loaded. Open the lesson or app separately.'; console.error(error); });
 })();

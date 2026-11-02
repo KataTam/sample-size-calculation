@@ -1,3 +1,16 @@
+# Shared presentation for optional guidance and readable calculator results.
+activity_help <- function(...) {
+  content <- shiny::tagList(...)
+  if (nchar(gsub("<[^>]+>", "", as.character(content))) <= 140)
+    return(shiny::helpText(...))
+  shiny::tags$details(class = "activity-help", shiny::tags$summary("Help"), shiny::tags$p(...))
+}
+activity_details <- function(title, ...) shiny::tags$details(class = "activity-details", shiny::tags$summary(title), ...)
+activity_count_result <- function(x) shiny::tags$div(class = "calculation-result",
+  shiny::tags$p(paste(x$n_per_group, "participants per group for analysis")),
+  shiny::tags$p(paste(x$total_n, "participants in total for analysis")),
+  if (x$dropout_rate > 0) shiny::tags$p(paste("Recruitment target:", x$total_with_dropout, "in total")))
+
 # Browser activity links and portable study plans. Statistical methods live in
 # sample_size_functions.R; these helpers validate UI state before applying it.
 lab_input_defaults <- function() list(
@@ -175,6 +188,8 @@ activity_bridge_script <- function(app = "power_explorer") {
   typography.textContent += '\n.irs-single,.irs-from,.irs-to{background:#205b89!important;color:#fff!important}.help-block{color:#555}a{color:#17547b}p a,.help-block a,label a{text-decoration:underline} :focus-visible{outline:3px solid #a45115;outline-offset:3px} pre{white-space:pre-wrap;overflow-wrap:anywhere}';
   document.documentElement.lang='en';
   document.head.append(typography);
+  typography.textContent += '\nsummary{display:list-item}summary::marker{color:#3263a0}.form-control,.btn{font-size:inherit}';
+  typography.textContent += '\nbody{font-size:17px;line-height:1.55}p{max-width:72ch}details.activity-details,details.activity-help{margin:1rem 0;border-top:1px solid #c4d2df;padding:.25rem .5rem}summary{cursor:pointer;min-height:44px;padding:.6rem .2rem;font-weight:600}details p{margin:.65rem 0}button,.btn{min-height:44px;white-space:normal}input,select,textarea{max-width:100%}.calculation-result{padding:1rem;background:#e3effa;border-left:4px solid #3263a0;margin:1rem 0}.calculation-result p{margin:.3rem 0}.guided .app-intro,.guided .activity-picker,.guided .activity-context,.guided .app-title{display:none}.well{background:#f6f8fa}.activity-question{padding:1rem 0;border-top:1px solid #c4d2df} .activity-question p{margin:.5rem 0}';
   const frames = [];
   let current = window, context = null, origin = null, siteRoot = null;
   while (current) {
@@ -183,6 +198,7 @@ activity_bridge_script <- function(app = "power_explorer") {
       if (/^https?:$/.test(url.protocol)) {
         if (origin && url.origin !== origin) break;
         origin = url.origin;
+        if (url.searchParams.get('guided') === '1') document.documentElement.classList.add('guided');
         if (!context && (url.searchParams.has('activity') || url.searchParams.has('state') ||
           new URLSearchParams(url.hash.slice(1)).has('state'))) context = url;
         if (!siteRoot && new RegExp('/' + app + '/(?:index\\.html)?$').test(url.pathname)) siteRoot = new URL('../', url).href;
@@ -192,6 +208,13 @@ activity_bridge_script <- function(app = "power_explorer") {
       current = current.parent;
     } catch (_) { break; }
   }
+  document.addEventListener('DOMContentLoaded', () => {
+    document.querySelector('.container-fluid > h2')?.classList.add('app-title');
+  });
+  // Closed plots need to be measured again when their disclosure opens.
+  document.addEventListener('toggle', event => {
+    if (event.target.open) window.dispatchEvent(new Event('resize'));
+  }, true);
   let connected = false, startupApplied = false;
   // Relative lesson/app links must use the public shell, not an inner webR URL.
   const resolveLinks = () => {

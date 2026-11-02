@@ -28,10 +28,10 @@ Apps are interactive software. Activities provide questions and exercises to hel
 
 - [Study-design questionnaire](design_questionnaire/): consider designs suited to your research question. [Activity: Which study design fits your question?](study/?activity=design_questionnaire).
 
-The reasoning lab has core and advanced activities. The [activity walkthroughs](student-materials/activity-walkthroughs.html) provide guidance for each one, including pilot retention, precision and recruitment scenarios.
+The reasoning lab has core and advanced activities. Core activities start with advanced controls closed; “Settings” provides the other assumptions. The study-plan report uses expandable sections and an optional preview. The [activity walkthroughs](student-materials/activity-walkthroughs.html) provide guidance for each one, including pilot retention, precision and recruitment scenarios.
 
 ## Tutorial beside the app
 
-Activity links open the tutorial and app together. You can drag the divider to adjust their widths, or use its Left and Right arrow keys. “Close app panel” returns to the tutorial at full width. “Tutorial + app” reopens the app with your current entries and results retained while the page stays open.
+Activity links open the tutorial and app together. You can drag the divider to adjust their widths, or use its Left and Right arrow keys. “Close app panel” returns to the tutorial at full width. “Tutorial + app” reopens the app with your current entries and results retained while the page stays open. On narrow screens, “Tutorial” and “App” switch between full-width panels.
 
 [Back to the start page](./)

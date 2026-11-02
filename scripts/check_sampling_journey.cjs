@@ -4,7 +4,8 @@ const assert=require('node:assert/strict');
  const browser=await chromium.launch({headless:true,...(process.platform==='win32'?{channel:'msedge'}:{})});
  try {
  const page=await browser.newPage({viewport:{width:1500,height:1100},reducedMotion:'reduce'});
- await page.goto('http://127.0.0.1:8769/study/?activity=pain_one_many');
+ const errors=[];page.on('console',message=>{if(message.type()==='error' && /unexpected state|Error on client while running Shiny/.test(message.text())) errors.push(message.text());});
+ await page.goto((process.argv[2]||'http://127.0.0.1:8769').replace(/\/$/,'')+'/study/?activity=pain_one_many');
  let f;
  for(let i=0;i<150;i++){
   f=page.frames().find(x=>x.url().includes('__shinylive'));
@@ -14,12 +15,17 @@ const assert=require('node:assert/strict');
  }
  assert(f,'App frame loaded');
  await f.waitForFunction(()=>document.querySelector('#fixed_n').value==='20');
+ await f.waitForFunction(()=>document.querySelector('#scenario_summary').textContent.includes('standard 30%; novel 60%'));
+ assert.equal(await f.locator('#show_advanced').isChecked(),false);
+ assert.equal(await f.locator('#lab-settings').getAttribute('open'),null);
  await f.waitForFunction(()=>document.querySelector('#combined-many-studies'));
  assert.equal(await f.locator('#combined-many-studies #run_many').count(),1);
  assert(!await f.locator('a[data-value="Many studies"]').isVisible());
  await f.locator('#run_one').click();
  await f.waitForFunction(()=>document.querySelector('#sampling-journey svg'));
  assert(await f.locator('#journey-motion').isChecked());
+ await f.getByText('Numerical results and interval methods',{exact:true}).click();
+ await f.locator('#one_result table').waitFor();
  await f.locator('#journey-pause').click();
  const text=await f.locator('#sampling-journey').innerText();
  assert(text.includes('trial 1 of 1'));
@@ -47,6 +53,7 @@ const assert=require('node:assert/strict');
  await f.waitForFunction(()=>document.querySelector('#sampling-journey').textContent.includes('trial 2 of 20'));
  await f.locator('#journey-pause').click();
  await f.locator('#sampling-journey').screenshot({path:'build/browser-checks/sampling-journey.png'});
+ await f.locator('#combined-many-studies > summary').click();
  await f.locator('#run_many').click();
  await f.waitForFunction(()=>document.querySelector('#many_summary').textContent.includes('significant'));
  await f.locator('#fixed_n').fill('50');await f.locator('#fixed_n').press('Tab');
@@ -56,6 +63,7 @@ const assert=require('node:assert/strict');
  await page.locator('select').filter({has:page.locator('option[value="pain_curves"]')}).selectOption('pain_curves');
  await f.waitForFunction(()=>!document.querySelector('#combined-many-studies'));
  assert(await f.locator('a[data-value="Many studies"]').isVisible());
+ assert.deepEqual(errors,[],'Simulation output updates should complete without client-state errors.');
  console.log('Animation tests passed: actual counts, reduced motion, pause, replay, repeated trials, stale assumptions and reset.');
  } finally {await browser.close();}
 })().catch(e=>{console.error(e);process.exit(1)});

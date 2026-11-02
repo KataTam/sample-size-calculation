@@ -86,11 +86,13 @@
       const onePanel=document.querySelector(oneLink.getAttribute('href')), manyPanel=document.querySelector(manyLink.getAttribute('href'));
       let combined=el('combined-many-studies');
       if(payload.combine && !combined){
-        combined=document.createElement('section');combined.id='combined-many-studies';
-        combined.append(...manyPanel.childNodes);onePanel.append(combined);
+        combined=document.createElement('details');combined.id='combined-many-studies';combined.className='activity-details';
+        const summary=document.createElement('summary');summary.textContent='Many studies and a larger sample';
+        const content=document.createElement('div');content.className='combined-content';content.append(...manyPanel.childNodes);
+        combined.append(summary,content);onePanel.append(combined);
         const credit=el('journey-credit');if(credit)onePanel.append(credit);
       } else if(!payload.combine && combined){
-        manyPanel.append(...combined.childNodes);combined.remove();
+        manyPanel.append(...combined.querySelector('.combined-content').childNodes);combined.remove();
       }
       oneLink.textContent=payload.combine?'One study and many studies':'One study';
       manyLink.parentElement.hidden=payload.combine;

@@ -14,11 +14,11 @@ The expected difference records your best expectation. With “Same as planning 
 
 Purpose: connect the calculation to a clinical question, evidence and a defensible recommendation.
 
-1. You can select the study structure, outcome and planning goal, then describe the question and why it matters.
+1. “Question and design” opens first. You can describe the research question, outcome and design, with “Study settings” available for the structure, outcome type and planning goal.
 2. Your assumptions should include their sources and uncertainty. For a treatment comparison, the expected difference, target difference and clinical threshold have separate roles.
 3. After using an appropriate calculator, you can enter its method, analyzable sample and recruitment allowance. A simulation result should include its generating assumptions and repetition count.
-4. The report on the right assembles your entries. You should review it for missing information and distinguish a numerical result from your interpretation.
-5. “Save entries” preserves an editable file; “Download report” saves the written report. The pain-relief example illustrates a completed starting point. You can begin with the question in Chapter 1, add decisions as the tutorial progresses, and record what changed and why in your final justification.
+4. “Preview report” brings your completed entries together. “Still to complete” lists open decisions. The downloaded report retains unanswered items explicitly.
+5. “Save entries” preserves an editable file; “Download report” in the preview saves the written report. “Files, example and help” contains the example and file-opening controls. The pain-relief example illustrates a completed starting point. You can begin with the question in Chapter 1, add decisions as the tutorial progresses, and record what changed and why in your final justification.
 
 ## Chronic pain: one study and many studies — core
 
@@ -29,8 +29,8 @@ Purpose: see why sample estimates differ from population values, interpret the u
 1. The starting population has 30% relief with standard treatment and 60% with novel treatment, with 20 analyzable patients per group and a 5% Type I error probability.
 2. In “One study and many studies,” “Simulate one study” generates patient outcomes. You can compare the observed percentages, difference and interval with the specified population values. The animation follows the patient outcomes into the estimated difference and then the sampling distribution. “Animate 20 trials” builds a short sequence; pause, replay and reduced motion support closer inspection. Each accumulated dot represents one complete trial.
 3. The 20-trial animation shows different possible trials while the population probabilities remain fixed. For each interval, you can compare the compatible differences with zero and the 20-percentage-point clinical threshold, following the [interval interpretation](../book/power.html#interpret-a-confidence-interval-clinically).
-4. Further down the same page, “Simulate many studies” generates 5,000 independent trials. The distribution shows sampling variability; the percentage of significant results estimates power for this population scenario.
-5. Before repeating at 50 and 80 patients per group, you can predict how the estimates, intervals and power will change, holding the population assumptions and repetition count fixed. Larger trials usually give narrower intervals and greater power. Coverage and Monte Carlo summaries can wait until the advanced chapter.
+4. “Many studies and a larger sample” opens further down the same page. “Simulate many studies” generates 5,000 independent trials. The distribution shows sampling variability; the percentage of significant results estimates power for this population scenario.
+5. Before repeating at 50 and 80 patients per group, you can predict how the estimates, intervals and power will change, holding the population assumptions and repetition count fixed. Larger trials usually give narrower intervals and greater power. “Settings” provides the other assumptions. Advanced controls start closed; coverage and Monte Carlo summaries can wait until the advanced chapter.
 
 ## Type I and Type II error probabilities and power — advanced
 
@@ -63,7 +63,7 @@ Purpose: connect a preventive treatment question to event coding, recruitment fe
 
 1. The favorable event is remaining free of gestational diabetes: 80% without probiotics and 90% with probiotics. These correspond to disease percentages of 20% and 10%. The expected difference is 12 percentage points, target difference 10 and clinical threshold 5.
 2. In “Explore assumptions,” you can compare the planned count and 15% loss allowance with the recruitment limit of 240.
-3. With advanced controls visible, “Custom effect or variability” lets you keep control at 80% but change the simulation's treatment probability to 85%. The original planning probabilities stay at 80% and 90%.
+3. With Settings open and advanced controls visible, “Custom effect or variability” lets you keep control at 80% but change the simulation's treatment probability to 85%. The original planning probabilities stay at 80% and 90%.
 4. “One study” gives a possible result; “Many studies” estimates power under the smaller 5-point true benefit at the original sample size. You should rerun after changing assumptions.
 5. Your explanation should distinguish a less favorable true population from a newly calculated study plan. These scenarios use hypothetical teaching assumptions.
 
@@ -98,7 +98,7 @@ Purpose: assess whether the feasible study can answer the intended question unde
 
 1. The activity fixes the analyzable sample at 90 per group: 200 recruited with 10% expected loss gives 180 expected analyzable participants.
 2. “Explore assumptions” shows analytical curves for the 30-point target difference and smaller 20- and 15-point differences. You can compare their power with the 90% target.
-3. With advanced controls visible, a custom simulation scenario of control 30% and treatment 50% or 45% keeps the original sample fixed while changing the true difference.
+3. With Settings open and advanced controls visible, a custom simulation scenario of control 30% and treatment 50% or 45% keeps the original sample fixed while changing the true difference.
 4. “Many studies” estimates power from generated patient data for the selected scenario.
 5. Your recommendation should address what the recruitment ceiling could establish and the uncertainty in the assumptions. Power for a test of zero difference depends on the true difference, sample size, and analysis.
 
@@ -114,7 +114,7 @@ Purpose: extend the core simulation from power to confidence interval coverage, 
 4. A custom treatment probability of 45%, with control still 30%, tests the plan under a 15-point true difference. A no-effect scenario estimates the false-positive probability.
 5. You can vary the repetition count while leaving patients per group fixed. More repetitions reduce Monte Carlo uncertainty while each trial's design stays fixed. A report should retain the generating assumptions, analysis and repetition count.
 
-Within the same activity, *Explore further* contains *Explore missing outcomes*:
+Within the same activity, *Settings* and *Explore further* contain *Explore missing outcomes*:
 
 1. You can select *Complete outcomes* and keep recruitment at 60 per group as a reference.
 2. *Equal losses* removes outcomes independently of relief with 10% probability in each group. One study shows recruited and retained counts and the records excluded from analysis.

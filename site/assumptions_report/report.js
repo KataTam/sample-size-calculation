@@ -1,6 +1,7 @@
 /* A written justification activity; numerical results come from the calculators. */
 (() => {
   'use strict';
+  if (new URL(location.href).searchParams.get('guided') === '1') document.body.classList.add('guided');
   const app = 'assumptions_report', storageKey = 'sample-size-assumptions-report-v1';
   const form = document.getElementById('plan-form');
   const status = document.getElementById('status');
@@ -10,7 +11,7 @@
       ['outcome_detail', 'Primary outcome and time point', 'Define what will be measured and when.', 'The primary outcome and time point are'],
       ['design', 'Design, sampling and allocation', 'Describe how participants or records are selected, how observations are related, and any treatment allocation.', 'The design, sampling and allocation are']
     ]],
-    ['Effects and supporting evidence', [
+    ['Assumptions and evidence', [
       ['scale', 'Effect scale and direction of benefit', 'The effect scale gives the units of the comparison: for example, a difference in event percentages is in percentage points, while a mean difference may be in pain-score units. Use treatment minus control and specify which direction is beneficial.', 'The effect scale and direction of benefit are'],
       ['expected', 'Expected difference', 'Give the best current expectation, its evidence source and uncertainty.', 'The expected difference and supporting evidence are'],
       ['clinical', 'Clinically important difference (clinical threshold)', 'Give the smallest between-group benefit that matters to patients and justify that judgment.', 'The clinical threshold and its justification are', 'comparison'],
@@ -20,20 +21,44 @@
       ['sensitivity', 'Sensitivity analysis: alternative assumptions', 'Give plausible alternative differences, standard deviations or event probabilities and their sources. Distinguish recalculating required counts from evaluating the original sample held fixed.', 'The sensitivity scenarios and their evidence are'],
       ['progression', 'Feasibility objectives and progression criteria', 'State each feasibility outcome and denominator, unacceptable and desirable levels, and the decisions to proceed, amend or stop.', 'The feasibility objectives and progression criteria are', 'feasibility']
     ]],
-    ['Analysis and information target', [
+    ['Calculation', [
       ['analysis', 'Planned analysis', 'Name the test and confidence interval method. State the sidedness and relevant assumptions.', 'The planned analysis is'],
       ['software', 'Calculation procedure and software', 'Your record should identify the calculation method, software and relevant versions, code version or source, and saved inputs. For simulation, it should also include the generating procedure, repetitions and random-number settings. Guidance is linked above.', 'The calculation procedure, software and reproducibility record are'],
       ['power', 'Type I error probability and target power', 'State Type I error probability and target power as percentages. With fixed resources, record attainable power and the effect at which it is evaluated.', 'The Type I error probability and power specification is', 'power'],
       ['precision', 'Precision: desired confidence interval width', 'State the desired full confidence interval width, its units and the confidence level. With fixed resources, record attainable precision.', 'The precision specification is', 'precision']
     ]],
-    ['Sample size, recruitment and conclusion', [
+    ['Recruitment and conclusion', [
       ['counts', 'Sample size needed or available for analysis', 'Record analyzable participants per group and total, or one total for a single-population estimate. State the method, result and rounding. For existing data, explain why the sample is fixed.', 'The analyzable sample size and calculation are'],
       ['recruitment', 'Losses, missing data and recruitment', 'Your expected losses should draw on comparable studies, routine records or pilot follow-up, with the population, time point and uncertainty recorded. There is no universal default. Give adjusted recruitment counts and plausible alternative losses, or completeness and missing observations in an existing dataset. Explain how missing outcomes could affect the comparison. Record anticipated treatment switching, adherence and rescue medication, and whether their impact is already included in the calculation.', 'The loss allowance, missing data and recruitment are'],
       ['resources', 'Feasibility and resources', 'Record the recruitment rate and period, available patients, costs or constraints, and whether the target is feasible.', 'The recruitment feasibility and resources are'],
       ['conclusion', 'Intended conclusion and limitations', 'Explain what the design could establish, what remains uncertain and which planning decisions still need to be resolved.', 'The intended conclusion and limitations are']
     ]]
   ];
+  groups[2][1].push(groups[3][1].shift());
   const fields = groups.flatMap(group => group[1]);
+  let reportLines = [];
+  const shortHelp = {
+    question: 'Your question should identify the population and, where relevant, the intervention and comparator.',
+    outcome_detail: 'Your description should identify the measurement and its time point.',
+    design: 'Your description should cover selection, allocation and relationships between observations.',
+    scale: 'Your comparison should specify the units and which direction indicates benefit.',
+    expected: 'Your best expectation should have an evidence source and an indication of uncertainty.',
+    clinical: 'Your threshold should describe a worthwhile between-group benefit.',
+    planning: 'Your justification should explain the difference used to evaluate power.',
+    variation: 'Your standard deviation or event percentages should have an evidence source.',
+    evidence_review: 'Which assumptions are least certain, and how well does the evidence fit your study?',
+    sensitivity: 'Which alternative assumptions could change your recommendation?',
+    progression: 'What results would support proceeding, amending or stopping?',
+    analysis: 'Your planned test and confidence interval should suit the study design.',
+    software: 'Your record should identify the method, software version and saved inputs.',
+    power: 'Your specification should give Type I error probability and power as percentages.',
+    precision: 'Your target should specify interval width, units and confidence level.',
+    counts: 'Your result should distinguish participants per group, total and rounding.',
+    recruitment: 'Your recruitment allowance should reflect expected losses and their evidence.',
+    resources: 'Is recruitment feasible within the available time and resources?',
+    conclusion: 'What could the study establish, and which uncertainties remain?'
+  };
+  const questions = {question: 'What question should your study answer?', outcome_detail: 'What outcome will you measure, and when?', design: 'How will participants be selected and, where relevant, allocated?'};
   const names = ['study_type', 'outcome', 'goal', ...fields.map(field => field[0])];
   const choices = {study_type: ['comparison', 'single', 'other'], outcome: ['binary', 'continuous'], goal: ['testing', 'precision', 'fixed', 'both', 'feasibility']};
   const goalText = {testing: 'planning sample size to achieve specified power', precision: 'estimation with a precision target', fixed: 'assessing what fixed resources or existing data could establish', both: 'meeting both power and precision requirements', feasibility: 'supporting a pilot or feasibility decision'};
@@ -47,12 +72,13 @@
     }
     return clean;
   }
-  for (const [title, definitions] of groups) {
-    const group = document.createElement('fieldset'), legend = document.createElement('legend');
-    legend.textContent = title; group.append(legend);
+  for (const [index, [title, definitions]] of groups.entries()) {
+    const group = document.createElement('details'), heading = document.createElement('summary');
+    group.className = 'plan-section'; group.id = 'plan-section-' + index; group.open = index === 0;
+    heading.textContent = title; group.append(heading);
     for (const [id, title, help] of definitions) {
       const wrapper = document.createElement('div'); wrapper.id = 'field-' + id;
-      const label = document.createElement('label'); label.htmlFor = id; label.textContent = title;
+      const label = document.createElement('label'); label.htmlFor = id; label.textContent = questions[id] || title;
       if (id === 'power') {
         const alpha = document.createElement('a'), power = document.createElement('a');
         alpha.href = '../student-materials/glossary.html#alpha'; alpha.textContent = 'Type I error probability';
@@ -60,12 +86,24 @@
         for (const link of [alpha, power]) { link.target = '_blank'; link.rel = 'noopener'; }
         label.replaceChildren(alpha, ' and target ', power);
       }
-      const guidance = document.createElement('p'); guidance.className = 'field-help'; guidance.id = id + '-help'; guidance.textContent = help;
+      const guidance = document.createElement('p'); guidance.className = 'field-help'; guidance.id = id + '-help'; guidance.textContent = shortHelp[id];
+      const more = document.createElement('details'), summary = document.createElement('summary'), explanation = document.createElement('p');
+      more.className = 'field-detail'; summary.textContent = questions[id] ? 'Example' : 'Help'; explanation.textContent = ({question: 'Does a novel treatment improve pain relief compared with standard treatment in adults with chronic pain?', outcome_detail: 'Pain relief (yes/no), assessed four weeks after treatment starts.', design: 'An individually randomized trial with two independent groups and equal allocation.'})[id] || help; more.append(summary, explanation);
       const input = document.createElement('textarea'); input.id = id; input.name = id; input.rows = 3; input.maxLength = 5000; input.setAttribute('aria-describedby', guidance.id);
-      wrapper.append(label, guidance, input); group.append(wrapper);
+      wrapper.append(label, guidance, input, more); group.append(wrapper);
     }
     document.getElementById('fields').append(group);
   }
+  document.getElementById('plan-section-0').append(document.getElementById('study-settings'));
+  const preview = document.getElementById('preview');
+  preview.addEventListener('click', () => {
+    const pane = document.getElementById('report-pane'), show = pane.hidden;
+    pane.hidden = !show; document.body.classList.toggle('report-visible', show);
+    preview.setAttribute('aria-expanded', String(show));
+    preview.textContent = show ? 'Back to questions' : 'Preview report';
+    if (show) document.getElementById('report-title').focus();
+    else preview.focus();
+  });
   const snapshot = () => Object.fromEntries(names.map(name => [name, form.elements[name].value]));
   function active(field, value) {
     if (field[4] === 'comparison') return value.study_type !== 'single';
@@ -81,7 +119,6 @@
     const single = value.study_type === 'single';
     for (const option of form.elements.goal.options) option.disabled = single && ['testing', 'both'].includes(option.value);
     if (single && ['testing', 'both'].includes(value.goal)) { value.goal = 'precision'; form.elements.goal.value = 'precision'; }
-    document.getElementById('outcome-scale-help').textContent = value.outcome === 'binary' ? 'Report event probabilities as percentages (e.g. 60%) and absolute differences or interval widths in percentage points. State the denominator.' : 'Report means, differences, interval widths and standard deviations in the outcome’s units.';
     const wording = single ? {
       scale: ['Outcome scale and interpretation', 'Your description should specify the percentage or mean to estimate and its units.', 'The outcome scale and interpretation are'],
       expected: ['Anticipated percentage or mean', 'Give an anticipated value and its evidence, if available. Distinguish it from the result observed in existing data.', 'The anticipated value and supporting evidence are']
@@ -89,14 +126,18 @@
     for (const id of ['scale', 'expected']) {
       const field = fields.find(field => field[0] === id), copy = wording[id];
       document.querySelector('label[for="' + id + '"]').textContent = copy ? copy[0] : field[1];
-      document.getElementById(id + '-help').textContent = copy ? copy[1] : field[2];
+      document.getElementById(id + '-help').textContent = copy ? copy[1] : shortHelp[id];
     }
     const intro = document.createElement('p');
     const structure = {comparison: 'a two-group comparison', single: 'an estimate of one population percentage or mean', other: 'another design requiring a specified planning method'};
-    intro.textContent = 'This study concerns ' + structure[value.study_type] + ' with a ' + value.outcome + ' outcome. Its planning goal is ' + goalText[value.goal] + '.'; article.append(intro);
+    intro.textContent = 'This study concerns ' + structure[value.study_type] + ' with a ' + value.outcome + ' outcome. Its planning goal is ' + goalText[value.goal] + '.';
+    reportLines = [intro.textContent];
+    const missing = document.querySelector('#report-missing ul'); missing.replaceChildren();
     let completed = 0, required = 0;
     for (const [title, definitions] of groups) {
-      const heading = document.createElement('h3'); heading.textContent = single && title === 'Effects and supporting evidence' ? 'Outcome and supporting evidence' : title; article.append(heading);
+      const heading = document.createElement('h3'); heading.textContent = title;
+      const paragraphs = [];
+      reportLines.push(title);
       for (const field of definitions) {
         const [id, originalLabel, , originalPrefix] = field, enabled = active(field, value);
         const label = wording[id] ? wording[id][0] : originalLabel, prefix = wording[id] ? wording[id][2] : originalPrefix;
@@ -104,13 +145,18 @@
         if (!enabled) continue;
         required++;
         const answer = value[id].trim(), paragraph = document.createElement('p');
-        if (answer) { completed++; paragraph.textContent = prefix + ': ' + sentence(answer); }
-        else { paragraph.className = 'missing'; paragraph.textContent = label + ': not yet specified.'; }
-        article.append(paragraph);
+        if (answer) { completed++; paragraph.textContent = prefix + ': ' + sentence(answer); paragraphs.push(paragraph); }
+        else { const item = document.createElement('li'); item.textContent = label; missing.append(item); paragraph.textContent = label + ': not yet specified.'; }
+        reportLines.push(paragraph.textContent);
       }
+      if (paragraphs.length) article.append(heading, ...paragraphs);
     }
+    if (completed) article.prepend(intro);
+    else { const empty = document.createElement('p'); empty.textContent = 'Your report will appear here as you answer the questions. You can leave decisions open and return to them later.'; article.append(empty); }
+    document.getElementById('report-missing').hidden = completed === required;
     const progress = document.getElementById('progress');
-    progress.textContent = completed === required ? 'All ' + required + ' prompts answered. Review the assumptions and calculations before sharing.' : 'Draft: ' + completed + ' of ' + required + ' prompts answered.';
+    const progressText = completed === required ? 'All ' + required + ' prompts answered. Your assumptions and calculations still need review.' : 'Draft: ' + completed + ' of ' + required + ' prompts answered.';
+    if (progress.textContent !== progressText) progress.textContent = progressText;
     if (persist) { try { localStorage.setItem(storageKey, JSON.stringify(value)); } catch (_) { status.textContent = 'Browser saving is unavailable. Save your entries to a file.'; } }
     notifyParent('state', {state: value});
   }
@@ -127,7 +173,7 @@
     download(JSON.stringify({schema: 'sample-size-assumptions-report', version: 1, entries: snapshot()}, null, 2), 'application/json', 'study-plan-entries.json'); status.textContent = 'Entries saved to a file.';
   });
   document.getElementById('download').addEventListener('click', () => {
-    const lines = ['Study-plan report', document.getElementById('progress').textContent, '', ...Array.from(document.querySelectorAll('#report > *'), node => node.textContent)];
+    const lines = ['Study-plan report', document.getElementById('progress').textContent, '', ...reportLines];
     download(lines.join('\n\n'), 'text/plain;charset=utf-8', 'study-plan-report.txt'); status.textContent = 'Report downloaded with the current answers and any missing entries marked.';
   });
   document.getElementById('restore').addEventListener('change', async event => {

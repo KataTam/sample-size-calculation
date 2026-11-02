@@ -10,7 +10,7 @@ ui <- fluidPage(
     sidebarPanel(
       percent_slider("pi1", "Novel treatment: assumed event probability for planning (%)", min = 0.01, max = 0.99, value = 0.60, step = 0.01),
       percent_slider("pi2", "Standard treatment: assumed event probability for planning (%)", min = 0.01, max = 0.99, value = 0.30, step = 0.01),
-      helpText("These assumed event probabilities determine the target difference. The pain example expects a 40-percentage-point benefit, plans for 30 points and uses a 20-point clinical threshold."),
+      activity_help("These assumed event probabilities determine the target difference. The pain example expects a 40-percentage-point benefit, plans for 30 points and uses a 20-point clinical threshold."),
       percent_slider("alpha", tags$a(href = "../book/Sample_size_open_module.html#alpha", target = "_blank", rel = "noopener", "Type I error probability (%)"), min = 0.001, max = 0.10, value = 0.05, step = 0.001),
       percent_slider("power", tags$a(href = "../book/Sample_size_open_module.html#statistical-power", target = "_blank", rel = "noopener", "Target power (%)"), min = 0.50, max = 0.99, value = 0.90, step = 0.01),
       percent_slider("dropout", "Expected loss to follow-up (%)", min = 0, max = 0.50, value = 0, step = 0.01)
@@ -19,17 +19,17 @@ ui <- fluidPage(
       p("Normal approximation for two independent groups with equal allocation and a two-sided test, using the same planning method as the tutorial and ", tags$a(href = "../power_explorer/", target = "_blank", rel = "noopener", "reasoning lab"), "."),
       p("Dropout is inflated and rounded within each arm. Missing-data bias requires attention to prevention and analysis."),
       h3("Approximate sample size"),
-      verbatimTextOutput("result"),
+      uiOutput("result"),
       h3("Interpretation"),
       textOutput("interpretation"),
       uiOutput("lab_link"),
-      helpText("The ", tags$a(href = "../power_explorer/", target = "_blank", rel = "noopener", "lab"), " receives this calculated analyzable count as a fixed sample, together with your event probabilities, Type I error probability, power target and losses. Simulation lets you examine the planned test's performance under these assumptions."),
+      activity_help("The ", tags$a(href = "../power_explorer/", target = "_blank", rel = "noopener", "lab"), " receives this calculated analyzable count as a fixed sample, together with your event probabilities, Type I error probability, power target and losses. Simulation lets you examine the planned test's performance under these assumptions."),
       h3("Effect size and sample size"),
       plotOutput("sample_size_plot", height = "320px"),
       p(class = "caption", "Figure. Approximate total analyzable sample size across absolute target differences, holding the control event probability, Type I error probability and target power fixed."),
-      h3("Assumptions"),
+      activity_details("Assumptions and method",
       tableOutput("assumptions"),
-      p(class = "caption", "Table. Current event percentages, absolute target difference, error targets and expected losses.")
+      p(class = "caption", "Table. Current event percentages, absolute target difference, error targets and expected losses."))
     )
   )
 )
@@ -46,14 +46,7 @@ server <- function(input, output, session) {
     )
   })
 
-  output$result <- renderPrint({
-    x <- result()
-    cat("Per group:", x$n_per_group, "\n")
-    cat("Total before dropout adjustment:", x$total_n, "\n")
-    if (x$dropout_rate > 0) {
-      cat("Recruitment target after dropout adjustment:", x$total_with_dropout, "\n")
-    }
-  })
+  output$result <- renderUI(activity_count_result(result()))
 
   output$interpretation <- renderText({
     sample_size_interpretation(result())

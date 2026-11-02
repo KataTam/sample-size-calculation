@@ -31,6 +31,7 @@ body[data-view="lesson"] .app-pane, body[data-view="app"] .lesson-pane, body:not
 body[data-view="lesson"] .panels, body[data-view="app"] .panels { grid-template-columns: minmax(0,1fr); }
 @media (max-width: 900px) {
   #panel-separator { display: none; }
+  button[data-view="both"] { display: none; }
   .heading a { font-size: .8rem; }
   h1 { font-size: 1rem; }
   .controls { gap: .4rem .7rem; }
@@ -44,3 +45,5 @@ body[data-view="lesson"] .panels, body[data-view="app"] .panels { grid-template-
 body :where(p, li, td, th, label, button, a, span, strong, b, code, pre, input, textarea, select) { font-weight: 400 !important; }
 body :where(h1,h2,h3,h4,h5,h6,summary,legend) :where(a,span,strong,b,code) { font-weight: inherit !important; }
 .reference-preview > strong { font-weight: 600 !important; }
+
+@media (max-width: 900px) { .heading h1 { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); } #activity-prompt { max-height: none; } }

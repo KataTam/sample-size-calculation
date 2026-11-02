@@ -209,7 +209,9 @@ draw_planning_differences()
 Choosing 30 rather than 20 percentage points has a consequence: a study planned for high power at 30 will generally have lower power at a 20-point benefit, even though that smaller benefit matters clinically. For this illustration, suppose the team considers a 30-point benefit realistic and large enough to support adopting the treatment. Its plan must acknowledge that a 20-point benefit could remain inconclusive. If reliably detecting the smallest worthwhile benefit is essential, evaluate the sample required at 20 instead. Affordability alone is not a justification for choosing a larger target [@cook2018delta2].
 
 ::: {.activity}
-The plan uses a target difference of 30 percentage points. Under what circumstances would planning for 20 percentage points be more appropriate, and what would that change? Your explanation should consider patient and clinical judgments, the evidence, and the intended conclusion. These are hypothetical values; a real protocol needs outcome-specific evidence.
+The plan uses a target difference of 30 percentage points. Under what circumstances would planning for 20 percentage points be more appropriate, and what would that change?
+
+Your explanation should consider patient and clinical judgments, the evidence, and the intended conclusion. These are hypothetical values; a real protocol needs outcome-specific evidence.
 
 <details class="model-answer" id="model-answer-target-choice">
 <summary>Model answer</summary>
@@ -261,9 +263,11 @@ For each numerical assumption, you should record the source, its relevance to th
 A useful check is whether another researcher could reproduce your calculation from the description. In a review of 185 studies using the BREAST-Q Reconstruction Module, only 17 reported a sample-size calculation [@gallo2022]. This finding identifies incomplete reporting; the calculations and power of the remaining studies could not be assessed from that information. Your [assumptions report](https://katatam.github.io/sample-size-calculation/study/?activity=assumptions_report) should make both the calculation and its justification traceable.
 
 ::: {.activity}
-Which count belongs in the protocol: analyzable patients or patients to recruit? Your report should record both and explain the adjustment for expected losses when you complete the calculation.
+Which count belongs in the protocol: analyzable patients or patients to recruit?
 
-You can develop your report in the [Activity: Develop and justify your study plan](https://katatam.github.io/sample-size-calculation/study/?activity=assumptions_report). The text boxes let you build a study-plan report alongside your answers. Your clinical question and evidence come first; the sample size and recruitment counts can be added after the calculation activities. You can load a hypothetical two-arm example, save your entries, and download the report. Your report should clarify the role of the expected difference, target difference and clinical threshold, and explain what your study could establish.
+Your report should record both and explain the adjustment for expected losses when you complete the calculation.
+
+The [Activity: Develop and justify your study plan](https://katatam.github.io/sample-size-calculation/study/?activity=assumptions_report) has four expandable sections: question and design, assumptions and evidence, calculation, and recruitment and conclusion. You can begin with the first section and return as your plan develops. The report preview brings your answers together; unanswered decisions remain listed in the download.
 
 This activity connects the numerical result to a defensible study decision. Your report should record the calculation or simulation results together with their method, inputs and interpretation.
 
@@ -506,13 +510,17 @@ Figure \@ref(fig:sample-differences) shows [sampling variability](#sampling-vari
 <details class="activity-practice">
 <summary>Practice with the activity, now or after this chapter</summary>
 
-You can try [Activity: Chronic pain: one study and many studies](https://katatam.github.io/sample-size-calculation/study/?activity=pain_one_many) with 20 patients per group, standard-treatment relief 30%, novel-treatment relief 60%, and Type I error probability 5%. One study, followed by another, lets you compare sample estimates with the specified population probabilities. For each interval, you can consider which differences remain compatible with the data relative to zero and the 20-point clinical threshold. Many studies shows the range of results and how often the test detects the difference. You can then compare 50 and 80 patients per group.
+The [Activity: Chronic pain: one study and many studies](https://katatam.github.io/sample-size-calculation/study/?activity=pain_one_many) opens with 20 patients per group and population relief probabilities of 30% and 60%. The questions accompany each part of the simulation:
 
-In this activity, *One study and many studies* brings both simulations together on one page. Simulate one study generates hypothetical patient outcomes. The animation connects the observed patient outcomes with the estimated between-group difference, then moves the pink estimate dot from the upper axis straight down to the same horizontal value on the lower axis. The lower plot accumulates the estimates from earlier trials. Each dot in the distribution represents one complete trial. *Animate 20 trials* builds a short sequence using fixed population probabilities; pause and replay let you follow the connection at your own pace. The reduced-motion option shows the same steps without moving dots. Further down the same page, Simulate many studies generates a larger batch of independent trials. The core task focuses on the distribution of estimated differences and the percentage of significant results; coverage and interval-width summaries are advanced extensions. After changing inputs, you should rerun the simulation: displayed results retain the assumptions under which they were generated.
+1. One study shows a possible set of patient outcomes and its estimated difference.
+2. Another study, or the 20-trial animation, shows what changes while the population assumptions stay fixed.
+3. Many studies shows the distribution of estimates and the percentage of significant results. You can then compare 50 and 80 patients per group.
+
+The app includes help with the animation and model answers. Settings provide the other assumptions and advanced controls. After an input changes, a new simulation updates the results; existing results retain their saved assumptions.
 
 </details>
 
-Which quantities stay fixed across trials, and which change? Why does a larger sample give a more precise estimate, while more simulation repetitions do not increase the power of each trial?
+The activity connects the fixed population assumptions, changing sample results, and the information gained by increasing sample size.
 
 <details class="model-answer" id="model-answer-sample-versus-population">
 <summary>Model answer</summary>
@@ -1069,7 +1077,11 @@ Table: (\#tab:increase-power) Options for increasing power and the assumptions o
 Power calculations describe performance under assumed treatment benefits. Those assumptions should be grounded in relevant evidence. You should keep the chronic pain expected difference (40 percentage points), target difference (30 points) and clinical threshold (20 points) distinct and justified. Running more simulations improves the precision of the estimated power.
 
 ::: {.activity}
-You can compare plans in [Activity: Chronic pain: one study and many studies](https://katatam.github.io/sample-size-calculation/study/?activity=pain_one_many). You should keep standard-treatment relief at 30%, novel-treatment relief at 60% and the Type I error probability at 5%. You can compare 50 and 80 analyzable patients per group. Which plan detects the specified benefit more often? What would obtaining the larger sample require in practice? Your study plan should explain the recruitment implications.
+You can compare plans in [Activity: Chronic pain: one study and many studies](https://katatam.github.io/sample-size-calculation/study/?activity=pain_one_many). You should keep standard-treatment relief at 30%, novel-treatment relief at 60% and the Type I error probability at 5%. You can compare 50 and 80 analyzable patients per group. Which plan detects the specified benefit more often?
+
+What would obtaining the larger sample require in practice?
+
+Your study plan should explain the recruitment implications.
 
 <details class="model-answer" id="model-answer-larger-study-resources">
 <summary>Model answer</summary>
@@ -1207,7 +1219,9 @@ You can explore these scenarios in [Activity: Chronic pain: explore power and re
 
 The curves in *Explore assumptions* are calculated from the planning formulas. They help you choose scenarios worth investigating. With advanced controls visible, *Custom effect or variability* lets you specify control relief of 30% and treatment relief of 50% or 45% while retaining 90 patients per group. The sensitivity table updates immediately; *Simulate many studies* then estimates performance from generated patient outcomes for the selected scenario.
 
-Explain. Which assumptions make the target feasible? How do you distinguish 200 recruited patients from 180 expected analyzable patients?
+Explain. Which assumptions make the target feasible?
+
+How do you distinguish 200 recruited patients from 180 expected analyzable patients?
 
 <details class="model-answer" id="model-answer-curve-assumptions">
 <summary>Model answer</summary>
@@ -1613,7 +1627,9 @@ In *Many studies*, the mean estimated difference is compared with the known popu
 The available-case analysis uses a two-sided pooled score test and a Newcombe-Wilson interval with the actual retained group sizes. It illustrates the consequences of a simple analysis under different missingness assumptions. Planning an appropriate missing-data analysis for a real trial requires assumptions and methods matched to the intended treatment effect [@bell2013dropout; @little2012missing]. The [recruitment discussion](#account-for-expected-losses) explains differential dropout and recruitment allowances; the [reproducibility chapter](#tutorial-methods) records the simulation procedures.
 
 ::: {.activity}
-With 60 recruited participants per group, how do unequal losses unrelated to relief compare with outcome-related losses at the same expected percentages? What happens to the estimated difference, coverage, and significance percentage?
+With 60 recruited participants per group, how do unequal losses unrelated to relief compare with outcome-related losses at the same expected percentages?
+
+What happens to the estimated difference, coverage, and significance percentage?
 
 <details class="model-answer" id="model-answer-missing-outcomes">
 <summary>Model answer</summary>
@@ -1666,7 +1682,9 @@ For the smaller-effect scenario, the generating probabilities are 30% standard-t
 </details>
 
 
-Would the original plan still answer the clinical question? What extra evidence or design change would help?
+Would the original plan still answer the clinical question?
+
+What extra evidence or design change would help?
 
 <details class="model-answer" id="model-answer-simulation-justify">
 <summary>Model answer</summary>
