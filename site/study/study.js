@@ -90,6 +90,11 @@
   selector.addEventListener('change', () => openActivity(selector.value));
   document.getElementById('reset').addEventListener('click', () => openActivity(selected, true));
   document.querySelectorAll('button[data-view]').forEach(button => button.addEventListener('click', () => setView(button.dataset.view)));
+  document.getElementById('close-app-panel').addEventListener('click', () => {
+    setView('lesson');
+    // Keep the iframe and its answers alive; return focus to a visible control.
+    document.querySelector('button[data-view="lesson"]').focus();
+  });
   const separator = document.getElementById('panel-separator');
   const panels = document.querySelector('.panels');
   let lessonWidth = 50, dragging = false;

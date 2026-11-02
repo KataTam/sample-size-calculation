@@ -13,9 +13,9 @@
     <div class="controls">
       <label for="activity">Activity <select id="activity"><option>Loading activities...</option></select></label>
       <div class="view-controls" aria-label="Visible panels">
-        <button type="button" data-view="lesson" aria-pressed="false">Lesson</button>
+        <button type="button" data-view="lesson" aria-pressed="false">Tutorial</button>
         <button type="button" data-view="app" aria-pressed="false">App</button>
-        <button type="button" data-view="both" aria-pressed="true">Both</button>
+        <button type="button" data-view="both" aria-pressed="true">Tutorial + app</button>
       </div>
       <button id="reset" type="button">Reset this activity</button>
     </div>
@@ -24,12 +24,12 @@
   </header>
   <main class="panels">
     <section id="lesson-pane" class="pane lesson-pane" aria-label="Tutorial panel">
-      <div class="pane-bar"><h2>Lesson</h2><a id="lesson-separate" href="../book/" target="_blank" rel="noopener">Open lesson separately</a></div>
+      <div class="pane-bar"><h2>Tutorial</h2><a id="lesson-separate" href="../book/" target="_blank" rel="noopener">Open tutorial separately</a></div>
       <iframe id="lesson-frame" title="Sample size tutorial" src="../book/"></iframe>
     </section>
     <div id="panel-separator" role="separator" tabindex="0" aria-label="Adjust lesson and app widths" aria-orientation="vertical" aria-controls="lesson-pane app-pane" aria-valuemin="20" aria-valuemax="80" aria-valuenow="50" aria-valuetext="Lesson 50%, app 50%" title="Drag to resize. Use Left and Right arrow keys to adjust the lesson width."><span aria-hidden="true"></span></div>
     <section id="app-pane" class="pane app-pane" aria-label="App panel">
-      <div class="pane-bar"><h2>App</h2><a id="app-separate" href="../power_explorer/" target="_blank" rel="noopener">Open app separately</a></div>
+      <div class="pane-bar"><h2>App</h2><div class="pane-actions"><a id="app-separate" href="../power_explorer/" target="_blank" rel="noopener">Open app separately</a><button id="close-app-panel" type="button" aria-controls="app-pane"><span aria-hidden="true">&times;</span> Close app panel</button></div></div>
       <iframe id="app-frame" title="Interactive sample size app" src="about:blank"></iframe>
     </section>
   </main>

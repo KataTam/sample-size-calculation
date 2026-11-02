@@ -137,7 +137,7 @@ def page(source, target):
                             r'src="../book/\1"', guide_text)
     subprocess.run([pandoc, "-" if guide_text is not None else str(rendered_source), *citation_args,
         "--from=" + reader, "--to=html5", "--standalone",
-        "--metadata", "pagetitle=" + title, "--css", css, "--mathjax", "--output", str(target)],
+        "--metadata", "pagetitle=" + title, "--metadata", "lang=en", "--css", css, "--mathjax", "--output", str(target)],
         input=guide_text, text=True, encoding="utf-8", check=True)
     text = target.read_text(encoding="utf-8")
     if source.name == "study-design-guide.md":

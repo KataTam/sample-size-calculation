@@ -24,6 +24,8 @@ body.resizing iframe { pointer-events: none; }
 .pane-bar { display: flex; justify-content: space-between; gap: .5rem; align-items: center; padding: .5rem .8rem; background: #eef4f5; border-bottom: 1px solid #dce4e7; }
 .pane-bar h2 { font-size: 1rem; margin: 0; }
 .pane-bar a { font-size: .85rem; }
+.pane-actions { display: flex; flex-wrap: wrap; justify-content: flex-end; align-items: center; gap: .4rem .8rem; }
+#close-app-panel { min-height: 44px; padding: .45rem .65rem; font-size: .85rem; }
 iframe { width: 100%; border: 0; flex: 1 1 auto; min-height: 0; background: white; }
 body[data-view="lesson"] .app-pane, body[data-view="app"] .lesson-pane, body:not([data-view="both"]) #panel-separator { display: none; }
 body[data-view="lesson"] .panels, body[data-view="app"] .panels { grid-template-columns: minmax(0,1fr); }

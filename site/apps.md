@@ -1,21 +1,37 @@
 # Apps
 
-Choose an app. Apps are interactive software; activities are learning exercises that may use an app. Start with the [core tutorial route](book/#core-route), or [open the tutorial and an app together](study/). The [advanced route](book/#advanced-route) extends the core simulation with coverage, Monte Carlo uncertainty, estimation with a precision target and other designs. See the [step-by-step activity walkthroughs](student-materials/activity-walkthroughs.html).
+Apps are interactive software. Activities provide questions and exercises to help you use them. The core apps accompany the [core tutorial](book/#core-route); the advanced options support further exploration.
 
-## Core: calculations, simulation and justification
+<span id="core-calculations-simulation-and-justification"></span>
 
-- [Chronic pain: one study and many studies](study/?activity=pain_one_many): generate hypothetical patient outcomes and see how sample estimates vary.
-- [Two proportions](two_proportions/): compare event percentages in two independent groups.
-- [Two means](two_means/): compare mean outcomes in two independent groups.
-- [Recruitment adjustment](dropout_adjustment/): explore shared or different expected losses, with an optional advanced allowance for treatment switching.
-- [Develop and justify your study plan](study/?activity=assumptions_report): write a study plan and generate a report.
+## Core apps
 
-## Explore further
+- [Study-plan report](assumptions_report/): build a report as you work through the tutorial. [Activity: Develop and justify your study plan](study/?activity=assumptions_report).
 
-- [Which study design fits your question?](study/?activity=design_questionnaire): answer a short questionnaire for design suggestions, reasoning and relevant planning resources.
+- [Sample size reasoning lab](power_explorer/?activity=pain_one_many): simulate patient outcomes and compare results across studies. [Activity: Chronic pain: one study and many studies](study/?activity=pain_one_many).
 
-- [Sample size reasoning lab](power_explorer/): starts with basic calculation controls; select Explore further for advanced controls, sensitivity analyses and simulation settings. One study and Many studies support the core exploration; coverage and Monte Carlo uncertainty provide advanced extensions.
-- [Estimate a proportion or pilot retention percentage](prevalence_precision/): estimate a population percentage and assess precision using confidence interval width.
-- [Type I error probability, Type II error probability and power](sampling_distributions/): compare sampling distributions under the null and an alternative.
+- [Two-proportion calculator](two_proportions/): calculate sample size for a difference between two event percentages. [Tutorial explanation](book/calculations.html#two-proportions).
+
+- [Two-mean calculator](two_means/): calculate sample size for a difference between two group means. [Tutorial explanation](book/calculations.html#two-means).
+
+- [Recruitment adjustment](dropout_adjustment/): calculate recruitment allowing for expected losses. [Tutorial explanation](book/feasibility.html#account-for-expected-losses).
+
+<span id="explore-further"></span>
+
+## Advanced apps and explorations
+
+- [Sample size reasoning lab](power_explorer/?activity=pain_simulation): explore uncertain assumptions, power, confidence intervals and missing outcomes. [Activity: Simulate repeated chronic-pain trials](study/?activity=pain_simulation).
+
+- [Estimate a population percentage](prevalence_precision/): plan sample size for a desired confidence interval width. [Activity: Estimate a percentage with useful precision](study/?activity=prevalence).
+
+- [Type I and Type II error probabilities and power](sampling_distributions/): explore false positives, false negatives and power. [Activity: Explore error probabilities and power](study/?activity=alpha_beta).
+
+- [Study-design questionnaire](design_questionnaire/): consider designs suited to your research question. [Activity: Which study design fits your question?](study/?activity=design_questionnaire).
+
+The reasoning lab has core and advanced activities. The [activity walkthroughs](student-materials/activity-walkthroughs.html) provide guidance for each one, including pilot retention, precision and recruitment scenarios.
+
+## Tutorial beside the app
+
+Activity links open the tutorial and app together. You can drag the divider to adjust their widths, or use its Left and Right arrow keys. “Close app panel” returns to the tutorial at full width. “Tutorial + app” reopens the app with your current entries and results retained while the page stays open.
 
 [Back to the start page](./)
