@@ -232,13 +232,14 @@ The pilot suggests a possible benefit, but its estimate is uncertain. It provide
 
 ## Develop and justify your study plan {#record-assumptions .core-heading}
 
-Your study-plan report develops alongside the tutorial. In this chapter, you can record the clinical question, effect scale and reasons for the three treatment differences. Chapter 2 informs the error probabilities and interpretation; Chapter 3 supplies the calculation; Chapter 4 adds expected losses, a simple sensitivity comparison and feasibility, then brings these decisions into a short justification. Unresolved entries can remain provisional.
+The aim is a short study plan that explains your research question, sample size and the evidence behind your choices. You can use your own study or the hypothetical chronic-pain case. In this chapter, you can record the question, design and initial assumptions. Chapter 2 informs the error probabilities and interpretation; Chapter 3 supplies the calculation; Chapter 4 adds recruitment, sensitivity and feasibility. Decisions that need more evidence can remain provisional.
 
 When you revise an assumption, a short note about what changed and why will help you explain the final plan.
 
 | Decision | What to make explicit |
 |---|---|
 | Research question: PICO | Population, Intervention, Comparator, and Outcome, following @richardson1995; the outcome should include the measurement time point |
+| Intervention and comparator | What each group receives, how it is delivered, by whom and on what schedule; relevant dose or intensity and permitted additional care |
 | Planning objective and constraints | Hypothesis testing with a power target, estimation with a precision target, both requirements, or a feasibility objective; whether the available sample is fixed |
 | Effect scale | Treatment minus control; score units or percentage points; direction of benefit |
 | Expected difference | Best current expectation, supporting evidence and uncertainty |
@@ -254,11 +255,11 @@ When you revise an assumption, a short note about what changed and why will help
 
 Table: (\#tab:planning-assumptions) Decisions and assumptions to record in a sample size plan.
 
-PICO connects the clinical question to the calculation. In this example, its components are patients with chronic pain, the novel treatment, standard treatment, and pain relief at four weeks.
+PICO connects the clinical question to the calculation. In this example, its components are patients with chronic pain, the novel treatment, standard treatment, and pain relief at four weeks. The report's prompts draw on PICO, selected SPIRIT 2025 protocol items on design, participants, interventions, outcomes, sample size and recruitment (items 12–16, 19–20), and DELTA² guidance on the target difference and calculation assumptions [@richardson1995; @spiritconsort2025; @cook2018delta2]. A full protocol should follow the complete guidance for its study design.
 
 The target difference tells the calculation where to evaluate power. The [standard deviation](#standard-deviation) describes variation between individuals; the [standard error](#standard-error) describes [sampling variability](#sampling-variability) of an estimate. For binary outcomes, you should report each group's event probability as a percentage and their absolute difference in percentage points. The section [Glossary](#glossary) explains these terms in more detail.
 
-For each numerical assumption, you should record the source, its relevance to these patients and this outcome, and a plausible range. Evidence from a different follow-up time or patient population may not transfer directly. For a clinical threshold, you should record the reasoning. DELTA² and CONSORT emphasize explaining the assumptions and calculation as opposed to reporting the final number [@cook2018delta2; @consortee2025].
+For each numerical assumption, you should record the source, its relevance to these patients and this outcome, and a plausible range. Evidence from a different follow-up time or patient population may not transfer directly. A clinical threshold needs a justification. CONSORT also emphasizes documenting the assumptions and calculation [@consortee2025].
 
 A useful check is whether another researcher could reproduce your calculation from the description. In a review of 185 studies using the BREAST-Q Reconstruction Module, only 17 reported a sample-size calculation [@gallo2022]. This finding identifies incomplete reporting; the calculations and power of the remaining studies could not be assessed from that information. Your [assumptions report](https://katatam.github.io/sample-size-calculation/study/?activity=assumptions_report) should make both the calculation and its justification traceable.
 
@@ -267,7 +268,7 @@ Which count belongs in the protocol: analyzable patients or patients to recruit?
 
 Your report should record both and explain the adjustment for expected losses when you complete the calculation.
 
-The [Activity: Develop and justify your study plan](https://katatam.github.io/sample-size-calculation/study/?activity=assumptions_report) has four expandable sections: question and design, assumptions and evidence, calculation, and recruitment and conclusion. You can begin with the first section and return as your plan develops. The report preview brings your answers together; unanswered decisions remain listed in the download.
+The [Activity: Develop and justify your study plan](https://katatam.github.io/sample-size-calculation/study/?activity=assumptions_report) has four expandable sections: question and design, assumptions and evidence, calculation, and recruitment and conclusion. You can begin with the first section and return as your plan develops. The preview and saved HTML report bring your answers together and identify unanswered decisions. The saved report can be read, printed or reopened in the activity to continue editing.
 
 This activity connects the numerical result to a defensible study decision. Your report should record the calculation or simulation results together with their method, inputs and interpretation.
 

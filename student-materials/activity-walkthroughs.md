@@ -14,11 +14,11 @@ The expected difference records your best expectation. With “Same as planning 
 
 Purpose: connect the calculation to a clinical question, evidence and a defensible recommendation.
 
-1. “Question and design” opens first. You can describe the research question, outcome and design, with “Study settings” available for the structure, outcome type and planning goal.
+1. “Question and design” opens first. You can describe the research question and its PICO components, including the intervention and comparator, then the design. “Study settings” controls the structure, outcome type and planning goal. Hovering over, focusing on or tapping a question opens its help; gray model answers illustrate possible responses.
 2. Your assumptions should include their sources and uncertainty. For a treatment comparison, the expected difference, target difference and clinical threshold have separate roles.
 3. After using an appropriate calculator, you can enter its method, analyzable sample and recruitment allowance. A simulation result should include its generating assumptions and repetition count.
 4. “Preview report” brings your completed entries together. “Still to complete” lists open decisions. The downloaded report retains unanswered items explicitly.
-5. “Save entries” preserves an editable file; “Download report” in the preview saves the written report. “Files, example and help” contains the example and file-opening controls. The pain-relief example illustrates a completed starting point. You can begin with the question in Chapter 1, add decisions as the tutorial progresses, and record what changed and why in your final justification.
+5. “Save report (HTML)” saves a readable report that you can print or reopen here for editing. “Files, example and help” contains the example, reopening controls and a plain-text download. Earlier JSON entries files remain supported. Only text you enter or load is saved as an answer. You can begin in Chapter 1, add decisions as the tutorial progresses, and record what changed and why in your final justification.
 
 ## Chronic pain: one study and many studies — core
 

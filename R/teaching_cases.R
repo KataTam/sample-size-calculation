@@ -20,7 +20,7 @@ teaching_cases <- function() {
       "Which study design suits your question and available data?",
       "design-questionnaire", app = "design_questionnaire"),
     assumptions_report = case("assumptions_report", "Develop and justify your study plan",
-      "Your report develops alongside the tutorial. You can begin with the question and design.",
+      "How would you justify your sample size and recruitment plan? Your answers build a report to save and discuss.",
       "record-assumptions", app = "assumptions_report"),
     pain_one_many = case("pain_one_many", "Pain relief: one study and many",
       "What changes when the same study is repeated? You can simulate patient outcomes, then compare studies with more patients.",

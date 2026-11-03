@@ -9,10 +9,13 @@ ui <- fluidPage(
   sidebarLayout(
     sidebarPanel(
       numericInput("delta", "Target difference: used in the sample size calculation", value = 3, min = 0.01),
-      activity_help("The score example expects a 4-unit benefit, plans for 3 units and uses a 2-unit clinical threshold."),
+      activity_help("The target is the between-group difference at which you want the specified power. The score example expects 4 units, uses 3 in the calculation and has a 2-unit clinical threshold.", for_input = "delta"),
       numericInput("sd", "Assumed standard deviation (SD)", value = 5, min = 0.01),
+      activity_help("The SD describes variation between participants, in the same units as the outcome. This calculation assumes a common SD in both groups.", for_input = "sd"),
       percent_slider("alpha", tags$a(href = "../book/Sample_size_open_module.html#alpha", target = "_blank", rel = "noopener", "Type I error probability (%)"), min = 0.001, max = 0.10, value = 0.05, step = 0.001),
       percent_slider("power", tags$a(href = "../book/Sample_size_open_module.html#statistical-power", target = "_blank", rel = "noopener", "Target power (%)"), min = 0.50, max = 0.99, value = 0.90, step = 0.01),
+      activity_help("The probability of detecting the specified true target difference with the planned test.", for_input = "power"),
+      activity_help("The probability of falsely rejecting the null hypothesis when the population means are equal.", for_input = "alpha"),
       percent_slider("dropout", "Expected loss to follow-up (%)", min = 0, max = 0.50, value = 0, step = 0.01)
     ),
     mainPanel(

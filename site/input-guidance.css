@@ -1,0 +1,12 @@
+/* Shared question help; original software, MIT license. */
+.input-question { display: block; max-width: 100%; padding: .2rem 0; margin: 0 0 .25rem; border: 0; border-radius: 0; background: transparent; color: inherit; font: inherit; line-height: 1.5; text-align: left; cursor: help; text-decoration: underline dotted; text-underline-offset: .22em; }
+.input-question:hover, .input-question:focus { background: transparent; color: inherit; }
+.input-question:focus-visible { outline: 3px solid #a45115; outline-offset: 3px; }
+.guidance-label { position: absolute !important; width: 1px !important; height: 1px !important; padding: 0 !important; margin: -1px !important; overflow: hidden !important; clip-path: inset(50%) !important; white-space: nowrap !important; border: 0 !important; }
+.input-guidance-popover { position: fixed; z-index: 10000; max-width: min(28rem, calc(100vw - 24px)); padding: .8rem 1rem; background: #fff; color: #20343e; border: 1px solid #577a8c; border-radius: .35rem; box-shadow: 0 3px 14px #20343e33; font: 1rem/1.5 system-ui, sans-serif; overflow: auto; overflow-wrap: anywhere; }
+.input-guidance-popover[hidden], .input-guidance-source { display: none !important; }
+.input-guidance-popover p { margin: .35rem 0; }
+.input-guidance-popover a { color: #17547b; text-decoration: underline; }
+.input-guidance-popover .input-model-answer { color: #616161; }
+textarea::placeholder, input[type="text"]::placeholder { color: #616161 !important; opacity: 1 !important; }
+@media print { .input-guidance-popover { display: none !important; } .input-question { text-decoration: none; } }

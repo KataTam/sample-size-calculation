@@ -2,11 +2,21 @@
 
 You can develop a hypothetical clinical case or use a topic with public evidence, keeping patient-identifiable information out of the material. Invented values should be labeled as teaching assumptions. The core comparison fields support equal independent groups with normal continuous outcomes or binary outcomes. The single-proportion extension supports descriptive/feasibility estimation; use a different validated method for other designs.
 
-You can enter and save your answers in the [study-plan report activity](https://katatam.github.io/sample-size-calculation/study/?activity=assumptions_report), or copy these prompts into your own document. The report develops across Chapters 1, 2, 3, 6 and 7; unresolved entries can identify the evidence you still need.
+You can enter and save your answers in the [study-plan report activity](https://katatam.github.io/sample-size-calculation/study/?activity=assumptions_report), or copy these prompts into your own document. The report develops across the core chapters; unresolved entries identify the evidence you still need. The saved HTML report can be read, printed and reopened in the activity.
 
 ## Question and inferential goal
 
-Population, intervention, comparator, primary outcome and time point:
+Research question:
+
+Population and key eligibility criteria:
+
+Intervention or exposure: content, delivery, provider, dose or intensity, schedule and duration:
+
+Comparator: what the comparison group receives, permitted additional care and reasons for choosing it:
+
+Primary outcome, measurement, summary measure and assessment time:
+
+These prompts draw on PICO ([Richardson et al., 1995](https://doi.org/10.7326/ACPJC-1995-123-3-A12)) and selected [SPIRIT 2025](https://www.consort-spirit.org/) items 12–16, 19–20. The calculation prompts also draw on [DELTA² (Cook et al., 2018)](https://doi.org/10.1136/bmj.k3750). A full protocol should follow the complete guidance for its design.
 
 Design dimensions: preclinical/clinical/population setting; interventional/observational; prospective/existing records; independent/paired/repeated/clustered units:
 

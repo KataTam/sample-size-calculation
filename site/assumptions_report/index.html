@@ -5,23 +5,27 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Develop and justify your study plan | Sample size calculation</title>
   <link rel="stylesheet" href="report.css">
+  <link rel="stylesheet" href="../input-guidance.css">
+  <script src="../input-guidance.js" defer></script>
   <script src="report.js" defer></script>
 </head>
 <body>
   <header>
     <h1>Develop and justify your study plan</h1>
-    <p>Your report develops as you work through the tutorial. You can begin with your research question and design, and return to the other sections later.</p>
+    <p>By the end of this activity, you will have a short study plan explaining your research question, sample size and the evidence behind your choices. You can use your own study or the hypothetical pain-relief case. The first section is enough to begin; later chapters help you complete the calculation and recruitment plan.</p>
+    <p class="note">Help appears when you hover over, focus on or tap a question. Gray model answers illustrate what you could write. Only your own entries are included in the report.</p>
     <div class="actions">
       <button id="preview" type="button" aria-expanded="false" aria-controls="report-pane">Preview report</button>
-      <button id="save" type="button">Save entries</button>
+      <button id="save" type="button">Save report (HTML)</button>
     </div>
     <details id="file-actions"><summary>Files, example and help</summary>
     <div class="actions">
       <button id="example" type="button">Load pain-relief example</button>
-      <label class="file-button" for="restore">Open saved entries<input id="restore" type="file" accept=".json,application/json"></label>
+      <label class="file-button" for="restore">Reopen saved report or entries<input id="restore" type="file" accept=".html,.htm,text/html,.json,application/json"></label>
+      <button id="download-text" type="button">Download plain text</button>
     </div>
     <p><a href="../book/clinical-question.html#record-assumptions" target="_blank" rel="noopener">Tutorial guidance</a> · <a href="../book/appendix.html#reproducibility-record" target="_blank" rel="noopener">Methods and software to record</a></p>
-    <p class="note">Entries are saved in this browser on this device. Saving a file keeps a copy you can open on another device. The example replaces current entries.</p>
+    <p class="note">Entries are saved in this browser on this device. The HTML report opens in a browser for reading or printing, and can be reopened here to continue editing. Earlier JSON entries files also work. Loading the example replaces current entries.</p>
     <button id="clear" class="secondary-action" type="button">Clear entries</button>
     </details>
     <p class="note">Your entries should contain hypothetical or non-identifying study details.</p>
@@ -35,7 +39,7 @@
           <label for="study_type">Study structure<select id="study_type" name="study_type"><option value="comparison">Two-group comparison</option><option value="single">One population percentage or mean</option><option value="other">Another design: specify the method</option></select></label>
           <label for="outcome">Primary outcome type<select id="outcome" name="outcome"><option value="binary">Binary outcome</option><option value="continuous">Continuous outcome</option></select></label>
           <label for="goal">Planning goal<select id="goal" name="goal"><option value="testing">Sample size based on power</option><option value="precision">Estimation with a precision target</option><option value="fixed">Available sample fixed</option><option value="both">Both power and precision requirements</option><option value="feasibility">Pilot or feasibility decision</option></select></label>
-        </div><details><summary>Help with the planning goal</summary><p>Power describes the probability of detecting a specified difference. A precision target specifies a desired confidence interval width. You can plan for either or both. With an available sample, your report should explain what that sample could establish.</p></details></details>
+        </div></details>
         <div id="fields"></div>
       </form>
     </section>
@@ -44,9 +48,15 @@
       <article id="report"></article>
       <details id="report-missing"><summary>Still to complete</summary><ul></ul></details>
       <p class="note">The downloaded report includes unanswered items so you can see what remains to be decided.</p>
-      <button id="download" type="button">Download report</button>
+      <button id="download" type="button">Save report (HTML)</button>
     </section>
   </main>
+  <footer id="guidance-credit">
+    <details><summary>Guidance behind the questions</summary>
+      <p>This educational planning worksheet draws on PICO (<a href="https://doi.org/10.7326/ACPJC-1995-123-3-A12" target="_blank" rel="noopener">Richardson et al., 1995</a>), selected <a href="https://www.consort-spirit.org/" target="_blank" rel="noopener">SPIRIT 2025</a> protocol items on design, participants, interventions, outcomes, sample size and recruitment (items 12–16, 19–20), and <a href="https://doi.org/10.1136/bmj.k3750" target="_blank" rel="noopener">DELTA² (Cook et al., 2018)</a> on justifying the target difference and calculation assumptions. A full protocol should follow the complete guidance for its design.</p>
+    </details>
+    <p class="note">Katalin Tamási · Teaching materials: <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="noopener">CC BY-SA 4.0</a> · Software: <a href="https://opensource.org/license/mit" target="_blank" rel="noopener">MIT</a></p>
+  </footer>
   <noscript><p>The report builder needs JavaScript. Use the <a href="../case-studies/student_case_template.html">student case template</a> to write your plan.</p></noscript>
 </body>
 </html>

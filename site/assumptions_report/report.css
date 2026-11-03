@@ -23,7 +23,6 @@ main { display: grid; grid-template-columns: minmax(0, 1fr); gap: 1.5rem; paddin
 label { display: block; font-weight: 600; }
 select, textarea { width: 100%; font: inherit; color: inherit; border: 1px solid #819ba8; border-radius: .25rem; padding: .45rem; background: #fff; margin: .25rem 0 .7rem; }
 textarea { resize: vertical; min-height: 5rem; }
-.field-help { margin: .15rem 0; font-size: .9rem; color: #415a66; }
 fieldset { border: 0; border-top: 1px solid #cfdee5; padding: .8rem 0 0; margin: 1rem 0; min-width: 0; }
 legend { padding: 0 .4rem 0 0; }
 #report p { white-space: pre-wrap; overflow-wrap: anywhere; }
@@ -35,8 +34,7 @@ summary { cursor: pointer; padding: .65rem .3rem; font-weight: 600; }
 .plan-section { border: 1px solid #a8bdcb; border-radius: .35rem; padding: 0 .9rem .4rem; }
 .plan-section > summary { color: #243f66; padding: .85rem 0; }
 .plan-section > div { padding: 1rem 0; border-top: 1px solid #d8e1e8; }
-.field-detail { font-size: .95rem; margin-top: 0; }
-.field-detail p { max-width: 65ch; }
+footer { max-width: 850px; margin: 0 auto; padding: 0 1rem 1rem; font-size: .9rem; }
 header { font-size: 1rem; }
 body { font-size: 17px; }
 button, .file-button, summary { min-height: 44px; }
@@ -50,5 +48,5 @@ body :where(p, li, td, th, label, button, a, span, strong, b, code, pre, input, 
 body :where(h1,h2,h3,h4,h5,h6,summary,legend) :where(a,span,strong,b,code) { font-weight: inherit !important; }
 .reference-preview > strong { font-weight: 600 !important; }
 
-.guided header > h1, .guided header > p:first-of-type { display: none; }
+.guided header > h1 { display: none; }
 #status:empty { display: none; }

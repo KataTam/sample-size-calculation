@@ -7,8 +7,11 @@
   const status = document.getElementById('status');
   const groups = [
     ['Question and design', [
-      ['question', 'Research question', 'State the population and question. Include the intervention and comparator when relevant.', 'The research question is'],
-      ['outcome_detail', 'Primary outcome and time point', 'Define what will be measured and when.', 'The primary outcome and time point are'],
+      ['question', 'Research question', 'Your question should identify the decision the study will inform. The PICO fields below describe its components.', 'The research question is'],
+      ['population', 'Population', 'Who should the findings apply to? Your description should include the setting and key eligibility criteria (PICO; SPIRIT 2025 items 13–14).', 'The population is'],
+      ['intervention', 'Intervention or exposure', 'For an intervention, describe what is delivered, how much, how often, for how long and by whom. An observational study should define the exposure or group of interest (PICO; SPIRIT 2025 item 15).', 'The intervention or exposure is', 'comparison'],
+      ['comparator', 'Comparator', 'Your description should identify the comparison condition and explain its choice. Usual care should be described, including permitted additional treatments (PICO; SPIRIT 2025 item 15).', 'The comparator is', 'comparison'],
+      ['outcome_detail', 'Primary outcome and time point', 'The outcome definition should identify the measurement, how results are summarized and the assessment time (PICO; SPIRIT 2025 item 16).', 'The primary outcome and time point are'],
       ['design', 'Design, sampling and allocation', 'Describe how participants or records are selected, how observations are related, and any treatment allocation.', 'The design, sampling and allocation are']
     ]],
     ['Assumptions and evidence', [
@@ -37,28 +40,117 @@
   groups[2][1].push(groups[3][1].shift());
   const fields = groups.flatMap(group => group[1]);
   let reportLines = [];
-  const shortHelp = {
-    question: 'Your question should identify the population and, where relevant, the intervention and comparator.',
-    outcome_detail: 'Your description should identify the measurement and its time point.',
-    design: 'Your description should cover selection, allocation and relationships between observations.',
-    scale: 'Your comparison should specify the units and which direction indicates benefit.',
-    expected: 'Your best expectation should have an evidence source and an indication of uncertainty.',
-    clinical: 'Your threshold should describe a worthwhile between-group benefit.',
-    planning: 'Your justification should explain the difference used to evaluate power.',
-    variation: 'Your standard deviation or event percentages should have an evidence source.',
-    evidence_review: 'Which assumptions are least certain, and how well does the evidence fit your study?',
+  const questions = {
+    question: 'What question should your study answer?',
+    population: 'Who is the study about? (Population)',
+    intervention: 'What intervention or exposure will you study? (Intervention)',
+    comparator: 'What will you compare it with? (Comparator)',
+    outcome_detail: 'What outcome will you measure, and when? (Outcome)',
+    design: 'How will participants be selected and, where relevant, allocated?',
+    scale: 'How will you express the difference between groups?',
+    expected: 'What difference do you expect, and what supports it?',
+    clinical: 'What between-group difference would matter clinically?',
+    planning: 'What target difference will you use for the power calculation?',
+    variation: 'What event percentages or standard deviation will you assume?',
+    evidence_review: 'How relevant and reliable is the supporting evidence?',
     sensitivity: 'Which alternative assumptions could change your recommendation?',
-    progression: 'What results would support proceeding, amending or stopping?',
-    analysis: 'Your planned test and confidence interval should suit the study design.',
-    software: 'Your record should identify the method, software version and saved inputs.',
-    power: 'Your specification should give Type I error probability and power as percentages.',
-    precision: 'Your target should specify interval width, units and confidence level.',
-    counts: 'Your result should distinguish participants per group, total and rounding.',
-    recruitment: 'Your recruitment allowance should reflect expected losses and their evidence.',
-    resources: 'Is recruitment feasible within the available time and resources?',
-    conclusion: 'What could the study establish, and which uncertainties remain?'
+    progression: 'Which results would support proceeding, amending or stopping?',
+    analysis: 'How will you analyze the primary outcome?',
+    software: 'How could someone reproduce your calculation?',
+    power: 'What Type I error probability and power will you use?',
+    precision: 'What confidence interval width would be useful?',
+    counts: 'How many participants are needed or available for analysis?',
+    recruitment: 'How will losses or treatment changes affect your plan?',
+    resources: 'Can you recruit enough participants with the available resources?',
+    conclusion: 'What could the study establish, and what remains uncertain?'
   };
-  const questions = {question: 'What question should your study answer?', outcome_detail: 'What outcome will you measure, and when?', design: 'How will participants be selected and, where relevant, allocated?'};
+  const modelAnswers = {
+    question: 'Does a novel treatment improve pain relief at four weeks compared with standard treatment in adults with chronic pain?',
+    population: 'Adults with chronic pain attending the participating clinics. Eligibility criteria should specify the pain condition, its duration and relevant exclusions.',
+    intervention: 'A novel pain treatment. Its dose or intensity, delivery, provider and schedule still need to be specified in the protocol.',
+    comparator: 'Standard treatment over the same follow-up period. Its content, permitted additional care and the reason for choosing it should be documented.',
+    outcome_detail: 'The percentage of patients reporting pain relief four weeks after treatment starts, using the same prespecified definition of relief in both groups.',
+    design: 'An individually randomized superiority trial with two independent groups and equal allocation. Eligible patients will be recruited from participating clinics.',
+    scale: 'The difference in pain-relief percentages, novel minus standard treatment, in percentage points. A positive difference favors the novel treatment.',
+    expected: '40 percentage points: the hypothetical pilot observed relief in 70% versus 30%. With 10 patients per group, this estimate is uncertain.',
+    clinical: '20 percentage points, an illustrative between-group threshold. A real plan should justify this judgment using patient and clinical input.',
+    planning: '30 percentage points, judged worthwhile and realistic for this teaching example. The choice needs evidence; power will be lower at the 20-point clinical threshold.',
+    variation: '30% relief with standard treatment and 60% with novel treatment for the calculation. These illustrative percentages imply the 30-point target difference.',
+    evidence_review: 'The small pilot provides uncertain event percentages. Comparable studies should be checked for the same population, definition of relief and four-week assessment.',
+    sensitivity: 'Assess power at benefits of 20, 30 and 40 percentage points while keeping the selected sample fixed and standard-treatment relief at 30%. Evidence should support the plausible range.',
+    progression: 'Retention at four weeks among all enrolled patients will inform feasibility. Proceed, amend and stop thresholds should be agreed with the study team before data collection.',
+    analysis: 'A two-sided test of the difference in pain-relief percentages between independent groups, with a 95% confidence interval. The selected calculation should use the planned test.',
+    software: 'The two-proportion app uses the tutorial normal approximation. The dated report records inputs, rounding and source version; the exact software versions should be saved with the calculation.',
+    power: 'A 5% Type I error probability and 90% target power at a 30-percentage-point difference, using a two-sided test.',
+    precision: 'A 95% confidence interval with a full width of 20 percentage points would give a margin of about 10 points. Its usefulness should be justified for the clinical decision.',
+    counts: '56 analyzable patients per group, 112 in total, using the tutorial approximation with 30% versus 60% relief, 5% Type I error probability and 90% power.',
+    recruitment: 'With illustrative 10% expected losses, 56 / 0.90 rounds up to 63 patients per group (126 total). Evidence should support the loss assumption; missing outcomes and treatment changes also need an analysis plan.',
+    resources: 'The clinics expect 20 eligible patients per month and 70% consent: about 14 recruits per month. Recruiting 126 would take about nine months before allowing for interruptions.',
+    conclusion: 'The plan evaluates power at the target difference. A smaller benefit could be missed; the estimate and confidence interval will help judge clinical importance. The assumptions and recruitment capacity need review.'
+  };
+  function examples(value) {
+    const result = {...modelAnswers};
+    if (value.outcome === 'continuous') Object.assign(result, {
+      question: 'Does the novel treatment improve the mean pain-improvement score at four weeks compared with standard treatment in adults with chronic pain?',
+      outcome_detail: 'Mean improvement in pain score from baseline to four weeks, using a prespecified scoring rule. Larger improvement means greater benefit.',
+      scale: 'The between-group mean difference in pain-improvement score, novel minus standard treatment, in score units.',
+      expected: '4 score units, the best current expectation in the teaching example. Its evidence source and uncertainty need to be justified.',
+      clinical: '2 score units between groups, an illustrative threshold requiring patient and clinical justification.',
+      planning: '3 score units, the target difference used for power. A smaller 2-unit benefit would have lower power at the same sample size.',
+      variation: 'A common standard deviation of 5 score units, supported by studies with comparable patients and measurement times.',
+      analysis: 'A two-sided comparison of independent group means with a 95% confidence interval for the mean difference. The analysis should reflect the distribution and design.',
+      software: 'The two-mean app uses the tutorial normal approximation. The report records the difference, SD, error probabilities, rounding and source version.',
+      power: 'A 5% Type I error probability and 90% target power at a between-group mean difference of 3 score units.',
+      precision: 'A 95% confidence interval with a full width of 4 score units would have a margin of about 2 units. Its usefulness needs clinical justification.',
+      counts: '59 analyzable patients per group, 118 total, using the tutorial normal approximation with a 3-unit target, SD 5, 5% Type I error probability and 90% power.',
+      recruitment: 'With illustrative 10% expected losses, 59 / 0.90 rounds up to 66 patients per group (132 total). Missing outcomes and treatment changes also need an analysis plan.',
+      resources: 'At 20 eligible patients per month and 70% consent, recruitment of 132 would take about ten months, allowing only for whole months.',
+      sensitivity: 'Assess power at true differences of 2, 3 and 4 units, and plausible SDs around 5, holding the selected sample fixed. The ranges need evidence.',
+      evidence_review: 'The expected difference and SD should come from comparable patients, measurement methods and follow-up times. Small pilot estimates can be unstable.'
+    });
+    if (value.study_type === 'single') Object.assign(result, {
+      question: value.outcome === 'binary' ? 'What percentage of adults in the target population have the condition during the specified survey period?' : 'What is the mean pain score in the target population at the specified assessment time?',
+      population: 'Adults registered with the participating clinics during the survey period, sampled using a prespecified eligibility and sampling procedure.',
+      outcome_detail: value.outcome === 'binary' ? 'Presence of the condition (yes/no), assessed using the same definition at the survey visit.' : 'Pain score measured with the same scale at the survey visit.',
+      design: 'A cross-sectional survey with independent sampling from the defined population. The sampling procedure and nonresponse should be documented.',
+      scale: value.outcome === 'binary' ? 'The population percentage with the condition; confidence interval width is measured in percentage points.' : 'The population mean pain score; confidence interval width is measured in score units.',
+      expected: value.outcome === 'binary' ? '20%, based on a previous survey. Its population, assessment period and uncertainty should be checked.' : 'A previous comparable survey suggests a mean pain score of 5; its relevance and uncertainty should be checked.',
+      variation: value.outcome === 'binary' ? 'An anticipated percentage of 20%, with 50% examined as a conservative planning assumption if prior evidence is weak.' : 'An SD of 2 score units from a comparable survey, with larger SDs assessed in sensitivity analyses.',
+      analysis: value.outcome === 'binary' ? 'The observed percentage and a 95% Wilson confidence interval for independent binary outcomes.' : 'The sample mean and a 95% confidence interval appropriate to the sampling design.',
+      precision: value.outcome === 'binary' ? 'A 95% confidence interval with full width 10 percentage points (a margin of about 5 points), chosen to inform service planning.' : 'A 95% confidence interval with full width 1 score unit, chosen to inform service planning.',
+      counts: value.outcome === 'binary' ? '246 participants for analysis using the normal approximation with an anticipated 20%, 95% confidence and a 5-point margin of error.' : '62 participants using the normal approximation with SD 2 and a 0.5-unit margin of error at 95% confidence; the final method should be checked.',
+      recruitment: 'The recruitment allowance should reflect the expected nonresponse and missing measurements. The denominator and reasons for missing observations will be recorded.',
+      resources: 'The sampling frame, contact rate, expected consent and assessment time should support the required total within the available period.',
+      software: 'The calculation record includes the one-population method, confidence level, interval-width target, assumptions, software version and rounding.',
+      sensitivity: 'Compare required counts across plausible population values and variation, then evaluate attainable interval width at the selected sample.',
+      evidence_review: 'The earlier survey should be checked for comparable sampling, outcome definitions and assessment time. Nonresponse could limit applicability.',
+      conclusion: 'The study will estimate the population value with a confidence interval. Sampling coverage and nonresponse affect how well the findings represent the population.'
+    });
+    if (value.goal === 'fixed') Object.assign(result, {
+      counts: value.study_type === 'single' ? '246 eligible records are available for the new question. Outcome completeness and the achievable interval width should be assessed.' : '20 analyzable participants per group (40 total) are available in this illustrative scenario. The sample remains fixed when assessing power and precision.',
+      power: value.outcome === 'binary' ? 'Use a 5% Type I error probability and evaluate attainable power at a 30-point true difference with 20 patients per group. The app result should be recorded.' : 'Use a 5% Type I error probability and evaluate attainable power at a 3-unit difference with 20 patients per group. The app result should be recorded.',
+      recruitment: value.study_type === 'single' ? 'The available records will be checked for missing outcomes and eligibility. The report will give the usable denominator and reasons for exclusions.' : 'With illustrative 10% expected losses, 20 / 0.90 rounds up to 23 per group (46 total). Actual retention can vary.',
+      conclusion: 'The available sample sets the limit on precision and power at prespecified differences. These results should determine which conclusions the study can support.'
+    });
+    if (value.goal === 'feasibility') Object.assign(result, {
+      question: 'Can the planned recruitment and follow-up procedures be delivered within the available time and resources?',
+      outcome_detail: value.outcome === 'binary' ? 'Retention at four weeks (yes/no), with all enrolled participants in the denominator.' : 'Time needed to complete the study assessment, in minutes, measured for every participant.',
+      scale: value.outcome === 'binary' ? 'The percentage retained at four weeks, reported overall and by group if relevant.' : 'Mean assessment time in minutes, reported overall and by group if relevant.',
+      expected: value.outcome === 'binary' ? 'Previous follow-up suggests about 80% retention. The population and follow-up period should be comparable.' : 'Previous sessions suggest a mean assessment time of 30 minutes. Its relevance to these procedures should be checked.',
+      variation: value.outcome === 'binary' ? 'An anticipated retention of 80%, with a plausible lower value included in sensitivity analysis.' : 'The SD of assessment times should be estimated from comparable procedures and its uncertainty examined.',
+      counts: 'The required total will be justified from the feasibility objective, desired precision and prespecified progression criteria.',
+      analysis: 'A summary and confidence interval for each feasibility outcome, compared with its prespecified progression criteria.',
+      precision: 'The interval-width target should be narrow enough to support the agreed progression decision. The outcome units and confidence level will be recorded.',
+      progression: 'The team will agree acceptable recruitment and follow-up performance, with prospective criteria for proceeding, amending or stopping.',
+      conclusion: 'The feasibility estimates and agreed progression criteria will inform whether the study should proceed, be amended or stop.'
+    });
+    if (value.study_type === 'other') {
+      result.design = 'A study with repeated measurements within participants. The allocation unit, measurement times and dependence between observations will be specified.';
+      result.counts = 'A design-specific calculation is needed. The report should give both the number of independent participants or clusters and the observations within each.';
+      result.analysis = 'A method that accounts for the allocation structure and dependence between observations, specified with statistical advice.';
+    }
+    return result;
+  }
   const names = ['study_type', 'outcome', 'goal', ...fields.map(field => field[0])];
   const choices = {study_type: ['comparison', 'single', 'other'], outcome: ['binary', 'continuous'], goal: ['testing', 'precision', 'fixed', 'both', 'feasibility']};
   const goalText = {testing: 'planning sample size to achieve specified power', precision: 'estimation with a precision target', fixed: 'assessing what fixed resources or existing data could establish', both: 'meeting both power and precision requirements', feasibility: 'supporting a pilot or feasibility decision'};
@@ -79,18 +171,9 @@
     for (const [id, title, help] of definitions) {
       const wrapper = document.createElement('div'); wrapper.id = 'field-' + id;
       const label = document.createElement('label'); label.htmlFor = id; label.textContent = questions[id] || title;
-      if (id === 'power') {
-        const alpha = document.createElement('a'), power = document.createElement('a');
-        alpha.href = '../student-materials/glossary.html#alpha'; alpha.textContent = 'Type I error probability';
-        power.href = '../student-materials/glossary.html#statistical-power'; power.textContent = 'power';
-        for (const link of [alpha, power]) { link.target = '_blank'; link.rel = 'noopener'; }
-        label.replaceChildren(alpha, ' and target ', power);
-      }
-      const guidance = document.createElement('p'); guidance.className = 'field-help'; guidance.id = id + '-help'; guidance.textContent = shortHelp[id];
-      const more = document.createElement('details'), summary = document.createElement('summary'), explanation = document.createElement('p');
-      more.className = 'field-detail'; summary.textContent = questions[id] ? 'Example' : 'Help'; explanation.textContent = ({question: 'Does a novel treatment improve pain relief compared with standard treatment in adults with chronic pain?', outcome_detail: 'Pain relief (yes/no), assessed four weeks after treatment starts.', design: 'An individually randomized trial with two independent groups and equal allocation.'})[id] || help; more.append(summary, explanation);
-      const input = document.createElement('textarea'); input.id = id; input.name = id; input.rows = 3; input.maxLength = 5000; input.setAttribute('aria-describedby', guidance.id);
-      wrapper.append(label, guidance, input, more); group.append(wrapper);
+      const input = document.createElement('textarea'); input.id = id; input.name = id; input.rows = 4; input.maxLength = 5000;
+      wrapper.append(label, input); group.append(wrapper);
+
     }
     document.getElementById('fields').append(group);
   }
@@ -104,8 +187,18 @@
     if (show) document.getElementById('report-title').focus();
     else preview.focus();
   });
+  for (const [id, help] of Object.entries({
+    study_type: 'Your choice controls which questions are relevant. Another design needs its own sample-size method.',
+    outcome: 'A binary outcome records two possibilities, such as relief or no relief. A continuous outcome records a numerical measurement, such as a pain score.',
+    goal: 'Power describes the probability of detecting a specified true difference. A precision target specifies a desired confidence interval width. With a fixed sample, you assess the attainable power or precision.'
+  })) {
+    const label = document.querySelector('label[for="' + id + '"]'), input = form.elements[id];
+    const text = label.firstChild.textContent; label.after(input); label.textContent = text;
+    InputGuidance.attach(label, help, input);
+  }
   const snapshot = () => Object.fromEntries(names.map(name => [name, form.elements[name].value]));
   function active(field, value) {
+    if (field[0] === 'clinical' && value.goal === 'feasibility') return false;
     if (field[4] === 'comparison') return value.study_type !== 'single';
     if (field[4] === 'power') return !['precision', 'feasibility'].includes(value.goal) && !(value.study_type === 'single' && value.goal === 'fixed');
     if (field[4] === 'precision') return value.goal !== 'testing';
@@ -120,13 +213,19 @@
     for (const option of form.elements.goal.options) option.disabled = single && ['testing', 'both'].includes(option.value);
     if (single && ['testing', 'both'].includes(value.goal)) { value.goal = 'precision'; form.elements.goal.value = 'precision'; }
     const wording = single ? {
-      scale: ['Outcome scale and interpretation', 'Your description should specify the percentage or mean to estimate and its units.', 'The outcome scale and interpretation are'],
-      expected: ['Anticipated percentage or mean', 'Give an anticipated value and its evidence, if available. Distinguish it from the result observed in existing data.', 'The anticipated value and supporting evidence are']
+      scale: ['Outcome scale and interpretation', 'Your description should specify the population percentage or mean and its units.', 'The outcome scale and interpretation are', 'What population value will you estimate, and in which units?'],
+      expected: ['Anticipated percentage or mean', 'Your anticipated value should have an evidence source, if available. An estimate from existing data is a result to report.', 'The anticipated value and supporting evidence are', 'What population percentage or mean do you anticipate?']
     } : {};
-    for (const id of ['scale', 'expected']) {
-      const field = fields.find(field => field[0] === id), copy = wording[id];
-      document.querySelector('label[for="' + id + '"]').textContent = copy ? copy[0] : field[1];
-      document.getElementById(id + '-help').textContent = copy ? copy[1] : shortHelp[id];
+    if (value.goal === 'feasibility') Object.assign(wording, {
+      scale: ['Feasibility outcome scale', 'The units should match the feasibility objective, such as retention percentage or assessment time.', 'The feasibility outcome scale is', 'How will you express the feasibility outcome?'],
+      expected: ['Anticipated feasibility outcome', 'Prior evidence should inform the expected recruitment, retention or other feasibility outcome.', 'The anticipated feasibility outcome is', 'What feasibility result do you anticipate?']
+    });
+    const answers = examples(value);
+    for (const field of fields) {
+      const [id, title, help] = field, copy = wording[id];
+      const label = document.querySelector('label[for="' + id + '"]');
+      label.textContent = copy ? copy[3] : questions[id] || title;
+      InputGuidance.attach(label, copy ? copy[1] : help, form.elements[id], answers[id]);
     }
     const intro = document.createElement('p');
     const structure = {comparison: 'a two-group comparison', single: 'an estimate of one population percentage or mean', other: 'another design requiring a specified planning method'};
@@ -169,20 +268,39 @@
   form.addEventListener('input', () => render());
   form.addEventListener('submit', event => event.preventDefault());
   document.getElementById('clear').addEventListener('click', () => { apply({}); status.textContent = 'Entries cleared. You can start a new plan.'; });
-  document.getElementById('save').addEventListener('click', () => {
-    download(JSON.stringify({schema: 'sample-size-assumptions-report', version: 1, entries: snapshot()}, null, 2), 'application/json', 'study-plan-entries.json'); status.textContent = 'Entries saved to a file.';
-  });
-  document.getElementById('download').addEventListener('click', () => {
-    const lines = ['Study-plan report', document.getElementById('progress').textContent, '', ...reportLines];
-    download(lines.join('\n\n'), 'text/plain;charset=utf-8', 'study-plan-report.txt'); status.textContent = 'Report downloaded with the current answers and any missing entries marked.';
+  const escapeHTML = text => String(text).replace(/[&<>"']/g, c => ({'&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;'}[c]));
+  function reportDocument() {
+    const entries = snapshot(), payload = JSON.stringify({schema: 'sample-size-assumptions-report', version: 2, entries}).replace(/</g, '\\u003c');
+    const headings = new Set(groups.map(group => group[0]));
+    const content = reportLines.map(line => headings.has(line) ? '<h2>' + escapeHTML(line) + '</h2>' : '<p>' + escapeHTML(line) + '</p>').join('\n');
+    return '<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Study-plan report</title>' +
+      '<style>body{max-width:800px;margin:2rem auto;padding:0 1rem;font:17px/1.6 system-ui,sans-serif;color:#20343e}p{white-space:pre-wrap;overflow-wrap:anywhere}h2{margin-top:1.5em;font-size:1.2em}a{color:#006481}footer{border-top:1px solid #abc;margin-top:2rem;font-size:.9em}@media print{body{margin:0;max-width:none;font-size:11pt}h2{break-after:avoid}a{color:inherit}}</style></head><body><h1>Study-plan report</h1>' +
+      '<p>' + escapeHTML(document.getElementById('progress').textContent) + '</p>' + content +
+      '<footer><p>This draft contains your entries and identifies unanswered decisions. You can print it or save it as PDF using your browser. To continue editing, reopen this HTML file in the <a href="https://katatam.github.io/sample-size-calculation/assumptions_report/">study-plan activity</a>.</p>' +
+      document.getElementById('guidance-credit').innerHTML.replace(/<(\/?)(?:details)[^>]*>/g, '<$1section>').replace(/<(\/?)(?:summary)>/g, '<$1h2>') + '</footer>' +
+      '<script type="application/json" id="study-plan-data">' + payload + '</script></body></html>';
+  }
+  function saveReport() {
+    download(reportDocument(), 'text/html;charset=utf-8', 'study-plan-report.html');
+    status.textContent = 'Readable HTML report saved. You can reopen this file here to continue editing.';
+  }
+  document.getElementById('save').addEventListener('click', saveReport);
+  document.getElementById('download').addEventListener('click', saveReport);
+  document.getElementById('download-text').addEventListener('click', () => {
+    const lines = ['Study-plan report', document.getElementById('progress').textContent, '', ...reportLines,
+      'Guidance: PICO (Richardson et al., 1995), https://doi.org/10.7326/ACPJC-1995-123-3-A12; SPIRIT 2025, https://www.consort-spirit.org/; DELTA² (Cook et al., 2018), https://doi.org/10.1136/bmj.k3750. Educational selection; a full protocol should use its complete design-specific guidance.',
+      'Teaching materials: CC BY-SA 4.0, https://creativecommons.org/licenses/by-sa/4.0/. Software: MIT, https://opensource.org/license/mit.'];
+    download(lines.join('\n\n'), 'text/plain;charset=utf-8', 'study-plan-report.txt'); status.textContent = 'Plain-text report downloaded.';
   });
   document.getElementById('restore').addEventListener('change', async event => {
     const file = event.target.files[0]; if (!file) return;
     try {
-      if (file.size > 1000000) throw Error('Choose an entries file smaller than 1 MB.');
-      const document = JSON.parse(await file.text());
-      if (document.schema !== 'sample-size-assumptions-report' || document.version !== 1) throw Error('Choose a supported assumptions-report file.');
-      apply(document.entries); status.textContent = 'Saved entries restored.';
+      if (file.size > 1000000) throw Error('Choose a saved report or entries file smaller than 1 MB.');
+      const text = await file.text();
+      const payload = text.match(/<script\b(?=[^>]*\bid=["']study-plan-data["'])(?=[^>]*\btype=["']application\/json["'])[^>]*>([\s\S]*?)<\/script\s*>/i);
+      const saved = JSON.parse(text.trim().startsWith('{') ? text : payload?.[1] || 'null');
+      if (!saved || saved.schema !== 'sample-size-assumptions-report' || ![1, 2].includes(saved.version)) throw Error('Choose an HTML report or earlier JSON entries file saved by this activity.');
+      apply(saved.entries); status.textContent = 'Saved entries restored.';
     } catch (error) { status.textContent = 'Entries were not changed. ' + error.message; }
     event.target.value = '';
   });
@@ -192,6 +310,9 @@
       const cases = await response.json(), input = cases.pain_one_many.inputs;
       const percent = value => Number((100 * value).toFixed(8));
       apply({study_type: 'comparison', outcome: 'binary', goal: 'fixed', question: 'Does a novel treatment improve pain relief compared with standard treatment in adults with chronic pain?',
+        population: modelAnswers.population,
+        intervention: modelAnswers.intervention,
+        comparator: modelAnswers.comparator,
         outcome_detail: 'Pain relief (yes/no) at four weeks',
         design: 'An individually randomized superiority trial with two independent groups and equal allocation',
         scale: 'Treatment minus control, in percentage points; a positive difference favors treatment',

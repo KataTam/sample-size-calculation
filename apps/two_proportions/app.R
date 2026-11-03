@@ -10,7 +10,8 @@ ui <- fluidPage(
     sidebarPanel(
       percent_slider("pi1", "Novel treatment: assumed event probability for planning (%)", min = 0.01, max = 0.99, value = 0.60, step = 0.01),
       percent_slider("pi2", "Standard treatment: assumed event probability for planning (%)", min = 0.01, max = 0.99, value = 0.30, step = 0.01),
-      activity_help("These assumed event probabilities determine the target difference. The pain example expects a 40-percentage-point benefit, plans for 30 points and uses a 20-point clinical threshold."),
+      activity_help("These assumed event percentages determine the target difference. In the pain example, 60% versus 30% gives a 30-percentage-point target; the expected difference is 40 points and the clinical threshold is 20.", for_input = "pi1"),
+      activity_help("The event percentage assumed for the standard-treatment group. Its source should use comparable patients, outcome definitions and follow-up.", for_input = "pi2"),
       percent_slider("alpha", tags$a(href = "../book/Sample_size_open_module.html#alpha", target = "_blank", rel = "noopener", "Type I error probability (%)"), min = 0.001, max = 0.10, value = 0.05, step = 0.001),
       percent_slider("power", tags$a(href = "../book/Sample_size_open_module.html#statistical-power", target = "_blank", rel = "noopener", "Target power (%)"), min = 0.50, max = 0.99, value = 0.90, step = 0.01),
       percent_slider("dropout", "Expected loss to follow-up (%)", min = 0, max = 0.50, value = 0, step = 0.01)

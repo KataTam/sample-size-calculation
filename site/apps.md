@@ -6,7 +6,7 @@ Apps are interactive software. Activities provide questions and exercises to hel
 
 ## Core apps
 
-- [Study-plan report](assumptions_report/): build a report as you work through the tutorial. [Activity: Develop and justify your study plan](study/?activity=assumptions_report).
+- [Study-plan report](assumptions_report/): develop a PICO question and justify the sample size, evidence and recruitment plan in a readable, reopenable report. [Activity: Develop and justify your study plan](study/?activity=assumptions_report).
 
 - [Sample size reasoning lab](power_explorer/?activity=pain_one_many): simulate patient outcomes and compare results across studies. [Activity: Chronic pain: one study and many studies](study/?activity=pain_one_many).
 
@@ -28,7 +28,7 @@ Apps are interactive software. Activities provide questions and exercises to hel
 
 - [Study-design questionnaire](design_questionnaire/): consider designs suited to your research question. [Activity: Which study design fits your question?](study/?activity=design_questionnaire).
 
-The reasoning lab has core and advanced activities. Core activities start with advanced controls closed; “Settings” provides the other assumptions. The study-plan report uses expandable sections and an optional preview. The [activity walkthroughs](student-materials/activity-walkthroughs.html) provide guidance for each one, including pilot retention, precision and recruitment scenarios.
+The reasoning lab has core and advanced activities. Core activities start with advanced controls closed; “Settings” provides the other assumptions. Question help is available by hover, keyboard focus or tap. Gray model answers in written-response fields illustrate how to explain a decision; reports use your own entries. The [activity walkthroughs](student-materials/activity-walkthroughs.html) provide guidance for each one, including pilot retention, precision and recruitment scenarios.
 
 ## Tutorial beside the app
 

@@ -1,9 +1,28 @@
 # Shared presentation for optional guidance and readable calculator results.
-activity_help <- function(...) {
+activity_help <- function(..., for_input = NULL) {
   content <- shiny::tagList(...)
+  if (!is.null(for_input)) return(shiny::tags$div(class = "input-guidance-source",
+    `data-for` = for_input, ...))
   if (nchar(gsub("<[^>]+>", "", as.character(content))) <= 140)
     return(shiny::helpText(...))
   shiny::tags$details(class = "activity-help", shiny::tags$summary("Help"), shiny::tags$p(...))
+}
+activity_text_input <- function(inputId, label, model_answer, help, rows = 4, width = "100%") {
+  shiny::tagList(shiny::textAreaInput(inputId, label, rows = rows, width = width,
+      placeholder = paste("Model answer:", model_answer)),
+    shiny::tags$div(class = "input-guidance-source", `data-for` = inputId,
+      `data-model` = model_answer, help))
+}
+activity_guidance_script <- function() {
+  read_asset <- function(name) {
+    candidates <- c(file.path("../../site", name), file.path("site", name), name)
+    file <- candidates[file.exists(candidates)][1]
+    if (is.na(file)) stop("Missing shared app guidance asset: ", name)
+    paste(readLines(file, warn = FALSE, encoding = "UTF-8"), collapse = "\n")
+  }
+  paste0("(function(){const style=document.createElement('style');style.textContent=",
+    jsonlite::toJSON(read_asset("input-guidance.css"), auto_unbox = TRUE),
+    ";document.head.append(style);})();\n", read_asset("input-guidance.js"))
 }
 activity_details <- function(title, ...) shiny::tags$details(class = "activity-details", shiny::tags$summary(title), ...)
 activity_count_result <- function(x) shiny::tags$div(class = "calculation-result",
@@ -262,5 +281,5 @@ activity_bridge_script <- function(app = "power_explorer") {
   $(document).on('shiny:disconnected', function() { connected = false; });
   Shiny.addCustomMessageHandler('sample-size-state', function(state) { send({type: 'sample-size:state', state}); });
 })();)---"
-  paste(percentage_display_script(), sub("__APP__", app, code, fixed = TRUE))
+  paste(activity_guidance_script(), percentage_display_script(), sub("__APP__", app, code, fixed = TRUE))
 }
