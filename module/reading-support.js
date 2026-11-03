@@ -13,6 +13,84 @@
   }
   if (redirectMovedSection()) return;
   window.addEventListener('hashchange', redirectMovedSection);
+  // The same contents panel appears in the book and the embedded lesson.
+  const book = document.querySelector('.book');
+  const sidebar = book?.querySelector('.book-summary');
+  if (sidebar && !document.getElementById('toc-resizer')) {
+    const embeddedLesson = window.frameElement?.id === 'lesson-frame';
+    const defaultWidth = embeddedLesson ? 180 : 300;
+    const storageKey = embeddedLesson ? 'sample-size-toc-width-study' : 'sample-size-toc-width';
+    let preferredWidth = defaultWidth, drag = null;
+    try {
+      const saved = Number(localStorage.getItem(storageKey));
+      if (Number.isFinite(saved) && saved >= 160) preferredWidth = saved;
+    } catch (_) { /* Resizing also works when browser storage is unavailable. */ }
+    sidebar.id ||= 'tutorial-contents-pane';
+    const divider = document.createElement('div');
+    divider.id = 'toc-resizer'; divider.tabIndex = 0;
+    divider.setAttribute('role', 'separator');
+    divider.setAttribute('aria-label', 'Adjust table of contents width');
+    divider.setAttribute('aria-orientation', 'vertical');
+    divider.setAttribute('aria-controls', sidebar.id);
+    divider.title = 'Drag to resize the contents. Arrow keys adjust the width; double-click restores the default.';
+    const grip = document.createElement('span'); grip.setAttribute('aria-hidden', 'true');
+    divider.append(grip); book.append(divider);
+    function limits() {
+      const available = Math.max(220, book.clientWidth);
+      // Leave space for the text on desktop and the menu toggle on phones.
+      return {min: 160, max: Math.max(160, available - (available <= 600 ? 60 : 240))};
+    }
+    function paint() {
+      const {min, max} = limits();
+      const width = Math.round(Math.min(max, Math.max(min, preferredWidth)));
+      book.style.setProperty('--toc-width', width + 'px');
+      book.classList.toggle('toc-narrow-reader', book.clientWidth - (book.classList.contains('with-summary') ? width : 0) < 1040);
+      divider.setAttribute('aria-valuemin', min);
+      divider.setAttribute('aria-valuemax', max);
+      divider.setAttribute('aria-valuenow', width);
+      divider.setAttribute('aria-valuetext', 'Contents ' + width + ' pixels wide');
+      return width;
+    }
+    function save() {
+      try { localStorage.setItem(storageKey, preferredWidth); } catch (_) {}
+    }
+    function change(value) {
+      const {min, max} = limits();
+      preferredWidth = Math.min(max, Math.max(min, value)); paint();
+    }
+    divider.addEventListener('pointerdown', event => {
+      if (event.button !== 0) return;
+      event.preventDefault(); divider.focus();
+      drag = {x: event.clientX, width: paint()};
+      book.classList.add('toc-resizing');
+      divider.setPointerCapture(event.pointerId);
+    });
+    divider.addEventListener('pointermove', event => {
+      if (drag) change(drag.width + event.clientX - drag.x);
+    });
+    function stopDrag() {
+      if (!drag) return;
+      drag = null; book.classList.remove('toc-resizing'); save();
+    }
+    divider.addEventListener('pointerup', stopDrag);
+    divider.addEventListener('pointercancel', stopDrag);
+    divider.addEventListener('lostpointercapture', stopDrag);
+    divider.addEventListener('dblclick', () => { change(defaultWidth); save(); });
+    divider.addEventListener('keydown', event => {
+      const {min, max} = limits(), width = paint(), step = event.shiftKey ? 40 : 10;
+      const value = {ArrowLeft: width - step, ArrowRight: width + step, Home: min, End: max}[event.key];
+      if (value === undefined) return;
+      // These arrows resize the panel instead of invoking chapter navigation.
+      event.preventDefault(); event.stopPropagation(); change(value); save();
+    });
+    window.addEventListener('resize', paint);
+    let shown = book.classList.contains('with-summary');
+    new MutationObserver(() => {
+      const next = book.classList.contains('with-summary');
+      if (next !== shown) { shown = next; paint(); }
+    }).observe(book, {attributes:true, attributeFilter:['class']});
+    paint();
+  }
   // Follow heading IDs: Bookdown's text-based matching is affected by badges
   // and heading controls. Only the selected branch exposes its deeper entries.
   const contents = document.querySelector('.book-summary .summary');

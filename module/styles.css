@@ -273,3 +273,37 @@ details.section-disclosure > summary > :is(h2,h3,h4,h5,h6) {
 @media print {
   .math.display, .MathJax_Display, .MathJax_CHTML_Display, .MathJax_SVG_Display { overflow:visible; }
 }
+
+/* Continuous contents resizing, including the lesson within the activity view. */
+.book { --toc-width: 300px; }
+.book .book-summary { width: var(--toc-width); left: calc(-1 * var(--toc-width)); }
+.book.with-summary .book-summary { left: 0; }
+.book.with-summary .book-body { left: var(--toc-width); }
+.book.with-summary .book-header.fixed { left: var(--toc-width); }
+.book .book-summary ul.summary { padding-right: 12px; }
+#toc-resizer {
+  display: none; position: absolute; top: 0; bottom: 0;
+  left: calc(var(--toc-width) - 12px); width: 24px; z-index: 10;
+  align-items: center; justify-content: center; cursor: col-resize; touch-action: none;
+}
+.book.with-summary > #toc-resizer { display: flex; }
+#toc-resizer span { width: 4px; height: 52px; background: #627d87; border-radius: 3px; }
+#toc-resizer:hover, #toc-resizer:focus-visible, .toc-resizing #toc-resizer { background: #dce7eacc; }
+#toc-resizer:focus-visible { outline-offset: -3px; }
+.book.color-theme-2 #toc-resizer span { background: #b5cbd9; }
+.book.color-theme-2 #toc-resizer:hover, .book.color-theme-2 #toc-resizer:focus-visible,
+.book.color-theme-2.toc-resizing #toc-resizer { background: #394758dd; }
+.book.toc-resizing { cursor: col-resize; user-select: none; }
+.book.toc-resizing .book-body, .book.toc-resizing .book-summary { transition: none !important; }
+.book.toc-narrow-reader .book-header { height: 90px; }
+.book.toc-narrow-reader .book-header :is(#feedback-link, #activity-menu-button) { top: 50px; }
+.book.toc-narrow-reader .book-body.fixed { top: 90px; }
+.book.toc-narrow-reader .book-body .body-inner { position: static; min-height: calc(100% - 50px); }
+.book.toc-narrow-reader .book-body.fixed .body-inner { top: auto; }
+.book.toc-narrow-reader .book-body .navigation {
+  position: static; top: auto; min-width: 0; max-width: 50%; width: 50%; display: inline-block; float: left;
+}
+@media (max-width: 600px) {
+  .book.with-summary .book-body { transform: none; }
+}
+@media print { #toc-resizer { display: none !important; } }

@@ -1074,7 +1074,7 @@ For continuous outcomes, allocation, baseline information and within-person comp
 
 Table: (\#tab:increase-power) Options for increasing power and the assumptions or tradeoffs they require.
 
-Power calculations describe performance under assumed treatment benefits. Those assumptions should be grounded in relevant evidence. You should keep the chronic pain expected difference (40 percentage points), target difference (30 points) and clinical threshold (20 points) distinct and justified. Running more simulations improves the precision of the estimated power.
+Power calculations describe performance under assumed treatment benefits. Those assumptions should be grounded in relevant evidence. Running more simulations improves the precision of the estimated power.
 
 ::: {.activity}
 You can compare plans in [Activity: Chronic pain: one study and many studies](https://katatam.github.io/sample-size-calculation/study/?activity=pain_one_many). You should keep standard-treatment relief at 30%, novel-treatment relief at 60% and the Type I error probability at 5%. You can compare 50 and 80 analyzable patients per group. Which plan detects the specified benefit more often?

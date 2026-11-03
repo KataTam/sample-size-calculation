@@ -1,0 +1,63 @@
+const {chromium}=require('playwright');
+const assert=require('node:assert/strict'),fs=require('node:fs');
+const base=(process.argv[2]||'http://127.0.0.1:8769').replace(/\/$/,'');
+(async()=>{
+ const browser=await chromium.launch({headless:true,...(process.platform==='win32'?{channel:'msedge'}:{})});
+ try {
+  const page=await browser.newPage({viewport:{width:1400,height:1000}}),errors=[];
+  page.on('pageerror',error=>errors.push(error.message));
+  await page.goto(base+'/book/clinical-question.html',{waitUntil:'networkidle'});
+  await page.evaluate(()=>{localStorage.removeItem('sample-size-toc-width');localStorage.removeItem('sample-size-toc-width-study');});
+  await page.reload({waitUntil:'networkidle'});
+  const handle=page.locator('#toc-resizer');
+  if(!await handle.isVisible())await page.getByRole('link',{name:'Toggle Sidebar',exact:true}).click();
+  const width=()=>handle.getAttribute('aria-valuenow').then(Number);
+  assert.equal(await width(),300);
+  async function drag(locator,delta){
+   const r=await locator.boundingBox(),x=r.x+r.width/2,y=r.y+r.height/2;
+   await page.mouse.move(x,y);await page.mouse.down();await page.mouse.move(x+delta,y,{steps:8});await page.mouse.up();
+  }
+  await drag(handle,180);assert.equal(await width(),480);
+  await page.waitForFunction(()=>Math.abs(document.querySelector('.book-body').getBoundingClientRect().left-480)<1);
+  assert.equal(Math.round((await page.locator('.book-header').boundingBox()).x),480,'Toolbar follows the contents edge');
+  const before=page.url();await handle.focus();await page.keyboard.press('ArrowRight');assert.equal(await width(),490);
+  await page.keyboard.press('Shift+ArrowLeft');assert.equal(await width(),450);assert.equal(page.url(),before,'Resize keys must not navigate chapters');
+  await page.keyboard.press('Home');assert.equal(await width(),160);
+  await page.keyboard.press('End');assert.equal(await width(),1160);
+  assert.equal(await page.locator('.navigation-next').evaluate(el=>getComputedStyle(el).position),'static','Navigation must leave room for a narrow reading pane');
+  await handle.dblclick();assert.equal(await width(),300);
+  await drag(handle,120);assert.equal(await width(),420);
+  await page.locator('.book-summary a[href="power.html"]').first().click();await page.waitForURL('**/power.html');
+  await page.waitForFunction(()=>document.querySelector('#toc-resizer')?.getAttribute('aria-valuenow')==='420');
+  await page.reload({waitUntil:'networkidle'});assert.equal(await width(),420);
+  await page.getByRole('link',{name:'Toggle Sidebar',exact:true}).click();assert(!await handle.isVisible());
+  await page.getByRole('link',{name:'Toggle Sidebar',exact:true}).click();assert.equal(await width(),420);
+  await page.emulateMedia({media:'print'});assert(!await handle.isVisible());await page.emulateMedia({media:'screen'});
+  await page.evaluate(()=>document.querySelector('.book').classList.add('color-theme-2'));
+  await handle.focus();fs.mkdirSync('build/browser-checks',{recursive:true});
+  await page.screenshot({path:'build/browser-checks/contents-night.png'});
+  await page.setViewportSize({width:390,height:844});
+  assert.equal(await width(),330);await drag(handle,-90);assert.equal(await width(),240);
+  await page.waitForFunction(()=>Math.abs(document.querySelector('.book-body').getBoundingClientRect().left-240)<1);
+  assert.equal(Math.round((await page.locator('.book-header').boundingBox()).x),240,'Mobile toolbar remains reachable beside the resized contents');
+  assert(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth));
+  await page.getByRole('link',{name:'Toggle Sidebar',exact:true}).click();assert(!await handle.isVisible());
+  await page.setViewportSize({width:1400,height:1000});
+  await page.evaluate(()=>localStorage.setItem('sample-size-toc-width','420'));
+  await page.goto(base+'/study/?activity=assumptions_report');
+  const lesson=page.frameLocator('#lesson-frame');
+  await lesson.locator('#toc-resizer').waitFor({state:'attached'});
+  await page.waitForFunction(()=>document.querySelector('#lesson-frame').contentDocument.readyState==='complete');
+  assert(!await lesson.locator('#toc-resizer').isVisible(),'Combined view starts with contents collapsed');
+  await lesson.getByRole('link',{name:'Toggle Sidebar',exact:true}).click();
+  assert.equal(await lesson.locator('#toc-resizer').getAttribute('aria-valuenow'),'180','Combined view has its own compact width');
+  await drag(lesson.locator('#toc-resizer'),60);
+  assert.equal(await lesson.locator('#toc-resizer').getAttribute('aria-valuenow'),'240');
+  assert.equal(await page.evaluate(()=>localStorage.getItem('sample-size-toc-width')),'420');
+  await page.screenshot({path:'build/browser-checks/contents-combined.png'});
+  await page.goto(base+'/book/feasibility.html');
+  assert(!(await page.locator('section.normal').innerText()).includes('You should keep the chronic pain expected difference'));
+  assert.deepEqual(errors,[]);
+  console.log('Contents resizing passed: drag, keyboard, limits, navigation, persistence, hide/show, print, night theme, mobile and compact embedded view.');
+ } finally {await browser.close();}
+})().catch(error=>{console.error(error);process.exit(1)});
