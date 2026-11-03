@@ -26,16 +26,16 @@ draw_pain_pilot_patients <- function() {
   relief <- "#21834a"
   person <- function(x, y, improved = FALSE) {
     color <- if (improved) relief else pain
-    points(x, y + 5, pch = 16, cex = 1.15, col = color)
-    segments(x, y + 2.5, x, y - 3, col = color, lwd = 2.2)
+    segments(x, y + 4, x, y - 3, col = color, lwd = 2.2)
+    points(x, y + 4, pch = 16, cex = 1.15, col = color)
     segments(x, y + 1, x + c(-1.25, 1.25),
       y + if (improved) 3.2 else -1.5, col = color, lwd = 2.2)
     segments(x, y - 3, x + c(-1.2, 1.2), y - 6.5,
       col = color, lwd = 2.2)
   }
   centers <- c(25, 75)
-  responders <- c(7L, 3L)
-  text(centers, 96, c("Novel treatment", "Standard treatment"),
+  responders <- c(3L, 7L)
+  text(centers, 96, c("Standard treatment", "Novel treatment"),
     font = 2, cex = 1.12)
   text(50, 86, "Before treatment: all 10 patients in each group have pain", cex = 1)
   segments(50, 23, 50, 79, col = "#e0e5e9")
