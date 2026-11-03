@@ -60,28 +60,27 @@ draw_pain_pilot_patients <- function() {
 draw_planning_differences <- function() {
   old <- par(no.readonly = TRUE)
   on.exit(par(old))
-  diagram_canvas()
-  text(50, 95, "Chronic pain: three planning quantities", font = 2, cex = 1.12)
+  par(mar = c(4.4, 10.2, .7, .8), las = 1, bg = "white",
+    fg = "#26343d", col.axis = "#26343d", col.lab = "#26343d",
+    family = "sans")
   values <- c(40, 30, 20)
-  rows <- c(77, 53, 29)
+  rows <- 3:1
   colors <- c("#17658a", "#72428b", "#a66510")
-  x <- function(value) 41 + value
-  for (i in seq_along(values)) {
-    segments(x(0), rows[i], x(50), rows[i], col = "#e0e5e9")
-    points(x(values[i]), rows[i], pch = c(17, 15, 18)[i], cex = 1.7,
-      col = colors[i])
-    text(x(values[i]), rows[i] + 7, values[i], col = colors[i], cex = 1.1)
-  }
-  text(3, rows + 3, c("Expected difference", "Target difference", "Clinical threshold"),
-    adj = 0, cex = 1)
-  text(3, rows - 5, c("Best current expectation", "Used to evaluate power",
-    "Smallest worthwhile benefit"), adj = 0, cex = .85)
-  segments(x(0), 16, x(50), 16)
-  for (tick in seq(0, 50, 10)) {
-    segments(x(tick), 16, x(tick), 14)
-    text(x(tick), 10, tick, cex = .85)
-  }
-  text(50, 2, "Novel minus standard: difference in pain relief (percentage points)", cex = .94)
+  plot(NA, xlim = c(0, 50), ylim = c(.5, 3.5),
+    xaxs = "i", yaxs = "i", axes = FALSE, xlab = "", ylab = "")
+  abline(h = rows, col = "#e5e9ec", lwd = 1)
+  abline(v = 0, col = "#4b5560", lwd = 1.5)
+  segments(0, rows, values, rows, col = colors, lwd = 3, lend = "butt")
+  points(values, rows, pch = c(17, 15, 18), cex = 1.25, col = colors)
+  text(values + 1.6, rows, values, adj = 0, cex = .95, col = colors)
+  text(-2, rows + .13, c("Expected difference", "Target difference", "Clinical threshold"),
+    adj = 1, cex = .95, xpd = NA)
+  text(-2, rows - .22, c("Best current expectation", "Used to evaluate power",
+    "Smallest worthwhile benefit"), adj = 1, cex = .78, xpd = NA)
+  axis(1, at = seq(0, 50, 10), cex.axis = .9)
+  mtext("Difference in pain-relief percentages", side = 1, line = 2.1, cex = .95)
+  mtext("Novel minus standard treatment (percentage points)", side = 1,
+    line = 3.2, cex = .8)
 }
 
 draw_discharge_grids <- function() {
