@@ -68,7 +68,7 @@ ui <- fluidPage(
       plotOutput("power_curve", height = "350px"), p(class = "caption", "Figure. Power at the specified alternative; the point marks your current sample size."),
       p("A one-sided alternative in the opposite direction can have power below the Type I error probability. The direction should follow the prespecified scientific question.")),
     tabPanel("Report", activity_text_input("interpretation", "How does sample size affect power at these settings?",
-      "The model answer updates with the selected example and current calculation inputs.",
+      "The example updates with the selected case and current calculation inputs.",
       "The power curve varies sample size while keeping population means, SD, and test settings fixed. Your explanation should connect the curve's direction to the shaded detection area.", rows = 5),
       uiOutput("report_preview"), activity_download_button("download_assumptions", "Save report (HTML)"),
       p(id = "download-status", role = "status", `aria-live` = "polite")),

@@ -21,7 +21,8 @@ const base = (process.argv[2] || 'http://127.0.0.1:8769').replace(/\/$/, '');
       await frame.waitForFunction(() => [...document.querySelectorAll('.input-guidance-source')].every(el => el.dataset.attached === 'true'));
       const fields = await frame.locator('textarea').evaluateAll(items => items.map(el => ({id: el.id, placeholder: el.placeholder, value: el.value, gray: getComputedStyle(el, '::placeholder').color})));
       for (const field of fields) {
-        assert.match(field.placeholder, /^Model answer: .{30}/, app + '/' + field.id);
+        assert(field.placeholder.length >= 30, app + '/' + field.id + ' retains its example');
+        assert.doesNotMatch(field.placeholder, /model answer/i, app + '/' + field.id);
         assert.equal(field.value, '', 'Examples must not become learner responses');
         assert.equal(field.gray, 'rgb(97, 97, 97)');
       }
@@ -44,7 +45,7 @@ const base = (process.argv[2] || 'http://127.0.0.1:8769').replace(/\/$/, '');
         const download = await pending, text = fs.readFileSync(await download.path(), 'utf8');
         assert.match(text, /My own recommendation/); assert.match(text, /Analyzable participants:/);
         assert.doesNotMatch(text, /List of \d|\$ study_question|Model answer:/);
-        assert.match(text, /Clinical relevance<\/p>\s*<p>Not yet specified/);
+        assert.match(text, /Clinical relevance: Not yet specified\./);
         await download.saveAs('build/input-guidance/lab-report.html');
       }
       await page.screenshot({path: 'build/input-guidance/' + app + '.png', fullPage: true});

@@ -9,14 +9,14 @@ activity_help <- function(..., for_input = NULL) {
 }
 activity_text_input <- function(inputId, label, model_answer, help, rows = 4, width = "100%") {
   shiny::tagList(shiny::textAreaInput(inputId, label, rows = rows, width = width,
-      placeholder = paste("Model answer:", model_answer)),
+      placeholder = model_answer),
     shiny::tags$div(class = "input-guidance-source", `data-for` = inputId,
       `data-model` = model_answer, help))
 }
 activity_model_answers <- function(session, answers, ids) {
   shiny::observe({
     values <- tryCatch(answers(), error = function(e)
-      stats::setNames(as.list(rep("A model answer will be available when the current calculation inputs are valid.", length(ids))), ids))
+      stats::setNames(as.list(rep("An example will be available when the current calculation inputs are valid.", length(ids))), ids))
     session$sendCustomMessage("activity-model-answers", values)
   })
 }

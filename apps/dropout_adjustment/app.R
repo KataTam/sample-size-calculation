@@ -101,7 +101,7 @@ ui <- fluidPage(
         p("Suppose some participants switch treatments, while others miss their final assessment."),
         tags$ol(tags$li("How would treatment switching change the recruitment requirement?"), tags$li("How would missing assessments change it?"), tags$li("Which assumptions need supporting evidence?")),
         activity_text_input("reasoning", "How would switching and missing assessments affect your recruitment plan?",
-          "The model answer updates with the selected example and current calculation inputs.",
+          "The example updates with the selected case and current calculation inputs.",
           "Your explanation should compare the starting and final counts, justify the loss and switching percentages, and identify how missing outcomes will be handled.", rows = 6)),
         uiOutput("report_preview"), downloadButton("report", "Save report (HTML)"),
         p(id = "download-status", role = "status", `aria-live` = "polite")),

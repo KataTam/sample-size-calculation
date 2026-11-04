@@ -80,7 +80,7 @@ ui <- fluidPage(
       activity_details("Planning and simulation assumptions", p("The saved interval retains the assumptions used to generate it. New settings take effect when you draw another sample."))),
     tabPanel("Report",
       activity_text_input("justification", "Why is your chosen interval width useful for this question?",
-        "The model answer updates with the selected example and current calculation inputs.",
+        "The example updates with the selected case and current calculation inputs.",
         "Your answer should explain which values the interval needs to distinguish for a useful decision, and whether the required sample is feasible.", rows = 5),
       uiOutput("report_preview"), activity_download_button("download_plan", "Save report (HTML)"),
       conditionalPanel("output.study_ready", activity_download_button("download_study", "Download saved interval (CSV)")),

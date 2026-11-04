@@ -33,7 +33,9 @@ const {chromium} = require('playwright');
     assert.equal(await page.locator('.plan-section[open]').count(), 1);
     assert.equal(await page.locator('#clinical').isVisible(), false);
     assert.equal(await page.locator('#question').inputValue(), '');
-    assert.match(await page.locator('#question').getAttribute('placeholder'), /^Model answer: Does a novel treatment/);
+    assert.match(await page.locator('#question').getAttribute('placeholder'), /^Does a novel treatment/);
+    for (const placeholder of await page.locator('textarea').evaluateAll(fields => fields.map(field => field.placeholder)))
+      assert.doesNotMatch(placeholder, /model answer/i);
     for (const id of ['population', 'intervention', 'comparator']) assert.equal(await page.locator('#' + id).isVisible(), true);
     assert.equal(await page.locator('.field-help, .field-detail').count(), 0);
     await page.locator('#intervention-question').focus();
