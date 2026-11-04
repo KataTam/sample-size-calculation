@@ -20,11 +20,11 @@ Apps are interactive software. Activities provide questions and exercises to hel
 
 ## Advanced apps and explorations
 
-- [Sample size reasoning lab](power_explorer/?activity=pain_simulation): explore uncertain assumptions, power, confidence intervals and missing outcomes. [Activity: Simulate repeated chronic-pain trials](study/?activity=pain_simulation).
+- [Sample size reasoning lab](power_explorer/?activity=pain_simulation): simulate how treatment estimates, confidence intervals, and detection probabilities change under different assumptions and missing-outcome scenarios. [Activity: Simulate repeated chronic-pain trials](study/?activity=pain_simulation).
 
-- [Estimate a population percentage](prevalence_precision/): plan sample size for a desired confidence interval width. [Activity: Estimate a percentage with useful precision](study/?activity=prevalence).
+- [Estimate a population percentage](prevalence_precision/): calculate sample size for a chosen confidence interval width, or assess the anticipated width for an available sample. [Activity: Estimate a percentage with useful precision](study/?activity=prevalence).
 
-- [Type I and Type II error probabilities and power](sampling_distributions/): explore false positives, false negatives and power. [Activity: Explore error probabilities and power](study/?activity=alpha_beta).
+- [Type I and Type II error probabilities and power](sampling_distributions/): see false-positive and false-negative probabilities and power for a test of one population mean. [Activity: Explore error probabilities and power](study/?activity=alpha_beta).
 
 - [Study-design questionnaire](design_questionnaire/): consider designs suited to your research question. [Activity: Choosing a study design](study/?activity=design_questionnaire).
 

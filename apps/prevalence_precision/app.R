@@ -45,7 +45,7 @@ apply_precision_inputs <- function(session, values) {
 ui <- fluidPage(
   tags$head(tags$script(HTML(activity_bridge_script("prevalence_precision"))), tags$script(HTML(activity_download_script()))),
   titlePanel("Estimate one proportion", windowTitle = "Estimate one proportion"),
-  p("How precise would your estimate be? You can plan a population survey or examine retention in a feasibility study."),
+  p(class = "app-intro", "This app calculates sample size for a chosen confidence interval width around a population percentage. It also shows the anticipated width for an available sample."),
   sidebarLayout(sidebarPanel(width = 4,
     app_input_group("Study assumptions",
       selectInput("case_id", "Teaching case", c("Prevalence survey" = "prevalence", "Pilot retention" = "pilot_feasibility")),

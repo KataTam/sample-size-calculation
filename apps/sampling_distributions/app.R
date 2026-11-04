@@ -43,7 +43,7 @@ apply_sampling_inputs <- function(session, values) {
 ui <- fluidPage(
   tags$head(tags$script(HTML(activity_bridge_script("sampling_distributions"))), tags$script(HTML(activity_download_script()))),
   titlePanel("Error probabilities and power", windowTitle = "Error probabilities and power"),
-  p("How does the same test behave under the null and a specified alternative? This reference model uses independent normal observations with a known population SD."),
+  p(class = "app-intro", "The graphs show false-positive and false-negative probabilities and power for a test of one population mean. You can see how power changes with sample size and the assumed true difference."),
   sidebarLayout(sidebarPanel(width = 4,
     app_input_group("Study assumptions", actionButton("load_case", "Restore the blood pressure example"),
       numericInput("mu0", "Mean under the null hypothesis (mmHg)", 120),

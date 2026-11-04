@@ -5,7 +5,9 @@ basic_calculator_ui <- function(outcome) {
   fluidPage(
     tags$head(tags$script(HTML(activity_bridge_script(slug))), tags$script(HTML(activity_download_script()))),
     titlePanel(title, windowTitle = title),
-    p("How many participants would support your planned comparison? The calculation assumes two independent, equally sized groups and a two-sided test."),
+    p(class = "app-intro", if (means)
+      "This app calculates the participants needed per group to detect a target difference between two population means at your chosen power. It assumes independent, equally sized groups and a two-sided test."
+      else "This app calculates the participants needed per group to detect a target difference between two population event percentages at your chosen power. It assumes independent, equally sized groups and a two-sided test."),
     sidebarLayout(sidebarPanel(width = 4,
       app_input_group("Study assumptions",
         if (means) tagList(

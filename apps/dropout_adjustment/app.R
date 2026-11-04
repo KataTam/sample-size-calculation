@@ -54,6 +54,7 @@ ui <- fluidPage(
   tags$head(tags$script(HTML(download_script)), tags$script(HTML(activity_bridge_script("dropout_adjustment"))),
     tags$style(HTML(".advanced-options>summary{background:#e9def5;padding:10px;border-radius:5px}details{margin:1em 0}summary{cursor:pointer;font-weight:600}table{width:100%}caption{color:#444}.recruitment-result{background:#dcecfb;padding:14px;border-radius:6px}.recruitment-result p{margin:0}.shiny-download-link{margin:12px 0}"))),
   titlePanel("Recruitment adjustment", windowTitle = "Recruitment adjustment"),
+  p(class = "app-intro", "This app calculates how many participants to recruit per group to allow for expected loss to follow-up. Optional settings cover unequal losses and treatment switching."),
   sidebarLayout(
     sidebarPanel(
       numericInput("n", "Starting participants needed for analysis, per group", 100, min = 1, step = 1),

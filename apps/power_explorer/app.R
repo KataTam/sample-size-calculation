@@ -57,7 +57,7 @@ ui <- fluidPage(
   tags$p(id = "download-status", role = "status", `aria-live` = "polite"),
   tags$head(tags$style(HTML("body{font-size:17px;line-height:1.55}.well{background:#f4f7fa}table{font-size:15px}.shiny-html-output{overflow-x:auto}.shiny-output-error-validation{color:#8a3410}.caption{font-size:.9em;color:#505b64;margin:8px 0 20px}"))),
   titlePanel("Sample size reasoning lab", windowTitle = "Sample size reasoning lab"),
-  p(class = "app-intro", "Explore a study question using hypothetical patient data."),
+  p(class = "app-intro", "You can calculate sample size or assess power and precision for two-group comparisons, then simulate studies to see how results vary."),
   tags$div(class = "activity-picker", selectInput("activity_choice", "Prepared activity", c("Choose an activity or use your own inputs" = "",
     setNames(names(teaching_cases()), vapply(teaching_cases(), function(x) x$title, character(1)))), width = "100%")),
   tags$div(class = "activity-context", uiOutput("activity_context")),

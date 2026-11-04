@@ -116,7 +116,7 @@ def build():
     assert core.items() <= combined.items(), 'Core notes must retain GUIDs and content in the combined package'
     review = ['# Flashcard preview', '',
               '<nav class="app-navigation" aria-label="Flashcard resources"><a href="index.md">Downloads and import instructions</a><a href="../../book/">Tutorial</a></nav>', '',
-              'The question-and-answer cards summarize the tutorial. Each question links to its explanation and supporting references. Numerical examples are hypothetical.', '',
+              'These cards help you review sample-size concepts and calculations. Each question links to the relevant tutorial explanation; numerical examples are hypothetical.', '',
               '<div id="flashcard-controls" class="app-panel" hidden>',
               '<div class="app-controls">',
               '<div><label for="flashcard-route">Level</label><select id="flashcard-route"><option value="all">Core + advanced</option><option value="core">Core</option><option value="advanced">Advanced</option></select><div class="input-guidance-source" data-for="flashcard-route">Core covers basic study planning and calculations. Advanced adds further methods and study designs. The filter changes this preview; each download keeps the deck named on its link.</div></div>',
