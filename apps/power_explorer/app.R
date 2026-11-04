@@ -526,22 +526,20 @@ server <- function(input, output, session) {
     saved <- one_saved(); x <- if (is.null(saved)) generating() else saved$spec
     paste0(if (x$outcome == "proportions") paste0("The assumed event probabilities (control ", format_percent(x$p_control), "; treatment ", format_percent(x$p_treatment), ")")
       else paste0("The assumed population mean difference (", effect_text(x$delta, x$outcome), ") and SD (", x$sd, ")"),
-      ", sample size (", x$n, " per group) and analysis stay fixed when this study is repeated. ",
-      "Sampled patients, observed outcomes and the estimated difference can change. ",
+      ", sample size (", x$n, " per group), and analysis stay fixed. Patients, outcomes, and the estimated difference vary between studies. ",
       if (!is.null(saved)) paste0("The displayed study estimated ", effect_text(saved$result$estimate, x$outcome), ". ",
-        if (!identical(saved$meta, snapshot())) "It uses earlier inputs; simulating again will update the displayed result. " else "") else "",
-      "Each animated dot represents one study's estimated difference.")
+        if (!identical(saved$meta, snapshot())) "It uses earlier inputs; a new simulation will use the current settings." else "") else "")
   })
   output$many_model_answer <- renderText({
     saved <- many_saved(); x <- if (is.null(saved)) generating() else saved$spec
-    paste0("At ", x$n, " participants per group, the simulated population difference is ", effect_text(true_difference(x), x$outcome), ". ",
-      if (true_difference(x) == 0) "With no population difference, rejection represents a false positive. A larger sample narrows the distribution of estimates; the nominal false-positive probability stays at the Type I error setting. "
-      else "A larger sample usually narrows the distribution of estimates and increases two-sided power at this nonzero difference. ",
-      "More simulation repetitions make the estimated performance more stable; each trial's sample size stays fixed. ",
+    missing <- if (is.null(saved)) !is.null(missing_settings()) else !is.null(saved$missing)
+    paste0("At ", x$n, if (missing) " recruited" else " analyzable", " participants per group, the assumed difference is ", effect_text(true_difference(x), x$outcome), ". ",
+      if (missing) "More patients can improve precision, while outcome-related losses can still bias estimates. Rejection percentages need assessment alongside bias and coverage. "
+      else if (true_difference(x) == 0) "Larger samples improve precision; with no true difference, rejections are false positives and their nominal probability stays at the Type I error setting. "
+      else "Larger samples usually improve precision and increase power at this nonzero difference. ",
+      "More repetitions stabilize simulation summaries while leaving each trial's sample size fixed. ",
       if (!is.null(saved)) paste0("The displayed batch contains ", x$B, " studies. ",
-        if (!identical(saved$meta, snapshot())) "It uses earlier inputs; simulating again will update the results. " else "") else "",
-      if (!is.null(saved$missing) || (is.null(saved) && !is.null(missing_settings())))
-        "With missing outcomes, the number analyzed can vary. Outcome-dependent missingness can bias estimates; bias and coverage help interpret the rejection percentage." else "")
+        if (!identical(saved$meta, snapshot())) "It uses earlier inputs." else "") else "")
   })
   one <- reactive({ req(one_saved()); one_saved() })
   observeEvent(input$run_one, {

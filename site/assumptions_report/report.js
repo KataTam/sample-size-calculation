@@ -66,29 +66,74 @@
   };
   const modelAnswers = {
     question: 'Does a novel treatment improve pain relief at four weeks compared with standard treatment in adults with chronic pain?',
-    population: 'Adults with chronic pain attending the participating clinics. Eligibility criteria should specify the pain condition, its duration and relevant exclusions.',
+    population: 'Adults with chronic pain attending the participating clinics; the specific condition, duration, and exclusions remain to be agreed.',
     intervention: 'A novel pain treatment. Its dose or intensity, delivery, provider and schedule still need to be specified in the protocol.',
-    comparator: 'Standard treatment over the same follow-up period. Its content, permitted additional care and the reason for choosing it should be documented.',
+    comparator: 'Standard treatment over the same follow-up period; its content and permitted additional care remain to be specified.',
     outcome_detail: 'The percentage of patients reporting pain relief four weeks after treatment starts, using the same prespecified definition of relief in both groups.',
     design: 'An individually randomized superiority trial with two independent groups and equal allocation. Eligible patients will be recruited from participating clinics.',
     scale: 'The difference in pain-relief percentages, novel minus standard treatment, in percentage points. A positive difference favors the novel treatment.',
     expected: '40 percentage points: the hypothetical pilot observed relief in 70% versus 30%. With 10 patients per group, this estimate is uncertain.',
-    clinical: '20 percentage points, an illustrative between-group threshold. A real plan should justify this judgment using patient and clinical input.',
-    planning: '30 percentage points, judged worthwhile and realistic for this teaching example. The choice needs evidence; power will be lower at the 20-point clinical threshold.',
+    clinical: '20 percentage points between groups, an illustrative minimum worthwhile benefit requiring patient and clinical justification.',
+    planning: '30 percentage points for this teaching example. Power is lower at the 20-point clinical threshold; the target still needs supporting evidence.',
     variation: '30% relief with standard treatment and 60% with novel treatment for the calculation. These illustrative percentages imply the 30-point target difference.',
-    evidence_review: 'The small pilot provides uncertain event percentages. Comparable studies should be checked for the same population, definition of relief and four-week assessment.',
-    sensitivity: 'Assess power at benefits of 20, 30 and 40 percentage points while keeping the selected sample fixed and standard-treatment relief at 30%. Evidence should support the plausible range.',
-    progression: 'Retention at four weeks among all enrolled patients will inform feasibility. Proceed, amend and stop thresholds should be agreed with the study team before data collection.',
-    analysis: 'A two-sided test of the difference in pain-relief percentages between independent groups, with a 95% confidence interval. The selected calculation should use the planned test.',
-    software: 'The two-proportion app uses the tutorial normal approximation. The dated report records inputs, rounding and source version; the exact software versions should be saved with the calculation.',
+    evidence_review: 'The small pilot gives uncertain event percentages. I would check comparable four-week studies before treating these inputs as reliable.',
+    sensitivity: 'I would assess power at 20-, 30-, and 40-point benefits, keeping the sample size and 30% standard-treatment relief fixed.',
+    progression: 'Retention at four weeks would inform feasibility. The proceed, amend, and stop thresholds remain to be agreed before data collection.',
+    analysis: 'A two-sided comparison of independent pain-relief percentages, with a 95% confidence interval for the difference.',
+    software: 'The two-proportion app and its normal approximation, with inputs, rounding, software versions, and source version saved alongside the calculation.',
     power: 'A 5% Type I error probability and 90% target power at a 30-percentage-point difference, using a two-sided test.',
-    precision: 'A 95% confidence interval with a full width of 20 percentage points would give a margin of about 10 points. Its usefulness should be justified for the clinical decision.',
+    precision: 'A 95% interval with full width 20 percentage points gives a margin of about 10 points; its clinical usefulness remains to be justified.',
     counts: '56 analyzable patients per group, 112 in total, using the tutorial approximation with 30% versus 60% relief, 5% Type I error probability and 90% power.',
-    recruitment: 'With illustrative 10% expected losses, 56 / 0.90 rounds up to 63 patients per group (126 total). Evidence should support the loss assumption; missing outcomes and treatment changes also need an analysis plan.',
+    recruitment: 'With illustrative 10% loss, 56 / 0.90 rounds up to 63 per group (126 total). I would also plan for missing-data bias and treatment changes.',
     resources: 'The clinics expect 20 eligible patients per month and 70% consent: about 14 recruits per month. Recruiting 126 would take about nine months before allowing for interruptions.',
-    conclusion: 'The plan evaluates power at the target difference. A smaller benefit could be missed; the estimate and confidence interval will help judge clinical importance. The assumptions and recruitment capacity need review.'
+    conclusion: 'The plan targets the specified difference; smaller benefits could be missed. The estimate and interval would inform clinical importance, subject to the assumptions and recruitment feasibility.'
   };
+  function answerFormats(value) {
+    const single = value.study_type === 'single', binary = value.outcome === 'binary', pilot = value.goal === 'feasibility';
+    const units = pilot ? (binary ? 'percentage points' : 'minutes') : (binary ? 'percentage points' : 'outcome units');
+    return {
+      question: pilot ? 'Can [study procedures] meet [feasibility criteria] within [time and resources]?'
+        : value.study_type === 'other' ? '[Research question] about [primary outcome] in [population] at [assessment time].'
+        : single ? 'What is the ' + (binary ? 'percentage with [condition]' : 'mean [outcome]') + ' in [population] at [time]?'
+        : 'In [population], how does [outcome] at [time] compare between [intervention or exposure] and [comparator]?',
+      population: '[Population] in [setting], eligible under [inclusion and exclusion criteria].',
+      intervention: '[Intervention or exposure], defined by [dose, schedule, duration, or measurement method].',
+      comparator: '[Comparison condition], including [usual care or permitted additional treatment].',
+      outcome_detail: '[Primary measurement or event definition], assessed at [time] and summarized as [measure].',
+      design: '[Study design], with [sampling and allocation] and [independent, paired, or clustered observations].',
+      scale: pilot ? (binary ? 'The percentage retained among all enrolled participants at [time].' : 'Mean assessment time in minutes per [visit or procedure].')
+        : single ? (binary ? 'The population percentage with [condition], using [denominator and time point].' : 'The population mean [outcome], measured in [units].')
+        : 'Treatment minus control in ' + units + '; [positive or negative] values favor treatment.',
+      expected: (pilot ? (binary ? '[Expected retention percentage]' : '[Expected mean assessment time]')
+        : single ? (binary ? '[Anticipated population percentage]' : '[Anticipated population mean]')
+        : '[Expected between-group difference] ' + units) + ' from [source], with uncertainty of [range or interval].',
+      clinical: '[Minimum worthwhile between-group benefit] ' + units + ', justified by [patient and clinical input].',
+      planning: '[Target difference] ' + units + ', supported as worthwhile and plausible by [evidence].',
+      variation: binary ? '[Event percentage(s)] for [population and assessment time], supported by [source].' : 'SD [value] ' + units + ' from [comparable population and measurement method].',
+      evidence_review: '[Source] is relevant because [population and outcome match]; [limitation] makes [input] uncertain.',
+      sensitivity: 'I would evaluate [plausible alternatives] at the selected sample size and record any revised count needed to meet the target.',
+      progression: 'Proceed at [acceptable result], amend at [intermediate result], and stop at [unacceptable result], using [outcome and denominator].',
+      analysis: '[Analysis and confidence interval method], accounting for [design and dependence between observations].',
+      software: '[Method] in [software and version], with [code version, inputs, and rounding]. For simulation: [generating assumptions, repetitions, and random-number settings].',
+      power: value.goal === 'fixed' ? 'At [available sample size] and [specified true difference], attainable power is [value]%, using [Type I error probability]% and [test sidedness].'
+        : '[Type I error probability]% and [target power]% at [target difference], using [test sidedness].',
+      precision: '[Confidence level]% confidence and full width [value] ' + units + '. The anticipated width at the selected sample size is [value].',
+      counts: value.goal === 'fixed' ? '[Available analyzable count], after [eligibility checks and exclusions]; ' + (single ? 'one population total.' : value.study_type === 'other' ? '[independent units] and [observations within units].' : '[count] per group and [total] overall.')
+        : pilot ? '[Analyzable count], justified by [feasibility objective, precision, and progression criteria].'
+        : value.goal === 'both' ? '[Final analyzable count], the larger of [power-based count] and [precision-based count], rounded upward.'
+        : '[Analyzable count] from [method and assumptions], rounded upward; ' + (single ? 'one population total.' : value.study_type === 'other' ? '[independent units] and [observations within units].' : '[count] per group and [total] overall.'),
+      recruitment: value.goal === 'fixed' && single ? '[Usable records] after [eligibility and missing-data checks], with [reasons for exclusions].'
+        : pilot && binary ? 'All enrolled participants contribute to retention assessment. I would document departures and allow for unknown retention status.'
+        : single ? '[Recruitment count] allows for [nonresponse and missing measurements], supported by [evidence].'
+        : '[Recruitment count] after allowing for [expected loss]%. [Treatment changes] are [already included or handled separately]; [analysis plan] addresses missing outcomes.',
+      resources: '[Eligible people per month] × [consent percentage] × [months] gives [expected recruitment], compared with [required count] and [budget].',
+      conclusion: pilot ? '[Feasibility results] would support [proceed, amend, or stop] under [agreed criteria].'
+        : 'The study could establish [finding] with [power or precision]. [Uncertain assumptions or design limitations] restrict the conclusion.'
+    };
+  }
   function examples(value) {
+    const recorded = fields.some(([id]) => (value[id] || '').trim());
+    if (recorded || value.study_type === 'other') return answerFormats(value);
     const result = {...modelAnswers};
     if (value.outcome === 'continuous') Object.assign(result, {
       question: 'Does the novel treatment improve the mean pain-improvement score at four weeks compared with standard treatment in adults with chronic pain?',
@@ -97,7 +142,7 @@
       expected: '4 score units, the best current expectation in the teaching example. Its evidence source and uncertainty need to be justified.',
       clinical: '2 score units between groups, an illustrative threshold requiring patient and clinical justification.',
       planning: '3 score units, the target difference used for power. A smaller 2-unit benefit would have lower power at the same sample size.',
-      variation: 'A common standard deviation of 5 score units, supported by studies with comparable patients and measurement times.',
+      variation: 'A common SD of 5 score units is assumed for this teaching example; comparable patient data are needed to justify it.',
       analysis: 'A two-sided comparison of independent group means with a 95% confidence interval for the mean difference. The analysis should reflect the distribution and design.',
       software: 'The two-mean app uses the tutorial normal approximation. The report records the difference, SD, error probabilities, rounding and source version.',
       power: 'A 5% Type I error probability and 90% target power at a between-group mean difference of 3 score units.',
@@ -105,8 +150,8 @@
       counts: '59 analyzable patients per group, 118 total, using the tutorial normal approximation with a 3-unit target, SD 5, 5% Type I error probability and 90% power.',
       recruitment: 'With illustrative 10% expected losses, 59 / 0.90 rounds up to 66 patients per group (132 total). Missing outcomes and treatment changes also need an analysis plan.',
       resources: 'At 20 eligible patients per month and 70% consent, recruitment of 132 would take about ten months, allowing only for whole months.',
-      sensitivity: 'Assess power at true differences of 2, 3 and 4 units, and plausible SDs around 5, holding the selected sample fixed. The ranges need evidence.',
-      evidence_review: 'The expected difference and SD should come from comparable patients, measurement methods and follow-up times. Small pilot estimates can be unstable.'
+      sensitivity: 'I would assess power at 2-, 3-, and 4-unit differences and plausible SDs around 5, holding the sample fixed.',
+      evidence_review: 'These are teaching assumptions. Comparable patient data are needed; small pilots give uncertain differences and SDs.'
     });
     if (value.study_type === 'single') Object.assign(result, {
       question: value.outcome === 'binary' ? 'What percentage of adults in the target population have the condition during the specified survey period?' : 'What is the mean pain score in the target population at the specified assessment time?',
@@ -114,29 +159,30 @@
       outcome_detail: value.outcome === 'binary' ? 'Presence of the condition (yes/no), assessed using the same definition at the survey visit.' : 'Pain score measured with the same scale at the survey visit.',
       design: 'A cross-sectional survey with independent sampling from the defined population. The sampling procedure and nonresponse should be documented.',
       scale: value.outcome === 'binary' ? 'The population percentage with the condition; confidence interval width is measured in percentage points.' : 'The population mean pain score; confidence interval width is measured in score units.',
-      expected: value.outcome === 'binary' ? '20%, based on a previous survey. Its population, assessment period and uncertainty should be checked.' : 'A previous comparable survey suggests a mean pain score of 5; its relevance and uncertainty should be checked.',
-      variation: value.outcome === 'binary' ? 'An anticipated percentage of 20%, with 50% examined as a conservative planning assumption if prior evidence is weak.' : 'An SD of 2 score units from a comparable survey, with larger SDs assessed in sensitivity analyses.',
+      expected: value.outcome === 'binary' ? 'An illustrative 20%; a comparable survey is needed to justify this value.' : 'An illustrative mean pain score of 5; a comparable survey is needed to justify this value.',
+      variation: value.outcome === 'binary' ? 'An anticipated percentage of 20%, with 50% examined as a conservative planning assumption if prior evidence is weak.' : 'An illustrative SD of 2 score units, with larger values considered in sensitivity analysis.',
       analysis: value.outcome === 'binary' ? 'The observed percentage and a 95% Wilson confidence interval for independent binary outcomes.' : 'The sample mean and a 95% confidence interval appropriate to the sampling design.',
       precision: value.outcome === 'binary' ? 'A 95% confidence interval with full width 10 percentage points (a margin of about 5 points), chosen to inform service planning.' : 'A 95% confidence interval with full width 1 score unit, chosen to inform service planning.',
       counts: value.outcome === 'binary' ? '246 participants for analysis using the normal approximation with an anticipated 20%, 95% confidence and a 5-point margin of error.' : '62 participants using the normal approximation with SD 2 and a 0.5-unit margin of error at 95% confidence; the final method should be checked.',
       recruitment: 'The recruitment allowance should reflect the expected nonresponse and missing measurements. The denominator and reasons for missing observations will be recorded.',
       resources: 'The sampling frame, contact rate, expected consent and assessment time should support the required total within the available period.',
       software: 'The calculation record includes the one-population method, confidence level, interval-width target, assumptions, software version and rounding.',
-      sensitivity: 'Compare required counts across plausible population values and variation, then evaluate attainable interval width at the selected sample.',
+      sensitivity: 'I would compare required counts across plausible population values, then assess interval width at the selected sample size.',
       evidence_review: 'The earlier survey should be checked for comparable sampling, outcome definitions and assessment time. Nonresponse could limit applicability.',
       conclusion: 'The study will estimate the population value with a confidence interval. Sampling coverage and nonresponse affect how well the findings represent the population.'
     });
     if (value.goal === 'fixed') Object.assign(result, {
       counts: value.study_type === 'single' ? '246 eligible records are available for the new question. Outcome completeness and the achievable interval width should be assessed.' : '20 analyzable participants per group (40 total) are available in this illustrative scenario. The sample remains fixed when assessing power and precision.',
-      power: value.outcome === 'binary' ? 'Use a 5% Type I error probability and evaluate attainable power at a 30-point true difference with 20 patients per group. The app result should be recorded.' : 'Use a 5% Type I error probability and evaluate attainable power at a 3-unit difference with 20 patients per group. The app result should be recorded.',
+      power: value.outcome === 'binary' ? 'A 5% Type I error probability; attainable power at a 30-point difference and 20 patients per group would come from the matched calculation.' : 'A 5% Type I error probability; attainable power at a 3-unit difference and 20 patients per group would come from the matched calculation.',
       recruitment: value.study_type === 'single' ? 'The available records will be checked for missing outcomes and eligibility. The report will give the usable denominator and reasons for exclusions.' : 'With illustrative 10% expected losses, 20 / 0.90 rounds up to 23 per group (46 total). Actual retention can vary.',
       conclusion: 'The available sample sets the limit on precision and power at prespecified differences. These results should determine which conclusions the study can support.'
     });
     if (value.goal === 'feasibility') Object.assign(result, {
       question: 'Can the planned recruitment and follow-up procedures be delivered within the available time and resources?',
+      design: 'A prospective pilot of the proposed recruitment, assessment, and follow-up procedures.',
       outcome_detail: value.outcome === 'binary' ? 'Retention at four weeks (yes/no), with all enrolled participants in the denominator.' : 'Time needed to complete the study assessment, in minutes, measured for every participant.',
       scale: value.outcome === 'binary' ? 'The percentage retained at four weeks, reported overall and by group if relevant.' : 'Mean assessment time in minutes, reported overall and by group if relevant.',
-      expected: value.outcome === 'binary' ? 'Previous follow-up suggests about 80% retention. The population and follow-up period should be comparable.' : 'Previous sessions suggest a mean assessment time of 30 minutes. Its relevance to these procedures should be checked.',
+      expected: value.outcome === 'binary' ? 'An illustrative 80% retention, to be checked against comparable follow-up data.' : 'An illustrative mean assessment time of 30 minutes, to be checked against comparable procedures.',
       variation: value.outcome === 'binary' ? 'An anticipated retention of 80%, with a plausible lower value included in sensitivity analysis.' : 'The SD of assessment times should be estimated from comparable procedures and its uncertainty examined.',
       counts: 'The required total will be justified from the feasibility objective, desired precision and prespecified progression criteria.',
       analysis: 'A summary and confidence interval for each feasibility outcome, compared with its prespecified progression criteria.',
@@ -144,35 +190,17 @@
       progression: 'The team will agree acceptable recruitment and follow-up performance, with prospective criteria for proceeding, amending or stopping.',
       conclusion: 'The feasibility estimates and agreed progression criteria will inform whether the study should proceed, be amended or stop.'
     });
-    if (value.study_type === 'other') {
-      result.design = 'A study with repeated measurements within participants. The allocation unit, measurement times and dependence between observations will be specified.';
-      result.counts = 'A design-specific calculation is needed. The report should give both the number of independent participants or clusters and the observations within each.';
-      result.analysis = 'A method that accounts for the allocation structure and dependence between observations, specified with statistical advice.';
-    }
     if (value.goal === 'fixed' && value.study_type !== 'single') {
       result.resources = 'The recruitment target in this example is 46 patients for an expected 40 analyzable outcomes. At 14 recruits per month, this would take about four whole months, allowing for no interruptions.';
     }
-    const recorded = fields.some(([id]) => (value[id] || '').trim());
-    // Written entries can contain any study's assumptions. Numerical guidance
-    // refers to those entries; it never guesses parameters from free text.
-    if (recorded || ['precision', 'both', 'feasibility'].includes(value.goal) || value.study_type === 'other') {
-      Object.assign(result, {
-        expected: value.study_type === 'single' ? 'My anticipated population percentage or mean follows the evidence recorded for this population, outcome and assessment time.' : 'My expected between-group difference follows the evidence recorded for this population, outcome and assessment time.',
-        clinical: 'My clinical threshold is the smallest between-group benefit judged worthwhile, supported by patient and clinical input.',
-        planning: 'My target difference is the between-group difference at which the recorded calculation evaluates power. Its size should be worthwhile and supported by evidence.',
-        variation: value.outcome === 'binary' ? 'The event percentages in my calculation use the same event definition, population and time point as my study question.' : 'The standard deviation in my calculation describes variation between participants on the stated outcome scale.',
-        evidence_review: 'My evidence review checks the population, outcome definition, follow-up time and uncertainty of each assumption recorded above.',
-        sensitivity: 'My sensitivity analysis evaluates plausible alternative assumptions using the selected sample size. I also record any revised sample size needed to meet the planning target.',
-        power: value.goal === 'fixed' ? 'I report the attainable power at the recorded sample size and specified true difference, together with the Type I error probability and test sidedness.' : 'I report the Type I error probability, target power, target difference and test sidedness used for the calculation.',
-        precision: 'I report the confidence level, desired full interval width and attainable width at the selected sample size, in the outcome units.',
-        counts: value.goal === 'fixed' ? 'I report the number available for analysis, its source and any exclusions, with per-group and total counts where applicable.' : value.goal === 'both' ? 'I compare the counts required for power and precision and use the larger requirement, recording the method and final upward rounding.' : value.goal === 'feasibility' ? 'I justify the total from the feasibility outcomes, their desired precision and the agreed progression criteria.' : 'I report the analyzable count returned by the method appropriate to this design and planning goal, including upward rounding and per-group or total counts.',
-        recruitment: value.goal === 'fixed' && value.study_type === 'single' ? 'I document eligibility and missing measurements in the available records and report the resulting usable denominator.' : 'I divide the required analyzable count by the expected retained fraction and round upward. My report records the resulting recruitment count, supporting evidence and plans for missing outcomes and treatment changes.',
-        resources: 'I compare the recorded recruitment requirement with eligible participants, expected consent and the time available, allowing for interruptions and other constraints.',
-        software: 'I record the procedure used for the current design and goal, its software and source version, numerical inputs and rounding. A simulation record also identifies the generating assumptions and repetitions.'
-      });
+    // The form does not infer calculations or progression criteria from prose.
+    if (['precision', 'both', 'feasibility'].includes(value.goal)) {
+      const formats = answerFormats(value);
+      for (const id of ['counts', 'recruitment', 'resources', 'software']) result[id] = formats[id];
       if (value.goal === 'feasibility') {
-        result.expected = 'My anticipated retention percentage or assessment time follows evidence from comparable procedures and follow-up.';
-        result.variation = value.outcome === 'binary' ? 'My anticipated feasibility percentage has an explicit denominator and a plausible range supported by prior evidence.' : 'My assumed SD describes variation in assessment time, in minutes, based on comparable procedures.';
+        result.precision = formats.precision;
+        result.sensitivity = 'I would vary the retention or assessment-time assumptions and check whether the progression decision changes.';
+        result.evidence_review = 'Comparable recruitment and follow-up procedures would support these assumptions; their reliability remains to be assessed.';
       }
     }
     return result;

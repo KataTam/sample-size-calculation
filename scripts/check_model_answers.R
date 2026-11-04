@@ -22,7 +22,8 @@ check_model_answers <- function() {
     x <- teaching_case_spec(id); x$n <- plan_n(x, v$goal, v$target_power)
     a <- lab_model_answers(v, study_input_defaults(), id, x, list(recruits = 168, balanced = 168))
     has(a$justification, paste(x$n, "participants per group"))
-    has(a$justification, paste0(format_percent(spec_power(x), 1), "; anticipated"))
+    if (v$goal != "precision") has(a$justification, format_percent(spec_power(x), 1))
+    if (v$goal != "testing") has(a$justification, model_effect(anticipated_width(x), x$outcome))
     has(a$evidence_sources, model_effect(true_difference(x), x$outcome))
     if (id == "adherence") { has(a$study_question, "probiotic"); stopifnot(!grepl("pain", paste(a, collapse = " "))) }
     if (id == "discharge") { has(a$study_question, "discharged"); stopifnot(!grepl("pain", paste(a, collapse = " "))) }
@@ -41,6 +42,7 @@ check_model_answers <- function() {
     session$setInputs(goal = "fixed", fixed_n = 17, target_power = .9, dropout = .2)
     has(model_answers()$justification, "17 participants per group (34 total)")
     has(model_answers()$justification, "22 recruits per group (44 total)")
+    has(model_answers()$justification, "misses the power and interval-width targets")
     stopifnot(input$justification == "My own answer")
     session$setInputs(B = 100, run_many = 1)
     has(model_answers()$justification, "saved batch of 100")
@@ -48,6 +50,10 @@ check_model_answers <- function() {
     has(model_answers()$justification, "earlier inputs")
     session$setInputs(run_many = 2)
     stopifnot(!grepl("earlier inputs", model_answers()$justification))
+    session$setInputs(outcome = "proportions", missing_mode = "selective", missing_n = 60, show_advanced = TRUE, run_many = 3)
+    has(output$many_model_answer, "60 recruited")
+    has(output$many_model_answer, "bias and coverage")
+    stopifnot(!grepl("nominal probability stays", output$many_model_answer))
     session$setInputs(study_design = "paired")
     has(model_answers()$justification, "matching planning method")
   })

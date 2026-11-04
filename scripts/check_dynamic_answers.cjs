@@ -84,6 +84,15 @@ const base = (process.argv[2] || 'http://127.0.0.1:8769').replace(/\/$/, '');
     await page.locator('#goal').selectOption('testing');
     assert(!await page.locator('#power').getAttribute('placeholder').then(t=>t.includes('90%')));
     assert.equal(await page.locator('#question').inputValue(),'My own trial question');
+    for (const id of ['population','intervention','comparator','outcome_detail','design']) {
+      const example=await page.locator('#'+id).getAttribute('placeholder');
+      assert(!/chronic pain|novel pain|four weeks/i.test(example),id+' uses the custom study format');
+      assert(example.includes('['),id+' marks unspecified details');
+    }
+    await page.locator('#goal').selectOption('feasibility');
+    assert.match(await page.locator('#scale').getAttribute('placeholder'),/percentage retained/);
+    assert.doesNotMatch(await page.locator('#scale').getAttribute('placeholder'),/percentage points/);
+    assert.match(await page.locator('#recruitment').getAttribute('placeholder'),/unknown retention status/);
     console.log('Written report: selected goal and custom study guidance passed.');
   } finally {await browser.close();}
 })().catch(error=>{console.error(error);process.exitCode=1});
