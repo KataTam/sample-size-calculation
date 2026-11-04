@@ -85,4 +85,4 @@ See [third-party notices](third-party-notices.md) before importing external figu
 
 ## Building an adapted version
 
-See the [build and publish guide](development/build-and-publish.md) for the build procedure and the local preview. Both HTML editions derive from `module/Sample_size_open_module.Rmd` and share `module/references.bib`. External papers and the author's local reading collection retain their own terms and are not included in the source package.
+See the [build and publish guide](development/build-and-publish.md) for the build procedure and the local preview. Both HTML editions derive from `module/Sample_size_open_module.Rmd` and share `module/references.bib`.
