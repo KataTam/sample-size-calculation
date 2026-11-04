@@ -132,7 +132,7 @@ ui <- fluidPage(
           "Unequal losses: 10% standard, 20% novel" = "differential",
           "Outcome-related losses: 10% standard, 20% novel" = "selective")),
         numericInput("missing_n", "Recruited participants per group for these scenarios", 60, min=2, max=100000, step=1),
-        activity_help("Equal and unequal losses are unrelated to relief. Outcome-related losses make missingness three times as likely without relief in the novel group, while retaining 20% average loss. Standard-group losses remain unrelated to relief.", for_input = "missing_mode"),
+        activity_help("Equal and unequal losses are unrelated to the event. Outcome-related losses make missingness three times as likely without the event in the novel group, while retaining 20% average loss. Standard-group losses remain unrelated to the event.", for_input = "missing_mode"),
         activity_help("Use the starting recruitment in each group. Simulations then remove outcomes according to the selected missingness scenario.", for_input = "missing_n"),
         p("One study and Many studies use this recruited count while the extension is active. Planning curves retain their complete-data assumptions."),
         p(tags$a(href="../book/simulation.html#explore-missing-outcomes", target="_blank", rel="noopener", "Explanation and model answer")))),
@@ -193,7 +193,7 @@ ui <- fluidPage(
           conditionalPanel("input.outcome == 'proportions'", tags$details(id="interval-method-help", tags$summary("About the p value and confidence interval"),
             p("Close to the significance threshold, the p value and confidence interval can sometimes give different indications because they use different calculation methods. The ", tags$a(href="../book/appendix.html#tutorial-methods", target="_blank", rel="noopener", "methods record"), " explains these methods.")))),
         activity_details("Participant records and download", tableOutput("one_data"), textOutput("one_missing_data_note"),
-          p(class = "caption", "Table 5. Up to six records per group. Binary outcomes use 0 for no relief and 1 for relief; missing records appear first when present."),
+          p(class = "caption", "Table 5. Up to six records per group. Binary outcomes use 0 for no event and 1 for the event; missing records appear first when present."),
           downloadButton("download_one", "Download study and assumptions"))),
       tags$div(id = "journey-credit", tags$hr(), p("The animated connection between samples, estimates, and sampling distributions was inspired by Douwe Postmus’s ", tags$a(href = "https://postmus.github.io/sampling-simulator/", target = "_blank", rel = "noopener", "Statistical Concepts Lab"), "."))),
     tabPanel("Many studies", h3("Many simulated studies"),
@@ -252,9 +252,9 @@ ui <- fluidPage(
       p("A structured ", tags$a(href = "../assumptions_report/", "study-plan report"), " brings these decisions together using PICO, selected SPIRIT 2025 items and DELTA² guidance."),
       uiOutput("report_preview"), downloadButton("download_plan", "Save report (HTML)"),
       activity_details("Backup inputs for reopening",
-      downloadButton("download_plan_json", "Download editable backup (JSON)"),
-      fileInput("upload_plan", "Reload a saved study plan", accept = c(".json", "application/json")),
-      p("The JSON backup restores inputs and written answers. Simulations need to be rerun after restoring it; the HTML report is for reading and printing.")),
+      downloadButton("download_plan_json", "Save settings and answers (JSON)"),
+      fileInput("upload_plan", "Restore settings and answers", accept = c(".json", "application/json")),
+      p("This optional backup lets you continue later or on another computer. Choosing the saved JSON file above restores the example, settings, and written answers; simulations must be rerun. For reading, sharing, or printing, use Save report (HTML).")),
       tags$details(tags$summary("Optional reproducible R workflow"),
         p("This script reproduces the current scenario when run from the downloaded source folder containing the shared R functions."), downloadButton("download_code", "Download R script")),
       app_citation("Sample size reasoning lab", "power_explorer")),
@@ -464,9 +464,10 @@ server <- function(input, output, session) {
     apply_study_inputs(session, saved$study)
     activity <- if (saved$activity %in% names(teaching_cases()) && teaching_case(saved$activity)$app == "power_explorer") saved$activity else ""
     current_activity(activity); activity_selection(activity); routed_case(NULL)
+    one_saved(NULL); many_saved(NULL)
     updateSelectInput(session, "activity_choice", selected = activity)
     updateCheckboxInput(session, "show_advanced", value = TRUE)
-    import_status("Study plan restored. Previous simulation outputs have their original saved assumptions; run again to generate results for this plan.")
+    import_status("Settings and written answers restored. Simulations can now be rerun for this plan.")
   }), ignoreInit = TRUE)
   # The wrapper can display current inputs; it never receives uploaded file paths.
   observe({
@@ -511,7 +512,7 @@ server <- function(input, output, session) {
   snapshot <- reactive({
     missing <- missing_settings(); simulated <- generating()
     if (!is.null(missing)) simulated$n <- missing$n
-    list(missing = missing, plan = planned(), generating = simulated, goal = input$goal,
+    list(activity = current_activity(), missing = missing, plan = planned(), generating = simulated, goal = input$goal,
       target_power = input$target_power, dropout = input$dropout,
       recruitment_cap = input$recruit_cap, expected_effect = expected_effect())
   })
@@ -749,57 +750,70 @@ server <- function(input, output, session) {
   })
   outputOptions(output, "download_one", suspendWhenHidden=FALSE)
   outputOptions(output, "download_many", suspendWhenHidden=FALSE)
-  report_paragraphs <- reactive({
+  report_sections <- reactive({
     details <- study_details()
-    answer <- function(x) if (nzchar(trimws(x))) x else "Not yet specified."
+    answer <- app_answer
     compatible <- details$study_design == "two_groups" && is.null(routed_case())
     calculation <- if (compatible) {
       x <- planned(); recruit <- adjust_for_dropout(x$n, input$dropout)
-      c("Calculation and assumptions",
-        paste("Planning goal:", switch(input$goal, testing = "Power at the target difference", precision = "Estimation with a target interval width", fixed = "Assess an available sample")),
-        paste("Expected difference:", effect_text(expected_effect(), x$outcome)),
-        paste("Target difference:", effect_text(true_difference(x), x$outcome)),
-        paste("Clinical threshold:", effect_text(x$threshold, x$outcome)),
-        if (x$outcome == "means") paste("Common standard deviation:", x$sd) else
-          paste("Assumed event percentages: standard", format_percent(x$p_control), "; novel", format_percent(x$p_treatment)),
-        paste("Type I error probability:", format_percent(x$alpha)),
-        paste("Target power:", format_percent(input$target_power)),
-        paste("Power at the target difference:", format_percent(spec_power(x), 1)),
-        paste("Target full interval width:", effect_text(x$width_target, x$outcome)),
-        paste("Expected full interval width:", effect_text(anticipated_width(x), x$outcome)),
-        paste("Analyzable participants:", x$n, "per group;", 2 * x$n, "total"),
-        paste("Expected losses:", format_percent(input$dropout)),
-        paste("Recruitment:", recruit, "per group;", 2 * recruit, "total"),
-        paste("Method:", method_label(x$outcome)))
-    } else "This design requires its own sample-size method; the numerical lab calculation has not been used."
+      c(paste0("Planning goal: ", switch(input$goal, testing = "power at the target difference", precision = "estimation with a target interval width", fixed = "assess an available sample"),
+          ". Two independent groups with equal allocation and a two-sided test."),
+        paste0("Between-group differences: expected ", effect_text(expected_effect(), x$outcome),
+          "; target ", effect_text(true_difference(x), x$outcome), "; clinical threshold ", effect_text(x$threshold, x$outcome), "."),
+        if (x$outcome == "means") paste0("Common SD: ", x$sd, " units.") else
+          paste0("Assumed event percentages: standard ", format_percent(x$p_control), "; novel ", format_percent(x$p_treatment), "."),
+        paste0("Type I error probability: ", format_percent(x$alpha), "; target power: ", format_percent(input$target_power),
+          "; calculated power at the target difference: ", format_percent(spec_power(x), 1), "."),
+        paste0(format_percent(1-x$alpha), " confidence intervals: target full width ", effect_text(x$width_target, x$outcome),
+          "; anticipated full width ", effect_text(anticipated_width(x), x$outcome), "."),
+        paste0("Analyzable participants: ", x$n, " per group; ", 2*x$n, " total. Expected losses: ", format_percent(input$dropout),
+          ". Recruitment after upward rounding: ", recruit, " per group; ", 2*recruit, " total."),
+        paste0("Planning method: ", if (x$outcome == "means") "noncentral t power; expected pooled-variance t-interval width."
+          else "stats::power.prop.test (two-sided, strict = TRUE); plug-in Newcombe-Wilson interval width."))
+    } else "This design requires a design-specific sample-size method."
     capacity <- feasibility()
-    c("Current sample size justification", "",
-      "Research question and primary outcome", answer(details$study_question), "",
-      "Clinical relevance", answer(details$clinical_relevance), "",
-      "Participant burden and ethical considerations", answer(details$participant_burden), "",
-      "Evidence and uncertainty", answer(details$evidence_sources), "",
-      calculation, "", "Resources and feasibility",
-      paste("Eligible participants per month:", details$eligible_monthly),
-      paste("Expected consent:", format_percent(details$consent_fraction)),
-      paste("Recruitment period:", details$recruitment_months, "months"),
-      paste("Expected recruits:", capacity$recruits),
-      if (compatible) paste("Expected participants for analysis under equal allocation:", capacity$expected_analysable),
-      paste("Fixed costs:", details$cost_base, "; cost per recruit:", details$cost_per_patient),
-      paste("Expected total costs:", capacity$budget), "",
-      "Your recommendation and justification", answer(details$justification), "",
-      paste("Software: R", getRversion(), "; Shiny", utils::packageVersion("shiny")),
-      "Methods and reproducibility: https://katatam.github.io/sample-size-calculation/book/appendix.html#tutorial-methods",
-      "The editable JSON backup retains the exact inputs for reopening. Simulation exports retain the assumptions used for each saved result.",
-      "Planning guidance: PICO (Richardson et al., 1995), https://doi.org/10.7326/ACPJC-1995-123-3-A12; SPIRIT 2025, https://www.consort-spirit.org/; DELTA² (Cook et al., 2018), https://doi.org/10.1136/bmj.k3750.",
-      "Teaching materials: CC BY-SA 4.0, https://creativecommons.org/licenses/by-sa/4.0/. Software: MIT, https://opensource.org/license/mit.")
+    sections <- list("Study context" = c(
+      paste0("Selected example: ", if (nzchar(current_activity())) teaching_case(current_activity())$title else "Custom settings", ". Values below reflect the current settings."),
+      paste("Study design:", switch(details$study_design, two_groups = "Two independent groups", paired = "Paired or repeated measurements",
+        single_proportion = "One population proportion", observational = "Observational study", diagnostic = "Diagnostic accuracy", prediction = "Prediction model", other = "Other design"))),
+      "Your study responses" = c("Responses are reproduced as entered and should be reviewed after changing the example or settings.",
+        paste("Research question and primary outcome:", answer(details$study_question)),
+        paste("Clinical relevance:", answer(details$clinical_relevance)),
+        paste("Participant burden and ethical considerations:", answer(details$participant_burden)),
+        paste("Evidence and uncertainty:", answer(details$evidence_sources))),
+      "Calculation and assumptions" = calculation,
+      "Resources and feasibility" = c(paste0(details$eligible_monthly, " eligible participants per month × ", format_percent(details$consent_fraction),
+        " expected consent × ", details$recruitment_months, " months gives ", capacity$recruits, " expected recruits."),
+        if (compatible) paste0("Under equal allocation: ", capacity$balanced, " recruits and approximately ", capacity$expected_analysable,
+          " participants available for analysis. Selected recruitment limit: ", input$recruit_cap, " in total. Required recruitment ",
+          if (2*recruit > capacity$balanced) "exceeds" else "fits within", " the expected recruitment capacity and ",
+          if (2*recruit > input$recruit_cap) "exceeds" else "fits within", " the selected limit."),
+        paste0("Costs in the entered currency units: fixed ", details$cost_base, "; per recruit ", details$cost_per_patient,
+          "; total at expected recruitment ", capacity$budget, ".")))
+    if (compatible) {
+      meta <- snapshot(); g <- meta$generating
+      sections[["Simulation assumptions"]] <- c(
+        paste0("Population assumed for simulation: ", if (g$outcome == "means") paste0("mean difference ", effect_text(g$delta, g$outcome), "; SD ", g$sd)
+          else paste0("standard event percentage ", format_percent(g$p_control), "; novel event percentage ", format_percent(g$p_treatment)),
+          ". Each simulated study uses ", g$n, if (is.null(meta$missing)) " analyzable" else " recruited", " participants per group."),
+        if (!is.null(meta$missing)) paste0("Missing-outcome scenario: ", missing_scenario_label(meta$missing),
+          ". Complete-outcome planning values above and simulated available-case results use different sample definitions."),
+        paste0("Analysis: ", method_label(g$outcome), if (!is.null(meta$missing)) "; available outcomes with their actual group sizes" else "", "."),
+        paste0("Reproducibility settings: random seed ", g$seed, "; requested repetitions ", g$B, "."))
+      sections[["One simulated study"]] <- app_simulation_report(one_saved(), meta)
+      sections[["Many simulated studies"]] <- app_simulation_report(many_saved(), meta, many = TRUE)
+    }
+    sections[["Your recommendation and justification"]] <- answer(details$justification)
+    sections[["Planning guidance"]] <- "PICO (Richardson et al., 1995), doi:10.7326/ACPJC-1995-123-3-A12; SPIRIT 2025, https://www.consort-spirit.org/; DELTA² (Cook et al., 2018), doi:10.1136/bmj.k3750."
+    sections
   })
-  output$report_preview <- renderUI(app_report_body(report_paragraphs()))
+  report_paragraphs <- reactive(unlist(report_sections(), use.names = FALSE))
+  output$report_preview <- renderUI(app_report_body(report_sections()))
   output$download_plan <- downloadHandler(filename = function() "sample-size-study-plan.html",
-    content = function(file) writeLines(app_report_document("Sample size study plan", "power_explorer", report_paragraphs()), file, useBytes = TRUE))
+    content = function(file) writeLines(app_report_document("Sample size study plan", "power_explorer", report_sections()), file, useBytes = TRUE))
   output$download_plan_json <- downloadHandler(filename = function() "sample_size_study_plan.json", content = function(file) {
     plan <- list(schema = "sample-size-study-plan", version = 1, activity = current_activity(),
-      inputs = current_lab_inputs(), study = study_details(),
-      snapshot = if (study_details()$study_design == "two_groups" && is.null(routed_case())) snapshot() else NULL)
+      inputs = current_lab_inputs(), study = study_details())
     writeLines(jsonlite::toJSON(plan, auto_unbox = TRUE, pretty = TRUE, digits = 16, null = "null"), file)
   })
   output$download_code <- downloadHandler(filename = function() "reproduce_studies.R", content = function(file) {

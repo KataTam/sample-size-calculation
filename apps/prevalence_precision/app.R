@@ -178,7 +178,7 @@ server <- function(input, output, session) {
   }, alt = "Required analyzable sample size versus assumed proportion. The largest requirement is near 50%; halving the margin approximately quadruples the requirement. Current values are in the table.")
   study <- eventReactive(input$simulate, {
     x <- snapshot(); y <- simulate_proportion_study(analysable_n(), x$anticipated_p, x$confidence, x$seed)
-    y$inputs <- x; y
+    y$inputs <- x; y$case_id <- active_case(); y
   }, ignoreInit = TRUE)
   model_answers <- reactive(list(justification = precision_model_answer(snapshot(), plan(), analysable_n(),
     active_case(), if (isTRUE(input$simulate > 0)) study() else NULL)))
@@ -229,11 +229,14 @@ server <- function(input, output, session) {
       paste0("Approximate full width at the current sample: ", overview_values()[["Approximate full width"]], ". Realized confidence interval widths vary between samples."),
       if (isTRUE(input$simulate > 0)) {
         y <- study(); r <- y$result
-        paste0("Saved sample: ", r$events, " events among ", r$n, "; estimated percentage ", format_percent(r$estimate, 1),
-          ", interval ", format_percent(r$lower, 1), " to ", format_percent(r$upper, 1), " at ", format_percent(y$confidence), " confidence. Generating probability: ", y$p, "; random seed: ", y$inputs$seed, ". ",
-          if (!identical(y$inputs, x)) "This saved sample uses earlier inputs." else "This sample uses the current inputs.")
+        if (!identical(y$inputs, x) || !identical(y$case_id, active_case()))
+          "The saved sample uses earlier settings or a different example and is omitted. Drawing a new sample will include its interval."
+        else paste0("Simulated sample: ", r$events, " events among ", r$n, "; estimated percentage ", format_percent(r$estimate, 1),
+          ", interval ", format_percent(r$lower, 1), " to ", format_percent(r$upper, 1), " at ", format_percent(y$confidence),
+          " confidence. Assumed population percentage: ", format_percent(y$p, 1), "; random seed: ", y$inputs$seed, ".")
       },
       paste("Your explanation:", app_answer(input$justification)),
+      "Your explanation is reproduced as entered and should be reviewed after changing the example or settings.",
       "Procedure: proportion_precision_plan(); simulated intervals: single_proportion_interval(), Wilson method. Independent binary outcomes; clustering and selection or missing-data bias require attention to the design and analysis.")
   })
   output$report_preview <- renderUI(app_report_body(report_paragraphs()))

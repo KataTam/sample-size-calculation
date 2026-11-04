@@ -122,6 +122,15 @@ basic_calculator_server <- function(outcome) function(input, output, session) {
   output$worked_method <- renderUI(tags$div(class = "app-method", lapply(method_text(), tags$p)))
   report_paragraphs <- reactive(c(sample_size_interpretation(result()),
     "Two independent groups, equal allocation, two-sided test. The target difference and variation assumptions require evidence appropriate to the intended population and outcome.", method_text(),
+    {
+      revised <- tryCatch(if (means) calculate(difference = input$compare_delta) else calculate(probability = input$compare_pi1), error = function(e) NULL)
+      if (is.null(revised)) "The revised scenario has invalid inputs and is omitted."
+      else if ((means && input$compare_delta != input$delta) || (!means && input$compare_pi1 != input$pi1))
+        paste0("Revised scenario, with all other assumptions unchanged: ", if (means) paste0("target difference ", revised$delta, " units")
+          else paste0("novel-treatment event probability ", format_percent(revised$pi1), "; absolute target difference ", round(100*revised$difference, 2), " percentage points"),
+          ". Analyzable sample: ", revised$n_per_group, " per group (", revised$total_n, " total); recruitment: ", revised$total_with_dropout/2,
+          " per group (", revised$total_with_dropout, " total).")
+    },
     "Expected losses affect recruitment counts. Missing outcomes and treatment changes also require prevention and an appropriate analysis plan."))
   output$report_preview <- renderUI(app_report_body(report_paragraphs(), assumptions()))
   output$download_report <- downloadHandler(filename = function() paste0(slug, "-report.html"),

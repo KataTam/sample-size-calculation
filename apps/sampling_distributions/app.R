@@ -110,7 +110,9 @@ server <- function(input, output, session) {
     alt = "Distributions of the sample mean under the null and specified alternative. Rejection tails under the null show Type I error probability; the non-rejection region under the alternative shows Type II error probability. Values and boundaries are listed below.")
   output$operating_table <- renderTable({
     x <- operating()
-    data.frame(Quantity = c("Standard error of the mean", "Rejection boundary or boundaries", "Type I error probability under null", "Type II error probability at the specified alternative", "Power at the specified alternative"),
+    data.frame(Quantity = c("Standard error of the mean", "Rejection boundary or boundaries", "Type I error probability under null",
+      if (x$mu0 == x$mu1) "Non-rejection probability under null" else "Type II error probability at the specified alternative",
+      if (x$mu0 == x$mu1) "Rejection probability under null" else "Power at the specified alternative"),
       Value = c(round(x$se, 4), paste(round(x$critical, 4), collapse = " and "),
         format_percent(x$type1, 2), format_percent(x$beta, 2), format_percent(x$power, 2)))
   })
@@ -119,8 +121,10 @@ server <- function(input, output, session) {
     reject <- switch(x$sidedness,
       greater = paste("above", round(x$upper, 3)), less = paste("below", round(x$lower, 3)),
       two.sided = paste("below", round(x$lower, 3), "or above", round(x$upper, 3)))
-    paste0("The test rejects when the sample mean is ", reject, ". Under the specified alternative mean of ",
-      x$mu1, ", ", format_percent(x$power, 1), " of repeated samples would reject. This power belongs to that assumed alternative.")
+    paste0("The test rejects when the sample mean is ", reject, ". At the specified population mean of ",
+      x$mu1, ", ", format_percent(x$power, 1), " of repeated samples would reject. ",
+      if (x$mu0 == x$mu1) "The null is true here, so these rejections are false positives."
+      else "This power belongs to that assumed alternative.")
   })
   output$power_curve <- renderPlot({
     x <- snapshot(); ns <- unique(round(seq(1, max(100, min(1000, 2*x$n)), length.out = 100)))
@@ -134,22 +138,26 @@ server <- function(input, output, session) {
   }, alt = "Power at the specified alternative across independent sample sizes, with current power given in the table and a line at Type I error probability.")
   output$overview_metrics <- renderUI({
     x <- operating()
-    app_metrics(c("Type I error probability" = format_percent(x$type1, 2), "Type II error probability" = format_percent(x$beta, 2), "Power" = format_percent(x$power, 2)))
+    app_metrics(setNames(format_percent(c(x$type1, x$beta, x$power), 2),
+      c("Type I error probability", if (x$mu0 == x$mu1) "Non-rejection probability" else "Type II error probability",
+        if (x$mu0 == x$mu1) "Rejection probability" else "Power")))
   })
   method_text <- reactive({
     x <- operating()
     paste0("SE = population SD / sqrt(n) = ", x$sigma, " / sqrt(", x$n, ") = ", round(x$se, 4),
       ". The ", switch(x$sidedness, greater = "one-sided (increase)", less = "one-sided (decrease)", two.sided = "two-sided"), " test uses rejection ", if (length(x$critical) == 1) "boundary " else "boundaries ",
       paste(round(x$critical, 4), collapse = " and "), ". The normal probability beyond the rejection boundary or boundaries at population mean ",
-      x$mu1, " is ", format_percent(x$power, 2), ". Type II error probability = 1 - rejection probability = ", format_percent(x$beta, 2), ".")
+      x$mu1, " is ", format_percent(x$power, 2), ". ", if (x$mu0 == x$mu1) "Non-rejection probability under the null" else "Type II error probability",
+      " = 1 - rejection probability = ", format_percent(x$beta, 2), ".")
   })
   output$worked_method <- renderUI(tags$div(class = "app-method", p(method_text())))
   report_paragraphs <- reactive({
     x <- operating()
     c(paste0("Known-SD one-sample normal model: null mean ", x$mu0, " mmHg; specified population mean ", x$mu1,
         " mmHg; population SD ", x$sigma, " mmHg; n = ", x$n, "."),
-      paste0("Type I error probability: ", format_percent(x$type1, 2), "; rejection probability at the specified population mean: ", format_percent(x$power, 2), "."),
+      paste0("Type I error probability: ", format_percent(x$type1, 2), "."),
       method_text(), paste("Your explanation:", app_answer(input$interpretation)),
+      "Your explanation is reproduced as entered and should be reviewed after changing the settings.",
       "Procedure: normal_sampling_operating_characteristics(), using normal quantiles and tail probabilities. Assumptions: independent normal observations, known population SD and a prespecified test direction.")
   })
   output$report_preview <- renderUI(app_report_body(report_paragraphs()))

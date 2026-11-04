@@ -549,9 +549,9 @@ missing_probabilities <- function(p, loss, multiplier = 1) {
 }
 
 missing_scenario_label <- function(x) switch(x$mode,
-  complete = "Complete outcomes", equal = "10% expected loss in both groups, unrelated to relief",
-  differential = "10% standard / 20% novel expected loss, unrelated to relief",
-  selective = "10% standard / 20% novel expected loss, related to relief in the novel group")
+  complete = "Complete outcomes", equal = "10% expected loss in both groups, unrelated to the event",
+  differential = "10% standard / 20% novel expected loss, unrelated to the event",
+  selective = "10% standard / 20% novel expected loss, related to the event in the novel group")
 
 analyse_binary_unequal <- function(treatment_count, control_count, n_treatment, n_control, alpha) {
   valid <- n_treatment > 0 & n_control > 0

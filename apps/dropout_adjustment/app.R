@@ -185,7 +185,9 @@ server <- function(input, output, session) {
   method_text <- reactive({
     x <- plan()
     c(if (switching_applied()) paste0("Switching: ", x$starting, " / (1 - ", input$switch_novel, " - ", input$switch_standard,
-      ")² = ", round(x$after_switching, 3), " per group before rounding.") else paste0("Starting count: ", x$starting, " per group. No additional switching adjustment is applied."),
+      ")² = ", round(x$after_switching, 3), " per group before rounding.") else paste0("Starting count: ", x$starting, " per group. ",
+        if (isTRUE(input$switching) && identical(input$starting_assumption, "included")) "This count already accounts for switching. " else "",
+        "No additional switching adjustment is applied."),
       paste0("Loss allowance: ", round(x$after_switching, 3), " divided by each retained fraction (novel: ", 1-x$losses[1],
         "; standard: ", 1-x$losses[2], "). The larger requirement is ", round(max(x$unrounded_recruitment), 3),
         "; rounded upward to ", x$per_group, " in each group, ", x$total, " in total."))
@@ -194,8 +196,10 @@ server <- function(input, output, session) {
   report_paragraphs <- reactive(c(method_text(),
     paste0("Expected losses, novel / standard: ", paste(format_percent(plan()$losses), collapse = " / "),
       ". Expected outcomes available, novel / standard: ", paste(round(plan()$expected_retained, 2), collapse = " / "), "."),
-    "The switching approximation assumes complete switching, comparable outcome distributions among recipients of the same treatment, and little change in variance. Actual retention varies. Missing outcomes need prevention and appropriate analysis.",
+    if (switching_applied()) "The switching approximation assumes complete switching, comparable outcome distributions among recipients of the same treatment, and little change in variance.",
+    "Actual retention varies. Missing outcomes need prevention and appropriate analysis.",
     paste("Your explanation:", app_answer(input$reasoning)),
+    "Your explanation is reproduced as entered and should be reviewed after changing the settings.",
     "Procedure: recruitment_plan() in R/sample_size_functions.R. References: Wittes (2002), doi:10.1093/epirev/24.1.39; Shardell and El-Kamary (2009), doi:10.1111/j.1541-0420.2008.01114.x; ICH E9(R1)."))
   output$report_preview <- renderUI(app_report_body(report_paragraphs()))
   output$report <- downloadHandler(filename = function() "recruitment-adjustment-report.html",

@@ -259,7 +259,6 @@
     if (field[4] === 'feasibility') return value.goal === 'feasibility';
     return true;
   }
-  const sentence = text => /[.!?]$/.test(text.trim()) ? text.trim() : text.trim() + '.';
   function notifyParent(type, extra = {}) { if (parent !== window) parent.postMessage({type: 'sample-size:' + type, app, ...extra}, location.origin); }
   function render(persist = true) {
     const value = snapshot(), article = document.getElementById('report'); article.replaceChildren();
@@ -292,13 +291,13 @@
       const paragraphs = [];
       reportLines.push(title);
       for (const field of definitions) {
-        const [id, originalLabel, , originalPrefix] = field, enabled = active(field, value);
-        const label = wording[id] ? wording[id][0] : originalLabel, prefix = wording[id] ? wording[id][2] : originalPrefix;
+        const [id, originalLabel] = field, enabled = active(field, value);
+        const label = wording[id] ? wording[id][0] : originalLabel;
         document.getElementById('field-' + id).hidden = !enabled;
         if (!enabled) continue;
         required++;
         const answer = value[id].trim(), paragraph = document.createElement('p');
-        if (answer) { completed++; paragraph.textContent = prefix + ': ' + sentence(answer); paragraphs.push(paragraph); }
+        if (answer) { completed++; paragraph.textContent = label + ': ' + answer; paragraphs.push(paragraph); }
         else { const item = document.createElement('li'); item.textContent = label; missing.append(item); paragraph.textContent = label + ': not yet specified.'; }
         reportLines.push(paragraph.textContent);
       }
@@ -372,13 +371,13 @@
         scale: 'Treatment minus control, in percentage points; a positive difference favors treatment',
         expected: percent(input.expected_p) + ' percentage points. The hypothetical pilot observed relief in 7/10 treated patients (70%) and 3/10 controls (30%); this small pilot gives an uncertain expectation',
         clinical: percent(input.threshold_p) + ' percentage points. This is an illustrative judgment about meaningful benefit that needs justification with patients and clinicians',
-        planning: percent(input.plan_p1 - input.plan_p0) + ' percentage points, an illustrative difference judged worthwhile and realistic. Power at the smaller 20-point clinical threshold will be lower; a real plan must justify accepting that uncertainty',
+        planning: percent(input.plan_p1 - input.plan_p0) + ' percentage points, an illustrative difference judged worthwhile and realistic. Power should also be assessed at the ' + percent(input.threshold_p) + '-point clinical threshold',
         variation: percent(input.plan_p0) + '% relief in controls and ' + percent(input.plan_p1) + '% in the treatment group',
         evidence_review: 'The pilot contains only 10 patients per group. Check comparable studies, outcome definitions and follow-up times; the event probabilities and expected difference remain uncertain',
         sensitivity: 'Compare smaller true benefits while keeping the original sample size fixed. Specify plausible ranges using evidence beyond the pilot',
         analysis: 'A two-sided pooled score test without continuity correction, with a Newcombe-Wilson confidence interval; independent observations and allocation are assumed',
         power: 'Type I error probability ' + percent(input.alpha) + '%. Evaluate attainable power at the ' + percent(input.plan_p1 - input.plan_p0) + '-percentage-point target difference using the matched pain-relief activity',
-        precision: 'Evaluate the attainable 95% confidence interval width at the fixed sample size. The activity compares it with a full width of ' + percent(input.width_p) + ' percentage points',
+        precision: 'Evaluate the attainable ' + percent(1 - input.alpha) + '% confidence interval width at the fixed sample size. The activity compares it with a full width of ' + percent(input.width_p) + ' percentage points',
         counts: input.fixed_n + ' analyzable patients per group, ' + (2 * input.fixed_n) + ' in total; the illustrative sample size is held fixed to assess power and precision',
         recruitment: percent(input.dropout) + '% expected losses. Recruit ' + Math.ceil(input.fixed_n / (1 - input.dropout)) + ' per group, ' + (2 * Math.ceil(input.fixed_n / (1 - input.dropout))) + ' in total using the expected-loss adjustment; actual retention may vary',
         resources: 'The feasibility of the recruitment target must be assessed from eligible patients, consent, recruitment period and costs',
