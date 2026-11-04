@@ -29,6 +29,7 @@ body.resizing iframe { pointer-events: none; }
 iframe { width: 100%; border: 0; flex: 1 1 auto; min-height: 0; background: white; }
 body[data-view="lesson"] .app-pane, body[data-view="app"] .lesson-pane, body:not([data-view="both"]) #panel-separator { display: none; }
 body[data-view="lesson"] .panels, body[data-view="app"] .panels { grid-template-columns: minmax(0,1fr); }
+body[data-view="lesson"] #lesson-separate { display: none; }
 @media (max-width: 900px) {
   #panel-separator { display: none; }
   button[data-view="both"] { display: none; }
