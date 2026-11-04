@@ -6,14 +6,16 @@ The [GitHub repository](https://github.com/KataTam/sample-size-calculation) is p
 
 Open teaching materials for medical students, by Katalin Tamási (UMCG). Work from a clinical question to the assumptions behind a sample size, explore what different studies could show, and explain what a feasible design could establish.
 
-The tutorial, browser apps and prepared examples require no R installation. The main calculations concern two independent groups with equal allocation. Separate activities cover estimating a single proportion and understanding Type I error rate, Type II error rate and power. A study-design guide routes other designs to appropriate methods.
+The tutorial, browser apps and prepared examples require no R installation. The main calculations concern two independent groups with equal allocation. Separate activities cover estimating a single proportion and understanding Type I error probability, Type II error probability and power. A study-design guide routes other designs to appropriate methods.
 
 ## Start here
 
 - Students: [open the lesson and matching app together](https://katatam.github.io/sample-size-calculation/study/), or [read the tutorial](https://katatam.github.io/sample-size-calculation/book/) and explore the [sample size reasoning lab](https://katatam.github.io/sample-size-calculation/power_explorer/).
 - Teachers: start with the [teaching guide](teaching/TEACHING_GUIDE.md), [prepared activity](teaching/static_activity.md) and [case studies](case-studies/README.md).
 - Student reviewers: use the [review guide](student-materials/README.md) and [open-ended review template](student-materials/material-review-template.md).
-- Adapters: see the [documentation](documentation/README.md), [build instructions](documentation/development/build-and-publish.md), and the shared code in [R/](https://github.com/KataTam/sample-size-calculation/tree/main/R) and [apps/](https://github.com/KataTam/sample-size-calculation/tree/main/apps).
+- Adapters: start with [Source and reuse](documentation/reuse-and-citation.md), the [adaptation guide](teaching/adaptation_guide.md) and [build instructions](documentation/development/build-and-publish.md).
+
+The [activity walkthroughs](student-materials/activity-walkthroughs.md) explain the app steps and [saved-file formats](student-materials/activity-walkthroughs.md#reports-and-saved-work), including readable HTML reports, the reasoning lab's optional JSON backup and simulation exports.
 
 ## What you will explore
 

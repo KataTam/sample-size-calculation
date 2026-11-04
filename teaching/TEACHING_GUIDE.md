@@ -15,7 +15,7 @@ Before a larger classroom session, an initial usability pilot with about five le
 
 Chapters 1–4 form the core sequence, and Chapters 5–8 provide optional advanced branches. The glossary and common questions support either route. The [core route](../book/index.html#core-route) covers clinical assumptions, power, a simple one-study/many-studies simulation, two-group calculations, expected losses, interpretation, a short sensitivity analysis and a written justification. The [advanced route](../book/index.html#advanced-route) adds sampling distributions, power curves, repeated-study simulation, estimation with a precision target and other designs. Chapter headings and learning-outcome boxes use blue for core material and purple for advanced material. The [reasoning lab](https://katatam.github.io/sample-size-calculation/study/?activity=own_study) starts with basic controls; clinical importance remains visible. Select Explore further for advanced controls and methods.
 
-Keep the chronic-pain case as the narrative thread: question, evidence, target difference, power, calculation, recruitment, sensitivity and recommendation. Students progressively complete one assumptions report rather than repeatedly start new tasks. Later sections change the question while retaining this planning logic: describe a symptom percentage, reuse the trial's baseline data, or plan a pilot's retention estimate. Select extensions that serve the session's aim; the core route includes interpreting one simulated trial and many trials in the app or prepared results; constructing simulations and analyzing Monte Carlo uncertainty remain advanced. Compare binary and continuous outcomes in a later session if time permits.
+The chronic-pain case provides the narrative thread: question, evidence, target difference, power, calculation, recruitment, sensitivity and recommendation. Students progressively develop one assumptions report as they work through the tutorial. Later sections change the question while retaining this planning logic: describe a symptom percentage, reuse the trial's baseline data, or plan a pilot's retention estimate. Extensions should serve the session's aim; the core route includes interpreting one simulated trial and many trials in the app or prepared results; constructing simulations and analyzing Monte Carlo uncertainty remain advanced. Binary and continuous outcomes can be compared in a later session if time permits.
 
 ## Session formats
 
@@ -32,7 +32,7 @@ These are proposed teaching allocations. The pilot should establish how much pre
 
 ## A study plan developed across chapters
 
-The [editable report activity](https://katatam.github.io/sample-size-calculation/study/?activity=assumptions_report) can be opened from the first session. Learners can save their entries and return to them. The [case template](../case-studies/student_case_template.md) provides prompts for an offline document. Early entries may remain provisional, with missing evidence identified.
+The [study-plan report activity](https://katatam.github.io/sample-size-calculation/study/?activity=assumptions_report) can be opened from the first session. Its saved HTML report can be read, printed or reopened in that activity for further editing. The [case template](../case-studies/student_case_template.md) provides prompts for an offline document. Early entries may remain provisional, with missing evidence identified.
 
 | Stage | Report entries | Teacher's review question |
 |---|---|---|
@@ -43,6 +43,16 @@ The [editable report activity](https://katatam.github.io/sample-size-calculation
 | Chapter 4: justification | A coherent recommendation and a short revision note | What changed in the plan, and what evidence or reasoning led to that change? |
 
 The seven planning questions in Chapter 1 can guide short individual decisions within this report. A learner may initially write “evidence needed” for a field and revise it after a relevant chapter. The teacher should assess the reasoning behind revisions.
+
+## App reports and saved work
+
+The calculation apps' “Report” view brings together the current assumptions, results and any written responses. The reasoning lab also identifies the selected example, recruitment feasibility and simulation assumptions. Its five writing prompts cover the research question, clinical relevance, participant burden, evidence and final recommendation. For an unsupported study design, the report retains the study notes and resource assessment and indicates that a design-specific calculation is needed.
+
+Reports include simulated results only when they match the current example and settings. After a change, an earlier result may remain visible in a simulation panel with its original assumptions, while the report explains that it has been omitted. Learners should rerun the relevant simulation before submitting a report that discusses its results. In the two-group calculators, the report also records the revised comparison scenario when its inputs are valid and differ from the main plan.
+
+Gray model answers illustrate responses using the selected example and current parameters; they are excluded from reports and backups. Question help explains what to enter or interpret. Students' written responses remain as entered when settings change, so you should check that their explanation still matches the reported calculation. The one-study and many-studies reflection questions have expandable model answers; you can collect learners' explanations orally or in their study-plan report.
+
+For assessment, you can request the readable HTML report or a PDF printed from it. The reasoning lab's optional “Save settings and answers (JSON)” backup lets learners resume their work through “Restore settings and answers.” Restoring it clears previous simulations; these should be rerun. The separate study-plan report activity can reopen its own HTML reports. The [download guide in the walkthroughs](../student-materials/activity-walkthroughs.html#reports-and-saved-work) distinguishes these files, simulation data and reproducible R scripts.
 
 ## Prediction, discussion and revision
 
@@ -109,7 +119,7 @@ See [References](../documentation/references.md) and [evidence and design ration
 
 ## Consolidated book and app route
 
-Use the single learner source in `module/Sample_size_open_module.Rmd`. Short sessions select from this book; do not create an independently maintained short tutorial. R code and raw output are available in expandable sections, but students are assessed on interpretation, not code.
+The single learner source is `module/Sample_size_open_module.Rmd`. Short sessions can select relevant parts of this book. R code and raw output are available in expandable sections; the suggested assessment focuses on interpretation.
 
 | Route | Book chapters and evidence |
 |---|---|
@@ -120,11 +130,11 @@ Use the single learner source in `module/Sample_size_open_module.Rmd`. Short ses
 
 [Activity: Chronic pain: one study and many studies](https://katatam.github.io/sample-size-calculation/study/?activity=pain_one_many): distinguish one result, power and Type I error probability; Monte Carlo uncertainty belongs to the advanced extension. [Activity: Chronic pain: explore power and recruitment](https://katatam.github.io/sample-size-calculation/study/?activity=pain_curves): read several curves and distinguish recruitment from expected analyzable counts. [Activity: Simulate repeated chronic-pain trials](https://katatam.github.io/sample-size-calculation/study/?activity=pain_simulation): identify generation, analysis, repetition and summary. Collect a prediction and a written explanation where they help the chosen activity. No ANOVA lesson is required.
 
-Open the [two-panel study view](https://katatam.github.io/sample-size-calculation/study/). The activity selector loads matched case assumptions. Drag the separator to adjust panel widths, or focus it and use Left/Right arrow keys; Home and End reach the width limits. Chapter navigation leaves the app session open; choosing or resetting an activity applies that preset. Content links open in a new tab. On narrow screens, Both stacks the panels, while Lesson and App show either panel alone. Students can also open either panel separately.
+In the [two-panel study view](https://katatam.github.io/sample-size-calculation/study/), the activity selector loads matched case assumptions. You can drag the separator to adjust panel widths, or focus it and use Left/Right arrow keys; Home and End reach the width limits. Chapter navigation leaves the app session open. “Close app panel” gives the tutorial the full width, and “Tutorial + app” restores the app while the page remains open. On narrow screens, “Tutorial” and “App” show either panel alone. Before resetting or changing an activity, learners should save work they want to retain using the appropriate format above.
 
 Use the [glossary](../student-materials/glossary.md), [FAQ](../student-materials/common-mistakes.md) and [study-design guide](../student-materials/study-design-guide.md) as needed. Formulas remain visible; code and raw output can be expanded.
 
-For an own-study exercise, students can complete the [lab](https://katatam.github.io/sample-size-calculation/study/?activity=own_study)'s My study tab, save the plan, and download a draft justification. Check their evidence, clinical threshold, participant burden and recruitment assumptions. A draft needs review against the intended design. The [software validation guide](../documentation/software-validation.md) is optional teacher material.
+For an own-study exercise, students can complete the [lab](https://katatam.github.io/sample-size-calculation/study/?activity=own_study)'s “My study” and “Report” views. You should review their evidence, clinical threshold, participant burden and recruitment assumptions against the intended design. The [software validation guide](../documentation/software-validation.md) provides optional teacher checks.
 
 The separate [assumptions report activity](https://katatam.github.io/sample-size-calculation/study/?activity=assumptions_report) records sources, their relevance, uncertain assumptions and the resulting recommendation. It also supports single-population estimation, fixed data and pilot objectives. It does not compute or validate a new sample size. Students should distinguish the default fixed-sample pain illustration from the sample selected to meet 90% target power in the tutorial.
 
@@ -146,3 +156,5 @@ You can discuss these review questions with a collaborator:
 - Are per-group, total and recruitment counts unambiguous?
 - Does the [sensitivity analysis](https://katatam.github.io/sample-size-calculation/book/glossary.html#sensitivity-analysis) keep the appropriate quantities fixed?
 - Does the interpretation acknowledge what an inconclusive result could mean?
+
+Teaching text: [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/). Original software code: [MIT](https://opensource.org/license/mit). Third-party attributions and exceptions remain applicable.

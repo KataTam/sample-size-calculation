@@ -5,14 +5,15 @@ For classroom use, start with the [teaching guide](../teaching/TEACHING_GUIDE.md
 ## Understand and adapt the resource
 
 - [Statistical methods](statistical-methods.md): calculations, simulation assumptions and limitations.
-- [Evidence and design rationale](evidence-and-design-rationale.md): scholarly background, rather than a student handout.
+- [Evidence and design rationale](evidence-and-design-rationale.md): scholarly background for teachers and adapters.
 - [Reading guide](reading-guide.md) and [references](references.md).
 - [Student-feedback implementation](student-feedback-implementation.md).
 - [Optional teacher software validation](software-validation.md).
+- [Adaptation guide](../teaching/adaptation_guide.md): where to edit cases, model answers and reports, and what to check after a change.
 
 ## Reuse and credit
 
-- [Reuse and citation](reuse-and-citation.md).
+- [Source and reuse](reuse-and-citation.md): download choices, adaptation, licensing and citation.
 - [Third-party notices](third-party-notices.md).
 - [OER metadata](oer-metadata.md).
 

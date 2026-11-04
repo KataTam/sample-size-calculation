@@ -18,9 +18,16 @@ The main principle is simple: if you change the teaching context, update the exa
 |---|---|
 | Learner-facing explanation | `module/Sample_size_open_module.Rmd` |
 | Font size or rendered HTML styling | `module/styles.css` |
-| Sample size formulae or interpretation text | `R/sample_size_functions.R` |
-| App labels, defaults, or plots | `apps/<app_name>/app.R` |
-| Clinical examples | `case-studies/` and relevant sections of the module |
+| Sample size formulas or statistical methods | `R/sample_size_functions.R` |
+| Shared two-group calculator labels, defaults, comparisons and reports | `R/basic_calculator.R`; called by `apps/two_means/app.R` and `apps/two_proportions/app.R` |
+| Other Shiny app controls, plots and report content | `apps/<app_name>/app.R` |
+| Matched activity examples | `R/teaching_cases.R`, with the corresponding module narrative and prepared results |
+| Gray model answers in Shiny text fields | `R/model_answers.R`; collapsed simulation explanations are in `apps/power_explorer/app.R` |
+| Shared report layout and saved-simulation summaries | `R/app_presentation.R` |
+| Reasoning-lab state validation and JSON restoration | `R/activity_bridge.R` and `apps/power_explorer/app.R` |
+| Written study-plan questions, examples, report and file restoration | `site/assumptions_report/report.js`, `index.html` and `report.css` |
+| Question help and shared app styling | `site/input-guidance.js`, `site/input-guidance.css` and `site/app-layout.css` |
+| Case-development worksheets | `case-studies/` |
 | Student case co-creation materials | `case-studies/student_case_template.md`, `case-studies/case_quality_checklist.md`, `case-studies/peer_review_form.md`, `case-studies/instructor_review_notes.md` |
 | Teaching plan | `teaching/TEACHING_GUIDE.md` |
 | Learning outcome/activity/assessment links | `teaching/constructive_alignment_table.md` |
@@ -45,18 +52,19 @@ Keep the case specific. A case such as "a new treatment improves recovery" is to
 
 ## Changing App Defaults
 
-The app defaults should match the example students see in the module or in class. Matched activities are maintained in `R/teaching_cases.R`; update the shared case there, the narrative and prepared outputs together. The written report activity is in `site/assumptions_report/`. Keep one learner source in R Markdown rather than maintaining a separate short tutorial.
+The app defaults should match the example students see in the module or in class. Matched activities are maintained in `R/teaching_cases.R`; their narrative and prepared outputs should be updated together. The written report activity reads this registry when loading the pain-relief example. The main tutorial remains in `module/Sample_size_open_module.Rmd`.
 
-For example, in `apps/two_proportions/app.R`, these values control the starting assumptions:
+The standalone two-group calculators use `basic_calculator_ui()` in `R/basic_calculator.R`. For the binary calculator, `pi2` starts at 0.30 for standard treatment, `pi1` at 0.60 for novel treatment, `alpha` at 0.05 and `power` at 0.90. The controls display these probabilities as percentages. Changing a matched lab activity requires editing its case record as well as any corresponding narrative or prepared figures.
 
-```r
-value = 0.60
-value = 0.30
-value = 0.05
-value = 0.90
-```
+## Model answers, reports and saved files
 
-If you change the default values, update the text and figures in the module where needed. Students should not see one set of assumptions in the module and a different unexplained set in the app.
+Model answers should respond directly to the question and use the selected example and current valid calculation inputs. Question help should explain what to enter or interpret. Gray placeholders should stay out of reports, completion counts and saved responses; learners' own text should survive parameter changes. The written study-plan activity uses bracketed prompts when custom details are still needed.
+
+Each report should distinguish the current plan, simulation assumptions and the learner's responses. Saved simulations are included only when their metadata match the current example and settings. Earlier results remain available in their simulation panels and CSV exports with their original assumptions. A report should explain an omission and how to obtain a current result. For missing-outcome scenarios, the report should identify recruited and retained counts and preserve the interpretation of bias and coverage. Unsupported designs should receive design-specific guidance without carrying over the independent-group calculation.
+
+The reasoning lab's JSON backup restores its example, inputs and written answers and clears previous simulations. The separate study-plan activity reopens its own HTML report, which includes the editable entries, and accepts its older JSON format. These files belong to their respective apps. The [walkthroughs](../student-materials/activity-walkthroughs.html#reports-and-saved-work) explain the learner workflow.
+
+After adaptation, `Rscript scripts/check_resource.R` checks calculations, model answers, reports and state handling. With the rebuilt site served locally, `node scripts/check_app_reports.cjs` checks the six app downloads against their previews, parameter changes and the lab's backup round trip; `node scripts/check_assumptions_report.cjs` checks the written report's save/reopen behavior. The [build guide](../documentation/development/build-and-publish.md) gives the required environment and publication steps.
 
 ## Using Only Part Of The Resource
 
@@ -66,9 +74,9 @@ Possible combinations:
 
 | Teaching need | Minimal set |
 |---|---|
-| Binary outcome sample size | Two-proportions section, Figure 1, `apps/two_proportions`, short rubric |
-| Continuous outcome sample size | Two-means section, Figure 2, `apps/two_means`, short rubric |
-| Feasibility and power | Power calculation section, Figure 3, `apps/power_explorer` |
+| Binary outcome sample size | [Two-proportions section](../book/calculations.html#two-proportions), [calculator](../two_proportions/), short rubric |
+| Continuous outcome sample size | [Two-means section](../book/calculations.html#two-means), [calculator](../two_means/), short rubric |
+| Feasibility and power | [Power curves](../book/curves.html), [reasoning-lab activity](../study/?activity=pain_curves) |
 | Recruitment adjustment | Recruitment and feasibility; shared or different losses and the optional treatment-switching approximation in `apps/dropout_adjustment` |
 | Protocol-writing practice | Build-your-own justification section, case template, assessment rubric |
 
@@ -94,7 +102,7 @@ If you remove a section, also remove or revise related assessment tasks.
 
 - Ask students to justify assumptions from literature or pilot data.
 - Discuss alternative designs, unequal allocation, non-inferiority, clustering, or repeated measures as extensions.
-- Ask students to identify when the simple formulae in this module are no longer sufficient.
+- Ask students to identify when the simple formulas in this module are no longer sufficient.
 
 ## Translation
 
@@ -116,18 +124,18 @@ Teachers may need to add local requirements, for example:
 - preferred software
 - reporting standards for student research projects
 
-Add these as a short local note rather than rewriting the whole module.
+Local requirements can be summarized in a short course-specific note.
 
 ## Sharing An Adapted Version
 
-Keep editable source, dependency instructions, reviewed changes and rendered outputs together. Bothmann et al.'s [open-source educational-resource manuscript](https://arxiv.org/abs/2107.14330) supports this development approach; it does not require publishing an unfinished review edition. The current repository and website are private. Make an external release only when the author chooses to publish.
+Editable source, dependency instructions, reviewed changes and rendered outputs should be kept together. Bothmann et al.'s [open-source educational-resource manuscript](https://arxiv.org/abs/2107.14330) supports this development approach. The [current source and reuse page](../documentation/reuse-and-citation.md) links the public repository, source download and licensing guidance.
 
 Before sharing an adapted version publicly:
 
 - remove any copyrighted figures or papers that cannot be redistributed
 - check that student cases contain no identifiable patient information
 - keep the [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/) teaching-material license visible
-- keep the MIT code license visible
+- keep the [MIT](https://opensource.org/license/mit) code license visible
 - cite the original repository
 - note what you changed
 - update the date and version if appropriate
@@ -147,6 +155,10 @@ When adapting the resource, check that:
 Use this checklist before teaching or sharing a revised version:
 
 - [ ] The module examples match the app defaults.
+- [ ] Model answers and reports follow the selected example and changed parameters.
+- [ ] Students' entries are preserved and model answers remain excluded from saved responses.
+- [ ] Reports omit earlier simulation results when settings change; CSV exports retain their recorded assumptions.
+- [ ] HTML reports match their previews, and supported backup files restore correctly.
 - [ ] Tables and figures are still referred to correctly in the text.
 - [ ] The assessment task matches the learning outcomes.
 - [ ] The rubric fits the task students are asked to complete.
@@ -158,4 +170,4 @@ Use this checklist before teaching or sharing a revised version:
 
 ## Adapting the reasoning pathway
 
-Update the goal, effect scale, beneficial direction, clinical threshold, target difference and generating assumptions together. The app cases use positive improvement; reversing direction for harmful outcomes requires corresponding labels and interval interpretation. Keep allocation equal unless the analysis and validation are extended. Match changes to the rubric and paired assessment. Preserve the original static activity or regenerate it with recorded seeds. Resampling and advanced designs remain optional extensions. See statistical_methods.md and ../THIRD_PARTY_NOTICES.md.
+The goal, effect scale, beneficial direction, clinical threshold, target difference and generating assumptions should be updated together. The app cases use positive improvement; reversing direction for harmful outcomes requires corresponding labels and interval interpretation. Equal allocation remains an assumption unless the analysis and validation are extended. Changes should also be reflected in the rubric and paired assessment. Prepared outputs can be regenerated with recorded simulation settings. See [statistical methods](../documentation/statistical-methods.md) and [third-party notices](../documentation/third-party-notices.md).

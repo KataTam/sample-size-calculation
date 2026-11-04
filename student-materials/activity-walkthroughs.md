@@ -8,6 +8,22 @@ In the reasoning lab, planning tables and curves update when inputs change. Simu
 
 The expected difference records your best expectation. With “Same as planning assumptions” selected, the simulations use the target difference and planning event probabilities. A custom population scenario lets you examine another true difference without changing the original plan. All treatment differences here are between-group differences.
 
+## Reports and saved work
+
+“Report” previews the current calculation and any answers you have entered. In the reasoning lab, it also identifies the selected example, feasibility and simulation assumptions. Gray model answers update with the example and parameters and remain examples; only your entered responses appear as answers in the report. Your writing is preserved when settings change and should be reviewed against the new results.
+
+The reasoning lab and single-percentage app omit saved simulation results from the report when their settings or example no longer match. A message explains which simulation needs rerunning. While the app remains open, its simulation panels and CSV downloads retain the original run and its recorded assumptions until another run replaces it. A downloaded file is a snapshot; after revising your plan, you should save a new report.
+
+| File | What it contains | How you can use it |
+|---|---|---|
+| App report (HTML) | Current assumptions, calculated results, matching simulated results where available, and your written responses | Open it in a browser to read, share or print; the browser's print options can save a PDF. |
+| Reasoning-lab backup (JSON) | The selected example, settings and written study-plan answers | In the lab's “Report” view, open “Backup inputs for reopening,” then use “Restore settings and answers.” Previous simulations are cleared and should be rerun. |
+| Study-plan report (HTML) | Your entries and the decisions still to complete | In the separate [study-plan activity](../study/?activity=assumptions_report), “Reopen saved report or entries” restores this file for editing. Its earlier JSON entries files are also accepted. |
+| Simulation data (CSV) | The saved study or repetitions and the assumptions used to generate them | Open the file in a spreadsheet or analysis program to inspect the saved run. |
+| Reproducible script (R) | Code for the reasoning lab's current simulation settings | Run it from the downloaded source folder with its shared R functions; see [Source and reuse](../documentation/reuse-and-citation.md). |
+
+The JSON backup is optional and can remain unopened on your computer until you restore it through the lab. The study-plan activity also offers a plain-text report. For a class submission, your teacher can specify which readable report and supporting results are needed.
+
 ## Develop and justify your study plan
 
 [Open activity](../study/?activity=assumptions_report) · [Matching explanation](../book/clinical-question.html#record-assumptions)
@@ -18,7 +34,7 @@ Purpose: connect the calculation to a clinical question, evidence and a defensib
 2. Your assumptions should include their sources and uncertainty. For a treatment comparison, the expected difference, target difference and clinical threshold have separate roles.
 3. After using an appropriate calculator, you can enter its method, analyzable sample and recruitment allowance. A simulation result should include its generating assumptions and repetition count.
 4. “Preview report” brings your completed entries together. “Still to complete” lists open decisions. The downloaded report retains unanswered items explicitly.
-5. “Save report (HTML)” saves a readable report that you can print or reopen here for editing. “Files, example and help” contains the example, reopening controls and a plain-text download. Earlier JSON entries files remain supported. Only text you enter or load is saved as an answer. You can begin in Chapter 1, add decisions as the tutorial progresses, and record what changed and why in your final justification.
+5. “Save report (HTML)” preserves the report and entries. “Files, example and help” contains the example, reopening controls and a plain-text download; the [file guide above](#reports-and-saved-work) explains each format. You can begin in Chapter 1, add decisions as the tutorial progresses, and record what changed and why in your final justification. Changing the study settings preserves your written answers, which should be reviewed for consistency with the new question and goal.
 
 ## Chronic pain: one study and many studies — core
 
@@ -31,6 +47,7 @@ Purpose: see why sample estimates differ from population values, interpret the u
 3. The 20-trial animation shows different possible trials while the population probabilities remain fixed. For each interval, you can compare the compatible differences with zero and the 20-percentage-point clinical threshold, following the [interval interpretation](../book/power.html#interpret-a-confidence-interval-clinically).
 4. “Many studies and a larger sample” opens further down the same page. “Simulate many studies” generates 5,000 independent trials. The distribution shows sampling variability; the percentage of significant results estimates power for this population scenario.
 5. Before repeating at 50 and 80 patients per group, you can predict how the estimates, intervals and power will change, holding the population assumptions and repetition count fixed. Larger trials usually give narrower intervals and greater power. “Settings” provides the other assumptions. Advanced controls start closed; coverage and Monte Carlo summaries can wait until the advanced chapter.
+6. The expandable “Model answer” sections support reflection. “Report” can save the current simulation results and assumptions. After changing the sample size, a new run is needed for those results to appear in the report.
 
 ## Type I and Type II error probabilities and power — advanced
 
@@ -43,6 +60,7 @@ Purpose: connect false positives, false negatives and power with the distributio
 3. Under the alternative distribution, the non-rejection area represents false negatives and the rejection area represents power.
 4. Increasing the sample size while keeping the means and SD fixed narrows both distributions of the sample mean. You can explain the resulting change in power without claiming that patients have become less variable.
 5. Comparing one-sided and two-sided rules illustrates their consequences; the scientific question should determine the rule before data collection. This one-sample known-SD model differs from the two-arm trials elsewhere.
+6. In “Report,” you can explain how sample size affects power at the current settings and save the calculation with your answer. If the specified population mean equals the null mean, rejections are false positives; the report labels the complementary probability as non-rejection under the null.
 
 ## Two-proportion calculator — core
 
@@ -54,6 +72,7 @@ Purpose: reproduce the binary-outcome sample size calculation. The calculator us
 2. The result is 56 analyzable patients per group. The total and any recruitment adjustment have different denominators and should be recorded separately.
 3. Changing one input at a time shows how the required sample responds. The calculation uses the event percentage in each group.
 4. The link to the lab transfers this calculated count as a fixed sample. “Many studies” then lets you estimate the performance of the planned test through simulation and compare the estimated power with the planning target.
+5. “Explore assumptions” lets you compare a revised event percentage. “Report” includes both scenarios when they differ, together with their analyzable and recruitment counts and calculation method.
 
 ## Gestational-diabetes prevention trial — core
 
@@ -77,6 +96,7 @@ Purpose: see how a target difference and between-patient variability determine a
 2. With no losses, the normal approximation gives 59 analyzable patients per group.
 3. Halving the target difference or doubling the SD approximately quadruples the required count, before rounding.
 4. The lab link carries the count across as a fixed sample for simulation. Its pooled t test estimates the common variance, so its power need not exactly equal the calculator's normal-approximation target.
+5. A revised target difference can be compared in “Explore assumptions.” “Report” records the main and revised scenarios, their counts and the calculation method.
 
 ## Rehabilitation: compare two means — core
 
@@ -121,7 +141,7 @@ Within the same activity, *Settings* and *Explore further* contain *Explore miss
 3. *Unequal losses* uses 10% expected loss in the standard group and 20% in the novel group. Recruitment and population probabilities stay fixed.
 4. *Outcome-related losses* keeps those expected percentages but makes missingness three times as likely without relief in the novel group. The standard group retains outcome-independent loss.
 5. Across the four scenarios, Many studies compares the mean estimate, bias, coverage, interval width, retained counts, and significance percentage. A high significance percentage can coexist with bias and poor coverage. The model answer is in the [missing-outcome explanation](../book/simulation.html#explore-missing-outcomes).
-6. Downloads retain the scenario assumptions and actual retained counts. The R script reproduces the current scenario; saved simulation CSV files retain the settings used when they were generated. *Usual simulation* restores the original analysis with fixed analyzable counts.
+6. The report identifies recruited versus analyzable counts and, for matching simulations, retained counts, bias and coverage. Saved simulation CSV files retain the settings used when they were generated; the R script reproduces the current scenario. *Usual simulation* restores the original analysis with fixed analyzable counts.
 
 ## Recruitment adjustment — core
 
@@ -132,10 +152,10 @@ Purpose: connect the analyzable requirement to anticipated outcome losses and tr
 1. For the chronic-pain example, the starting analyzable requirement is 56 patients per group.
 2. At 10% expected loss, the result is 63 recruits per group, or 126 total. Comparing 0%, 10% and 20% losses keeps the starting requirement fixed.
 3. With different losses of 20% in the novel group and 10% in the standard group, equal recruitment uses 70 per group (140 total). This gives expected retained counts of 56 and 63. The tables explain why the recruitment counts remain equal.
-4. Your interpretation should consider actual retention and the reasons for missing outcomes. The collapsed activity question in “Report” provides space for your prediction and justification, followed by a model answer.
+4. Your interpretation should consider actual retention and the reasons for missing outcomes. The collapsed activity question in “Report” provides space for your explanation, with a gray model answer that follows the current inputs.
 5. For the optional advanced example, a starting count of 100 per group is assumed to require full adherence. With switching of 10% from novel to standard and 5% in the other direction, and 5% missing outcomes in each group, the approximate recruitment target is 146 per group. The intermediate values remain unrounded.
 6. Choosing “Expected switching is already included” applies no additional switching multiplier. For binary outcomes, you should use the revised event percentages in the [two-proportion app](../two_proportions/); the [tutorial's sensitivity example](../book/feasibility.html#treatment-switching) gives 57% and 31.5%.
-7. “Methods and references” explains the approximation using the current values. “Report” previews your calculation and explanation and saves a readable HTML report. The lab link carries the starting analyzable sample into a complete-outcome scenario; switching and unequal losses remain specific to this recruitment calculation.
+7. “Methods and references” explains the approximation using the current values. “Report” records the applied adjustments, whether switching is already included, expected retained counts and your explanation. The lab link carries the starting analyzable sample into a complete-outcome scenario; switching and unequal losses remain specific to this recruitment calculation.
 
 ## Estimate a mean difference with a precision target — advanced
 
@@ -160,6 +180,7 @@ Purpose: connect the precision needed for a descriptive decision with survey siz
 3. The 50% conservative-planning option changes the probability used for sample size planning. The anticipated percentage remains the generating probability for the illustrative simulation.
 4. In “Explore assumptions,” “Draw one illustrative sample” generates a binomial count and a Wilson interval. The realized interval width varies with the observed count.
 5. Your explanation should distinguish interval precision from representativeness. Here, n is the total number of participants in the sample.
+6. In “Report,” your explanation accompanies the confidence level, planning percentage, width target, sample size and recruitment allowance. The simulated interval is included when it matches the current example and settings; otherwise, you should draw another sample.
 
 ## Pilot study: retention — advanced
 
@@ -171,7 +192,7 @@ Purpose: assess whether a limited pilot provides useful information for a feasib
 2. In “Explore assumptions,” “Draw one illustrative sample” generates a possible retained count and its Wilson interval. The simulated retention count varies around its expected value of 32.
 3. You can compare the illustrative result with a fixed sample of 80. More participants generally provide more information about retention, but obtaining them requires a feasible plan.
 4. Retained and non-retained participants both belong in the denominator when their status is known. Loss adjustment is appropriate only for participants whose outcome status itself cannot be established.
-5. Your report should relate the interval and its uncertainty to the prespecified feasibility decision.
+5. In “Report,” your explanation should relate the interval and its uncertainty to the prespecified feasibility decision. After changing the sample size or confidence level, a new illustrative sample is needed before the report can include its interval.
 
 ## Discharge percentages — core calculation, optional simulation extension
 
@@ -195,9 +216,8 @@ Purpose: bring together the clinical question, numerical requirements and practi
 2. For a supported design, you can select testing, interval-width planning or a fixed available sample and enter justified assumptions in “Settings.” Other designs require an appropriate external calculation.
 3. The recruitment and cost inputs help assess feasibility. Actual recruitment and retention can vary from these expectations.
 4. For a supported design, “One study” and “Many studies” can examine possible results and performance. Sensitivity scenarios should change the assumed population while retaining the original plan when that is the question.
-5. In “Report,” you can save inputs and explanations, download reproducible code or simulation results, and transfer the relevant findings into the assumptions report. A saved plan is distinct from saved simulation output.
-
-Teaching text: [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/). Original software code: [MIT](https://opensource.org/license/mit). Third-party attributions and exceptions remain applicable.
+5. “Report” combines your study responses and recommendation with the current calculations, feasibility and matching simulations. Your written answers should reflect the selected example and settings. Unsupported designs receive a note about the need for a design-specific method.
+6. “Save report (HTML)” produces the readable summary. “Backup inputs for reopening” offers “Save settings and answers (JSON)” and its restore control. The [file guide above](#reports-and-saved-work) explains backups, simulation data and the optional R script. Findings and their justification can be entered in the separate study-plan activity.
 
 ## Choosing a study design — advanced
 
@@ -209,3 +229,5 @@ Purpose: identify a suitable design family and the decisions that determine its 
 2. Treatment questions address allocation, comparisons and the intended claim. Observational, diagnostic and prediction questions use their own follow-ups.
 3. “Show design suggestions” presents a candidate design, the reasoning, unresolved choices and sample-size implications.
 4. The resource links provide a relevant activity or specialist guidance. Changing an answer clears the previous suggestion until you request an update. “Start again” clears the form.
+
+Teaching text: [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/). Original software code: [MIT](https://opensource.org/license/mit). Third-party attributions and exceptions remain applicable.
