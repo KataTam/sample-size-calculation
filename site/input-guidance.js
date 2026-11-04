@@ -66,8 +66,6 @@
     record.tip.replaceChildren(p);
     if (modelAnswer) {
       field.placeholder = 'Model answer: ' + modelAnswer;
-      const example = document.createElement('p'); example.className = 'input-model-answer'; example.textContent = field.placeholder;
-      record.tip.append(example);
       fitExample(field);
     }
     if (record.links.length) {

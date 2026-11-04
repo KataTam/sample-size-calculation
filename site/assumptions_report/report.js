@@ -7,34 +7,34 @@
   const status = document.getElementById('status');
   const groups = [
     ['Question and design', [
-      ['question', 'Research question', 'Your question should identify the decision the study will inform. The PICO fields below describe its components.', 'The research question is'],
-      ['population', 'Population', 'Who should the findings apply to? Your description should include the setting and key eligibility criteria (PICO; SPIRIT 2025 items 13–14).', 'The population is'],
-      ['intervention', 'Intervention or exposure', 'For an intervention, describe what is delivered, how much, how often, for how long and by whom. An observational study should define the exposure or group of interest (PICO; SPIRIT 2025 item 15).', 'The intervention or exposure is', 'comparison'],
-      ['comparator', 'Comparator', 'Your description should identify the comparison condition and explain its choice. Usual care should be described, including permitted additional treatments (PICO; SPIRIT 2025 item 15).', 'The comparator is', 'comparison'],
-      ['outcome_detail', 'Primary outcome and time point', 'The outcome definition should identify the measurement, how results are summarized and the assessment time (PICO; SPIRIT 2025 item 16).', 'The primary outcome and time point are'],
-      ['design', 'Design, sampling and allocation', 'Describe how participants or records are selected, how observations are related, and any treatment allocation.', 'The design, sampling and allocation are']
+      ['question', 'Research question', 'A useful question identifies the clinical or scientific decision the result will inform. The PICO fields below provide the study details.', 'The research question is'],
+      ['population', 'Population', 'Your description should specify the setting and key eligibility criteria, including exclusions that limit who the findings apply to.', 'The population is'],
+      ['intervention', 'Intervention or exposure', 'For treatment, relevant details include dose or intensity, schedule, duration, and provider. For an exposure, you should specify how it is measured and classified.', 'The intervention or exposure is', 'comparison'],
+      ['comparator', 'Comparator', 'Your description should specify what usual care, placebo, or the comparison group involves, including permitted additional treatments and why this comparison is appropriate.', 'The comparator is', 'comparison'],
+      ['outcome_detail', 'Primary outcome and time point', 'Your answer should give the measurement or event definition, how it will be summarized, and the assessment time. Comparisons should use the same definition in both groups.', 'The primary outcome and time point are'],
+      ['design', 'Design, sampling and allocation', 'Relevant details include eligibility-based sampling, the unit assigned to treatment, and repeated or clustered observations that the analysis must account for.', 'The design, sampling and allocation are']
     ]],
     ['Assumptions and evidence', [
-      ['scale', 'Effect scale and direction of benefit', 'The effect scale gives the units of the comparison: for example, a difference in event percentages is in percentage points, while a mean difference may be in pain-score units. Use treatment minus control and specify which direction is beneficial.', 'The effect scale and direction of benefit are'],
-      ['expected', 'Expected difference', 'Give the best current expectation, its evidence source and uncertainty.', 'The expected difference and supporting evidence are'],
-      ['clinical', 'Clinically important difference (clinical threshold)', 'Give the smallest between-group benefit that matters to patients and justify that judgment.', 'The clinical threshold and its justification are', 'comparison'],
-      ['planning', 'Target difference: used in the calculation', 'Give the difference used to evaluate power and explain why it is appropriate.', 'The target difference and its justification are', 'power'],
-      ['variation', 'Variation or event probabilities', 'Give the standard deviation or anticipated event probabilities, their evidence sources, population and time point.', 'The variation or event probabilities used for planning are'],
-      ['evidence_review', 'Evidence relevance and uncertainty', 'Which assumptions are least certain? Explain whether previous evidence fits this population, outcome and follow-up time.', 'The relevance and uncertainty of the evidence are'],
-      ['sensitivity', 'Sensitivity analysis: alternative assumptions', 'Give plausible alternative differences, standard deviations or event probabilities and their sources. Distinguish recalculating required counts from evaluating the original sample held fixed.', 'The sensitivity scenarios and their evidence are'],
-      ['progression', 'Feasibility objectives and progression criteria', 'State each feasibility outcome and denominator, unacceptable and desirable levels, and the decisions to proceed, amend or stop.', 'The feasibility objectives and progression criteria are', 'feasibility']
+      ['scale', 'Effect scale and direction of benefit', 'An event-percentage difference is measured in percentage points; a mean difference uses the outcome units. Your answer should define treatment minus control and which sign favors treatment.', 'The effect scale and direction of benefit are'],
+      ['expected', 'Expected difference', 'Your estimate should cite comparable evidence and acknowledge uncertainty, especially when based on a small pilot.', 'The expected difference and supporting evidence are'],
+      ['clinical', 'Clinically important difference (clinical threshold)', 'Patient and clinical input should justify the minimum worthwhile benefit between groups. The units should match the outcome scale.', 'The clinical threshold and its justification are', 'comparison'],
+      ['planning', 'Target difference: used in the calculation', 'Your chosen value should be plausible and clinically worthwhile, with supporting evidence. Power is evaluated at this between-group difference.', 'The target difference and its justification are', 'power'],
+      ['variation', 'Variation or event probabilities', 'For a continuous outcome, you need an SD in its units; for a binary outcome, event percentages. Each assumption should cite a comparable population and follow-up time.', 'The variation or event probabilities used for planning are'],
+      ['evidence_review', 'Evidence relevance and uncertainty', 'You should assess differences in population, outcome definition, and follow-up time, then identify uncertain inputs needing sensitivity analysis.', 'The relevance and uncertainty of the evidence are'],
+      ['sensitivity', 'Sensitivity analysis: alternative assumptions', 'Plausible alternatives should reflect uncertainty in the evidence. Your report should distinguish power at a fixed sample size from recalculated counts needed to meet the target.', 'The sensitivity scenarios and their evidence are'],
+      ['progression', 'Feasibility objectives and progression criteria', 'For each feasibility outcome, you should specify a denominator, acceptable and unacceptable levels, and the action associated with each result.', 'The feasibility objectives and progression criteria are', 'feasibility']
     ]],
     ['Calculation', [
-      ['analysis', 'Planned analysis', 'Name the test and confidence interval method. State the sidedness and relevant assumptions.', 'The planned analysis is'],
-      ['software', 'Calculation procedure and software', 'Your record should identify the calculation method, software and relevant versions, code version or source, and saved inputs. For simulation, it should also include the generating procedure, repetitions and random-number settings. Guidance is linked above.', 'The calculation procedure, software and reproducibility record are'],
-      ['power', 'Type I error probability and target power', 'State Type I error probability and target power as percentages. With fixed resources, record attainable power and the effect at which it is evaluated.', 'The Type I error probability and power specification is', 'power'],
-      ['precision', 'Precision: desired confidence interval width', 'State the desired full confidence interval width, its units and the confidence level. With fixed resources, record attainable precision.', 'The precision specification is', 'precision']
+      ['analysis', 'Planned analysis', 'Your record should name the test, confidence interval method, sidedness, and how any pairing or clustering will be handled.', 'The planned analysis is'],
+      ['software', 'Calculation procedure and software', 'A reproducible record needs the method, software and code versions, and saved inputs. Simulations also need the data-generating assumptions, repetitions, and random-number settings.', 'The calculation procedure, software and reproducibility record are'],
+      ['power', 'Type I error probability and target power', 'Both values should be percentages, with the difference used to evaluate power. A fixed sample requires reporting attainable power at specified true differences.', 'The Type I error probability and power specification is', 'power'],
+      ['precision', 'Precision: desired confidence interval width', 'Your answer should give the full width, units, and confidence level. A fixed sample requires assessing the anticipated width under the stated assumptions.', 'The precision specification is', 'precision']
     ]],
     ['Recruitment and conclusion', [
-      ['counts', 'Sample size needed or available for analysis', 'Record analyzable participants per group and total, or one total for a single-population estimate. State the method, result and rounding. For existing data, explain why the sample is fixed.', 'The analyzable sample size and calculation are'],
-      ['recruitment', 'Losses, missing data and recruitment', 'Your expected losses should draw on comparable studies, routine records or pilot follow-up, with the population, time point and uncertainty recorded. There is no universal default. Give adjusted recruitment counts and plausible alternative losses, or completeness and missing observations in an existing dataset. Explain how missing outcomes could affect the comparison. Record anticipated treatment switching, adherence and rescue medication, and whether their impact is already included in the calculation.', 'The loss allowance, missing data and recruitment are'],
-      ['resources', 'Feasibility and resources', 'Record the recruitment rate and period, available patients, costs or constraints, and whether the target is feasible.', 'The recruitment feasibility and resources are'],
-      ['conclusion', 'Intended conclusion and limitations', 'Explain what the design could establish, what remains uncertain and which planning decisions still need to be resolved.', 'The intended conclusion and limitations are']
+      ['counts', 'Sample size needed or available for analysis', 'Your record should give the method, result, upward rounding, and per-group and total counts where applicable. Existing-data projects should explain eligibility, exclusions, and the available count.', 'The analyzable sample size and calculation are'],
+      ['recruitment', 'Losses, missing data and recruitment', 'Your answer should justify loss assumptions and recruitment counts, assess possible missing-data bias, and document treatment changes already allowed for. Existing-data projects should describe completeness; uncertain assumptions need plausible alternatives.', 'The loss allowance, missing data and recruitment are'],
+      ['resources', 'Feasibility and resources', 'Monthly eligible numbers, expected consent, recruitment time, and costs should support your feasibility assessment. Likely delays or other constraints should be included.', 'The recruitment feasibility and resources are'],
+      ['conclusion', 'Intended conclusion and limitations', 'Your conclusion should reflect the design, attainable power or precision, and sensitivity results. Unresolved assumptions and limits on interpretation should be explicit.', 'The intended conclusion and limitations are']
     ]]
   ];
   groups[2][1].push(groups[3][1].shift());
@@ -214,9 +214,9 @@
     else preview.focus();
   });
   for (const [id, help] of Object.entries({
-    study_type: 'Your choice controls which questions are relevant. Another design needs its own sample-size method.',
+    study_type: 'One-population estimation uses a single percentage or mean. Paired, clustered, and other designs need methods that account for their observation structure.',
     outcome: 'A binary outcome records two possibilities, such as relief or no relief. A continuous outcome records a numerical measurement, such as a pain score.',
-    goal: 'Power describes the probability of detecting a specified true difference. A precision target specifies a desired confidence interval width. With a fixed sample, you assess the attainable power or precision.'
+    goal: 'Power planning starts with a difference to detect; precision planning starts with an interval width. A fixed sample uses the number already available; feasibility planning uses pilot objectives.'
   })) {
     const label = document.querySelector('label[for="' + id + '"]'), input = form.elements[id];
     const text = label.firstChild.textContent; label.after(input); label.textContent = text;
@@ -239,12 +239,12 @@
     for (const option of form.elements.goal.options) option.disabled = single && ['testing', 'both'].includes(option.value);
     if (single && ['testing', 'both'].includes(value.goal)) { value.goal = 'precision'; form.elements.goal.value = 'precision'; }
     const wording = single ? {
-      scale: ['Outcome scale and interpretation', 'Your description should specify the population percentage or mean and its units.', 'The outcome scale and interpretation are', 'What population value will you estimate, and in which units?'],
-      expected: ['Anticipated percentage or mean', 'Your anticipated value should have an evidence source, if available. An estimate from existing data is a result to report.', 'The anticipated value and supporting evidence are', 'What population percentage or mean do you anticipate?']
+      scale: ['Outcome scale and interpretation', 'An event estimate needs an explicit denominator and assessment time. A mean needs a measurement scale and units.', 'The outcome scale and interpretation are', 'What population value will you estimate, and in which units?'],
+      expected: ['Anticipated percentage or mean', 'Comparable studies can support this planning value. If you have already analyzed existing data, you should label that estimate as an observed result.', 'The anticipated value and supporting evidence are', 'What population percentage or mean do you anticipate?']
     } : {};
     if (value.goal === 'feasibility') Object.assign(wording, {
-      scale: ['Feasibility outcome scale', 'The units should match the feasibility objective, such as retention percentage or assessment time.', 'The feasibility outcome scale is', 'How will you express the feasibility outcome?'],
-      expected: ['Anticipated feasibility outcome', 'Prior evidence should inform the expected recruitment, retention or other feasibility outcome.', 'The anticipated feasibility outcome is', 'What feasibility result do you anticipate?']
+      scale: ['Feasibility outcome scale', 'Retention needs a denominator, such as all enrolled participants. Assessment time needs units, such as minutes per visit.', 'The feasibility outcome scale is', 'How will you express the feasibility outcome?'],
+      expected: ['Anticipated feasibility outcome', 'Comparable recruitment or follow-up procedures can support the planning value. Your answer should identify the source and plausible uncertainty.', 'The anticipated feasibility outcome is', 'What feasibility result do you anticipate?']
     });
     const answers = examples(value);
     for (const field of fields) {

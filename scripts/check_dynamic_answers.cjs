@@ -31,9 +31,12 @@ const base = (process.argv[2] || 'http://127.0.0.1:8769').replace(/\/$/, '');
     await answer(f,'reasoning','125 per group (250 total)');
     assert.equal(await f.locator('#reasoning').inputValue(),'My written response remains here.');
     await f.locator('#reasoning-question').focus();
-    await f.locator('.input-guidance-popover:not([hidden])').getByText('125 per group (250 total)',{exact:false}).waitFor();
+    const help=f.locator('.input-guidance-popover:not([hidden])');
+    await help.waitFor();
+    assert.match(await help.innerText(),/starting and final counts/);
+    assert.doesNotMatch(await help.innerText(),/Model answer:|125 per group/);
     await set(f,{n:0}); await answer(f,'reasoning','when the current calculation inputs are valid');
-    console.log('Recruitment answers: counts, losses, invalid inputs, live help and preserved writing passed.');
+    console.log('Recruitment answers: current placeholders, concise help, invalid inputs and preserved writing passed.');
 
     f=await app('sampling_distributions','interpretation');
     await answer(f,'interpretation','50.87%');

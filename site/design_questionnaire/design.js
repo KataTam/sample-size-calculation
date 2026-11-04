@@ -6,17 +6,17 @@ const form=document.getElementById('design-form'),result=document.getElementById
 let shown=false;
 function answers(){return Object.fromEntries(new FormData(form));}
 const help={
- aim:'The main purpose determines what you need to estimate or compare. A treatment question often uses PICO: population, intervention, comparator and outcome.',
- data:'Existing records may support several designs. Relevant variables, timing, selection and missing data should be checked for your question.',
- structure:'Independent observations come from separate participants or units. Paired measurements come from the same person or matched units. Clusters contain observations that may be correlated, such as patients within a clinic.',
- outcome:'The primary outcome is the main measurement used to answer your question. Its definition and assessment time should be specified before choosing the analysis and sample-size method.',
- allocation:'This concerns who assigns treatment. Individual randomization assigns participants; cluster randomization assigns groups such as clinics. In an observational study, treatment is determined outside the study.',
- comparison:'Parallel groups receive different treatments. In a crossover study, the same participants receive treatments in successive periods. A before–after comparison measures change around an intervention.',
- claim:'Superiority tests a difference between treatments. Noninferiority and equivalence use prespecified, justified margins. The intended claim determines the hypothesis and calculation.',
- crossover:'Carryover occurs when an earlier treatment affects a later period. Suitability depends on the condition, reversibility of effects and whether carryover can be controlled.',
- sampling:'Selection and timing distinguish these designs. A cohort starts with an eligible population, case-control sampling starts with outcome status, and a cross-sectional study assesses a defined time.',
- reference:'The reference standard provides the comparison used to establish whether the target condition is present. Its suitability and application affect interpretation of diagnostic accuracy.',
- prediction:'Development fits or updates a model. External evaluation examines an existing model in new patients. Comparing models or feature sets requires a defined performance measure.'
+ aim:'Your primary question should determine this choice. If the study has several aims, you can run the questionnaire separately for each.',
+ data:'For existing records, you should check whether the required variables, assessment times, and eligible participants are available, including the extent of missing data.',
+ structure:'Repeated measurements on one person are paired. Patients within clinics may be clustered. Counting all measurements as independent can overstate the information available.',
+ outcome:'Any admission during follow-up is binary; the number of admissions is a count; time to first admission is a time-to-event outcome. The definition should match your primary question.',
+ allocation:'Treatment chosen during routine care is observed. Randomization can assign individual patients or whole groups, such as clinics, depending on how the intervention is delivered.',
+ comparison:'Receiving both treatments in successive periods is a crossover. Measurements before and after a single intervention form a before–after comparison; treatment order and timing matter.',
+ claim:'Noninferiority needs a justified limit on acceptable disadvantage; equivalence needs limits in both directions. These margins and the intended claim should be specified before analysis.',
+ crossover:'An earlier treatment may affect later measurements. A sufficiently stable condition, reversible effects, and control of carryover are needed; uncertainty should remain marked for assessment.',
+ sampling:'The starting point matters: an eligible population, people selected by outcome status, or a snapshot at one time. Existing records can support a cohort when the time sequence is clear.',
+ reference:'A reference standard establishes whether the target condition is present, for example through an accepted diagnostic assessment. You should check its accuracy and whether participants can receive it.',
+ prediction:'Fitting or updating coefficients counts as development. Testing an unchanged model in new patients is external evaluation. Comparing feature sets needs a shared performance measure and evaluation data.'
 };
 const groups=[['Purpose and data',['aim','data']],['Observations and outcome',['structure','outcome']],['Design details',['allocation','comparison','claim','crossover','sampling','reference','prediction']]];
 for(const [number,[title,ids]] of groups.entries()){
