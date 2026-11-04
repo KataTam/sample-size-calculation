@@ -50,3 +50,10 @@ body :where(h1,h2,h3,h4,h5,h6,summary,legend) :where(a,span,strong,b,code) { fon
 
 .guided header > h1 { display: none; }
 #status:empty { display: none; }
+
+/* Shared stage and report hierarchy across the teaching apps. */
+.plan-section { border-radius:8px; margin:16px 0; background:#fff; }
+.plan-section > summary { margin:0 -.9rem; padding:14px .9rem; background:#dcecfb; border-radius:7px 7px 0 0; }
+.report-pane { background:#f4f7fa; border-radius:8px; }
+.actions button:first-child { background:#dcecfb; }
+#report h2 { border-bottom:1px solid #b8cbd4; padding-bottom:8px; margin-top:22px; }

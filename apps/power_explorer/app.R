@@ -4,6 +4,7 @@ source("../../R/tutorial_helpers.R")
 source("../../R/teaching_cases.R")
 source("../../R/activity_bridge.R")
 source("../../R/model_answers.R")
+source("../../R/app_presentation.R")
 
 # Let the download response supply the filename. Chromium's download attribute
 # can bypass the service worker serving a Shinylive download (issue 468227).
@@ -135,13 +136,15 @@ ui <- fluidPage(
     p(tags$a(href = "../book/Sample_size_open_module.html#glossary", target = "_blank", rel = "noopener", "Key terms and assumptions"), " · ",
       tags$a(href = "../book/Sample_size_open_module.html#common-mistakes", target = "_blank", rel = "noopener", "Common mistakes and FAQ")))),
   mainPanel(width = 8, tabsetPanel(id = "stage",
-    tabPanel("Explore assumptions", h3("Your planned design"), tableOutput("planning"),
-      p(class = "caption", "Table 1. Expected difference, target difference, clinical threshold and sample requirements for the current design."),
-      p("Predict a change before moving a control. Compare testing with a power target, estimation with an interval-width target, and fixed-resource planning. Both testing and estimation plans produce estimates and confidence intervals."),
-      textOutput("axis_note"), actionButton("fit_axis", "Fit axis to results"),
-    plotOutput("planning_plot", height = "430px"), textOutput("planning_text"),
+    tabPanel("Overview", value = "Explore assumptions", h3("Your planned design"), uiOutput("overview_metrics"),
+      textOutput("overview_text"),
+      plotOutput("planning_plot", height = "430px"),
       p(class = "caption", "Figure 1. Power and anticipated full confidence interval width across sample sizes. Dashed lines show the selected targets; points mark the current plan."),
-      conditionalPanel("input.show_advanced", h4("Advanced: compare smaller effects"),
+      activity_details("Current assumptions and graph details", tableOutput("planning"),
+        p(class = "caption", "Table 1. Current assumptions and sample requirements."),
+        textOutput("planning_text"), textOutput("axis_note"), actionButton("fit_axis", "Fit axis to results"))),
+    tabPanel("Explore assumptions", value = "Compare assumptions",
+      h3("Compare smaller effects"),
       p("Curves compare the target difference with two smaller differences. Predict which curve will reach the target first. Clinical importance is a separate judgment."),
       plotOutput("comparison_plot", height = "360px"),
       p(class = "caption", "Figure 2. Power curves at half, two-thirds and the full target difference, with the power target and expected analyzable recruitment limit."),
@@ -153,9 +156,7 @@ ui <- fluidPage(
       p("Each point on the curve describes the probability of detecting a specified true difference. Smaller differences can produce significant results and larger differences can go undetected. This sensitivity analysis evaluates the fixed design across plausible population differences."),
       h4("Sensitivity analysis: what if the assumptions differ?"), tableOutput("sensitivity"),
       p(class = "caption", "Table 3. Power and anticipated full interval width under the plan, the reality assumed for simulation and a null effect at unchanged sample size."),
-      p("Changing the reality assumed for simulation keeps the planned sample size fixed. Usual simulations use analyzable counts. The Explore missing outcomes extension instead starts with recruited participants and generates missing outcomes; its results appear in One study and Many studies."),
-      h4("Analysis assumptions"), textOutput("method"),
-      p("Normal outcomes use a pooled-variance t test and interval. Binary outcomes use a pooled score test without continuity correction and a Newcombe-Wilson difference interval. Binary analytical power and precision are approximations; check finite-sample behavior with simulations."))),
+      p("Changing the reality assumed for simulation keeps the planned sample size fixed. Usual simulations use analyzable counts. The Explore missing outcomes extension instead starts with recruited participants and generates missing outcomes; its results appear in One study and Many studies.")),
     tabPanel("One study", h3("One simulated study"),
       p("Which quantities do you expect to change when you repeat the same study?"),
       actionButton("run_one", "Simulate one study", class = "btn-primary"),
@@ -235,18 +236,24 @@ ui <- fluidPage(
       activity_help("These scenarios describe expected recruitment and costs. Actual numbers can vary; your assessment should account for other exclusions and costs where relevant."),
       actionButton("use_feasible_cap", "Use expected recruitment as the lab limit"),
       p(tags$a(href = "../book/appendix.html#own-study", target = "_blank", rel = "noopener", "Read the study justification guidance"))),
-    tabPanel("Justify and communicate", h3("Explain your decision"),
+    tabPanel("Report", value = "Justify and communicate", h3("Explain your decision"),
       activity_text_input("justification", "What study plan would you recommend, and why?",
         "The model answer updates with the selected example and current calculation inputs.",
         "Your answer should use your current results, explain the evidence and sensitivity to assumptions, and identify the conclusions the study could support.", rows = 8),
       p("A structured ", tags$a(href = "../assumptions_report/", "study-plan report"), " brings these decisions together using PICO, selected SPIRIT 2025 items and DELTA² guidance."),
-      downloadButton("download_plan", "Download plan and explanation"),
+      uiOutput("report_preview"), downloadButton("download_plan", "Save report (HTML)"),
       activity_details("Backup inputs for reopening",
       downloadButton("download_plan_json", "Download editable backup (JSON)"),
       fileInput("upload_plan", "Reload a saved study plan", accept = c(".json", "application/json")),
-      p("This backup restores the inputs and written answers in the app. “Download plan and explanation” provides a readable report. Simulations should be rerun after restoring inputs.")),
+      p("This backup restores the inputs and written answers in the app. “Save report (HTML)” provides a readable report. Simulations should be rerun after restoring inputs.")),
       tags$details(tags$summary("Optional reproducible R workflow"),
         p("Run this script from the repository root to reproduce the current scenario with the same shared functions."), downloadButton("download_code", "Download R script")),
+      app_citation("Sample size reasoning lab", "power_explorer")),
+    tabPanel("Methods and references", value = "Methods",
+      h3("Calculation with your current values"), uiOutput("worked_method"),
+      h4("Analysis assumptions"), textOutput("method"),
+      p("Normal outcomes use a pooled-variance t test and interval. Binary outcomes use a pooled score test without continuity correction and a Newcombe-Wilson difference interval. Binary analytical power and precision are approximations; simulation assesses their finite-sample performance under the selected assumptions."),
+      p(tags$a(href = "../book/appendix.html#tutorial-methods", target = "_blank", rel = "noopener", "Methods and reproducibility record")),
       h3("References"), tags$ul(
         tags$li(tags$a(href = "https://aaroncaldwell.us/SuperpowerBook/", "Caldwell et al. (2022). Power Analysis with Superpower, chapters 1, 11 and 15: inspiration for the clinical activities.")),
         tags$li(tags$a(href = "https://doi.org/10.1016/j.jesp.2017.09.004", "Albers and Lakens (2018). Uncertainty and bias in pilot-based planning.")),
@@ -542,6 +549,26 @@ server <- function(input, output, session) {
     if (is.null(saved$missing)) " analyzable per group; " else paste0(" recruited per group; ", missing_scenario_label(saved$missing), "; "),
     "true difference assumed for simulation = ", effect_text(true_difference(saved$spec), saved$spec$outcome),
     ". ", if (!identical(saved$meta, snapshot())) "Inputs changed. These are saved results; run again to update." else "Results match current inputs.")
+  output$overview_metrics <- renderUI({
+    x <- planned()
+    app_metrics(c("Analyzable per group" = x$n, "Recruitment total" = 2*adjust_for_dropout(x$n, input$dropout),
+      "Power at target difference" = format_percent(spec_power(x), 1)))
+  })
+  output$overview_text <- renderText({
+    x <- planned()
+    paste0("At ", x$n, " analyzable participants per group, the anticipated full interval width is ", effect_text(anticipated_width(x), x$outcome),
+      ". One study and Many studies show how estimates and intervals vary under the chosen population assumptions.")
+  })
+  output$worked_method <- renderUI({
+    x <- planned()
+    tags$div(class = "app-method", p(paste0("Planning goal: ", switch(input$goal, testing = "power at the target difference", precision = "estimation with a target interval width", fixed = "assessment of an available sample"), "; Type I error probability: ", format_percent(x$alpha),
+      "; target power: ", format_percent(input$target_power), "; target difference: ", effect_text(true_difference(x), x$outcome), ".")),
+      p(if (x$outcome == "means") paste0("Common SD: ", x$sd, ". Power uses the noncentral t distribution for a two-sample, equal-variance t test.") else
+        paste0("Assumed event probabilities: standard ", format_percent(x$p_control), ", novel ", format_percent(x$p_treatment), ". Power uses the two-sided normal approximation in stats::power.prop.test with strict = TRUE.")),
+      p(paste0("The selected goal gives ", x$n, " analyzable participants per group. Anticipated full interval width: ", effect_text(anticipated_width(x), x$outcome), ".")),
+      p(paste0("Recruitment per group = ceiling(", x$n, " / ", 1-input$dropout, ") = ", adjust_for_dropout(x$n, input$dropout), ".")),
+      p("Simulation exports retain the generating assumptions, analysis procedure and reproducibility settings used for the saved results."))
+  })
   output$planning <- renderTable({
     x <- planned(); recruit <- adjust_for_dropout(x$n, input$dropout)
     data.frame(Item = c("Expected difference (recorded judgment)", "Target difference (used in calculation)", "Clinical threshold (meaningful benefit)",
@@ -715,7 +742,7 @@ server <- function(input, output, session) {
   })
   outputOptions(output, "download_one", suspendWhenHidden=FALSE)
   outputOptions(output, "download_many", suspendWhenHidden=FALSE)
-  output$download_plan <- downloadHandler(filename = function() "sample_size_justification.txt", content = function(file) {
+  report_paragraphs <- reactive({
     details <- study_details()
     answer <- function(x) if (nzchar(trimws(x))) x else "Not yet specified."
     compatible <- details$study_design == "two_groups" && is.null(routed_case())
@@ -739,7 +766,7 @@ server <- function(input, output, session) {
         paste("Method:", method_label(x$outcome)))
     } else "This design requires its own sample-size method; the numerical lab calculation has not been used."
     capacity <- feasibility()
-    writeLines(c("Current sample size justification", "",
+    c("Current sample size justification", "",
       "Research question and primary outcome", answer(details$study_question), "",
       "Clinical relevance", answer(details$clinical_relevance), "",
       "Participant burden and ethical considerations", answer(details$participant_burden), "",
@@ -757,8 +784,11 @@ server <- function(input, output, session) {
       "Methods and reproducibility: https://katatam.github.io/sample-size-calculation/book/appendix.html#tutorial-methods",
       "The editable JSON backup retains the exact inputs for reopening. Simulation exports retain the assumptions used for each saved result.",
       "Planning guidance: PICO (Richardson et al., 1995), https://doi.org/10.7326/ACPJC-1995-123-3-A12; SPIRIT 2025, https://www.consort-spirit.org/; DELTA² (Cook et al., 2018), https://doi.org/10.1136/bmj.k3750.",
-      "Teaching materials: CC BY-SA 4.0, https://creativecommons.org/licenses/by-sa/4.0/. Software: MIT, https://opensource.org/license/mit."), file)
+      "Teaching materials: CC BY-SA 4.0, https://creativecommons.org/licenses/by-sa/4.0/. Software: MIT, https://opensource.org/license/mit.")
   })
+  output$report_preview <- renderUI(app_report_body(report_paragraphs()))
+  output$download_plan <- downloadHandler(filename = function() "sample-size-study-plan.html",
+    content = function(file) writeLines(app_report_document("Sample size study plan", "power_explorer", report_paragraphs()), file, useBytes = TRUE))
   output$download_plan_json <- downloadHandler(filename = function() "sample_size_study_plan.json", content = function(file) {
     plan <- list(schema = "sample-size-study-plan", version = 1, activity = current_activity(),
       inputs = current_lab_inputs(), study = study_details(),

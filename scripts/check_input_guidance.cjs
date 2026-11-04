@@ -26,6 +26,8 @@ const base = (process.argv[2] || 'http://127.0.0.1:8769').replace(/\/$/, '');
         assert.equal(field.gray, 'rgb(97, 97, 97)');
       }
       if (app === 'power_explorer') await frame.locator('#lab-settings > summary').click();
+      if (app === 'dropout_adjustment') { await frame.getByRole('tab',{name:'Report',exact:true}).click(); await frame.getByText('Activity: Treatment changes and missing outcomes',{exact:true}).click(); }
+      if (app === 'sampling_distributions') await frame.getByRole('tab',{name:'Report',exact:true}).click();
       const question = frame.locator('.input-question:visible').first();
       await question.focus();
       const tip = frame.locator('#' + await question.getAttribute('aria-controls'));
@@ -34,14 +36,14 @@ const base = (process.argv[2] || 'http://127.0.0.1:8769').replace(/\/$/, '');
       if (app === 'power_explorer') {
         await frame.getByRole('tab', {name: 'My study', exact: true}).click();
         await frame.locator('#study_question').fill('Does a new treatment improve the four-week outcome?');
-        await frame.getByRole('tab', {name: 'Justify and communicate', exact: true}).click();
+        await frame.getByRole('tab', {name: 'Report', exact: true}).click();
         await frame.locator('#justification').fill('My own recommendation for this teaching case.');
         const pending = page.waitForEvent('download'); await frame.locator('#download_plan').click();
         const download = await pending, text = fs.readFileSync(await download.path(), 'utf8');
         assert.match(text, /My own recommendation/); assert.match(text, /Analyzable participants:/);
         assert.doesNotMatch(text, /List of \d|\$ study_question|Model answer:/);
-        assert.match(text, /Clinical relevance\s+Not yet specified/);
-        await download.saveAs('build/input-guidance/lab-report.txt');
+        assert.match(text, /Clinical relevance<\/p>\s*<p>Not yet specified/);
+        await download.saveAs('build/input-guidance/lab-report.html');
       }
       await page.screenshot({path: 'build/input-guidance/' + app + '.png', fullPage: true});
       console.log(app + ': all help sources attached; gray examples remain empty inputs; keyboard help passed');

@@ -2,6 +2,7 @@ library(shiny)
 source("../../R/sample_size_functions.R")
 source("../../R/activity_bridge.R")
 source("../../R/model_answers.R")
+source("../../R/app_presentation.R")
 
 # Let the download response supply the filename. Chromium's download attribute
 # can bypass the service worker serving a Shinylive download (issue 468227).
@@ -75,27 +76,14 @@ ui <- fluidPage(
           " can recalculate sample size using revised event percentages. In the tutorial example these become 57% and 31.5%."),
         p(tags$a(href = "../book/feasibility.html#treatment-switching", "Explanation and assumptions")))
     ),
-    mainPanel(
-      p("You can explore how expected losses and treatment switching affect recruitment. The app keeps recruitment equal in the two randomized groups. With different expected losses, it uses the larger requirement for both groups so each can meet the analyzable requirement in expectation."),
-      p("Actual retention varies. Prevention, appropriate analysis and sensitivity analyses remain important when outcomes are missing."),
-      h3("Recruitment target"), uiOutput("result"), activity_details("Calculation steps and group counts", uiOutput("stages"), uiOutput("group_counts")),
-      h3("Expected losses and recruitment"), plotOutput("dropout_plot", height = "320px"),
-      textOutput("plot_caption", container = function(...) p(class = "caption", ...)),
-      tags$details(tags$summary("Activity: Treatment changes and missing outcomes"),
-        p("Suppose some participants switch treatments, while others miss their final assessment."),
-        tags$ol(tags$li("How would treatment switching change the recruitment requirement?"), tags$li("How would missing assessments change it?"), tags$li("Which assumptions need supporting evidence?")),
-        activity_text_input("reasoning", "How would switching and missing assessments affect your recruitment plan?",
-          "The model answer updates with the selected example and current calculation inputs.",
-          "Your answer should explain the direction of each change and the evidence needed for the assumptions. It is included in the report and retained in this open session.", rows = 6)),
-      tags$details(tags$summary("Methods and report"),
-        p("Starting n is multiplied by 1/(1 - a - b)^2 when the switching option applies. Here a and b are the fractions switching in the two directions. The result is divided by each group's expected retained fraction. The larger requirement is rounded upward once per group and doubled for equal recruitment."),
-        p("The approximation assumes complete switching, comparable outcome distributions among recipients of the same treatment, and little change in variance. Partial, delayed, or outcome-related switching needs a more detailed model. This app calculates expected counts without generating patient outcomes."),
-        p("References: ", tags$a(href = "https://doi.org/10.1093/epirev/24.1.39", "Wittes (2002)"), "; ",
-          tags$a(href = "https://doi.org/10.1111/j.1541-0420.2008.01114.x", "Shardell and El-Kamary (2009)"), "; ",
-          tags$a(href = "https://www.fda.gov/media/148473/download", "ICH E9(R1)"), "."),
-        downloadButton("report", "Download calculation report"),
-        p(id = "download-status", role = "status", `aria-live` = "polite")),
-      tags$details(tags$summary("Explore a complete-outcome scenario in the reasoning lab"),
+    mainPanel(tabsetPanel(id = "recruitment_view",
+      tabPanel("Overview", h3("Recruitment target"), uiOutput("result"), uiOutput("recruitment_steps"),
+        p("The calculation keeps recruitment equal in the two randomized groups. With different expected losses, the larger requirement is used for both groups."),
+        p("Each group can then meet the analyzable requirement in expectation. Actual retention varies; prevention and an appropriate missing-data analysis remain important."),
+        activity_details("Calculation steps and group counts", uiOutput("stages"), uiOutput("group_counts"))),
+      tabPanel("Explore assumptions", plotOutput("dropout_plot", height = "340px"),
+        textOutput("plot_caption", container = function(...) p(class = "caption", ...)),
+        tags$details(tags$summary("Explore a complete-outcome scenario in the reasoning lab"),
         uiOutput("lab_scope"),
         selectInput("lab_outcome", "Outcome for the two-group design", c("Continuous" = "means", "Binary" = "proportions")),
         conditionalPanel("input.lab_outcome == 'means'",
@@ -103,8 +91,24 @@ ui <- fluidPage(
         conditionalPanel("input.lab_outcome == 'proportions'",
           percent_slider("lab_p0", "Standard treatment: event probability used for planning (%)", .01, .99, .3, step = .01),
           percent_slider("lab_p1", "Novel treatment: event probability used for planning (%)", .01, .99, .6, step = .01)),
-        uiOutput("lab_link"))
-    )
+        uiOutput("lab_link"))),
+      tabPanel("Report",
+      tags$details(tags$summary("Activity: Treatment changes and missing outcomes"),
+        p("Suppose some participants switch treatments, while others miss their final assessment."),
+        tags$ol(tags$li("How would treatment switching change the recruitment requirement?"), tags$li("How would missing assessments change it?"), tags$li("Which assumptions need supporting evidence?")),
+        activity_text_input("reasoning", "How would switching and missing assessments affect your recruitment plan?",
+          "The model answer updates with the selected example and current calculation inputs.",
+          "Your answer should explain the direction of each change and the evidence needed for the assumptions. It is included in the report and retained in this open session.", rows = 6)),
+        uiOutput("report_preview"), downloadButton("report", "Save report (HTML)"),
+        p(id = "download-status", role = "status", `aria-live` = "polite")),
+      tabPanel("Methods and references", h3("Calculation with your current values"), uiOutput("worked_method"),
+        p("Starting n is multiplied by 1/(1 - a - b)^2 when the switching option applies. Here a and b are the fractions switching in the two directions. The result is divided by each group's expected retained fraction. The larger requirement is rounded upward once per group and doubled for equal recruitment."),
+        p("The approximation assumes complete switching, comparable outcome distributions among recipients of the same treatment, and little change in variance. Partial, delayed, or outcome-related switching needs a more detailed model. This app calculates expected counts without generating patient outcomes."),
+        p("References: ", tags$a(href = "https://doi.org/10.1093/epirev/24.1.39", "Wittes (2002)"), "; ",
+          tags$a(href = "https://doi.org/10.1111/j.1541-0420.2008.01114.x", "Shardell and El-Kamary (2009)"), "; ",
+          tags$a(href = "https://www.fda.gov/media/148473/download", "ICH E9(R1)"), "."),
+        app_citation("Recruitment adjustment", "dropout_adjustment"))
+    ))
   )
 )
 
@@ -167,31 +171,31 @@ server <- function(input, output, session) {
       format_percent(input$loss_standard), ". The dashed line shows its minimum requirement. The dot marks the current plan.")
     else "Figure. Equal recruitment per group across shared loss percentages, holding the starting sample and switching assumptions fixed. The dot marks the current plan."
   })
-  report_text <- reactive({
+  output$recruitment_steps <- renderUI({
     x <- plan()
-    paste(c("RECRUITMENT ADJUSTMENT REPORT", paste("Generated:", Sys.Date()),
-      paste("Starting requirement per group:", x$starting), paste("Switching option enabled:", isTRUE(input$switching)),
-      paste("Starting assumption:", if (isTRUE(input$switching)) input$starting_assumption else "unchanged; switching option off"),
-      paste("Applied switching, novel to standard:", if (switching_applied()) format_percent(input$switch_novel) else "0%"),
-      paste("Applied switching, standard to novel:", if (switching_applied()) format_percent(input$switch_standard) else "0%"),
-      paste("Switching multiplier:", format(x$multiplier, digits = 15)),
-      paste("After switching (unrounded):", format(x$after_switching, digits = 15)),
-      paste("Expected losses, novel / standard:", paste(format_percent(x$losses), collapse = " / ")),
-      paste("Recruitment before rounding, novel / standard:", paste(format(x$unrounded_recruitment, digits = 15), collapse = " / ")),
-      paste("Equal recruitment per group:", x$per_group), paste("Recruitment total:", x$total),
-      paste("Expected outcomes available, novel / standard:", paste(round(x$expected_retained, 2), collapse = " / ")),
-      "Method: n / (1-a-b)^2 when applicable, then divide by each retained fraction; round up the larger requirement once and recruit that count in each group.",
-      "Assumptions: complete switching; comparable outcome distributions among recipients of the same treatment; little change in variance. Actual retention varies. Missing-data bias requires prevention and appropriate analysis.",
-      "Binary outcomes: recalculate with revised event probabilities in the two-proportion app. The switching multiplier is an approximation.",
-      "Procedure: recruitment_plan() in R/sample_size_functions.R; apps/dropout_adjustment/app.R.",
-      paste("Software:", R.version.string, "; Shiny", as.character(packageVersion("shiny"))),
-      "Source and version history: https://github.com/KataTam/sample-size-calculation/commits/main/apps/dropout_adjustment/app.R",
-      "Teaching materials: CC BY-SA 4.0 https://creativecommons.org/licenses/by-sa/4.0/ ; software: MIT https://opensource.org/license/mit",
-      "References: https://doi.org/10.1093/epirev/24.1.39 ; https://doi.org/10.1111/j.1541-0420.2008.01114.x ; https://www.fda.gov/media/148473/download",
-      "", "PREDICTION AND JUSTIFICATION", if (is.null(input$reasoning)) "" else input$reasoning), collapse = "\n")
+    labels <- c("Starting analyzable count", "After switching allowance", "After loss allowance", "Recruitment per group")
+    values <- c(x$starting, round(x$after_switching, 2), round(max(x$unrounded_recruitment), 2), x$per_group)
+    tags$ol(class = "app-steps", `aria-label` = "Recruitment calculation in four steps",
+      lapply(seq_along(values), function(i) tags$li(tags$span(class = "app-label", paste0(i, ". ", labels[i])), tags$span(class = "app-value", values[i]))))
   })
-  output$report <- downloadHandler(filename = function() "recruitment-adjustment-report.txt",
-    content = function(file) writeLines(report_text(), file, useBytes = TRUE))
+  method_text <- reactive({
+    x <- plan()
+    c(if (switching_applied()) paste0("Switching: ", x$starting, " / (1 - ", input$switch_novel, " - ", input$switch_standard,
+      ")² = ", round(x$after_switching, 3), " per group before rounding.") else paste0("Starting count: ", x$starting, " per group. No additional switching adjustment is applied."),
+      paste0("Loss allowance: ", round(x$after_switching, 3), " divided by each retained fraction (novel: ", 1-x$losses[1],
+        "; standard: ", 1-x$losses[2], "). The larger requirement is ", round(max(x$unrounded_recruitment), 3),
+        "; rounded upward to ", x$per_group, " in each group, ", x$total, " in total."))
+  })
+  output$worked_method <- renderUI(tags$div(class = "app-method", lapply(method_text(), tags$p)))
+  report_paragraphs <- reactive(c(method_text(),
+    paste0("Expected losses, novel / standard: ", paste(format_percent(plan()$losses), collapse = " / "),
+      ". Expected outcomes available, novel / standard: ", paste(round(plan()$expected_retained, 2), collapse = " / "), "."),
+    "The switching approximation assumes complete switching, comparable outcome distributions among recipients of the same treatment, and little change in variance. Actual retention varies. Missing outcomes need prevention and appropriate analysis.",
+    paste("Your explanation:", app_answer(input$reasoning)),
+    "Procedure: recruitment_plan() in R/sample_size_functions.R. References: Wittes (2002), doi:10.1093/epirev/24.1.39; Shardell and El-Kamary (2009), doi:10.1111/j.1541-0420.2008.01114.x; ICH E9(R1)."))
+  output$report_preview <- renderUI(app_report_body(report_paragraphs()))
+  output$report <- downloadHandler(filename = function() "recruitment-adjustment-report.html",
+    content = function(file) writeLines(app_report_document("Recruitment adjustment", "dropout_adjustment", report_paragraphs()), file, useBytes = TRUE))
   output$lab_scope <- renderUI({
     if (switching_applied() || isTRUE(input$different_losses))
       p("The lab link carries the starting analyzable count and outcome assumptions into a complete-outcome scenario. Treatment switching and unequal losses remain specific to this recruitment calculation.")

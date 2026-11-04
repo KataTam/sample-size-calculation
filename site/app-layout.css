@@ -1,0 +1,49 @@
+/* Shared presentation for the teaching apps. Original software: MIT. */
+html { font-size:16px; }
+body { font-family: system-ui,sans-serif; font-size:17px; line-height:1.55; color:#20343e; background:#fff; }
+.container-fluid { max-width:1600px; padding:18px; }
+h1,h2,h3,h4 { line-height:1.3; color:#20343e; }
+h2 { font-size:1.65rem; margin:0 0 12px; } h3 { font-size:1.35rem; margin:18px 0 12px; } h4 { font-size:1.1rem; }
+a { color:#17547b; text-decoration:underline; text-underline-offset:.15em; }
+.well { background:#f4f7fa; border:1px solid #b8cbd4; border-radius:8px; box-shadow:none; }
+.app-input-group { border-top:1px solid #b8cbd4; padding:12px 0 0; margin:14px 0 0; }
+.app-input-group:first-child { border-top:0; margin-top:0; padding-top:0; }
+.app-input-group > h3 { font-size:1.05rem; margin:0 0 12px; }
+.app-input-group > summary, details.activity-details > summary { padding:10px 6px; color:#20343e; }
+details { margin:12px 0; } summary { min-height:44px; cursor:pointer; }
+.app-advanced > summary { background:#e9def5; border-radius:5px; }
+.nav-tabs { display:flex; flex-wrap:wrap; gap:3px; border-bottom:1px solid #9cb5c7; margin-bottom:20px; }
+.nav-tabs > li { float:none; margin:0; }
+.nav-tabs > li > a { color:#17547b; border-radius:5px 5px 0 0; padding:10px 12px; text-decoration:none; min-height:44px; }
+.nav-tabs > li.active > a, .nav-tabs > li.active > a:focus, .nav-tabs > li.active > a:hover { background:#dcecfb; color:#20343e; border:1px solid #9cb5c7; border-bottom-color:#dcecfb; }
+.app-metrics { display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:12px; margin:12px 0 20px; }
+.app-metric { background:#dcecfb; border:1px solid #9cb5c7; border-radius:7px; padding:12px 16px; }
+.app-metric .app-value { display:block; font-size:1.65rem; line-height:1.3; }
+.app-metric .app-label { display:block; font-size:.9rem; margin-top:6px; }
+.app-overview { display:grid; grid-template-columns:minmax(0,2fr) minmax(220px,1fr); gap:20px; align-items:start; }
+.app-interpretation { background:#f4f7fa; border-left:4px solid #245e90; padding:12px 16px; border-radius:0 6px 6px 0; }
+.app-interpretation h3 { margin-top:0; }
+.app-note,.caption,.help-block { color:#415663; font-size:.9rem; } .caption { margin:8px 0 18px; }
+.app-steps { display:flex; flex-wrap:wrap; gap:12px; align-items:stretch; list-style:none; padding:0; margin:12px 0 20px; }
+.app-steps li { flex:1 1 145px; border:1px solid #9cb5c7; border-top:5px solid #245e90; border-radius:6px; padding:12px; background:#f4f7fa; }
+.app-steps .app-value { display:block; font-size:1.45rem; } .app-steps .app-label { display:block; font-size:.9rem; }
+.app-report { background:#f4f7fa; border:1px solid #b8cbd4; border-radius:7px; padding:18px; margin:16px 0; overflow-wrap:anywhere; }
+.app-report p { white-space:pre-wrap; } .app-report h3 { margin-top:0; }
+.app-method { background:#f4f7fa; padding:14px; border-left:4px solid #704a93; margin:14px 0; overflow-wrap:anywhere; }
+.app-comparison { border:1px solid #b8cbd4; border-radius:7px; padding:16px; margin:16px 0; }
+.app-footer { border-top:1px solid #b8cbd4; margin-top:24px; padding-top:14px; font-size:.9rem; }
+.btn,button,select,input.form-control { min-height:44px; }
+.btn-primary { background:#245e90; border-color:#245e90; color:#fff; }
+.btn-primary:hover,.btn-primary:focus { background:#18496f; border-color:#18496f; color:#fff; }
+textarea.form-control { font-size:1rem; line-height:1.55; }
+:focus-visible { outline:3px solid #a45115; outline-offset:3px; }
+.shiny-output-error-validation { color:#8a3410; background:#fff2d6; padding:10px; border-radius:5px; }
+.shiny-plot-output { max-width:100%; } .shiny-html-output,.shiny-table-output { overflow-x:auto; }
+table { font-size:.95rem; width:100%; } th,td { padding:8px; }
+.app-table caption { caption-side:top; color:#415663; text-align:left; }
+.app-table th { text-align:left; border-bottom:1px solid #9cb5c7; } .app-table td { border-bottom:1px solid #d8e1e8; }
+body :where(p,li,td,th,label,button,a,span,strong,b,code,pre,input,textarea,select) { font-weight:400; }
+body :where(h1,h2,h3,h4,summary,legend) :where(a,span,strong,b,code) { font-weight:inherit; }
+@media(max-width:1150px) { .app-overview { grid-template-columns:minmax(0,1fr); } }
+@media(max-width:767px) { .container-fluid { padding:15px; } .nav-tabs > li > a { padding:9px; } .app-metrics { gap:8px; } .well { padding:14px; } .app-metric { padding:10px; } }
+@media print { .nav-tabs,.well,.shiny-download-link { display:none; } .tab-content > .tab-pane { display:block; } .app-report { border:0; background:#fff; } }

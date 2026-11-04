@@ -30,10 +30,10 @@ check_recruitment <- function() {
     stopifnot(plan()$per_group == 106)
     session$setInputs(switching = TRUE)
     stopifnot(plan()$per_group == 146, grepl("292", output$result$html),
-      grepl("Evidence from comparable trials", report_text()), grepl("Shiny", report_text()))
+      any(grepl("Evidence from comparable trials", report_paragraphs())), grepl("Shiny", app_report_document("Report", "dropout_adjustment", report_paragraphs())))
     session$setInputs(starting_assumption = "included")
     stopifnot(plan()$per_group == 106, plan()$multiplier == 1,
-      grepl("already accounts", output$result$html), grepl("Applied switching, novel to standard: 0%", report_text()))
+      grepl("already accounts", output$result$html), any(grepl("No additional switching adjustment", report_paragraphs())))
     session$setInputs(starting_assumption = "full", switch_novel = .5, switch_standard = .5)
     rejects(plan())
     session$setInputs(switching = FALSE, n = 56, dropout = .20, different_losses = TRUE)

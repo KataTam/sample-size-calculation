@@ -62,7 +62,7 @@ Purpose: reproduce the binary-outcome sample size calculation. The calculator us
 Purpose: connect a preventive treatment question to event coding, recruitment feasibility and uncertain treatment benefit.
 
 1. The favorable event is remaining free of gestational diabetes: 80% without probiotics and 90% with probiotics. These correspond to disease percentages of 20% and 10%. The expected difference is 12 percentage points, target difference 10 and clinical threshold 5.
-2. In “Explore assumptions,” you can compare the planned count and 15% loss allowance with the recruitment limit of 240.
+2. In “Overview,” you can compare the planned count and 15% loss allowance with the recruitment limit of 240.
 3. With Settings open and advanced controls visible, “Custom effect or variability” lets you keep control at 80% but change the simulation's treatment probability to 85%. The original planning probabilities stay at 80% and 90%.
 4. “One study” gives a possible result; “Many studies” estimates power under the smaller 5-point true benefit at the original sample size. You should rerun after changing assumptions.
 5. Your explanation should distinguish a less favorable true population from a newly calculated study plan. These scenarios use hypothetical teaching assumptions.
@@ -85,7 +85,7 @@ Purpose: see how a target difference and between-patient variability determine a
 Purpose: connect a continuous-outcome calculation with the interpretation of a possible trial result.
 
 1. The hypothetical score has expected between-group improvement difference 4 units, target difference 3, clinical threshold 2 and common SD 5.
-2. “Explore assumptions” uses a pooled two-sample t-test plan with 90% target power. You can compare recruitment after 10% losses with the limit of 200.
+2. “Overview” uses a pooled two-sample t-test plan with 90% target power. You can compare recruitment after 10% losses with the limit of 200.
 3. In “One study,” a run generates independent normal improvement scores using the planning difference of 3 units. The observed difference and interval vary across simulated trials.
 4. You can compare the interval with zero and the 2-unit threshold. A statistically significant difference can still be too small to matter to patients.
 5. “Many studies” shows how often conclusions vary across repetitions. Each patient contributes one improvement score to the comparison of two independent treatment groups.
@@ -132,10 +132,10 @@ Purpose: connect the analyzable requirement to anticipated outcome losses and tr
 1. For the chronic-pain example, the starting analyzable requirement is 56 patients per group.
 2. At 10% expected loss, the result is 63 recruits per group, or 126 total. Comparing 0%, 10% and 20% losses keeps the starting requirement fixed.
 3. With different losses of 20% in the novel group and 10% in the standard group, equal recruitment uses 70 per group (140 total). This gives expected retained counts of 56 and 63. The tables explain why the recruitment counts remain equal.
-4. Your interpretation should consider actual retention and the reasons for missing outcomes. The collapsed activity question provides space for your prediction and justification, followed by a model answer.
+4. Your interpretation should consider actual retention and the reasons for missing outcomes. The collapsed activity question in “Report” provides space for your prediction and justification, followed by a model answer.
 5. For the optional advanced example, a starting count of 100 per group is assumed to require full adherence. With switching of 10% from novel to standard and 5% in the other direction, and 5% missing outcomes in each group, the approximate recruitment target is 146 per group. The intermediate values remain unrounded.
 6. Choosing “Expected switching is already included” applies no additional switching multiplier. For binary outcomes, you should use the revised event percentages in the [two-proportion app](../two_proportions/); the [tutorial's sensitivity example](../book/feasibility.html#treatment-switching) gives 57% and 31.5%.
-7. “Methods and report” explains the approximation and downloads the inputs, method, calculation and your justification. The lab link carries the starting analyzable sample into a complete-outcome scenario; switching and unequal losses remain specific to this recruitment calculation.
+7. “Methods and references” explains the approximation using the current values. “Report” previews your calculation and explanation and saves a readable HTML report. The lab link carries the starting analyzable sample into a complete-outcome scenario; switching and unequal losses remain specific to this recruitment calculation.
 
 ## Estimate a mean difference with a precision target — advanced
 
@@ -144,7 +144,7 @@ Purpose: connect the analyzable requirement to anticipated outcome losses and tr
 Purpose: extend the rehabilitation calculation to planning a useful confidence-interval width and compare that criterion with target power.
 
 1. The activity uses expected difference 4 units, target difference 3, common SD 5, clinical threshold 2 and target full interval width 4 units.
-2. “Explore assumptions” calculates the sample for the interval-width goal. You can compare it with the count for 80% target power by switching the planning goal.
+2. “Overview” shows the sample for the interval-width goal. You can compare it with the count for 80% target power by switching the planning goal.
 3. Returning to the precision goal, “One study” generates a realized interval. Realized interval widths vary.
 4. “Many studies” estimates the percentage meeting the full-width target. A full width of 4 corresponds to a margin of about 2 for a symmetric interval.
 5. Your justification should explain which interval widths would be useful and whether both power and precision requirements matter for the question.
@@ -158,7 +158,7 @@ Purpose: connect the precision needed for a descriptive decision with survey siz
 1. The example anticipates 20% prevalence and a 95% interval with full width 10 percentage points, equivalent to a margin of 5 points.
 2. The formula gives 246 completed observations. Reducing full width to 5 points, a margin of 2.5, requires about four times as many.
 3. The 50% conservative-planning option changes the probability used for sample size planning. The anticipated percentage remains the generating probability for the illustrative simulation.
-4. “Draw one illustrative sample” generates a binomial count and a Wilson interval. The realized interval width varies with the observed count.
+4. In “Explore assumptions,” “Draw one illustrative sample” generates a binomial count and a Wilson interval. The realized interval width varies with the observed count.
 5. Your explanation should distinguish interval precision from representativeness. Here, n is the total number of participants in the sample.
 
 ## Pilot study: retention — advanced
@@ -168,7 +168,7 @@ Purpose: connect the precision needed for a descriptive decision with survey siz
 Purpose: assess whether a limited pilot provides useful information for a feasibility decision.
 
 1. The starting goal is to assess a fixed sample of 40 participants with anticipated retention of 80%.
-2. “Draw one illustrative sample” generates a possible retained count and its Wilson interval. The simulated retention count varies around its expected value of 32.
+2. In “Explore assumptions,” “Draw one illustrative sample” generates a possible retained count and its Wilson interval. The simulated retention count varies around its expected value of 32.
 3. You can compare the illustrative result with a fixed sample of 80. More participants generally provide more information about retention, but obtaining them requires a feasible plan.
 4. Retained and non-retained participants both belong in the denominator when their status is known. Loss adjustment is appropriate only for participants whose outcome status itself cannot be established.
 5. Your report should relate the interval and its uncertainty to the prespecified feasibility decision.
@@ -180,7 +180,7 @@ Purpose: assess whether a limited pilot provides useful information for a feasib
 Purpose: distinguish relative changes from percentage-point differences and investigate planning close to 100%.
 
 1. The planning probabilities are 80% and 96% discharge: a 16-percentage-point target difference and a 20% relative increase. The separate expected difference is 18 points and clinical threshold 8.
-2. “Explore assumptions” calculates the sample for 80% power at a 5% Type I error probability, with no loss allowance in the prepared case.
+2. “Overview” shows the sample for 80% power at a 5% Type I error probability, with no loss allowance in the prepared case.
 3. “One study” shows possible discharge counts; “Many studies” estimates the planned test's power when one event probability is near 100%.
 4. A no-effect generating scenario checks false positives without changing the original sample size. Comparing simulation and planning results helps assess the approximation under these assumptions.
 5. Your explanation should identify the event, baseline and absolute difference. A time-to-discharge outcome would need a different method.
@@ -192,10 +192,10 @@ Purpose: distinguish relative changes from percentage-point differences and inve
 Purpose: bring together the clinical question, numerical requirements and practical constraints.
 
 1. In “My study,” you can describe the question, design, evidence, participant burden and resources. The numerical model supports two independent, equally sized groups. Other designs require calculations matched to their structure and analysis.
-2. For a supported design, you can select testing, interval-width planning or a fixed available sample and enter justified assumptions in “Explore assumptions.” Other designs require an appropriate external calculation.
+2. For a supported design, you can select testing, interval-width planning or a fixed available sample and enter justified assumptions in “Settings.” Other designs require an appropriate external calculation.
 3. The recruitment and cost inputs help assess feasibility. Actual recruitment and retention can vary from these expectations.
 4. For a supported design, “One study” and “Many studies” can examine possible results and performance. Sensitivity scenarios should change the assumed population while retaining the original plan when that is the question.
-5. In “Justify and communicate,” you can save inputs and explanations, download reproducible code or simulation results, and transfer the relevant findings into the assumptions report. A saved plan is distinct from saved simulation output.
+5. In “Report,” you can save inputs and explanations, download reproducible code or simulation results, and transfer the relevant findings into the assumptions report. A saved plan is distinct from saved simulation output.
 
 Teaching text: [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/). Original software code: [MIT](https://opensource.org/license/mit). Third-party attributions and exceptions remain applicable.
 

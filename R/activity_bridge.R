@@ -28,7 +28,7 @@ activity_guidance_script <- function() {
     paste(readLines(file, warn = FALSE, encoding = "UTF-8"), collapse = "\n")
   }
   paste0("(function(){const style=document.createElement('style');style.textContent=",
-    jsonlite::toJSON(read_asset("input-guidance.css"), auto_unbox = TRUE),
+    jsonlite::toJSON(paste(read_asset("app-layout.css"), read_asset("input-guidance.css")), auto_unbox = TRUE),
     ";document.head.append(style);})();\n", read_asset("input-guidance.js"))
 }
 activity_details <- function(title, ...) shiny::tags$details(class = "activity-details", shiny::tags$summary(title), ...)
@@ -61,7 +61,7 @@ validate_lab_inputs <- function(values, complete = TRUE) {
     stop("This plan contains unsupported lab inputs.", call. = FALSE)
   enums <- list(missing_mode = c("off", "complete", "equal", "differential", "selective"), outcome = c("means", "proportions"),
     goal = c("testing", "precision", "fixed"), reality = c("same", "null", "custom"),
-    stage = c("Explore assumptions", "One study", "Many studies", "My study", "Justify and communicate"))
+    stage = c("Explore assumptions", "Compare assumptions", "One study", "Many studies", "My study", "Justify and communicate", "Methods"))
   ranges <- list(missing_n = c(2, 100000), expected_m = c(-1e6, 1e6), expected_p = c(-1, 1),
     plan_delta = c(-1e6, 1e6), plan_sd = c(.1, 1e6),
     plan_p0 = c(.01, .99), plan_p1 = c(.01, .99), threshold_m = c(.1, 1e6),

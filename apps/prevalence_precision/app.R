@@ -3,6 +3,7 @@ source("../../R/sample_size_functions.R")
 source("../../R/teaching_cases.R")
 source("../../R/activity_bridge.R")
 source("../../R/model_answers.R")
+source("../../R/app_presentation.R")
 
 precision_defaults <- function() list(goal = "precision", anticipated_p = .20,
   full_width = .10, confidence = .95, unknown_p = FALSE, fixed_n = 246,
@@ -42,53 +43,51 @@ apply_precision_inputs <- function(session, values) {
 }
 
 ui <- fluidPage(
-  tags$head(tags$script(HTML(activity_bridge_script("prevalence_precision"))),
-    tags$script(HTML(activity_download_script())),
-    tags$style(HTML("body{font-size:17px;line-height:1.55}.well{background:#f4f7fa}.shiny-output-error-validation{color:#8a3410}"))),
-  titlePanel("Estimate one proportion with useful precision", windowTitle = "Estimate one proportion"),
-  p("Plan a prevalence survey or estimate a feasibility process such as retention. These are hypothetical independently sampled binary outcomes."),
+  tags$head(tags$script(HTML(activity_bridge_script("prevalence_precision"))), tags$script(HTML(activity_download_script()))),
+  titlePanel("Estimate one proportion", windowTitle = "Estimate one proportion"),
+  p("How precise would your estimate be? You can plan a population survey or examine retention in a feasibility study."),
   sidebarLayout(sidebarPanel(width = 4,
-    selectInput("case_id", "Teaching case", c("Prevalence survey" = "prevalence", "Pilot retention" = "pilot_feasibility")),
-    actionButton("load_case", "Load case assumptions"),
-    selectInput("goal", "Planning goal", c("Estimation with a target interval width" = "precision", "Assess an available sample" = "fixed")),
-    percent_slider("anticipated_p", "Anticipated percentage (%)", .001, .999, .20, step = .001),
-    checkboxInput("unknown_p", "No previous estimate: use 50% for conservative planning", FALSE),
-    activity_help("Using 50% gives the largest sample requirement under the usual single-proportion approximation, with the confidence level and absolute margin of error fixed.", for_input = "anticipated_p"),
-    percent_slider("full_width", "Target full confidence interval width (percentage points)", value = .10, min = .01, max = .50, step = .01, suffix = " percentage points"),
-    percent_slider("confidence", "Confidence level (%)", .80, .99, .95, step = .01),
-    conditionalPanel("input.goal == 'fixed'", numericInput("fixed_n", "Available participants for analysis (one sample)", 246, min = 1, max = 1e7, step = 1)),
-    percent_slider("dropout", "Expected loss or nonresponse (%)", 0, .80, 0, step = .01),
-    activity_help("When retention is the outcome, retained and non-retained participants belong in its denominator. Extra loss adjustment applies when the outcome status itself will be unavailable.", for_input = "dropout"),
-    tags$details(tags$summary("Reproducibility settings"), numericInput("seed", "Random seed", 20260942, min = 0, max = 2147483647, step = 1))),
-  mainPanel(width = 8,
-    tags$div(class="activity-context", h3(textOutput("case_title")), textOutput("case_prompt")), textOutput("bridge_status"),
-    h3("Your sample size plan"),
-    activity_details("Help with estimation and precision", p("Estimation uses the sample to estimate a population percentage. Precision describes uncertainty around that estimate; here it is assessed by confidence interval width. A narrower target width requires more participants under the same assumptions.")),
-    p("What do you expect to happen to sample size if the margin of error is halved?"),
-    tableOutput("plan_table"), textOutput("precision_text"), textOutput("approximation_note"),
-    p(class = "caption", "Table. Planning prevalence, requested margin of error, approximate analyzable counts and recruitment target."),
-    activity_details("Compare precision targets", plotOutput("sample_plot", height = "360px"),
-    p(class = "caption", "Figure. Approximate prevalence sample size across assumed percentages and confidence-interval margins. The dot marks the current plan."),
-    p("Both reference curves use 95% confidence and fixed absolute margins: ±5 versus ±2.5 percentage points. The dot and separate curve show your chosen confidence and width.")),
-    h3("One simulated confidence interval"),
-    actionButton("simulate", "Draw one illustrative sample", class = "btn-primary"),
-    p("The simulated sample uses the anticipated percentage as its assumed population probability. Choosing 50% for conservative planning changes the sample size calculation. The anticipated percentage remains the population assumption used for the simulation."),
-    textOutput("saved_status"), conditionalPanel("output.study_ready", tableOutput("study_table"),
-    p(class = "caption", "Table. Event count, observed percentage and Wilson confidence limits from one illustrative sample, with the realized width and target assessment."),
-    plotOutput("interval_plot", height = "220px"),
-    p(class = "caption", "Figure. One illustrative Wilson confidence interval compared with the assumed population percentage and requested width."),
-    p("Wilson intervals stay between 0% and 100%. Their realized width depends on the observed count. Recruitment inflation addresses expected numbers; selection and missing-data bias require attention to recruitment procedures and analysis.")),
-    activity_text_input("justification", "Why is your chosen interval width useful for this question?",
-      "The model answer updates with the selected example and current calculation inputs.",
-      "Your answer should connect the interval width to the decision the estimate will inform and the resources available. The example is guidance for your own justification.", rows = 5),
-    activity_download_button("download_plan", "Download assumptions and explanation"),
-    conditionalPanel("output.study_ready", activity_download_button("download_study", "Download realized interval and assumptions")),
-    tags$p(id = "download-status", role = "status", "aria-live" = "polite"),
-    tags$details(tags$summary("Calculation and sources"),
-      p("Approximate n = z² × p × (1 − p) / d², where d is the margin of error (half the interval width). Required n is rounded upward; recruitment is ceiling(n / (1 − loss)). All calculation functions and app code are included in the open source download."),
-      tags$ul(tags$li(tags$a(href = "https://www.who.int/docs/default-source/ncds/ncd-surveillance/steps/steps-manual.pdf", "WHO STEPS manual: sample planning and the conservative p = 0.50 choice.")),
-        tags$li(tags$a(href = "https://njl-admin.nihr.ac.uk/document/download/2023130", "NIHR: feasibility and pilot study guidance (archived).")),
-        tags$li(tags$a(href = "https://doi.org/10.1080/01621459.1927.10502953", "Wilson (1927): score confidence intervals.")))))))
+    app_input_group("Study assumptions",
+      selectInput("case_id", "Teaching case", c("Prevalence survey" = "prevalence", "Pilot retention" = "pilot_feasibility")),
+      actionButton("load_case", "Load case assumptions"),
+      selectInput("goal", "Planning goal", c("Estimation with a target interval width" = "precision", "Assess an available sample" = "fixed")),
+      percent_slider("anticipated_p", "Anticipated percentage (%)", .001, .999, .20, step = .001),
+      activity_help("This is the population percentage assumed for planning and simulation. The conservative-planning option uses 50% to calculate sample size while simulation retains your anticipated percentage.", for_input = "anticipated_p"),
+      conditionalPanel("input.goal == 'fixed'", numericInput("fixed_n", "Available participants for analysis", 246, min = 1, max = 1e7, step = 1))),
+    app_input_group("Precision target",
+      percent_slider("full_width", "Target full interval width (percentage points)", .01, .50, .10, step = .01, suffix = " percentage points"),
+      percent_slider("confidence", "Confidence level (%)", .80, .99, .95, step = .01)),
+    app_input_group("Planning options", advanced = TRUE, collapsed = TRUE,
+      checkboxInput("unknown_p", "Use 50% for conservative planning", FALSE),
+      percent_slider("dropout", "Expected loss or nonresponse (%)", 0, .80, 0, step = .01),
+      activity_help("When retention is the outcome, retained and non-retained participants belong in its denominator. Extra loss adjustment applies if the outcome status itself will be unavailable.", for_input = "dropout"),
+      tags$details(tags$summary("Reproducibility settings"), numericInput("seed", "Random seed", 20260942, min = 0, max = 2147483647, step = 1)))),
+  mainPanel(width = 8, textOutput("case_title"), textOutput("bridge_status"), tabsetPanel(id = "precision_view",
+    tabPanel("Overview", uiOutput("overview_metrics"),
+      app_overview(tagList(plotOutput("sample_plot", height = "360px"), p(class = "caption", "Figure. Sample size across anticipated percentages. Reference curves use 95% confidence and margins of 5 and 2.5 points; the separate curve uses your settings. The dot marks the required sample for the target width.")),
+        textOutput("precision_text")),
+      activity_details("Current assumptions and counts", tableOutput("plan_table"), textOutput("approximation_note"))),
+    tabPanel("Explore assumptions", h3("One simulated confidence interval"),
+      p("A simulated sample connects the population percentage to an estimate and confidence interval. The realized width can vary between samples."),
+      actionButton("simulate", "Draw one illustrative sample", class = "btn-primary"), textOutput("saved_status"),
+      conditionalPanel("output.study_ready", plotOutput("interval_plot", height = "260px"),
+        p(class = "caption", "Figure. The saved sample's Wilson interval and assumed population percentage."),
+        tableOutput("study_table"), p(class = "caption", "Table. Observed events, estimate, interval limits and whether the saved width meets its target.")),
+      activity_details("Planning and simulation assumptions", p("Conservative planning uses 50% to calculate sample size. The simulated outcomes use your anticipated percentage. Changing settings leaves the saved interval visible until you draw another sample."))),
+    tabPanel("Report",
+      activity_text_input("justification", "Why is your chosen interval width useful for this question?",
+        "The model answer updates with the selected example and current calculation inputs.",
+        "Your answer should connect precision to the decision the estimate will inform and the resources available.", rows = 5),
+      uiOutput("report_preview"), activity_download_button("download_plan", "Save report (HTML)"),
+      conditionalPanel("output.study_ready", activity_download_button("download_study", "Download saved interval (CSV)")),
+      p(id = "download-status", role = "status", `aria-live` = "polite")),
+    tabPanel("Methods and references", h3("Calculation with your current values"), uiOutput("worked_method"),
+      p("The normal approximation assumes independent sampling at a fixed absolute margin. Wilson intervals stay between 0% and 100%; their realized width depends on the observed count. Clustering and finite-population sampling need additional methods."),
+      p(tags$a(href = "https://www.who.int/docs/default-source/ncds/ncd-surveillance/steps/steps-manual.pdf", target = "_blank", rel = "noopener", "WHO STEPS manual"), " · ",
+        tags$a(href = "https://doi.org/10.1080/01621459.1927.10502953", target = "_blank", rel = "noopener", "Wilson (1927)"), " · ",
+        tags$a(href = "https://njl-admin.nihr.ac.uk/document/download/2023130", target = "_blank", rel = "noopener", "NIHR pilot and feasibility guidance")),
+      app_citation("Estimate one proportion", "prevalence_precision")))))
+)
 
 server <- function(input, output, session) {
   safe <- function(expr) tryCatch(expr, error = function(e) validate(need(FALSE, conditionMessage(e))))
@@ -149,7 +148,7 @@ server <- function(input, output, session) {
     p <- plan(); x <- snapshot()
     paste0("This is one sample, so n is a total count. The requested full width is ",
       100*p$full_width, " percentage points (margin ±", 100*p$half_width, "). ",
-      if (x$goal == "fixed") "Available n is fixed; compare its precision with the target before justifying the plan."
+      if (x$goal == "fixed") "The available sample is fixed. Its approximate width is shown in the summary for comparison with the target."
       else "Halving the margin multiplies the unrounded normal-approximation requirement by four.")
   })
   output$approximation_note <- renderText({
@@ -157,11 +156,12 @@ server <- function(input, output, session) {
     sparse <- min(n*p$planning_p, n*(1-p$planning_p)) < 10
     paste("The planned n is an approximation for independent sampling at a fixed absolute margin.",
       if (sparse) "Few expected events or non-events make this approximation less reliable. Rare outcomes require particular care and a justified binomial precision analysis."
-      else "Check expected counts, sampling design and the assumptions for your actual study.",
+      else "Expected counts and sampling assumptions should reflect the intended study.",
       "Clustering, finite-population sampling and diagnostic-test error require additional methods.")
   })
   output$sample_plot <- renderPlot({
     x <- snapshot(); ps <- seq(.001, .999, length.out = 201)
+    par(cex.axis = 1.1, cex.lab = 1.1)
     ns <- function(width, confidence) ceiling(qnorm((1+confidence)/2)^2 * ps*(1-ps)/(width/2)^2)
     y1 <- ns(.10, .95); y2 <- ns(.05, .95); current <- ns(x$full_width, x$confidence)
     plot(ps*100, y2, type = "l", lwd = 2, col = "#a34724", ylim = c(0,max(y1,y2,current)),
@@ -170,7 +170,7 @@ server <- function(input, output, session) {
     lines(ps*100, current, col = "#635493", lwd = 2, lty = 3)
     points(plan()$planning_p*100, plan()$n, pch = 19, col = "#635493")
     legend("topright", c("95% confidence; ±2.5 points", "95% confidence; ±5 points", "Your confidence and margin"),
-      col = c("#a34724", "#176675", "#635493"), lty = 1:3, lwd = 2, cex = .78, bg = "white")
+      col = c("#a34724", "#176675", "#635493"), lty = 1:3, lwd = 2, cex = .9, bg = "white")
   }, alt = "Required analyzable sample size versus assumed proportion. The largest requirement is near 50%; halving the margin approximately quadruples the requirement. Current values are in the table.")
   study <- eventReactive(input$simulate, {
     x <- snapshot(); y <- simulate_proportion_study(analysable_n(), x$anticipated_p, x$confidence, x$seed)
@@ -202,11 +202,39 @@ server <- function(input, output, session) {
     abline(v = y$p*100, lty = 2, col = "#a34724")
     legend("topright", "Population percentage assumed for simulation", lty = 2, col = "#a34724", bty = "n", cex = .8)
   }, alt = "Saved one-sample Wilson interval; observed events, estimate and limits are supplied in the table.")
-  output$download_plan <- downloadHandler(filename = function() "proportion_precision_plan.txt", content = function(file) {
-    writeLines(c("Single proportion: planning assumptions", capture.output(dput(snapshot())),
-      "Approximate sample size plan for estimation with a precision target", capture.output(dput(plan())),
-      paste("Current participants for analysis:", analysable_n()), "Learner explanation:", input$justification,
-      "Realized interval widths vary with the observed count. Sampling bias requires attention to recruitment procedures and analysis."), file)
+  overview_values <- reactive({
+    x <- snapshot(); n <- analysable_n(); p <- plan()
+    width <- 2*qnorm((1+x$confidence)/2)*sqrt(p$planning_p*(1-p$planning_p)/n)
+    c("Current analyzable total" = n, "Approximate full width" = paste0(round(100*width, 1), " points"), "Recruitment total" = adjust_for_dropout(n, x$dropout))
+  })
+  output$overview_metrics <- renderUI(app_metrics(overview_values()))
+  method_text <- reactive({
+    x <- snapshot(); p <- plan(); z <- qnorm((1+x$confidence)/2)
+    paste0("n = z² × p × (1 - p) / margin² = ", round(z, 4), "² × ", p$planning_p,
+      " × ", 1-p$planning_p, " / ", p$half_width, "². Rounding upward gives ", p$n,
+      " participants for the target width. The current analyzable count is ", analysable_n(),
+      "; recruitment = ceiling(", analysable_n(), " / ", 1-x$dropout, ") = ", adjust_for_dropout(analysable_n(), x$dropout), ".")
+  })
+  output$worked_method <- renderUI(tags$div(class = "app-method", p(method_text())))
+  report_paragraphs <- reactive({
+    x <- snapshot()
+    c(paste0(teaching_case(active_case())$title, ". Planning goal: ", if (x$goal == "fixed") "assess the available sample." else "estimate with a target interval width."),
+      paste0("Anticipated percentage: ", format_percent(x$anticipated_p), "; percentage used for planning: ", format_percent(plan()$planning_p),
+        ". Confidence: ", format_percent(x$confidence), "; target full width: ", 100*x$full_width, " percentage points."),
+      method_text(),
+      paste0("Approximate full width at the current sample: ", overview_values()[["Approximate full width"]], ". Realized confidence interval widths vary between samples."),
+      if (isTRUE(input$simulate > 0)) {
+        y <- study(); r <- y$result
+        paste0("Saved sample: ", r$events, " events among ", r$n, "; estimated percentage ", format_percent(r$estimate, 1),
+          ", interval ", format_percent(r$lower, 1), " to ", format_percent(r$upper, 1), " at ", format_percent(y$confidence), " confidence. Generating probability: ", y$p, "; random seed: ", y$inputs$seed, ". ",
+          if (!identical(y$inputs, x)) "This saved sample uses earlier inputs." else "This sample uses the current inputs.")
+      },
+      paste("Your explanation:", app_answer(input$justification)),
+      "Procedure: proportion_precision_plan(); simulated intervals: single_proportion_interval(), Wilson method. Independent binary outcomes; clustering and selection or missing-data bias require attention to the design and analysis.")
+  })
+  output$report_preview <- renderUI(app_report_body(report_paragraphs()))
+  output$download_plan <- downloadHandler(filename = function() "proportion-precision-report.html", content = function(file) {
+    writeLines(app_report_document("Estimate one proportion", "prevalence_precision", report_paragraphs()), file, useBytes = TRUE)
   })
   output$download_study <- downloadHandler(filename = function() "proportion_realised_interval.csv", content = function(file) {
     y <- study(); r <- y$result

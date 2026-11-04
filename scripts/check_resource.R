@@ -144,6 +144,8 @@ check_resource <- function(render_module = FALSE) {
   check_recruitment()
   source("scripts/check_model_answers.R", local = TRUE)
   check_model_answers()
+  source("scripts/check_app_presentation.R", local = TRUE)
+  check_app_presentation()
   say("All checks passed.")
   invisible(TRUE)
 }
