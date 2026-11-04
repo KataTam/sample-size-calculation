@@ -114,23 +114,27 @@ def build():
     core = packages['sample-size-core']
     combined = packages['sample-size-core-and-advanced']
     assert core.items() <= combined.items(), 'Core notes must retain GUIDs and content in the combined package'
-    review = ['# Sample size flashcards: all cards', '',
-              'These cards summarize the tutorial. Numerical examples are hypothetical. '
-              'Each question links to its explanation; the linked chapter supplies the supporting references.', '',
-              '[Downloads and import instructions](index.md)', '',
-              'Katalin Tamási. Teaching content: [CC BY-SA 4.0](' + LICENSE + '). '
-              'Original build software: [MIT](https://opensource.org/license/mit).', '']
+    review = ['# Flashcard preview', '',
+              '<nav class="app-navigation" aria-label="Flashcard resources"><a href="index.md">Downloads and import instructions</a><a href="../../book/">Tutorial</a></nav>', '',
+              'The question-and-answer cards summarize the tutorial. Each question links to its explanation and supporting references. Numerical examples are hypothetical.', '',
+              '<div id="flashcard-controls" class="app-panel" hidden>',
+              '<div class="app-controls">',
+              '<div><label for="flashcard-route">Level</label><select id="flashcard-route"><option value="all">Core + advanced</option><option value="core">Core</option><option value="advanced">Advanced</option></select><div class="input-guidance-source" data-for="flashcard-route">Core covers basic study planning and calculations. Advanced adds further methods and study designs. The filter changes this preview; each download keeps the deck named on its link.</div></div>',
+              '<div class="search-control"><label for="flashcard-search">Search questions and answers</label><input id="flashcard-search" type="search" autocomplete="off"><div class="input-guidance-source" data-for="flashcard-search">Search matches words in either column within the selected level. Each matching row contains all the words you enter.</div></div>',
+              '<button type="button" class="secondary" id="clear-search">Clear search</button></div>',
+              '<p id="flashcard-count" role="status" aria-live="polite"></p></div>', '',
+              '<p id="flashcard-empty" hidden>No cards match this search and level. You can try a shorter search or choose another level.</p>', '']
     counts = Counter(c['level'] for c in cards)
     for level in ('core', 'advanced'):
-        review += ['## ' + level.capitalize() + ' (' + str(counts[level]) + ' cards)', '']
-        review += ['| Question | Answer |', '|---|---|']
+        review += [f'<section class="flashcard-level" data-level="{level}" aria-labelledby="{level}-{counts[level]}-cards">',
+                   f'<h2 id="{level}-{counts[level]}-cards">{level.capitalize()} <span class="level-count">({counts[level]} cards)</span></h2>',
+                   '<table><caption>' + level.capitalize() + ' questions and answers</caption><thead><tr><th scope="col">Question</th><th scope="col">Answer</th></tr></thead><tbody>']
         for c in cards:
             if c['level'] != level:
                 continue
-            question = c['front'].replace('|', '&#124;')
-            answer = c['back'].replace('|', '&#124;')
-            review += ['| [' + question + '](' + c['source'] + ') | ' + answer + ' |']
-        review += ['']
+            review += [f'<tr data-card="{escape(c["id"], quote=True)}"><td><a href="{escape(c["source"], quote=True)}">{escape(c["front"])}</a></td><td>{escape(c["back"])}</td></tr>']
+        review += ['</tbody></table></section>', '']
+    review += ['<footer><p>Katalin Tamási. Teaching content: <a href="' + LICENSE + '">CC BY-SA 4.0</a>. Original software: <a href="https://opensource.org/license/mit">MIT</a>.</p></footer>', '']
     (OUT / 'cards.md').write_text('\n'.join(review), encoding='utf-8')
     print(f"Built and checked {len(cards)} cards: {counts['core']} core and {counts['advanced']} advanced; two Anki and two Quizlet imports.")
 

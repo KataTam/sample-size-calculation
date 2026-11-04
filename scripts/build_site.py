@@ -94,12 +94,13 @@ for name in ["README.md", "CONTRIBUTING.md", "LICENSE", "LICENSE-code.md", "CITA
 shutil.copy2(ROOT / "module/references.bib", SITE / "module/references.bib")
 shutil.copy2(ROOT / "site/styles.css", SITE / "styles.css")
 shutil.copy2(ROOT / "site/link-behavior.js", SITE / "link-behavior.js")
-for name in ("input-guidance.js", "input-guidance.css", "app-layout.css"):
+for name in ("input-guidance.js", "input-guidance.css", "app-layout.css", "learning-layout.css"):
     shutil.copy2(ROOT / "site" / name, SITE / name)
 shutil.copytree(ROOT / "site/study", SITE / "study")
 shutil.copytree(ROOT / "site/assumptions_report", SITE / "assumptions_report")
 shutil.copytree(ROOT / "site/design_questionnaire", SITE / "design_questionnaire")
 shutil.copytree(ROOT / "site/quiz", SITE / "quiz")
+shutil.copytree(ROOT / "site/flashcards", SITE / "flashcards")
 (SITE / ".nojekyll").touch()
 
 # The lesson and apps use one registry, including the same seed and replications.
@@ -142,6 +143,11 @@ def page(source, target):
         "--metadata", "pagetitle=" + title, "--metadata", "lang=en", "--css", css, "--mathjax", "--output", str(target)],
         input=guide_text, text=True, encoding="utf-8", check=True)
     text = target.read_text(encoding="utf-8")
+    if source.name == "cards.md" and source.parent.name == "flashcards":
+        assets = '<link rel="stylesheet" href="../../app-layout.css"><link rel="stylesheet" href="../../learning-layout.css"><link rel="stylesheet" href="../../flashcards/preview.css"><link rel="stylesheet" href="../../input-guidance.css"><script src="../../input-guidance.js" defer></script><script src="../../flashcards/preview.js" defer></script>'
+        text = text.replace('</head>', assets + '</head>').replace('<body>', '<body class="learning-app flashcard-preview">')
+        text = text.replace('<body class="learning-app flashcard-preview">', '<body class="learning-app flashcard-preview"><a class="skip-link" href="#flashcard-main">Skip to flashcards</a><main id="flashcard-main" tabindex="-1">')
+        text = text.replace("</body>", "</main></body>")
     if source.name == "study-design-guide.md":
         text = re.sub(r'(<div class="sourceCode"[^>]*>.*?</div>)',
                       r'<details class="r-code-output"><summary>R code</summary>\1</details>', text, flags=re.S)

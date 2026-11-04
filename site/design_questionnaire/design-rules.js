@@ -33,7 +33,7 @@ function relevant(field,a){
  return scope.includes(a.aim);
 }
 const links={
- chapter:['Chapter 8: design and planning guidance','../book/study-designs.html'],
+ chapter:['Study-design guide','../book/study-designs.html'],
  report:['Develop and justify your study plan','../study/?activity=assumptions_report'],
  binary:['Two independent groups: binary outcome','../two_proportions/'],
  means:['Two independent groups: continuous outcome','../two_means/'],

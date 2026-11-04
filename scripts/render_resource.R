@@ -16,6 +16,8 @@ render_resource <- function(include_pdf = TRUE) {
   cat(paste0('<script type="application/json" id="moved-section-data">', moved_json,
     '</script>\n<script type="application/json" id="activity-menu-data">', menu_json,
     '</script>\n<script>', reading_js, '</script>'), file = "module/glossary-support.html", append = TRUE)
+  quiz_css <- paste(readLines("site/quiz/quiz-content.css", encoding = "UTF-8"), collapse = "\n")
+  cat(paste0("<style>", quiz_css, "</style>"), file = "module/glossary-support.html", append = TRUE)
   quiz_js <- paste(readLines("module/chapter-quiz.js", encoding = "UTF-8"), collapse = "\n")
   cat(paste0('<script>', quiz_js, '</script>'), file = "module/glossary-support.html", append = TRUE)
   accessibility_js <- paste(readLines("module/accessibility.js", encoding = "UTF-8"), collapse = "\n")

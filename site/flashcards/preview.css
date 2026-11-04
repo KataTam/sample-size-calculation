@@ -1,0 +1,18 @@
+.learning-app.flashcard-preview { max-width:1180px; }
+.flashcard-preview #title-block-header { display:none; }
+.flashcard-preview h1 { margin-bottom:12px; }
+.flashcard-preview .app-controls .search-control { flex:2 1 260px; }
+.flashcard-preview #flashcard-count { margin:0; color:#415663; }
+.flashcard-preview .flashcard-level { margin:30px 0; }
+.flashcard-preview .flashcard-level h2 { padding:14px 18px; border-radius:6px; background:#dcecfb; margin-bottom:0; }
+.flashcard-preview .flashcard-level[data-level=advanced] h2 { background:#e9def5; }
+.flashcard-preview table { display:table; width:100%; table-layout:fixed; border-collapse:collapse; font-size:1rem; }
+.flashcard-preview th, .flashcard-preview td { padding:16px; border-bottom:1px solid #b8cbd4; vertical-align:top; overflow-wrap:anywhere; text-align:left; }
+.flashcard-preview th:first-child,.flashcard-preview td:first-child { width:42%; }
+.flashcard-preview thead th { position:sticky; top:0; background:#f4f7fa; color:#20343e; z-index:1; }
+.flashcard-preview tbody tr:nth-child(even) { background:#f4f7fa; }
+.flashcard-preview caption { text-align:left; padding:10px 0; color:#415663; font-size:.9rem; }
+.flashcard-preview .level-count { font-size:.85em; }
+.flashcard-preview #flashcard-empty { padding:16px; background:#fff2d6; border-radius:6px; }
+@media(max-width:550px) { .flashcard-preview th,.flashcard-preview td { padding:12px 8px; } }
+@media print { .flashcard-preview thead th { position:static; } .flashcard-preview tr { break-inside:avoid; } .flashcard-preview #flashcard-count,.flashcard-preview #flashcard-empty { display:none; } }

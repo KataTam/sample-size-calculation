@@ -96,6 +96,7 @@ let browser;
   await page.setContent(html, {waitUntil:'load'});
   await page.evaluate(async () => {
     document.querySelectorAll('.chapter-quiz').forEach(root => {
+      root.querySelectorAll('.quiz-help').forEach(el=>el.remove());
       root.querySelector('form').hidden = false;
       root.querySelector('.quiz-results').hidden = true;
       root.querySelector('.quiz-answer-key').hidden = false;

@@ -16,7 +16,9 @@
       const questions = [...form.querySelectorAll('fieldset')], answers = [...key.querySelectorAll('.quiz-answer')];
       let active = [], missed = [];
       function updateProgress() {
-        root.querySelector('.quiz-progress').textContent = `${active.filter(q => q.querySelector('input:checked')).length} of ${active.length} answered`;
+        const answered=active.filter(q => q.querySelector('input:checked')).length;
+        root.querySelector('.quiz-progress').textContent = `${answered} of ${active.length} answered`;
+        const bar=root.querySelector('.quiz-progress-bar');bar.max=active.length;bar.value=answered;
       }
       function begin(subset) {
         active = subset;
@@ -26,7 +28,7 @@
           q.querySelectorAll('input').forEach(input => { input.disabled = !selected; });
           if (selected) q.querySelector('.quiz-number').textContent = active.indexOf(q) + 1;
         });
-        answers.forEach(answer => { answer.hidden = true; answer.querySelector('.quiz-choice').textContent = ''; });
+        answers.forEach(answer => { answer.hidden = true; answer.open=false;answer.querySelector('.quiz-choice').textContent = '';answer.querySelector('.quiz-answer-status').textContent=''; });
         updateProgress();
       }
       function reset() {
@@ -43,7 +45,8 @@
           const chosen = q.querySelector('input:checked'), correct = chosen.value === q.dataset.answer;
           if (!correct) missed.push(q);
           const answer = answers.find(a => a.dataset.question === q.dataset.question);
-          answer.hidden = false; answer.classList.toggle('quiz-incorrect', !correct);
+          answer.hidden = false; answer.open=!correct;answer.classList.toggle('quiz-incorrect', !correct);
+          answer.querySelector('.quiz-answer-status').textContent=correct?'Correct':'Needs review';
           answer.querySelector('.quiz-number').textContent = i + 1;
           answer.querySelector('.quiz-choice').textContent = `${correct ? 'Correct' : 'Incorrect'}. Your answer: ${chosen.nextElementSibling.textContent}`;
           const topic = q.dataset.topic;
@@ -56,9 +59,12 @@
         root.querySelector('.quiz-retry').hidden = missed.length === 0;
         const breakdown = root.querySelector('.quiz-topics'); breakdown.replaceChildren();
         if (root.id === 'quiz-all') {
-          const list = document.createElement('ul');
-          topics.forEach(item => { const li = document.createElement('li'); li.textContent = `${item.label}: ${item.correct} / ${item.total}`; list.append(li); });
-          breakdown.append(list);
+          const table=document.createElement('table'),caption=document.createElement('caption');caption.textContent='Results by topic';table.append(caption);
+          const head=document.createElement('thead'),row=document.createElement('tr');
+          for(const text of ['Topic','Correct']){const cell=document.createElement('th');cell.scope='col';cell.textContent=text;row.append(cell)}head.append(row);table.append(head);
+          const body=document.createElement('tbody');
+          topics.forEach(item=>{const row=document.createElement('tr'),topic=document.createElement('th'),score=document.createElement('td');topic.scope='row';topic.textContent=item.label;score.textContent=`${item.correct} / ${item.total}`;row.append(topic,score);body.append(row)});
+          table.append(body);breakdown.append(table);
         }
         score.focus();
       });

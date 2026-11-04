@@ -3,35 +3,39 @@
 <head>
   <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
   <title>Test your understanding — sample size quiz</title>
-  <link rel="stylesheet" href="quiz.css"><script src="quiz.js" defer></script>
+  <link rel="stylesheet" href="../app-layout.css"><link rel="stylesheet" href="../learning-layout.css"><link rel="stylesheet" href="quiz-content.css"><link rel="stylesheet" href="quiz.css"><link rel="stylesheet" href="../input-guidance.css"><script src="../input-guidance.js" defer></script><script src="quiz.js" defer></script>
 </head>
-<body>
-<main>
-  <nav aria-label="Tutorial"><a href="../book/exercises.html" target="_blank" rel="noopener">Test your understanding</a> · <a href="../book/index.html" target="_blank" rel="noopener">Tutorial</a></nav>
+<body class="learning-app">
+<a class="skip-link" href="#setup-title">Skip to quiz setup</a>
+<main class="quiz-surface">
+  <nav class="app-navigation" aria-label="Tutorial"><a href="../book/exercises.html" target="_blank" rel="noopener">Test your understanding</a> <a href="../book/index.html" target="_blank" rel="noopener">Tutorial</a></nav>
   <h1>Test your understanding</h1>
-  <section id="setup" aria-labelledby="setup-title">
-    <h2 id="setup-title">Choose your check</h2>
-    <label>Coverage<select id="chapter"><option value="all">Cumulative quiz</option></select></label>
-    <label>Route<select id="route"><option value="core">Core</option><option value="all">Core + advanced</option></select></label>
+  <section class="app-panel" id="setup" aria-labelledby="setup-title">
+    <h2 id="setup-title" tabindex="-1">Choose your check</h2>
+    <div class="app-controls">
+      <div><label for="chapter">Coverage</label><select id="chapter"><option value="all">Cumulative quiz</option></select><div class="input-guidance-source" data-for="chapter">A chapter check revisits one chapter. The cumulative quiz draws on the teaching chapters you have studied; feedback links to the relevant explanations.</div></div>
+      <div><label for="route">Route</label><select id="route"><option value="core">Core</option><option value="all">Core + advanced</option></select><div class="input-guidance-source" data-for="route">Core covers the basic planning route, including reproducibility. Core + advanced adds simulation, other study designs and further methods.</div></div>
+    </div>
     <p id="coverage" aria-live="polite"></p>
+    <details class="topic-coverage"><summary>Topics included</summary><ul id="coverage-topics"></ul></details>
     <button id="start" type="button" disabled>Start</button>
-    <p>The cumulative quiz includes reproducibility and, in the advanced route, study designs and simulation. It is intended for use after the relevant teaching chapters. The glossary and common misconceptions are revision resources.</p>
   </section>
+  <details class="quiz-help"><summary>Quiz help</summary><p>Each question has one best answer. You can revise your choices before selecting “View results.” Explanations and links appear with the results; missed questions can be retried.</p></details>
   <p id="status" role="status">Loading questions…</p>
   <form id="quiz" hidden>
     <h2 id="quiz-title" tabindex="-1"></h2>
-    <p id="progress" aria-live="polite"></p>
+    <div class="quiz-progress-row quiz-controls"><p id="progress" aria-live="polite"></p><progress id="quiz-progress-bar" aria-label="Questions answered" value="0" max="1"></progress></div>
     <div id="questions"></div>
-    <button type="submit">View results</button>
+    <button type="submit" class="quiz-controls">View results</button>
   </form>
   <section id="results" aria-labelledby="results-title" hidden>
     <h2 id="results-title" tabindex="-1">Your results</h2>
-    <p id="score"></p>
+    <p class="quiz-score" id="score"></p>
     <p>This is a self-assessment. The topic breakdown can help you decide what to revisit.</p>
     <table><caption>Results by topic</caption><thead><tr><th scope="col">Topic</th><th scope="col">Correct</th></tr></thead><tbody id="topics"></tbody></table>
     <div id="review"></div>
-    <button id="retry" type="button">Retry missed questions</button>
-    <button id="again" type="button">Choose another check</button>
+    <div class="quiz-actions"><button id="retry" type="button">Retry missed questions</button>
+    <button id="again" class="secondary" type="button">Choose another check</button></div>
   </section>
   <noscript><p>The interactive quiz requires JavaScript. Printable questions and explanations are available in <a href="../book/exercises.html">Test your understanding</a>.</p></noscript>
   <footer><p>Your responses stay in this page and are cleared when it is reloaded. No responses are submitted to a server.</p>

@@ -1,0 +1,29 @@
+/* Shared layout for the questionnaire, quiz and card preview. Original code: MIT. */
+.learning-app { box-sizing:border-box; max-width:1280px; margin:0 auto; padding:24px; }
+.learning-app *, .learning-app *::before, .learning-app *::after { box-sizing:border-box; }
+.learning-app h1 { font-size:1.85rem; margin:12px 0; }
+.learning-app h2 { font-size:1.35rem; margin:0 0 14px; }
+.learning-app h3 { font-size:1.12rem; }
+.learning-app p { max-width:75ch; }
+.learning-app .app-header { margin-bottom:24px; }
+.learning-app .app-navigation { display:flex; gap:8px 22px; flex-wrap:wrap; font-size:.94rem; margin-bottom:16px; }
+.learning-app .app-panel { padding:22px; border:1px solid #b8cbd4; border-radius:8px; background:#f4f7fa; min-width:0; }
+.learning-app .app-controls { display:flex; gap:16px 24px; flex-wrap:wrap; align-items:end; margin:16px 0; }
+.learning-app .app-controls > div { flex:1 1 220px; min-width:0; }
+.learning-app label { display:block; margin-bottom:6px; }
+.learning-app select, .learning-app input[type=search] { display:block; width:100%; min-height:44px; font:inherit; line-height:1.5; padding:9px 12px; border:1px solid #819ba8; border-radius:5px; color:#20343e; background:#fff; }
+.learning-app .app-actions { display:flex; flex-wrap:wrap; gap:10px; align-items:center; margin-top:20px; }
+.learning-app button:not(.input-question) { min-height:44px; font:inherit; padding:10px 16px; border:1px solid #245e90; border-radius:5px; color:#fff; background:#245e90; cursor:pointer; }
+.learning-app button.secondary { color:#17547b; background:#fff; }
+.learning-app button:disabled { background:#e4e9ee; color:#526574; border-color:#819ba8; cursor:default; }
+.learning-app .app-help { border:1px solid #b8cbd4; background:#f4f7fa; padding:0 14px; border-radius:6px; }
+.learning-app .app-help > summary { padding:10px 0; }
+.learning-app .app-note { color:#415663; }
+.learning-app .app-progress { display:flex; align-items:center; flex-wrap:wrap; gap:8px 18px; margin:12px 0 22px; }
+.learning-app progress { width:min(220px,100%); height:12px; accent-color:#245e90; }
+.learning-app footer { border-top:1px solid #b8cbd4; margin-top:28px; padding-top:16px; font-size:.9rem; }
+.learning-app [hidden] { display:none !important; }
+.learning-app .skip-link { position:fixed; top:-100px; left:12px; z-index:10001; padding:12px; background:#fff; }
+.learning-app .skip-link:focus { top:8px; }
+@media(max-width:650px) { .learning-app { padding:16px; } .learning-app .app-panel { padding:16px; } .learning-app h1 { font-size:1.65rem; } }
+@media print { .learning-app { max-width:none; padding:0; } .learning-app .app-navigation, .learning-app .app-controls, .learning-app .app-actions, .learning-app .app-help { display:none; } }

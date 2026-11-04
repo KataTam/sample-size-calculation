@@ -7,7 +7,7 @@ Short question-and-answer cards accompany the tutorial. Core covers the basic pl
 | Anki | [Download Core deck](sample-size-core.apkg) | [Download Core + Advanced deck](sample-size-core-and-advanced.apkg) |
 | Quizlet | [Download Core import text](sample-size-core-quizlet.txt) | [Download Core + Advanced import text](sample-size-core-and-advanced-quizlet.txt) |
 
-[Preview all questions and answers](cards.md).
+[Preview questions and answers](cards.md) in a table. You can filter by level or search both columns; each question links to its tutorial explanation.
 
 ## Try the Anki Core deck
 

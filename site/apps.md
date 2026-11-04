@@ -32,6 +32,11 @@ The calculation apps use four views: “Overview” for the main result, “Expl
 
 The reasoning lab has core and advanced activities. Core activities start with advanced controls closed; “Settings” provides the other assumptions. Question help is available by hover, keyboard focus or tap. Gray model answers in written-response fields illustrate how to explain a decision; reports use your own entries. The [activity walkthroughs](student-materials/activity-walkthroughs.html) provide guidance for each one, including pilot retention, precision and recruitment scenarios.
 
+## Review and practice
+
+- [Quizzes](quiz/): chapter checks and a cumulative quiz, with a Core or Core + advanced route. Results link to the relevant explanations; missed questions can be retried. Chapter checks are also embedded in the [tutorial](book/).
+- [Flashcard preview](student-materials/flashcards/cards.md): a question-and-answer table with level filtering and search. [Anki and Quizlet downloads](student-materials/flashcards/index.md) are available for review outside the tutorial.
+
 ## Tutorial beside the app
 
 Activity links open the tutorial and app together. You can drag the divider to adjust their widths, or use its Left and Right arrow keys. “Close app panel” returns to the tutorial at full width. “Tutorial + app” reopens the app with your current entries and results retained while the page stays open. On narrow screens, “Tutorial” and “App” switch between full-width panels.
