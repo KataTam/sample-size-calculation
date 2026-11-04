@@ -15,7 +15,7 @@ The study design and planning method should follow the research question, outcom
 
 This chapter offers optional branches for questions beyond the basic two-independent-group calculation. The questionnaire provides a starting point; the sections cover dependent observations, precision-based planning, existing data, pilot studies and rare-disease constraints. You can consult the branch relevant to your study.
 
-## Activity: Which study design fits your question? {#design-questionnaire .advanced-heading}
+## Activity: Choosing a study design {#design-questionnaire .advanced-heading}
 
 [Open the study-design questionnaire with this chapter](https://katatam.github.io/sample-size-calculation/study/?activity=design_questionnaire).
 

@@ -199,7 +199,7 @@ Purpose: bring together the clinical question, numerical requirements and practi
 
 Teaching text: [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/). Original software code: [MIT](https://opensource.org/license/mit). Third-party attributions and exceptions remain applicable.
 
-## Which study design fits your question? — advanced
+## Choosing a study design — advanced
 
 [Open questionnaire](../study/?activity=design_questionnaire) · [Matching explanation](../book/study-designs.html#design-questionnaire)
 

@@ -26,7 +26,7 @@ Apps are interactive software. Activities provide questions and exercises to hel
 
 - [Type I and Type II error probabilities and power](sampling_distributions/): explore false positives, false negatives and power. [Activity: Explore error probabilities and power](study/?activity=alpha_beta).
 
-- [Study-design questionnaire](design_questionnaire/): consider designs suited to your research question. [Activity: Which study design fits your question?](study/?activity=design_questionnaire).
+- [Study-design questionnaire](design_questionnaire/): consider designs suited to your research question. [Activity: Choosing a study design](study/?activity=design_questionnaire).
 
 The calculation apps use four views: “Overview” for the main result, “Explore assumptions” for graphs and comparisons, “Report” for a readable summary of current inputs and results, and “Methods and references” for calculation details. Reports can be saved as HTML and printed from a browser. The reasoning lab also has simulation and “My study” views; the study-plan report follows four writing stages.
 
