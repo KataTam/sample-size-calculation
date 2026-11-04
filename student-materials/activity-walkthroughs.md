@@ -47,7 +47,7 @@ Purpose: see why sample estimates differ from population values, interpret the u
 3. The 20-trial animation shows different possible trials while the population probabilities remain fixed. For each interval, you can compare the compatible differences with zero and the 20-percentage-point clinical threshold, following the [interval interpretation](../book/power.html#interpret-a-confidence-interval-clinically).
 4. “Many studies and a larger sample” opens further down the same page. “Simulate many studies” generates 5,000 independent trials. The distribution shows sampling variability; the percentage of significant results estimates power for this population scenario.
 5. Before repeating at 50 and 80 patients per group, you can predict how the estimates, intervals and power will change, holding the population assumptions and repetition count fixed. Larger trials usually give narrower intervals and greater power. “Settings” provides the other assumptions. Advanced controls start closed; coverage and Monte Carlo summaries can wait until the advanced chapter.
-6. The expandable “Model answer” sections support reflection. “Report” can save the current simulation results and assumptions. After changing the sample size, a new run is needed for those results to appear in the report.
+6. The expandable “Model answer” sections support reflection. “Report” summarizes the population assumptions, pain-relief counts in one study, and results across many studies, with an explanation of sampling variability. You can add your reflection and save the report as HTML. After changing the sample size, a new run is needed for those results to appear in the report.
 
 ## Type I and Type II error probabilities and power — advanced
 

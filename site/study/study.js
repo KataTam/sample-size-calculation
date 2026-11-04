@@ -35,6 +35,9 @@
     if (!record || !allowedApps.has(record.app)) return;
     selected = id;
     selector.value = id;
+    document.getElementById('app-panel-title').textContent = record.title;
+    app.title = record.title;
+    document.title = record.title + ' | Sample size calculation';
     document.getElementById('activity-prompt').textContent = record.prompt || record.title;
     const targetLesson = lessonUrl(record);
     if (lesson.src !== targetLesson) lesson.src = targetLesson;

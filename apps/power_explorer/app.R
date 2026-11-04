@@ -245,11 +245,11 @@ ui <- fluidPage(
       activity_help("These scenarios describe expected recruitment and costs. Actual numbers can vary; your assessment should account for other exclusions and costs where relevant."),
       actionButton("use_feasible_cap", "Use expected recruitment as the lab limit"),
       p(tags$a(href = "../book/appendix.html#own-study", target = "_blank", rel = "noopener", "Read the study justification guidance"))),
-    tabPanel("Report", value = "Justify and communicate", h3("Explain your decision"),
+    tabPanel("Report", value = "Justify and communicate", h3(id = "report-question-heading", "Explain your decision"),
       activity_text_input("justification", "What study plan would you recommend, and why?",
         "The model answer updates with the selected example and current calculation inputs.",
         "Your recommendation should give analyzable and recruitment counts, supporting evidence, and the effect of plausible alternative assumptions. It should identify remaining limitations.", rows = 8),
-      p("A structured ", tags$a(href = "../assumptions_report/", "study-plan report"), " brings these decisions together using PICO, selected SPIRIT 2025 items and DELTA² guidance."),
+      p(id = "study-plan-guidance", "A structured ", tags$a(href = "../assumptions_report/", "study-plan report"), " brings these decisions together using PICO, selected SPIRIT 2025 items and DELTA² guidance."),
       uiOutput("report_preview"), downloadButton("download_plan", "Save report (HTML)"),
       activity_details("Backup inputs for reopening",
       downloadButton("download_plan_json", "Save settings and answers (JSON)"),
@@ -391,6 +391,10 @@ server <- function(input, output, session) {
     else { current_activity(""); routed_case(NULL) }
   }, ignoreInit = TRUE)
   observeEvent(input$activity_request, {
+    # The standalone URL and the two-panel wrapper can announce the same
+    # initial activity. A second announcement must preserve the reader's tab.
+    if (identical(input$activity_request$activity, current_activity()) &&
+        !isTRUE(input$activity_request$reset)) return()
     handle(apply_case(input$activity_request$activity, isTRUE(input$activity_request$reset)))
   }, ignoreInit = FALSE)
   observeEvent(input$state_request, {
@@ -516,11 +520,24 @@ server <- function(input, output, session) {
       target_power = input$target_power, dropout = input$dropout,
       recruitment_cap = input$recruit_cap, expected_effect = expected_effect())
   })
+  pain_report <- reactive(identical(current_activity(), "pain_one_many") &&
+    identical(input$outcome, "proportions") && study_details()$study_design == "two_groups" &&
+    is.null(routed_case()) && is.null(missing_settings()))
+  observe({
+    core <- pain_report()
+    session$sendCustomMessage("lab-report-context", list(core = core,
+      question = if (core) "What do these simulations show about sampling variability and sample size?"
+        else "What study plan would you recommend, and why?",
+      help = if (core) "Your reflection should connect the observed differences to the assumed population values, then explain the effects of more patients and more simulation repetitions."
+        else "Your recommendation should give analyzable and recruitment counts, supporting evidence, and the effect of plausible alternative assumptions. It should identify remaining limitations."))
+  })
   model_answers <- reactive({
     supported <- is.null(routed_case()) && study_details()$study_design == "two_groups"
-    lab_model_answers(current_lab_inputs(), study_details(), current_activity(),
+    answers <- lab_model_answers(current_lab_inputs(), study_details(), current_activity(),
       if (supported) planned() else NULL, if (supported) feasibility() else NULL,
       if (supported) many_saved() else NULL, if (supported) snapshot() else NULL)
+    if (pain_report()) answers$justification <- app_sampling_explanation(generating())
+    answers
   })
   activity_model_answers(session, model_answers, c("study_question", "clinical_relevance", "participant_burden", "evidence_sources", "justification"))
   output$one_model_answer <- renderText({
@@ -752,6 +769,7 @@ server <- function(input, output, session) {
   outputOptions(output, "download_many", suspendWhenHidden=FALSE)
   report_sections <- reactive({
     details <- study_details()
+    if (pain_report()) return(app_pain_simulation_report(snapshot(), one_saved(), many_saved(), details))
     answer <- app_answer
     compatible <- details$study_design == "two_groups" && is.null(routed_case())
     calculation <- if (compatible) {
@@ -808,9 +826,14 @@ server <- function(input, output, session) {
     sections
   })
   report_paragraphs <- reactive(unlist(report_sections(), use.names = FALSE))
-  output$report_preview <- renderUI(app_report_body(report_sections()))
-  output$download_plan <- downloadHandler(filename = function() "sample-size-study-plan.html",
-    content = function(file) writeLines(app_report_document("Sample size study plan", "power_explorer", report_sections()), file, useBytes = TRUE))
+  report_heading <- reactive(if (pain_report()) "Pain relief: simulation report" else "Study-plan report")
+  report_intro <- reactive(if (pain_report())
+    "This report summarizes the population assumptions, simulated results, and your reflection on how results vary between studies. The results come from Simulate one study and Simulate many studies; rerunning either replaces its previous results."
+    else "This report records the current study plan, matching simulation results, and your written justification.")
+  output$report_preview <- renderUI(app_report_body(report_sections(), heading = report_heading(), intro = report_intro()))
+  output$download_plan <- downloadHandler(filename = function() if (pain_report()) "pain-relief-simulation-report.html" else "sample-size-study-plan.html",
+    content = function(file) writeLines(app_report_document(report_heading(), "power_explorer", report_sections(),
+      report_heading = report_heading(), report_intro = report_intro()), file, useBytes = TRUE))
   output$download_plan_json <- downloadHandler(filename = function() "sample_size_study_plan.json", content = function(file) {
     plan <- list(schema = "sample-size-study-plan", version = 1, activity = current_activity(),
       inputs = current_lab_inputs(), study = study_details())

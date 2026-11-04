@@ -80,6 +80,16 @@
     el('journey-pause').onclick=()=>{paused=!paused;el('journey-pause').textContent=paused?'Resume':'Pause';if(paused){cancelAnimationFrame(raf);status();}else play();};
     el('journey-replay').onclick=()=>{index=0;elapsed=0;play();};
     el('journey-motion').onchange=()=>{if(data)draw(elapsed/3800);};
+    Shiny.addCustomMessageHandler('lab-report-context',payload=>{
+      el('report-question-heading').textContent=payload.core?'Your reflection':'Explain your decision';
+      el('study-plan-guidance').hidden=payload.core;
+      const field=el('justification'), label=document.querySelector('label[for="justification"]');
+      const source=document.querySelector('.input-guidance-source[data-for="justification"]');
+      if(label && field && source){
+        label.textContent=payload.question;source.textContent=payload.help;
+        window.InputGuidance?.attach(label,payload.help,field,source.dataset.model || '');
+      }
+    });
     Shiny.addCustomMessageHandler('combine-pain-panels',payload=>{
       const oneLink=document.querySelector('a[data-value="One study"]'), manyLink=document.querySelector('a[data-value="Many studies"]');
       if(!oneLink || !manyLink) return;

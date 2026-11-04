@@ -19,7 +19,6 @@
       </div>
       <button id="reset" type="button">Reset this activity</button>
     </div>
-    <p id="activity-prompt">Loading the activity…</p>
     <p id="app-status" role="status" aria-live="polite">Loading the app. You can read the lesson while it starts.</p>
   </header>
   <main class="panels">
@@ -28,8 +27,9 @@
       <iframe id="lesson-frame" title="Sample size tutorial" src="../book/"></iframe>
     </section>
     <div id="panel-separator" role="separator" tabindex="0" aria-label="Adjust lesson and app widths" aria-orientation="vertical" aria-controls="lesson-pane app-pane" aria-valuemin="20" aria-valuemax="80" aria-valuenow="50" aria-valuetext="Lesson 50%, app 50%" title="Drag to resize. Use Left and Right arrow keys to adjust the lesson width."><span aria-hidden="true"></span></div>
-    <section id="app-pane" class="pane app-pane" aria-label="App panel">
-      <div class="pane-bar"><h2>App</h2><div class="pane-actions"><a id="app-separate" href="../power_explorer/" target="_blank" rel="noopener">Open app separately</a><button id="close-app-panel" type="button" aria-controls="app-pane"><span aria-hidden="true">&times;</span> Close app panel</button></div></div>
+    <section id="app-pane" class="pane app-pane" aria-labelledby="app-panel-title">
+      <div class="pane-bar"><h2 id="app-panel-title">Loading activity…</h2><div class="pane-actions"><a id="app-separate" href="../power_explorer/" target="_blank" rel="noopener">Open app separately</a><button id="close-app-panel" type="button" aria-controls="app-pane"><span aria-hidden="true">&times;</span> Close app panel</button></div></div>
+      <p id="activity-prompt">Loading the activity…</p>
       <iframe id="app-frame" title="Interactive sample size app" src="about:blank"></iframe>
     </section>
   </main>
