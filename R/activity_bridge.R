@@ -13,6 +13,13 @@ activity_text_input <- function(inputId, label, model_answer, help, rows = 4, wi
     shiny::tags$div(class = "input-guidance-source", `data-for` = inputId,
       `data-model` = model_answer, help))
 }
+activity_model_answers <- function(session, answers, ids) {
+  shiny::observe({
+    values <- tryCatch(answers(), error = function(e)
+      stats::setNames(as.list(rep("A model answer will be available when the current calculation inputs are valid.", length(ids))), ids))
+    session$sendCustomMessage("activity-model-answers", values)
+  })
+}
 activity_guidance_script <- function() {
   read_asset <- function(name) {
     candidates <- c(file.path("../../site", name), file.path("site", name), name)

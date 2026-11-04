@@ -149,6 +149,32 @@
       result.counts = 'A design-specific calculation is needed. The report should give both the number of independent participants or clusters and the observations within each.';
       result.analysis = 'A method that accounts for the allocation structure and dependence between observations, specified with statistical advice.';
     }
+    if (value.goal === 'fixed' && value.study_type !== 'single') {
+      result.resources = 'The recruitment target in this example is 46 patients for an expected 40 analyzable outcomes. At 14 recruits per month, this would take about four whole months, allowing for no interruptions.';
+    }
+    const recorded = fields.some(([id]) => (value[id] || '').trim());
+    // Written entries can contain any study's assumptions. Numerical guidance
+    // refers to those entries; it never guesses parameters from free text.
+    if (recorded || ['precision', 'both', 'feasibility'].includes(value.goal) || value.study_type === 'other') {
+      Object.assign(result, {
+        expected: value.study_type === 'single' ? 'My anticipated population percentage or mean follows the evidence recorded for this population, outcome and assessment time.' : 'My expected between-group difference follows the evidence recorded for this population, outcome and assessment time.',
+        clinical: 'My clinical threshold is the smallest between-group benefit judged worthwhile, supported by patient and clinical input.',
+        planning: 'My target difference is the between-group difference at which the recorded calculation evaluates power. Its size should be worthwhile and supported by evidence.',
+        variation: value.outcome === 'binary' ? 'The event percentages in my calculation use the same event definition, population and time point as my study question.' : 'The standard deviation in my calculation describes variation between participants on the stated outcome scale.',
+        evidence_review: 'My evidence review checks the population, outcome definition, follow-up time and uncertainty of each assumption recorded above.',
+        sensitivity: 'My sensitivity analysis evaluates plausible alternative assumptions using the selected sample size. I also record any revised sample size needed to meet the planning target.',
+        power: value.goal === 'fixed' ? 'I report the attainable power at the recorded sample size and specified true difference, together with the Type I error probability and test sidedness.' : 'I report the Type I error probability, target power, target difference and test sidedness used for the calculation.',
+        precision: 'I report the confidence level, desired full interval width and attainable width at the selected sample size, in the outcome units.',
+        counts: value.goal === 'fixed' ? 'I report the number available for analysis, its source and any exclusions, with per-group and total counts where applicable.' : value.goal === 'both' ? 'I compare the counts required for power and precision and use the larger requirement, recording the method and final upward rounding.' : value.goal === 'feasibility' ? 'I justify the total from the feasibility outcomes, their desired precision and the agreed progression criteria.' : 'I report the analyzable count returned by the method appropriate to this design and planning goal, including upward rounding and per-group or total counts.',
+        recruitment: value.goal === 'fixed' && value.study_type === 'single' ? 'I document eligibility and missing measurements in the available records and report the resulting usable denominator.' : 'I divide the required analyzable count by the expected retained fraction and round upward. My report records the resulting recruitment count, supporting evidence and plans for missing outcomes and treatment changes.',
+        resources: 'I compare the recorded recruitment requirement with eligible participants, expected consent and the time available, allowing for interruptions and other constraints.',
+        software: 'I record the procedure used for the current design and goal, its software and source version, numerical inputs and rounding. A simulation record also identifies the generating assumptions and repetitions.'
+      });
+      if (value.goal === 'feasibility') {
+        result.expected = 'My anticipated retention percentage or assessment time follows evidence from comparable procedures and follow-up.';
+        result.variation = value.outcome === 'binary' ? 'My anticipated feasibility percentage has an explicit denominator and a plausible range supported by prior evidence.' : 'My assumed SD describes variation in assessment time, in minutes, based on comparable procedures.';
+      }
+    }
     return result;
   }
   const names = ['study_type', 'outcome', 'goal', ...fields.map(field => field[0])];

@@ -4,6 +4,7 @@
   if (window.InputGuidance) return;
   let current = null, closeTimer, counter = 0;
   const records = new WeakMap();
+  const models = {};
   function fitExample(field) {
     if (field.tagName !== 'TEXTAREA' || field.value || !field.checkVisibility()) return;
     field.style.height = 'auto';
@@ -81,9 +82,20 @@
       const field = document.getElementById(source.dataset.for);
       const label = field && (document.querySelector('label[for="' + field.id + '"]') || document.getElementById(field.id + '-label'));
       if (!label) return;
-      attach(label, source.textContent, field, source.dataset.model || ''); source.dataset.attached = 'true';
+      attach(label, source.textContent, field, models[field.id] || source.dataset.model || ''); source.dataset.attached = 'true';
     });
   }
+  function updateModels(answers) {
+    Object.assign(models, answers);
+    for (const [id, answer] of Object.entries(answers)) {
+      const field = document.getElementById(id), record = field && records.get(field);
+      const source = [...document.querySelectorAll('.input-guidance-source')].find(el => el.dataset.for === id);
+      if (source) source.dataset.model = answer;
+      if (record && source) attach(record.label, source.textContent, field, answer);
+    }
+    init();
+  }
+  if (window.Shiny) Shiny.addCustomMessageHandler('activity-model-answers', updateModels);
   document.addEventListener('keydown', event => { if (event.key === 'Escape') close(); });
   document.addEventListener('pointerdown', event => { if (current && !current.button.contains(event.target) && !current.tip.contains(event.target)) close(); });
   document.addEventListener('scroll', () => { if (current) position(current); }, true);

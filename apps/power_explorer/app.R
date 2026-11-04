@@ -3,6 +3,7 @@ source("../../R/sample_size_functions.R")
 source("../../R/tutorial_helpers.R")
 source("../../R/teaching_cases.R")
 source("../../R/activity_bridge.R")
+source("../../R/model_answers.R")
 
 # Let the download response supply the filename. Chromium's download attribute
 # can bypass the service worker serving a Shinylive download (issue 468227).
@@ -172,7 +173,7 @@ ui <- fluidPage(
           tags$button(id = "journey-pause", type = "button", "Pause", disabled = NA),
           tags$button(id = "journey-replay", type = "button", "Replay", disabled = NA),
           tags$label(tags$input(id = "journey-motion", type = "checkbox"), " Reduced motion"),
-          activity_details("Model answer", p("The specified population probabilities, sample size and analysis stay fixed. The sampled patients, observed percentages and estimated difference can change. The animation follows each estimate into the sampling distribution."))))),
+          activity_details("Model answer", textOutput("one_model_answer"))))),
       conditionalPanel("output.one_ready",
         textOutput("one_interpretation"),
         plotOutput("one_plot", height = "300px"),
@@ -205,10 +206,10 @@ ui <- fluidPage(
         activity_details("Download results", downloadButton("download_many", "Download replications and assumptions"))),
       tags$div(class="activity-question", h4("A larger sample"),
         p("What should happen to the estimates and power with more patients per group? You can compare 20, 50 and 80 while keeping the population assumptions fixed."),
-        activity_details("Model answer", p("More patients generally narrow the distribution of estimates and increase power at the same true difference. More simulation repetitions make the estimated performance more stable; the sample size and power of each individual trial stay the same.")))),
+        activity_details("Model answer", textOutput("many_model_answer")))),
     tabPanel("My study", h3("Apply this to your question"),
       activity_text_input("study_question", "What is your research question and primary outcome?",
-        "For the pain-relief example: does the novel treatment improve the percentage of adults with chronic pain who report relief at four weeks, compared with standard treatment?",
+        "The model answer updates with the selected example and current calculation inputs.",
         "PICO identifies the population, intervention, comparator and outcome. The study-plan report provides separate fields for these components and the intervention details.", rows = 4),
       selectInput("study_design", "Study design", c("Two independent groups, equal allocation" = "two_groups",
         "Paired or repeated measurements" = "paired", "One population proportion" = "single_proportion",
@@ -216,13 +217,13 @@ ui <- fluidPage(
         "Prediction or prognostic model" = "prediction", "Another design" = "other")),
       uiOutput("design_route"),
       activity_text_input("clinical_relevance", "Why would this difference or precision matter clinically?",
-        "In the pain-relief example, a 20-percentage-point between-group benefit is the illustrative clinical threshold. Its relevance should be discussed with patients and clinicians in relation to burden, harms and cost.",
+        "The model answer updates with the selected example and current calculation inputs.",
         "Your justification should explain who would benefit, what decision the result informs and the evidence behind the clinical threshold or precision target."),
       activity_text_input("participant_burden", "What participant burden, benefits and ethical issues should you consider?",
-        "The pain-relief study adds treatment and follow-up visits. Expected benefits and potential harms should justify that burden, and the protocol should describe monitoring and consent.",
+        "The model answer updates with the selected example and current calculation inputs.",
         "Relevant considerations include visits, discomfort, time, possible harms and how the information would help patients."),
       activity_text_input("evidence_sources", "What evidence supports your inputs, and how uncertain is it?",
-        "The hypothetical pain pilot observed 70% versus 30% relief in 10 patients per group. These small samples give uncertain estimates; comparable studies should support the 30-point target and other assumptions.",
+        "The model answer updates with the selected example and current calculation inputs.",
         "Your sources should identify the population, outcome, assessment time and uncertainty. The least certain inputs should be explored in sensitivity analyses."),
       fluidRow(column(6, numericInput("eligible_monthly", "Eligible participants per month", 20, min = 0)),
         column(6, percent_slider("consent_fraction", "Expected percentage consenting (%)", 0, 1, .7, step = .01))),
@@ -236,7 +237,7 @@ ui <- fluidPage(
       p(tags$a(href = "../book/appendix.html#own-study", target = "_blank", rel = "noopener", "Read the study justification guidance"))),
     tabPanel("Justify and communicate", h3("Explain your decision"),
       activity_text_input("justification", "What study plan would you recommend, and why?",
-        "For the pain-relief example, the tutorial approximation requires 56 analyzable patients per group for 90% power at a 30-point difference and 5% Type I error probability. Allowing for illustrative 10% losses gives 63 recruits per group. A smaller 20-point benefit has lower power. The recommendation depends on evidence for the event percentages, plausible losses and recruitment capacity.",
+        "The model answer updates with the selected example and current calculation inputs.",
         "Your answer should use your current results, explain the evidence and sensitivity to assumptions, and identify the conclusions the study could support.", rows = 8),
       p("A structured ", tags$a(href = "../assumptions_report/", "study-plan report"), " brings these decisions together using PICO, selected SPIRIT 2025 items and DELTA² guidance."),
       downloadButton("download_plan", "Download plan and explanation"),
@@ -497,6 +498,34 @@ server <- function(input, output, session) {
     list(missing = missing, plan = planned(), generating = simulated, goal = input$goal,
       target_power = input$target_power, dropout = input$dropout,
       recruitment_cap = input$recruit_cap, expected_effect = expected_effect())
+  })
+  model_answers <- reactive({
+    supported <- is.null(routed_case()) && study_details()$study_design == "two_groups"
+    lab_model_answers(current_lab_inputs(), study_details(), current_activity(),
+      if (supported) planned() else NULL, if (supported) feasibility() else NULL,
+      if (supported) many_saved() else NULL, if (supported) snapshot() else NULL)
+  })
+  activity_model_answers(session, model_answers, c("study_question", "clinical_relevance", "participant_burden", "evidence_sources", "justification"))
+  output$one_model_answer <- renderText({
+    saved <- one_saved(); x <- if (is.null(saved)) generating() else saved$spec
+    paste0(if (x$outcome == "proportions") paste0("The assumed event probabilities (control ", format_percent(x$p_control), "; treatment ", format_percent(x$p_treatment), ")")
+      else paste0("The assumed population mean difference (", effect_text(x$delta, x$outcome), ") and SD (", x$sd, ")"),
+      ", sample size (", x$n, " per group) and analysis stay fixed when this study is repeated. ",
+      "Sampled patients, observed outcomes and the estimated difference can change. ",
+      if (!is.null(saved)) paste0("The displayed study estimated ", effect_text(saved$result$estimate, x$outcome), ". ",
+        if (!identical(saved$meta, snapshot())) "It uses earlier inputs; simulating again will update the displayed result. " else "") else "",
+      "Each animated dot represents one study's estimated difference.")
+  })
+  output$many_model_answer <- renderText({
+    saved <- many_saved(); x <- if (is.null(saved)) generating() else saved$spec
+    paste0("At ", x$n, " participants per group, the simulated population difference is ", effect_text(true_difference(x), x$outcome), ". ",
+      if (true_difference(x) == 0) "With no population difference, rejection represents a false positive. A larger sample narrows the distribution of estimates; the nominal false-positive probability stays at the Type I error setting. "
+      else "A larger sample usually narrows the distribution of estimates and increases two-sided power at this nonzero difference. ",
+      "More simulation repetitions make the estimated performance more stable; each trial's sample size stays fixed. ",
+      if (!is.null(saved)) paste0("The displayed batch contains ", x$B, " studies. ",
+        if (!identical(saved$meta, snapshot())) "It uses earlier inputs; simulating again will update the results. " else "") else "",
+      if (!is.null(saved$missing) || (is.null(saved) && !is.null(missing_settings())))
+        "With missing outcomes, the number analyzed can vary. Outcome-dependent missingness can bias estimates; bias and coverage help interpret the rejection percentage." else "")
   })
   one <- reactive({ req(one_saved()); one_saved() })
   observeEvent(input$run_one, {

@@ -2,6 +2,7 @@ library(shiny)
 source("../../R/sample_size_functions.R")
 source("../../R/teaching_cases.R")
 source("../../R/activity_bridge.R")
+source("../../R/model_answers.R")
 
 sampling_defaults <- function() list(mu0 = 120, mu1 = 125, sigma = 15, n = 25,
   alpha = .05, sidedness = "greater")
@@ -71,7 +72,7 @@ ui <- fluidPage(
     p(class = "caption", "Figure. Power at the specified alternative across independent sample sizes. The point marks the current sample; the reference line marks Type I error probability."),
     p("A one-sided alternative in the wrong direction can have power below Type I error probability. Direction should follow the prespecified scientific question. A realized non-significant result does not establish that the null is true.")),
     activity_text_input("interpretation", "How did power change, and why?",
-      "In the blood-pressure example, increasing the sample while keeping the population means and SD fixed narrows the distribution of sample means. Power increases for the specified higher mean and greater-than test. The chosen Type I error probability stays fixed.",
+      "The model answer updates with the selected example and current calculation inputs.",
       "Your explanation should identify what you changed, what stayed fixed and how the shaded areas changed. With a one-sided test, the direction of the true difference matters.", rows = 5),
     activity_download_button("download_assumptions", "Download assumptions and explanation"),
     tags$p(id = "download-status", role = "status", "aria-live" = "polite"),
@@ -105,6 +106,8 @@ server <- function(input, output, session) {
   observeEvent(input$bridge_error, bridge_status(input$bridge_error))
   observe({ session$sendCustomMessage("sample-size-state", c(snapshot(), list(case_id = "alpha_beta"))) })
   operating <- reactive(safe(do.call(normal_sampling_operating_characteristics, snapshot())))
+  model_answers <- reactive(list(interpretation = sampling_model_answer(operating())))
+  activity_model_answers(session, model_answers, "interpretation")
   output$bridge_status <- renderText(bridge_status())
   output$distributions <- renderPlot(plot_sample_mean_distributions(operating()),
     alt = "Distributions of the sample mean under the null and specified alternative. Rejection tails under the null show Type I error probability; the non-rejection region under the alternative shows Type II error probability. Values and boundaries are listed below.")

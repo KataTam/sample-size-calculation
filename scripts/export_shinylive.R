@@ -13,7 +13,7 @@ export_shinylive_apps <- function(
   }
 
   root <- normalizePath(".", winslash = "/", mustWork = TRUE)
-  helper_files <- file.path(root, "R", c("sample_size_functions.R", "tutorial_helpers.R", "teaching_cases.R", "activity_bridge.R"))
+  helper_files <- file.path(root, "R", c("sample_size_functions.R", "tutorial_helpers.R", "teaching_cases.R", "activity_bridge.R", "model_answers.R"))
   helper_files <- c(helper_files, file.path(root, "site", c("input-guidance.js", "input-guidance.css")))
 
   if (!all(file.exists(helper_files))) {

@@ -1,6 +1,7 @@
 library(shiny)
 source("../../R/sample_size_functions.R")
 source("../../R/activity_bridge.R")
+source("../../R/model_answers.R")
 
 # Let the download response supply the filename. Chromium's download attribute
 # can bypass the service worker serving a Shinylive download (issue 468227).
@@ -84,7 +85,7 @@ ui <- fluidPage(
         p("Suppose some participants switch treatments, while others miss their final assessment."),
         tags$ol(tags$li("How would treatment switching change the recruitment requirement?"), tags$li("How would missing assessments change it?"), tags$li("Which assumptions need supporting evidence?")),
         activity_text_input("reasoning", "How would switching and missing assessments affect your recruitment plan?",
-          "Switching can reduce the difference between randomized groups and increase the sample needed for the planned power. Missing assessments reduce available outcomes. Evidence is needed for switching in each direction and follow-up completeness in each group. The switching adjustment should be applied once; equal recruitment uses the larger group requirement.",
+          "The model answer updates with the selected example and current calculation inputs.",
           "Your answer should explain the direction of each change and the evidence needed for the assumptions. It is included in the report and retained in this open session.", rows = 6)),
       tags$details(tags$summary("Methods and report"),
         p("Starting n is multiplied by 1/(1 - a - b)^2 when the switching option applies. Here a and b are the fractions switching in the two directions. The result is divided by each group's expected retained fraction. The larger requirement is rounded upward once per group and doubled for equal recruitment."),
@@ -121,6 +122,9 @@ server <- function(input, output, session) {
     tryCatch(recruitment_plan(valid_n(), input$dropout, loss0, a, b),
       error = function(e) validate(need(FALSE, conditionMessage(e))))
   })
+  model_answers <- reactive(list(reasoning = recruitment_model_answer(plan(), switching_applied(),
+    isTRUE(input$switching) && identical(input$starting_assumption, "included"))))
+  activity_model_answers(session, model_answers, "reasoning")
   make_table <- function(caption, headings, rows) {
     tags$table(class = "table table-striped", tags$caption(caption),
       tags$thead(tags$tr(lapply(headings, function(x) tags$th(scope = "col", x)))),

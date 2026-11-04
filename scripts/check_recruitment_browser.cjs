@@ -31,7 +31,7 @@ const base=process.argv[2]||'http://127.0.0.1:8769';
   await frame.getByText('Activity: Treatment changes and missing outcomes',{exact:true}).click();
   await frame.locator('#reasoning').fill('Switching changes the comparison; missing assessments reduce available outcomes.');
   await frame.locator('#reasoning-question').hover();
-  await frame.locator('.input-guidance-popover:not([hidden])').getByText('The switching adjustment should be applied once',{exact:false}).waitFor();
+  await frame.locator('.input-guidance-popover:not([hidden])').getByText('154 per group (308 total)',{exact:false}).waitFor();
   await frame.getByText('Methods and report',{exact:true}).click();
   const downloadPromise=page.waitForEvent('download');await frame.locator('#report').click();
   const download=await downloadPromise;

@@ -142,6 +142,8 @@ check_resource <- function(render_module = FALSE) {
   check_activity()
   source("scripts/check_recruitment.R", local = TRUE)
   check_recruitment()
+  source("scripts/check_model_answers.R", local = TRUE)
+  check_model_answers()
   say("All checks passed.")
   invisible(TRUE)
 }

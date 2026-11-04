@@ -2,6 +2,7 @@ library(shiny)
 source("../../R/sample_size_functions.R")
 source("../../R/teaching_cases.R")
 source("../../R/activity_bridge.R")
+source("../../R/model_answers.R")
 
 precision_defaults <- function() list(goal = "precision", anticipated_p = .20,
   full_width = .10, confidence = .95, unknown_p = FALSE, fixed_n = 246,
@@ -78,7 +79,7 @@ ui <- fluidPage(
     p(class = "caption", "Figure. One illustrative Wilson confidence interval compared with the assumed population percentage and requested width."),
     p("Wilson intervals stay between 0% and 100%. Their realized width depends on the observed count. Recruitment inflation addresses expected numbers; selection and missing-data bias require attention to recruitment procedures and analysis.")),
     activity_text_input("justification", "Why is your chosen interval width useful for this question?",
-      "For the prevalence example, a full width of 10 percentage points gives a margin of about 5 points at 95% confidence. Whether this is useful depends on the service-planning decision. Halving the margin approximately quadruples the required sample, with other assumptions fixed.",
+      "The model answer updates with the selected example and current calculation inputs.",
       "Your answer should connect the interval width to the decision the estimate will inform and the resources available. The example is guidance for your own justification.", rows = 5),
     activity_download_button("download_plan", "Download assumptions and explanation"),
     conditionalPanel("output.study_ready", activity_download_button("download_study", "Download realized interval and assumptions")),
@@ -175,6 +176,9 @@ server <- function(input, output, session) {
     x <- snapshot(); y <- simulate_proportion_study(analysable_n(), x$anticipated_p, x$confidence, x$seed)
     y$inputs <- x; y
   }, ignoreInit = TRUE)
+  model_answers <- reactive(list(justification = precision_model_answer(snapshot(), plan(), analysable_n(),
+    active_case(), if (isTRUE(input$simulate > 0)) study() else NULL)))
+  activity_model_answers(session, model_answers, "justification")
   output$study_ready <- reactive(isTRUE(input$simulate > 0))
   outputOptions(output, "study_ready", suspendWhenHidden = FALSE)
   output$saved_status <- renderText({
