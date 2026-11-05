@@ -70,7 +70,7 @@ ui <- fluidPage(
     tabPanel("Report", activity_text_input("interpretation", "How does sample size affect power at these settings?",
       "The example updates with the selected case and current calculation inputs.",
       "The power curve varies sample size while keeping population means, SD, and test settings fixed. Your explanation should connect the curve's direction to the shaded detection area.", rows = 5),
-      uiOutput("report_preview"), activity_download_button("download_assumptions", "Save report (HTML)"),
+      uiOutput("report_preview"), activity_report_downloads("download_assumptions"),
       p(id = "download-status", role = "status", `aria-live` = "polite")),
     tabPanel("Methods and references", h3("Calculation with your current values"), uiOutput("worked_method"),
       p("The normal model gives exact error probabilities for independent normal observations with known population SD. The reasoning lab uses an estimated SD and a two-sample t test for continuous outcomes."),

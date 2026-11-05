@@ -82,7 +82,7 @@ ui <- fluidPage(
       activity_text_input("justification", "Why is your chosen interval width useful for this question?",
         "The example updates with the selected case and current calculation inputs.",
         "Your answer should explain which values the interval needs to distinguish for a useful decision, and whether the required sample is feasible.", rows = 5),
-      uiOutput("report_preview"), activity_download_button("download_plan", "Save report (HTML)"),
+      uiOutput("report_preview"), activity_report_downloads("download_plan"),
       conditionalPanel("output.study_ready", activity_download_button("download_study", "Download saved interval (CSV)")),
       p(id = "download-status", role = "status", `aria-live` = "polite")),
     tabPanel("Methods and references", h3("Calculation with your current values"), uiOutput("worked_method"),

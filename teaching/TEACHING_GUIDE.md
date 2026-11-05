@@ -32,7 +32,7 @@ These are proposed teaching allocations. The pilot should establish how much pre
 
 ## A study plan developed across chapters
 
-The [study-plan report activity](https://katatam.github.io/sample-size-calculation/study/?activity=assumptions_report) can be opened from the first session. Its saved HTML report can be read, printed or reopened in that activity for further editing. The [case template](../case-studies/student_case_template.md) provides prompts for an offline document. Early entries may remain provisional, with missing evidence identified.
+The [study-plan report activity](https://katatam.github.io/sample-size-calculation/study/?activity=assumptions_report) can be opened from the first session. Its report downloads as PDF by default, with an editable Word alternative. “Save work for later” stores entries for reopening in the activity. The [case template](../case-studies/student_case_template.md) provides prompts for an offline document. Early entries may remain provisional, with missing evidence identified.
 
 | Stage | Report entries | Teacher's review question |
 |---|---|---|
@@ -52,7 +52,7 @@ Reports include simulated results only when they match the current example and s
 
 Gray model answers illustrate responses using the selected example and current parameters; they are excluded from reports and backups. Question help explains what to enter or interpret. Students' written responses remain as entered when settings change, so you should check that their explanation still matches the reported calculation. The one-study and many-studies reflection questions have expandable model answers; you can collect learners' explanations orally or in their study-plan report.
 
-For assessment, you can request the readable HTML report or a PDF printed from it. The reasoning lab's optional “Save settings and answers (JSON)” backup lets learners resume their work through “Restore settings and answers.” Restoring it clears previous simulations; these should be rerun. The separate study-plan report activity can reopen its own HTML reports. The [download guide in the walkthroughs](../student-materials/activity-walkthroughs.html#reports-and-saved-work) distinguishes these files, simulation data and reproducible R scripts.
+For assessment, you can request the PDF report or editable Word document. The separate “Save work for later” controls in the reasoning lab and study-plan form save a JSON file; “Reopen saved work” restores it in the same app. Lab simulations are cleared on reopening and should be rerun. Editing a Word report changes that document only. The [download guide in the walkthroughs](../student-materials/activity-walkthroughs.html#reports-and-saved-work) explains reports, saved work, simulation data and reproducible R scripts.
 
 ## Prediction, discussion and revision
 

@@ -1,3 +1,4 @@
+const {saveReportPair}=require('./report_test_helpers.cjs');
 const {chromium}=require('playwright');
 const assert=require('node:assert/strict');
 const fs=require('node:fs');
@@ -76,10 +77,7 @@ const fs=require('node:fs');
  const report=await f.locator('#report_preview .app-report').innerText();
  assert(report.includes('Pain relief occurred in'));
  assert(report.includes('My reflection on the simulated studies.'));
- const pending=page.waitForEvent('download');await f.locator('#download_plan').click();
- const download=await pending;
- assert.equal(download.suggestedFilename(),'pain-relief-simulation-report.html');
- const html=fs.readFileSync(await download.path(),'utf8');
+ const {html}=await saveReportPair(page,f,'#download_plan','#download_plan_word','pain-simulation');
  const savedPage=await browser.newPage();await savedPage.setContent(html);
  assert.equal(await savedPage.locator('.app-report > h3').count(),0,'Saved report has one title');
  assert.equal((await savedPage.locator('h1').innerText()+' '+await savedPage.locator('.app-report').innerText()).replace(/\s+/g,' ').trim(),report.replace(/\s+/g,' ').trim());

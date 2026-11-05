@@ -20,6 +20,10 @@ for name in sorted(set(filter(None, paths))):
         errors.append(f"{name}: not UTF-8")
         continue
     count += 1
+    # Third-party decoder implementations intentionally contain U+FFFD.
+    # Keep their published bytes unchanged; UTF-8 validity was checked above.
+    if name.startswith("site/vendor/"):
+        continue
     for number, line in enumerate(text.splitlines(), 1):
         if broken.search(line):
             errors.append(f"{name}:{number}: possible broken text encoding")

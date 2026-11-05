@@ -1,4 +1,5 @@
 const {chromium} = require('playwright');
+const {saveReportPair} = require('./report_test_helpers.cjs');
 const assert = require('node:assert/strict'), fs = require('node:fs');
 const base = (process.argv[2] || 'http://127.0.0.1:8769').replace(/\/$/, '');
 (async () => {
@@ -17,8 +18,7 @@ const base = (process.argv[2] || 'http://127.0.0.1:8769').replace(/\/$/, '');
     };
     async function save(f, id, app) {
       await f.waitForFunction(() => !document.querySelector('#report_preview.recalculating'));
-      const pending = page.waitForEvent('download'); await f.locator('#'+id).click();
-      const download = await pending, html = fs.readFileSync(await download.path(), 'utf8');
+      const {html} = await saveReportPair(page, f, '#'+id, '#'+id+'_word', app);
       await offline.setContent(html);
       const preview = await f.locator('#report_preview .app-report').innerText();
       const heading = await offline.locator('.app-report > h3').count() ? '' : await offline.locator('h1').innerText();
@@ -27,7 +27,6 @@ const base = (process.argv[2] || 'http://127.0.0.1:8769').replace(/\/$/, '');
       assert.equal(await offline.locator('footer').count(), 1);
       assert.match(html, /https:\/\/creativecommons.org\/licenses\/by-sa\/4.0\//);
       assert.match(html, /https:\/\/opensource.org\/license\/mit/);
-      await download.saveAs('build/app-reports/'+app+'.html');
       return html;
     }
     for (const [app,field,download] of [['two_means','delta','download_report'], ['two_proportions','pi1','download_report'],
@@ -82,7 +81,7 @@ const base = (process.argv[2] || 'http://127.0.0.1:8769').replace(/\/$/, '');
         await set(f,{fixed_n:17}); await has(f,'17 per group; 34 total'); await has(f,'uses earlier settings');
         assert(!await f.locator('#report_preview').innerText().then(t=>t.includes('100 simulated studies')));
         for(const text of ['My study question.','My clinical rationale.','My burden assessment.','My supporting evidence.','My recommendation.']) await has(f,text);
-        await f.getByText('Backup inputs for reopening',{exact:true}).click();
+        await f.locator('details').filter({has:f.locator('#download_plan_json')}).locator('summary').click();
         const pending=page.waitForEvent('download'); await f.locator('#download_plan_json').click();
         const backup=await pending, json=fs.readFileSync(await backup.path(),'utf8'), data=JSON.parse(json);
         assert.equal(data.inputs.fixed_n,17); assert.equal(data.study.justification,'My recommendation.'); assert.equal(data.activity,'adherence');
@@ -93,7 +92,7 @@ const base = (process.argv[2] || 'http://127.0.0.1:8769').replace(/\/$/, '');
       }
       await save(f,download,app);
       assert.deepEqual(await f.locator('.tab-pane.active .shiny-output-error:not(.shiny-output-error-validation)').allTextContents(),[]);
-      console.log(app+': current report and HTML download verified.');
+      console.log(app+': current report, PDF, editable Word and saved-work controls verified.');
     }
     await offline.screenshot({path:'build/app-reports/lab-report.png',fullPage:true});
   } finally { await browser.close(); }

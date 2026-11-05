@@ -27,9 +27,16 @@ activity_guidance_script <- function() {
     if (is.na(file)) stop("Missing shared app guidance asset: ", name)
     paste(readLines(file, warn = FALSE, encoding = "UTF-8"), collapse = "\n")
   }
-  paste0("(function(){const style=document.createElement('style');style.textContent=",
+  native_assets <- c("../../site/vendor/reports", "site/vendor/reports")
+  native_assets <- native_assets[dir.exists(native_assets)]
+  asset_setup <- ""
+  if (length(native_assets)) {
+    shiny::addResourcePath("report-assets", normalizePath(native_assets[1], winslash = "/"))
+    asset_setup <- "window.SampleSizeReportAssets=new URL('/report-assets/',location.href).href;"
+  }
+  paste0(asset_setup, "(function(){const style=document.createElement('style');style.textContent=",
     jsonlite::toJSON(paste(read_asset("app-layout.css"), read_asset("input-guidance.css")), auto_unbox = TRUE),
-    ";document.head.append(style);})();\n", read_asset("input-guidance.js"))
+    ";document.head.append(style);})();\n", read_asset("input-guidance.js"), "\n", read_asset("report-exports.js"))
 }
 activity_details <- function(title, ...) shiny::tags$details(class = "activity-details", shiny::tags$summary(title), ...)
 activity_count_result <- function(x) shiny::tags$div(class = "calculation-result",
@@ -158,27 +165,41 @@ activity_download_button <- function(...) {
   button
 }
 
+activity_report_downloads <- function(inputId) {
+  pdf <- activity_download_button(inputId, "Download report (PDF)", class = "btn-primary")
+  pdf$attribs[["data-report-format"]] <- "pdf"
+  shiny::tags$div(class = "report-downloads", pdf,
+    shiny::tags$button(id = paste0(inputId, "_word"), type = "button", class = "btn btn-default",
+      `data-report-for` = inputId, `data-report-format` = "docx", "Download editable report (Word)"))
+}
+
 activity_download_script <- function() r"---(document.addEventListener('click', async function(event) {
-  const link = event.target.closest('a.shiny-download-link');
-  if (!link) return;
+  const button = event.target.closest('a.shiny-download-link,button[data-report-for]');
+  if (!button) return;
+  const link = button.dataset.reportFor ? document.getElementById(button.dataset.reportFor) : button;
   event.preventDefault(); event.stopImmediatePropagation();
   const status = document.getElementById('download-status');
   const report = text => { if (status) status.textContent = text; };
   if (!link.href || !link.href.includes('/download/')) { report('Run the activity before downloading.'); return; }
-  if (link.getAttribute('aria-busy') === 'true') return;
-  link.setAttribute('aria-busy', 'true'); report('Preparing download...');
+  if (button.getAttribute('aria-busy') === 'true') return;
+  button.setAttribute('aria-busy', 'true'); report('Preparing download...');
   try {
     const response = await fetch(link.href);
     if (!response.ok) throw new Error('The file could not be generated.');
     const match = (response.headers.get('Content-Disposition') || '').match(/filename="([^"]+)"/i);
     if (!match) throw new Error('The response did not contain a file.');
+    if (button.dataset.reportFormat) {
+      const name = await ReportExports.download(await response.text(), button.dataset.reportFormat, match[1]);
+      report('Report downloaded: ' + name);
+      return;
+    }
     const url = URL.createObjectURL(await response.blob());
     const save = document.createElement('a'); save.href = url; save.download = match[1];
     document.body.appendChild(save); save.click(); save.remove();
     setTimeout(function() { URL.revokeObjectURL(url); }, 60000);
     report('Download prepared: ' + match[1]);
   } catch (error) { report('Download failed. ' + error.message + ' Please try again.'); }
-  finally { link.removeAttribute('aria-busy'); }
+  finally { button.removeAttribute('aria-busy'); }
 }, true);)---"
 
 # Exported Shinylive apps have nested frames. Listen on accessible same-origin
@@ -234,6 +255,7 @@ activity_bridge_script <- function(app = "power_explorer") {
       current = current.parent;
     } catch (_) { break; }
   }
+  window.SampleSizeSiteRoot = siteRoot;
   document.addEventListener('DOMContentLoaded', () => {
     document.querySelector('.container-fluid > h2')?.classList.add('app-title');
   });

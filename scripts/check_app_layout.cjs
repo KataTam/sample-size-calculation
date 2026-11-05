@@ -1,4 +1,5 @@
 const {chromium}=require('playwright');
+const {saveReportPair}=require('./report_test_helpers.cjs');
 const assert=require('node:assert/strict'),fs=require('node:fs');
 const base=process.argv[2]||'http://127.0.0.1:8769';
 (async()=>{
@@ -31,12 +32,8 @@ const base=process.argv[2]||'http://127.0.0.1:8769';
    await f.locator('#report_preview .app-report').waitFor();
    const preview=await f.locator('#report_preview').innerText();
    assert(preview.length>150,app+' has substantive report');
-   const pending=page.waitForEvent('download');await f.locator('#'+save).click();
-   const download=await pending;assert(download.suggestedFilename().endsWith('.html'));
-   const html=fs.readFileSync(await download.path(),'utf8');
-   assert.match(html,/<!doctype html>/i);assert.match(html,/<head>/);assert.match(html,/<style>/);assert.match(html,/<title>/);assert.match(html,/Shiny/);assert.match(html,/https:\/\/creativecommons.org\/licenses\/by-sa\/4.0\//);
+   const {html}=await saveReportPair(page,f,'#'+save,'#'+save+'_word',app+'-layout');
    assert(!html.includes('Model answer:'),'Model examples stay out of reports');
-   await download.saveAs(`build/app-layout/${app}-report.html`);
    await page.screenshot({path:`build/app-layout/${app}-report.png`,fullPage:true});
    await f.getByRole('tab',{name:'Overview',exact:true}).click();
    await page.setViewportSize({width:390,height:844});
@@ -44,7 +41,7 @@ const base=process.argv[2]||'http://127.0.0.1:8769';
    const size=await f.evaluate(()=>({width:document.documentElement.clientWidth,scroll:document.documentElement.scrollWidth}));
    assert(size.scroll<=size.width+2,app+' no horizontal page overflow '+JSON.stringify(size));
    await page.screenshot({path:`build/app-layout/${app}-mobile.png`,fullPage:true});
-   console.log(app+': tabs, legible headings, output rendering, HTML report and narrow layout passed');
+   console.log(app+': tabs, legible headings, output rendering, PDF/Word reports and narrow layout passed');
   }
  }finally{await browser.close()}
 })().catch(e=>{console.error(e);process.exit(1)});

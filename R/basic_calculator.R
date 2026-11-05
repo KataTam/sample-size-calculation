@@ -45,7 +45,7 @@ basic_calculator_ui <- function(outcome) {
           else activity_help("A value closer to the standard-treatment percentage gives a smaller target difference. The original plan stays in the first column.", for_input = "compare_pi1"),
           p("Both columns use the same power, error probability, expected losses, and remaining assumptions."),
           tableOutput("comparison_table"))),
-      tabPanel("Report", uiOutput("report_preview"), activity_download_button("download_report", "Save report (HTML)"),
+      tabPanel("Report", uiOutput("report_preview"), activity_report_downloads("download_report"),
         p(id = "download-status", role = "status", `aria-live` = "polite")),
       tabPanel("Methods and references", h3("Calculation with your current values"), uiOutput("worked_method"),
         p(if (means) "This introductory normal approximation uses a common population SD. The reasoning lab uses t-test power with an estimated SD and can require a different sample size."

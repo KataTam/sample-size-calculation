@@ -62,7 +62,7 @@ Model answers should respond directly to the question and use the selected examp
 
 Each report should distinguish the current plan, simulation assumptions and the learner's responses. Saved simulations are included only when their metadata match the current example and settings. Earlier results remain available in their simulation panels and CSV exports with their original assumptions. A report should explain an omission and how to obtain a current result. For missing-outcome scenarios, the report should identify recruited and retained counts and preserve the interpretation of bias and coverage. Unsupported designs should receive design-specific guidance without carrying over the independent-group calculation.
 
-The reasoning lab's JSON backup restores its example, inputs and written answers and clears previous simulations. The separate study-plan activity reopens its own HTML report, which includes the editable entries, and accepts its older JSON format. These files belong to their respective apps. The [walkthroughs](../student-materials/activity-walkthroughs.html#reports-and-saved-work) explain the learner workflow.
+All report downloads offer PDF first and editable Word (.docx) alongside it. “Save work for later” is separate: the reasoning lab restores its JSON example, inputs and written answers and clears previous simulations; the study-plan form restores its own JSON entries and still accepts its earlier HTML reports. Saved work belongs to its respective app. Word edits remain in the downloaded document. The [walkthroughs](../student-materials/activity-walkthroughs.html#reports-and-saved-work) explain the learner workflow.
 
 After adaptation, `Rscript scripts/check_resource.R` checks calculations, model answers, reports and state handling. With the rebuilt site served locally, `node scripts/check_app_reports.cjs` checks the six app downloads against their previews, parameter changes and the lab's backup round trip; `node scripts/check_assumptions_report.cjs` checks the written report's save/reopen behavior. The [build guide](../documentation/development/build-and-publish.md) gives the required environment and publication steps.
 
@@ -158,7 +158,7 @@ Use this checklist before teaching or sharing a revised version:
 - [ ] Model answers and reports follow the selected example and changed parameters.
 - [ ] Students' entries are preserved and model answers remain excluded from saved responses.
 - [ ] Reports omit earlier simulation results when settings change; CSV exports retain their recorded assumptions.
-- [ ] HTML reports match their previews, and supported backup files restore correctly.
+- [ ] PDF and Word reports match their previews, preserve readable text and links, and supported saved-work files restore correctly.
 - [ ] Tables and figures are still referred to correctly in the text.
 - [ ] The assessment task matches the learning outcomes.
 - [ ] The rubric fits the task students are asked to complete.

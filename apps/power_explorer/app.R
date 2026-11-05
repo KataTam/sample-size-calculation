@@ -15,42 +15,7 @@ downloadButton <- function(...) {
   button
 }
 
-download_script <- r"---(// Fetch through the page's service worker before asking Chromium to save.
-document.addEventListener('click', async function(event) {
-  const link = event.target.closest('a.shiny-download-link');
-  if (!link) return;
-  event.preventDefault();
-  event.stopImmediatePropagation();
-  const status = document.getElementById('download-status');
-  if (!link.href || !link.href.includes('/download/')) {
-    status.textContent = 'Run the study before downloading its results.';
-    return;
-  }
-  if (link.getAttribute('aria-busy') === 'true') return;
-  link.setAttribute('aria-busy', 'true');
-  status.textContent = 'Preparing download...';
-  try {
-    const response = await fetch(link.href);
-    if (!response.ok) throw new Error('The file could not be generated.');
-    const disposition = response.headers.get('Content-Disposition') || '';
-    const filenameMatch = disposition.match(/filename="([^"]+)"/i);
-    if (!filenameMatch) throw new Error('The download response did not contain a file.');
-    const blob = await response.blob();
-    const url = URL.createObjectURL(blob);
-    const save = document.createElement('a');
-    save.href = url;
-    save.download = filenameMatch[1];
-    document.body.appendChild(save);
-    save.click();
-    save.remove();
-    setTimeout(function() { URL.revokeObjectURL(url); }, 60000);
-    status.textContent = 'Download prepared: ' + filenameMatch[1];
-  } catch (error) {
-    status.textContent = 'Download failed. ' + error.message + ' Please try again.';
-  } finally {
-    link.removeAttribute('aria-busy');
-  }
-}, true);)---"
+download_script <- activity_download_script()
 
 ui <- fluidPage(
   tags$head(tags$script(src = "sampling-journey.js"), tags$link(rel = "stylesheet", href = "sampling-journey.css"), tags$script(HTML(download_script)), tags$script(HTML(activity_bridge_script()))),
@@ -250,11 +215,11 @@ ui <- fluidPage(
         "The example updates with the selected case and current calculation inputs.",
         "Your recommendation should give analyzable and recruitment counts, supporting evidence, and the effect of plausible alternative assumptions. It should identify remaining limitations.", rows = 8),
       p(id = "study-plan-guidance", "A structured ", tags$a(href = "../assumptions_report/", "study-plan report"), " brings these decisions together using PICO, selected SPIRIT 2025 items and DELTA² guidance."),
-      uiOutput("report_preview"), downloadButton("download_plan", "Save report (HTML)"),
-      activity_details("Backup inputs for reopening",
-      downloadButton("download_plan_json", "Save settings and answers (JSON)"),
-      fileInput("upload_plan", "Restore settings and answers", accept = c(".json", "application/json")),
-      p("This optional backup lets you continue later or on another computer. Choosing the saved JSON file above restores the example, settings, and written answers; simulations must be rerun. For reading, sharing, or printing, use Save report (HTML).")),
+      uiOutput("report_preview"), activity_report_downloads("download_plan"),
+      activity_details("Save work for later",
+      downloadButton("download_plan_json", "Save work for later"),
+      fileInput("upload_plan", "Reopen saved work", accept = c(".json", "application/json")),
+      p("This file restores your example, settings, and written answers in this app. Simulations should be rerun after reopening. The PDF and Word downloads provide a readable report.")),
       tags$details(tags$summary("Optional reproducible R workflow"),
         p("This script reproduces the current scenario when run from the downloaded source folder containing the shared R functions."), downloadButton("download_code", "Download R script")),
       app_citation("Sample size reasoning lab", "power_explorer")),

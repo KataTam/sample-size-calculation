@@ -28,7 +28,7 @@ Apps are interactive software. Activities provide questions and exercises to hel
 
 - [Study-design questionnaire](design_questionnaire/): consider designs suited to your research question. [Activity: Choosing a study design](study/?activity=design_questionnaire).
 
-The calculation apps use four views: “Overview” for the main result, “Explore assumptions” for graphs and comparisons, “Report” for a readable summary of current inputs and results, and “Methods and references” for calculation details. Reports can be saved as HTML and printed from a browser. The reasoning lab also has simulation and “My study” views; the study-plan report follows four writing stages.
+The calculation apps use four views: “Overview” for the main result, “Explore assumptions” for graphs and comparisons, “Report” for a readable summary of current inputs and results, and “Methods and references” for calculation details. Reports download as PDF by default, with an editable Word alternative. The reasoning lab also has simulation and “My study” views; the study-plan report follows four writing stages. In the lab and study-plan form, separate “Save work for later” controls preserve settings and answers for reopening.
 
 The reasoning lab has core and advanced activities. Core activities start with advanced controls closed; “Settings” provides the other assumptions. Question help is available by hover, keyboard focus or tap. Gray model answers in written-response fields illustrate how to explain a decision; reports use your own entries. The [activity walkthroughs](student-materials/activity-walkthroughs.html) provide guidance for each one, including pilot retention, precision and recruitment scenarios.
 

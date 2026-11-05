@@ -1,5 +1,6 @@
 /* Browser checks for shared question help and example-only answer placeholders. */
 const {chromium} = require('playwright');
+const {saveReportPair} = require('./report_test_helpers.cjs');
 const assert = require('node:assert/strict'), fs = require('node:fs');
 const base = (process.argv[2] || 'http://127.0.0.1:8769').replace(/\/$/, '');
 (async () => {
@@ -41,12 +42,10 @@ const base = (process.argv[2] || 'http://127.0.0.1:8769').replace(/\/$/, '');
         await frame.locator('#study_question').fill('Does a new treatment improve the four-week outcome?');
         await frame.getByRole('tab', {name: 'Report', exact: true}).click();
         await frame.locator('#justification').fill('My own recommendation for this teaching case.');
-        const pending = page.waitForEvent('download'); await frame.locator('#download_plan').click();
-        const download = await pending, text = fs.readFileSync(await download.path(), 'utf8');
+        const {html:text} = await saveReportPair(page,frame,'#download_plan','#download_plan_word','lab-guidance');
         assert.match(text, /My own recommendation/); assert.match(text, /Analyzable participants:/);
         assert.doesNotMatch(text, /List of \d|\$ study_question|Model answer:/);
         assert.match(text, /Clinical relevance: Not yet specified\./);
-        await download.saveAs('build/input-guidance/lab-report.html');
       }
       await page.screenshot({path: 'build/input-guidance/' + app + '.png', fullPage: true});
       console.log(app + ': all help sources attached; gray examples remain empty inputs; keyboard help passed');

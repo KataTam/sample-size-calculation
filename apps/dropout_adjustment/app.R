@@ -13,42 +13,7 @@ downloadButton <- function(...) {
   button
 }
 
-download_script <- r"---(// Fetch through the page's service worker before asking Chromium to save.
-document.addEventListener('click', async function(event) {
-  const link = event.target.closest('a.shiny-download-link');
-  if (!link) return;
-  event.preventDefault();
-  event.stopImmediatePropagation();
-  const status = document.getElementById('download-status');
-  if (!link.href || !link.href.includes('/download/')) {
-    status.textContent = 'The calculation must be valid before its report can be downloaded.';
-    return;
-  }
-  if (link.getAttribute('aria-busy') === 'true') return;
-  link.setAttribute('aria-busy', 'true');
-  status.textContent = 'Preparing download...';
-  try {
-    const response = await fetch(link.href);
-    if (!response.ok) throw new Error('The file could not be generated.');
-    const disposition = response.headers.get('Content-Disposition') || '';
-    const filenameMatch = disposition.match(/filename="([^"]+)"/i);
-    if (!filenameMatch) throw new Error('The download response did not contain a file.');
-    const blob = await response.blob();
-    const url = URL.createObjectURL(blob);
-    const save = document.createElement('a');
-    save.href = url;
-    save.download = filenameMatch[1];
-    document.body.appendChild(save);
-    save.click();
-    save.remove();
-    setTimeout(function() { URL.revokeObjectURL(url); }, 60000);
-    status.textContent = 'Download prepared: ' + filenameMatch[1];
-  } catch (error) {
-    status.textContent = 'Download failed. ' + error.message + ' Please try again.';
-  } finally {
-    link.removeAttribute('aria-busy');
-  }
-}, true);)---"
+download_script <- activity_download_script()
 
 ui <- fluidPage(
   tags$head(tags$script(HTML(download_script)), tags$script(HTML(activity_bridge_script("dropout_adjustment"))),
@@ -103,7 +68,7 @@ ui <- fluidPage(
         activity_text_input("reasoning", "How would switching and missing assessments affect your recruitment plan?",
           "The example updates with the selected case and current calculation inputs.",
           "Your explanation should compare the starting and final counts, justify the loss and switching percentages, and identify how missing outcomes will be handled.", rows = 6)),
-        uiOutput("report_preview"), downloadButton("report", "Save report (HTML)"),
+        uiOutput("report_preview"), activity_report_downloads("report"),
         p(id = "download-status", role = "status", `aria-live` = "polite")),
       tabPanel("Methods and references", h3("Calculation with your current values"), uiOutput("worked_method"),
         p("Starting n is multiplied by 1/(1 - a - b)^2 when the switching option applies. Here a and b are the fractions switching in the two directions. The result is divided by each group's expected retained fraction. The larger requirement is rounded upward once per group and doubled for equal recruitment."),

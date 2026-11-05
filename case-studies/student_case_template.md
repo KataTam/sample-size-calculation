@@ -2,7 +2,7 @@
 
 You can develop a hypothetical clinical case or use a topic with public evidence, keeping patient-identifiable information out of the material. Invented values should be labeled as teaching assumptions. The core comparison fields support equal independent groups with normal continuous outcomes or binary outcomes. The single-proportion extension supports descriptive/feasibility estimation; use a different validated method for other designs.
 
-You can enter and save your answers in the [study-plan report activity](https://katatam.github.io/sample-size-calculation/study/?activity=assumptions_report), or copy these prompts into your own document. The report develops across the core chapters; unresolved entries identify the evidence you still need. The saved HTML report can be read, printed and reopened in the activity.
+You can enter and save your answers in the [study-plan report activity](https://katatam.github.io/sample-size-calculation/study/?activity=assumptions_report), or copy these prompts into your own document. The report develops across the core chapters; unresolved entries identify the evidence you still need. You can download the report as PDF or an editable Word document. “Save work for later” stores your entries for reopening in the activity.
 
 ## Question and inferential goal
 

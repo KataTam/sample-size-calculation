@@ -268,7 +268,7 @@ Which count belongs in the protocol: analyzable patients or patients to recruit?
 
 Your report should record both and explain the adjustment for expected losses when you complete the calculation.
 
-The [Activity: Develop and justify your study plan](https://katatam.github.io/sample-size-calculation/study/?activity=assumptions_report) has four expandable sections: question and design, assumptions and evidence, calculation, and recruitment and conclusion. You can begin with the first section and return as your plan develops. The preview and saved HTML report bring your answers together and identify unanswered decisions. The saved report can be read, printed or reopened in the activity to continue editing.
+The [Activity: Develop and justify your study plan](https://katatam.github.io/sample-size-calculation/study/?activity=assumptions_report) has four expandable sections: question and design, assumptions and evidence, calculation, and recruitment and conclusion. You can begin with the first section and return as your plan develops. The preview and report bring your answers together and identify unanswered decisions. You can download the report as PDF or an editable Word document. “Save work for later” stores your entries for reopening in the activity.
 
 This activity connects the numerical result to a defensible study decision. Your report should record the calculation or simulation results together with their method, inputs and interpretation.
 

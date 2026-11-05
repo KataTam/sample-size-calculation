@@ -16,13 +16,13 @@ The reasoning lab and single-percentage app omit saved simulation results from t
 
 | File | What it contains | How you can use it |
 |---|---|---|
-| App report (HTML) | Current assumptions, calculated results, matching simulated results where available, and your written responses | Open it in a browser to read, share or print; the browser's print options can save a PDF. |
-| Reasoning-lab backup (JSON) | The selected example, settings and written study-plan answers | In the lab's “Report” view, open “Backup inputs for reopening,” then use “Restore settings and answers.” Previous simulations are cleared and should be rerun. |
-| Study-plan report (HTML) | Your entries and the decisions still to complete | In the separate [study-plan activity](../study/?activity=assumptions_report), “Reopen saved report or entries” restores this file for editing. Its earlier JSON entries files are also accepted. |
+| Report (PDF) | Current assumptions, calculated results, matching simulated results where available, and your written responses | The default download for reading, sharing, printing or submitting. The study-plan form includes your entries and decisions still to complete. |
+| Editable report (Word) | The same report in a .docx document | Open it in Word or another compatible editor to revise or combine with your assignment. Edits in Word remain in that document. |
+| Saved work (JSON) | The example, settings and answers needed to resume in the reasoning lab, or entries from the study-plan form | Open “Save work for later,” then use “Reopen saved work” in the same app. The lab clears previous simulations, which should be rerun. |
 | Simulation data (CSV) | The saved study or repetitions and the assumptions used to generate them | Open the file in a spreadsheet or analysis program to inspect the saved run. |
 | Reproducible script (R) | Code for the reasoning lab's current simulation settings | Run it from the downloaded source folder with its shared R functions; see [Source and reuse](../documentation/reuse-and-citation.md). |
 
-The JSON backup is optional and can remain unopened on your computer until you restore it through the lab. The study-plan activity also offers a plain-text report. For a class submission, your teacher can specify which readable report and supporting results are needed.
+“Save work for later” is separate from the report downloads. Its JSON file can remain unopened on your computer until you reopen it in the app. The study-plan form also accepts its earlier saved HTML reports and JSON entries, and offers a plain-text report. For a class submission, your teacher can specify the report and supporting results needed.
 
 ## Develop and justify your study plan
 
@@ -34,7 +34,7 @@ Purpose: connect the calculation to a clinical question, evidence and a defensib
 2. Your assumptions should include their sources and uncertainty. For a treatment comparison, the expected difference, target difference and clinical threshold have separate roles.
 3. After using an appropriate calculator, you can enter its method, analyzable sample and recruitment allowance. A simulation result should include its generating assumptions and repetition count.
 4. “Preview report” brings your completed entries together. “Still to complete” lists open decisions. The downloaded report retains unanswered items explicitly.
-5. “Save report (HTML)” preserves the report and entries. “Files, example and help” contains the example, reopening controls and a plain-text download; the [file guide above](#reports-and-saved-work) explains each format. You can begin in Chapter 1, add decisions as the tutorial progresses, and record what changed and why in your final justification. Changing the study settings preserves your written answers, which should be reviewed for consistency with the new question and goal.
+5. “Download report (PDF)” saves the report; “Download editable report (Word)” provides a document you can edit. “Save work for later” preserves entries to reopen in the form; the [file guide above](#reports-and-saved-work) explains each format. You can begin in Chapter 1, add decisions as the tutorial progresses, and record what changed and why in your final justification. Changing the study settings preserves your written answers, which should be reviewed for consistency with the new question and goal.
 
 ## Chronic pain: one study and many studies — core
 
@@ -47,7 +47,7 @@ Purpose: see why sample estimates differ from population values, interpret the u
 3. The 20-trial animation shows different possible trials while the population probabilities remain fixed. For each interval, you can compare the compatible differences with zero and the 20-percentage-point clinical threshold, following the [interval interpretation](../book/power.html#interpret-a-confidence-interval-clinically).
 4. “Many studies and a larger sample” opens further down the same page. “Simulate many studies” generates 5,000 independent trials. The distribution shows sampling variability; the percentage of significant results estimates power for this population scenario.
 5. Before repeating at 50 and 80 patients per group, you can predict how the estimates, intervals and power will change, holding the population assumptions and repetition count fixed. Larger trials usually give narrower intervals and greater power. “Settings” provides the other assumptions. Advanced controls start closed; coverage and Monte Carlo summaries can wait until the advanced chapter.
-6. The expandable “Model answer” sections support reflection. “Report” summarizes the population assumptions, pain-relief counts in one study, and results across many studies, with an explanation of sampling variability. You can add your reflection and save the report as HTML. After changing the sample size, a new run is needed for those results to appear in the report.
+6. The expandable “Model answer” sections support reflection. “Report” summarizes the population assumptions, pain-relief counts in one study, and results across many studies, with an explanation of sampling variability. You can add your reflection and download a PDF or editable Word report. After changing the sample size, a new run is needed for those results to appear in the report.
 
 ## Type I and Type II error probabilities and power — advanced
 
@@ -217,7 +217,7 @@ Purpose: bring together the clinical question, numerical requirements and practi
 3. The recruitment and cost inputs help assess feasibility. Actual recruitment and retention can vary from these expectations.
 4. For a supported design, “One study” and “Many studies” can examine possible results and performance. Sensitivity scenarios should change the assumed population while retaining the original plan when that is the question.
 5. “Report” combines your study responses and recommendation with the current calculations, feasibility and matching simulations. Your written answers should reflect the selected example and settings. Unsupported designs receive a note about the need for a design-specific method.
-6. “Save report (HTML)” produces the readable summary. “Backup inputs for reopening” offers “Save settings and answers (JSON)” and its restore control. The [file guide above](#reports-and-saved-work) explains backups, simulation data and the optional R script. Findings and their justification can be entered in the separate study-plan activity.
+6. “Download report (PDF)” saves the summary; “Download editable report (Word)” provides an editable copy. The separate “Save work for later” controls save and reopen your settings and answers. The [file guide above](#reports-and-saved-work) explains backups, simulation data and the optional R script. Findings and their justification can be entered in the separate study-plan activity.
 
 ## Choosing a study design — advanced
 

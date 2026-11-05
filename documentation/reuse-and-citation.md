@@ -10,7 +10,7 @@ This repository contains both teaching materials and code.
 |---|---|
 | Read or teach from the complete tutorial | [Standalone HTML](../book/Sample_size_open_module.html) or [PDF](../book/Sample_size_open_module.pdf) |
 | Adapt the tutorial, apps or supporting materials | [Source package](../sample-size-oer-source.zip), with the [adaptation guide](../teaching/adaptation_guide.md) |
-| Save or submit work completed in an app | The app's HTML report; the [walkthroughs](../student-materials/activity-walkthroughs.html#reports-and-saved-work) explain readable reports, optional JSON backups and simulation downloads |
+| Save or submit work completed in an app | The app's PDF report or editable Word document; the [walkthroughs](../student-materials/activity-walkthroughs.html#reports-and-saved-work) explain readable reports, optional JSON backups and simulation downloads |
 
 The source package contains the maintained teaching files, software and build instructions. A reasoning-lab JSON backup contains one learner's selected example, settings and answers for restoration in that lab. App reports and backups are created when you download them from an app.
 

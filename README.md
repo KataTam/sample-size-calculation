@@ -15,7 +15,7 @@ The tutorial, browser apps and prepared examples require no R installation. The 
 - Student reviewers: use the [review guide](student-materials/README.md) and [open-ended review template](student-materials/material-review-template.md).
 - Adapters: start with [Source and reuse](documentation/reuse-and-citation.md), the [adaptation guide](teaching/adaptation_guide.md) and [build instructions](documentation/development/build-and-publish.md).
 
-The [activity walkthroughs](student-materials/activity-walkthroughs.md) explain the app steps and [saved-file formats](student-materials/activity-walkthroughs.md#reports-and-saved-work), including readable HTML reports, the reasoning lab's optional JSON backup and simulation exports.
+The [activity walkthroughs](student-materials/activity-walkthroughs.md) explain the app steps and [saved-file formats](student-materials/activity-walkthroughs.md#reports-and-saved-work), including PDF and editable Word reports, separate saved-work files and simulation exports.
 
 ## What you will explore
 

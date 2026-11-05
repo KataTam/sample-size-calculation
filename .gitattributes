@@ -1,0 +1,4 @@
+# Preserve distributed third-party JavaScript and license files byte for byte.
+site/vendor/reports/*.js -text -whitespace
+site/vendor/reports/LICENSE-*.txt -text -whitespace
+site/vendor/reports/*.ttf binary

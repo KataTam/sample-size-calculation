@@ -29,6 +29,8 @@ details { margin:12px 0; } summary { min-height:44px; cursor:pointer; }
 .app-steps .app-value { display:block; font-size:1.45rem; } .app-steps .app-label { display:block; font-size:.9rem; }
 .app-report { background:#f4f7fa; border:1px solid #b8cbd4; border-radius:7px; padding:18px; margin:16px 0; overflow-wrap:anywhere; }
 .app-report p { white-space:pre-wrap; } .app-report h3 { margin-top:0; }
+.report-downloads { display:flex; flex-wrap:wrap; align-items:center; gap:10px; margin:16px 0; }
+.report-downloads .btn { white-space:normal; }
 .app-method { background:#f4f7fa; padding:14px; border-left:4px solid #704a93; margin:14px 0; overflow-wrap:anywhere; }
 .app-comparison { border:1px solid #b8cbd4; border-radius:7px; padding:16px; margin:16px 0; }
 .app-footer { border-top:1px solid #b8cbd4; margin-top:24px; padding-top:14px; font-size:.9rem; }

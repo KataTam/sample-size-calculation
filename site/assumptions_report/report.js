@@ -323,22 +323,36 @@
   document.getElementById('clear').addEventListener('click', () => { apply({}); status.textContent = 'Entries cleared. You can start a new plan.'; });
   const escapeHTML = text => String(text).replace(/[&<>"']/g, c => ({'&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;'}[c]));
   function reportDocument() {
-    const entries = snapshot(), payload = JSON.stringify({schema: 'sample-size-assumptions-report', version: 2, entries}).replace(/</g, '\\u003c');
     const headings = new Set(groups.map(group => group[0]));
     const content = reportLines.map(line => headings.has(line) ? '<h2>' + escapeHTML(line) + '</h2>' : '<p>' + escapeHTML(line) + '</p>').join('\n');
     return '<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Study-plan report</title>' +
       '<style>body{max-width:800px;margin:2rem auto;padding:0 1rem;font:17px/1.6 system-ui,sans-serif;color:#20343e}p{white-space:pre-wrap;overflow-wrap:anywhere}h2{margin-top:1.5em;font-size:1.2em}a{color:#006481}footer{border-top:1px solid #abc;margin-top:2rem;font-size:.9em}@media print{body{margin:0;max-width:none;font-size:11pt}h2{break-after:avoid}a{color:inherit}}</style></head><body><h1>Study-plan report</h1>' +
+      '<p>Generated ' + new Intl.DateTimeFormat('en-US', {dateStyle:'long'}).format(new Date()) + '</p>' +
       '<p>' + escapeHTML(document.getElementById('progress').textContent) + '</p>' + content +
-      '<footer><p>This draft contains your entries and identifies unanswered decisions. You can print it or save it as PDF using your browser. To continue editing, reopen this HTML file in the <a href="https://katatam.github.io/sample-size-calculation/assumptions_report/">study-plan activity</a>.</p>' +
+      '<footer><p>This draft contains your entries and identifies unanswered decisions.</p>' +
       document.getElementById('guidance-credit').innerHTML.replace(/<(\/?)(?:details)[^>]*>/g, '<$1section>').replace(/<(\/?)(?:summary)>/g, '<$1h2>') + '</footer>' +
-      '<script type="application/json" id="study-plan-data">' + payload + '</script></body></html>';
+      '</body></html>';
   }
-  function saveReport() {
-    download(reportDocument(), 'text/html;charset=utf-8', 'study-plan-report.html');
-    status.textContent = 'Readable HTML report saved. You can reopen this file here to continue editing.';
+  async function saveReport(event) {
+    const button = event.currentTarget;
+    if (button.getAttribute('aria-busy') === 'true') return;
+    button.setAttribute('aria-busy', 'true'); status.textContent = 'Preparing report...';
+    try {
+      render();
+      const name = await ReportExports.download(reportDocument(), button.id.endsWith('word') ? 'docx' : 'pdf', 'study-plan-report');
+      status.textContent = 'Report downloaded: ' + name;
+    } catch (error) { status.textContent = 'The report could not be downloaded. ' + error.message; }
+    finally { button.removeAttribute('aria-busy'); }
   }
   document.getElementById('save').addEventListener('click', saveReport);
   document.getElementById('download').addEventListener('click', saveReport);
+  document.getElementById('save-word').addEventListener('click', saveReport);
+  document.getElementById('download-word').addEventListener('click', saveReport);
+  document.getElementById('save-work').addEventListener('click', () => {
+    download(JSON.stringify({schema:'sample-size-assumptions-report',version:2,entries:snapshot()}, null, 2),
+      'application/json', 'study-plan-work.json');
+    status.textContent = 'Work saved. Reopen this file here to continue editing.';
+  });
   document.getElementById('download-text').addEventListener('click', () => {
     const lines = ['Study-plan report', document.getElementById('progress').textContent, '', ...reportLines,
       'Guidance: PICO (Richardson et al., 1995), https://doi.org/10.7326/ACPJC-1995-123-3-A12; SPIRIT 2025, https://www.consort-spirit.org/; DELTA² (Cook et al., 2018), https://doi.org/10.1136/bmj.k3750. Educational selection; a full protocol should use its complete design-specific guidance.',
@@ -348,11 +362,11 @@
   document.getElementById('restore').addEventListener('change', async event => {
     const file = event.target.files[0]; if (!file) return;
     try {
-      if (file.size > 1000000) throw Error('Choose a saved report or entries file smaller than 1 MB.');
+      if (file.size > 1000000) throw Error('Choose a saved work file smaller than 1 MB.');
       const text = await file.text();
       const payload = text.match(/<script\b(?=[^>]*\bid=["']study-plan-data["'])(?=[^>]*\btype=["']application\/json["'])[^>]*>([\s\S]*?)<\/script\s*>/i);
       const saved = JSON.parse(text.trim().startsWith('{') ? text : payload?.[1] || 'null');
-      if (!saved || saved.schema !== 'sample-size-assumptions-report' || ![1, 2].includes(saved.version)) throw Error('Choose an HTML report or earlier JSON entries file saved by this activity.');
+      if (!saved || saved.schema !== 'sample-size-assumptions-report' || ![1, 2].includes(saved.version)) throw Error('Choose a saved work file or an earlier HTML report from this activity.');
       apply(saved.entries); status.textContent = 'Saved entries restored.';
     } catch (error) { status.textContent = 'Entries were not changed. ' + error.message; }
     event.target.value = '';
