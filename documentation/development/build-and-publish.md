@@ -10,6 +10,8 @@ Open `sample-size-calculation.Rproj`. Edit `module/Sample_size_open_module.Rmd` 
 
 Save, commit and push to `main` to update the public source. When enabled, the GitHub Actions workflow checks source encoding, runs the statistical/server checks, renders chaptered and complete HTML and the complete PDF, exports the browser apps, renders the supporting pages, checks local website links, refreshes the source download and deploys GitHub Pages. Knitting alone updates local files and does not publish. A failed deployment leaves the previous successful site online.
 
+The build uses Ubuntu 24.04 and R 4.5.1 with the package lockfile. The runner is pinned because `later` 1.4.4 fails to compile against the Ubuntu 26 system headers; an environment upgrade should be validated separately.
+
 PDF update policy (5 October 2026): after tutorial changes, refresh the complete tutorial HTML and PDF downloads. Check their content and rendered layout before delivery. The complete PDF expands all disclosure boxes, including model answers, R code and raw output, alongside formatted tables and figures.
 
 ## Build locally

@@ -10,7 +10,8 @@ concurrency:
   cancel-in-progress: false
 jobs:
   build:
-    runs-on: ubuntu-latest
+    # The locked R dependencies are validated on this runner (later 1.4.4 fails on Ubuntu 26).
+    runs-on: ubuntu-24.04
     env:
       BUILD_PDF: 'true'
     steps:
