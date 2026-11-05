@@ -282,6 +282,18 @@ In rare-disease studies, the Type I error probability and any alternative design
 
 </details>
 
+## Noninferiority and equivalence trials {#noninferiority-equivalence .advanced-heading}
+
+The earlier treatment comparisons asked whether a novel treatment improves outcomes. A new treatment may also offer easier administration, fewer adverse effects, or lower costs. You may then want to establish whether it retains sufficient efficacy to be an acceptable alternative to an established treatment. This can motivate a noninferiority trial. An equivalence trial assesses whether the treatments differ only within prespecified, clinically acceptable limits [@schumi2011lookingglass].
+
+The margin defines the boundary used to assess the treatment difference. For noninferiority, it represents the largest acceptable loss of efficacy. Equivalence uses lower and upper boundaries. These margins concern the population-level difference between treatment groups. Their justification should reflect the outcome, follow-up period, clinical consequences, and evidence about the established treatment's benefit. The 20-percentage-point clinical threshold in the chronic-pain example describes a worthwhile improvement; an acceptable loss requires a separate justification [@fda2016noninferiority].
+
+For an outcome such as pain relief, where higher percentages are better and the difference is novel minus standard treatment, noninferiority requires the lower confidence limit to lie above the prespecified lower boundary. Equivalence requires the entire confidence interval to lie within the two equivalence boundaries. The confidence level should match the planned test and Type I error probability. A nonsignificant superiority result alone cannot establish either conclusion [@piaggio2012consortni].
+
+Sample-size planning should specify both the margin and the assumed true between-group difference at which power is evaluated. The calculation also depends on outcome variability or event probabilities, allocation, Type I error probability, and target power. With other assumptions fixed, narrower margins generally require larger samples. The margin should be justified before calculating the sample size. Careful trial conduct is particularly important because problems that make the groups appear more similar can favor a misleading noninferiority conclusion [@fda2016noninferiority].
+
+*Further resource: Katalin Tam&aacute;si's tutorial and interactive apps on noninferiority and equivalence trials [link to be added].*
+
 ## Match the question to a method and resource {.advanced-heading}
 
 | Example question | Planning focus | Route |
@@ -293,7 +305,7 @@ In rare-disease studies, the Type I error probability and any alternative design
 | How accurately does a screening test identify disease? | Precision of sensitivity/specificity and enough reference-positive/reference-negative participants | [STARD 2015](https://www.bmj.com/content/351/bmj.h5527) for reporting; obtain diagnostic-accuracy planning methods |
 | Do speech measurements differ between the same Parkinson patient's OFF and ON medication states? | Within-person differences, repeated-measures analysis and correlation | Use a paired/repeated-measures method for this change question; both recordings belong to the same participant |
 | Does an intervention allocated to wards improve outcomes? | Number/size of clusters, within-cluster correlation and analysis | Use cluster planning; see [Hayes and Bennett (1999)](https://doi.org/10.1093/ije/28.2.319) |
-| Is a treatment sufficiently similar to an established treatment, or not worse by more than an acceptable margin? | Equivalence or noninferiority hypotheses, justified margin, analysis and error control | The hypotheses should assess the prespecified equivalence or noninferiority margin. See Julious (2023) in the tutorial references |
+| Is a treatment sufficiently similar to an established treatment, or not worse by more than an acceptable margin? | Equivalence or noninferiority hypotheses, justified margin, analysis and error control | [Noninferiority and equivalence trials](#noninferiority-equivalence) explains the margins and planning assumptions. See Julious (2023) in the tutorial references |
 | What can a trial establish when a rare disease limits recruitment? | Recruitment ceiling, meaningful outcomes, valid comparison and attainable information | [Rare-disease planning](#rare-diseases); the sample size should follow the study objectives, recruitment ceiling and design-specific guidance |
 | Is a risk factor associated with an outcome in a cohort or case-control study? | Association scale, event frequency, exposure frequency, confounder adjustment and missingness | Obtain analysis-specific regression/association planning; [STROBE](https://www.strobe-statement.org/) supports reporting |
 | Do semantic speech features predict Parkinson's medication state more accurately than syntactic features? | Paired ON/OFF recordings, paired comparison of model performance, number of patients and predictor parameters, and evaluation without patient overlap | [Riley et al. (2020)](https://www.bmj.com/content/368/bmj.m441) gives general model-development planning guidance; the paired comparison needs additional methods. [TRIPOD+AI](https://www.tripod-statement.org/) supports reporting |
