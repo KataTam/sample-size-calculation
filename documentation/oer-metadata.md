@@ -101,15 +101,9 @@ Teachers may adapt examples, app defaults, cases, and assessment tasks. The repo
 
 Student-generated cases should be reviewed and reused publicly only with consent.
 
-## Suggested citations
+## Suggested Citation
 
-The complete resource:
-
-> Tamási, K. (2026). *[Sample size calculation OER](https://katatam.github.io/sample-size-calculation/)* [Open educational resource].
-
-The tutorial:
-
-> Tamási, K. (2026). *[How many patients do you need for your study? Sample size calculation tutorial for healthcare professionals](https://katatam.github.io/sample-size-calculation/book/)* [Tutorial, draft version].
+Tamasi, K. (2026). *Sample size calculation OER* [Teaching materials and software]. GitHub. https://github.com/KataTam/sample-size-calculation
 
 
 ## Revised learning scope
