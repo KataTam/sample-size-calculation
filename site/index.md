@@ -21,6 +21,18 @@ Open teaching materials for reasoning about sample size in medical studies.
   </a>
 </nav>
 
+## How to cite this resource
+
+The complete open educational resource includes the tutorial, activities, apps, flashcards, and guidance for teaching and adaptation. You can cite the collection as a whole or cite the tutorial specifically, depending on which materials you use.
+
+The complete resource:
+
+> Tamási, K. (2026). *[Sample size calculation OER](https://katatam.github.io/sample-size-calculation/)* [Open educational resource].
+
+The tutorial:
+
+> Tamási, K. (2026). *[How many patients do you need for your study? Sample size calculation tutorial for healthcare professionals](https://katatam.github.io/sample-size-calculation/book/)* [Tutorial, draft version].
+
 Ideas, questions, or problems with the tutorial or activities? [Ideas and feedback](https://forms.cloud.microsoft/e/j00AMibqi5). You can leave an email address if you would like a reply.
 
 <footer class="landing-footer">

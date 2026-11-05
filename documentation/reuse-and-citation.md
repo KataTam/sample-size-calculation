@@ -36,7 +36,7 @@ You may share and adapt these materials if you give appropriate credit, link to 
 
 Suggested attribution:
 
-> Adapted from "Sample Size Calculation OER" by Katalin Tamasi, licensed under [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/).
+> Adapted from "Sample Size Calculation OER" by Katalin Tamási, licensed under [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/).
 
 ## Code
 
@@ -51,9 +51,15 @@ The full project-specific notice is in [LICENSE-code.md](../LICENSE-code.md).
 
 ## Citation
 
-Citation metadata is provided in `CITATION.cff`. Until a DOI is added, cite the GitHub repository:
+You can cite the complete collection or the tutorial specifically, depending on which materials you use. Citation metadata for the collection is provided in `CITATION.cff`.
 
-> Tamasi, K. (2026). *Sample size calculation OER* [Teaching materials and software]. GitHub. https://github.com/KataTam/sample-size-calculation
+The complete resource:
+
+> Tamási, K. (2026). *[Sample size calculation OER](https://katatam.github.io/sample-size-calculation/)* [Open educational resource].
+
+The tutorial:
+
+> Tamási, K. (2026). *[How many patients do you need for your study? Sample size calculation tutorial for healthcare professionals](https://katatam.github.io/sample-size-calculation/book/)* [Tutorial, draft version].
 
 If you cite a specific version, use the release tag once releases are created.
 

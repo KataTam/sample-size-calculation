@@ -209,6 +209,8 @@ draw_planning_differences()
 Choosing 30 rather than 20 percentage points has a consequence: a study planned for high power at 30 will generally have lower power at a 20-point benefit, even though that smaller benefit matters clinically. For this illustration, suppose the team considers a 30-point benefit realistic and large enough to support adopting the treatment. Its plan must acknowledge that a 20-point benefit could remain inconclusive. If reliably detecting the smallest worthwhile benefit is essential, evaluate the sample required at 20 instead. Affordability alone is not a justification for choosing a larger target [@cook2018delta2].
 
 ::: {.activity}
+<p class="question-label">Question to consider</p>
+
 The plan uses a target difference of 30 percentage points. Under what circumstances would planning for 20 percentage points be more appropriate, and what would that change?
 
 Your explanation should consider patient and clinical judgments, the evidence, and the intended conclusion. These are hypothetical values; a real protocol needs outcome-specific evidence.
@@ -264,6 +266,8 @@ For each numerical assumption, you should record the source, its relevance to th
 A useful check is whether another researcher could reproduce your calculation from the description. In a review of 185 studies using the BREAST-Q Reconstruction Module, only 17 reported a sample-size calculation [@gallo2022]. This finding identifies incomplete reporting; the calculations and power of the remaining studies could not be assessed from that information. Your [assumptions report](https://katatam.github.io/sample-size-calculation/study/?activity=assumptions_report) should make both the calculation and its justification traceable.
 
 ::: {.activity}
+<p class="question-label">Question to consider</p>
+
 Which count belongs in the protocol: analyzable patients or patients to recruit?
 
 Your report should record both and explain the adjustment for expected losses when you complete the calculation.
@@ -508,6 +512,8 @@ local({
 Figure \@ref(fig:sample-differences) shows [sampling variability](#sampling-variability); the table shows how often the planned test detects the specified population difference. The assumed true difference here equals the 30-point [target difference](#target-difference) used to evaluate power. The simulation uses the specified population probabilities of 30% and 60%.
 
 ::: {.activity}
+<p class="question-label">Question to consider</p>
+
 <details class="activity-practice">
 <summary>Practice with the activity, now or after this chapter</summary>
 
@@ -1078,6 +1084,8 @@ Table: (\#tab:increase-power) Options for increasing power and the assumptions o
 Power calculations describe performance under assumed treatment benefits. Those assumptions should be grounded in relevant evidence. Running more simulations improves the precision of the estimated power.
 
 ::: {.activity}
+<p class="question-label">Question to consider</p>
+
 You can compare plans in [Activity: Chronic pain: one study and many studies](https://katatam.github.io/sample-size-calculation/study/?activity=pain_one_many). You should keep standard-treatment relief at 30%, novel-treatment relief at 60% and the Type I error probability at 5%. You can compare 50 and 80 analyzable patients per group. Which plan detects the specified benefit more often?
 
 What would obtaining the larger sample require in practice?
@@ -1207,6 +1215,8 @@ An effect below the target-power crossing can still produce a significant result
 </details>
 
 ::: {.activity}
+<p class="question-label">Question to consider</p>
+
 Predict. Which effect assumption is most demanding at the same power target?
 
 <details class="model-answer" id="model-answer-curves-predict">
@@ -1628,6 +1638,8 @@ In *Many studies*, the mean estimated difference is compared with the known popu
 The available-case analysis uses a two-sided pooled score test and a Newcombe-Wilson interval with the actual retained group sizes. It illustrates the consequences of a simple analysis under different missingness assumptions. Planning an appropriate missing-data analysis for a real trial requires assumptions and methods matched to the intended treatment effect [@bell2013dropout; @little2012missing]. The [recruitment discussion](#account-for-expected-losses) explains differential dropout and recruitment allowances; the [reproducibility chapter](#tutorial-methods) records the simulation procedures.
 
 ::: {.activity}
+<p class="question-label">Question to consider</p>
+
 With 60 recruited participants per group, how do unequal losses unrelated to relief compare with outcome-related losses at the same expected percentages?
 
 What happens to the estimated difference, coverage, and significance percentage?
@@ -1655,6 +1667,8 @@ knitr::kable(data.frame(Method=c("Repeated-trial simulation", "Planning approxim
 A difference can reflect Monte Carlo error or the approximation used for binary planning. Increasing the number of simulations reduces only the Monte Carlo component. Simulation evaluates the analysis under specified assumptions. Their suitability for the clinical study requires supporting evidence.
 
 ::: {.activity}
+<p class="question-label">Question to consider</p>
+
 With 60 patients per group, what happens if true treatment relief is 45% rather than 60%?
 
 <details class="model-answer" id="model-answer-simulation-predict">

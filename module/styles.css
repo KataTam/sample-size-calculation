@@ -21,6 +21,7 @@ pre:not(.sourceCode):not(.r) { background: #fff; border-left: 3px solid #b5c8ce;
 p.caption { color: #505b64; font-size: .92em; margin: 10px 0 24px; }
 .activity { border-left: 4px solid var(--accent); background: #deefee; padding: 12px 20px; margin: 22px 0; }
 .activity p:last-child { margin-bottom: 0; }
+.activity > .question-label { font-weight: 600 !important; margin: 0 0 .65em; break-after: avoid; }
 .learning-goals { border-left: 4px solid #3263a0; background: #dbe9fb; color: #25313b; padding: 12px 20px; margin: 20px 0 26px; }
 .learning-goals.advanced-outcomes { border-left-color: #69509a; background: #e7dcf6; }
 .learning-goals p:last-child { margin-bottom: 0; }
