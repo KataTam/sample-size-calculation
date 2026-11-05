@@ -4,6 +4,8 @@ These walkthroughs connect each activity to the question it helps answer. The cl
 
 Before changing an input, you can predict what the result will do and identify the quantities you will keep fixed. After exploring, your explanation should compare the result with your prediction and note what it means for the study plan.
 
+You can drag a slider or type its value in the adjacent number field. Percentages are entered on the displayed scale, so 5 means 5%. In a narrow app panel, “Study settings” opens the inputs; closing it leaves room for the result and graph. Secondary calculation settings remain available in their expandable groups.
+
 In the reasoning lab, planning tables and curves update when inputs change. Simulated results update only when you run the relevant simulation again and retain their saved assumptions until then. More patients change a study's information; more simulation repetitions improve the numerical precision of the estimated performance.
 
 The expected difference records your best expectation. With “Same as planning assumptions” selected, the simulations use the target difference and planning event probabilities. A custom population scenario lets you examine another true difference without changing the original plan. All treatment differences here are between-group differences.
@@ -33,7 +35,7 @@ Purpose: connect the calculation to a clinical question, evidence and a defensib
 1. “Question and design” opens first. You can describe the research question and its PICO components, including the intervention and comparator, then the design. “Study settings” controls the structure, outcome type and planning goal. Hovering over, focusing on or tapping a question opens its help; gray model answers illustrate possible responses.
 2. Your assumptions should include their sources and uncertainty. For a treatment comparison, the expected difference, target difference and clinical threshold have separate roles.
 3. After using an appropriate calculator, you can enter its method, analyzable sample and recruitment allowance. A simulation result should include its generating assumptions and repetition count.
-4. “Preview report” brings your completed entries together. “Still to complete” lists open decisions. The downloaded report retains unanswered items explicitly.
+4. The report appears beside the form on a wide screen. “Preview report” opens it in a narrow panel. Each section shows how many active prompts you have answered; “Still to complete” lists open decisions. The downloaded report retains unanswered items explicitly.
 5. “Download report (PDF)” saves the report; “Download editable report (Word)” provides a document you can edit. “Save work for later” preserves entries to reopen in the form; the [file guide above](#reports-and-saved-work) explains each format. You can begin in Chapter 1, add decisions as the tutorial progresses, and record what changed and why in your final justification. Changing the study settings preserves your written answers, which should be reviewed for consistency with the new question and goal.
 
 ## Chronic pain: one study and many studies — core
@@ -43,7 +45,7 @@ Purpose: connect the calculation to a clinical question, evidence and a defensib
 Purpose: see why sample estimates differ from population values, interpret the uncertainty in one trial, and relate repeated trials to power.
 
 1. The starting population has 30% relief with standard treatment and 60% with novel treatment, with 20 analyzable patients per group and a 5% Type I error probability.
-2. In “One study and many studies,” “Simulate one study” generates patient outcomes. You can compare the observed percentages, difference and interval with the specified population values. The animation follows the patient outcomes into the estimated difference and then the sampling distribution. “Animate 20 trials” builds a short sequence; pause, replay and reduced motion support closer inspection. Each accumulated dot represents one complete trial.
+2. In “One study and many studies,” “Simulate one study” generates patient outcomes. The animation follows the patient outcomes into the estimated difference and then the sampling distribution, with the population difference marked on both axes. “Animate 20 trials” builds a short sequence; pause, replay and reduced motion support closer inspection. Each accumulated dot represents one complete trial. “More lab views” opens the other calculation and study-planning views when needed.
 3. The 20-trial animation shows different possible trials while the population probabilities remain fixed. For each interval, you can compare the compatible differences with zero and the 20-percentage-point clinical threshold, following the [interval interpretation](../book/power.html#interpret-a-confidence-interval-clinically).
 4. “Many studies and a larger sample” opens further down the same page. “Simulate many studies” generates 5,000 independent trials. The distribution shows sampling variability; the percentage of significant results estimates power for this population scenario.
 5. Before repeating at 50 and 80 patients per group, you can predict how the estimates, intervals and power will change, holding the population assumptions and repetition count fixed. Larger trials usually give narrower intervals and greater power. “Settings” provides the other assumptions. Advanced controls start closed; coverage and Monte Carlo summaries can wait until the advanced chapter.
@@ -70,7 +72,7 @@ Purpose: reproduce the binary-outcome sample size calculation. The calculator us
 
 1. For the chronic pain example, you can enter 60% and 30%, Type I error probability 5%, target power 90% and initially no losses.
 2. The result is 56 analyzable patients per group. The total and any recruitment adjustment have different denominators and should be recorded separately.
-3. Changing one input at a time shows how the required sample responds. The calculation uses the event percentage in each group.
+3. Changing one input at a time shows how the required sample responds. The opening curve marks your current target difference and analyzable count per group. Adding expected losses changes the main result to recruitment per group, with the analyzable requirement retained below it.
 4. The link to the lab transfers this calculated count as a fixed sample. “Many studies” then lets you estimate the performance of the planned test through simulation and compare the estimated power with the planning target.
 5. “Explore assumptions” lets you compare a revised event percentage. “Report” includes both scenarios when they differ, together with their analyzable and recruitment counts and calculation method.
 

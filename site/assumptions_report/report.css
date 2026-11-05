@@ -40,6 +40,13 @@ body { font-size: 17px; }
 button, .file-button, summary { min-height: 44px; }
 #file-actions { max-width: 65ch; }
 .secondary-action { margin-top: .8rem; }
+.actions .secondary-action { margin-top:0; }
+.secondary-controls { display:flex; flex-wrap:wrap; align-items:start; gap:0 24px; }
+.secondary-controls > details { flex:1 1 230px; margin:0; }
+.secondary-controls > details > summary { font-size:.94rem; padding:6px 0; }
+.section-progress { display:block; font-size:.85rem; color:#415663; margin-top:4px; }
+.plan-section > div { padding:.75rem 0; }
+.plan-section textarea { min-height:88px; }
 @media (max-width: 900px) { main, .report-visible main { grid-template-columns: 1fr; padding: .6rem; } header { padding: .8rem; } .report-pane { position: static; max-height: none; } .report-visible .form-pane { display: none; } }
 @media print { header, .form-pane, .report-heading { display: none; } main { display: block; padding: 0; } .report-pane { position: static; max-height: none; overflow: visible; border: 0; } }
 

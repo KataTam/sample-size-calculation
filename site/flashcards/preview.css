@@ -14,5 +14,7 @@
 .flashcard-preview caption { text-align:left; padding:10px 0; color:#415663; font-size:.9rem; }
 .flashcard-preview .level-count { font-size:.85em; }
 .flashcard-preview #flashcard-empty { padding:16px; background:#fff2d6; border-radius:6px; }
+.flashcard-preview .reveal-answer { margin-bottom:8px; }
+@media print { .flashcard-preview .reveal-answer {display:none!important} .flashcard-preview .card-answer[hidden] {display:block!important} }
 @media(max-width:550px) { .flashcard-preview th,.flashcard-preview td { padding:12px 8px; } }
 @media print { .flashcard-preview thead th { position:static; } .flashcard-preview tr { break-inside:avoid; } .flashcard-preview #flashcard-count,.flashcard-preview #flashcard-empty { display:none; } }

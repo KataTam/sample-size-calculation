@@ -68,7 +68,10 @@ ui <- fluidPage(
       tags$details(tags$summary("Reproducibility settings"), numericInput("seed", "Random seed", 20260942, min = 0, max = 2147483647, step = 1)))),
   mainPanel(width = 8, textOutput("case_title"), textOutput("bridge_status"), tabsetPanel(id = "precision_view",
     tabPanel("Overview", uiOutput("overview_metrics"),
-      app_overview(tagList(plotOutput("sample_plot", height = "360px"), p(class = "caption", "Figure. Sample size across anticipated percentages. Reference curves use 95% confidence and margins of 5 and 2.5 points; the separate curve uses your settings. The dot marks the required sample for the target width.")),
+      uiOutput("width_diagram"),
+      app_overview(tagList(plotOutput("sample_plot", height = "310px"), uiOutput("curve_key"),
+        checkboxInput("reference_curves", "Compare reference widths at 95% confidence", FALSE),
+        p(class = "caption", "Figure. Required sample size across assumed population percentages. The dot marks the requirement for your target width.")),
         textOutput("precision_text")),
       activity_details("Current assumptions and counts", tableOutput("plan_table"), textOutput("approximation_note"))),
     tabPanel("Explore assumptions", h3("One simulated confidence interval"),
@@ -163,19 +166,37 @@ server <- function(input, output, session) {
       else "Expected counts and sampling assumptions should reflect the intended study.",
       "Clustering, finite-population sampling and diagnostic-test error require additional methods.")
   })
-  output$sample_plot <- renderPlot({
+  precision_curves <- reactive({
     x <- snapshot(); ps <- seq(.001, .999, length.out = 201)
-    par(cex.axis = 1.1, cex.lab = 1.1)
     ns <- function(width, confidence) ceiling(qnorm((1+confidence)/2)^2 * ps*(1-ps)/(width/2)^2)
-    y1 <- ns(.10, .95); y2 <- ns(.05, .95); current <- ns(x$full_width, x$confidence)
-    plot(ps*100, y2, type = "l", lwd = 2, col = "#a34724", ylim = c(0,max(y1,y2,current)),
-      xlab = "Assumed prevalence (%)", ylab = "Approximate analyzable participants")
-    lines(ps*100, y1, col = "#176675", lwd = 2, lty = 2)
-    lines(ps*100, current, col = "#635493", lwd = 2, lty = 3)
-    points(plan()$planning_p*100, plan()$n, pch = 19, col = "#635493")
-    legend("topright", c("95% confidence; ±2.5 points", "95% confidence; ±5 points", "Your confidence and margin"),
-      col = c("#a34724", "#176675", "#635493"), lty = 1:3, lwd = 2, cex = .9, bg = "white")
-  }, alt = "Required analyzable sample size versus assumed proportion. The largest requirement is near 50%; halving the margin approximately quadruples the requirement. Current values are in the table.")
+    curves <- list(list(label = paste0("Your settings: ", format_percent(x$confidence), " confidence, ",
+      round(100*x$full_width, 1), "-point width"), y = ns(x$full_width, x$confidence), color = "#245e90", lty = 1))
+    if (isTRUE(input$reference_curves)) for (width in c(.05, .10)) {
+      if (abs(width-x$full_width)<1e-8 && abs(x$confidence-.95)<1e-8) next
+      curves[[length(curves)+1]] <- list(label = paste0("95% confidence, ",100*width,"-point width"),
+        y = ns(width,.95), color = if(width==.05) "#704a93" else "#176675", lty = if(width==.05) 2 else 3)
+    }
+    list(ps = ps, curves = curves)
+  })
+  output$sample_plot <- renderPlot({
+    c <- precision_curves(); app_plot_style()
+    plot(c$ps*100, c$curves[[1]]$y, type = "n", ylim = c(0,max(vapply(c$curves,function(z) max(z$y),numeric(1)))*1.08),
+      xlab = "Assumed population percentage (%)", ylab = "Required analyzable total")
+    app_plot_grid()
+    for (curve in c$curves) lines(c$ps*100, curve$y, col=curve$color, lwd=2.5, lty=curve$lty)
+    app_current_point(plan()$planning_p*100, plan()$n)
+    app_point_label(plan()$planning_p*100, plan()$n, paste0("Target width: n = ", plan()$n))
+  }, res = 96, alt = "Required analyzable sample for the target width across population percentages. The marked requirement and current sample are given in the numerical results.")
+  output$curve_key <- renderUI(tags$div(class="app-plot-key", lapply(precision_curves()$curves, function(c)
+    tags$span(class=c("solid","dashed","dotted")[c$lty], style=paste0("--key-color:",c$color), c$label))))
+  output$width_diagram <- renderUI({
+    x <- snapshot()
+    tags$div(class="interval-width-guide",
+      tags$p(paste0("Target full width: ", round(100*x$full_width,1), " percentage points")),
+      tags$div(class="interval-width-line", `aria-hidden`="true", tags$span(), tags$span(), tags$span()),
+      tags$div(class="interval-width-labels", tags$span("Lower limit"), tags$span("Estimate"), tags$span("Upper limit")),
+      tags$p(class="app-note", paste0("Symmetric planning interval: about ", round(50*x$full_width,1), " points on each side of the estimate.")))
+  })
   study <- eventReactive(input$simulate, {
     x <- snapshot(); y <- simulate_proportion_study(analysable_n(), x$anticipated_p, x$confidence, x$seed)
     y$inputs <- x; y$case_id <- active_case(); y
@@ -200,18 +221,24 @@ server <- function(input, output, session) {
   }, digits = 4)
   output$interval_plot <- renderPlot({
     y <- study(); r <- y$result
+    app_plot_style(c(4.2,1,2,1))
     plot(r$estimate*100, 1, xlim = c(0,100), ylim = c(.5,1.5), yaxt = "n", pch = 19,
       xlab = "Percentage (%)", ylab = "", main = paste(round(100*y$confidence), "% Wilson interval"))
     segments(r$lower*100, 1, r$upper*100, 1, lwd = 3, col = "#176675")
     abline(v = y$p*100, lty = 2, col = "#a34724")
-    legend("topright", "Population percentage assumed for simulation", lty = 2, col = "#a34724", bty = "n", cex = .8)
+    mtext(paste0("Dashed line: assumed population percentage ", format_percent(y$p)), side = 3, line = .1, cex = .85)
   }, alt = "Saved one-sample Wilson interval; observed events, estimate and limits are supplied in the table.")
   overview_values <- reactive({
     x <- snapshot(); n <- analysable_n(); p <- plan()
     width <- 2*qnorm((1+x$confidence)/2)*sqrt(p$planning_p*(1-p$planning_p)/n)
     c("Current analyzable total" = n, "Approximate full width" = paste0(round(100*width, 1), " points"), "Recruitment total" = adjust_for_dropout(n, x$dropout))
   })
-  output$overview_metrics <- renderUI(app_metrics(overview_values()))
+  output$overview_metrics <- renderUI({
+    x <- snapshot(); n <- analysable_n()
+    app_primary_result(n, "participants for analysis",
+      paste0("Anticipated full interval width: ", overview_values()[["Approximate full width"]],
+        if (x$dropout > 0) paste0(" · Recruit ", adjust_for_dropout(n,x$dropout), " allowing for ", format_percent(x$dropout), " loss") else ""))
+  })
   method_text <- reactive({
     x <- snapshot(); p <- plan(); z <- qnorm((1+x$confidence)/2)
     paste0("n = z² × p × (1 - p) / margin² = ", round(z, 4), "² × ", p$planning_p,

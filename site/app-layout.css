@@ -20,7 +20,7 @@ details { margin:12px 0; } summary { min-height:44px; cursor:pointer; }
 .app-metric { background:#dcecfb; border:1px solid #9cb5c7; border-radius:7px; padding:12px 16px; }
 .app-metric .app-value { display:block; font-size:1.65rem; line-height:1.3; }
 .app-metric .app-label { display:block; font-size:.9rem; margin-top:6px; }
-.app-overview { display:grid; grid-template-columns:minmax(0,2fr) minmax(220px,1fr); gap:20px; align-items:start; }
+.app-overview { display:grid; grid-template-columns:minmax(0,1fr); gap:14px; align-items:start; }
 .app-interpretation { background:#f4f7fa; border-left:4px solid #245e90; padding:12px 16px; border-radius:0 6px 6px 0; }
 .app-interpretation h3 { margin-top:0; }
 .app-note,.caption,.help-block { color:#415663; font-size:.9rem; } .caption { margin:8px 0 18px; }
@@ -41,6 +41,7 @@ textarea.form-control { font-size:1rem; line-height:1.55; }
 :focus-visible { outline:3px solid #a45115; outline-offset:3px; }
 .shiny-output-error-validation { color:#8a3410; background:#fff2d6; padding:10px; border-radius:5px; }
 .shiny-plot-output { max-width:100%; } .shiny-html-output,.shiny-table-output { overflow-x:auto; }
+.shiny-plot-output img { max-width:100%; height:auto; }
 table { font-size:.95rem; width:100%; } th,td { padding:8px; }
 .app-table caption { caption-side:top; color:#415663; text-align:left; }
 .app-table th { text-align:left; border-bottom:1px solid #9cb5c7; } .app-table td { border-bottom:1px solid #d8e1e8; }
@@ -49,3 +50,49 @@ body :where(h1,h2,h3,h4,summary,legend) :where(a,span,strong,b,code) { font-weig
 @media(max-width:1150px) { .app-overview { grid-template-columns:minmax(0,1fr); } }
 @media(max-width:767px) { .container-fluid { padding:15px; } .nav-tabs > li > a { padding:9px; } .app-metrics { gap:8px; } .well { padding:14px; } .app-metric { padding:10px; } }
 @media print { .nav-tabs,.well,.shiny-download-link { display:none; } .tab-content > .tab-pane { display:block; } .app-report { border:0; background:#fff; } }
+
+/* Keep the result and graph prominent in a tutorial/app split view. */
+.app-intro { margin-bottom:18px; }
+.app-settings { margin:0; }
+.app-settings > summary { padding:4px 0 12px; font-size:1.1rem; }
+.app-settings-content { padding-top:4px; }
+.app-input-group { padding-top:8px; margin-top:10px; }
+.app-input-group > h3 { margin-bottom:8px; }
+.app-slider-value { display:flex; align-items:center; gap:7px; margin:4px 0 0; }
+.app-slider-number { width:100px; min-height:40px; border:1px solid #7a929f; border-radius:5px; padding:5px 8px; background:white; color:#20343e; font-size:1.1rem; }
+.app-numeric-slider .irs { height:33px; margin-top:-16px; margin-bottom:6px; }
+.app-numeric-slider .irs-line { top:22px; }
+.app-numeric-slider .irs-bar { top:22px; }
+.app-numeric-slider .irs-handle { top:16px; }
+.app-numeric-slider .irs-single,.app-numeric-slider .irs-min,.app-numeric-slider .irs-max { display:none; }
+.app-numeric-slider.shiny-input-container { margin-bottom:12px; width:100%; }
+.app-primary-result { padding:14px 18px; border:1px solid #9cb5c7; border-left:5px solid #245e90; border-radius:7px; background:#dcecfb; margin:10px 0 16px; }
+.app-primary-result p { margin:2px 0; }
+.app-primary-result .app-value { font-size:2rem; line-height:1.2; }
+.app-primary-result .app-label { font-size:1rem; margin-left:8px; }
+.app-primary-result .app-secondary { font-size:.95rem; margin-top:6px; }
+.app-plot-key { display:flex; flex-wrap:wrap; gap:8px 20px; font-size:.9rem; color:#415663; margin:8px 0; }
+.app-plot-key span::before { content:''; display:inline-block; width:25px; border-top:3px solid var(--key-color,#245e90); margin-right:7px; vertical-align:middle; }
+.app-plot-key .dashed::before { border-top-style:dashed; }
+.app-plot-key .dotted::before { border-top-style:dotted; }
+textarea.form-control { min-height:88px; resize:vertical; }
+.interval-width-guide { border:1px solid #b8cbd4; border-radius:6px; padding:10px 16px; margin:12px 0; max-width:600px; }
+.interval-width-guide p { margin:2px 0 8px; }
+.interval-width-line { display:flex; justify-content:space-between; align-items:center; border-top:3px solid #245e90; margin:18px 5% 8px; height:0; }
+.interval-width-line span { display:block; height:15px; width:3px; background:#245e90; margin-top:-3px; }
+.interval-width-line span:nth-child(2) { width:11px; height:11px; border-radius:50%; }
+.interval-width-labels { display:flex; justify-content:space-between; font-size:.9rem; margin:0 0 10px; }
+.app-steps li { position:relative; }
+.app-steps li + li::before { content:'→'; position:absolute; left:-13px; top:30px; color:#245e90; background:white; }
+@media(max-width:899px) {
+  .row > .col-sm-4,.row > .col-sm-8 { width:100%; float:none; }
+  .container-fluid { padding:15px; }
+  .well { margin-bottom:12px; padding:10px 14px; }
+  .app-settings > summary { padding:3px 0; }
+  .app-settings[open] > summary { padding-bottom:10px; }
+  .nav-tabs { margin-bottom:12px; gap:0; }
+  .nav-tabs > li > a { padding:8px 10px; font-size:.95rem; }
+  .tab-pane.active > .shiny-html-output:has(> .app-primary-result) { position:sticky; top:0; z-index:3; }
+  .app-primary-result { box-shadow:0 3px 5px #20343e12; }
+  .app-primary-result .app-value { font-size:1.7rem; }
+}

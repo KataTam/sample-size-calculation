@@ -36,7 +36,7 @@ activity_guidance_script <- function() {
   }
   paste0(asset_setup, "(function(){const style=document.createElement('style');style.textContent=",
     jsonlite::toJSON(paste(read_asset("app-layout.css"), read_asset("input-guidance.css")), auto_unbox = TRUE),
-    ";document.head.append(style);})();\n", read_asset("input-guidance.js"), "\n", read_asset("report-exports.js"))
+    ";document.head.append(style);})();\n", read_asset("input-guidance.js"), "\n", read_asset("app-layout.js"), "\n", read_asset("report-exports.js"))
 }
 activity_details <- function(title, ...) shiny::tags$details(class = "activity-details", shiny::tags$summary(title), ...)
 activity_count_result <- function(x) shiny::tags$div(class = "calculation-result",
@@ -213,7 +213,7 @@ percentage_display_script <- function() r"---((function () {
   function format(value) { return (Math.round(Number(value) * 10000) / 100).toLocaleString('en', {maximumFractionDigits:2}); }
   function update() {
     if (!window.jQuery) return;
-    document.querySelectorAll('.percentage-slider input').forEach(function (input) {
+    document.querySelectorAll('.percentage-slider input.js-range-slider').forEach(function (input) {
       var slider = jQuery(input).data('ionRangeSlider');
       if (!slider || slider.options.prettify === format) return;
       slider.update({prettify_enabled:true, prettify:format, postfix:input.closest('.percentage-slider').dataset.suffix});

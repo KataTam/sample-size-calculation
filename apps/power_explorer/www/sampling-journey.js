@@ -14,12 +14,15 @@
   function draw(progress) {
     const host = el('sampling-journey'); if (!host || !data) return;
     host.replaceChildren();
-    const svg = node(host,'svg',{viewBox:'0 0 500 650',role:'img','aria-label':'Patient outcomes, estimated difference and accumulated trial estimates'});
+    const rows = Math.ceil(Math.min(data.n,80)/16);
+    const endPatients = 110 + (rows-1)*16, heading2 = endPatients+40, axis1 = heading2+80;
+    const heading3 = axis1+52, axis2 = heading3+115, footer = axis2+48;
+    const svg = node(host,'svg',{viewBox:`0 0 500 ${footer+30}`,role:'img','aria-label':'Patient outcomes, estimated difference and accumulated trial estimates'});
     const t = data.trials[index], reduced = el('journey-motion').checked;
     const counts = t.counts;
     node(svg,'text',{x:15,y:23},`Assumed population: standard ${pct(data.p0)}; novel ${pct(data.p1)}`);
     node(svg,'text',{x:15,y:47},`1. Patient outcomes · trial ${index+1} of ${data.trials.length}`);
-    node(svg,'text',{x:15,y:185},`${data.n} patients per group`);
+    node(svg,'text',{x:15,y:endPatients},`${data.n} patients per group`);
     [t.control,t.treatment].forEach((values,g) => {
       const x0 = 20 + g*245, color = g ? '#984b87' : '#19738c';
       node(svg,'text',{x:x0,y:73},`${g?'Novel':'Standard'}: ${counts[g]}/${data.n} (${pct(counts[g]/data.n)})`);
@@ -27,37 +30,37 @@
         cx:x0+7+(i%16)*13,cy:94+Math.floor(i/16)*16,r:4.5,
         fill:v?color:'white',stroke:color,'stroke-width':1.5}));
     });
-    if(data.n>80) node(svg,'text',{x:15,y:165},'First 80 patient outcomes shown per group; counts include everyone.');
-    node(svg,'path',{d:'M250 190 L250 210 M244 204 L250 210 L256 204',fill:'none',stroke:'#64748b','stroke-width':2});
-    node(svg,'text',{x:15,y:233},'2. Estimated difference in this trial');
-    node(svg,'text',{x:15,y:257},`Estimated difference: ${pct(counts[1]/data.n)} − ${pct(counts[0]/data.n)}`);
-    node(svg,'text',{x:15,y:280},`= ${Math.round(t.estimate*1000)/10} percentage points (novel − standard)`);
-    [320,555].forEach(y => {
+    if(data.n>80) node(svg,'text',{x:15,y:endPatients+17},'First 80 shown per group; counts include everyone.');
+    node(svg,'path',{d:`M250 ${endPatients+8} L250 ${heading2-14} M244 ${heading2-20} L250 ${heading2-14} L256 ${heading2-20}`,fill:'none',stroke:'#64748b','stroke-width':2});
+    node(svg,'text',{x:15,y:heading2},'2. Estimated difference in this trial');
+    node(svg,'text',{x:15,y:heading2+23},`Estimated difference: ${pct(counts[1]/data.n)} − ${pct(counts[0]/data.n)}`);
+    node(svg,'text',{x:15,y:heading2+44},`= ${Math.round(t.estimate*1000)/10} percentage points (novel − standard)`);
+    [axis1,axis2].forEach(y => {
       node(svg,'line',{x1:45,x2:455,y1:y,y2:y,stroke:'#64748b'});
       [-1,-.5,0,.5,1].forEach(v => node(svg,'text',{x:point(v),y:y+19,'text-anchor':'middle'},v*100));
     });
-    node(svg,'text',{x:15,y:375},'3. The same estimate joins the results from earlier trials');
+    node(svg,'text',{x:15,y:heading3},'3. The same estimate joins earlier trials');
     const bins = {}, positions=[];
     for(let i=0;i<=index;i++) {
       const v=data.trials[i].estimate, key=Math.round(v*1000000);
       const level=bins[key]||0;bins[key]=level+1;
-      positions.push({x:point(v),y:545-level*6});
+      positions.push({x:point(v),y:axis2-10-level*4});
     }
     for(let i=0;i<index;i++) node(svg,'circle',{cx:positions[i].x,cy:positions[i].y,r:3,fill:'#546378'});
     const truth=point(data.p1-data.p0);
-    node(svg,'line',{x1:truth,x2:truth,y1:410,y2:555,stroke:'#17734c','stroke-dasharray':'4 3'});
-    node(svg,'text',{x:15,y:615},`Dashed line: assumed population difference ${Math.round((data.p1-data.p0)*1000)/10} points`);
-    node(svg,'text',{x:15,y:396},'Each dot is one trial. Both axes show percentage points.');
-    node(svg,'text',{x:15,y:640},'Pink dot: the current trial’s estimated difference');
+    [axis1,axis2].forEach(y => node(svg,'line',{x1:truth,x2:truth,y1:y-55,y2:y,stroke:'#17734c','stroke-dasharray':'4 3'}));
+    node(svg,'text',{x:15,y:footer},`Dashed line: assumed population difference ${Math.round((data.p1-data.p0)*1000)/10} points`);
+    node(svg,'text',{x:15,y:heading3+20},'Each dot is one trial. Both axes show percentage points.');
+    node(svg,'text',{x:15,y:footer+22},'Pink dot: the current trial’s estimated difference');
     const x=point(t.estimate), destination=positions[index].y;
-    node(svg,'line',{x1:x,x2:x,y1:320,y2:destination,stroke:'#b53c69','stroke-width':2,'stroke-dasharray':'3 5',opacity:.45});
+    node(svg,'line',{x1:x,x2:x,y1:axis1,y2:destination,stroke:'#b53c69','stroke-width':2,'stroke-dasharray':'3 5',opacity:.45});
     node(svg,'path',{d:`M${x-5} ${destination-10} L${x} ${destination-3} L${x+5} ${destination-10}`,fill:'none',stroke:'#b53c69','stroke-width':2});
-    node(svg,'circle',{cx:x,cy:320,r:6,fill:'white',stroke:'#b53c69','stroke-width':2});
+    node(svg,'circle',{cx:x,cy:axis1,r:6,fill:'white',stroke:'#b53c69','stroke-width':2});
     node(svg,'circle',{cx:x,cy:destination,r:6,fill:'white',stroke:'#b53c69','stroke-dasharray':'2 2'});
-    node(svg,'text',{x:Math.max(65,Math.min(435,x)),y:307,'text-anchor':'middle'},`${Math.round(t.estimate*1000)/10} points`);
+    node(svg,'text',{x:Math.max(65,Math.min(435,x)),y:axis1-12,'text-anchor':'middle'},`${Math.round(t.estimate*1000)/10} points`);
     const phase = Math.max(0,Math.min(1,(progress-.35)/.5));
     const moving = reduced ? (progress<.85?0:1) : phase*phase*(3-2*phase);
-    node(svg,'circle',{cx:point(t.estimate),'data-moving-estimate':'true',cy:320+(positions[index].y-320)*moving,r:5,fill:'#b53c69',stroke:'#fff','stroke-width':1});
+    node(svg,'circle',{cx:point(t.estimate),'data-moving-estimate':'true',cy:axis1+(positions[index].y-axis1)*moving,r:5,fill:'#b53c69',stroke:'#fff','stroke-width':1});
   }
   function status() {
     const t = data.trials[index];
@@ -93,6 +96,32 @@
     Shiny.addCustomMessageHandler('combine-pain-panels',payload=>{
       const oneLink=document.querySelector('a[data-value="One study"]'), manyLink=document.querySelector('a[data-value="Many studies"]');
       if(!oneLink || !manyLink) return;
+      document.documentElement.classList.toggle('pain-focus', payload.combine);
+      const title=document.querySelector('.app-title'), intro=document.querySelector('.app-intro');
+      if(title) title.textContent=payload.combine?'Pain relief: one study and many':'Sample size reasoning lab';
+      if(intro) intro.textContent=payload.combine
+        ?'You can sample patients from two treatment groups and see how their estimated difference varies across studies.'
+        :'You can calculate sample size or assess power and precision for two-group comparisons, then simulate studies to see how results vary.';
+      const tabs=oneLink.closest('.nav-tabs');
+      let more=el('lab-more-views');
+      if(!more){
+        more=document.createElement('button');more.id='lab-more-views';more.type='button';more.className='btn btn-default';
+        more.textContent='More lab views';more.setAttribute('aria-expanded','false');
+        tabs.before(more);
+        more.onclick=()=>{const expanded=more.getAttribute('aria-expanded')!=='true';more.setAttribute('aria-expanded',String(expanded));
+          document.documentElement.classList.toggle('lab-expanded',expanded);more.textContent=expanded?'Fewer lab views':'More lab views';};
+      }
+      more.hidden=!payload.combine;
+      if(!payload.combine){document.documentElement.classList.remove('lab-expanded');more.setAttribute('aria-expanded','false');more.textContent='More lab views';}
+      ['Explore assumptions','Compare assumptions','My study'].forEach(value=>{
+        const link=document.querySelector(`a[data-value="${value}"]`);if(link)link.parentElement.classList.add('lab-secondary-view');
+      });
+      const picker=document.querySelector('.activity-picker');
+      if(picker && !picker.closest('details')){
+        const options=document.createElement('details');options.className='lab-activity-options';
+        const summary=document.createElement('summary');summary.textContent='Other prepared activities';
+        picker.before(options);options.append(summary,picker);
+      }
       const onePanel=document.querySelector(oneLink.getAttribute('href')), manyPanel=document.querySelector(manyLink.getAttribute('href'));
       let combined=el('combined-many-studies');
       if(payload.combine && !combined){

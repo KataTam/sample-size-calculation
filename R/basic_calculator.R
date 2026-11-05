@@ -20,7 +20,7 @@ basic_calculator_ui <- function(outcome) {
           percent_slider("pi1", "Novel treatment: assumed event probability (%)", .01, .99, .60, step = .01),
           activity_help("Use evidence for the same event definition, population, and follow-up time. Both groups should use the same definition and assessment time.", for_input = "pi2"),
           activity_help("Its difference from the standard-treatment percentage sets the target difference. Higher values mean benefit for recovery events and harm for adverse events.", for_input = "pi1"))),
-      app_input_group("Statistical settings",
+      app_input_group("Statistical settings", collapsed = TRUE,
         percent_slider("alpha", "Type I error probability (%)", .001, .10, .05, step = .001),
         percent_slider("power", "Target power (%)", .50, .99, .90, step = .01),
         activity_help("A 5% setting allows a 5% false-positive probability when the population outcomes are equal. A smaller setting generally requires more participants.", for_input = "alpha"),
@@ -31,13 +31,13 @@ basic_calculator_ui <- function(outcome) {
     mainPanel(width = 8, tabsetPanel(id = "calculator_view",
       tabPanel("Overview",
         uiOutput("result"),
-        app_overview(tagList(plotOutput("allocation_plot", height = "280px"), p(class = "caption", "Figure. Participants needed for analysis and recruitment in each group.")),
+        app_overview(tagList(plotOutput("allocation_plot", height = "310px"), p(class = "caption", "Figure. Required analyzable participants per group across target differences. The labeled dot marks your current plan; other assumptions stay fixed.")),
           tagList(textOutput("interpretation"), uiOutput("lab_link"))),
         activity_details("Current assumptions", tableOutput("assumptions"))),
       tabPanel("Explore assumptions",
         p("The curve varies the target difference while keeping the other assumptions fixed. The point marks your current plan."),
         plotOutput("sample_size_plot", height = "350px"),
-        p(class = "caption", "Figure. Required total analyzable sample across target differences, with other planning assumptions fixed."),
+        p(class = "caption", "Figure. Required analyzable participants per group across target differences, with other planning assumptions fixed."),
         tags$section(class = "app-comparison", h3("Compare a revised scenario"),
           if (means) numericInput("compare_delta", "Revised target difference (outcome units)", 2, min = .01)
           else percent_slider("compare_pi1", "Revised novel-treatment event probability (%)", .01, .99, .50, step = .01),
@@ -72,17 +72,42 @@ basic_calculator_server <- function(outcome) function(input, output, session) {
       Value = c(if (means) c(x$delta, x$sd) else c(format_percent(x$pi2), format_percent(x$pi1), paste0(round(100*x$difference, 2), " percentage points")),
         format_percent(x$alpha), format_percent(x$power), format_percent(x$dropout_rate)))
   })
-  output$result <- renderUI({ x <- result(); app_metrics(c("Analyzable per group" = x$n_per_group, "Analyzable total" = x$total_n, "Recruitment total" = x$total_with_dropout)) })
-  output$interpretation <- renderText(sample_size_interpretation(result()))
+  output$result <- renderUI({
+    x <- result()
+    app_primary_result(if (x$dropout_rate > 0) x$total_with_dropout/2 else x$n_per_group,
+      if (x$dropout_rate > 0) "to recruit per group" else "analyzable per group",
+      if (x$dropout_rate > 0) paste0(x$total_with_dropout, " to recruit in total, allowing for ",
+        format_percent(x$dropout_rate), " expected loss. Analysis requires ", x$n_per_group, " per group (", x$total_n, " total).")
+      else paste0(x$total_n, " in total · ", format_percent(x$power), " target power · ",
+        format_percent(x$alpha), " Type I error probability"))
+  })
+  output$interpretation <- renderText({
+    x <- result()
+    paste0("Power is evaluated at ", if (means) paste0("a target difference of ", x$delta, " units with common SD ", x$sd)
+      else paste0("a target difference of ", round(100*x$difference, 2), " percentage points (", format_percent(x$pi1), " versus ", format_percent(x$pi2), ")"),
+      ". Smaller target differences generally require more participants.")
+  })
   output$assumptions <- renderTable(assumptions(), striped = TRUE)
-  output$allocation_plot <- renderPlot({
-    x <- result(); values <- rbind(c(x$n_per_group, x$n_per_group), rep(x$total_with_dropout/2, 2))
-    par(mar = c(4, 4, 1, 1), cex.axis = 1.05, cex.lab = 1.1)
-    b <- barplot(values, beside = TRUE, names.arg = c("Standard", "Novel"), col = c("#245e90", "#8ca9c0"),
-      ylim = c(0, max(values)*1.3), ylab = "Participants per group")
-    text(b, values, labels = values, pos = 3, cex = .85)
-    legend("top", c("Analysis", "Recruitment"), fill = c("#245e90", "#8ca9c0"), bty = "n", horiz = TRUE, cex = .8)
-  }, alt = "Analyzable and recruitment counts per group, also shown in the numerical summary and report.")
+  draw_curve <- function() {
+    x <- result(); app_plot_style()
+    if (means) {
+      ds <- seq(max(.01, x$delta/2), x$delta*1.75, length.out = 100)
+      ns <- vapply(ds, sample_size_two_means, numeric(1), sd = x$sd, alpha = x$alpha, power = x$power)
+      axis_x <- ds; selected <- x$delta; label <- "Target difference (units)"
+    } else {
+      direction <- sign(x$pi1-x$pi2)
+      limit <- if (direction > 0) .99-x$pi2 else x$pi2-.01
+      ds <- seq(max(.001, x$difference/2), min(limit, x$difference*1.75), length.out = 100)
+      ns <- vapply(x$pi2+direction*ds, sample_size_two_proportions, numeric(1), pi2=x$pi2, alpha=x$alpha, power=x$power)
+      axis_x <- 100*ds; selected <- 100*x$difference; label <- "Absolute target difference (points)"
+    }
+    plot(axis_x, ns, type = "n", ylim = c(0,max(ns)*1.05), xlab = label, ylab = "Analyzable per group")
+    app_plot_grid(); lines(axis_x, ns, lwd = 2.5, col = "#245e90")
+    app_current_point(selected, x$n_per_group)
+    app_point_label(selected, x$n_per_group, paste0("Current: ", x$n_per_group))
+  }
+  output$allocation_plot <- renderPlot(draw_curve(), res = 96,
+    alt = "Required analyzable participants per group across target differences. A labeled dot marks the current plan, also given in the numerical result.")
   output$lab_link <- renderUI({
     x <- result(); validate(need(x$n_per_group >= 2 && x$n_per_group <= 100000, "The reasoning lab supports 2 to 100,000 analyzable participants per group."))
     v <- list(outcome = if (means) "means" else "proportions", goal = "fixed", fixed_n = x$n_per_group,
@@ -90,21 +115,8 @@ basic_calculator_server <- function(outcome) function(input, output, session) {
     v <- c(v, if (means) list(plan_delta = input$delta, plan_sd = input$sd) else list(plan_p0 = input$pi2, plan_p1 = input$pi1))
     tags$a(href = lab_state_url(v), target = "_blank", rel = "noopener", class = "btn btn-primary", "Explore this design in the lab")
   })
-  output$sample_size_plot <- renderPlot({
-    x <- result(); par(mar = c(4.5, 4.5, 1, 1), cex.axis = 1.05, cex.lab = 1.1)
-    if (means) {
-      ds <- seq(max(.01, x$delta/4), x$delta*2.5, length.out = 100)
-      ns <- vapply(ds, sample_size_two_means, numeric(1), sd = x$sd, alpha = x$alpha, power = x$power)
-      plot(ds, 2*ns, type = "l", lwd = 2, col = "#245e90", xlab = "Target difference (units)", ylab = "Required analyzable total")
-      points(x$delta, x$total_n, pch = 19, col = "#a45115")
-    } else {
-      direction <- sign(x$pi1-x$pi2); limit <- if (direction > 0) .99-x$pi2 else x$pi2-.01
-      ds <- seq(max(.001, x$difference/4), min(limit, x$difference*2.5), length.out = 100)
-      ns <- vapply(x$pi2+direction*ds, sample_size_two_proportions, numeric(1), pi2=x$pi2, alpha=x$alpha, power=x$power)
-      plot(100*ds, 2*ns, type = "l", lwd = 2, col = "#245e90", xlab = "Absolute target difference (percentage points)", ylab = "Required analyzable total")
-      points(100*x$difference, x$total_n, pch = 19, col = "#a45115")
-    }
-  }, alt = "Required sample size across target differences, holding other assumptions fixed. The current plan is marked.")
+  output$sample_size_plot <- renderPlot(draw_curve(), res = 96,
+    alt = "Required analyzable participants per group across target differences, holding other assumptions fixed. The current plan is marked.")
   output$comparison_table <- renderTable({
     original <- result(); updated <- if (means) calculate(difference = input$compare_delta) else calculate(probability = input$compare_pi1)
     data.frame(Quantity = c(if (means) "Target difference (units)" else "Novel event probability", "Analyzable per group", "Analyzable total", "Recruitment total"),

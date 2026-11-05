@@ -28,6 +28,11 @@
     questions.forEach((q, index) => {
       const box = element('fieldset',undefined,'quiz-question'); box.dataset.question = q.id;
       box.append(element('legend', `${index + 1}. ${q.question}`), element('p', `${bank.chapters[q.chapter]} · ${q.level === 'core' ? 'Core' : 'Advanced'}`, 'quiz-level ' + q.level));
+      if (q.figure) {
+        const figure=element('figure',undefined,'quiz-figure'), img=element('img');
+        img.src='figures/'+q.figure.file;img.alt=q.figure.alt;
+        figure.append(img,element('figcaption',q.figure.caption));box.append(figure);
+      }
       q.options.forEach((text, option) => {
         const label = element('label', undefined, 'quiz-option');
         const radio = element('input'); radio.type = 'radio'; radio.name = q.id; radio.value = option; radio.required = true;

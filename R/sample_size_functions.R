@@ -392,7 +392,7 @@ interval_interpretation <- function(result, spec) {
   paste0(test, clinical, " Equivalence and noninferiority require their own prespecified margins, hypotheses and analyses.")
 }
 
-plot_trial_intervals <- function(results, spec, max_display = 30) {
+plot_trial_intervals <- function(results, spec, max_display = 30, show_legend = TRUE) {
   x <- head(results, max_display); y <- seq_len(nrow(x))
   # Rescale the display only; methods, input values and returned data stay unchanged.
   scale <- if (spec$outcome == "proportions") 100 else 1
@@ -407,7 +407,7 @@ plot_trial_intervals <- function(results, spec, max_display = 30) {
   abline(v = 0, lty = 1, col = "grey40")
   abline(v = clinical, lty = 2, col = "#9a3412")
   abline(v = truth, lty = 3, col = "#075985")
-  legend("topright", c("Zero", "Clinical threshold", "Assumed true effect"),
+  if (show_legend) legend("topright", c("Zero", "Clinical threshold", "Assumed true effect"),
          lty = 1:3, col = c("grey40", "#9a3412", "#075985"), cex = .75, bg = "white")
 }
 
@@ -499,7 +499,9 @@ normal_sampling_operating_characteristics <- function(mu0 = 120, mu1 = 125,
 plot_sample_mean_distributions <- function(x) {
   old_par <- par(no.readonly = TRUE)
   on.exit(par(old_par), add = TRUE)
-  par(mfrow = c(2, 1), mar = c(3.8, 4.2, 3.2, 1), mgp = c(2.3, .7, 0))
+  par(mfrow = c(2, 1), mar = c(3.4, 3.8, 4.8, 1), mgp = c(2.2, .6, 0),
+    ps = if (dev.size("in")[1] < 5.5) 11 else 13, cex = 1, cex.axis = .9, cex.lab = 1,
+    col.axis = "#415663", col.lab = "#20343e", fg = "#9cb5c7", bty = "l")
   limits <- range(c(x$mu0, x$mu1, x$critical)) + c(-4.5, 4.5) * x$se
   grid <- seq(limits[1], limits[2], length.out = 1200)
   ymax <- dnorm(x$mu0, x$mu0, x$se) * 1.12
@@ -511,24 +513,28 @@ plot_sample_mean_distributions <- function(x) {
   }
   panel <- function(mean, title) {
     plot(grid, dnorm(grid, mean, x$se), type = "n", ylim = c(0, ymax),
-      xlab = "Mean across one sample", ylab = "Density", main = title)
+      xlab = "Sample mean (mmHg)", ylab = "Density")
+    abline(h = axTicks(2), col = "#e4ebef", lwd = .8)
+    mtext(title, side=3, line=3.2, adj=0, cex=.95, col="#20343e")
   }
-  panel(x$mu0, paste0("Null hypothesis: population mean = ", x$mu0, "; n = ", x$n))
-  shade(-Inf, x$lower, x$mu0, "#e5b59f")
-  shade(x$upper, Inf, x$mu0, "#e5b59f")
-  lines(grid, dnorm(grid, x$mu0, x$se), col = "#a34724", lwd = 2)
-  abline(v = x$critical, col = "#555555", lty = 3)
-  mtext(paste0("Shaded: Type I error = ", round(100*x$alpha, 1), "% (false positive)"), side = 3, line = .25, cex = .8, col = "#8d3b1e")
-  panel(x$mu1, paste0("Specified alternative: population mean = ", x$mu1, "; n = ", x$n))
+  boundary <- switch(x$sidedness,
+    greater = paste0("Reject above ", round(x$upper,2)), less = paste0("Reject below ",round(x$lower,2)),
+    two.sided = paste0("Reject below ",round(x$lower,2)," or above ",round(x$upper,2)))
+  panel(x$mu0, paste0("Null: population mean ", x$mu0, "; n = ", x$n))
+  shade(-Inf, x$lower, x$mu0, "#e5b59f"); shade(x$upper, Inf, x$mu0, "#e5b59f")
+  lines(grid, dnorm(grid, x$mu0, x$se), col = "#a34724", lwd = 2.5)
+  abline(v = x$critical, col = "#415663", lty = 3)
+  mtext(paste0("False positives (shaded): ", round(100*x$type1,1), "%"), side=3, line=1.8, adj=0, cex=.9, col="#8d3b1e")
+  mtext(paste0("Dotted boundary: ",boundary), side=3, line=.4, adj=0, cex=.85, col="#415663")
+  panel(x$mu1, paste0("Specified population mean ", x$mu1, "; n = ", x$n))
   shade(x$lower, x$upper, x$mu1, "#d5c4eb")
-  shade(-Inf, x$lower, x$mu1, "#a7d7cc")
-  shade(x$upper, Inf, x$mu1, "#a7d7cc")
-  lines(grid, dnorm(grid, x$mu1, x$se), col = "#176675", lwd = 2)
-  abline(v = x$critical, col = "#555555", lty = 3)
-  mtext(paste0("Purple: Type II error = ", round(100*x$beta,1), "%"),
-    side = 3, line = .25, adj = .05, cex = .8, col = "#67448c")
-  mtext(paste0("Green: power = ", round(100*x$power,1), "%"),
-    side = 3, line = .25, adj = .95, cex = .8, col = "#176675")
+  shade(-Inf, x$lower, x$mu1, "#a7d7cc"); shade(x$upper, Inf, x$mu1, "#a7d7cc")
+  lines(grid, dnorm(grid, x$mu1, x$se), col = "#176675", lwd = 2.5)
+  abline(v = x$critical, col = "#415663", lty = 3)
+  mtext(paste0(if(x$mu0==x$mu1) "Non-rejection" else "False negatives", " (non-rejection area): ", round(100*x$beta,1), "%"),
+    side=3, line=1.8, adj=0, cex=.9, col="#67448c")
+  mtext(paste0(if(x$mu0==x$mu1) "False positives" else "Power", " (rejection area): ", round(100*x$power,1), "%"),
+    side=3, line=.4, adj=0, cex=.9, col="#176675")
 }
 
 

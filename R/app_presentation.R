@@ -6,6 +6,29 @@ app_input_group <- function(title, ..., advanced = FALSE, collapsed = FALSE) {
 app_metrics <- function(values) shiny::tags$div(class = "app-metrics",
   lapply(names(values), function(label) shiny::tags$div(class = "app-metric",
     shiny::tags$span(class = "app-value", values[[label]]), shiny::tags$span(class = "app-label", label))))
+app_primary_result <- function(value, label, detail = NULL) shiny::tags$div(class = "app-primary-result",
+  shiny::tags$p(shiny::tags$span(class = "app-value", value), shiny::tags$span(class = "app-label", label)),
+  if (!is.null(detail)) shiny::tags$p(class = "app-secondary", detail))
+app_plot_style <- function(mar = c(4.2, 4.4, 1, 1)) {
+  graphics::par(mar = mar, ps = if (grDevices::dev.size("in")[1] < 5.5) 11 else 13, cex.axis = 1, cex.lab = 1, las = 1,
+    col.axis = "#415663", col.lab = "#20343e", fg = "#9cb5c7", bty = "l")
+}
+app_plot_grid <- function() graphics::abline(h = graphics::axTicks(2), col = "#e4ebef", lwd = .8)
+app_current_point <- function(x, y) {
+  graphics::segments(x, graphics::par("usr")[3], x, y, col = "#a45115", lty = 3)
+  graphics::points(x, y, pch = 21, bg = "#a45115", col = "white", cex = 1.5)
+}
+app_point_label <- function(x, y, label) {
+  bounds <- graphics::par("usr")
+  pad <- graphics::strwidth(label, cex=.9)/2
+  x <- max(bounds[1]+pad, min(bounds[2]-pad, x))
+  y <- min(y, bounds[4]-graphics::strheight(label, cex=.9)*1.6)
+  graphics::text(x, y, label, pos=3, offset=.7, cex=.9, col="#7e3d12")
+}
+app_interval_key <- function() shiny::tags$div(class="app-plot-key",
+  shiny::tags$span(style="--key-color:#666666", "Zero difference"),
+  shiny::tags$span(class="dashed", style="--key-color:#9a3412", "Clinical threshold"),
+  shiny::tags$span(class="dotted", style="--key-color:#075985", "Assumed population difference"))
 app_overview <- function(visual, explanation) shiny::tags$div(class = "app-overview",
   shiny::tags$div(visual), shiny::tags$aside(class = "app-interpretation", shiny::tags$h3("What this means"), explanation))
 app_table <- function(data, caption = NULL) shiny::tags$table(class = "app-table",

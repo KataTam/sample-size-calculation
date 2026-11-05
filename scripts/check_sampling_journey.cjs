@@ -92,6 +92,7 @@ const fs=require('node:fs');
  await page.setViewportSize({width:1500,height:1100});
  await page.locator('button[data-view="both"]').click();
  await f.getByRole('tab',{name:'One study and many studies',exact:true}).click();
+ await f.locator('.app-settings').evaluate(el=>el.open=true);
  await f.locator('#fixed_n').fill('50');await f.locator('#fixed_n').press('Tab');
  await f.waitForFunction(()=>document.querySelector('#journey-status').textContent.includes('Inputs changed'));
  await f.getByRole('tab',{name:'Report',exact:true}).click();

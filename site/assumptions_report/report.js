@@ -225,7 +225,7 @@
     for (const [id, title, help] of definitions) {
       const wrapper = document.createElement('div'); wrapper.id = 'field-' + id;
       const label = document.createElement('label'); label.htmlFor = id; label.textContent = questions[id] || title;
-      const input = document.createElement('textarea'); input.id = id; input.name = id; input.rows = 4; input.maxLength = 5000;
+      const input = document.createElement('textarea'); input.id = id; input.name = id; input.rows = 2; input.maxLength = 5000;
       wrapper.append(label, input); group.append(wrapper);
 
     }
@@ -233,13 +233,21 @@
   }
   document.getElementById('plan-section-0').append(document.getElementById('study-settings'));
   const preview = document.getElementById('preview');
-  preview.addEventListener('click', () => {
-    const pane = document.getElementById('report-pane'), show = pane.hidden;
+  const wide = matchMedia('(min-width: 1100px)');
+  let previewChosen = false;
+  function showPreview(show, focus = false) {
+    const pane = document.getElementById('report-pane');
     pane.hidden = !show; document.body.classList.toggle('report-visible', show);
     preview.setAttribute('aria-expanded', String(show));
-    preview.textContent = show ? 'Back to questions' : 'Preview report';
-    if (show) document.getElementById('report-title').focus();
-    else preview.focus();
+    preview.textContent = show ? (wide.matches ? 'Hide report preview' : 'Back to questions') : 'Preview report';
+    if (focus && show) document.getElementById('report-title').focus();
+    else if (focus) preview.focus();
+    window.dispatchEvent(new Event('resize'));
+  }
+  showPreview(wide.matches);
+  wide.addEventListener('change', () => { if (!previewChosen) showPreview(wide.matches); });
+  preview.addEventListener('click', () => {
+    previewChosen = true; showPreview(document.getElementById('report-pane').hidden, true);
   });
   for (const [id, help] of Object.entries({
     study_type: 'One-population estimation uses a single percentage or mean. Paired, clustered, and other designs need methods that account for their observation structure.',
@@ -286,22 +294,27 @@
     reportLines = [intro.textContent];
     const missing = document.querySelector('#report-missing ul'); missing.replaceChildren();
     let completed = 0, required = 0;
-    for (const [title, definitions] of groups) {
+    for (const [groupIndex, [title, definitions]] of groups.entries()) {
       const heading = document.createElement('h3'); heading.textContent = title;
       const paragraphs = [];
+      let groupCompleted = 0, groupRequired = 0;
       reportLines.push(title);
       for (const field of definitions) {
         const [id, originalLabel] = field, enabled = active(field, value);
         const label = wording[id] ? wording[id][0] : originalLabel;
         document.getElementById('field-' + id).hidden = !enabled;
         if (!enabled) continue;
-        required++;
+        required++; groupRequired++;
         const answer = value[id].trim(), paragraph = document.createElement('p');
-        if (answer) { completed++; paragraph.textContent = label + ': ' + answer; paragraphs.push(paragraph); }
+        if (answer) { completed++; groupCompleted++; paragraph.textContent = label + ': ' + answer; paragraphs.push(paragraph); }
         else { const item = document.createElement('li'); item.textContent = label; missing.append(item); paragraph.textContent = label + ': not yet specified.'; }
         reportLines.push(paragraph.textContent);
       }
       if (paragraphs.length) article.append(heading, ...paragraphs);
+      const summary = document.querySelector('#plan-section-' + groupIndex + ' > summary');
+      let count = summary.querySelector('.section-progress');
+      if (!count) { count = document.createElement('span'); count.className = 'section-progress'; summary.append(count); }
+      count.textContent = `${groupCompleted} of ${groupRequired} answered`;
     }
     if (completed) article.prepend(intro);
     else { const empty = document.createElement('p'); empty.textContent = 'Your report will appear here as you answer the questions. You can leave decisions open and return to them later.'; article.append(empty); }

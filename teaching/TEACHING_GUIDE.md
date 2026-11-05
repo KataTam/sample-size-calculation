@@ -9,6 +9,8 @@ The module teaches sample size as a justified research-design decision. Activiti
 
 Learners should know sample versus population, binary versus continuous outcomes, and the basic purpose of a test and confidence interval. Send the case, short concept notes and access link in advance. Provide the complete tutorial HTML/PDF and `static_activity.md` with prepared outputs as alternatives to live apps. Formulas and formatted results remain visible; expandable R code and output support reproducibility and further learning.
 
+The apps keep the main result visible while secondary settings can remain closed. Learners can drag sliders or type values on the displayed scale; percentage fields use 5 for 5%. The introductory pain activity begins with three views, with the rest available through “More lab views.” For independent practice, the flashcard table can hide answers until requested. The study-plan form shows completion counts and a live report beside the questions when the screen is wide enough.
+
 Before a larger classroom session, an initial usability pilot with about five learners can identify unclear tasks and navigation problems. The [pilot observation notes](pilot_observation_notes.md) provide a task-based protocol. After revision, a class of 20–25 can work in pairs or groups of 3–4, rotating the roles of explaining, checking assumptions and recording. The teacher should check the deployment environment and keyboard access, supply readable static alternatives and identify invented case values as hypothetical.
 
 ## Selecting a learning route

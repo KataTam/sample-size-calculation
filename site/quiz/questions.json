@@ -168,7 +168,12 @@
         "The population benefit is certainly 25 points"
       ],
       "answer": 2,
-      "explanation": "The interval excludes zero but includes differences below and above the 20-point threshold. The estimate is a between-group population comparison."
+      "explanation": "The interval excludes zero but includes differences below and above the 20-point threshold. The estimate is a between-group population comparison.",
+      "figure": {
+        "file": "clinical-interval.svg",
+        "alt": "Estimated difference 25 percentage points; 95% confidence interval 5 to 45; clinical threshold 20.",
+        "caption": "The estimate and interval describe the difference between groups."
+      }
     },
     {
       "id": "q09",
@@ -200,7 +205,12 @@
         "It becomes approximately four times as large"
       ],
       "answer": 3,
-      "explanation": "Required sample size is proportional to the inverse square of the target difference in this approximation. Halving the difference multiplies the requirement by four."
+      "explanation": "Required sample size is proportional to the inverse square of the target difference in this approximation. Halving the difference multiplies the requirement by four.",
+      "figure": {
+        "file": "target-difference.svg",
+        "alt": "Target difference of 3 units: 59 analyzable participants per group; 1.5 units: 234 per group.",
+        "caption": "Two-means normal approximation: common SD 5 units, 90% target power, two-sided Type I error probability 5%."
+      }
     },
     {
       "id": "q11",

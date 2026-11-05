@@ -42,6 +42,7 @@ const base = (process.argv[2] || 'http://127.0.0.1:8769').replace(/\/$/, '');
       await f.waitForFunction(() => window.Shiny?.shinyapp?.$socket?.readyState === 1);
       await f.getByRole('tab',{name:'Report',exact:true}).click();
       await f.locator('#report_preview .app-report').waitFor();
+      console.log(app+': checking changed inputs and report downloads');
       if(app==='two_means') {
         await set(f,{delta:2,sd:7,compare_delta:1,dropout:.2}); await has(f,'target difference 1 units');
         await has(f,'7² / 2²');

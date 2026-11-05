@@ -23,6 +23,11 @@ render_chapter_quiz <- function(chapter = "all") {
     name <- paste(id, q$id, sep = "-")
     cat(sprintf('<fieldset class="quiz-question" data-question="%s" data-level="%s" data-answer="%s" data-topic="%s"><legend><span class="quiz-number">%s</span>. %s</legend>\n', esc(q$id), q$level, q$answer, esc(bank$chapters[[q$chapter]]), i, esc(q$question)))
     if (q$level == "advanced") cat('<p class="quiz-level advanced">Advanced</p>\n')
+    if (!is.null(q$figure)) {
+      file <- file.path("../site/quiz/figures", basename(q$figure$file))
+      cat('<figure class="quiz-figure">', paste(readLines(file, warn=FALSE, encoding="UTF-8"),collapse="\n"),
+        '<figcaption>', esc(q$figure$caption), '</figcaption></figure>\n')
+    }
     for (j in seq_along(q$options)) {
       cat(sprintf('<label class="quiz-option"><input type="radio" name="%s" value="%s" required> <span>%s. %s</span></label>\n',
                   name, j - 1L, LETTERS[j], esc(q$options[[j]])))

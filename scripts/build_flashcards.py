@@ -121,7 +121,7 @@ def build():
               '<div class="app-controls">',
               '<div><label for="flashcard-route">Level</label><select id="flashcard-route"><option value="all">Core + advanced</option><option value="core">Core</option><option value="advanced">Advanced</option></select><div class="input-guidance-source" data-for="flashcard-route">Core covers basic planning and calculations; Advanced covers further methods and designs. This filter changes the preview. Downloads contain the deck named on each link.</div></div>',
               '<div class="search-control"><label for="flashcard-search">Search questions and answers</label><input id="flashcard-search" type="search" autocomplete="off"><div class="input-guidance-source" data-for="flashcard-search">Search matches words in either column within the selected level. Each matching row contains all the words you enter.</div></div>',
-              '<button type="button" class="secondary" id="clear-search">Clear search</button></div>',
+              '<button type="button" class="secondary" id="clear-search">Clear search</button><button type="button" class="secondary" id="hide-answers" aria-pressed="false">Hide answers</button></div>',
               '<p id="flashcard-count" role="status" aria-live="polite"></p></div>', '',
               '<p id="flashcard-empty" hidden>No cards match this search and level. You can try a shorter search or choose another level.</p>', '']
     counts = Counter(c['level'] for c in cards)

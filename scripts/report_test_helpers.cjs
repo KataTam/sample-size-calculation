@@ -13,7 +13,12 @@ async function saveReport(page, frame, selector, stem, format) {
   });
   const pending = page.waitForEvent('download', {timeout:60000});
   await frame.locator(selector).click();
-  const file = await pending;
+  let file;
+  try { file = await pending; }
+  catch (error) {
+    console.error('Download status for '+stem+' ('+format+'):', await frame.locator('#download-status, #status').allTextContents());
+    throw error;
+  }
   assert(file.suggestedFilename().endsWith('.'+format), file.suggestedFilename());
   fs.mkdirSync('build/report-downloads', {recursive:true});
   await file.saveAs('build/report-downloads/'+stem+'.'+format);

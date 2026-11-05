@@ -30,12 +30,14 @@ Apps are interactive software. Activities provide questions and exercises to hel
 
 The calculation apps use four views: “Overview” for the main result, “Explore assumptions” for graphs and comparisons, “Report” for a readable summary of current inputs and results, and “Methods and references” for calculation details. Reports download as PDF by default, with an editable Word alternative. The reasoning lab also has simulation and “My study” views; the study-plan report follows four writing stages. In the lab and study-plan form, separate “Save work for later” controls preserve settings and answers for reopening.
 
+Each slider has an editable number beside it. Percentages use the displayed percentage scale: entering 5 means 5%. “Study settings” collapses in a narrow panel to leave room for the result. The introductory pain activity starts with its simulation, report and methods views; “More lab views” reveals the remaining views.
+
 The reasoning lab has core and advanced activities. Core activities start with advanced controls closed; “Settings” provides the other assumptions. Question help is available by hover, keyboard focus or tap. Gray model answers in written-response fields illustrate how to explain a decision; reports use your own entries. The [activity walkthroughs](student-materials/activity-walkthroughs.html) provide guidance for each one, including pilot retention, precision and recruitment scenarios.
 
 ## Review and practice
 
 - [Quizzes](quiz/): chapter checks and a cumulative quiz, with a Core or Core + advanced route. Results link to the relevant explanations; missed questions can be retried. Chapter checks are also embedded in the [tutorial](book/).
-- [Flashcard preview](student-materials/flashcards/cards.md): a question-and-answer table with level filtering and search. [Anki and Quizlet downloads](student-materials/flashcards/index.md) are available for review outside the tutorial.
+- [Flashcard preview](student-materials/flashcards/cards.md): a question-and-answer table with level filtering, search and optional hidden answers for self-testing. [Anki and Quizlet downloads](student-materials/flashcards/index.md) are available for review outside the tutorial.
 
 ## Tutorial beside the app
 

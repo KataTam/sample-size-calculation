@@ -19,7 +19,7 @@ const base=process.argv[2]||'http://127.0.0.1:8769';
    assert(f,app+' loaded');
    await f.waitForFunction(()=>window.Shiny?.shinyapp?.$socket?.readyState===1);
    await f.getByRole('tab',{name:'Overview',exact:true}).click();
-   await f.locator(app==='dropout_adjustment'?'#recruitment_steps li':'.app-metric').first().waitFor();
+   await f.locator(app==='dropout_adjustment'?'#recruitment_steps li':'.app-primary-result,.app-metric').first().waitFor();
    await f.waitForFunction(()=>![...document.querySelectorAll('.recalculating')].some(el=>el.checkVisibility()));
    assert(await f.locator('h2').first().evaluate(el=>parseFloat(getComputedStyle(el).fontSize)>=24),'Legible heading');
    await page.screenshot({path:`build/app-layout/${app}-overview.png`,fullPage:true});

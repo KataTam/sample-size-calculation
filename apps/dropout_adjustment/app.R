@@ -105,7 +105,7 @@ server <- function(input, output, session) {
   }
   output$result <- renderUI({
     x <- plan()
-    tagList(div(class = "recruitment-result", p(paste0(x$per_group, " participants per group; ", x$total, " in total."))),
+    tagList(app_primary_result(x$per_group, "to recruit per group", paste0(x$total, " participants in total")),
       if (switching_applied()) p(paste0("Approximate switching multiplier: ", round(x$multiplier, 3), ". The result depends on the simplified switching assumptions.")),
       if (isTRUE(input$switching) && identical(input$starting_assumption, "included"))
         p("The starting sample already accounts for switching. No additional switching multiplier is applied."))
@@ -128,12 +128,14 @@ server <- function(input, output, session) {
     target <- function(r) ceiling(x$after_switching / (1-r))
     targets <- target(losses)
     if (unequal) targets <- pmax(targets, target(x$losses[2]))
-    par(mar = c(4.5, 4.5, 1, 1), cex.axis = 1.1, cex.lab = 1.1)
-    plot(100*losses, targets, type = "l", lwd = 2, col = "#245e90",
+    app_plot_style()
+    plot(100*losses, targets, type = "n",
       xlab = if (unequal) "Expected loss in novel group (%)" else "Expected loss in each group (%)", ylab = "Equal recruitment per group")
+    app_plot_grid(); lines(100*losses, targets, lwd = 2.5, col = "#245e90")
     if (unequal) abline(h = target(x$losses[2]), lty = 2, col = "#704a93")
-    points(100*input$dropout, x$per_group, pch = 19, cex = 1.3, col = "#245e90")
-  }, alt = "Recruitment increases with expected losses. The current target is also given in the calculation tables.")
+    app_current_point(100*input$dropout, x$per_group)
+    app_point_label(100*input$dropout, x$per_group, paste0("Current: ", x$per_group))
+  }, res = 96, alt = "Recruitment increases with expected losses. The current target is also given in the calculation tables.")
   output$plot_caption <- renderText({
     plan()
     if (isTRUE(input$different_losses)) paste0("Figure. Equal recruitment per group as loss in the novel group varies; standard-group loss remains ",
@@ -142,11 +144,12 @@ server <- function(input, output, session) {
   })
   output$recruitment_steps <- renderUI({
     x <- plan()
-    labels <- c("Starting analyzable count", "After switching allowance", "After loss allowance", "Recruitment per group")
-    values <- c(x$starting, round(x$after_switching, 2), round(max(x$unrounded_recruitment), 2), x$per_group)
-    tags$ol(class = "app-steps", `aria-label` = "Recruitment calculation in four steps",
-      lapply(seq_along(values), function(i) tags$li(tags$span(class = "app-label", paste0(i, ". ", labels[i])), tags$span(class = "app-value", values[i]))))
+    labels <- c("Analyzable per group", if (switching_applied()) "After switching allowance", "Recruit per group")
+    values <- c(x$starting, if (switching_applied()) round(x$after_switching, 2), x$per_group)
+    tags$ol(class = "app-steps", `aria-label` = "Recruitment calculation",
+      lapply(seq_along(values), function(i) tags$li(tags$span(class = "app-label", labels[i]), tags$span(class = "app-value", values[i]))))
   })
+
   method_text <- reactive({
     x <- plan()
     c(if (switching_applied()) paste0("Switching: ", x$starting, " / (1 - ", input$switch_novel, " - ", input$switch_standard,

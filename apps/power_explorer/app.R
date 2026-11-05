@@ -117,7 +117,7 @@ ui <- fluidPage(
     tabPanel("Explore assumptions", value = "Compare assumptions",
       h3("Compare smaller effects"),
       p("The point where each curve crosses the power target gives the required sample size for that difference."),
-      plotOutput("comparison_plot", height = "360px"),
+      plotOutput("comparison_plot", height = "340px"), uiOutput("comparison_key"),
       p(class = "caption", "Figure 2. Power curves at half, two-thirds and the full target difference, with the power target and expected analyzable recruitment limit."),
       tableOutput("comparison_table"),
       p(class = "caption", "Table 2. Power at the expected analyzable recruitment limit for each assumed benefit."),
@@ -130,25 +130,26 @@ ui <- fluidPage(
       p("The table keeps the planned sample size fixed. Missing-outcome scenarios start with recruited participants; their results appear in One study and Many studies.")),
     tabPanel("One study", h3("One simulated study"),
       p("Which quantities do you expect to change when you repeat the same study?"),
-      actionButton("run_one", "Simulate one study", class = "btn-primary"),
+      tags$div(class = "simulation-actions",
+        actionButton("run_one", "Simulate one study", class = "btn-primary"),
+        conditionalPanel("input.outcome == 'proportions' && !output.one_has_missing",
+          actionButton("run_journey", "Animate 20 trials"),
+          tags$button(id = "journey-pause", type = "button", "Pause", disabled = NA),
+          tags$button(id = "journey-replay", type = "button", "Replay", disabled = NA))),
       textOutput("one_status"),
       conditionalPanel("input.outcome == 'proportions' && !output.one_has_missing",
         tags$div(id = "sampling-journey", `aria-describedby` = "journey-description"),
-        tags$p(id = "journey-description"),
+        tags$p(id = "journey-description", class = "sr-only"),
         tags$p(id = "journey-status", role = "status", `aria-live` = "polite", "The patient outcomes and estimated difference will appear here."),
         conditionalPanel("output.one_ready", activity_details("How to read the animation",
           p("Filled circles show patients with the event; open circles show patients without it. In the chronic pain case, the event is pain relief."),
           p("The pink dot starts at this trial's estimated difference on the upper axis and falls to the same value on the lower axis. Each accumulated dot represents one complete trial.")),
-        tags$div(class="activity-question", h4("Another study, then a short sequence"),
-          p("Each repetition samples new patients under the same population assumptions. The dots accumulate to show variation in the estimated difference."),
-          actionButton("run_journey", "Animate 20 trials"),
-          tags$button(id = "journey-pause", type = "button", "Pause", disabled = NA),
-          tags$button(id = "journey-replay", type = "button", "Replay", disabled = NA),
+        tags$div(class="activity-question", h4("What stays fixed, and what changes?"),
           tags$label(tags$input(id = "journey-motion", type = "checkbox"), " Reduced motion"),
           activity_details("Model answer", textOutput("one_model_answer"))))),
       conditionalPanel("output.one_ready",
         textOutput("one_interpretation"),
-        plotOutput("one_plot", height = "300px"),
+        plotOutput("one_plot", height = "300px"), app_interval_key(),
         p(class = "caption", "Figure 4. The saved study's estimate and interval compared with zero, the clinical threshold and the true effect assumed for simulation."),
         activity_details("Numerical results and interval methods",
           tableOutput("one_retention"),
@@ -169,7 +170,7 @@ ui <- fluidPage(
         p(class = "caption", "Table 6. Summary of the saved simulation batch. Advanced controls add coverage, interval-width targets and simulation uncertainty."),
         textOutput("many_text"), plotOutput("distribution", height = "300px"),
         p(class = "caption", "Figure 6. Estimated treatment differences across independent studies. The dashed line marks the assumed population difference."),
-        activity_details("Intervals across studies", plotOutput("many_plot", height = "480px"),
+        activity_details("Intervals across studies", plotOutput("many_plot", height = "480px"), app_interval_key(),
           p(class = "caption", "Figure 5. The first 30 saved trial intervals. Filled dots show statistically significant results. Lines mark zero, the clinical threshold and the assumed true effect.")),
         activity_details("P values across studies", plotOutput("p_values", height = "300px"),
           p(class = "caption", "Figure 7. Saved p-values across studies; the dashed line marks Type I error probability.")),
@@ -535,14 +536,18 @@ server <- function(input, output, session) {
       x <- if (is.null(meta$missing)) simulate_trials(meta$generating) else simulate_missing_trials(meta$generating, meta$missing); incProgress(.8); x$meta <- meta; many_saved(x)
     })
   }, ignoreInit = TRUE)
-  status <- function(saved, label) paste0(label, ": n = ", saved$spec$n,
+  status <- function(saved, label) {
+    if (identical(current_activity(), "pain_one_many")) return(paste0(label, ": ", saved$spec$n,
+      " patients per group. ", if (!identical(saved$meta, snapshot())) "Inputs changed; run again to update." else "Results match current inputs."))
+    paste0(label, ": n = ", saved$spec$n,
     if (is.null(saved$missing)) " analyzable per group; " else paste0(" recruited per group; ", missing_scenario_label(saved$missing), "; "),
     "true difference assumed for simulation = ", effect_text(true_difference(saved$spec), saved$spec$outcome),
     ". ", if (!identical(saved$meta, snapshot())) "Inputs changed. These are saved results; run again to update." else "Results match current inputs.")
+  }
   output$overview_metrics <- renderUI({
     x <- planned()
-    app_metrics(c("Analyzable per group" = x$n, "Recruitment total" = 2*adjust_for_dropout(x$n, input$dropout),
-      "Power at target difference" = format_percent(spec_power(x), 1)))
+    app_primary_result(x$n, "analyzable per group", paste0(2*x$n, " in total · Power at target difference: ", format_percent(spec_power(x),1),
+      if (input$dropout > 0) paste0(" · Recruit ", 2*adjust_for_dropout(x$n,input$dropout), " in total") else ""))
   })
   output$overview_text <- renderText({
     x <- planned()
@@ -588,12 +593,12 @@ server <- function(input, output, session) {
   output$planning_plot <- renderPlot({
     x <- planned(); ns <- unique(round(seq(2, plot_limit(), length.out = 100)))
     scale <- if (x$outcome == "proportions") 100 else 1
-    par(mfrow = c(2, 1), mar = c(4, 4, 2, 1))
+    app_plot_style(c(3.8,4.2,1,1)); par(mfrow = c(2,1))
     plot(ns, 100 * vapply(ns, function(n) spec_power(x, n), numeric(1)), type = "l", lwd = 2,
-      ylim = c(0, 100), xlab = "Participants for analysis, per group", ylab = "Power (%)")
+      ylim = c(0, 100), xlab = "Analyzable participants per group", ylab = "Power (%)")
     abline(h = 100 * input$target_power, lty = 2); points(x$n, 100 * spec_power(x), pch = 19)
     plot(ns, scale * vapply(ns, function(n) anticipated_width(x, n), numeric(1)), type = "l", lwd = 2,
-      xlab = "Participants for analysis, per group", ylab = if (x$outcome == "proportions") "Full CI width (percentage points)" else "Full CI width (outcome units)")
+      xlab = "Analyzable participants per group", ylab = if (x$outcome == "proportions") "Full CI width (points)" else "Full CI width (outcome units)")
     abline(h = scale * x$width_target, lty = 2); points(x$n, scale * anticipated_width(x), pch = 19)
   }, alt = "Power and anticipated full confidence interval width versus participants per group. Current values are provided in the design table.")
   comparison <- reactive({
@@ -616,15 +621,20 @@ server <- function(input, output, session) {
     z <- comparison(); x <- z$spec
     ns <- unique(round(seq(2, plot_limit(), length.out = 100)))
     colors <- c("#176675", "#a04a24", "#635493")
-    plot(range(ns), c(0, 100), type = "n", xlab = "Participants for analysis, per group", ylab = "Power (%)")
+    app_plot_style()
+    plot(range(ns), c(0, 100), type = "n", xlab = "Analyzable participants per group", ylab = "Power (%)")
+    app_plot_grid()
     for (i in seq_along(z$scenarios)) lines(ns,
       100 * vapply(ns, function(n) spec_power(z$scenarios[[i]], n), numeric(1)),
       lwd = 2, col = colors[i], lty = i)
     abline(h = 100 * input$target_power, lty = 2, col = "#555555")
     abline(v = z$cap_n, lty = 3, col = "#555555")
-    legend("bottomright", legend = effect_text(z$effects, x$outcome, 1),
-      col = colors, lty = 1:3, lwd = 2, bty = "n")
-  }, alt = "Power curves compare half, two-thirds and the full target difference. The table gives power at the expected analyzable recruitment limit.")
+  }, res = 96, alt = "Power curves compare half, two-thirds and the full target difference. The table gives power at the expected analyzable recruitment limit.")
+  output$comparison_key <- renderUI({
+    z <- comparison()
+    tags$div(class="app-plot-key", lapply(1:3, function(i) tags$span(class=c("solid","dashed","dotted")[i],
+      style=paste0("--key-color:",c("#176675", "#a04a24", "#635493")[i]), effect_text(z$effects[i],z$spec$outcome,1))))
+  })
   output$comparison_table <- renderTable({
     z <- comparison()
     data.frame(Difference = effect_text(z$effects, z$spec$outcome), `Participants for analysis per group` = z$cap_n,
@@ -640,8 +650,9 @@ server <- function(input, output, session) {
       spec_power(y)
     }, numeric(1))
     scale <- if (x$outcome == "proportions") 100 else 1
+    app_plot_style(c(4.2,4.4,2,1))
     plot(scale * effects, 100 * powers, type = "l", lwd = 2, col = "#176675", ylim = c(0,100),
-      xlab = if (x$outcome == "means") "Treatment minus control (outcome units)" else "Treatment minus control (percentage points)",
+      xlab = if (x$outcome == "means") "Treatment minus control (outcome units)" else "Treatment minus control (points)",
       ylab = "Power (%)", main = paste(x$n, "analyzable patients per group"))
     abline(h = 100 * input$target_power, lty = 2); abline(v = 0, lty = 3)
     points(scale * d, 100 * spec_power(x), pch = 19)
@@ -672,7 +683,7 @@ server <- function(input, output, session) {
     x <- one(); if (!is.finite(x$result$estimate)) return("This study cannot estimate the treatment difference from the retained records.")
     paste(interval_interpretation(x$result, x$spec), if (!is.null(x$missing)) "The available-case analysis uses observed outcomes. Selective missingness can bias its estimate of the full-population difference." else "")
   })
-  output$one_plot <- renderPlot({ validate(need(is.finite(one()$result$estimate), "No estimable comparison in this study.")); plot_trial_intervals(one()$result, one()$spec) }, alt = "One study estimate and interval; values and interpretation are stated above.")
+  output$one_plot <- renderPlot({ validate(need(is.finite(one()$result$estimate), "No estimable comparison in this study.")); plot_trial_intervals(one()$result, one()$spec, show_legend=FALSE) }, alt = "One study estimate and interval; values and interpretation are stated above.")
   output$one_data <- renderTable({
     d <- one()$data
     if ("missing" %in% names(d)) d <- d[order(!d$missing), ]
@@ -699,15 +710,17 @@ server <- function(input, output, session) {
     x <- many(); x$results <- x$results[is.finite(x$results$estimate), , drop=FALSE]
     validate(need(nrow(x$results)>0, "No estimable comparisons in this batch.")); x
   })
-  output$many_plot <- renderPlot(plot_trial_intervals(valid_many()$results, many()$spec), alt = "First 30 study intervals; summary percentages and downloadable data provide a text alternative.")
+  output$many_plot <- renderPlot(plot_trial_intervals(valid_many()$results, many()$spec, show_legend=FALSE), alt = "First 30 study intervals; summary percentages and downloadable data provide a text alternative.")
   output$distribution <- renderPlot({
     x <- valid_many(); scale <- if (x$spec$outcome == "proportions") 100 else 1
+    app_plot_style(c(4.2,4.4,2,1))
     hist(scale * x$results$estimate, breaks = 25, col = "#dbeafe", border = "white", main = "Sampling distribution of effects",
-      xlab = if (x$spec$outcome == "proportions") "Treatment minus control (percentage points)" else "Treatment minus control (outcome units)")
+      xlab = if (x$spec$outcome == "proportions") "Treatment minus control (points)" else "Treatment minus control (outcome units)")
     abline(v = scale * true_difference(x$spec), lty = 3, lwd = 2)
   }, alt = "Effect estimate histogram; mean estimate and the true effect assumed for simulation are provided above.")
   output$p_values <- renderPlot({
     x <- valid_many()
+    app_plot_style(c(4.2,4.4,2,1))
     hist(x$results$p_value, breaks = seq(0,1,.025), col = "#d2e6e9", border = "white",
       xlab = "p-value", ylab = "Number of studies", main = "Saved repeated-study p-values")
     abline(v = x$spec$alpha, lty = 2, lwd = 2, col = "#923d20")

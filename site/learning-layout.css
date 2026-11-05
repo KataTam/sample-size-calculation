@@ -5,10 +5,10 @@
 .learning-app h2 { font-size:1.35rem; margin:0 0 14px; }
 .learning-app h3 { font-size:1.12rem; }
 .learning-app p { max-width:75ch; }
-.learning-app .app-header { margin-bottom:24px; }
+.learning-app .app-header { margin-bottom:18px; }
 .learning-app .app-navigation { display:flex; gap:8px 22px; flex-wrap:wrap; font-size:.94rem; margin-bottom:16px; }
 .learning-app .app-panel { padding:22px; border:1px solid #b8cbd4; border-radius:8px; background:#f4f7fa; min-width:0; }
-.learning-app .app-controls { display:flex; gap:16px 24px; flex-wrap:wrap; align-items:end; margin:16px 0; }
+.learning-app .app-controls { display:flex; gap:12px 18px; flex-wrap:wrap; align-items:end; margin:12px 0; }
 .learning-app .app-controls > div { flex:1 1 220px; min-width:0; }
 .learning-app label { display:block; margin-bottom:6px; }
 .learning-app select, .learning-app input[type=search] { display:block; width:100%; min-height:44px; font:inherit; line-height:1.5; padding:9px 12px; border:1px solid #819ba8; border-radius:5px; color:#20343e; background:#fff; }

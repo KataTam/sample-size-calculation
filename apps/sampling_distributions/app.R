@@ -54,13 +54,13 @@ ui <- fluidPage(
       activity_help("This is the sample size of each study. Larger samples narrow the distributions of sample means, making a specified difference easier to detect.", for_input = "n"),
       sliderInput("sigma", "Known population SD (mmHg)", .1, 100, 15, step = .1),
       activity_help("This describes variation between individual measurements. The app treats it as known; the spread of sample means is SD divided by the square root of sample size.", for_input = "sigma")),
-    app_input_group("Statistical settings", percent_slider("alpha", "Type I error probability (%)", .001, .20, .05, step = .001),
+    app_input_group("Statistical settings", collapsed = TRUE, percent_slider("alpha", "Type I error probability (%)", .001, .20, .05, step = .001),
       activity_help("This sets the shaded false-positive area under the null distribution. Reducing it makes rejection harder and lowers power at the same sample size and true difference.", for_input = "alpha"),
       selectInput("sidedness", "Direction chosen before analysis", c("Greater than the null (one-sided)" = "greater", "Less than the null (one-sided)" = "less", "Either direction (two-sided)" = "two.sided")),
       activity_help("A two-sided test can reject in either direction. A one-sided choice should follow the prespecified question; a true difference in the opposite direction can give very low power.", for_input = "sidedness"))),
   mainPanel(width = 8, textOutput("bridge_status"), tabsetPanel(id = "sampling_view",
     tabPanel("Overview", uiOutput("overview_metrics"),
-      app_overview(tagList(plotOutput("distributions", height = "520px"), p(class = "caption", "Figure. Sample-mean distributions under the null and specified alternative. Shaded regions represent false positives, false negatives and detected differences.")), textOutput("explanation")),
+      app_overview(tagList(plotOutput("distributions", height = "560px"), p(class = "caption", "Figure. Sample-mean distributions under the null and specified alternative. Shaded regions represent false positives, false negatives and detected differences.")), textOutput("explanation")),
       activity_details("Current numerical results", tableOutput("operating_table")),
       activity_details("Help with the shaded areas", p("Type I error probability describes false positives under the null. Type II error probability describes false negatives at the specified alternative. Power is the corresponding true-positive probability. The two panels refer to different population assumptions."))),
     tabPanel("Explore assumptions", h3("Power across sample sizes"),
@@ -106,7 +106,7 @@ server <- function(input, output, session) {
   model_answers <- reactive(list(interpretation = sampling_model_answer(operating())))
   activity_model_answers(session, model_answers, "interpretation")
   output$bridge_status <- renderText(bridge_status())
-  output$distributions <- renderPlot(plot_sample_mean_distributions(operating()),
+  output$distributions <- renderPlot(plot_sample_mean_distributions(operating()), res = 96,
     alt = "Distributions of the sample mean under the null and specified alternative. Rejection tails under the null show Type I error probability; the non-rejection region under the alternative shows Type II error probability. Values and boundaries are listed below.")
   output$operating_table <- renderTable({
     x <- operating()
@@ -130,18 +130,22 @@ server <- function(input, output, session) {
     x <- snapshot(); ns <- unique(round(seq(1, max(100, min(1000, 2*x$n)), length.out = 100)))
     powers <- vapply(ns, function(n) { y <- x; y$n <- n
       do.call(normal_sampling_operating_characteristics, y)$power }, numeric(1))
-    plot(ns, powers, type = "l", lwd = 2, col = "#176675", ylim = c(0,1), yaxt = "n",
-      xlab = "Independent observations per sample", ylab = "Power at specified alternative (%)")
+    app_plot_style()
+    plot(ns, powers, type = "n", ylim = c(0,1), yaxt = "n",
+      xlab = "Independent observations per sample", ylab = "Power (%)")
+    app_plot_grid(); lines(ns, powers, lwd = 2.5, col = "#245e90")
     axis(2, at = seq(0, 1, .2), labels = paste0(seq(0, 100, 20), "%"))
     abline(h = x$alpha, lty = 3, col = "#a34724")
-    points(x$n, operating()$power, pch = 19)
-  }, alt = "Power at the specified alternative across independent sample sizes, with current power given in the table and a line at Type I error probability.")
+    app_current_point(x$n, operating()$power)
+    app_point_label(x$n, operating()$power, paste0("Current: ", format_percent(operating()$power,1)))
+  }, res = 96, alt = "Power at the specified alternative across independent sample sizes, with current power given in the table and a line at Type I error probability.")
   output$overview_metrics <- renderUI({
     x <- operating()
-    app_metrics(setNames(format_percent(c(x$type1, x$beta, x$power), 2),
-      c("Type I error probability", if (x$mu0 == x$mu1) "Non-rejection probability" else "Type II error probability",
-        if (x$mu0 == x$mu1) "Rejection probability" else "Power")))
+    app_primary_result(format_percent(x$power,1), if (x$mu0 == x$mu1) "false-positive probability" else "power at this difference",
+      paste0("n = ", x$n, " · Type I error probability ", format_percent(x$type1,1),
+        " · ", if(x$mu0==x$mu1) "Non-rejection " else "Type II error probability ", format_percent(x$beta,1)))
   })
+
   method_text <- reactive({
     x <- operating()
     paste0("SE = population SD / sqrt(n) = ", x$sigma, " / sqrt(", x$n, ") = ", round(x$se, 4),

@@ -1,5 +1,20 @@
-#sampling-journey {max-width:700px;margin:1em 0;background:#f6f9fc;border:1px solid #cad5df;border-radius:8px}
+#sampling-journey {max-width:600px;margin:12px 0;background:#f6f9fc;border:1px solid #cad5df;border-radius:8px}
 #sampling-journey svg {display:block;width:100%;height:auto}
 #sampling-journey text {font:13px system-ui,sans-serif;fill:#243447}
 #journey-pause,#journey-replay {margin:4px;padding:6px 12px;border:1px solid #718096;border-radius:4px;background:white;color:#243447}
 #journey-motion {margin-left:10px}
+.simulation-actions {display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin:8px 0}
+.simulation-actions > div {display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.simulation-actions button {margin:0!important}
+#journey-status {font-size:.9rem;color:#415663;margin:6px 0}
+#lab-more-views {margin:0 0 10px;font-size:.9rem;float:right}
+.lab-activity-options {max-width:620px;margin:0 0 12px}
+.lab-activity-options > summary {font-size:.95rem}
+.pain-focus .activity-context {display:none}
+.pain-focus:not(.lab-expanded) .lab-activity-options {display:none}
+.pain-focus:not(.lab-expanded) .lab-secondary-view {display:none}
+.pain-focus .tab-pane > h3 {font-size:1.15rem;margin:10px 0}
+.pain-focus .activity-question {padding:.5rem 0}
+.pain-focus .activity-question h4 {margin:8px 0}
+.guided .lab-activity-options {display:none}
+@media(max-width:600px){#lab-more-views{float:none}.simulation-actions button{font-size:.9rem;padding:7px 10px}#sampling-journey text{font-size:14px}}

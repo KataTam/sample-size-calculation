@@ -29,6 +29,9 @@
 .quiz-surface th,.quiz-surface td { text-align:left; font-weight:400; padding:10px; border-bottom:1px solid var(--quiz-border); }
 .quiz-surface caption { text-align:left; color:var(--quiz-text); }
 .quiz-surface :focus-visible { outline:3px solid #a45115; outline-offset:3px; }
+.quiz-surface .quiz-figure { margin:10px 0 18px; max-width:580px; }
+.quiz-surface .quiz-figure img,.quiz-surface .quiz-figure svg { display:block; width:100%; height:auto; background:white; border:1px solid #b8cbd4; border-radius:5px; }
+.quiz-surface .quiz-figure figcaption { margin-top:7px; font-size:.9em; color:var(--quiz-text); }
 .book.color-theme-1 .quiz-surface { --quiz-paper:#fffaf0; --quiz-surface:#f5eddc; }
 .book.color-theme-2 .quiz-surface { --quiz-text:#edf3fa; --quiz-paper:#252a39; --quiz-surface:#2f3847; --quiz-border:#8196ac; --quiz-selected:#304d68; --quiz-advanced:#493d60; --quiz-correct:#243e36; --quiz-missed:#493b20; }
 @media(max-width:550px) { .quiz-surface .quiz-question { padding:12px; } .quiz-surface .quiz-option { padding:10px; gap:10px; } }
