@@ -40,6 +40,10 @@ details.misconception p:last-child { margin-bottom: 0; }
 .book.color-theme-2 details.misconception summary { color: #ffe1a0; }
 table { font-size: .92em; }
 th, td { padding: 8px 10px; vertical-align: top; }
+.planning-assumptions col:first-child { width: 32%; }
+.planning-assumptions col:last-child { width: 68%; }
+.planning-assumptions td > strong { font-weight: 600 !important; }
+.planning-assumptions tr:has(td > strong) { break-after: avoid; }
 img { max-width: 100%; height: auto; }
 h1.core-heading, .core-heading > h1 { background: #dbe9fb; padding: .4em .6em; border-left: 4px solid #3263a0; }
 h1.advanced-heading, .advanced-heading > h1 { background: #e7dcf6; padding: .4em .6em; border-left: 4px solid #69509a; }

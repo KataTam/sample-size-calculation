@@ -238,24 +238,37 @@ The aim is a short study plan that explains your research question, sample size 
 
 When you revise an assumption, a short note about what changed and why will help you explain the final plan.
 
+Table \@ref(tab:planning-assumptions) follows the four sections of the [Activity: Develop and justify your study plan](https://katatam.github.io/sample-size-calculation/study/?activity=assumptions_report). In the activity's *Study settings*, you can specify a power target, a precision target, both requirements, a fixed available sample, or a pilot or feasibility objective.
+
+::: {.planning-assumptions}
+
 | Decision | What to make explicit |
 |---|---|
+| **Question and design** | |
 | Research question: PICO | Population, Intervention, Comparator, and Outcome, following @richardson1995; the outcome should include the measurement time point |
 | Intervention and comparator | What each group receives, how it is delivered, by whom and on what schedule; relevant dose or intensity and permitted additional care |
-| Planning objective and constraints | Hypothesis testing with a power target, estimation with a precision target, both requirements, or a feasibility objective; whether the available sample is fixed |
+| Design, sampling and allocation | Study design, participant selection, unit of allocation and allocation ratio; any paired, repeated or clustered observations |
+| **Assumptions and evidence** | |
 | Effect scale | Treatment minus control; score units or percentage points; direction of benefit |
 | Expected difference | Best current expectation, supporting evidence and uncertainty |
 | Clinical threshold | Smallest benefit that matters to patients, with justification |
 | Target difference | Difference used in the power calculation, with justification |
 | Variation or event probabilities | Common standard deviation or control and treatment percentages; evidence source, population and time point |
 | Sensitivity | Plausible alternative differences, standard deviations or event probabilities; identify the least certain assumptions |
-| Analysis and power | Planned test and confidence interval; sidedness, Type I error probability and target power |
+| **Calculation** | |
+| Planned analysis | Planned test and confidence interval method; sidedness; how pairing or clustering will be handled, where relevant |
+| Calculation procedure and software | Method or formula; software, package and code versions; saved inputs and calculation steps. For simulations: data-generating assumptions, repetitions and random-number settings. See [Methods and software to record](#reproducibility-record) |
+| Type I error probability and target power | Chosen probabilities and the target difference at which power is evaluated |
 | Precision | Desired full confidence interval width and confidence level |
-| Allocation and counts | Allocation ratio; per-group and total analyzable sample sizes |
-| Recruitment | Expected losses, recruitment target, recruitment period and available resources |
+| Sample size needed or available for analysis | Per-group and total analyzable counts; calculation result and upward rounding, or the available sample for an existing-data study |
+| **Recruitment and conclusion** | |
+| Losses, missing data and recruitment | Expected losses, recruitment target and how missing outcomes or treatment changes affect the plan |
+| Feasibility and resources | Expected recruitment rate, recruitment period, available resources and other practical constraints |
 | Intended conclusion | What the design could establish and what remains uncertain |
 
-Table: (\#tab:planning-assumptions) Decisions and assumptions to record in a sample size plan.
+Table: (\#tab:planning-assumptions) Decisions and assumptions to record, grouped by the four sections of the study-plan activity.
+
+:::
 
 PICO connects the clinical question to the calculation. In this example, its components are patients with chronic pain, the novel treatment, standard treatment, and pain relief at four weeks. The report's prompts draw on PICO, selected SPIRIT 2025 protocol items on design, participants, interventions, outcomes, sample size and recruitment (items 12–16, 19–20), and DELTA² guidance on the target difference and calculation assumptions [@richardson1995; @spiritconsort2025; @cook2018delta2]. A full protocol should follow the complete guidance for its study design.
 
@@ -272,7 +285,7 @@ Which count belongs in the protocol: analyzable patients or patients to recruit?
 
 Your report should record both and explain the adjustment for expected losses when you complete the calculation.
 
-The [Activity: Develop and justify your study plan](https://katatam.github.io/sample-size-calculation/study/?activity=assumptions_report) has four expandable sections: question and design, assumptions and evidence, calculation, and recruitment and conclusion. You can begin with the first section and return as your plan develops. The preview and report bring your answers together and identify unanswered decisions. You can download the report as PDF or an editable Word document. “Save work for later” stores your entries for reopening in the activity.
+In the [Activity: Develop and justify your study plan](https://katatam.github.io/sample-size-calculation/study/?activity=assumptions_report), you can begin with the first section and return as your plan develops. The preview and report bring your answers together and identify unanswered decisions. You can download the report as PDF or an editable Word document. “Save work for later” stores your entries for reopening in the activity.
 
 This activity connects the numerical result to a defensible study decision. Your report should record the calculation or simulation results together with their method, inputs and interpretation.
 
