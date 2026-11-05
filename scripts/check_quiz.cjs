@@ -1,4 +1,5 @@
 const {chromium}=require('playwright');
+const {saveReportPair}=require('./report_test_helpers.cjs');
 const assert=require('node:assert/strict');
 const fs=require('node:fs');
 const base=process.argv[2] || 'http://127.0.0.1:8769';
@@ -62,10 +63,8 @@ const bank=JSON.parse(fs.readFileSync('site/quiz/questions.json','utf8'));
   await page.locator('#software').fill('Pooled score test; R 4.5.1; recorded source commit and saved input file');
   await page.locator('#preview').click();
   assert((await page.locator('#report').innerText()).includes('R 4.5.1'));
-  const saved=page.waitForEvent('download');
-  await page.locator('#download').click();
-  const download=await saved;
-  assert(fs.readFileSync(await download.path(),'utf8').includes('recorded source commit'));
+  const {html}=await saveReportPair(page,page,'#download','#download-word','study-plan-quiz');
+  assert(html.includes('recorded source commit'));
   assert.deepEqual(errors,[]);
   console.log('Quiz: all chapter filters, core/advanced coverage, required answers, scores, feedback anchors, retry and mobile layout passed.');
  }finally{await browser.close()}
