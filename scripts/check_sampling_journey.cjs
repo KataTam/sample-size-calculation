@@ -27,7 +27,7 @@ const fs=require('node:fs');
  await f.locator('#report_preview .app-report').waitFor();
  assert((await f.locator('#report_preview').innerText()).includes('Pain relief: simulation report'));
  assert((await f.locator('#justification-question').innerText()).includes('sampling variability'));
- assert((await f.locator('#justification').getAttribute('placeholder')).includes('20 patients per group'));
+ assert((await f.locator('#justification').getAttribute('data-example-answer')).includes('20 patients per group'));
  assert(!await f.locator('#study-plan-guidance').isVisible());
  await f.locator('#justification').fill('My reflection on the simulated studies.');
  await f.getByRole('tab',{name:'One study and many studies',exact:true}).click();

@@ -46,7 +46,11 @@ app_report_body <- function(paragraphs, data = NULL, heading = "Current report",
   if (!is.null(intro)) shiny::tags$p(intro),
   if (is.list(paragraphs)) lapply(names(paragraphs), function(title)
     shiny::tags$section(shiny::tags$h4(title), lapply(paragraphs[[title]][nzchar(paragraphs[[title]])], shiny::tags$p)))
-  else lapply(paragraphs[nzchar(paragraphs)], shiny::tags$p),
+  else {
+    technical <- grepl("^(Procedure:|R stats::|M =|Recruitment per group =)", paragraphs)
+    shiny::tagList(lapply(paragraphs[nzchar(paragraphs) & !technical], shiny::tags$p),
+      if (any(technical)) shiny::tags$details(shiny::tags$summary("Methods and reproducibility"), lapply(paragraphs[technical], shiny::tags$p)))
+  },
   if (!is.null(data)) app_table(data, "Inputs and calculated quantities"))
 app_report_document <- function(title, slug, paragraphs, data = NULL, report_heading = "Current report", report_intro = NULL) {
   # Render head contents explicitly: Shiny otherwise collects tags$head outside
@@ -151,4 +155,15 @@ app_simulation_report <- function(saved, current, many = FALSE) {
     if (!is.null(saved$missing)) paste0("Participants with observed outcomes, standard / novel: ",
       sum(saved$data$group == "Control" & !is.na(saved$data$outcome)), " / ",
       sum(saved$data$group == "Treatment" & !is.na(saved$data$outcome)), "."))
+}
+
+# A selected snapshot becomes a reviewable attachment to the developing report.
+app_plan_transfer <- function(title, slug, kind, facts, lines) {
+  version <- if (file.exists("source-version.txt")) paste(readLines("source-version.txt", warn = FALSE), collapse = "") else "local working copy"
+  record <- list(title = title, kind = kind, source = slug, facts = facts,
+    lines = unname(c(unlist(lines, use.names = FALSE), paste("Software: R", getRversion(), "; Shiny", utils::packageVersion("shiny"), "; source version:", version))))
+  shiny::tags$div(class = "plan-transfer",
+    shiny::tags$div(class = "plan-transfer-data", hidden = NA, jsonlite::toJSON(record, auto_unbox = TRUE, null = "null")),
+    shiny::tags$button(type = "button", class = "btn btn-primary plan-transfer-button", "Add this calculation to my report"),
+    shiny::tags$p(role = "status", `aria-live` = "polite"))
 }

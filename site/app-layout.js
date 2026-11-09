@@ -54,18 +54,22 @@
       content.append(...well.childNodes); disclosure.append(summary, content); well.append(disclosure);
     });
   }
-  function grow(field) {
+  const measuredWidths=new WeakMap();
+  function grow(field, force=false) {
     if (!field.getClientRects().length) return;
+    const width=field.getBoundingClientRect().width;
+    if(!force && measuredWidths.get(field)===width)return;
+    measuredWidths.set(field,width);
     field.style.height = 'auto'; field.style.height = `${Math.max(88, field.scrollHeight + 3)}px`;
   }
   function update() {
-    settings(); enhanceSliders(); document.querySelectorAll('textarea').forEach(grow);
+    settings(); enhanceSliders(); document.querySelectorAll('textarea').forEach(field=>grow(field));
   }
   let pending;
   function schedule() { clearTimeout(pending); pending = setTimeout(update, 70); }
   new MutationObserver(schedule).observe(document.documentElement, {childList: true, subtree: true});
   document.addEventListener('DOMContentLoaded', update);
-  document.addEventListener('input', e => { if (e.target.matches('textarea')) grow(e.target); });
+  document.addEventListener('input', e => { if (e.target.matches('textarea')) grow(e.target,true); });
   document.addEventListener('toggle', schedule, true);
   window.addEventListener('resize', schedule);
   narrow.addEventListener('change', () => {

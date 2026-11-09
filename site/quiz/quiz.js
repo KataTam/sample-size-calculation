@@ -1,7 +1,11 @@
 (() => {
   'use strict';
   const $ = id => document.getElementById(id);
-  let bank, current = [], missed = [];
+  let bank, current = [], missed = [], orders={}, restoring=false, submitted=false;
+  const storageKey='sample-size-cumulative-quiz-v2';
+  const shuffle=values=>{for(let i=values.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[values[i],values[j]]=[values[j],values[i]]}return values;};
+  function save(){if(restoring||!bank||!current.length)return;try{localStorage.setItem(storageKey,JSON.stringify({version:JSON.stringify(bank),chapter:chapter.value,route:route.value,ids:current.map(q=>q.id),orders,answers:Object.fromEntries(new FormData($('quiz'))),submitted}));}catch(_) {}}
+
   const chapter = $('chapter'), route = $('route');
   const selected = () => bank.questions.filter(q => (chapter.value === 'all' || q.chapter === chapter.value) && (route.value === 'all' || q.level === 'core'));
   function describe() {
@@ -19,8 +23,8 @@
     if (className) node.className = className;
     return node;
   }
-  function start(questions, retry = false) {
-    current = questions; missed = [];
+  function start(questions, retry = false, saved = null) {
+    current = questions; missed = []; submitted=false;orders=saved?.orders||{};
     $('setup').hidden = true; $('results').hidden = true; $('quiz').hidden = false;
     $('status').textContent = '';
     $('quiz-title').textContent = retry ? 'Retry missed questions' : chapter.value === 'all' ? `Cumulative quiz: ${route.options[route.selectedIndex].text}` : bank.chapters[chapter.value];
@@ -33,23 +37,27 @@
         img.src='figures/'+q.figure.file;img.alt=q.figure.alt;
         figure.append(img,element('figcaption',q.figure.caption));box.append(figure);
       }
-      q.options.forEach((text, option) => {
+      orders[q.id] ||= shuffle(q.options.map((_,i)=>i));
+      orders[q.id].forEach((option,position) => {
+        const text=q.options[option];
         const label = element('label', undefined, 'quiz-option');
-        const radio = element('input'); radio.type = 'radio'; radio.name = q.id; radio.value = option; radio.required = true;
-        label.append(radio, element('span', `${String.fromCharCode(65+option)}. ${text}`)); box.append(label);
+        const radio = element('input'); radio.type = 'radio'; radio.name = q.id; radio.value = option; radio.required = true;radio.checked=String(saved?.answers?.[q.id])===String(option);
+        label.append(radio, element('span', `${String.fromCharCode(65+position)}. ${text}`)); box.append(label);
       });
       $('questions').append(box);
     });
-    progress(); $('quiz-title').focus();
+    progress(); save(); $('quiz-title').focus();
   }
   function progress() {
     const answered=$('quiz').querySelectorAll('input:checked').length;
     $('progress').textContent = `${answered} of ${current.length} answered.`;
     $('quiz-progress-bar').max=current.length;$('quiz-progress-bar').value=answered;
   }
-  $('quiz').addEventListener('change', progress);
+  $('quiz').addEventListener('change',()=>{progress();save();});
+  const restart=element('button','Restart quiz');restart.type='button';restart.className='secondary';restart.addEventListener('click',()=>{if(confirm('Restart this quiz and clear its answers?'))start(selected());});$('quiz').append(restart);
   $('quiz').addEventListener('submit', event => {
     event.preventDefault();
+    if(!$('quiz').reportValidity())return;
     const answers = new FormData($('quiz')), topics = {};
     let correct = 0;
     $('review').replaceChildren(); $('topics').replaceChildren(); missed = [];
@@ -63,6 +71,7 @@
       item.append(
         element('p', `${right ? 'Correct' : 'Incorrect'}. Your answer: ${q.options[choice]}`),
         element('p', `Correct answer: ${q.options[q.answer]}`), element('p', q.explanation));
+      if(q.feedback){if(!right)item.append(element('p',q.feedback[choice]));const detail=element('details');detail.append(element('summary','Other answer options'));q.options.forEach((text,i)=>{if(i!==q.answer&&i!==choice)detail.append(element('p',text+': '+q.feedback[i]));});item.append(detail);}
       const link = element('a', `Review: ${q.section}`); link.href = '../book/' + q.link; link.target = '_blank'; link.rel = 'noopener';
       item.append(link); $('review').append(item);
     });
@@ -71,7 +80,7 @@
     }
     $('score').textContent = `${correct} of ${current.length} correct (${Math.round(100 * correct / current.length)}%).`;
     $('retry').hidden = missed.length === 0;
-    $('quiz').hidden = true; $('results').hidden = false; $('results-title').focus();
+    $('quiz').hidden = true; $('results').hidden = false; $('results-title').focus();submitted=true;save();
   });
   $('start').addEventListener('click', () => start(selected()));
   $('retry').addEventListener('click', () => start([...missed], true));
@@ -95,5 +104,17 @@
     if (requested && bank.chapters[requested]) chapter.value = requested;
     if (chapter.value !== 'all' && !bank.questions.some(q => q.chapter === chapter.value && q.level === 'core')) route.value = 'all';
     $('status').textContent = ''; describe();
+    try {
+      const saved=JSON.parse(localStorage.getItem(storageKey)||'null');
+      if(saved && saved.version===JSON.stringify(bank) && (!requested||requested===saved.chapter)){
+        const qs=saved.ids.map(id=>bank.questions.find(q=>q.id===id));
+        if(qs.length&&qs.every(q=>q&&Array.isArray(saved.orders[q.id])&&saved.orders[q.id].length===q.options.length&&new Set(saved.orders[q.id]).size===q.options.length&&saved.orders[q.id].every(i=>Number.isInteger(i)&&i>=0&&i<q.options.length))){
+          restoring=true;chapter.value=saved.chapter;route.value=saved.route;start(qs,false,saved);
+          if(saved.submitted)$('quiz').dispatchEvent(new Event('submit',{cancelable:true}));
+          restoring=false;$('status').textContent='Your previous attempt has been restored. Restart quiz begins a new attempt.';
+        }
+      }
+    }catch(_){restoring=false;}
+
   }).catch(() => { $('status').textContent = 'The questions could not load. Please reload the page to try again.'; });
 })();

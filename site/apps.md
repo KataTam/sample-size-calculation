@@ -14,7 +14,7 @@ Apps are interactive software. Activities provide questions and exercises to hel
 
 - [Two-mean calculator](two_means/): calculate sample size for a difference between two group means. [Tutorial explanation](book/calculations.html#two-means).
 
-- [Recruitment adjustment](dropout_adjustment/): calculate recruitment allowing for expected losses. [Tutorial explanation](book/feasibility.html#account-for-expected-losses).
+- [Recruitment adjustment](study/?activity=recruitment): calculate recruitment allowing for expected losses. [Tutorial explanation](book/feasibility.html#account-for-expected-losses).
 
 <span id="explore-further"></span>
 
@@ -28,11 +28,13 @@ Apps are interactive software. Activities provide questions and exercises to hel
 
 - [Study-design questionnaire](design_questionnaire/): consider designs suited to your research question. [Activity: Choosing a study design](study/?activity=design_questionnaire).
 
+Your [study-plan report](assumptions_report/?stage=question) develops through the core chapters. The Report view in each app offers “Add this calculation to my report.” A preview lets you attach the selected result and its inputs; your written answers remain in place. “Review before downloading” identifies unresolved decisions and checks attached calculation and recruitment counts.
+
 The calculation apps use four views: “Overview” for the main result, “Explore assumptions” for graphs and comparisons, “Report” for a readable summary of current inputs and results, and “Methods and references” for calculation details. Reports download as PDF by default, with an editable Word alternative. The reasoning lab also has simulation and “My study” views; the study-plan report follows four writing stages. In the lab and study-plan form, separate “Save work for later” controls preserve settings and answers for reopening.
 
-Each slider has an editable number beside it. Percentages use the displayed percentage scale: entering 5 means 5%. “Study settings” collapses in a narrow panel to leave room for the result. The introductory pain activity starts with its simulation, report and methods views; “More lab views” reveals the remaining views.
+Each slider has an editable number beside it. Percentages use the displayed percentage scale: entering 5 means 5%. “Study settings” collapses in a narrow panel to leave room for the result. The introductory pain activity starts with its simulation, report and methods views; “Additional calculations and simulations” reveals the remaining views.
 
-The reasoning lab has core and advanced activities. Core activities start with advanced controls closed; “Settings” provides the other assumptions. Question help is available by hover, keyboard focus or tap. Gray model answers in written-response fields illustrate how to explain a decision; reports use your own entries. The [activity walkthroughs](student-materials/activity-walkthroughs.html) provide guidance for each one, including pilot retention, precision and recruitment scenarios.
+The reasoning lab has core and advanced activities. Core activities start with advanced controls closed; “Settings” provides the other assumptions. Question help is available by hover, keyboard focus or tap. Expandable “Example answer” sections illustrate a response using the current parameters. Reports use your own entries. The [activity walkthroughs](student-materials/activity-walkthroughs.html) provide guidance for each one, including pilot retention, precision and recruitment scenarios.
 
 ## Review and practice
 
@@ -41,6 +43,6 @@ The reasoning lab has core and advanced activities. Core activities start with a
 
 ## Tutorial beside the app
 
-Activity links open the tutorial and app together. You can drag the divider to adjust their widths, or use its Left and Right arrow keys. “Close app panel” returns to the tutorial at full width. “Tutorial + app” reopens the app with your current entries and results retained while the page stays open. On narrow screens, “Tutorial” and “App” switch between full-width panels.
+Activity links open the tutorial and app together. You can drag the divider to adjust their widths, or use its Left and Right arrow keys. “Close app panel” returns to the tutorial at full width. “Tutorial + activity” reopens the app with your current entries and results retained while the page stays open. On narrow screens, “Tutorial” and “Activity” switch between full-width panels.
 
 [Back to the start page](./)

@@ -10,25 +10,39 @@
   <script src="../input-guidance.js" defer></script>
   <script src="../app-layout.js" defer></script>
   <script src="../report-exports.js" defer></script>
+  <script src="plan-workflow.js" defer></script>
   <script src="report.js" defer></script>
 </head>
 <body>
   <header>
     <h1>Develop and justify your study plan</h1>
-    <p>Your answers build a report documenting your research question, sample-size calculation, recruitment plan, and supporting evidence. You can use your own study or the hypothetical pain-relief example.</p>
+    <p>Your study plan develops through the four core chapters. You can begin with your question, record decisions that need evidence, and return to complete the calculation and recruitment sections.</p>
+    <details id="plan-identity" open><summary>Study title and starting point</summary>
+    <section id="plan-start" aria-label="Your developing study plan">
+      <label for="plan-title">Study title<input id="plan-title" name="plan_title" form="plan-form" maxlength="200" placeholder="A short title for your study"></label>
+      <label for="plan-basis">Starting point<select id="plan-basis" name="plan_basis" form="plan-form"><option value="own">My own study</option><option value="pain">Chronic-pain teaching example</option></select></label>
+      <button id="example" type="button" hidden>Start the pain-relief plan</button>
+      <p>Your answers are saved in this browser. “Save work for later” lets you reopen the plan on another computer.</p>
+    </section></details>
+    <nav id="plan-stages" aria-label="Contributions to your study plan"></nav>
+    <div id="plan-stage-guidance" tabindex="-1"></div>
+    <section id="transfer-preview" hidden aria-label="Review a calculation before adding it">
+      <h2 class="transfer-title"></h2><p class="transfer-scope"></p><div class="transfer-lines"></div>
+      <label><input id="replace-calculation" type="checkbox" checked>Replace previously attached results of this type</label>
+      <button id="accept-transfer" type="button">Add this result</button><button id="cancel-transfer" type="button">Cancel</button>
+    </section>
     <div class="actions">
       <button id="preview" type="button" aria-expanded="false" aria-controls="report-pane">Preview report</button>
       <button id="save" type="button">Download report (PDF)</button>
       <button id="save-word" type="button" class="secondary-action">Download editable report (Word)</button>
     </div>
-    <div class="secondary-controls"><details id="file-actions"><summary>Example and help</summary>
-    <p class="note">Underlined questions have hover, keyboard, and tap help. Gray model answers are examples; brackets mark details still to supply. The report uses your own entries.</p>
+    <div class="secondary-controls"><details id="file-actions"><summary>Help</summary>
+    <p class="note">Underlined questions have hover, keyboard, and tap help. “Example answer” opens an illustration of a response. The report uses your own entries. Study settings change the applicable questions; you can revisit any section and leave decisions provisional.</p>
     <div class="actions">
-      <button id="example" type="button">Load pain-relief example</button>
       <button id="download-text" type="button">Download plain text</button>
     </div>
     <p><a href="../book/clinical-question.html#record-assumptions" target="_blank" rel="noopener">Tutorial guidance</a> · <a href="../book/appendix.html#reproducibility-record" target="_blank" rel="noopener">Methods and software to record</a></p>
-    <p class="note">Entries are saved in this browser. Loading the example replaces current entries.</p>
+    <p class="note">Entries are saved in this browser. Starting the teaching example replaces current entries after confirmation.</p>
     <p class="note">Your entries should contain hypothetical or non-identifying study details.</p>
     <button id="clear" class="secondary-action" type="button">Clear entries</button>
     </details>
@@ -49,6 +63,8 @@
           <label for="goal">Planning goal<select id="goal" name="goal"><option value="testing">Sample size based on power</option><option value="precision">Estimation with a precision target</option><option value="fixed">Available sample fixed</option><option value="both">Both power and precision requirements</option><option value="feasibility">Pilot or feasibility decision</option></select></label>
         </div></details>
         <div id="fields"></div>
+        <details id="plan-review"><summary>Review before downloading</summary><p class="review-note"></p><ul></ul></details>
+        <section aria-label="Attached calculations"><h2>Saved calculations</h2><div id="saved-calculations"></div></section>
       </form>
     </section>
     <section id="report-pane" class="report-pane" aria-labelledby="report-title" hidden>

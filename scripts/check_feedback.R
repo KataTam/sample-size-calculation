@@ -72,7 +72,7 @@ check_feedback_methods <- function() {
   expect_error(normal_sampling_operating_characteristics(sidedness="post-hoc"))
 
   cases <- teaching_cases()
-  required <- c("design_questionnaire","assumptions_report","pain_one_many","pain_curves","pain_simulation","mean_precision",
+  required <- c("probiotics_calculation", "rehabilitation_calculation", "recruitment", "design_questionnaire","assumptions_report","pain_one_many","pain_curves","pain_simulation","mean_precision",
     "own_study","rehabilitation","discharge","adherence","prevalence","pilot_feasibility","alpha_beta")
   stopifnot(setequal(names(cases),required), !anyDuplicated(names(cases)))
   for (id in names(cases)) {

@@ -14,11 +14,13 @@ This repository contains both teaching materials and code.
 
 The source package contains the maintained teaching files, software and build instructions. A reasoning-lab JSON backup contains one learner's selected example, settings and answers for restoration in that lab. App reports and backups are created when you download them from an app.
 
+The developing study-plan report brings selected calculation snapshots together with the learner's own justification. Chapter-specific links open the relevant part of the same saved plan. Its version-3 work file preserves the entries, decision statuses and attached results; older work files remain supported.
+
 ## Adapting apps and reports
 
 The [adaptation guide](../teaching/adaptation_guide.md#where-to-edit) identifies the files for cases, interfaces, model answers and reports. When changing an example, its narrative, calculation inputs, model answers and generated report should be checked together. Reports should use the current calculation objects and include saved simulation results only when their example and settings still match. Learners' written responses should remain intact and be clearly identified as their own entries.
 
-The [build guide](development/build-and-publish.md#app-reports-and-backups) describes report checks and file compatibility. A revised version should retain readable HTML exports, clear restoration instructions and support for existing saved files where applicable. Rebuilding the site refreshes the published pages, apps and source package; the complete tutorial HTML/PDF should also be refreshed before release.
+The [build guide](development/build-and-publish.md#app-reports-and-backups) describes report checks and file compatibility. A revised version should retain PDF and Word reports, clear restoration instructions and support for existing saved files where applicable. Rebuilding the site refreshes the published pages, apps and source package; the complete tutorial HTML/PDF should also be refreshed before release.
 
 ## Teaching Materials
 

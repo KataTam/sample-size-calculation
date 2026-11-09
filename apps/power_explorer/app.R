@@ -30,8 +30,8 @@ ui <- fluidPage(
   textOutput("missing_note"),
   sidebarLayout(sidebarPanel(width = 4,
     textOutput("scenario_summary"),
-    conditionalPanel("input.goal == 'fixed'", numericInput("fixed_n", "Available participants for analysis, per group", 60, min = 2, max = 100000, step = 1),
-      activity_help("This count should include participants with usable outcomes in each group, after expected losses. The app evaluates power and precision at this fixed count.", for_input = "fixed_n")),
+    conditionalPanel("input.goal == 'fixed'", numericInput("fixed_n", "Participants per group in each study", 60, min = 2, max = 100000, step = 1),
+      activity_help("This is the chosen analyzable sample size. The introductory activity starts with 20 per group to make sampling variability visible; larger samples can then be compared. Recruitment limits are assessed separately.", for_input = "fixed_n")),
     tags$details(id="lab-settings", class="activity-details", tags$summary("Settings"),
     checkboxInput("show_advanced", "Explore further: advanced controls and explanations", FALSE),
     selectInput("outcome", "Outcome", c("Continuous (numerical) outcome" = "means", "Binary (yes/no) outcome" = "proportions")),
@@ -75,8 +75,8 @@ ui <- fluidPage(
     percent_slider("dropout", "Expected loss to follow-up in each group (%)", 0, .5, .1, step = .01),
     activity_help("This percentage adjusts recruitment and the recruitment-limit curve. Simulating incomplete outcomes requires the separate missing-outcome scenarios in the advanced settings.", for_input = "dropout"),
     textOutput("dropout_input"),
-    numericInput("recruit_cap", "Maximum recruitment, across both groups", 200, min = 4, max = 200000, step = 2),
-    activity_help("Use the total your sites and recruitment period could support. The graph converts this to an expected analyzable limit after losses; actual retention varies.", for_input = "recruit_cap"),
+    tags$div(class = "lab-recruitment", numericInput("recruit_cap", "Maximum recruitment, across both groups", 200, min = 4, max = 200000, step = 2),
+    activity_help("Use the total your sites and recruitment period could support. The graph converts this to an expected analyzable limit after losses; actual retention varies.", for_input = "recruit_cap")),
     conditionalPanel("input.show_advanced",
     h4("Advanced: what if the assumptions differ?"),
     selectInput("reality", "Assumptions for the simulated studies", c("Same as planning assumptions" = "same", "No true treatment effect" = "null", "Custom effect or variability" = "custom")),
@@ -211,7 +211,7 @@ ui <- fluidPage(
       activity_help("These scenarios describe expected recruitment and costs. Actual numbers can vary; your assessment should account for other exclusions and costs where relevant."),
       actionButton("use_feasible_cap", "Use expected recruitment as the lab limit"),
       p(tags$a(href = "../book/appendix.html#own-study", target = "_blank", rel = "noopener", "Read the study justification guidance"))),
-    tabPanel("Report", value = "Justify and communicate", h3(id = "report-question-heading", "Explain your decision"),
+    tabPanel("Report", value = "Justify and communicate", uiOutput("plan_transfer"), h3(id = "report-question-heading", "Explain your decision"),
       activity_text_input("justification", "What study plan would you recommend, and why?",
         "The example updates with the selected case and current calculation inputs.",
         "Your recommendation should give analyzable and recruitment counts, supporting evidence, and the effect of plausible alternative assumptions. It should identify remaining limitations.", rows = 8),
@@ -560,7 +560,7 @@ server <- function(input, output, session) {
       "; target power: ", format_percent(input$target_power), "; target difference: ", effect_text(true_difference(x), x$outcome), ".")),
       p(if (x$outcome == "means") paste0("Common SD: ", x$sd, ". Power uses the noncentral t distribution for a two-sample, equal-variance t test.") else
         paste0("Assumed event probabilities: standard ", format_percent(x$p_control), ", novel ", format_percent(x$p_treatment), ". Power uses the two-sided normal approximation in stats::power.prop.test with strict = TRUE.")),
-      p(paste0("The selected goal gives ", x$n, " analyzable participants per group. Anticipated full interval width: ", effect_text(anticipated_width(x), x$outcome), ".")),
+      p(paste0(if (input$goal == "fixed") "Your selected fixed sample is " else "The calculation gives ", x$n, " analyzable participants per group. Anticipated full interval width: ", effect_text(anticipated_width(x), x$outcome), ".")),
       p(paste0("Recruitment per group = ceiling(", x$n, " / ", 1-input$dropout, ") = ", adjust_for_dropout(x$n, input$dropout), ".")),
       p("Simulation exports retain the generating assumptions, analysis procedure and reproducibility settings used for the saved results."))
   })
@@ -573,7 +573,7 @@ server <- function(input, output, session) {
   })
   output$method <- renderText(method_label(planned()$outcome))
   output$planning_text <- renderText(paste(if (planned()$outcome == "means")
-    "The width curve is the expected full t-interval width under normal equal-variance sampling." else
+    "The width curve shows the expected width of the confidence interval for the difference between the two population means. It uses a t interval and assumes normal outcomes with equal variances." else
     "The width curve uses the Newcombe-Wilson method with the assumed event probabilities (a plug-in approximation). The mean realized width is assessed across simulated studies.",
     "Realized interval widths vary. Many studies reports the fraction that meets the width target."))
   observeEvent(input$outcome, { axis_limit(NULL) }, ignoreInit = TRUE)
@@ -637,9 +637,9 @@ server <- function(input, output, session) {
   })
   output$comparison_table <- renderTable({
     z <- comparison()
-    data.frame(Difference = effect_text(z$effects, z$spec$outcome), `Participants for analysis per group` = z$cap_n,
-      Power_at_limit = format_percent(vapply(z$scenarios, function(x) spec_power(x, z$cap_n), numeric(1)), 1))
-  }, digits = 3)
+    data.frame(Difference = effect_text(z$effects, z$spec$outcome), `Participants for analysis per group` = as.integer(z$cap_n),
+      `Power at this sample` = format_percent(vapply(z$scenarios, function(x) spec_power(x, z$cap_n), numeric(1)), 1), check.names = FALSE)
+  }, digits = 0)
   output$effect_plot <- renderPlot({
     x <- planned(); d <- true_difference(x)
     if (x$outcome == "means") effects <- seq(-max(abs(d)*1.5, x$sd), max(abs(d)*1.5, x$sd), length.out = 101)
@@ -808,6 +808,14 @@ server <- function(input, output, session) {
   report_intro <- reactive(if (pain_report())
     "This report summarizes the population assumptions, simulated results, and your reflection on how results vary between studies. The results come from Simulate one study and Simulate many studies; rerunning either replaces its previous results."
     else "This report records the current study plan, matching simulation results, and your written justification.")
+  output$plan_transfer <- renderUI({
+    req(is.null(routed_case()), study_details()$study_design == "two_groups")
+    x <- planned()
+    app_plan_transfer(if (pain_report()) "Pain relief: sampling variability" else "Two-group study calculation", "power_explorer",
+      if (pain_report()) "exploration" else "calculation",
+      list(outcome = if (x$outcome == "means") "continuous" else "binary", study_type = "comparison", goal = input$goal,
+        analyzable = x$n, alpha = x$alpha, target_power = input$target_power, recruitment = adjust_for_dropout(x$n, input$dropout)), report_sections())
+  })
   output$report_preview <- renderUI(app_report_body(report_sections(), heading = report_heading(), intro = report_intro()))
   output$download_plan <- downloadHandler(filename = function() if (pain_report()) "pain-relief-simulation-report.html" else "sample-size-study-plan.html",
     content = function(file) writeLines(app_report_document(report_heading(), "power_explorer", report_sections(),

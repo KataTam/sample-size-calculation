@@ -16,7 +16,7 @@ render_chapter_quiz <- function(chapter = "all") {
   if (length(levels) > 1) {
     cat(sprintf('<div class="quiz-controls"><label for="%s-route">Route</label> <select id="%s-route" class="quiz-route"><option value="core">Core</option><option value="all">Core + advanced</option></select></div>\n', id, id))
   }
-  cat('<details class="quiz-help quiz-controls"><summary>Quiz help</summary><p>Each question has one best answer. You can revise your choices before selecting &ldquo;View results.&rdquo; Explanations and links appear with the results; missed questions can be retried. Changing the route starts a new check.</p></details>\n')
+  cat('<details class="quiz-help quiz-controls"><summary>Quiz help</summary><p>Each question has one best answer. You can revise your choices before selecting &ldquo;View results.&rdquo; Explanations and links appear with the results; missed questions can be retried. Your choices are saved in this browser. A new attempt changes the answer order; reopening preserves your attempt.</p></details>\n')
   cat('<form class="embedded-quiz-form"><div class="quiz-progress-row quiz-controls"><p class="quiz-progress" aria-live="polite"></p><progress class="quiz-progress-bar" aria-label="Questions answered" value="0" max="1"></progress></div><div class="quiz-questions">\n')
   for (i in seq_along(questions)) {
     q <- questions[[i]]
@@ -39,8 +39,15 @@ render_chapter_quiz <- function(chapter = "all") {
   cat('<details class="quiz-answer-key"><summary>Answers and explanations</summary>\n')
   for (i in seq_along(questions)) {
     q <- questions[[i]]
-    cat(sprintf('<details class="quiz-answer" data-question="%s" data-level="%s"><summary class="quiz-answer-title"><span class="quiz-number">%s</span>. %s<span class="quiz-answer-status"></span></summary><p class="quiz-choice"></p><p>Correct answer: %s. %s</p><p>%s</p><a href="https://katatam.github.io/sample-size-calculation/book/%s" target="_blank" rel="noopener">Review: %s</a></details>\n',
-                esc(q$id), q$level, i, esc(q$question), LETTERS[q$answer + 1L], esc(q$options[[q$answer + 1L]]), esc(q$explanation), esc(q$link), esc(q$section)))
+    cat(sprintf('<details class="quiz-answer" data-question="%s" data-level="%s"><summary class="quiz-answer-title"><span class="quiz-number">%s</span>. %s<span class="quiz-answer-status"></span></summary><p class="quiz-choice"></p><p>Correct answer: %s%s</p><p>%s</p><a href="https://katatam.github.io/sample-size-calculation/book/%s" target="_blank" rel="noopener">Review: %s</a>\n',
+                esc(q$id), q$level, i, esc(q$question), "", esc(q$options[[q$answer + 1L]]), esc(q$explanation), esc(q$link), esc(q$section)))
+    if (!is.null(q$feedback)) {
+      cat('<details class="quiz-option-feedback"><summary>Answer option explanations</summary>')
+      for (j in seq_along(q$options)) cat('<p>', esc(q$options[[j]]), ': ', esc(q$feedback[[j]]), '</p>')
+      cat('</details>')
+    }
+    cat('</details>\n')
+
   }
   cat('</details></div>\n')
 }

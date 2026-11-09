@@ -81,7 +81,7 @@ ui <- fluidPage(
         p(class = "caption", "Figure. The saved sample's Wilson interval and assumed population percentage."),
         tableOutput("study_table"), p(class = "caption", "Table. Observed events, estimate, interval limits and whether the saved width meets its target.")),
       activity_details("Planning and simulation assumptions", p("The saved interval retains the assumptions used to generate it. New settings take effect when you draw another sample."))),
-    tabPanel("Report",
+    tabPanel("Report", uiOutput("plan_transfer"),
       activity_text_input("justification", "Why is your chosen interval width useful for this question?",
         "The example updates with the selected case and current calculation inputs.",
         "Your answer should explain which values the interval needs to distinguish for a useful decision, and whether the required sample is feasible.", rows = 5),
@@ -266,6 +266,7 @@ server <- function(input, output, session) {
       "Your explanation is reproduced as entered and should be reviewed after changing the example or settings.",
       "Procedure: proportion_precision_plan(); simulated intervals: single_proportion_interval(), Wilson method. Independent binary outcomes; clustering and selection or missing-data bias require attention to the design and analysis.")
   })
+  output$plan_transfer <- renderUI(app_plan_transfer("Population percentage and precision", "prevalence_precision", "calculation", list(outcome = "binary", study_type = "single", goal = input$goal, analyzable = analysable_n(), confidence = snapshot()$confidence, full_width = snapshot()$full_width), report_paragraphs()))
   output$report_preview <- renderUI(app_report_body(report_paragraphs()))
   output$download_plan <- downloadHandler(filename = function() "proportion-precision-report.html", content = function(file) {
     writeLines(app_report_document("Estimate one proportion", "prevalence_precision", report_paragraphs()), file, useBytes = TRUE)

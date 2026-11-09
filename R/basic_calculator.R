@@ -32,20 +32,21 @@ basic_calculator_ui <- function(outcome) {
       tabPanel("Overview",
         uiOutput("result"),
         app_overview(tagList(plotOutput("allocation_plot", height = "310px"), p(class = "caption", "Figure. Required analyzable participants per group across target differences. The labeled dot marks your current plan; other assumptions stay fixed.")),
-          tagList(textOutput("interpretation"), uiOutput("lab_link"))),
+          tagList(textOutput("interpretation"), activity_details("Advanced simulation", uiOutput("lab_link")))),
         activity_details("Current assumptions", tableOutput("assumptions"))),
       tabPanel("Explore assumptions",
         p("The curve varies the target difference while keeping the other assumptions fixed. The point marks your current plan."),
         plotOutput("sample_size_plot", height = "350px"),
         p(class = "caption", "Figure. Required analyzable participants per group across target differences, with other planning assumptions fixed."),
-        tags$section(class = "app-comparison", h3("Compare a revised scenario"),
+        tags$details(class = "app-comparison", tags$summary("Compare two scenarios"),
+          p("The first column preserves your current plan while the second shows a revised assumption."),
           if (means) numericInput("compare_delta", "Revised target difference (outcome units)", 2, min = .01)
           else percent_slider("compare_pi1", "Revised novel-treatment event probability (%)", .01, .99, .50, step = .01),
           if (means) activity_help("A plausible smaller difference shows how much the sample requirement depends on your target. The original plan stays in the first column.", for_input = "compare_delta")
           else activity_help("A value closer to the standard-treatment percentage gives a smaller target difference. The original plan stays in the first column.", for_input = "compare_pi1"),
           p("Both columns use the same power, error probability, expected losses, and remaining assumptions."),
           tableOutput("comparison_table"))),
-      tabPanel("Report", uiOutput("report_preview"), activity_report_downloads("download_report"),
+      tabPanel("Report", uiOutput("plan_transfer"), uiOutput("report_preview"), activity_report_downloads("download_report"),
         p(id = "download-status", role = "status", `aria-live` = "polite")),
       tabPanel("Methods and references", h3("Calculation with your current values"), uiOutput("worked_method"),
         p(if (means) "This introductory normal approximation uses a common population SD. The reasoning lab uses t-test power with an estimated SD and can require a different sample size."
@@ -59,6 +60,18 @@ basic_calculator_ui <- function(outcome) {
 basic_calculator_server <- function(outcome) function(input, output, session) {
   means <- outcome == "means"; slug <- if (means) "two_means" else "two_proportions"
   title <- if (means) "Two means sample size" else "Two proportions sample size"
+  observeEvent(input$activity_request, {
+    id <- input$activity_request$activity
+    if (identical(id, "probiotics_calculation") && !means) {
+      updateSliderInput(session, "pi1", value = .90); updateSliderInput(session, "pi2", value = .80)
+      updateSliderInput(session, "compare_pi1", value = .85); updateSliderInput(session, "dropout", value = .15)
+      updateSliderInput(session, "power", value = .90); updateSliderInput(session, "alpha", value = .05)
+    } else if (identical(id, "rehabilitation_calculation") && means) {
+      updateNumericInput(session, "delta", value = 3); updateNumericInput(session, "sd", value = 5)
+      updateNumericInput(session, "compare_delta", value = 1.5); updateSliderInput(session, "dropout", value = .10)
+      updateSliderInput(session, "power", value = .90); updateSliderInput(session, "alpha", value = .05)
+    }
+  })
   calculate <- function(difference = input$delta, probability = input$pi1) {
     tryCatch(if (means) sample_size_two_means_details(difference, input$sd, input$alpha, input$power, input$dropout)
       else sample_size_two_proportions_details(probability, input$pi2, input$alpha, input$power, input$dropout),
@@ -113,7 +126,7 @@ basic_calculator_server <- function(outcome) function(input, output, session) {
     v <- list(outcome = if (means) "means" else "proportions", goal = "fixed", fixed_n = x$n_per_group,
       alpha = input$alpha, target_power = input$power, dropout = input$dropout)
     v <- c(v, if (means) list(plan_delta = input$delta, plan_sd = input$sd) else list(plan_p0 = input$pi2, plan_p1 = input$pi1))
-    tags$a(href = lab_state_url(v), target = "_blank", rel = "noopener", class = "btn btn-primary", "Explore this design in the lab")
+    tags$a(href = lab_state_url(v), target = "_blank", rel = "noopener", class = "btn btn-primary", "Advanced: simulate this design")
   })
   output$sample_size_plot <- renderPlot(draw_curve(), res = 96,
     alt = "Required analyzable participants per group across target differences, holding other assumptions fixed. The current plan is marked.")
@@ -144,6 +157,13 @@ basic_calculator_server <- function(outcome) function(input, output, session) {
           " per group (", revised$total_with_dropout, " total).")
     },
     "Expected losses affect recruitment counts. Missing outcomes and treatment changes also require prevention and an appropriate analysis plan."))
+  output$plan_transfer <- renderUI({
+    x <- result()
+    app_plan_transfer(title, slug, "calculation",
+      list(outcome = if (means) "continuous" else "binary", study_type = "comparison", goal = "testing", analyzable = x$n_per_group,
+        alpha = x$alpha, power = x$power, dropout = x$dropout_rate, recruitment = x$total_with_dropout/2),
+      c(sample_size_interpretation(x), paste(assumptions()$Assumption, assumptions()$Value, sep = ": "), method_text()))
+  })
   output$report_preview <- renderUI(app_report_body(report_paragraphs(), assumptions()))
   output$download_report <- downloadHandler(filename = function() paste0(slug, "-report.html"),
     content = function(file) writeLines(app_report_document(title, slug, report_paragraphs(), assumptions()), file, useBytes = TRUE))

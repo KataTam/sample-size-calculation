@@ -208,11 +208,11 @@
   const root = location.protocol === 'file:' || location.pathname === 'blank' || location.href === 'about:blank'
     ? 'https://katatam.github.io/sample-size-calculation/' : new URL('../', location.href).href;
   for (const group of ordered) {
-    const title = document.createElement('h3'); title.textContent = group.title; dialog.append(title);
+    const title = document.createElement('h3'); title.textContent = group.route + ': ' + group.title; title.className=group.route==='Core'?'activity-core-heading':'activity-advanced-heading'; dialog.append(title);
     const list = document.createElement('ul');
     for (const item of group.activities) {
       const li = document.createElement('li'), a = document.createElement('a');
-      a.textContent = 'Activity: ' + item.label; a.href = new URL(item.path, root).href;
+      a.textContent = 'Activity: ' + item.label + ' (' + item.route + ')'; a.href = new URL(item.path, root).href;
       a.target = '_blank'; a.rel = 'noopener'; li.append(a); list.append(li);
     }
     dialog.append(list);
@@ -228,6 +228,7 @@
   button.addEventListener('click', () => dialog.showModal());
   dialog.addEventListener('click', event => { if (event.target === dialog) { const r=dialog.getBoundingClientRect(); if(event.clientX<r.left || event.clientX>r.right || event.clientY<r.top || event.clientY>r.bottom) dialog.close(); } });
   document.body.append(dialog);
+  const planLink=document.createElement('a');planLink.id='my-study-plan';planLink.textContent='My study plan';planLink.href=new URL('assumptions_report/',root).href;planLink.target='_blank';planLink.rel='noopener';(header||document.body).append(planLink);
   const feedbackLink = document.getElementById('feedback-link');
   if (feedbackLink) feedbackLink.before(button);
   else (header || document.body).append(button);

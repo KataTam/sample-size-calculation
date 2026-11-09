@@ -1,0 +1,73 @@
+/* End-to-end checks for the developing assignment and saved quiz attempts. */
+const assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path'),http=require('node:http');
+const {chromium}=require('playwright');
+const {saveReportPair}=require('./report_test_helpers.cjs');
+(async()=>{
+ const root=path.resolve(process.argv.includes('--source')?'site':'_site');
+ const server=http.createServer((req,res)=>{const url=new URL(req.url,'http://local');const file=path.resolve(root,'.'+decodeURIComponent(url.pathname),url.pathname.endsWith('/')?'index.html':'');
+  if(!file.startsWith(root+path.sep)){res.writeHead(403).end();return;}
+  try{res.setHeader('Content-Type',({'.html':'text/html','.js':'text/javascript','.json':'application/json','.css':'text/css','.svg':'image/svg+xml'})[path.extname(file)]||'application/octet-stream');res.end(fs.readFileSync(file));}catch(_){res.writeHead(404).end();}});
+ await new Promise(r=>server.listen(0,'127.0.0.1',r));const base=`http://127.0.0.1:${server.address().port}/`;
+ const browser=await chromium.launch({headless:true,...(process.env.BROWSER_CHANNEL==='chromium'?{}:process.platform==='win32'?{channel:'msedge'}:{})});
+ try{
+  const context=await browser.newContext({viewport:{width:1400,height:1000}}),page=await context.newPage(),errors=[];
+  page.on('pageerror',e=>errors.push(e.message));
+  await page.goto(base+'assumptions_report/?stage=question');
+  await page.locator('#plan-title').fill('My trial');await page.locator('#question').fill('Does the intervention help?');
+  await page.locator('#question-status').selectOption('evidence');
+  assert.equal(await page.locator('#question-status').inputValue(),'evidence');
+  assert.equal(await page.locator('#question').getAttribute('placeholder'),'Your answer');
+  await page.locator('#question-question').focus();assert.equal(await page.locator('.input-guidance-popover:visible').count(),1);
+  await page.locator('#question').focus();assert.equal(await page.locator('.input-guidance-popover:visible').count(),0);
+  await page.reload();assert.equal(await page.locator('#plan-title').inputValue(),'My trial');assert.equal(await page.locator('#question').inputValue(),'Does the intervention help?');assert.equal(await page.locator('#question-status').inputValue(),'evidence');
+  const second=await context.newPage();await second.goto(base+'assumptions_report/?stage=question');
+  await second.locator('#question').fill('An updated question from the other tab');
+  await page.waitForFunction(()=>document.querySelector('#question').value==='An updated question from the other tab');
+  await page.locator('#population').fill('Adults eligible for the trial');
+  await second.waitForFunction(()=>document.querySelector('#population').value==='Adults eligible for the trial');
+  await page.locator('#question').fill('Does the intervention help?');await second.close();
+  await page.goto(base+'assumptions_report/?stage=calculation');assert.equal(await page.locator('#plan-section-2').getAttribute('open'),'');
+  const record={title:'Two-group calculation',kind:'calculation',facts:{outcome:'binary',study_type:'comparison',goal:'testing',analyzable:56},lines:['56 analyzable per group','Method and inputs recorded'],captured:new Date().toISOString()};
+  await page.evaluate(r=>localStorage.setItem('sample-size-pending-test',JSON.stringify(r)),record);
+  await page.goto(base+'assumptions_report/?stage=review&transfer=test');
+  assert.match(await page.locator('#transfer-preview').innerText(),/My trial/);
+  await page.locator('#accept-transfer').click();assert.match(await page.locator('#report').innerText(),/56 analyzable/);
+  assert.equal(await page.locator('#question').inputValue(),'Does the intervention help?');
+  await page.evaluate(r=>localStorage.setItem('sample-size-pending-loss',JSON.stringify(r)),{...record,title:'Recruitment',kind:'recruitment',facts:{starting_n:60,recruitment:67},lines:['Starting with 60 per group']});
+  await page.goto(base+'assumptions_report/?stage=review&transfer=loss');await page.locator('#accept-transfer').click();
+  assert.match(await page.locator('#plan-review').innerText(),/starts with 60.*requires 56/);
+  const report=await saveReportPair(page,page,'#download','#download-word','study-plan-with-calculations');
+  assert.match(report.html,/56 analyzable per group/);assert.match(report.html,/Starting with 60 per group/);assert.match(report.html,/Does the intervention help/);
+  await page.locator('#saved-work > summary').click();
+  const [backup]=await Promise.all([page.waitForEvent('download'),page.locator('#save-work').click()]);
+  const saved=JSON.parse(fs.readFileSync(await backup.path(),'utf8'));assert.equal(saved.version,3);assert.equal(JSON.parse(saved.entries.calculation_records).length,2);
+  await page.locator('#restore').setInputFiles({name:'plan.json',mimeType:'application/json',buffer:Buffer.from(JSON.stringify(saved))});
+  assert.match(await page.locator('#status').innerText(),/restored/);
+  // Activity switches within a running app must keep separate saved inputs.
+  const inputs=await context.newPage();await inputs.goto(base+'empty-input-check.html');
+  await inputs.setContent('<main class="container-fluid"><div class="shiny-input-container"><label for="n">Count</label><input id="n" type="number" min="1" value="20"></div></main>');
+  await inputs.evaluate(()=>{window.SampleSizeApp='saved-input-check';window.jQuery=()=>({one:(_,fn)=>window.connectInputs=fn,on:()=>{},data:()=>null,trigger:()=>{}});});
+  await inputs.addScriptTag({path:path.resolve('site/plan-transfer.js')});await inputs.evaluate(()=>window.connectInputs());
+  const switchActivity=async(activity,reset=false)=>inputs.evaluate(detail=>window.dispatchEvent(new CustomEvent('sample-size:activity-context',{detail})),{activity,reset});
+  await inputs.locator('#n').fill('56');await inputs.waitForTimeout(300);
+  await switchActivity('first');await inputs.locator('#n').fill('80');await inputs.waitForTimeout(300);
+  await switchActivity('second');await inputs.locator('#n').fill('100');await inputs.waitForTimeout(300);
+  await switchActivity('first');await inputs.locator('.app-resume > summary').click();await inputs.getByRole('button',{name:'Restore previous inputs'}).click();
+  assert.equal(await inputs.locator('#n').inputValue(),'80');
+  assert.equal(await inputs.evaluate(()=>JSON.parse(localStorage.getItem('sample-size-app-inputs-v1-saved-input-check-second')).n),'100');
+  await switchActivity('first',true);assert.equal(await inputs.getByRole('button',{name:'Restore previous inputs'}).isVisible(),false);await inputs.close();
+  await page.locator('#restore').setInputFiles({name:'old.json',mimeType:'application/json',buffer:Buffer.from(JSON.stringify({schema:'sample-size-assumptions-report',version:2,entries:{question:'Older saved answer'}}))});
+  assert.equal(await page.locator('#question').inputValue(),'Older saved answer');
+  await page.locator('#plan-identity').evaluate(el=>el.open=true);await page.locator('#plan-basis').selectOption('pain');await page.locator('#file-actions > summary').click();
+  page.once('dialog',d=>d.accept());await page.locator('#example').click();
+  assert.equal(await page.locator('#counts').inputValue(),'');assert.match(await page.locator('#question').inputValue(),/pain relief/);
+  fs.mkdirSync('build/week4-qa',{recursive:true});await page.screenshot({path:'build/week4-qa/report-wide.png',fullPage:true});
+  await page.setViewportSize({width:390,height:844});assert(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1));
+  await page.screenshot({path:'build/week4-qa/report-mobile.png',fullPage:true});
+  await page.goto(base+'quiz/');await page.locator('#start').click();
+  const q=page.locator('#questions fieldset').first();const order=await q.locator('input').evaluateAll(ns=>ns.map(n=>n.value));await q.locator('input').first().check();
+  await page.reload();assert.deepEqual(await q.locator('input').evaluateAll(ns=>ns.map(n=>n.value)),order);assert.equal(await q.locator('input:checked').count(),1);
+  assert.match(await page.locator('#status').innerText(),/restored/);
+  assert.deepEqual(errors,[]);console.log('Report stages, statuses, selected transfers, mismatch review, saved files, examples, mobile layout and quiz restoration passed.');
+ }finally{await browser.close();server.close();}
+})().catch(e=>{console.error(e);process.exit(1)});

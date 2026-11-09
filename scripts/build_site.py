@@ -94,7 +94,7 @@ for name in ["README.md", "CONTRIBUTING.md", "LICENSE", "LICENSE-code.md", "CITA
 shutil.copy2(ROOT / "module/references.bib", SITE / "module/references.bib")
 shutil.copy2(ROOT / "site/styles.css", SITE / "styles.css")
 shutil.copy2(ROOT / "site/link-behavior.js", SITE / "link-behavior.js")
-for name in ("input-guidance.js", "input-guidance.css", "app-layout.css", "app-layout.js", "learning-layout.css", "report-exports.js"):
+for name in ("input-guidance.js", "input-guidance.css", "app-layout.css", "app-layout.js", "plan-transfer.js", "learning-layout.css", "report-exports.js"):
     shutil.copy2(ROOT / "site" / name, SITE / name)
 shutil.copytree(ROOT / "site/vendor", SITE / "vendor")
 shutil.copytree(ROOT / "site/study", SITE / "study")

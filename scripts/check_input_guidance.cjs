@@ -20,7 +20,7 @@ const base = (process.argv[2] || 'http://127.0.0.1:8769').replace(/\/$/, '');
       assert(frame, app + ' loaded');
       await frame.waitForFunction(() => window.Shiny?.shinyapp?.$socket?.readyState === 1);
       await frame.waitForFunction(() => [...document.querySelectorAll('.input-guidance-source')].every(el => el.dataset.attached === 'true'));
-      const fields = await frame.locator('textarea').evaluateAll(items => items.map(el => ({id: el.id, placeholder: el.placeholder, value: el.value, gray: getComputedStyle(el, '::placeholder').color})));
+      const fields = await frame.locator('textarea').evaluateAll(items => items.map(el => ({id: el.id, placeholder: el.dataset.exampleAnswer, value: el.value, gray: getComputedStyle(el, '::placeholder').color})));
       for (const field of fields) {
         assert(field.placeholder.length >= 30, app + '/' + field.id + ' retains its example');
         assert.doesNotMatch(field.placeholder, /model answer/i, app + '/' + field.id);

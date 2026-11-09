@@ -32,7 +32,7 @@ const base=process.argv[2]||'http://127.0.0.1:8769';
   await frame.getByText('Activity: Treatment changes and missing outcomes',{exact:true}).click();
   await frame.locator('#reasoning').fill('Switching changes the comparison; missing assessments reduce available outcomes.');
   await frame.locator('#reasoning-question').hover();
-  assert.match(await frame.locator('#reasoning').getAttribute('placeholder'),/154 per group \(308 total\)/);
+  assert.match(await frame.locator('#reasoning').getAttribute('data-example-answer'),/154 per group \(308 total\)/);
   fs.mkdirSync('build/browser-checks',{recursive:true});
   const {html:report}=await require('./report_test_helpers.cjs').saveReportPair(page,frame,'#report','#report_word','recruitment-switching');
   assert.match(report,/308 in total/);assert.match(report,/Switching changes the comparison/);

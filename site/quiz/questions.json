@@ -24,7 +24,13 @@
         "The outcome producing the smallest sample size"
       ],
       "answer": 0,
-      "explanation": "The outcome definition and measurement time point should be specified before choosing planning inputs. They are part of the Outcome component of PICO."
+      "explanation": "The outcome definition and measurement time point should be specified before choosing planning inputs. They are part of the Outcome component of PICO.",
+      "feedback": [
+        "The outcome definition and measurement time point should be specified before choosing planning inputs. They are part of the Outcome component of PICO.",
+        "An unspecified visit allows the outcome timing to vary between participants.",
+        "Selecting an outcome because it shows a difference makes the analysis data-dependent.",
+        "The outcome should follow the research question; a smaller calculation alone does not justify it."
+      ]
     },
     {
       "id": "q02",
@@ -40,7 +46,13 @@
         "30 percentage points"
       ],
       "answer": 3,
-      "explanation": "The target difference is the effect used in the power calculation. The expected difference and clinical threshold answer separate questions."
+      "explanation": "The target difference is the effect used in the power calculation. The expected difference and clinical threshold answer separate questions.",
+      "feedback": [
+        "Twenty points is the clinical threshold. Power at that smaller difference needs a separate assessment.",
+        "Forty points is the expected difference. The stated power calculation uses the target difference.",
+        "Power changes with the size of the true difference.",
+        "The target difference is the effect used in the power calculation. The expected difference and clinical threshold answer separate questions."
+      ]
     },
     {
       "id": "q03",
@@ -56,7 +68,13 @@
         "Every treated patient has a 20% improvement"
       ],
       "answer": 2,
-      "explanation": "The threshold concerns a comparison between population percentages."
+      "explanation": "The threshold concerns a comparison between population percentages.",
+      "feedback": [
+        "A between-group event difference does not identify which individuals benefit personally.",
+        "The threshold concerns the difference between groups, rather than the percentage in either group.",
+        "The threshold concerns a comparison between population percentages.",
+        "Individual outcomes and the difference between population percentages describe different quantities."
+      ]
     },
     {
       "id": "q04",
@@ -72,7 +90,13 @@
         "Only when a trial is statistically significant"
       ],
       "answer": 1,
-      "explanation": "The question, outcome, dependency structure and planned analysis determine which planning method is appropriate. Reporting guidance helps document those decisions."
+      "explanation": "The question, outcome, dependency structure and planned analysis determine which planning method is appropriate. Reporting guidance helps document those decisions.",
+      "feedback": [
+        "The method should follow the design and intended analysis.",
+        "The question, outcome, dependency structure and planned analysis determine which planning method is appropriate. Reporting guidance helps document those decisions.",
+        "Recruitment decisions require an appropriate calculation beforehand.",
+        "The planning method is chosen before observing statistical significance."
+      ]
     },
     {
       "id": "q37",
@@ -88,7 +112,13 @@
         "A standard value used for every disease"
       ],
       "answer": 0,
-      "explanation": "The target difference should have clinical importance and a defensible evidence base. Its uncertainty belongs in sensitivity analysis."
+      "explanation": "The target difference should have clinical importance and a defensible evidence base. Its uncertainty belongs in sensitivity analysis.",
+      "feedback": [
+        "The target difference should have clinical importance and a defensible evidence base. Its uncertainty belongs in sensitivity analysis.",
+        "Small-study effects can be uncertain or unusually large.",
+        "Affordability alone does not establish that the assumed difference is plausible.",
+        "Clinical importance and plausible effects depend on the outcome and setting."
+      ]
     },
     {
       "id": "q05",
@@ -104,7 +134,13 @@
         "Missing a specified real difference in 5% of studies"
       ],
       "answer": 0,
-      "explanation": "Type I error probability describes false-positive performance under the null."
+      "explanation": "Type I error probability describes false-positive performance under the null.",
+      "feedback": [
+        "Type I error probability describes false-positive performance under the null.",
+        "The probability is conditional on a true null; it does not assign a probability to the hypothesis.",
+        "The fraction of significant results that are false depends on more than the Type I error probability.",
+        "Missing a specified true difference is a Type II error."
+      ]
     },
     {
       "id": "q06",
@@ -120,7 +156,13 @@
         "About 90% of repeated studies under that difference and the stated assumptions would reject the null"
       ],
       "answer": 3,
-      "explanation": "Power is the probability of rejecting the null under a specified true difference, design and analysis. Its complement is the Type II error probability at that difference."
+      "explanation": "Power is the probability of rejecting the null under a specified true difference, design and analysis. Its complement is the Type II error probability at that difference.",
+      "feedback": [
+        "Power concerns rejection of the null, rather than estimation accuracy.",
+        "Power assumes a specified alternative for its calculation.",
+        "Patient improvement percentages describe outcomes, rather than the rejection probability of a test.",
+        "Power is the probability of rejecting the null under a specified true difference, design and analysis. Its complement is the Type II error probability at that difference."
+      ]
     },
     {
       "id": "q07",
@@ -136,7 +178,13 @@
         "The study with the larger estimate used a different target power"
       ],
       "answer": 2,
-      "explanation": "Realized estimates vary between independently generated samples even when their population assumptions and designs are identical."
+      "explanation": "Realized estimates vary between independently generated samples even when their population assumptions and designs are identical.",
+      "feedback": [
+        "The generating population probabilities were held fixed.",
+        "Different random samples can produce these differences without a coding error.",
+        "Realized estimates vary between independently generated samples even when their population assumptions and designs are identical.",
+        "A larger realized difference can occur under the same design and power settings."
+      ]
     },
     {
       "id": "q38",
@@ -152,7 +200,13 @@
         "About 95% of intervals from repeated studies contain the fixed true population value"
       ],
       "answer": 3,
-      "explanation": "Coverage describes the long-run performance of the interval procedure under its assumptions. It differs from the spread of individual patient outcomes."
+      "explanation": "Coverage describes the long-run performance of the interval procedure under its assumptions. It differs from the spread of individual patient outcomes.",
+      "feedback": [
+        "Confidence intervals concern a population quantity; prediction intervals address individual outcomes.",
+        "The population value is fixed in this repeated-study description.",
+        "Coverage depends on the interval method and its assumptions; narrowness alone does not establish coverage.",
+        "Coverage describes the long-run performance of the interval procedure under its assumptions. It differs from the spread of individual patient outcomes."
+      ]
     },
     {
       "id": "q22",
@@ -173,7 +227,13 @@
         "file": "clinical-interval.svg",
         "alt": "Estimated difference 25 percentage points; 95% confidence interval 5 to 45; clinical threshold 20.",
         "caption": "The estimate and interval describe the difference between groups."
-      }
+      },
+      "feedback": [
+        "The interval concerns a between-group difference, rather than a minimum benefit for every patient.",
+        "The interval excludes zero and therefore supports a positive difference under the interval method.",
+        "The interval excludes zero but includes differences below and above the 20-point threshold. The estimate is a between-group population comparison.",
+        "The estimate is uncertain; the interval includes a range of compatible differences."
+      ]
     },
     {
       "id": "q09",
@@ -189,7 +249,13 @@
         "111 patients split equally"
       ],
       "answer": 0,
-      "explanation": "The required sample size is rounded upward within each group before adding the groups. Expected losses are handled separately."
+      "explanation": "The required sample size is rounded upward within each group before adding the groups. Expected losses are handled separately.",
+      "feedback": [
+        "The required sample size is rounded upward within each group before adding the groups. Expected losses are handled separately.",
+        "Rounding down leaves each group below the calculated requirement.",
+        "The calculation is per group, so the two-group total is 112.",
+        "An odd total cannot be divided into two equally sized whole-person groups."
+      ]
     },
     {
       "id": "q10",
@@ -210,7 +276,13 @@
         "file": "target-difference.svg",
         "alt": "Target difference of 3 units: 59 analyzable participants per group; 1.5 units: 234 per group.",
         "caption": "Two-means normal approximation: common SD 5 units, 90% target power, two-sided Type I error probability 5%."
-      }
+      },
+      "feedback": [
+        "A smaller target difference generally requires a larger sample.",
+        "The inverse-square relationship gives a factor of four when the difference is halved.",
+        "The target difference is a direct input to this calculation.",
+        "Required sample size is proportional to the inverse square of the target difference in this approximation. Halving the difference multiplies the requirement by four."
+      ]
     },
     {
       "id": "q11",
@@ -226,7 +298,13 @@
         "It decreases"
       ],
       "answer": 2,
-      "explanation": "Higher target power requires greater ability to detect the specified difference. The normal-quantile multiplier increases, so the sample-size requirement increases."
+      "explanation": "Higher target power requires greater ability to detect the specified difference. The normal-quantile multiplier increases, so the sample-size requirement increases.",
+      "feedback": [
+        "The requirement depends on the chosen power.",
+        "Target difference remains an input when power changes.",
+        "Higher target power requires greater ability to detect the specified difference. The normal-quantile multiplier increases, so the sample-size requirement increases.",
+        "A higher probability of detection generally requires more information."
+      ]
     },
     {
       "id": "q12",
@@ -242,7 +320,13 @@
         "The lab treats two measurements as two patients"
       ],
       "answer": 1,
-      "explanation": "Normal approximations and t-test calculations handle sampling uncertainty differently. Methods and assumptions should be checked before comparing numerical outputs."
+      "explanation": "Normal approximations and t-test calculations handle sampling uncertainty differently. Methods and assumptions should be checked before comparing numerical outputs.",
+      "feedback": [
+        "A larger number alone cannot establish that a method suits the design.",
+        "Normal approximations and t-test calculations handle sampling uncertainty differently. Methods and assumptions should be checked before comparing numerical outputs.",
+        "Different justified methods can produce different numerical answers.",
+        "Both calculations assume independent participants in this comparison."
+      ]
     },
     {
       "id": "q25",
@@ -258,7 +342,13 @@
         "125%"
       ],
       "answer": 0,
-      "explanation": "The absolute change is 10 percentage points. Relative to the original 40%, the increase is 10/40 = 25%."
+      "explanation": "The absolute change is 10 percentage points. Relative to the original 40%, the increase is 10/40 = 25%.",
+      "feedback": [
+        "The absolute change is 10 percentage points. Relative to the original 40%, the increase is 10/40 = 25%.",
+        "Ten is the absolute increase in percentage points.",
+        "Fifty percent is the new discharge percentage.",
+        "125% expresses the new value as a percentage of the old value; the increase is 25%."
+      ]
     },
     {
       "id": "q21",
@@ -274,7 +364,13 @@
         "90"
       ],
       "answer": 0,
-      "explanation": "The calculation is 90 divided by 0.90, giving 100 per group. Adding 10% to 90 gives only 99; expected losses apply to the recruited count."
+      "explanation": "The calculation is 90 divided by 0.90, giving 100 per group. Adding 10% to 90 gives only 99; expected losses apply to the recruited count.",
+      "feedback": [
+        "The calculation is 90 divided by 0.90, giving 100 per group. Adding 10% to 90 gives only 99; expected losses apply to the recruited count.",
+        "Adding 10% to 90 gives 99; retaining 90% of 99 gives only 89.1 in expectation.",
+        "Eighty-one is 90% of 90, which reduces the starting count.",
+        "Recruiting 90 with 10% expected loss leaves about 81 for analysis."
+      ]
     },
     {
       "id": "q42",
@@ -290,7 +386,13 @@
         "It is determined by the number of simulation repetitions"
       ],
       "answer": 0,
-      "explanation": "A smaller true difference requires more patients to achieve the same power under otherwise comparable assumptions. The sensitivity comparison shows how this uncertainty affects the recruitment plan."
+      "explanation": "A smaller true difference requires more patients to achieve the same power under otherwise comparable assumptions. The sensitivity comparison shows how this uncertainty affects the recruitment plan.",
+      "feedback": [
+        "A smaller true difference requires more patients to achieve the same power under otherwise comparable assumptions. The sensitivity comparison shows how this uncertainty affects the recruitment plan.",
+        "Similar treatments produce a smaller signal, which is harder to distinguish from sampling variability.",
+        "The effect size influences the information needed for detection.",
+        "Simulation repetitions affect the accuracy of a simulation estimate, rather than the size required within each trial."
+      ]
     },
     {
       "id": "q45",
@@ -306,7 +408,13 @@
         "Nothing, provided the recruitment target was met"
       ],
       "answer": 2,
-      "explanation": "Recruitment inflation helps preserve the expected analyzable count. Outcome-related missingness can still bias the available-case comparison, so the reasons and analysis assumptions need attention."
+      "explanation": "Recruitment inflation helps preserve the expected analyzable count. Outcome-related missingness can still bias the available-case comparison, so the reasons and analysis assumptions need attention.",
+      "feedback": [
+        "An even total does not address outcome-related missingness.",
+        "Changing the target after observing outcomes does not resolve selection in the available data.",
+        "Recruitment inflation helps preserve the expected analyzable count. Outcome-related missingness can still bias the available-case comparison, so the reasons and analysis assumptions need attention.",
+        "Reaching the recruitment target can still leave a biased available-case analysis."
+      ]
     },
     {
       "id": "q26",
@@ -322,7 +430,13 @@
         "The assumptions, evidence, method, allocation, analyzable counts and recruitment adjustment"
       ],
       "answer": 3,
-      "explanation": "A reproducible justification connects the clinical assumptions, procedure and numerical result. A final count alone leaves the reasoning and calculation unclear."
+      "explanation": "A reproducible justification connects the clinical assumptions, procedure and numerical result. A final count alone leaves the reasoning and calculation unclear.",
+      "feedback": [
+        "The total alone omits the assumptions and procedure.",
+        "A calculator name leaves its inputs and settings unspecified.",
+        "A power percentage needs its effect, design and analysis assumptions.",
+        "A reproducible justification connects the clinical assumptions, procedure and numerical result. A final count alone leaves the reasoning and calculation unclear."
+      ]
     },
     {
       "id": "q27",
@@ -338,7 +452,13 @@
         "Report only the smaller answer"
       ],
       "answer": 2,
-      "explanation": "The differences reveal uncertainty relevant to planning. The choice and its consequences need clinical and statistical justification."
+      "explanation": "The differences reveal uncertainty relevant to planning. The choice and its consequences need clinical and statistical justification.",
+      "feedback": [
+        "An average requires a justification for how uncertainty is being represented.",
+        "A larger requirement does not establish that its assumptions are true.",
+        "The differences reveal uncertainty relevant to planning. The choice and its consequences need clinical and statistical justification.",
+        "Selecting only the smaller answer hides uncertainty relevant to feasibility."
+      ]
     },
     {
       "id": "q13",
@@ -354,7 +474,13 @@
         "The probability that the null hypothesis is true"
       ],
       "answer": 0,
-      "explanation": "This sensitivity analysis evaluates a fixed design across plausible effects."
+      "explanation": "This sensitivity analysis evaluates a fixed design across plausible effects.",
+      "feedback": [
+        "This sensitivity analysis evaluates a fixed design across plausible effects.",
+        "A sensitivity analysis explores specified possibilities; it supplies no new observations about which effect is true.",
+        "The curve evaluates the prespecified design under alternative assumptions.",
+        "Frequentist power conditions on a specified population effect."
+      ]
     },
     {
       "id": "q14",
@@ -370,7 +496,13 @@
         "The effect estimate and confidence interval, with design limitations"
       ],
       "answer": 3,
-      "explanation": "The estimate and interval describe compatible effects and uncertainty. Observed power based on the same observed effect adds no independent evidence about the result."
+      "explanation": "The estimate and interval describe compatible effects and uncertainty. Observed power based on the same observed effect adds no independent evidence about the result.",
+      "feedback": [
+        "Observed power from the same observed effect largely restates the test result.",
+        "Selecting a larger assumed effect makes the reported power less relevant to the uncertainty.",
+        "Equivalence requires justified margins and an appropriate analysis.",
+        "The estimate and interval describe compatible effects and uncertainty. Observed power based on the same observed effect adds no independent evidence about the result."
+      ]
     },
     {
       "id": "q15",
@@ -386,7 +518,13 @@
         "It must also be exactly 90%"
       ],
       "answer": 2,
-      "explanation": "Power depends on the true effect. A clinical threshold below the target difference may have lower power and should be included in sensitivity analysis."
+      "explanation": "Power depends on the true effect. A clinical threshold below the target difference may have lower power and should be included in sensitivity analysis.",
+      "feedback": [
+        "Smaller effects can still be detected, although with lower probability.",
+        "The target difference is used to evaluate power; the usual superiority alternative includes other nonzero differences.",
+        "Power depends on the true effect. A clinical threshold below the target difference may have lower power and should be included in sensitivity analysis.",
+        "The 90% value applies at the specified 30-point difference."
+      ]
     },
     {
       "id": "q16",
@@ -402,7 +540,13 @@
         "Ignore expected losses"
       ],
       "answer": 1,
-      "explanation": "The original assumptions should remain explicit while the attainable power, precision, feasibility, and alternative plans are assessed."
+      "explanation": "The original assumptions should remain explicit while the attainable power, precision, feasibility, and alternative plans are assessed.",
+      "feedback": [
+        "A smaller analyzable sample changes the original power calculation.",
+        "The original assumptions should remain explicit while the attainable power, precision, feasibility, and alternative plans are assessed.",
+        "An unsupported larger effect does not improve the attainable information.",
+        "Expected losses reduce the available analyzable count."
+      ]
     },
     {
       "id": "q41",
@@ -418,7 +562,13 @@
         "The power calculated from the effect observed after the study"
       ],
       "answer": 1,
-      "explanation": "The recruitment cap must first be translated into an expected analyzable count. Its usefulness depends on the research objective, planned analysis, and plausible population assumptions."
+      "explanation": "The recruitment cap must first be translated into an expected analyzable count. Its usefulness depends on the research objective, planned analysis, and plausible population assumptions.",
+      "feedback": [
+        "There is no universal adequate sample size across objectives and designs.",
+        "The recruitment cap must first be translated into an expected analyzable count. Its usefulness depends on the research objective, planned analysis, and plausible population assumptions.",
+        "Increasing an assumption to fit resources supplies no supporting evidence for that assumption.",
+        "Observed power calculated after the study does not establish whether the original plan was adequate."
+      ]
     },
     {
       "id": "q28",
@@ -434,7 +584,13 @@
         "The study rules out any worthwhile benefit"
       ],
       "answer": 1,
-      "explanation": "The interval spans zero and the clinical threshold. Its full range should inform interpretation. Equivalence requires prespecified margins and an appropriate analysis."
+      "explanation": "The interval spans zero and the clinical threshold. Its full range should inform interpretation. Equivalence requires prespecified margins and an appropriate analysis.",
+      "feedback": [
+        "Equivalence needs prespecified margins and a suitable analysis.",
+        "The interval spans zero and the clinical threshold. Its full range should inform interpretation. Equivalence requires prespecified margins and an appropriate analysis.",
+        "The interval includes effects below the 10-point threshold.",
+        "Benefits as large as 15 points remain within the interval."
+      ]
     },
     {
       "id": "q08",
@@ -450,7 +606,13 @@
         "400 with twice as many patients per trial"
       ],
       "answer": 1,
-      "explanation": "Monte Carlo standard error is proportional to 1/sqrt(B) at a fixed rejection probability. Four times as many repetitions approximately halves it."
+      "explanation": "Monte Carlo standard error is proportional to 1/sqrt(B) at a fixed rejection probability. Four times as many repetitions approximately halves it.",
+      "feedback": [
+        "Doubling repetitions reduces the standard error by a factor of about 1.41.",
+        "Monte Carlo standard error is proportional to 1/sqrt(B) at a fixed rejection probability. Four times as many repetitions approximately halves it.",
+        "Fewer repetitions increase Monte Carlo uncertainty.",
+        "More patients change trial power; they do not supply the fourfold increase in independent simulation repetitions."
+      ]
     },
     {
       "id": "q17",
@@ -466,7 +628,13 @@
         "Increase the sample until the first significant result appears"
       ],
       "answer": 0,
-      "explanation": "Repeated studies under an explicit model allow the rejection probability to be estimated for the chosen analysis."
+      "explanation": "Repeated studies under an explicit model allow the rejection probability to be estimated for the chosen analysis.",
+      "feedback": [
+        "Repeated studies under an explicit model allow the rejection probability to be estimated for the chosen analysis.",
+        "One rejection or non-rejection gives only one trial outcome.",
+        "Selecting significant datasets biases the estimated performance.",
+        "Stopping at the first significant result changes the study procedure being evaluated."
+      ]
     },
     {
       "id": "q18",
@@ -482,7 +650,13 @@
         "The assumed population event probabilities used to generate outcomes"
       ],
       "answer": 3,
-      "explanation": "The generating probabilities define the hypothetical population. Realized sample percentages vary around them."
+      "explanation": "The generating probabilities define the hypothetical population. Realized sample percentages vary around them.",
+      "feedback": [
+        "Sample event percentages vary even when their generating probabilities stay fixed.",
+        "These probabilities generate patient outcomes; they do not describe the truth of hypotheses.",
+        "Discarding simulations would change the assessment and needs a separate justification.",
+        "The generating probabilities define the hypothetical population. Realized sample percentages vary around them."
+      ]
     },
     {
       "id": "q19",
@@ -498,7 +672,13 @@
         "The fraction of intervals excluding zero"
       ],
       "answer": 2,
-      "explanation": "Coverage compares each interval with the known generating value. Rejection frequency and interval width measure different aspects of performance."
+      "explanation": "Coverage compares each interval with the known generating value. Rejection frequency and interval width measure different aspects of performance.",
+      "feedback": [
+        "Width measures precision, while coverage records whether the true value is included.",
+        "Significance records rejection of the null.",
+        "Coverage compares each interval with the known generating value. Rejection frequency and interval width measure different aspects of performance.",
+        "Excluding zero assesses a particular null value, which can differ from the generating value."
+      ]
     },
     {
       "id": "q20",
@@ -514,7 +694,13 @@
         "A guarantee that the simulation is wrong"
       ],
       "answer": 1,
-      "explanation": "More repetitions reduce Monte Carlo uncertainty. Analytical-approximation error and the credibility of the population assumptions require separate assessment."
+      "explanation": "More repetitions reduce Monte Carlo uncertainty. Analytical-approximation error and the credibility of the population assumptions require separate assessment.",
+      "feedback": [
+        "Agreement or disagreement between calculations cannot establish the realism of the assumed population.",
+        "More repetitions reduce Monte Carlo uncertainty. Analytical-approximation error and the credibility of the population assumptions require separate assessment.",
+        "Finite simulation repetitions create ordinary random uncertainty even with a valid seed.",
+        "An approximation and a finite-sample simulation can differ while both are implemented correctly."
+      ]
     },
     {
       "id": "q23",
@@ -530,7 +716,13 @@
         "Only a p-value cutoff"
       ],
       "answer": 2,
-      "explanation": "Estimation concerns the population quantity; precision concerns uncertainty around its estimate. Interval width at a stated confidence level can guide planning."
+      "explanation": "Estimation concerns the population quantity; precision concerns uncertainty around its estimate. Interval width at a stated confidence level can guide planning.",
+      "feedback": [
+        "A precision target concerns uncertainty around an estimate.",
+        "The parameter is treated as fixed in this interval-planning framework.",
+        "Estimation concerns the population quantity; precision concerns uncertainty around its estimate. Interval width at a stated confidence level can guide planning.",
+        "A significance cutoff alone does not specify the desired interval width."
+      ]
     },
     {
       "id": "q24",
@@ -546,7 +738,13 @@
         "Selecting the largest observed effect for the main trial calculation"
       ],
       "answer": 1,
-      "explanation": "Pilot sample size should follow its feasibility objectives. Uncertain treatment effects from a small pilot should be interpreted cautiously."
+      "explanation": "Pilot sample size should follow its feasibility objectives. Uncertain treatment effects from a small pilot should be interpreted cautiously.",
+      "feedback": [
+        "The sample should follow the particular feasibility objective.",
+        "Pilot sample size should follow its feasibility objectives. Uncertain treatment effects from a small pilot should be interpreted cautiously.",
+        "A small feasibility study generally has a different primary purpose from a definitive efficacy trial.",
+        "An unusually large pilot effect can lead to an inadequately justified main-trial calculation."
+      ]
     },
     {
       "id": "q39",
@@ -562,7 +760,13 @@
         "The team can assume the conventional power target is automatically satisfied"
       ],
       "answer": 2,
-      "explanation": "Limited recruitment calls for realistic information targets and carefully justified design choices. Collaboration and efficient measurements may help; each option retains assumptions and limitations."
+      "explanation": "Limited recruitment calls for realistic information targets and carefully justified design choices. Collaboration and efficient measurements may help; each option retains assumptions and limitations.",
+      "feedback": [
+        "Recruitment constraints do not justify inflating the assumed effect.",
+        "Historical and randomized controls can differ in population, care and measurement.",
+        "Limited recruitment calls for realistic information targets and carefully justified design choices. Collaboration and efficient measurements may help; each option retains assumptions and limitations.",
+        "Limited recruitment may leave the desired power unattainable."
+      ]
     },
     {
       "id": "q43",
@@ -578,7 +782,13 @@
         "Every descriptive analysis requires 90% treatment-effect power"
       ],
       "answer": 1,
-      "explanation": "The available sample is fixed, but the target quantity and intended conclusion have changed. Missing baseline information and the original eligibility criteria also affect what the estimate can establish."
+      "explanation": "The available sample is fixed, but the target quantity and intended conclusion have changed. Missing baseline information and the original eligibility criteria also affect what the estimate can establish.",
+      "feedback": [
+        "Random allocation within a trial does not guarantee population-representative recruitment.",
+        "The available sample is fixed, but the target quantity and intended conclusion have changed. Missing baseline information and the original eligibility criteria also affect what the estimate can establish.",
+        "A new question needs a relevant assessment; no universal doubling rule applies.",
+        "A descriptive percentage is commonly planned using interval precision."
+      ]
     },
     {
       "id": "q29",
@@ -594,7 +804,13 @@
         "Using only the total number of recordings"
       ],
       "answer": 0,
-      "explanation": "Paired observations contain dependency. Planning should reflect within-person differences and the intended paired or repeated-measures analysis."
+      "explanation": "Paired observations contain dependency. Planning should reflect within-person differences and the intended paired or repeated-measures analysis.",
+      "feedback": [
+        "Paired observations contain dependency. Planning should reflect within-person differences and the intended paired or repeated-measures analysis.",
+        "Two measurements from one patient remain dependent.",
+        "The ON and OFF measurements come from the same individuals.",
+        "The number of recordings alone omits the number of patients and their dependence."
+      ]
     },
     {
       "id": "q30",
@@ -610,7 +826,13 @@
         "Treating each patient as independently randomized"
       ],
       "answer": 1,
-      "explanation": "Additional independently randomized hospitals provide new clusters. Patients within an existing hospital share cluster characteristics, so adding more patients there has diminishing gains in information. The final calculation still needs the cluster sizes, ICC, and planned analysis."
+      "explanation": "Additional independently randomized hospitals provide new clusters. Patients within an existing hospital share cluster characteristics, so adding more patients there has diminishing gains in information. The final calculation still needs the cluster sizes, ICC, and planned analysis.",
+      "feedback": [
+        "Additional patients within existing hospitals share cluster characteristics.",
+        "Additional independently randomized hospitals provide new clusters. Patients within an existing hospital share cluster characteristics, so adding more patients there has diminishing gains in information. The final calculation still needs the cluster sizes, ICC, and planned analysis.",
+        "Repeated measurements add dependence and do not create new randomized hospitals.",
+        "Ignoring the allocation unit would misrepresent the design."
+      ]
     },
     {
       "id": "q31",
@@ -626,7 +848,13 @@
         "One universal sample-size formula"
       ],
       "answer": 2,
-      "explanation": "Reporting guidance helps make decisions transparent. The sample-size method must still match the question, design and planned analysis."
+      "explanation": "Reporting guidance helps make decisions transparent. The sample-size method must still match the question, design and planned analysis.",
+      "feedback": [
+        "Transparent reporting helps appraisal but cannot guarantee freedom from bias.",
+        "Clinical input and relevant evidence are needed to justify the target difference.",
+        "Reporting guidance helps make decisions transparent. The sample-size method must still match the question, design and planned analysis.",
+        "Different designs and analyses require different sample-size methods."
+      ]
     },
     {
       "id": "q32",
@@ -642,7 +870,13 @@
         "It removes the need to justify clinical importance"
       ],
       "answer": 1,
-      "explanation": "Assurance or expected power incorporates a specified distribution of uncertainty. That distribution and the decision rule require justification."
+      "explanation": "Assurance or expected power incorporates a specified distribution of uncertainty. That distribution and the decision rule require justification.",
+      "feedback": [
+        "Averaging over uncertain parameters can change the result.",
+        "Assurance or expected power incorporates a specified distribution of uncertainty. That distribution and the decision rule require justification.",
+        "Assurance remains a probability under specified assumptions.",
+        "The uncertainty distribution and clinical objective still need justification."
+      ]
     },
     {
       "id": "q40",
@@ -658,7 +892,13 @@
         "Counting every recording as an independent patient"
       ],
       "answer": 1,
-      "explanation": "Prediction objectives require planning for model performance and validation. Repeated recordings from the same patient remain dependent and should be handled accordingly."
+      "explanation": "Prediction objectives require planning for model performance and validation. Repeated recordings from the same patient remain dependent and should be handled accordingly.",
+      "feedback": [
+        "Training accuracy can overstate performance on new patients.",
+        "Prediction objectives require planning for model performance and validation. Repeated recordings from the same patient remain dependent and should be handled accordingly.",
+        "A generic mean comparison does not necessarily match prediction-model evaluation.",
+        "Recordings from one patient share information and remain dependent."
+      ]
     },
     {
       "id": "q44",
@@ -674,7 +914,13 @@
         "An anticipated population percentage, confidence level, and useful absolute margin of error"
       ],
       "answer": 3,
-      "explanation": "A prevalence survey estimates one population percentage. These inputs guide the sample-size approximation; the sampling approach and missing data also matter for a credible estimate."
+      "explanation": "A prevalence survey estimates one population percentage. These inputs guide the sample-size approximation; the sampling approach and missing data also matter for a credible estimate.",
+      "feedback": [
+        "A prevalence objective concerns one population percentage.",
+        "Repeated recordings do not automatically provide independent participants.",
+        "An earlier treatment-test p-value does not specify the desired prevalence precision.",
+        "A prevalence survey estimates one population percentage. These inputs guide the sample-size approximation; the sampling approach and missing data also matter for a credible estimate."
+      ]
     },
     {
       "id": "q33",
@@ -690,7 +936,13 @@
         "Repeating a calculation until the preferred result appears"
       ],
       "answer": 0,
-      "explanation": "Computational reproducibility concerns checking the same computational work. Replication addresses the scientific question with newly collected data."
+      "explanation": "Computational reproducibility concerns checking the same computational work. Replication addresses the scientific question with newly collected data.",
+      "feedback": [
+        "Computational reproducibility concerns checking the same computational work. Replication addresses the scientific question with newly collected data.",
+        "New patient data address replication of the scientific finding.",
+        "A similar appearance does not establish computational agreement.",
+        "Selecting a preferred result makes the procedure dependent on its outcome."
+      ]
     },
     {
       "id": "q34",
@@ -706,7 +958,13 @@
         "Sharing appropriate methods and code while using governed access or other suitable restrictions for protected data"
       ],
       "answer": 3,
-      "explanation": "Transparency and reuse can be supported through protocols, code and documentation while respecting consent and legitimate access restrictions."
+      "explanation": "Transparency and reuse can be supported through protocols, code and documentation while respecting consent and legitimate access restrictions.",
+      "feedback": [
+        "Identifiable records require appropriate protection and permissions.",
+        "Methods and code can often be shared even when patient data are restricted.",
+        "A PDF alone may omit the computational inputs and procedures.",
+        "Transparency and reuse can be supported through protocols, code and documentation while respecting consent and legitimate access restrictions."
+      ]
     },
     {
       "id": "q35",
@@ -722,7 +980,13 @@
         "Whatever slider values happen to be displayed later"
       ],
       "answer": 2,
-      "explanation": "Saved results retain the assumptions and computational context used to produce them, including after controls change."
+      "explanation": "Saved results retain the assumptions and computational context used to produce them, including after controls change.",
+      "feedback": [
+        "A date alone does not identify the numerical assumptions or procedure.",
+        "A rounded count alone leaves the calculation uncheckable.",
+        "Saved results retain the assumptions and computational context used to produce them, including after controls change.",
+        "Later slider settings may differ from those used to produce the saved result."
+      ]
     },
     {
       "id": "q36",
@@ -738,7 +1002,13 @@
         "Yes, provided the plot colors are unchanged"
       ],
       "answer": 1,
-      "explanation": "A seed identifies a starting random state under particular settings. Different generators, algorithms or environments can yield different realized draws."
+      "explanation": "A seed identifies a starting random state under particular settings. Different generators, algorithms or environments can yield different realized draws.",
+      "feedback": [
+        "Simulations can be reproduced under controlled computational conditions.",
+        "A seed identifies a starting random state under particular settings. Different generators, algorithms or environments can yield different realized draws.",
+        "Software and algorithms affect how a seed maps to generated values.",
+        "Plot colors do not control random-number generation."
+      ]
     }
   ]
 }

@@ -26,6 +26,7 @@ const bank=JSON.parse(fs.readFileSync('site/quiz/questions.json','utf8'));
    assert.equal(await page.locator('fieldset').count(),bank.questions.filter(q=>q.chapter===ch).length);
    assert.equal(await page.locator('#results').isVisible(),false);
   }
+  await page.evaluate(()=>localStorage.removeItem('sample-size-cumulative-quiz-v2'));
   await page.goto(base+'/quiz/');
   await page.waitForFunction(()=>!document.getElementById('start').disabled);
   await page.locator('#start').click();

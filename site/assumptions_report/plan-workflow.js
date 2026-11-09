@@ -1,0 +1,128 @@
+/* One developing assignment, explicit snapshots, and review states. MIT. */
+(() => {
+  'use strict';
+  const metaNames = ['plan_title', 'plan_basis', 'decision_statuses', 'calculation_records'];
+  const stages = {
+    question: {title:'Chapter 1: question and design', sections:[0], fields:['question','population','intervention','comparator','outcome_detail','design'], text:'Your first contribution is the research question and study design. Initial assumptions can remain provisional while you look for evidence.'},
+    power: {title:'Chapter 2: power and interpretation', sections:[2,3], fields:['power','conclusion'], text:'Your plan should explain the chosen error probability and power, and what the study could establish under its assumptions.'},
+    calculation: {title:'Chapter 3: calculation', sections:[1,2], fields:['expected','clinical','planning','variation','analysis','software','counts'], text:'Your calculation record should contain the inputs, method, analyzable sample size, and your justification. A calculator can add a selected result to this report.'},
+    recruitment: {title:'Chapter 4: recruitment and feasibility', sections:[3], fields:['recruitment','sensitivity','resources','conclusion'], text:'Your final contribution is a recruitment target, a plausible sensitivity comparison, feasibility, and your recommendation.'},
+    review: {title:'Review your complete study plan', sections:[], fields:[], text:'The review below identifies unresolved decisions and mismatches between saved calculations. Your reasoning and evidence still need your own review.'}
+  };
+  const read = (text, fallback) => { try {return JSON.parse(text || '')} catch (_) {return fallback} };
+  const element = (tag, text, cls) => { const node=document.createElement(tag); if(text!==undefined)node.textContent=text;if(cls)node.className=cls;return node; };
+  function validateRecords(text) {
+    let records;
+    try {records=JSON.parse(text||'[]');} catch (_) {throw Error('Invalid saved calculation records.');}
+    if(!Array.isArray(records)||records.length>30)throw Error('Invalid saved calculation records.');
+    records.forEach(r=>{
+      if(!r||typeof r!=='object'||!['calculation','recruitment','exploration'].includes(r.kind)||typeof r.title!=='string'||r.title.length>300||!Array.isArray(r.lines)||r.lines.length>100||r.lines.some(x=>typeof x!=='string'||x.length>12000))throw Error('Invalid calculation record.');
+      if(r.facts && (typeof r.facts!=='object'||Array.isArray(r.facts)||Object.values(r.facts).some(x=>!['string','number','boolean'].includes(typeof x)||(typeof x==='number'&&!Number.isFinite(x)))))throw Error('Invalid calculation values.');
+      if(r.captured && (typeof r.captured!=='string'||!Number.isFinite(Date.parse(r.captured))))throw Error('Invalid calculation date.');
+    });return records;
+  }
+  function validateMetadata(value) {
+    validateRecords(value.calculation_records||'[]');
+    let statuses;
+    try {statuses=JSON.parse(value.decision_statuses||'{}');} catch (_) {throw Error('Invalid decision status.');}
+    if(!statuses||Array.isArray(statuses)||typeof statuses!=='object'||Object.values(statuses).some(s=>!['provisional','evidence','reviewed'].includes(s)))throw Error('Invalid decision status.');
+  }
+  let form, fields, statusNodes={}, currentRecords=[], review, pending;
+  function changed(){form.dispatchEvent(new Event('input',{bubbles:true}));}
+  function setStatuses(values){form.elements.decision_statuses.value=JSON.stringify(values);}
+  function init(f, definitions) {
+    form=f;fields=definitions;
+    for(const name of metaNames.filter(n=>!form.elements[n])){const input=element('input');input.type='hidden';input.name=name;form.append(input);}
+    const setup=document.getElementById('plan-start');
+    setup.querySelectorAll('input,select').forEach(input=>{input.setAttribute('form',form.id);input.addEventListener('input',changed);});
+    fields.forEach(([id])=>{
+      const row=element('label',undefined,'decision-status');row.htmlFor=id+'-status';row.append(element('span','Decision status'));
+      const select=element('select');select.id=id+'-status';
+      [['provisional','Provisional'],['evidence','Evidence needed'],['reviewed','Ready for review']].forEach(([v,t])=>{const o=element('option',t);o.value=v;select.append(o)});
+      select.addEventListener('input',event=>event.stopPropagation());
+      select.addEventListener('change',()=>{const statuses=read(form.elements.decision_statuses.value,{});statuses[id]=select.value;setStatuses(statuses);changed();});
+      row.append(select);document.getElementById('field-'+id).append(row);statusNodes[id]=select;
+    });
+    review=document.getElementById('plan-review');
+    const nav=document.getElementById('plan-stages');
+    for(const [id,s] of Object.entries(stages)){
+      const a=element('a',({question:'1 Question',power:'2 Power',calculation:'3 Calculation',recruitment:'4 Recruitment',review:'Review'})[id]);a.href='?stage='+id;a.addEventListener('click',e=>{e.preventDefault();showStage(id);});nav.append(a);
+    }
+    document.getElementById('study_type').addEventListener('change',()=>{
+      if(form.elements.study_type.value==='other'){document.getElementById('plan-section-0').open=true;document.getElementById('design').focus();}
+    });
+    document.getElementById('plan-basis').addEventListener('change',()=>{
+      document.getElementById('example').hidden=document.getElementById('plan-basis').value!=='pain';changed();
+    });
+  }
+  function showStage(id) {
+    const s=stages[id]||stages.question;
+    const intro=document.getElementById('plan-stage-guidance');intro.replaceChildren(element('h2',s.title),element('p',s.text));
+    document.querySelectorAll('#plan-stages a').forEach(a=>a.setAttribute('aria-current',a.search==='?stage='+id?'step':'false'));
+    for(let i=0;i<4;i++)document.getElementById('plan-section-'+i).open=s.sections.includes(i);
+    const url=new URL(location.href);url.searchParams.set('stage',id);history.replaceState(null,'',url);
+    review.open=id==='review';
+    intro.scrollIntoView({block:'nearest'});
+  }
+  function decorate(value, article, lines, active) {
+    const statuses=read(value.decision_statuses,{}), records=validateRecords(value.calculation_records||'[]');currentRecords=records;
+    const issues=[], relevant=fields.filter(field=>active(field,value));
+    relevant.forEach(([id,title])=>{
+      statusNodes[id].value=statuses[id]||'provisional';statusNodes[id].disabled=!value[id].trim();
+      if(!value[id].trim())issues.push(title+': still to complete.');
+      else if(statuses[id]!=='reviewed')issues.push(title+': '+(statuses[id]==='evidence'?'evidence needed.':'provisional.'));
+    });
+    const calc=[...records].reverse().find(r=>r.kind==='calculation'), recruitment=[...records].reverse().find(r=>r.kind==='recruitment');
+    if(!calc)issues.push('No calculator result has been attached. An external calculation can be documented in the calculation and software answers.');
+    if(calc?.facts?.study_type==='comparison' && calc.facts.analyzable && recruitment?.facts?.starting_n && calc.facts.analyzable!==recruitment.facts.starting_n)issues.push('The recruitment calculation starts with '+recruitment.facts.starting_n+' per group, while the selected calculation requires '+calc.facts.analyzable+'. The recruitment calculation needs review.');
+    if(calc?.facts?.outcome && calc.facts.outcome!==value.outcome)issues.push('The attached calculation uses a different outcome type from the current study settings.');
+    if(calc?.facts?.study_type && calc.facts.study_type!==value.study_type)issues.push('The attached calculation uses a different study structure from the current study settings.');
+    if(calc?.facts?.goal && calc.facts.goal!==value.goal && value.goal!=='both')issues.push('The attached calculation uses a different planning goal from the current study settings.');
+    const list=review.querySelector('ul');list.replaceChildren(...issues.map(text=>element('li',text)));
+    if(!issues.length)list.append(element('li','All applicable answers are ready for your final review. Check the evidence, written values, and interpretation before submitting.'));
+    review.querySelector('.review-note').textContent='Checks compare saved structured results. Numerical values in your written answers need your own review.';
+    const heading=element('h3',value.plan_title.trim()||'My study plan');article.prepend(heading);
+    document.querySelector('#plan-identity > summary').textContent=value.plan_title.trim()?'Study: '+value.plan_title.trim():'Study title and starting point';
+    lines.unshift('Study: '+heading.textContent);
+    lines.push('Decision review',...issues);
+    const summary=element('p',`${relevant.filter(([id])=>value[id].trim()&&statuses[id]==='reviewed').length} of ${relevant.length} applicable decisions marked ready for review.`);
+    article.append(summary);lines.push(summary.textContent);
+    const recordList=document.getElementById('saved-calculations');recordList.parentElement.hidden=records.length===0;recordList.replaceChildren();
+    records.forEach((record,index)=>{
+      const section=element('section');section.append(element('h3',record.title));
+      const stamp='Saved '+new Date(record.captured||Date.now()).toLocaleString('en-US');
+      section.append(element('p',stamp),...record.lines.map(line=>element('p',line)));
+      const remove=element('button','Remove this saved result');remove.type='button';remove.addEventListener('click',()=>{const next=[...currentRecords];next.splice(index,1);form.elements.calculation_records.value=JSON.stringify(next);changed();});
+      const display=element('details');display.append(element('summary',record.title),element('p',stamp),...record.lines.map(line=>element('p',line)),remove);recordList.append(display);
+      article.append(section);lines.push('Saved calculation: '+record.title,stamp,...record.lines);
+    });
+    document.getElementById('example').hidden=value.plan_basis!=='pain';
+  }
+  function loadPending() {
+    const params=new URLSearchParams(location.search),id=params.get('transfer');
+    showStage(params.get('stage')||'question');
+    if(form.elements.plan_title.value.trim()){document.getElementById('plan-identity').open=false;document.querySelector('#plan-identity > summary').textContent='Study: '+form.elements.plan_title.value.trim();}
+    if(!id||!/^[-a-zA-Z0-9]+$/.test(id))return;
+    try {
+      const raw=localStorage.getItem('sample-size-pending-'+id);if(!raw)throw Error('This transfer is no longer available. You can return to the app and add its current calculation.');
+      pending=validateRecords('['+raw+']')[0];
+      const panel=document.getElementById('transfer-preview');panel.hidden=false;
+      panel.querySelector('.transfer-title').textContent='Add '+pending.title+' to '+(form.elements.plan_title.value||'your study plan')+'?';
+      panel.querySelector('.transfer-lines').replaceChildren(...pending.lines.map(line=>element('p',line)));
+      panel.querySelector('.transfer-scope').textContent='This saves the displayed inputs and result in your report. Your written answers remain in place. Check that this example and calculation belong to your study.';
+      document.getElementById('accept-transfer').onclick=()=>{
+        const records=validateRecords(form.elements.calculation_records.value||'[]');
+        if(document.getElementById('replace-calculation').checked)for(let i=records.length-1;i>=0;i--)if(records[i].kind===pending.kind)records.splice(i,1);
+        if(records.length>=30){document.getElementById('status').textContent='Remove an older saved result before adding another.';return;}
+        records.push(pending);form.elements.calculation_records.value=JSON.stringify(records);
+        const statuses=read(form.elements.decision_statuses.value,{});
+        for(const key of pending.kind==='recruitment'?['recruitment','resources','conclusion']:['counts','software','analysis','recruitment','conclusion'])statuses[key]='provisional';
+        setStatuses(statuses);changed();panel.hidden=true;localStorage.removeItem('sample-size-pending-'+id);
+        document.getElementById('status').textContent='Calculation added. Related decisions are provisional so you can review your written explanation.';
+      };
+      document.getElementById('cancel-transfer').onclick=()=>{panel.hidden=true;localStorage.removeItem('sample-size-pending-'+id);};
+    }catch(error){document.getElementById('status').textContent=error.message;}
+  }
+  function onEdit(name){if(!fields.some(([id])=>id===name)&&!['study_type','outcome','goal'].includes(name))return;const statuses=read(form.elements.decision_statuses.value,{});statuses[name]='provisional';if(['question','design','outcome_detail','study_type','outcome','goal','planning','variation','power'].includes(name))for(const id of ['counts','analysis','software','recruitment','conclusion'])statuses[id]='provisional';setStatuses(statuses);}
+  window.PlanWorkflow={onEdit,metaNames,validateMetadata,init,decorate,loadPending,showStage};
+})();

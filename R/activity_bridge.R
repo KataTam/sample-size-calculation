@@ -36,7 +36,7 @@ activity_guidance_script <- function() {
   }
   paste0(asset_setup, "(function(){const style=document.createElement('style');style.textContent=",
     jsonlite::toJSON(paste(read_asset("app-layout.css"), read_asset("input-guidance.css")), auto_unbox = TRUE),
-    ";document.head.append(style);})();\n", read_asset("input-guidance.js"), "\n", read_asset("app-layout.js"), "\n", read_asset("report-exports.js"))
+    ";document.head.append(style);})();\n", read_asset("input-guidance.js"), "\n", read_asset("app-layout.js"), "\n", read_asset("plan-transfer.js"), "\n", read_asset("report-exports.js"))
 }
 activity_details <- function(title, ...) shiny::tags$details(class = "activity-details", shiny::tags$summary(title), ...)
 activity_count_result <- function(x) shiny::tags$div(class = "calculation-result",
@@ -229,6 +229,7 @@ percentage_display_script <- function() r"---((function () {
 activity_bridge_script <- function(app = "power_explorer") {
   code <- r"---((function() {
   const app = '__APP__';
+  window.SampleSizeApp=app;
   const typography=document.createElement('style');
   typography.id='teaching-typography';
   typography.textContent="\n/* Normal-weight content; headings and disclosure titles keep their hierarchy. */\nbody :where(p, li, td, th, label, button, a, span, strong, b, code, pre, input, textarea, select) { font-weight: 400 !important; }\nbody :where(h1,h2,h3,h4,h5,h6,summary,legend) :where(a,span,strong,b,code) { font-weight: inherit !important; }\n.reference-preview > strong { font-weight: 600 !important; }\n";
@@ -283,6 +284,7 @@ activity_bridge_script <- function(app = "power_explorer") {
   const apply = (payload) => {
     if (!connected || !window.Shiny) return;
     if (payload.type === 'sample-size:activity' && typeof payload.activity === 'string') {
+      window.dispatchEvent(new CustomEvent('sample-size:activity-context', {detail: payload}));
       Shiny.setInputValue('activity_request', {activity: payload.activity, reset: payload.reset === true, nonce: Date.now()}, {priority: 'event'});
     } else if (payload.type === 'sample-size:state' && payload.state && typeof payload.state === 'object') {
       Shiny.setInputValue('state_request', {state: payload.state, nonce: Date.now()}, {priority: 'event'});

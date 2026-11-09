@@ -42,6 +42,8 @@ jobs:
           python3 -m pip install -r scripts/pdf-requirements.txt
           npm install --no-save --package-lock=false playwright axe-core@4.10.3
           npx playwright install --with-deps chromium
+      - name: Check developing report and saved quiz attempts
+        run: node scripts/check_report_journey.cjs --source
       - name: Export complete tutorial HTML and PDF
         run: |
           python3 -m http.server 8769 --bind 127.0.0.1 --directory _site > /tmp/tutorial-preview.log 2>&1 &

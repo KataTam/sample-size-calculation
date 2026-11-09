@@ -43,6 +43,7 @@ const bank=JSON.parse(fs.readFileSync('site/quiz/questions.json','utf8'));
   assert.equal(await quiz.locator('fieldset:visible').count(),bank.questions.filter(q=>q.level==='core').length);
   await quiz.locator('select').selectOption('all');
   assert.equal(await quiz.locator('fieldset:visible').count(),bank.questions.length);
+  await page.evaluate(()=>localStorage.removeItem('sample-size-embedded-quiz-clinical-question-v2'));
   await page.goto(`${base}/book/Sample_size_open_module.html`);
   assert.equal(await page.locator('.chapter-quiz').count(),9);
   const offline=page.locator('#quiz-clinical-question');

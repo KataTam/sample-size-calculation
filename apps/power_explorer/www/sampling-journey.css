@@ -18,3 +18,5 @@
 .pain-focus .activity-question h4 {margin:8px 0}
 .guided .lab-activity-options {display:none}
 @media(max-width:600px){#lab-more-views{float:none}.simulation-actions button{font-size:.9rem;padding:7px 10px}#sampling-journey text{font-size:14px}}
+
+.pain-focus .lab-recruitment{display:none}

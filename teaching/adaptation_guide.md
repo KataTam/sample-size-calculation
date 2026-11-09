@@ -22,7 +22,7 @@ The main principle is simple: if you change the teaching context, update the exa
 | Shared two-group calculator labels, defaults, comparisons and reports | `R/basic_calculator.R`; called by `apps/two_means/app.R` and `apps/two_proportions/app.R` |
 | Other Shiny app controls, plots and report content | `apps/<app_name>/app.R` |
 | Matched activity examples | `R/teaching_cases.R`, with the corresponding module narrative and prepared results |
-| Gray model answers in Shiny text fields | `R/model_answers.R`; collapsed simulation explanations are in `apps/power_explorer/app.R` |
+| Expandable example answers in Shiny apps | `R/model_answers.R`; collapsed simulation explanations are in `apps/power_explorer/app.R` |
 | Shared report layout and saved-simulation summaries | `R/app_presentation.R` |
 | Reasoning-lab state validation and JSON restoration | `R/activity_bridge.R` and `apps/power_explorer/app.R` |
 | Written study-plan questions, examples, report and file restoration | `site/assumptions_report/report.js`, `index.html` and `report.css` |
@@ -58,7 +58,7 @@ The standalone two-group calculators use `basic_calculator_ui()` in `R/basic_cal
 
 ## Model answers, reports and saved files
 
-Model answers should respond directly to the question and use the selected example and current valid calculation inputs. Question help should explain what to enter or interpret. Gray placeholders should stay out of reports, completion counts and saved responses; learners' own text should survive parameter changes. The written study-plan activity uses bracketed prompts when custom details are still needed.
+Model answers should respond directly to the question and use the selected example and current valid calculation inputs. Question help should explain what to enter or interpret. Example answers should stay out of reports, completion counts and saved responses; learners' own text should survive parameter changes. The written study-plan activity uses bracketed prompts when custom details are still needed.
 
 Each report should distinguish the current plan, simulation assumptions and the learner's responses. Saved simulations are included only when their metadata match the current example and settings. Earlier results remain available in their simulation panels and CSV exports with their original assumptions. A report should explain an omission and how to obtain a current result. For missing-outcome scenarios, the report should identify recruited and retained counts and preserve the interpretation of bias and coverage. Unsupported designs should receive design-specific guidance without carrying over the independent-group calculation.
 
@@ -171,3 +171,5 @@ Use this checklist before teaching or sharing a revised version:
 ## Adapting the reasoning pathway
 
 The goal, effect scale, beneficial direction, clinical threshold, target difference and generating assumptions should be updated together. The app cases use positive improvement; reversing direction for harmful outcomes requires corresponding labels and interval interpretation. Equal allocation remains an assumption unless the analysis and validation are extended. Changes should also be reflected in the rubric and paired assessment. Prepared outputs can be regenerated with recorded simulation settings. See [statistical methods](../documentation/statistical-methods.md) and [third-party notices](../documentation/third-party-notices.md).
+
+Chapter contributions and calculation transfer are maintained in `site/assumptions_report/plan-workflow.js` and `site/plan-transfer.js`. The report stores selected snapshots, including inputs, methods and versions. Changes to these records should preserve older saved work, student prose, and the review step before replacing attachments. `module/activity-contents.json` controls route labels and activity navigation. The four core chapter links use the same developing report with a chapter-specific stage.

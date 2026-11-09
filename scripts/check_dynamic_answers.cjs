@@ -16,7 +16,7 @@ const base = (process.argv[2] || 'http://127.0.0.1:8769').replace(/\/$/, '');
       }
       throw Error(name+' did not load');
     }
-    const answer = (f,id,text) => f.waitForFunction(({id,text})=>document.getElementById(id).placeholder.includes(text),{id,text});
+    const answer = (f,id,text) => f.waitForFunction(({id,text})=>document.getElementById(id).dataset.exampleAnswer?.includes(text),{id,text});
     const set = (f, values) => f.evaluate(values=>{
       for(const [id,value] of Object.entries(values)) Shiny.setInputValue(id,value,{priority:'event'});
     },values);
@@ -62,7 +62,7 @@ const base = (process.argv[2] || 'http://127.0.0.1:8769').replace(/\/$/, '');
     await answer(f,'justification','45 participants per group');
     await set(f,{activity_request:{activity:'adherence',nonce:Date.now()}});
     await answer(f,'study_question','probiotic'); await answer(f,'evidence_sources','10 percentage points');
-    assert(!await f.locator('#study_question').getAttribute('placeholder').then(t=>t.includes('pain')));
+    assert(!await f.locator('#study_question').getAttribute('data-example-answer').then(t=>t.includes('pain')));
     await set(f,{goal:'fixed',fixed_n:17,dropout:.2});
     await answer(f,'justification','17 participants per group (34 total)');
     await answer(f,'justification','22 recruits per group (44 total)');
@@ -77,22 +77,22 @@ const base = (process.argv[2] || 'http://127.0.0.1:8769').replace(/\/$/, '');
     await page.goto(base+'/assumptions_report/');
     await page.locator('#study-settings > summary').click();
     await page.locator('#goal').selectOption('precision');
-    assert(!await page.locator('#counts').getAttribute('placeholder').then(t=>t.includes('56')));
+    assert(!await page.locator('#counts').getAttribute('data-example-answer').then(t=>t.includes('56')));
     await page.locator('#goal').selectOption('feasibility');
-    assert(!await page.locator('#recruitment').getAttribute('placeholder').then(t=>t.includes('63')));
+    assert(!await page.locator('#recruitment').getAttribute('data-example-answer').then(t=>t.includes('63')));
     await page.locator('#question').fill('My own trial question');
     await page.locator('#goal').selectOption('testing');
-    assert(!await page.locator('#power').getAttribute('placeholder').then(t=>t.includes('90%')));
+    assert(!await page.locator('#power').getAttribute('data-example-answer').then(t=>t.includes('90%')));
     assert.equal(await page.locator('#question').inputValue(),'My own trial question');
     for (const id of ['population','intervention','comparator','outcome_detail','design']) {
-      const example=await page.locator('#'+id).getAttribute('placeholder');
+      const example=await page.locator('#'+id).getAttribute('data-example-answer');
       assert(!/chronic pain|novel pain|four weeks/i.test(example),id+' uses the custom study format');
       assert(example.includes('['),id+' marks unspecified details');
     }
     await page.locator('#goal').selectOption('feasibility');
-    assert.match(await page.locator('#scale').getAttribute('placeholder'),/percentage retained/);
-    assert.doesNotMatch(await page.locator('#scale').getAttribute('placeholder'),/percentage points/);
-    assert.match(await page.locator('#recruitment').getAttribute('placeholder'),/unknown retention status/);
+    assert.match(await page.locator('#scale').getAttribute('data-example-answer'),/percentage retained/);
+    assert.doesNotMatch(await page.locator('#scale').getAttribute('data-example-answer'),/percentage points/);
+    assert.match(await page.locator('#recruitment').getAttribute('data-example-answer'),/unknown retention status/);
     console.log('Written report: selected goal and custom study guidance passed.');
   } finally {await browser.close();}
 })().catch(error=>{console.error(error);process.exitCode=1});

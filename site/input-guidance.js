@@ -6,7 +6,7 @@
   const records = new WeakMap();
   const models = {};
   function fitExample(field) {
-    if (field.tagName !== 'TEXTAREA' || field.value || !field.checkVisibility()) return;
+    if (field.tagName !== 'TEXTAREA' || !field.checkVisibility()) return;
     field.style.height = 'auto';
     field.style.height = (field.scrollHeight + 2) + 'px';
   }
@@ -25,7 +25,8 @@
   function position(record) {
     const rect = record.button.getBoundingClientRect(), tip = record.tip;
     tip.style.maxHeight = Math.max(120, innerHeight - 24) + 'px';
-    const top = rect.bottom + 5;
+    const above = rect.top - tip.offsetHeight - 5;
+    const top = above >= 12 ? above : rect.bottom + 5;
     tip.style.left = Math.max(12, Math.min(rect.left, innerWidth - tip.offsetWidth - 12)) + 'px';
     tip.style.top = Math.max(12, Math.min(top, innerHeight - tip.offsetHeight - 12)) + 'px';
   }
@@ -45,6 +46,8 @@
       button.textContent = label.textContent; button.setAttribute('aria-expanded', 'false');
       tip.className = 'input-guidance-popover'; tip.id = field.id + '-guidance-' + (++counter); tip.role = 'tooltip'; tip.hidden = true;
       button.setAttribute('aria-controls', tip.id); button.setAttribute('aria-describedby', tip.id);
+      field.addEventListener('focus', close);
+      field.addEventListener('input', close);
       field.setAttribute('aria-describedby', [...new Set([...(field.getAttribute('aria-describedby') || '').split(/\s+/).filter(Boolean), tip.id])].join(' '));
       record = {button, tip, label, field, links: [...label.querySelectorAll('a')].map(a => a.cloneNode(true))};
       label.classList.add('guidance-label'); label.before(button); document.body.append(tip); records.set(field, record);
@@ -61,14 +64,22 @@
       tip.addEventListener('pointerleave', delayedClose);
       tip.addEventListener('focusout', event => { if (!tip.contains(event.relatedTarget)) delayedClose(); });
     }
-    record.button.textContent = label.textContent;
+    if (record.button.textContent !== label.textContent) record.button.textContent = label.textContent;
     const p = document.createElement('p'); p.textContent = help;
-    record.tip.replaceChildren(p);
+    if (record.tip.firstChild?.textContent !== help) record.tip.replaceChildren(p);
     if (modelAnswer) {
-      field.placeholder = modelAnswer;
+      field.placeholder = 'Your answer';
+      field.dataset.exampleAnswer = modelAnswer;
+      if (!record.example) {
+        const details=document.createElement('details'); details.className='input-example';
+        const summary=document.createElement('summary'); summary.textContent='Example answer';
+        record.example=document.createElement('p');record.example.className='input-model-answer';
+        details.append(summary,record.example);field.after(details);
+      }
+      if(record.example.textContent!==modelAnswer)record.example.textContent=modelAnswer;
       fitExample(field);
     }
-    if (record.links.length) {
+    if (record.links.length && !record.tip.querySelector('a')) {
       const links = document.createElement('p'); links.append('Further explanation: ');
       record.links.forEach((link, i) => { if (i) links.append(' · '); links.append(link.cloneNode(true)); }); record.tip.append(links);
     }

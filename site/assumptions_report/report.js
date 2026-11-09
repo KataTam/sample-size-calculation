@@ -19,7 +19,7 @@
       ['expected', 'Expected difference', 'Your estimate should cite comparable evidence and acknowledge uncertainty, especially when based on a small pilot.', 'The expected difference and supporting evidence are'],
       ['clinical', 'Clinically important difference (clinical threshold)', 'Patient and clinical input should justify the minimum worthwhile benefit between groups. The units should match the outcome scale.', 'The clinical threshold and its justification are', 'comparison'],
       ['planning', 'Target difference: used in the calculation', 'Your chosen value should be plausible and clinically worthwhile, with supporting evidence. Power is evaluated at this between-group difference.', 'The target difference and its justification are', 'power'],
-      ['variation', 'Variation or event probabilities', 'For a continuous outcome, you need an SD in its units; for a binary outcome, event percentages. Each assumption should cite a comparable population and follow-up time.', 'The variation or event probabilities used for planning are'],
+      ['variation', 'Variation or event probabilities', 'For a continuous outcome, you need an SD in its units; for a binary outcome, event percentages. You should cite the study supporting each value and explain whether its population, outcome measurement, and follow-up time are comparable to yours.', 'The variation or event probabilities used for planning are'],
       ['evidence_review', 'Evidence relevance and uncertainty', 'You should assess differences in population, outcome definition, and follow-up time, then identify uncertain inputs needing sensitivity analysis.', 'The relevance and uncertainty of the evidence are'],
       ['sensitivity', 'Sensitivity analysis: alternative assumptions', 'Plausible alternatives should reflect uncertainty in the evidence. Your report should distinguish power at a fixed sample size from recalculated counts needed to meet the target.', 'The sensitivity scenarios and their evidence are'],
       ['progression', 'Feasibility objectives and progression criteria', 'For each feasibility outcome, you should specify a denominator, acceptable and unacceptable levels, and the action associated with each result.', 'The feasibility objectives and progression criteria are', 'feasibility']
@@ -33,7 +33,7 @@
     ['Recruitment and conclusion', [
       ['counts', 'Sample size needed or available for analysis', 'Your record should give the method, result, upward rounding, and per-group and total counts where applicable. Existing-data projects should explain eligibility, exclusions, and the available count.', 'The analyzable sample size and calculation are'],
       ['recruitment', 'Losses, missing data and recruitment', 'Your answer should justify loss assumptions and recruitment counts, assess possible missing-data bias, and document treatment changes already allowed for. Existing-data projects should describe completeness; uncertain assumptions need plausible alternatives.', 'The loss allowance, missing data and recruitment are'],
-      ['resources', 'Feasibility and resources', 'Monthly eligible numbers, expected consent, recruitment time, and costs should support your feasibility assessment. Likely delays or other constraints should be included.', 'The recruitment feasibility and resources are'],
+      ['resources', 'Feasibility and resources', 'You can record eligible numbers, consent, time and costs when available. For unknown values, describe the evidence needed and who could provide it. Likely delays should be considered.', 'The recruitment feasibility and resources are'],
       ['conclusion', 'Intended conclusion and limitations', 'Your conclusion should reflect the design, attainable power or precision, and sensitivity results. Unresolved assumptions and limits on interpretation should be explicit.', 'The intended conclusion and limitations are']
     ]]
   ];
@@ -205,17 +205,18 @@
     }
     return result;
   }
-  const names = ['study_type', 'outcome', 'goal', ...fields.map(field => field[0])];
-  const choices = {study_type: ['comparison', 'single', 'other'], outcome: ['binary', 'continuous'], goal: ['testing', 'precision', 'fixed', 'both', 'feasibility']};
+  const names = [...PlanWorkflow.metaNames, 'study_type', 'outcome', 'goal', ...fields.map(field => field[0])];
+  const choices = {plan_basis: ['own', 'pain'], study_type: ['comparison', 'single', 'other'], outcome: ['binary', 'continuous'], goal: ['testing', 'precision', 'fixed', 'both', 'feasibility']};
   const goalText = {testing: 'planning sample size to achieve specified power', precision: 'estimation with a precision target', fixed: 'assessing what fixed resources or existing data could establish', both: 'meeting both power and precision requirements', feasibility: 'supporting a pilot or feasibility decision'};
   function validate(value) {
     if (!value || typeof value !== 'object' || Array.isArray(value) || Object.keys(value).some(key => !names.includes(key))) throw Error('Choose a supported assumptions-report file.');
     const clean = {};
     for (const name of names) {
-      const text = value[name] ?? (name === 'study_type' ? 'comparison' : name === 'outcome' ? 'binary' : name === 'goal' ? 'testing' : '');
-      if (typeof text !== 'string' || text.length > 5000 || (choices[name] && !choices[name].includes(text))) throw Error('The file contains an invalid answer or selection.');
+      const text = value[name] ?? (name === 'plan_basis' ? 'own' : name === 'study_type' ? 'comparison' : name === 'outcome' ? 'binary' : name === 'goal' ? 'testing' : '');
+      if (typeof text !== 'string' || text.length > (name === 'calculation_records' ? 300000 : 5000) || (choices[name] && !choices[name].includes(text))) throw Error('The file contains an invalid answer or selection.');
       clean[name] = text;
     }
+    PlanWorkflow.validateMetadata(clean);
     return clean;
   }
   for (const [index, [title, definitions]] of groups.entries()) {
@@ -258,6 +259,7 @@
     const text = label.firstChild.textContent; label.after(input); label.textContent = text;
     InputGuidance.attach(label, help, input);
   }
+  PlanWorkflow.init(form, fields, render);
   const snapshot = () => Object.fromEntries(names.map(name => [name, form.elements[name].value]));
   function active(field, value) {
     if (field[0] === 'clinical' && value.goal === 'feasibility') return false;
@@ -318,6 +320,7 @@
     }
     if (completed) article.prepend(intro);
     else { const empty = document.createElement('p'); empty.textContent = 'Your report will appear here as you answer the questions. You can leave decisions open and return to them later.'; article.append(empty); }
+    PlanWorkflow.decorate(value, article, reportLines, active);
     document.getElementById('report-missing').hidden = completed === required;
     const progress = document.getElementById('progress');
     const progressText = completed === required ? 'All ' + required + ' prompts answered. Your assumptions and calculations still need review.' : 'Draft: ' + completed + ' of ' + required + ' prompts answered.';
@@ -325,19 +328,24 @@
     if (persist) { try { localStorage.setItem(storageKey, JSON.stringify(value)); } catch (_) { status.textContent = 'Browser saving is unavailable. Save your entries to a file.'; } }
     notifyParent('state', {state: value});
   }
-  function apply(value) { const clean = validate(value); for (const name of names) form.elements[name].value = clean[name]; render(); }
+  function apply(value, persist = true) { const clean = validate(value); for (const name of names) if (form.elements[name].value !== clean[name]) form.elements[name].value = clean[name]; render(persist); }
+  window.addEventListener('storage', event => {
+    if (event.key !== storageKey || !event.newValue) return;
+    try { apply(JSON.parse(event.newValue), false); status.textContent = 'Your study plan was updated from another open tab.'; }
+    catch (_) { status.textContent = 'An update from another tab could not be loaded. Your current entries remain in place.'; }
+  });
   function download(text, type, filename) {
     const url = URL.createObjectURL(new Blob([text], {type})), link = document.createElement('a');
     link.href = url; link.download = filename; document.body.append(link); link.click(); link.remove();
     setTimeout(() => URL.revokeObjectURL(url), 1000);
   }
-  form.addEventListener('input', () => render());
+  form.addEventListener('input', event => {PlanWorkflow.onEdit(event.target.name);render();});
   form.addEventListener('submit', event => event.preventDefault());
-  document.getElementById('clear').addEventListener('click', () => { apply({}); status.textContent = 'Entries cleared. You can start a new plan.'; });
+  document.getElementById('clear').addEventListener('click', () => { if (!confirm('Clear this study plan? Save work for later first if you want to keep it.')) return; apply({}); status.textContent = 'Entries cleared. You can start a new plan.'; });
   const escapeHTML = text => String(text).replace(/[&<>"']/g, c => ({'&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;'}[c]));
   function reportDocument() {
-    const headings = new Set(groups.map(group => group[0]));
-    const content = reportLines.map(line => headings.has(line) ? '<h2>' + escapeHTML(line) + '</h2>' : '<p>' + escapeHTML(line) + '</p>').join('\n');
+    const headings = new Set([...groups.map(group => group[0]), 'Decision review']);
+    const content = reportLines.map(line => headings.has(line) || line.startsWith('Saved calculation: ') ? '<h2>' + escapeHTML(line) + '</h2>' : '<p>' + escapeHTML(line) + '</p>').join('\n');
     return '<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Study-plan report</title>' +
       '<style>body{max-width:800px;margin:2rem auto;padding:0 1rem;font:17px/1.6 system-ui,sans-serif;color:#20343e}p{white-space:pre-wrap;overflow-wrap:anywhere}h2{margin-top:1.5em;font-size:1.2em}a{color:#006481}footer{border-top:1px solid #abc;margin-top:2rem;font-size:.9em}@media print{body{margin:0;max-width:none;font-size:11pt}h2{break-after:avoid}a{color:inherit}}</style></head><body><h1>Study-plan report</h1>' +
       '<p>Generated ' + new Intl.DateTimeFormat('en-US', {dateStyle:'long'}).format(new Date()) + '</p>' +
@@ -362,7 +370,7 @@
   document.getElementById('save-word').addEventListener('click', saveReport);
   document.getElementById('download-word').addEventListener('click', saveReport);
   document.getElementById('save-work').addEventListener('click', () => {
-    download(JSON.stringify({schema:'sample-size-assumptions-report',version:2,entries:snapshot()}, null, 2),
+    download(JSON.stringify({schema:'sample-size-assumptions-report',version:3,entries:snapshot()}, null, 2),
       'application/json', 'study-plan-work.json');
     status.textContent = 'Work saved. Reopen this file here to continue editing.';
   });
@@ -379,38 +387,19 @@
       const text = await file.text();
       const payload = text.match(/<script\b(?=[^>]*\bid=["']study-plan-data["'])(?=[^>]*\btype=["']application\/json["'])[^>]*>([\s\S]*?)<\/script\s*>/i);
       const saved = JSON.parse(text.trim().startsWith('{') ? text : payload?.[1] || 'null');
-      if (!saved || saved.schema !== 'sample-size-assumptions-report' || ![1, 2].includes(saved.version)) throw Error('Choose a saved work file or an earlier HTML report from this activity.');
+      if (!saved || saved.schema !== 'sample-size-assumptions-report' || ![1, 2, 3].includes(saved.version)) throw Error('Choose a saved work file or an earlier HTML report from this activity.');
       apply(saved.entries); status.textContent = 'Saved entries restored.';
     } catch (error) { status.textContent = 'Entries were not changed. ' + error.message; }
     event.target.value = '';
   });
   document.getElementById('example').addEventListener('click', async () => {
-    try {
-      const response = await fetch('../teaching-cases.json'); if (!response.ok) throw Error('Example unavailable.');
-      const cases = await response.json(), input = cases.pain_one_many.inputs;
-      const percent = value => Number((100 * value).toFixed(8));
-      apply({study_type: 'comparison', outcome: 'binary', goal: 'fixed', question: 'Does a novel treatment improve pain relief compared with standard treatment in adults with chronic pain?',
-        population: modelAnswers.population,
-        intervention: modelAnswers.intervention,
-        comparator: modelAnswers.comparator,
-        outcome_detail: 'Pain relief (yes/no) at four weeks',
-        design: 'An individually randomized superiority trial with two independent groups and equal allocation',
-        scale: 'Treatment minus control, in percentage points; a positive difference favors treatment',
-        expected: percent(input.expected_p) + ' percentage points. The hypothetical pilot observed relief in 7/10 treated patients (70%) and 3/10 controls (30%); this small pilot gives an uncertain expectation',
-        clinical: percent(input.threshold_p) + ' percentage points. This is an illustrative judgment about meaningful benefit that needs justification with patients and clinicians',
-        planning: percent(input.plan_p1 - input.plan_p0) + ' percentage points, an illustrative difference judged worthwhile and realistic. Power should also be assessed at the ' + percent(input.threshold_p) + '-point clinical threshold',
-        variation: percent(input.plan_p0) + '% relief in controls and ' + percent(input.plan_p1) + '% in the treatment group',
-        evidence_review: 'The pilot contains only 10 patients per group. Check comparable studies, outcome definitions and follow-up times; the event probabilities and expected difference remain uncertain',
-        sensitivity: 'Compare smaller true benefits while keeping the original sample size fixed. Specify plausible ranges using evidence beyond the pilot',
-        analysis: 'A two-sided pooled score test without continuity correction, with a Newcombe-Wilson confidence interval; independent observations and allocation are assumed',
-        power: 'Type I error probability ' + percent(input.alpha) + '%. Evaluate attainable power at the ' + percent(input.plan_p1 - input.plan_p0) + '-percentage-point target difference using the matched pain-relief activity',
-        precision: 'Evaluate the attainable ' + percent(1 - input.alpha) + '% confidence interval width at the fixed sample size. The activity compares it with a full width of ' + percent(input.width_p) + ' percentage points',
-        counts: input.fixed_n + ' analyzable patients per group, ' + (2 * input.fixed_n) + ' in total; the illustrative sample size is held fixed to assess power and precision',
-        recruitment: percent(input.dropout) + '% expected losses. Recruit ' + Math.ceil(input.fixed_n / (1 - input.dropout)) + ' per group, ' + (2 * Math.ceil(input.fixed_n / (1 - input.dropout))) + ' in total using the expected-loss adjustment; actual retention may vary',
-        resources: 'The feasibility of the recruitment target must be assessed from eligible patients, consent, recruitment period and costs',
-        conclusion: 'Assess power and precision at this fixed sample size before deciding what the trial could establish. Clinical interpretation should compare the estimate and confidence interval with zero and the clinical threshold'});
-      status.textContent = 'Hypothetical pain-relief example loaded. Replace illustrative assumptions and unresolved decisions with a justified plan.';
-    } catch (error) { status.textContent = error.message + ' Your entries were not changed.'; }
+    if (fields.some(([id]) => form.elements[id].value.trim()) && !confirm('Replace this plan with the partially completed teaching example? Your current entries can be kept with Save work for later.')) return;
+    apply({plan_title:'Chronic-pain treatment trial', plan_basis:'pain', study_type:'comparison', outcome:'binary', goal:'testing',
+      question:'Does a novel treatment improve pain relief at four weeks compared with standard treatment in adults with chronic pain?',
+      population:modelAnswers.population, intervention:modelAnswers.intervention, comparator:modelAnswers.comparator,
+      outcome_detail:'Pain relief (yes/no) at four weeks', design:'An individually randomized superiority trial with two independent groups and equal allocation'});
+    PlanWorkflow.showStage('question');
+    status.textContent='The research question and design are supplied. Later chapters help you justify the assumptions, calculation and recruitment.';
   });
   window.addEventListener('message', event => {
     if (event.origin !== location.origin || event.source !== parent) return;
@@ -421,5 +410,6 @@
   });
   try { const saved = localStorage.getItem(storageKey); if (saved) { apply(JSON.parse(saved)); status.textContent = 'Restored your entries from this browser.'; } else render(false); }
   catch (_) { render(false); status.textContent = 'Previous entries could not be restored. You can start a new plan or open a saved file.'; }
+  PlanWorkflow.loadPending();
   notifyParent('ready');
 })();

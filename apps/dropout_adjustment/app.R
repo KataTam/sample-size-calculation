@@ -31,6 +31,7 @@ ui <- fluidPage(
         percent_slider("loss_standard", "Expected loss: standard-treatment group (%)", 0, .50, .10, step = .01),
         activity_help("Use evidence specific to the standard-treatment group. Equal recruitment uses the larger group requirement so both can meet the analyzable target in expectation.", for_input = "loss_standard")),
       tags$details(class = "advanced-options", tags$summary("Allowing for treatment switching"),
+        p("Treatment switching means receiving the other treatment after assignment. Follow-up should continue after a switch."),
         p("Approximation for complete switching between two treatments with little change in outcome variance."),
         checkboxInput("switching", "Explore treatment switching", FALSE),
         conditionalPanel("input.switching",
@@ -47,7 +48,7 @@ ui <- fluidPage(
         p(tags$a(href = "../book/feasibility.html#treatment-switching", "Explanation and assumptions")))
     ),
     mainPanel(tabsetPanel(id = "recruitment_view",
-      tabPanel("Overview", h3("Recruitment target"), uiOutput("result"), uiOutput("recruitment_steps"),
+      tabPanel("Overview", h3("Recruitment target"), p("Recruitment per group is the analyzable requirement divided by the expected retained fraction, rounded upward. With 10% expected loss, the retained fraction is 0.90."), uiOutput("result"), uiOutput("recruitment_steps"),
         p("Recruitment is equal in both groups, using the larger requirement when expected losses differ. Actual retention varies; extra recruitment cannot remove bias from missing outcomes."),
         activity_details("Calculation steps and group counts", uiOutput("stages"), uiOutput("group_counts"))),
       tabPanel("Explore assumptions", plotOutput("dropout_plot", height = "340px"),
@@ -61,7 +62,7 @@ ui <- fluidPage(
           percent_slider("lab_p0", "Standard treatment: event probability used for planning (%)", .01, .99, .3, step = .01),
           percent_slider("lab_p1", "Novel treatment: event probability used for planning (%)", .01, .99, .6, step = .01)),
         uiOutput("lab_link"))),
-      tabPanel("Report",
+      tabPanel("Report", uiOutput("plan_transfer"),
       tags$details(tags$summary("Activity: Treatment changes and missing outcomes"),
         p("Suppose some participants switch treatments, while others miss their final assessment."),
         tags$ol(tags$li("How would treatment switching change the recruitment requirement?"), tags$li("How would missing assessments change it?"), tags$li("Which assumptions need supporting evidence?")),
@@ -82,6 +83,12 @@ ui <- fluidPage(
 )
 
 server <- function(input, output, session) {
+  observeEvent(input$activity_request, {
+    if (isTRUE(input$activity_request$reset)) {
+      updateNumericInput(session, "n", value = 100); updateSliderInput(session, "dropout", value = .10)
+      updateCheckboxInput(session, "different_losses", value = FALSE); updateCheckboxInput(session, "switching", value = FALSE)
+    }
+  })
   valid_n <- reactive({
     validate(need(length(input$n) == 1 && is.finite(input$n) && input$n == floor(input$n) && input$n >= 1 && input$n <= 1e7,
       "Use a whole number from 1 to 10,000,000 per group.")); input$n
@@ -169,6 +176,7 @@ server <- function(input, output, session) {
     paste("Your explanation:", app_answer(input$reasoning)),
     "Your explanation is reproduced as entered and should be reviewed after changing the settings.",
     "Procedure: recruitment_plan() in R/sample_size_functions.R. References: Wittes (2002), doi:10.1093/epirev/24.1.39; Shardell and El-Kamary (2009), doi:10.1111/j.1541-0420.2008.01114.x; ICH E9(R1)."))
+  output$plan_transfer <- renderUI(app_plan_transfer("Recruitment adjustment", "dropout_adjustment", "recruitment", list(starting_n = valid_n(), recruitment = plan()$per_group, dropout = input$dropout, standard_loss = if (isTRUE(input$different_losses)) input$loss_standard else input$dropout), report_paragraphs()))
   output$report_preview <- renderUI(app_report_body(report_paragraphs()))
   output$report <- downloadHandler(filename = function() "recruitment-adjustment-report.html",
     content = function(file) writeLines(app_report_document("Recruitment adjustment", "dropout_adjustment", report_paragraphs()), file, useBytes = TRUE))

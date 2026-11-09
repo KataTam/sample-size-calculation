@@ -11,7 +11,7 @@
   let cases = {}, anchors = {}, selected = '', engine = '', ready = false, state = null;
   let queuedActivity = null;
   const narrow = matchMedia('(max-width: 900px)');
-  const allowedApps = new Set(['power_explorer', 'prevalence_precision', 'sampling_distributions', 'assumptions_report', 'design_questionnaire']);
+  const allowedApps = new Set(['power_explorer', 'prevalence_precision', 'sampling_distributions', 'assumptions_report', 'design_questionnaire', 'two_proportions', 'two_means', 'dropout_adjustment']);
   const send = value => app.contentWindow.postMessage(value, location.origin);
   function setView(view) {
     if (!['lesson', 'app', 'both'].includes(view)) return;
@@ -54,6 +54,7 @@
       const targetApp = new URL(engine + '/', site);
       targetApp.searchParams.set('activity', id);
       targetApp.searchParams.set('guided', '1');
+      if(engine==='assumptions_report')targetApp.searchParams.set('stage',new URL(location.href).searchParams.get('stage')||'question');
       app.src = targetApp.href;
       status.textContent = 'Loading the app. You can read the lesson while it starts.';
     } else if (ready) {
@@ -149,9 +150,11 @@
     .then(([registry, map]) => {
       cases = registry; anchors = map;
       selector.replaceChildren();
+      const core=new Set(['assumptions_report','pain_one_many','probiotics_calculation','rehabilitation_calculation','recruitment']);
+      const options={};for(const level of ['Core','Advanced']){const group=document.createElement('optgroup');group.label=level;selector.append(group);options[level]=group;}
       Object.entries(cases).forEach(([id, record]) => {
         if (!allowedApps.has(record.app)) return;
-        const option = document.createElement('option'); option.value = id; option.textContent = record.title; selector.appendChild(option);
+        const option = document.createElement('option'); option.value = id; option.textContent = record.title; options[core.has(id)?'Core':'Advanced'].appendChild(option);
       });
       const requested = new URL(location.href).searchParams.get('activity');
       openActivity(cases[requested] ? requested : 'pain_one_many');

@@ -96,3 +96,5 @@ textarea.form-control { min-height:88px; resize:vertical; }
   .app-primary-result { box-shadow:0 3px 5px #20343e12; }
   .app-primary-result .app-value { font-size:1.7rem; }
 }
+
+.plan-transfer {margin:1rem 0}.plan-transfer-data[hidden]{display:none!important}.plan-transfer [role=status]:empty{display:none}

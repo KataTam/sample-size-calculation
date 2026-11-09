@@ -12,7 +12,9 @@ The expected difference records your best expectation. With “Same as planning 
 
 ## Reports and saved work
 
-“Report” previews the current calculation and any answers you have entered. In the reasoning lab, it also identifies the selected example, feasibility and simulation assumptions. Gray model answers update with the example and parameters and remain examples; only your entered responses appear as answers in the report. Your writing is preserved when settings change and should be reviewed against the new results.
+“Report” previews the current calculation and any answers you have entered. In the reasoning lab, it also identifies the selected example, feasibility and simulation assumptions. Expandable example answers update with the example and parameters; only your entered responses appear as answers in the report. Your writing is preserved when settings change and should be reviewed against the new results.
+
+The apps remember edited inputs in the same browser. After reopening an app, “Help and saved inputs” offers “Restore previous inputs.” Simulations need to be run again with the restored settings. The study-plan report and quizzes restore their saved entries automatically. A downloaded work file provides a backup or lets you continue on another computer.
 
 The reasoning lab and single-percentage app omit saved simulation results from the report when their settings or example no longer match. A message explains which simulation needs rerunning. While the app remains open, its simulation panels and CSV downloads retain the original run and its recorded assumptions until another run replaces it. A downloaded file is a snapshot; after revising your plan, you should save a new report.
 
@@ -28,15 +30,15 @@ The reasoning lab and single-percentage app omit saved simulation results from t
 
 ## Develop and justify your study plan
 
-[Open activity](../study/?activity=assumptions_report) · [Matching explanation](../book/clinical-question.html#record-assumptions)
+[Open your plan](../assumptions_report/?stage=question) · [Matching explanation](../book/clinical-question.html#record-assumptions)
 
-Purpose: connect the calculation to a clinical question, evidence and a defensible recommendation.
+1. Your starting point can be your own study or the chronic-pain teaching example. A study title identifies the plan. The teaching example supplies the question and design; you develop the remaining sections.
+2. Chapter 1 contributes PICO and design; Chapter 2 contributes power and interpretation; Chapter 3 contributes the calculation; Chapter 4 contributes recruitment and feasibility. The chapter links open the relevant report sections.
+3. Each decision can remain provisional, need evidence, or be ready for review. For an unknown value, your answer can explain what evidence is needed and where you could obtain it.
+4. In an app’s Report view, “Add this calculation to my report” opens a preview of the current inputs, result and method. You choose whether to attach it and whether to replace an earlier result of that type. Your written answers remain in place; related decisions become provisional for review.
+5. “Review before downloading” lists unresolved decisions and compares the analyzable requirement with the starting count in an attached recruitment calculation. Values written in free text still need your review. Optional simulations can be attached as explorations.
+6. PDF and Word downloads contain the plan, decision review and attached results. “Save work for later” preserves the editable app state. Entries also persist in the same browser; the saved file supports another computer. The plan is complete for the core assignment when its applicable decisions and calculation have been reviewed. Advanced activities can extend it when relevant.
 
-1. “Question and design” opens first. You can describe the research question and its PICO components, including the intervention and comparator, then the design. “Study settings” controls the structure, outcome type and planning goal. Hovering over, focusing on or tapping a question opens its help; gray model answers illustrate possible responses.
-2. Your assumptions should include their sources and uncertainty. For a treatment comparison, the expected difference, target difference and clinical threshold have separate roles.
-3. After using an appropriate calculator, you can enter its method, analyzable sample and recruitment allowance. A simulation result should include its generating assumptions and repetition count.
-4. The report appears beside the form on a wide screen. “Preview report” opens it in a narrow panel. Each section shows how many active prompts you have answered; “Still to complete” lists open decisions. The downloaded report retains unanswered items explicitly.
-5. “Download report (PDF)” saves the report; “Download editable report (Word)” provides a document you can edit. “Save work for later” preserves entries to reopen in the form; the [file guide above](#reports-and-saved-work) explains each format. You can begin in Chapter 1, add decisions as the tutorial progresses, and record what changed and why in your final justification. Changing the study settings preserves your written answers, which should be reviewed for consistency with the new question and goal.
 
 ## Chronic pain: one study and many studies — core
 
@@ -45,7 +47,7 @@ Purpose: connect the calculation to a clinical question, evidence and a defensib
 Purpose: see why sample estimates differ from population values, interpret the uncertainty in one trial, and relate repeated trials to power.
 
 1. The starting population has 30% relief with standard treatment and 60% with novel treatment, with 20 analyzable patients per group and a 5% Type I error probability.
-2. In “One study and many studies,” “Simulate one study” generates patient outcomes. The animation follows the patient outcomes into the estimated difference and then the sampling distribution, with the population difference marked on both axes. “Animate 20 trials” builds a short sequence; pause, replay and reduced motion support closer inspection. Each accumulated dot represents one complete trial. “More lab views” opens the other calculation and study-planning views when needed.
+2. In “One study and many studies,” “Simulate one study” generates patient outcomes. The animation follows the patient outcomes into the estimated difference and then the sampling distribution, with the population difference marked on both axes. “Animate 20 trials” builds a short sequence; pause, replay and reduced motion support closer inspection. Each accumulated dot represents one complete trial. “Additional calculations and simulations” opens the other calculation and study-planning views when needed.
 3. The 20-trial animation shows different possible trials while the population probabilities remain fixed. For each interval, you can compare the compatible differences with zero and the 20-percentage-point clinical threshold, following the [interval interpretation](../book/power.html#interpret-a-confidence-interval-clinically).
 4. “Many studies and a larger sample” opens further down the same page. “Simulate many studies” generates 5,000 independent trials. The distribution shows sampling variability; the percentage of significant results estimates power for this population scenario.
 5. Before repeating at 50 and 80 patients per group, you can predict how the estimates, intervals and power will change, holding the population assumptions and repetition count fixed. Larger trials usually give narrower intervals and greater power. “Settings” provides the other assumptions. Advanced controls start closed; coverage and Monte Carlo summaries can wait until the advanced chapter.
@@ -64,7 +66,7 @@ Purpose: connect false positives, false negatives and power with the distributio
 5. Comparing one-sided and two-sided rules illustrates their consequences; the scientific question should determine the rule before data collection. This one-sample known-SD model differs from the two-arm trials elsewhere.
 6. In “Report,” you can explain how sample size affects power at the current settings and save the calculation with your answer. If the specified population mean equals the null mean, rejections are false positives; the report labels the complementary probability as non-rejection under the null.
 
-## Two-proportion calculator — core
+## Two-proportion calculator — reference
 
 [Open calculator](../two_proportions/) · [Matching explanation](../book/calculations.html#two-proportions)
 
@@ -78,17 +80,18 @@ Purpose: reproduce the binary-outcome sample size calculation. The calculator us
 
 ## Gestational-diabetes prevention trial — core
 
-[Open activity](../study/?activity=adherence) · [Matching explanation](../book/calculations.html#adherence)
+[Open activity](../study/?activity=probiotics_calculation) · [Matching explanation](../book/calculations.html#adherence)
 
-Purpose: connect a preventive treatment question to event coding, recruitment feasibility and uncertain treatment benefit.
+Purpose: calculate a sample size for a binary outcome and examine its sensitivity to the target difference.
 
-1. The favorable event is remaining free of gestational diabetes: 80% without probiotics and 90% with probiotics. These correspond to disease percentages of 20% and 10%. The expected difference is 12 percentage points, target difference 10 and clinical threshold 5.
-2. In “Overview,” you can compare the planned count and 15% loss allowance with the recruitment limit of 240.
-3. With Settings open and advanced controls visible, “Custom effect or variability” lets you keep control at 80% but change the simulation's treatment probability to 85%. The original planning probabilities stay at 80% and 90%.
-4. “One study” gives a possible result; “Many studies” estimates power under the smaller 5-point true benefit at the original sample size. You should rerun after changing assumptions.
-5. Your explanation should distinguish a less favorable true population from a newly calculated study plan. These scenarios use hypothetical teaching assumptions.
+1. The favorable event is remaining free of gestational diabetes: 80% without probiotics and 90% with probiotics. The expected difference is 12 points, target difference 10 and clinical threshold 5. These are hypothetical assumptions.
+2. The calculator uses 90% power and a 5% Type I error probability. Its result gives the analyzable count and recruitment after 15% expected loss.
+3. “Compare two scenarios” preserves the original plan beside a calculation using 85% with probiotics. Your explanation should address why detecting the smaller target difference needs more participants.
+4. Recruitment can be compared with the example's limit of 240 women. “Add this calculation to my report” attaches a selected result after your review.
+5. The optional [advanced simulation](../study/?activity=adherence) keeps the original sample fixed while changing the probabilities that generate outcomes. This asks how the original design would perform if the true difference were smaller.
 
-## Two-mean calculator — core
+
+## Two-mean calculator — reference
 
 [Open calculator](../two_means/) · [Matching explanation](../book/calculations.html#two-means)
 
@@ -154,7 +157,7 @@ Purpose: connect the analyzable requirement to anticipated outcome losses and tr
 1. For the chronic-pain example, the starting analyzable requirement is 56 patients per group.
 2. At 10% expected loss, the result is 63 recruits per group, or 126 total. Comparing 0%, 10% and 20% losses keeps the starting requirement fixed.
 3. With different losses of 20% in the novel group and 10% in the standard group, equal recruitment uses 70 per group (140 total). This gives expected retained counts of 56 and 63. The tables explain why the recruitment counts remain equal.
-4. Your interpretation should consider actual retention and the reasons for missing outcomes. The collapsed activity question in “Report” provides space for your explanation, with a gray model answer that follows the current inputs.
+4. Your interpretation should consider actual retention and the reasons for missing outcomes. The collapsed activity question in “Report” provides space for your explanation, with an expandable example answer that follows the current inputs.
 5. For the optional advanced example, a starting count of 100 per group is assumed to require full adherence. With switching of 10% from novel to standard and 5% in the other direction, and 5% missing outcomes in each group, the approximate recruitment target is 146 per group. The intermediate values remain unrounded.
 6. Choosing “Expected switching is already included” applies no additional switching multiplier. For binary outcomes, you should use the revised event percentages in the [two-proportion app](../two_proportions/); the [tutorial's sensitivity example](../book/feasibility.html#treatment-switching) gives 57% and 31.5%.
 7. “Methods and references” explains the approximation using the current values. “Report” records the applied adjustments, whether switching is already included, expected retained counts and your explanation. The lab link carries the starting analyzable sample into a complete-outcome scenario; switching and unequal losses remain specific to this recruitment calculation.
@@ -233,3 +236,7 @@ Purpose: identify a suitable design family and the decisions that determine its 
 4. The resource links provide a relevant activity or specialist guidance. Changing an answer clears the previous suggestion until you request an update. “Start again” clears the form.
 
 Teaching text: [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/). Original software code: [MIT](https://opensource.org/license/mit). Third-party attributions and exceptions remain applicable.
+
+## Rehabilitation calculation — core
+
+[Open activity](../study/?activity=rehabilitation_calculation). A 3-unit target difference, SD 5, 90% power and a 5% Type I error probability give 59 analyzable patients per group with the introductory normal approximation. You can compare a 1.5-unit target difference or an SD of 7 while holding the other assumptions fixed. Expected losses change recruitment. The Report view lets you attach the selected calculation to your developing study plan. The [t-test simulation extension](../study/?activity=rehabilitation) is optional advanced exploration.

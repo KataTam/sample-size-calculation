@@ -67,7 +67,7 @@ ui <- fluidPage(
       p("The curve varies sample size while keeping population means, SD, test direction and Type I error probability fixed."),
       plotOutput("power_curve", height = "350px"), p(class = "caption", "Figure. Power at the specified alternative; the point marks your current sample size."),
       p("A one-sided alternative in the opposite direction can have power below the Type I error probability. The direction should follow the prespecified scientific question.")),
-    tabPanel("Report", activity_text_input("interpretation", "How does sample size affect power at these settings?",
+    tabPanel("Report", uiOutput("plan_transfer"), activity_text_input("interpretation", "How does sample size affect power at these settings?",
       "The example updates with the selected case and current calculation inputs.",
       "The power curve varies sample size while keeping population means, SD, and test settings fixed. Your explanation should connect the curve's direction to the shaded detection area.", rows = 5),
       uiOutput("report_preview"), activity_report_downloads("download_assumptions"),
@@ -164,6 +164,7 @@ server <- function(input, output, session) {
       "Your explanation is reproduced as entered and should be reviewed after changing the settings.",
       "Procedure: normal_sampling_operating_characteristics(), using normal quantiles and tail probabilities. Assumptions: independent normal observations, known population SD and a prespecified test direction.")
   })
+  output$plan_transfer <- renderUI(app_plan_transfer("Error probabilities exploration", "sampling_distributions", "exploration", list(outcome = "continuous", study_type = "single", analyzable = operating()$n), report_paragraphs()))
   output$report_preview <- renderUI(app_report_body(report_paragraphs()))
   output$download_assumptions <- downloadHandler(filename = function() "error-probabilities-report.html", content = function(file) {
     writeLines(app_report_document("Error probabilities and power", "sampling_distributions", report_paragraphs()), file, useBytes = TRUE)

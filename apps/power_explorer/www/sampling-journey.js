@@ -106,13 +106,13 @@
       let more=el('lab-more-views');
       if(!more){
         more=document.createElement('button');more.id='lab-more-views';more.type='button';more.className='btn btn-default';
-        more.textContent='More lab views';more.setAttribute('aria-expanded','false');
+        more.textContent='Additional calculations and simulations';more.setAttribute('aria-expanded','false');
         tabs.before(more);
         more.onclick=()=>{const expanded=more.getAttribute('aria-expanded')!=='true';more.setAttribute('aria-expanded',String(expanded));
-          document.documentElement.classList.toggle('lab-expanded',expanded);more.textContent=expanded?'Fewer lab views':'More lab views';};
+          document.documentElement.classList.toggle('lab-expanded',expanded);more.textContent=expanded?'Hide additional views':'Additional calculations and simulations';};
       }
       more.hidden=!payload.combine;
-      if(!payload.combine){document.documentElement.classList.remove('lab-expanded');more.setAttribute('aria-expanded','false');more.textContent='More lab views';}
+      if(!payload.combine){document.documentElement.classList.remove('lab-expanded');more.setAttribute('aria-expanded','false');more.textContent='Additional calculations and simulations';}
       ['Explore assumptions','Compare assumptions','My study'].forEach(value=>{
         const link=document.querySelector(`a[data-value="${value}"]`);if(link)link.parentElement.classList.add('lab-secondary-view');
       });

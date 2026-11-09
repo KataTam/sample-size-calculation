@@ -34,33 +34,21 @@
     "route": "Core",
     "activities": [
       {
-        "label": "Gestational-diabetes prevention trial",
-        "path": "study/?activity=adherence",
+        "label": "Probiotics: calculate a binary-outcome sample size",
+        "path": "study/?activity=probiotics_calculation",
         "route": "Core",
         "section": "adherence"
       },
       {
-        "label": "Rehabilitation: compare two means",
-        "path": "study/?activity=rehabilitation",
+        "label": "Rehabilitation: calculate a mean-difference sample size",
+        "path": "study/?activity=rehabilitation_calculation",
         "route": "Core",
         "section": "rehabilitation"
       },
       {
-        "label": "Two-proportion calculator",
-        "path": "two_proportions/",
-        "route": "Core",
-        "section": "two-proportions"
-      },
-      {
-        "label": "Two-mean calculator",
-        "path": "two_means/",
-        "route": "Core",
-        "section": "two-means"
-      },
-      {
-        "label": "Discharge: an absolute probability difference",
+        "label": "Hospital discharge: additional practice",
         "path": "study/?activity=discharge",
-        "route": "Core",
+        "route": "Optional core practice",
         "section": "discharge"
       }
     ]
@@ -73,13 +61,13 @@
     "activities": [
       {
         "label": "Adjust recruitment",
-        "path": "dropout_adjustment/",
+        "path": "study/?activity=recruitment",
         "route": "Core",
         "section": "account-for-expected-losses"
       },
       {
         "label": "Complete your assumptions report",
-        "path": "study/?activity=assumptions_report",
+        "path": "assumptions_report/?stage=review",
         "route": "Core",
         "section": "write-a-sample-size-justification"
       }

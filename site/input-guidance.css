@@ -10,3 +10,5 @@
 .input-guidance-popover .input-model-answer { color: #616161; }
 textarea::placeholder, input[type="text"]::placeholder { color: #616161 !important; opacity: 1 !important; }
 @media print { .input-guidance-popover { display: none !important; } .input-question { text-decoration: none; } }
+
+.input-example {margin:.25rem 0 .75rem;border:0}.input-example summary{font-size:.95rem;min-height:36px;padding:.3rem 0}.input-example p{color:#535353;white-space:pre-wrap}.input-example a{color:inherit}

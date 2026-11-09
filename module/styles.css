@@ -313,3 +313,8 @@ details.section-disclosure > summary > :is(h2,h3,h4,h5,h6) {
   .book.with-summary .book-body { transform: none; }
 }
 @media print { #toc-resizer { display: none !important; } }
+
+#my-study-plan {display:inline-block;padding:.6rem .8rem;font-size:14px;background:#e1edf8;color:#173d5b!important} #activity-menu .activity-core-heading{background:#dcecfb;color:#20343e;padding:.4rem} #activity-menu .activity-advanced-heading{background:#e9def5;color:#20343e;padding:.4rem}
+@media print { #my-study-plan {display:none!important} }
+
+.plan-contribution{border-left:4px solid #3263a0;background:#e1edf9;padding:.75rem 1rem;margin:1.5rem 0}.book.color-theme-2 .plan-contribution{background:#243b4a;color:#edf4f8}
