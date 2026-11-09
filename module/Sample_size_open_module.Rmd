@@ -428,7 +428,7 @@ The population assumptions stay the same across these trials. Their observed rel
 
 To interpret one trial, you can compare its confidence interval with both zero and the 20-percentage-point clinical threshold introduced for the chronic pain study. Zero represents no population difference; the clinical threshold represents the between-group benefit judged worthwhile in this example.
 
-The estimated difference summarizes the treatment comparison. Its interval shows uncertainty around that estimate under the analysis assumptions. At the same confidence level, a narrower interval gives a more precise estimate. Three hypothetical 95% intervals illustrate the possible clinical conclusions:
+The estimated difference summarizes the treatment comparison. The confidence interval for this between-group difference shows uncertainty around the estimate under the analysis assumptions. At the same confidence level, a narrower interval gives a more precise estimate. Three hypothetical 95% intervals illustrate the possible clinical conclusions:
 
 ```{r clinical-intervals, echo=FALSE}
 clinical_intervals <- data.frame(

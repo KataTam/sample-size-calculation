@@ -226,8 +226,10 @@ ui <- fluidPage(
       app_citation("Sample size reasoning lab", "power_explorer")),
     tabPanel("Methods and references", value = "Methods",
       h3("Calculation with your current values"), uiOutput("worked_method"),
-      h4("Analysis assumptions"), textOutput("method"),
-      p("Normal outcomes use a pooled-variance t test and interval. Binary outcomes use a pooled score test without continuity correction and a Newcombe-Wilson difference interval. Binary analytical power and precision are approximations; simulation assesses their finite-sample performance under the selected assumptions."),
+      h4("Analysis assumptions"),
+      p("The analysis compares two independent groups using a two-sided test and a confidence interval for the difference between groups."),
+      activity_details("Advanced method details", textOutput("method"),
+        p("Normal outcomes use a pooled-variance t test and interval. Binary outcomes use a pooled score test without continuity correction and a Newcombe-Wilson difference interval. Binary analytical power and precision are approximations; simulation assesses their finite-sample performance under the selected assumptions.")),
       p(tags$a(href = "../book/appendix.html#tutorial-methods", target = "_blank", rel = "noopener", "Methods and reproducibility record")),
       h3("References"), tags$ul(
         tags$li(tags$a(href = "https://aaroncaldwell.us/SuperpowerBook/", "Caldwell et al. (2022). Power Analysis with Superpower, chapters 1, 11 and 15: inspiration for the clinical activities.")),
@@ -576,8 +578,8 @@ server <- function(input, output, session) {
   })
   output$method <- renderText(method_label(planned()$outcome))
   output$planning_text <- renderText(paste(if (planned()$outcome == "means")
-    "The width curve shows the expected width of the confidence interval for the difference between the two population means. It uses a t interval and assumes normal outcomes with equal variances." else
-    "The width curve uses the Newcombe-Wilson method with the assumed event probabilities (a plug-in approximation). The mean realized width is assessed across simulated studies.",
+    "The width curve shows the expected width of the confidence interval for the difference between the two population means. It assumes normal outcomes with equal variances." else
+    "The width curve shows the approximate confidence interval width for the difference between groups, based on the assumed event percentages.",
     "Realized interval widths vary. Many studies reports the fraction that meets the width target."))
   observeEvent(input$outcome, { axis_limit(NULL) }, ignoreInit = TRUE)
   # Initialize the sticky axis before outputs render. Changing reactive state

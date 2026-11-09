@@ -44,8 +44,11 @@ app_citation <- function(title, slug) shiny::tags$footer(class = "app-footer",
 app_report_body <- function(paragraphs, data = NULL, heading = "Current report", intro = NULL) shiny::tags$div(class = "app-report",
   if (!is.null(heading)) shiny::tags$h3(heading),
   if (!is.null(intro)) shiny::tags$p(intro),
-  if (is.list(paragraphs)) lapply(names(paragraphs), function(title)
-    shiny::tags$section(shiny::tags$h4(title), lapply(paragraphs[[title]][nzchar(paragraphs[[title]])], shiny::tags$p)))
+  if (is.list(paragraphs)) lapply(names(paragraphs), function(title) {
+    content <- shiny::tags$section(shiny::tags$h4(title), lapply(paragraphs[[title]][nzchar(paragraphs[[title]])], shiny::tags$p))
+    if (title == "Simulation record") shiny::tags$details(shiny::tags$summary("Advanced methods and reproducibility"), content)
+    else content
+  })
   else {
     technical <- grepl("^(Procedure:|R stats::|M =|Recruitment per group =)", paragraphs)
     shiny::tagList(lapply(paragraphs[nzchar(paragraphs) & !technical], shiny::tags$p),
