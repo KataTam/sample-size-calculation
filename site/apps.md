@@ -38,7 +38,7 @@ The reasoning lab has core and advanced activities. Core activities start with a
 
 ## Review and practice
 
-- [Quizzes](quiz/): chapter checks and a cumulative quiz, with a Core or Core + advanced route. Results link to the relevant explanations; missed questions can be retried. Chapter checks are also embedded in the [tutorial](book/).
+- [Quizzes](quiz/): chapter checks and a cumulative quiz. Results link to the relevant explanations; missed questions can be retried. Chapter checks are also embedded in the [tutorial](book/).
 - [Flashcard preview](student-materials/flashcards/cards.md): a question-and-answer table with level filtering, search and optional hidden answers for self-testing. [Anki and Quizlet downloads](student-materials/flashcards/index.md) are available for review outside the tutorial.
 
 ## Tutorial beside the app

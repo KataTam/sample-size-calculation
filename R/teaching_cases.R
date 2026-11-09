@@ -60,7 +60,7 @@ teaching_cases <- function() {
         plan_sd = 5, threshold_m = 2, target_power = .90, dropout = .10,
         recruit_cap = 200, seed = 20261001)),
     discharge = case("discharge", "Discharge: an absolute probability difference",
-      "How does the baseline probability of hospital discharge affect sample size for a target difference in percentage points? The example distinguishes absolute and relative changes.",
+      "For a hypothetical trial of discharge within seven days, how do relative and absolute increases translate into planning percentages? You can compare sample size requirements at 80% and 90% power.",
       "discharge", list(outcome = "proportions", goal = "testing", plan_p0 = .80,
         plan_p1 = .96, expected_p = .18, threshold_p = .08, target_power = .80, dropout = 0,
         width_p = .20, seed = 20261003)),

@@ -12,8 +12,8 @@
     const questions = selected();
     $('start').disabled = questions.length === 0;
     $('coverage').textContent = questions.length
-      ? `${questions.length} questions · ${route.options[route.selectedIndex].text}`
-      : 'This chapter contains advanced questions. The Core + advanced route includes its chapter check.';
+      ? `${questions.length} questions`
+      : 'This chapter has no questions in the selected set. All topics includes its chapter check.';
     $('coverage-topics').replaceChildren(...[...new Set(questions.map(q=>bank.chapters[q.chapter]))].map(text=>element('li',text)));
 
   }
@@ -27,11 +27,12 @@
     current = questions; missed = []; submitted=false;orders=saved?.orders||{};
     $('setup').hidden = true; $('results').hidden = true; $('quiz').hidden = false;
     $('status').textContent = '';
-    $('quiz-title').textContent = retry ? 'Retry missed questions' : chapter.value === 'all' ? `Cumulative quiz: ${route.options[route.selectedIndex].text}` : bank.chapters[chapter.value];
+    $('quiz-title').textContent = retry ? 'Retry missed questions' : chapter.value === 'all' ? 'Cumulative quiz' : bank.chapters[chapter.value];
     $('questions').replaceChildren();
     questions.forEach((q, index) => {
       const box = element('fieldset',undefined,'quiz-question'); box.dataset.question = q.id;
-      box.append(element('legend', `${index + 1}. ${q.question}`), element('p', `${bank.chapters[q.chapter]} · ${q.level === 'core' ? 'Core' : 'Advanced'}`, 'quiz-level ' + q.level));
+      box.append(element('legend', `${index + 1}. ${q.question}`));
+      if (chapter.value === 'all') box.append(element('p', bank.chapters[q.chapter], 'quiz-level'));
       if (q.figure) {
         const figure=element('figure',undefined,'quiz-figure'), img=element('img');
         img.src='figures/'+q.figure.file;img.alt=q.figure.alt;

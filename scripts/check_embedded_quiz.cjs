@@ -18,7 +18,22 @@ const bank=JSON.parse(fs.readFileSync('site/quiz/questions.json','utf8'));
    assert.equal(await quiz.evaluate(q=>q.closest('details').open),false);
    await quiz.evaluate(q=>q.closest('details').open=true);
    assert((await quiz.locator('fieldset:visible').count())>0);
+   assert.equal(await quiz.locator('.quiz-level').count(),0,'No repeated level badges in '+chapter);
+   assert(!/\b(Core|Advanced)\b/.test(await quiz.innerText()),'No level labels in quiz text');
   }
+  // A saved attempt from before the level-badge removal remains usable.
+  await page.goto(`${base}/book/appendix.html`);
+  const previous=page.locator('#quiz-appendix');
+  await previous.evaluate(q=>q.closest('details').open=true);
+  await previous.locator('fieldset').first().locator('input').first().check();
+  await page.evaluate(()=>{
+   const key='sample-size-embedded-quiz-appendix-v2';
+   const saved=JSON.parse(localStorage.getItem(key));
+   saved.signature=saved.signature.replace('\n','\nAdvanced\n');
+   localStorage.setItem(key,JSON.stringify(saved));
+  });
+  await page.reload();
+  assert.equal(await previous.locator('input:checked').count(),1,'Existing answers survive display-only label changes');
   await page.goto(`${base}/book/clinical-question.html`);
   const quiz=page.locator('.chapter-quiz');
   await quiz.evaluate(q=>q.closest('details').open=true);
@@ -43,6 +58,7 @@ const bank=JSON.parse(fs.readFileSync('site/quiz/questions.json','utf8'));
   assert.equal(await quiz.locator('fieldset:visible').count(),bank.questions.filter(q=>q.level==='core').length);
   await quiz.locator('select').selectOption('all');
   assert.equal(await quiz.locator('fieldset:visible').count(),bank.questions.length);
+  assert.equal(await quiz.locator('select option:checked').innerText(),'All topics');
   await page.evaluate(()=>localStorage.removeItem('sample-size-embedded-quiz-clinical-question-v2'));
   await page.goto(`${base}/book/Sample_size_open_module.html`);
   assert.equal(await page.locator('.chapter-quiz').count(),9);

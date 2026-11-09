@@ -24,6 +24,8 @@ const bank=JSON.parse(fs.readFileSync('site/quiz/questions.json','utf8'));
    await page.locator('#route').selectOption('all');
    await page.locator('#start').click();
    assert.equal(await page.locator('fieldset').count(),bank.questions.filter(q=>q.chapter===ch).length);
+   assert.equal(await page.locator('#questions .quiz-level').count(),0,'Chapter name is not repeated under each question');
+   assert(!/\b(Core|Advanced)\b/.test(await page.locator('#quiz').innerText()));
    assert.equal(await page.locator('#results').isVisible(),false);
   }
   await page.evaluate(()=>localStorage.removeItem('sample-size-cumulative-quiz-v2'));
@@ -48,6 +50,7 @@ const bank=JSON.parse(fs.readFileSync('site/quiz/questions.json','utf8'));
   await page.locator('#route').selectOption('all');
   await page.locator('#start').click();
   assert.equal(await page.locator('fieldset').count(),bank.questions.length);
+  assert(!/\b(Core|Advanced)\b/.test(await page.locator('#quiz').innerText()));
   for(const q of bank.questions)await page.locator(`input[name="${q.id}"][value="${q.answer}"]`).check();
   await page.locator('button[type=submit]').click();
   assert((await page.locator('#score').innerText()).includes('100%'));

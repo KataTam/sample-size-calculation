@@ -61,7 +61,7 @@ cat('<figure class="tutorial-roadmap">',
     roadmap, '</figure>')
 ```
 
-Each teaching chapter ends with an embedded *Check your understanding* quiz. The material comes together in a [cumulative quiz](#cumulative-quiz), with Core and Core + advanced routes.
+Each teaching chapter ends with an embedded *Check your understanding* quiz. The material comes together in a [cumulative quiz](#cumulative-quiz).
 
 You can open [the tutorial and an app together](https://katatam.github.io/sample-size-calculation/study/?activity=pain_one_many), consult the [activity walkthroughs](https://katatam.github.io/sample-size-calculation/student-materials/activity-walkthroughs.html), or review terms in the [Glossary](#glossary). For your own project, [Other study goals and designs](#study-designs) helps you choose an approach. Its advanced section on [units of randomization, measurement, and analysis](#units-of-analysis) explains how grouping and paired measurements affect the information a study provides.
 
@@ -860,11 +860,11 @@ The expected-loss adjustment gives a recruitment total of `r 2 * adjust_for_drop
 
 ## Discharge percentages {#discharge .core-heading}
 
-This optional practice explores how baseline probability and the difference scale affect a binary-outcome calculation.
+In this optional practice, you compare three sample size plans for the same hospital-discharge trial. The aim is to see how a relative increase differs from an increase in percentage points, and how the target difference and target power affect the number of patients needed.
 
+Suppose a hospital is planning a trial of a new discharge-support program against standard care. The outcome is discharge within seven days of admission: yes or no. With standard care, 80% of patients are expected to be discharged by then. All values in this example are hypothetical.
 
-
-With standard care, 80% of patients are discharged from hospital by a specified time point. Comparable evidence suggests an 18-percentage-point [expected difference](#expected-difference): 98% versus 80%. Patients judge an 8-percentage-point between-group benefit worthwhile. Those two values remain fixed while you compare the following sample size plans.
+For the new program, the [expected difference](#expected-difference) is 18 percentage points (98% versus 80%), and the clinical threshold is 8 percentage points. These remain fixed reference values. Each plan below specifies the target difference used in its calculation. All three plans use equal group sizes, a two-sided test, a 5% Type I error probability, and no allowance for losses at this stage.
 
 | Plan | Target difference | Target power |
 |:--|:--|:--|
@@ -876,9 +876,9 @@ Table: (\#tab:discharge-task) Three discharge-study plans with a 5% Type I error
 
 ### Your task {.unnumbered}
 
-Your answer should contain the treatment percentage for each plan, your prediction of which plan needs the most patients, the calculated per-group and total counts, and a short explanation of the differences. You can use [Two proportions](#two-proportions) or [Activity: Discharge percentages](https://katatam.github.io/sample-size-calculation/study/?activity=discharge). Each calculated per-group count should be rounded upward to a whole patient before doubling for the two equal groups.
-
-The expected difference remains 18 points and the clinical threshold remains 8 points throughout.
+1. For each plan, what percentage would be discharged with the new program, and what is its target difference in percentage points? A relative increase of 20% means multiplying the standard-care percentage by 1.20. An increase of 10 percentage points means adding 10 points. Before calculating sample size, which plan do you expect to need the most patients?
+2. You can calculate each plan using the [two-proportions method](#two-proportions) or [Activity: Discharge percentages](https://katatam.github.io/sample-size-calculation/study/?activity=discharge). In the app's *Settings*, the standard-treatment percentage stays at 80%; the novel-treatment percentage and target power should match the plan. The *Overview* shows the required sample size. Your record should include both the analyzable count per group and the total. Each per-group count is rounded upward before doubling for two equal groups.
+3. How does changing the target difference affect sample size when power stays at 80% (A versus B)? How does increasing power affect sample size when the target difference stays the same (A versus C)? A short explanation should connect these comparisons to your prediction.
 
 <details>
 <summary>Show the calculation and interpretation</summary>
@@ -896,7 +896,7 @@ knitr::kable(display_probabilities(discharge, c("control", "treatment", "power")
   caption = "Analyzable discharge-study sample sizes using the normal planning approximation in power.prop.test().")
 ```
 
-The treatment percentages are 96%, 90% and 96%. The approximate totals are `r paste(discharge$total, collapse = ", ")`, respectively. Each per-group count is rounded up before doubling for the total. The expected difference remains 18 points and the [clinical threshold](#clinical-threshold) remains 8 points in each comparison.
+The treatment percentages are 96%, 90% and 96%, giving target differences of 16, 10 and 16 percentage points for A, B and C. The approximate totals are `r paste(discharge$total, collapse = ", ")`, respectively. Plan B needs more patients than A because its smaller target difference is harder to detect at the same power. Plan C needs more patients than A because it aims for higher power at the same difference. Of these three plans, B requires the most patients. The expected difference remains 18 points and the clinical threshold remains 8 points in each comparison.
 
 Figure \@ref(fig:discharge-grids) shows how the relative increase in Plans A and C and the absolute increase in Plan B translate into discharge percentages.
 
@@ -2023,6 +2023,18 @@ Your project may involve estimation, a fixed dataset or dependent observations. 
 
 
 
+<div class="chapter-recap">
+
+### Take-home points {.unnumbered}
+
+- Computational reproducibility uses the same inputs and procedures; replication investigates the same question with new data.
+- Software and its settings should match the planned analysis, including the meaning and units of each input.
+- A calculation record should include assumptions, methods, results, rounding rules, and software and code versions.
+- A simulation record also needs data-generating assumptions, the analysis, the number of repetitions, and random-number settings.
+- Sharing protocols and code supports checking and reuse. Data access should respect consent, confidentiality and other applicable restrictions.
+
+</div>
+
 ## Check your understanding {#check-appendix .unnumbered}
 
 ```{r quiz-appendix, echo=FALSE, results="asis"}
@@ -2031,7 +2043,7 @@ render_chapter_quiz("appendix")
 
 # Test your understanding {#exercises .unnumbered .reference-heading}
 
-The cumulative quiz offers Core and Core + advanced options. Feedback links to the relevant explanations. The chapter checks remain available beside their teaching material.
+The cumulative quiz brings together the tutorial's main decisions. Your results include explanations and links to sections you can review.
 
 ## Cumulative quiz {#cumulative-quiz .unnumbered}
 

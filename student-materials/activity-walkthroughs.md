@@ -203,13 +203,15 @@ Purpose: assess whether a limited pilot provides useful information for a feasib
 
 [Open activity](../study/?activity=discharge) · [Matching explanation](../book/calculations.html#discharge)
 
-Purpose: distinguish relative changes from percentage-point differences and investigate planning close to 100%.
+Purpose: compare three sample size plans for a hypothetical trial of discharge within seven days, distinguishing relative changes from percentage-point differences.
 
-1. The planning probabilities are 80% and 96% discharge: a 16-percentage-point target difference and a 20% relative increase. The separate expected difference is 18 points and clinical threshold 8.
-2. “Overview” shows the sample for 80% power at a 5% Type I error probability, with no loss allowance in the prepared case.
-3. “One study” shows possible discharge counts; “Many studies” estimates the planned test's power when one event probability is near 100%.
-4. A no-effect generating scenario checks false positives without changing the original sample size. Comparing simulation and planning results helps assess the approximation under these assumptions.
-5. Your explanation should identify the event, baseline and absolute difference. A time-to-discharge outcome would need a different method.
+1. The standard-care percentage stays at 80%. The expected difference stays at 18 percentage points and the clinical threshold at 8. All three plans use a two-sided test, a 5% Type I error probability and no loss allowance.
+2. For Plan A, the 20% relative increase gives 96% discharge with the new program (80% × 1.20), a 16-point target difference. In “Settings,” the two planning percentages should be 80% and 96%, with target power 80%. “Overview” shows the analyzable counts per group and in total.
+3. For Plan B, the novel-treatment percentage becomes 90%, giving a 10-point target difference; power stays at 80%. How does the required sample compare with Plan A?
+4. For Plan C, the novel-treatment percentage returns to 96%, and power increases to 90%. How does the required sample compare with Plan A?
+5. Your explanation should compare A with B to discuss the target difference, and A with C to discuss power. The worked answer in the tutorial shows all three calculations.
+
+For optional simulation exploration, “One study” shows possible discharge counts and “Many studies” estimates the test's power under the selected assumptions. A no-effect scenario examines false positives. The [discharge simulation](../book/simulation.html#discharge-simulation) explains how simulation can assess the planning approximation near 100%.
 
 ## Build your own study calculation — advanced application
 

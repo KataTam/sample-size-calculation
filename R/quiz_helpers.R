@@ -14,7 +14,7 @@ render_chapter_quiz <- function(chapter = "all") {
   default <- if ("core" %in% levels) "core" else "all"
   cat(sprintf('<div class="chapter-quiz quiz-surface" id="%s" data-default-route="%s">\n', id, default))
   if (length(levels) > 1) {
-    cat(sprintf('<div class="quiz-controls"><label for="%s-route">Route</label> <select id="%s-route" class="quiz-route"><option value="core">Core</option><option value="all">Core + advanced</option></select></div>\n', id, id))
+    cat(sprintf('<div class="quiz-controls"><label for="%s-route">Question set</label> <select id="%s-route" class="quiz-route"><option value="core">Basic planning</option><option value="all">All topics</option></select></div>\n', id, id))
   }
   cat('<details class="quiz-help quiz-controls"><summary>Quiz help</summary><p>Each question has one best answer. You can revise your choices before selecting &ldquo;View results.&rdquo; Explanations and links appear with the results; missed questions can be retried. Your choices are saved in this browser. A new attempt changes the answer order; reopening preserves your attempt.</p></details>\n')
   cat('<form class="embedded-quiz-form"><div class="quiz-progress-row quiz-controls"><p class="quiz-progress" aria-live="polite"></p><progress class="quiz-progress-bar" aria-label="Questions answered" value="0" max="1"></progress></div><div class="quiz-questions">\n')
@@ -22,7 +22,6 @@ render_chapter_quiz <- function(chapter = "all") {
     q <- questions[[i]]
     name <- paste(id, q$id, sep = "-")
     cat(sprintf('<fieldset class="quiz-question" data-question="%s" data-level="%s" data-answer="%s" data-topic="%s"><legend><span class="quiz-number">%s</span>. %s</legend>\n', esc(q$id), q$level, q$answer, esc(bank$chapters[[q$chapter]]), i, esc(q$question)))
-    if (q$level == "advanced") cat('<p class="quiz-level advanced">Advanced</p>\n')
     if (!is.null(q$figure)) {
       file <- file.path("../site/quiz/figures", basename(q$figure$file))
       cat('<figure class="quiz-figure">', paste(readLines(file, warn=FALSE, encoding="UTF-8"),collapse="\n"),
