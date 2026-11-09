@@ -33,7 +33,7 @@
     ['Recruitment and conclusion', [
       ['counts', 'Sample size needed or available for analysis', 'Your record should give the method, result, upward rounding, and per-group and total counts where applicable. Existing-data projects should explain eligibility, exclusions, and the available count.', 'The analyzable sample size and calculation are'],
       ['recruitment', 'Losses, missing data and recruitment', 'Your answer should justify loss assumptions and recruitment counts, assess possible missing-data bias, and document treatment changes already allowed for. Existing-data projects should describe completeness; uncertain assumptions need plausible alternatives.', 'The loss allowance, missing data and recruitment are'],
-      ['resources', 'Feasibility and resources', 'You can record eligible numbers, consent, time and costs when available. For unknown values, describe the evidence needed and who could provide it. Likely delays should be considered.', 'The recruitment feasibility and resources are'],
+      ['resources', 'Feasibility and resources', 'Screening and enrollment records should support your eligible numbers and consent estimate. Your answer should allow for time, costs, slower recruitment and site-opening delays. For unknown values, describe the evidence needed and who could provide it.', 'The recruitment feasibility and resources are'],
       ['conclusion', 'Intended conclusion and limitations', 'Your conclusion should reflect the design, attainable power or precision, and sensitivity results. Unresolved assumptions and limits on interpretation should be explicit.', 'The intended conclusion and limitations are']
     ]]
   ];
@@ -236,6 +236,12 @@
       const label = document.createElement('label'); label.htmlFor = id; label.textContent = questions[id] || title;
       const input = document.createElement('textarea'); input.id = id; input.name = id; input.rows = 2; input.maxLength = 5000;
       wrapper.append(label, input); group.append(wrapper);
+      if (id === 'resources') {
+        const note = document.createElement('p'); note.className = 'note';
+        const link = document.createElement('a'); link.href = '../book/feasibility.html#lasagnas-law';
+        link.target = '_blank'; link.rel = 'noopener'; link.textContent = "Lasagna's law: checking recruitment forecasts";
+        note.append(link); wrapper.append(note);
+      }
 
     }
     document.getElementById('fields').append(group);

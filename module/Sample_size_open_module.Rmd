@@ -1096,6 +1096,15 @@ knitr::kable(data.frame(
 
 The smaller difference should have a scientific justification. Your report should identify which assumptions are uncertain and show how a plausible alternative changes the recommendation. The advanced chapter on [power and uncertain assumptions](#curves) also evaluates how the original fixed sample would perform if reality differed from the plan.
 
+<details class="misconception" id="lasagnas-law">
+<summary>Common misconception: having many patients in the clinic guarantees enough recruits</summary>
+
+*Lasagna's law* describes the tendency to overestimate how many patients will actually be available for a study. Eligibility criteria, willingness to participate, competing studies, and practical barriers can substantially reduce recruitment [@lasagna1979].
+
+For the chronic pain trial, recruitment estimates should draw on recent screening and enrollment records. For example, if 100 potentially relevant patients are seen each month, 40 meet the eligibility criteria, and half of those consent, expected recruitment is 20 participants per month. Your plan should also consider slower recruitment and delays in opening study sites.
+
+</details>
+
 ## Options when the study provides insufficient information {#what-if-the-study-is-too-small-for-its-purpose .core-heading}
 
 ### Underpowered studies {#underpowered-studies .core-heading}
