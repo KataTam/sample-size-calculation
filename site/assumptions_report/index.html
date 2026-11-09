@@ -22,8 +22,13 @@
       <label for="plan-title">Study title<input id="plan-title" name="plan_title" form="plan-form" maxlength="200" placeholder="A short title for your study"></label>
       <label for="plan-basis">Starting point<select id="plan-basis" name="plan_basis" form="plan-form"><option value="own">My own study</option><option value="pain">Chronic-pain teaching example</option></select></label>
       <button id="example" type="button" hidden>Start the pain-relief plan</button>
-      <p>Your answers are saved in this browser. “Save work for later” lets you reopen the plan on another computer.</p>
+      <p>The core starting point is a two-group comparison planned for power. Written answers start empty; selecting “Start the pain-relief plan” supplies an example. Saved work can be resumed below.</p>
     </section></details>
+    <section id="resume-plan" hidden aria-label="Saved study plan">
+      <p>A saved plan is available in this browser. You can resume it or start a new plan with the core settings.</p>
+      <button id="resume-plan-button" type="button">Resume saved plan</button>
+      <button id="new-plan-button" type="button" class="secondary-action">Start a new plan</button>
+    </section>
     <nav id="plan-stages" aria-label="Contributions to your study plan"></nav>
     <div id="plan-stage-guidance" tabindex="-1"></div>
     <section id="transfer-preview" hidden aria-label="Review a calculation before adding it">
@@ -37,7 +42,7 @@
       <button id="save-word" type="button" class="secondary-action">Download editable report (Word)</button>
     </div>
     <div class="secondary-controls"><details id="file-actions"><summary>Help</summary>
-    <p class="note">Underlined questions have hover, keyboard, and tap help. “Example answer” opens an illustration of a response. The report uses your own entries. Study settings change the applicable questions; you can revisit any section and leave decisions provisional.</p>
+    <p class="note">Underlined questions have hover, keyboard, and tap help. “Suggested structure” offers a framework for your own study; “Example answer” illustrates the selected teaching case. Each section can be marked ready for review after its applicable questions are answered.</p>
     <div class="actions">
       <button id="download-text" type="button">Download plain text</button>
     </div>
@@ -57,12 +62,14 @@
     <section class="form-pane" aria-labelledby="form-title">
       <h2 id="form-title">Your study plan</h2>
       <form id="plan-form">
+        <fieldset id="answer-fields"><legend class="sr-only">Study settings and answers</legend>
         <details id="study-settings"><summary>Study settings</summary><div class="choices">
           <label for="study_type">Study structure<select id="study_type" name="study_type"><option value="comparison">Two-group comparison</option><option value="single">One population percentage or mean</option><option value="other">Another design: specify the method</option></select></label>
           <label for="outcome">Primary outcome type<select id="outcome" name="outcome"><option value="binary">Binary outcome</option><option value="continuous">Continuous outcome</option></select></label>
           <label for="goal">Planning goal<select id="goal" name="goal"><option value="testing">Sample size based on power</option><option value="precision">Estimation with a precision target</option><option value="fixed">Available sample fixed</option><option value="both">Both power and precision requirements</option><option value="feasibility">Pilot or feasibility decision</option></select></label>
         </div></details>
         <div id="fields"></div>
+        </fieldset>
         <details id="plan-review"><summary>Review before downloading</summary><p class="review-note"></p><ul></ul></details>
         <section aria-label="Attached calculations"><h2>Saved calculations</h2><div id="saved-calculations"></div></section>
       </form>
@@ -70,7 +77,6 @@
     <section id="report-pane" class="report-pane" aria-labelledby="report-title" hidden>
       <div class="report-heading"><h2 id="report-title" tabindex="-1">Study-plan report</h2><p id="progress" role="status" aria-live="polite"></p></div>
       <article id="report"></article>
-      <details id="report-missing"><summary>Still to complete</summary><ul></ul></details>
       <p class="note">The downloaded report includes unanswered items so you can see what remains to be decided.</p>
       <div class="report-downloads"><button id="download" type="button">Download report (PDF)</button>
         <button id="download-word" type="button" class="secondary-action">Download editable report (Word)</button></div>

@@ -90,7 +90,7 @@ const base = (process.argv[2] || 'http://127.0.0.1:8769').replace(/\/$/, '');
       assert(example.includes('['),id+' marks unspecified details');
     }
     await page.locator('#goal').selectOption('feasibility');
-    assert.match(await page.locator('#scale').getAttribute('data-example-answer'),/percentage retained/);
+    assert.match(await page.locator('#scale').getAttribute('data-example-answer'),/percentage with \[feasibility outcome\]/);
     assert.doesNotMatch(await page.locator('#scale').getAttribute('data-example-answer'),/percentage points/);
     assert.match(await page.locator('#recruitment').getAttribute('data-example-answer'),/unknown retention status/);
     console.log('Written report: selected goal and custom study guidance passed.');

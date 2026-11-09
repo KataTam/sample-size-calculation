@@ -37,7 +37,7 @@
     record.button.setAttribute('aria-expanded', 'true'); position(record);
   }
   function delayedClose() { clearTimeout(closeTimer); closeTimer = setTimeout(close, 180); }
-  function attach(label, help, field, modelAnswer = '') {
+  function attach(label, help, field, modelAnswer = '', exampleLabel = 'Example answer') {
     if (!label || !field) return;
     let record = records.get(field);
     if (!record) {
@@ -72,10 +72,11 @@
       field.dataset.exampleAnswer = modelAnswer;
       if (!record.example) {
         const details=document.createElement('details'); details.className='input-example';
-        const summary=document.createElement('summary'); summary.textContent='Example answer';
+        const summary=document.createElement('summary'); summary.textContent=exampleLabel;
         record.example=document.createElement('p');record.example.className='input-model-answer';
         details.append(summary,record.example);field.after(details);
       }
+      record.example.parentElement.querySelector('summary').textContent=exampleLabel;
       if(record.example.textContent!==modelAnswer)record.example.textContent=modelAnswer;
       fitExample(field);
     }
@@ -104,7 +105,19 @@
     }
     init();
   }
+  function updateHelp(items) {
+    for (const [id, content] of Object.entries(items)) {
+      const field=document.getElementById(id), record=field&&records.get(field);
+      const source=[...document.querySelectorAll('.input-guidance-source')].find(el=>el.dataset.for===id);
+      if(source)source.textContent=content.help;
+      const label=record?.label||document.querySelector('label[for="'+id+'"]');
+      if(label&&content.question)label.textContent=content.question;
+      if(label&&field&&source)attach(label,content.help,field,models[id]||source.dataset.model||'');
+    }
+    init();
+  }
   if (window.Shiny) Shiny.addCustomMessageHandler('activity-model-answers', updateModels);
+  if (window.Shiny) Shiny.addCustomMessageHandler('activity-question-help', updateHelp);
   document.addEventListener('keydown', event => { if (event.key === 'Escape') close(); });
   document.addEventListener('pointerdown', event => { if (current && !current.button.contains(event.target) && !current.tip.contains(event.target)) close(); });
   document.addEventListener('scroll', () => { if (current) position(current); }, true);

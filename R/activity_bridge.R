@@ -9,7 +9,7 @@ activity_help <- function(..., for_input = NULL) {
 }
 activity_text_input <- function(inputId, label, model_answer, help, rows = 4, width = "100%") {
   shiny::tagList(shiny::textAreaInput(inputId, label, rows = rows, width = width,
-      placeholder = model_answer),
+      placeholder = "Your answer"),
     shiny::tags$div(class = "input-guidance-source", `data-for` = inputId,
       `data-model` = model_answer, help))
 }

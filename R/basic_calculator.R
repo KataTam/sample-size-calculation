@@ -6,8 +6,8 @@ basic_calculator_ui <- function(outcome) {
     tags$head(tags$script(HTML(activity_bridge_script(slug))), tags$script(HTML(activity_download_script()))),
     titlePanel(title, windowTitle = title),
     p(class = "app-intro", if (means)
-      "This app calculates the participants needed per group to detect a target difference between two population means at your chosen power. It assumes independent, equally sized groups and a two-sided test."
-      else "This app calculates the participants needed per group to detect a target difference between two population event percentages at your chosen power. It assumes independent, equally sized groups and a two-sided test."),
+      "This app calculates the participants needed per group to detect a target difference between two population means at your chosen power. It assumes equal group sizes, independent participant outcomes, and a two-sided test."
+      else "This app calculates the participants needed per group to detect a target difference between two population event percentages at your chosen power. It assumes equal group sizes, independent participant outcomes, and a two-sided test."),
     sidebarLayout(sidebarPanel(width = 4,
       app_input_group("Study assumptions",
         if (means) tagList(
@@ -146,7 +146,7 @@ basic_calculator_server <- function(outcome) function(input, output, session) {
   })
   output$worked_method <- renderUI(tags$div(class = "app-method", lapply(method_text(), tags$p)))
   report_paragraphs <- reactive(c(sample_size_interpretation(result()),
-    "Two independent groups, equal allocation, two-sided test. The target difference and variation assumptions require evidence appropriate to the intended population and outcome.", method_text(),
+    "Two independent groups, equal allocation, two-sided test. Each participant contributes one outcome, and outcomes from different participants are assumed independent. The target difference and variation assumptions require evidence appropriate to the intended population and outcome.", method_text(),
     {
       revised <- tryCatch(if (means) calculate(difference = input$compare_delta) else calculate(probability = input$compare_pi1), error = function(e) NULL)
       if (is.null(revised)) "The revised scenario has invalid inputs and is omitted."

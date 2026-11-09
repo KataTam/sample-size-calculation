@@ -25,23 +25,31 @@
     validateRecords(value.calculation_records||'[]');
     let statuses;
     try {statuses=JSON.parse(value.decision_statuses||'{}');} catch (_) {throw Error('Invalid decision status.');}
-    if(!statuses||Array.isArray(statuses)||typeof statuses!=='object'||Object.values(statuses).some(s=>!['provisional','evidence','reviewed'].includes(s)))throw Error('Invalid decision status.');
+    if(!statuses||Array.isArray(statuses)||typeof statuses!=='object'||Object.values(statuses).some(s=>!['provisional','evidence','reviewed','changed'].includes(s)))throw Error('Invalid review status.');
   }
-  let form, fields, statusNodes={}, currentRecords=[], review, pending;
+  let form, fields, groups, statusNodes={}, currentRecords=[], review, pending;
   function changed(){form.dispatchEvent(new Event('input',{bubbles:true}));}
   function setStatuses(values){form.elements.decision_statuses.value=JSON.stringify(values);}
-  function init(f, definitions) {
-    form=f;fields=definitions;
+  function init(f, definitions, sections) {
+    form=f;fields=definitions;groups=sections;
     for(const name of metaNames.filter(n=>!form.elements[n])){const input=element('input');input.type='hidden';input.name=name;form.append(input);}
     const setup=document.getElementById('plan-start');
-    setup.querySelectorAll('input,select').forEach(input=>{input.setAttribute('form',form.id);input.addEventListener('input',changed);});
-    fields.forEach(([id])=>{
-      const row=element('label',undefined,'decision-status');row.htmlFor=id+'-status';row.append(element('span','Decision status'));
-      const select=element('select');select.id=id+'-status';
-      [['provisional','Provisional'],['evidence','Evidence needed'],['reviewed','Ready for review']].forEach(([v,t])=>{const o=element('option',t);o.value=v;select.append(o)});
-      select.addEventListener('input',event=>event.stopPropagation());
-      select.addEventListener('change',()=>{const statuses=read(form.elements.decision_statuses.value,{});statuses[id]=select.value;setStatuses(statuses);changed();});
-      row.append(select);document.getElementById('field-'+id).append(row);statusNodes[id]=select;
+    setup.querySelectorAll('input,select').forEach(input=>{input.setAttribute('form',form.id);input.addEventListener('input',()=>{onEdit(input.name);changed();});});
+    groups.forEach(([title, definitions],index)=>{
+      const box=element('div',undefined,'section-review'),row=element('label');
+      const checkbox=element('input');checkbox.type='checkbox';checkbox.id='section-'+index+'-reviewed';
+      checkbox.setAttribute('aria-label',title+': ready for review');
+      row.append(checkbox,document.createTextNode(' Ready for review'));
+      const note=element('span',undefined,'section-review-note');note.id=checkbox.id+'-note';checkbox.setAttribute('aria-describedby',note.id);
+      checkbox.addEventListener('input',event=>event.stopPropagation());
+      checkbox.addEventListener('change',()=>{
+        const statuses=read(form.elements.decision_statuses.value,{});
+        statuses['section-'+index]=checkbox.checked?'reviewed':'provisional';
+        for(const [id] of definitions)delete statuses[id];
+        setStatuses(statuses);changed();
+      });
+      box.append(row,note);document.getElementById('plan-section-'+index).append(box);
+      statusNodes[index]={checkbox,note};
     });
     review=document.getElementById('plan-review');
     const nav=document.getElementById('plan-stages');
@@ -66,11 +74,21 @@
   }
   function decorate(value, article, lines, active) {
     const statuses=read(value.decision_statuses,{}), records=validateRecords(value.calculation_records||'[]');currentRecords=records;
-    const issues=[], relevant=fields.filter(field=>active(field,value));
-    relevant.forEach(([id,title])=>{
-      statusNodes[id].value=statuses[id]||'provisional';statusNodes[id].disabled=!value[id].trim();
-      if(!value[id].trim())issues.push(title+': still to complete.');
-      else if(statuses[id]!=='reviewed')issues.push(title+': '+(statuses[id]==='evidence'?'evidence needed.':'provisional.'));
+    const issues=[];let readySections=0;
+    groups.forEach(([title,definitions],index)=>{
+      const relevant=definitions.filter(field=>active(field,value));
+      const missing=relevant.filter(([id])=>!value[id].trim());
+      const key='section-'+index;
+      // Earlier work files used one status per field. Preserve their review meaning.
+      const savedStatus=statuses[key]||(!missing.length&&relevant.every(([id])=>statuses[id]==='reviewed')?'reviewed':'provisional');
+      const ready=!missing.length&&savedStatus==='reviewed';
+      const node=statusNodes[index];node.checkbox.checked=ready;node.checkbox.disabled=!!missing.length;
+      node.note.textContent=missing.length?'Available after the applicable questions are answered.':savedStatus==='changed'?'Updated since review.':ready?'':'Your evidence and interpretation should be checked before marking this section.';
+      if(missing.length)issues.push(title+' — still to complete: '+missing.map(([id,label])=>label).join('; ')+'.');
+      else if(!ready)issues.push(title+' — '+(savedStatus==='changed'?'updated since review.':'ready for your review.'));
+      const evidence=relevant.filter(([id])=>statuses[id]==='evidence');
+      if(evidence.length)issues.push(title+' — earlier notes marked evidence needed: '+evidence.map(([,label])=>label).join('; ')+'.');
+      if(ready)readySections++;
     });
     const calc=[...records].reverse().find(r=>r.kind==='calculation'), recruitment=[...records].reverse().find(r=>r.kind==='recruitment');
     if(!calc)issues.push('No calculator result has been attached. An external calculation can be documented in the calculation and software answers.');
@@ -84,8 +102,9 @@
     const heading=element('h3',value.plan_title.trim()||'My study plan');article.prepend(heading);
     document.querySelector('#plan-identity > summary').textContent=value.plan_title.trim()?'Study: '+value.plan_title.trim():'Study title and starting point';
     lines.unshift('Study: '+heading.textContent);
-    lines.push('Decision review',...issues);
-    const summary=element('p',`${relevant.filter(([id])=>value[id].trim()&&statuses[id]==='reviewed').length} of ${relevant.length} applicable decisions marked ready for review.`);
+    if(pending&&!document.getElementById('transfer-preview').hidden)document.querySelector('.transfer-title').textContent='Add '+pending.title+' to '+heading.textContent+'?';
+    lines.push('Section review',...issues);
+    const summary=element('p',`${readySections} of ${groups.length} sections marked ready for review.`);
     article.append(summary);lines.push(summary.textContent);
     const recordList=document.getElementById('saved-calculations');recordList.parentElement.hidden=records.length===0;recordList.replaceChildren();
     records.forEach((record,index)=>{
@@ -115,14 +134,29 @@
         if(document.getElementById('replace-calculation').checked)for(let i=records.length-1;i>=0;i--)if(records[i].kind===pending.kind)records.splice(i,1);
         if(records.length>=30){document.getElementById('status').textContent='Remove an older saved result before adding another.';return;}
         records.push(pending);form.elements.calculation_records.value=JSON.stringify(records);
-        const statuses=read(form.elements.decision_statuses.value,{});
-        for(const key of pending.kind==='recruitment'?['recruitment','resources','conclusion']:['counts','software','analysis','recruitment','conclusion'])statuses[key]='provisional';
-        setStatuses(statuses);changed();panel.hidden=true;localStorage.removeItem('sample-size-pending-'+id);
-        document.getElementById('status').textContent='Calculation added. Related decisions are provisional so you can review your written explanation.';
+        invalidate(pending.kind==='recruitment'?[3]:[2,3]);
+        changed();panel.hidden=true;localStorage.removeItem('sample-size-pending-'+id);
+        document.getElementById('status').textContent='Calculation added. The affected sections need review against your written answers.';
       };
       document.getElementById('cancel-transfer').onclick=()=>{panel.hidden=true;localStorage.removeItem('sample-size-pending-'+id);};
     }catch(error){document.getElementById('status').textContent=error.message;}
   }
-  function onEdit(name){if(!fields.some(([id])=>id===name)&&!['study_type','outcome','goal'].includes(name))return;const statuses=read(form.elements.decision_statuses.value,{});statuses[name]='provisional';if(['question','design','outcome_detail','study_type','outcome','goal','planning','variation','power'].includes(name))for(const id of ['counts','analysis','software','recruitment','conclusion'])statuses[id]='provisional';setStatuses(statuses);}
+  function invalidate(indices){
+    const statuses=read(form.elements.decision_statuses.value,{});
+    for(const index of new Set(indices)){
+      const key='section-'+index;
+      if(statuses[key]==='reviewed'||groups[index][1].some(([id])=>statuses[id]==='reviewed'))statuses[key]='changed';
+      else if(!statuses[key])statuses[key]='provisional';
+      // Legacy evidence flags remain visible until this section is reviewed.
+      for(const [id] of groups[index][1])if(statuses[id]==='reviewed')delete statuses[id];
+    }
+    setStatuses(statuses);
+  }
+  function onEdit(name){
+    if(['study_type','outcome','goal','plan_basis'].includes(name)){invalidate([0,1,2,3]);return;}
+    const index=groups.findIndex(([,definitions])=>definitions.some(([id])=>id===name));
+    if(index<0)return;
+    invalidate([index,...(['question','design','outcome_detail','expected','clinical','planning','variation','analysis','power','precision','counts','sensitivity'].includes(name)?[2,3]:[])]);
+  }
   window.PlanWorkflow={onEdit,metaNames,validateMetadata,init,decorate,loadPending,showStage};
 })();

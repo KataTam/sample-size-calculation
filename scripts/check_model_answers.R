@@ -17,6 +17,12 @@ check_model_answers <- function() {
   answer <- precision_model_answer(v, p, 40, "pilot_feasibility")
   has(answer, "retention pilot"); has(answer, "90% confidence"); has(answer, "fixed at 40")
   has(answer, "planning uses 50%"); has(answer, "simulation assumes 80%"); has(answer, "target is 50")
+  has(answer, "unknown retention status"); has(answer, "values leading to different decisions"); has(answer, "available participants, time, and resources")
+  has(recruitment_model_answer(x, TRUE, FALSE), "comparable follow-up evidence")
+  has(lab_question_help("prediction"), "prediction horizon"); stopifnot(!grepl("PICO", lab_question_help("prediction")))
+  has(lab_question_help("diagnostic"), "reference standard")
+  has(lab_question_help("two_groups"), "independent observations")
+  stopifnot(grepl('placeholder="Your answer"', as.character(activity_text_input("sample", "Question", "Example answer", "Help")), fixed = TRUE))
   for (id in c("pain_one_many", "discharge", "adherence", "rehabilitation", "mean_precision", "own_study")) {
     v <- validate_lab_inputs(teaching_case(id)$inputs)
     x <- teaching_case_spec(id); x$n <- plan_n(x, v$goal, v$target_power)
@@ -25,6 +31,9 @@ check_model_answers <- function() {
     if (v$goal != "precision") has(a$justification, format_percent(spec_power(x), 1))
     if (v$goal != "testing") has(a$justification, model_effect(anticipated_width(x), x$outcome))
     has(a$evidence_sources, model_effect(true_difference(x), x$outcome))
+    has(a$evidence_sources, "assessment time"); has(a$evidence_sources, "uncertainty of [range]")
+    has(a$clinical_relevance, "Patient or clinical input")
+    has(a$justification, "sensitivity results")
     if (id == "adherence") { has(a$study_question, "probiotic"); stopifnot(!grepl("pain", paste(a, collapse = " "))) }
     if (id == "discharge") { has(a$study_question, "discharged"); stopifnot(!grepl("pain", paste(a, collapse = " "))) }
     if (id == "rehabilitation") has(a$study_question, "six weeks")

@@ -37,7 +37,7 @@ ui <- fluidPage(
     selectInput("outcome", "Outcome", c("Continuous (numerical) outcome" = "means", "Binary (yes/no) outcome" = "proportions")),
     selectInput("goal", "Planning goal", c("Test a difference from zero" = "testing", "Estimation with a target interval width" = "precision", "Assess a fixed number of available participants" = "fixed")),
     activity_help("Testing uses a power target; estimation uses a desired interval width. The fixed-sample option evaluates what the available participants can achieve under your assumptions.", for_input = "goal"),
-    p("Two independent groups, equal allocation. Differences are treatment minus control; positive values mean benefit in these cases."),
+    p("Two equally sized groups, with one outcome per participant and independent observations. Differences are treatment minus control; positive values mean benefit in these cases."),
     conditionalPanel("input.outcome == 'means'",
       numericInput("expected_m", "Expected difference: best current estimate (outcome units)", 4, step = .5),
       numericInput("plan_delta", "Target difference: used in the sample size calculation (outcome units)", 3, step = .5),
@@ -183,7 +183,7 @@ ui <- fluidPage(
     tabPanel("My study", h3("Apply this to your question"),
       activity_text_input("study_question", "What is your research question and primary outcome?",
         "The example updates with the selected case and current calculation inputs.",
-        "Your question should name the population, intervention, comparator, outcome, and assessment time (PICO). The study-plan report has separate fields for these details.", rows = 4),
+        lab_question_help("two_groups"), rows = 4),
       selectInput("study_design", "Study design", c("Two independent groups, equal allocation" = "two_groups",
         "Paired or repeated measurements" = "paired", "One population proportion" = "single_proportion",
         "Observational or retrospective study" = "observational", "Diagnostic or screening study" = "diagnostic",
@@ -191,7 +191,7 @@ ui <- fluidPage(
       uiOutput("design_route"),
       activity_text_input("clinical_relevance", "Why would this difference or precision matter clinically?",
         "The example updates with the selected case and current calculation inputs.",
-        "You should connect the clinical threshold or precision target to a treatment decision and identify whose judgment or evidence supports it."),
+        "Your answer should connect the clinical threshold or precision target to the clinical or scientific decision and identify whose judgment or evidence supports it."),
       activity_text_input("participant_burden", "What participant burden, benefits and ethical issues should you consider?",
         "The example updates with the selected case and current calculation inputs.",
         "Relevant details include visit frequency, discomfort, time, and possible harms, alongside the patient benefit expected from the knowledge gained."),
@@ -506,6 +506,9 @@ server <- function(input, output, session) {
     answers
   })
   activity_model_answers(session, model_answers, c("study_question", "clinical_relevance", "participant_burden", "evidence_sources", "justification"))
+  observe({session$sendCustomMessage("activity-question-help", list(study_question = list(
+    question = "What is your research question and primary outcome?",
+    help = lab_question_help(study_details()$study_design))))})
   output$one_model_answer <- renderText({
     saved <- one_saved(); x <- if (is.null(saved)) generating() else saved$spec
     paste0(if (x$outcome == "proportions") paste0("The assumed event probabilities (control ", format_percent(x$p_control), "; treatment ", format_percent(x$p_treatment), ")")

@@ -11,7 +11,8 @@ recruitment_model_answer <- function(x, switching, already_included) {
     else if (already_included) "The starting requirement already includes switching. " else "",
     if (x$losses[1] == x$losses[2]) paste0("This allows for ", format_percent(x$losses[1]), " loss in each group. ")
     else paste0("This allows for ", format_percent(x$losses[1]), " novel-group and ", format_percent(x$losses[2]), " standard-group losses, using the larger requirement for both. "),
-    "Actual retention varies; missing-data bias still needs an analysis plan.")
+    "The ", if (switching || already_included) "loss and switching assumptions need" else "loss assumption needs",
+    " support from [comparable follow-up evidence]. Missing outcomes will be handled using [analysis plan]; actual retention can vary.")
 }
 
 sampling_model_answer <- function(x) {
@@ -19,9 +20,10 @@ sampling_model_answer <- function(x) {
   wrong <- (x$sidedness == "greater" && x$mu1 < x$mu0) || (x$sidedness == "less" && x$mu1 > x$mu0)
   paste0("With ", x$n, " observations, ",
     if (null) paste0("rejection under the null is ", format_percent(x$power, 2), ". This false-positive probability stays at the chosen Type I error probability as sample size increases.")
-    else paste0("power is ", format_percent(x$power, 2), " at a true mean difference of ", model_number(x$mu1-x$mu0), " mmHg. ",
+    else paste0("power is ", format_percent(x$power, 2), " when the population mean is ", model_number(x$mu1), " mmHg (null reference ", model_number(x$mu0), " mmHg). ",
       if (wrong) "A larger sample reduces power because the true difference is opposite to the chosen one-sided direction."
-      else "A larger sample increases power by narrowing the distribution of sample means, with the population means, SD, and test settings held fixed."))
+      else "A larger sample increases power by narrowing the distribution of sample means, with the population means, SD, and test settings held fixed."),
+    " The shaded detection area represents this probability.")
 }
 
 precision_model_answer <- function(x, p, n, case_id, saved = NULL) {
@@ -34,15 +36,24 @@ precision_model_answer <- function(x, p, n, case_id, saved = NULL) {
     " the ", model_number(100*x$full_width), "-point target. ",
     if (x$goal == "fixed") paste0("The available sample is fixed at ", n, ". ") else "",
     if (x$unknown_p) paste0("Conservative planning uses 50%; simulation assumes ", format_percent(x$anticipated_p), ". ") else "",
-    if (x$dropout > 0) paste0("With ", format_percent(x$dropout), " loss, the recruitment target is ", adjust_for_dropout(n, x$dropout), ".") else "")
+    if (x$dropout > 0) paste0("With ", format_percent(x$dropout), if (case_id == "pilot_feasibility") " unknown retention status" else " unavailable outcome status", ", the recruitment target is ", adjust_for_dropout(n, x$dropout), ".") else "")
   if (!is.null(saved)) {
     r <- saved$result
     text <- paste0(trimws(text), " The saved sample has a ", format_percent(saved$confidence),
       " interval width of ", round(100*r$full_width, 1), " points. ",
       if (!identical(saved$inputs, x)) "It uses earlier inputs; a new draw will use the current settings." else "Widths vary between samples.")
   }
-  trimws(text)
+  paste0(trimws(text), " The interval should distinguish [values leading to different decisions], supported by [clinical or service-planning evidence]. Recruitment is feasible if [available participants, time, and resources] can support the required count.")
 }
+
+lab_question_help <- function(design) switch(design,
+  two_groups = "Your question should identify the population, intervention or exposure, comparator, outcome, and assessment time (PICO). Each participant contributes one outcome; this calculation assumes independent observations and equal allocation.",
+  paired = "Your question should identify the population, the conditions or times being compared, and the outcome. Paired measurements come from the same participants; their correlation matters for planning.",
+  single_proportion = "Your question should identify the population, event definition, denominator, and assessment time. A single-population estimate needs a sampling method and a useful precision target.",
+  observational = "Your question should identify the population, exposure, comparison, outcome, and assessment time. Relevant confounding and selection should be considered.",
+  diagnostic = "Your question should identify the population, index test, reference standard, target condition, and assessment time. The intended accuracy measures guide planning.",
+  prediction = "Your question should identify the population, predicted outcome, prediction horizon, and whether the aim is model development, evaluation, or comparison. Predictors must be available when predictions are made.",
+  "Your question should identify the population, outcome, assessment time, and intended conclusion. The planning method should reflect the independent units and any paired or clustered observations.")
 
 lab_model_context <- function(id, outcome, design) {
   if (design != "two_groups") return(list(
@@ -80,9 +91,9 @@ lab_model_context <- function(id, outcome, design) {
 lab_model_answers <- function(v, details, case_id, x = NULL, capacity = NULL, saved = NULL, current = NULL) {
   context <- lab_model_context(case_id, v$outcome, details$study_design)
   if (is.null(x)) return(list(study_question = context$question, participant_burden = context$burden,
-    evidence_sources = context$evidence,
-    clinical_relevance = "I would judge usefulness against a clinically justified effect or precision target for this design.",
-    justification = "I would use a matching planning method for the selected design, accounting for its independent units and dependence between observations."))
+    evidence_sources = paste(context$evidence, "[Source] reports [population, outcome, and assessment time], with uncertainty of [range]. Plausible alternatives are [values]."),
+    clinical_relevance = "The result would inform [clinical or scientific decision]. A useful effect or precision target needs support from [patients, clinicians, or relevant evidence].",
+    justification = "I would use a matching planning method for the selected design, accounting for its independent units and dependence between observations. [Evidence] supports [inputs]; [alternative assumptions] give [results], with [remaining limitations]."))
   effect <- function(z) model_effect(z, x$outcome)
   recruit <- adjust_for_dropout(x$n, v$dropout)
   actual_power <- spec_power(x); width <- anticipated_width(x)
@@ -100,7 +111,8 @@ lab_model_answers <- function(v, details, case_id, x = NULL, capacity = NULL, sa
     if (length(missed)) paste0("The fixed sample misses the ", paste(missed, collapse = " and "),
       " target", if (length(missed) > 1) "s" else "", ". I would reconsider the question or available sample.")
     else if (feasible) "I would check plausible alternative assumptions before adopting this plan."
-    else "I would resolve the recruitment shortfall before adopting this plan.")
+    else "I would resolve the recruitment shortfall before adopting this plan.",
+    " [Source] supports the selected assumptions; [plausible alternatives] give [sensitivity results]. [Remaining limitations] affect the recommendation.")
   if (!is.null(saved)) {
     valid <- is.finite(saved$results$estimate)
     rate <- if (any(valid)) format_percent(mean(saved$results$reject[valid]), 1) else "unavailable"
@@ -111,12 +123,13 @@ lab_model_answers <- function(v, details, case_id, x = NULL, capacity = NULL, sa
       if (!is.null(saved$missing)) "Missing-outcome bias and interval coverage also inform the decision." else "")
   }
   list(study_question = context$question, participant_burden = context$burden,
-    clinical_relevance = if (v$goal == "precision") paste0("I would accept a full interval width of ", effect(x$width_target),
-      " only if it supports judging benefit against the ", effect(x$threshold), " between-group clinical threshold.")
-      else paste0("I would use ", effect(x$threshold), " as the minimum worthwhile between-group benefit in this example. An interval spanning this threshold would leave clinical importance uncertain."),
+    clinical_relevance = if (v$goal == "precision") paste0("A full interval width of ", effect(x$width_target),
+      " should distinguish [values leading to different decisions] around the ", effect(x$threshold), " between-group clinical threshold. [Patient or clinical input] should justify that choice.")
+      else paste0("The selected minimum worthwhile between-group benefit is ", effect(x$threshold), ". [Patient or clinical input] should justify it for [treatment decision]. An interval spanning this threshold would leave clinical importance uncertain."),
     evidence_sources = paste0(context$evidence, " Values to justify: expected difference ", effect(if (x$outcome == "means") v$expected_m else v$expected_p),
       "; target ", effect(true_difference(x)), "; ",
       if (x$outcome == "means") paste0("SD ", model_number(x$sd), ".")
-      else paste0("control ", format_percent(x$p_control), ", treatment ", format_percent(x$p_treatment), ".")),
+      else paste0("control ", format_percent(x$p_control), ", treatment ", format_percent(x$p_treatment), "."),
+      " [Source] reports [comparable population, outcome, and assessment time], with uncertainty of [range]. I would examine [plausible alternative inputs]."),
     justification = trimws(justification))
 }

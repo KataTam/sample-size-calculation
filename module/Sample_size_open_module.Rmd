@@ -234,7 +234,7 @@ The pilot suggests a possible benefit, but its estimate is uncertain. It provide
 
 ## Develop and justify your study plan {#record-assumptions .core-heading}
 
-The aim is a short study plan that explains your research question, sample size and the evidence behind your choices. You can use your own study or the hypothetical chronic-pain case. In this chapter, you can record the question, design and initial assumptions. Chapter 2 informs the error probabilities and interpretation; Chapter 3 supplies the calculation; Chapter 4 adds recruitment, sensitivity and feasibility. Decisions that need more evidence can remain provisional.
+The aim is a short study plan that explains your research question, sample size and the evidence behind your choices. The activity opens with a two-group comparison planned for power and empty answer boxes. You can use the suggested structures for your own study, explicitly load the hypothetical chronic-pain case, or resume a saved plan. In this chapter, you can record the question, design and initial assumptions. Chapter 2 informs the error probabilities and interpretation; Chapter 3 supplies the calculation; Chapter 4 adds recruitment, sensitivity and feasibility. Decisions that need more evidence can remain provisional.
 
 When you revise an assumption, a short note about what changed and why will help you explain the final plan.
 
@@ -285,7 +285,7 @@ Which count belongs in the protocol: analyzable patients or patients to recruit?
 
 Your report should record both and explain the adjustment for expected losses when you complete the calculation.
 
-In the [Activity: Develop and justify your study plan](https://katatam.github.io/sample-size-calculation/assumptions_report/?stage=question), you can begin with the first section and return as your plan develops. Your study title identifies the plan you are developing. The preview brings your answers and selected calculation records together. Decisions can be provisional, marked as needing evidence, or ready for review. Exploring a different teaching example leaves your saved plan in place. You can download the report as PDF or an editable Word document. “Save work for later” stores your entries for reopening in the activity.
+In the [Activity: Develop and justify your study plan](https://katatam.github.io/sample-size-calculation/assumptions_report/?stage=question), you can begin with the first section and return as your plan develops. Your study title identifies the plan you are developing. The preview brings your answers and selected calculation records together. Each section can be marked ready for review once its applicable questions are answered. Unresolved evidence belongs in your written explanation; changes to key inputs flag affected sections for another review. Exploring a different teaching example leaves your saved plan in place. You can download the report as PDF or an editable Word document. “Save work for later” stores your entries for reopening in the activity.
 
 This activity connects the numerical result to a defensible study decision. Your report should record the calculation or simulation results together with their method, inputs and interpretation.
 

@@ -34,7 +34,7 @@ These are proposed teaching allocations. The pilot should establish how much pre
 
 ## A study plan developed across chapters
 
-The [study-plan report activity](https://katatam.github.io/sample-size-calculation/study/?activity=assumptions_report) can be opened from the first session. Its report downloads as PDF by default, with an editable Word alternative. “Save work for later” stores entries for reopening in the activity. The [case template](../case-studies/student_case_template.md) provides prompts for an offline document. Early entries may remain provisional, with missing evidence identified.
+The [study-plan report activity](https://katatam.github.io/sample-size-calculation/study/?activity=assumptions_report) can be opened from the first session. Its report downloads as PDF by default, with an editable Word alternative. “Save work for later” stores entries for reopening in the activity. The [case template](../case-studies/student_case_template.md) provides prompts for an offline document. The activity starts with empty answers and the core two-group power settings. Students can choose “Resume saved plan” or explicitly start the teaching example. Early entries may remain provisional, with missing evidence identified.
 
 | Stage | Report entries | Teacher's review question |
 |---|---|---|
@@ -165,6 +165,6 @@ Teaching text: [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/). 
 
 Students choose one study and maintain its report across the four core chapters. Teaching examples in other activities provide practice; students select which results belong in their own plan. Chapter 1 contributes PICO and design, Chapter 2 error probabilities and interpretation, Chapter 3 the calculation, and Chapter 4 recruitment, sensitivity and feasibility. Advanced extensions depend on the chosen question.
 
-A provisional answer is a useful starting point. Students can identify missing evidence, its likely source and the decision it would inform. During peer review, partners can check whether the assumptions are justified and whether the attached calculation matches the written plan. The report's automated checks compare structured saved results; they cannot assess the credibility of evidence or validate numbers embedded in prose.
+A provisional answer is a useful starting point. Students can mark each section ready for review; edits to key assumptions flag the affected sections for another review. Students can identify missing evidence, its likely source and the decision it would inform. During peer review, partners can check whether the assumptions are justified and whether the attached calculation matches the written plan. The report's automated checks compare structured saved results; they cannot assess the credibility of evidence or validate numbers embedded in prose.
 
 The final submission can be the complete PDF or editable Word report with selected calculation records. Quality depends on the reasoning and evidence, as well as completion. A conclusion that the proposed study is infeasible can be well justified. Quizzes and practice examples support learning without becoming compulsory report attachments.

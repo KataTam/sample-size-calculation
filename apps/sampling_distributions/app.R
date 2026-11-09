@@ -51,7 +51,7 @@ ui <- fluidPage(
       sliderInput("effect", "True mean difference assumed for power (mmHg)", -30, 30, 5, step = .5),
       activity_help("This value is added to the null mean to set the population mean in the power panel. Negative values place it below the null mean.", for_input = "effect"),
       sliderInput("n", "Independent observations in the sample", 1, 1000, 25, step = 1),
-      activity_help("This is the sample size of each study. Larger samples narrow the distributions of sample means, making a specified difference easier to detect.", for_input = "n"),
+      activity_help("This is the sample size of each study. Larger samples narrow the distributions of sample means; their effect on power also depends on the true difference and test direction.", for_input = "n"),
       sliderInput("sigma", "Known population SD (mmHg)", .1, 100, 15, step = .1),
       activity_help("This describes variation between individual measurements. The app treats it as known; the spread of sample means is SD divided by the square root of sample size.", for_input = "sigma")),
     app_input_group("Statistical settings", collapsed = TRUE, percent_slider("alpha", "Type I error probability (%)", .001, .20, .05, step = .001),
@@ -105,6 +105,16 @@ server <- function(input, output, session) {
   operating <- reactive(safe(do.call(normal_sampling_operating_characteristics, snapshot())))
   model_answers <- reactive(list(interpretation = sampling_model_answer(operating())))
   activity_model_answers(session, model_answers, "interpretation")
+  observe({
+    x <- operating()
+    wrong <- (x$sidedness == "greater" && x$mu1 < x$mu0) || (x$sidedness == "less" && x$mu1 > x$mu0)
+    direction <- if (x$mu1 == x$mu0) "The population mean equals the null reference: rejection is a false positive, and its probability stays at the selected Type I error setting."
+      else if (wrong) "The true difference points opposite to the one-sided test. Increasing sample size reduces the shaded detection area and power."
+      else "Increasing sample size expands the shaded detection area and power at this true difference."
+    session$sendCustomMessage("activity-question-help", list(
+      n = list(help = paste("This is the number of observations in each study. Larger samples narrow the distributions of sample means.", direction)),
+      interpretation = list(help = paste("Your explanation should connect the power curve to the shaded detection area, with population means, SD, and test settings held fixed.", direction))))
+  })
   output$bridge_status <- renderText(bridge_status())
   output$distributions <- renderPlot(plot_sample_mean_distributions(operating()), res = 96,
     alt = "Distributions of the sample mean under the null and specified alternative. Rejection tails under the null show Type I error probability; the non-rejection region under the alternative shows Type II error probability. Values and boundaries are listed below.")

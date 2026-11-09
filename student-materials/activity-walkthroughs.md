@@ -14,7 +14,7 @@ The expected difference records your best expectation. With “Same as planning 
 
 “Report” previews the current calculation and any answers you have entered. In the reasoning lab, it also identifies the selected example, feasibility and simulation assumptions. Expandable example answers update with the example and parameters; only your entered responses appear as answers in the report. Your writing is preserved when settings change and should be reviewed against the new results.
 
-The apps remember edited inputs in the same browser. After reopening an app, “Help and saved inputs” offers “Restore previous inputs.” Simulations need to be run again with the restored settings. The study-plan report and quizzes restore their saved entries automatically. A downloaded work file provides a backup or lets you continue on another computer.
+The apps remember edited inputs in the same browser. After reopening an app, “Help and saved inputs” offers “Restore previous inputs.” Simulations need to be run again with the restored settings. The study-plan report opens with empty answers and the core two-group power settings; “Resume saved plan” restores your earlier work when selected. Quizzes restore their saved attempts automatically. A downloaded work file provides a backup or lets you continue on another computer.
 
 The reasoning lab and single-percentage app omit saved simulation results from the report when their settings or example no longer match. A message explains which simulation needs rerunning. While the app remains open, its simulation panels and CSV downloads retain the original run and its recorded assumptions until another run replaces it. A downloaded file is a snapshot; after revising your plan, you should save a new report.
 
@@ -32,12 +32,12 @@ The reasoning lab and single-percentage app omit saved simulation results from t
 
 [Open your plan](../assumptions_report/?stage=question) · [Matching explanation](../book/clinical-question.html#record-assumptions)
 
-1. Your starting point can be your own study or the chronic-pain teaching example. A study title identifies the plan. The teaching example supplies the question and design; you develop the remaining sections.
+1. Your starting point can be your own study or the chronic-pain teaching example. A study title identifies the plan. Answers start empty. “Suggested structure” gives a framework for your own study. Selecting the teaching case shows its example answers; “Start the pain-relief plan” supplies the question and design when you choose it.
 2. Chapter 1 contributes PICO and design; Chapter 2 contributes power and interpretation; Chapter 3 contributes the calculation; Chapter 4 contributes recruitment and feasibility. The chapter links open the relevant report sections.
-3. Each decision can remain provisional, need evidence, or be ready for review. For an unknown value, your answer can explain what evidence is needed and where you could obtain it.
-4. In an app’s Report view, “Add this calculation to my report” opens a preview of the current inputs, result and method. You choose whether to attach it and whether to replace an earlier result of that type. Your written answers remain in place; related decisions become provisional for review.
+3. Each of the four sections has one “Ready for review” checkbox, available after its applicable questions are answered. Your explanation can identify unknown values and the evidence needed. The final review groups missing answers and checks attached calculation values.
+4. In an app’s Report view, “Add this calculation to my report” opens a preview of the current inputs, result and method. You choose whether to attach it and whether to replace an earlier result of that type. Your written answers remain in place; affected sections are marked for another review.
 5. “Review before downloading” lists unresolved decisions and compares the analyzable requirement with the starting count in an attached recruitment calculation. Values written in free text still need your review. Optional simulations can be attached as explorations.
-6. PDF and Word downloads contain the plan, decision review and attached results. “Save work for later” preserves the editable app state. Entries also persist in the same browser; the saved file supports another computer. The plan is complete for the core assignment when its applicable decisions and calculation have been reviewed. Advanced activities can extend it when relevant.
+6. PDF and Word downloads contain the plan, section review and attached results. “Save work for later” preserves the editable app state. Entries also persist in the same browser; the saved file supports another computer. The plan is complete for the core assignment when its applicable decisions and calculation have been reviewed. Advanced activities can extend it when relevant.
 
 
 ## Chronic pain: one study and many studies — core

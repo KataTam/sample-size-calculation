@@ -105,6 +105,11 @@ server <- function(input, output, session) {
   model_answers <- reactive(list(reasoning = recruitment_model_answer(plan(), switching_applied(),
     isTRUE(input$switching) && identical(input$starting_assumption, "included"))))
   activity_model_answers(session, model_answers, "reasoning")
+  observe({session$sendCustomMessage("activity-question-help", list(reasoning = list(
+    question = if (isTRUE(input$switching)) "How would switching and missing assessments affect your recruitment plan?" else "How would missing assessments affect your recruitment plan?",
+    help = paste0("Your explanation should compare the starting and final counts, justify the loss",
+      if (isTRUE(input$switching)) " and switching" else "",
+      " assumptions using comparable evidence, and identify how missing outcomes will be handled."))))})
   make_table <- function(caption, headings, rows) {
     tags$table(class = "table table-striped", tags$caption(caption),
       tags$thead(tags$tr(lapply(headings, function(x) tags$th(scope = "col", x)))),
