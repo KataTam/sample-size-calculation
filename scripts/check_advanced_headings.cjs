@@ -14,7 +14,9 @@ const base=process.argv[2]||'http://127.0.0.1:8769';
   if(i<4) {
     const disclosures=p.locator('.page-inner details.advanced-explanation');
     const optional={feasibility:'treatment-switching'}[chapter];
-    assert.equal(await disclosures.count(),optional?1:0,'Optional advanced explanations stay beside their related core calculation');
+    assert.equal(await disclosures.count(),chapter==='calculations'?2:optional?1:0,'Optional advanced explanations stay beside their related core calculation');
+    for(const disclosure of await disclosures.all())assert.equal(await disclosure.getAttribute('open'),null,'Advanced explanation starts collapsed');
+    if(chapter==='calculations')assert.deepEqual(await disclosures.evaluateAll(nodes=>nodes.map(n=>n.closest('.section').id)),['adherence','rehabilitation']);
     if(optional) {
       assert.equal(await disclosures.getAttribute('id'),optional);
       assert.equal(await disclosures.getAttribute('open'),null,'Advanced explanation starts collapsed');
