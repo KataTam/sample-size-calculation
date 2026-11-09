@@ -42,9 +42,9 @@ Table: Design dimensions that determine the appropriate planning method.
 
 The number of measurements in a study does not necessarily equal the number of independent observations. Before choosing a sample size calculation, you should distinguish:
 
-- The [unit of randomization](#unit-of-randomization): what is assigned to a treatment, such as a participant, hospital, or body site.
-- The [unit of measurement](#unit-of-measurement): what an outcome is recorded for, such as a participant, lesion, or measurement occasion.
-- The [unit of analysis](#unit-of-analysis): the entity represented in the analysis, with dependence among entities accounted for by the model.
+- The [unit of randomization](#unit-of-randomization){.no-glossary-tooltip}: what is assigned to a treatment, such as a participant, hospital, or body site.
+- The [unit of measurement](#unit-of-measurement){.no-glossary-tooltip}: what an outcome is recorded for, such as a participant, lesion, or measurement occasion.
+- The [unit of analysis](#unit-of-analysis){.no-glossary-tooltip}: the entity represented in the analysis, with dependence among entities accounted for by the model.
 
 These units may coincide, as in a trial where participants are individually randomized and each contributes one outcome. They can also differ. An analysis may use individual measurements while accounting for their grouping within hospitals or participants.
 
@@ -186,7 +186,7 @@ knitr::kable(data.frame(
     "Reporting sleep difficulty", "Observed percentage", "95% Wilson confidence interval"),
   Result = c("200", "180", "72", "40.0%",
     paste(percent(sleep_limits[1, 1]), "to", percent(sleep_limits[1, 2])))),
-  caption = "A new descriptive question answered using an existing chronic-pain trial dataset.")
+  caption = "A new descriptive question answered using an existing chronic pain trial dataset.")
 ```
 
 The interval describes sampling uncertainty under the model. Possible differences between the 20 patients with missing information and those who answered require separate assessment. The trial's eligibility criteria also restrict whom these results describe: its participants may not represent all patients with chronic pain. Random allocation supports the original treatment comparison.
@@ -270,7 +270,7 @@ Before writing the protocol, you should check relevant guidance and the current 
 
 For a rare disease, the number of eligible patients may limit recruitment. Your plan should document how many patients could realistically participate, over what period and across which centers, and what that sample could establish.
 
-This is the same feasibility problem as the chronic pain plan, with a more restrictive recruitment ceiling. The aim is to obtain useful, valid information within the recruitment limit.
+This is the same feasibility problem as the plan for the chronic pain trial, with a more restrictive recruitment ceiling. The aim is to obtain useful, valid information within the recruitment limit.
 
 1. You should establish the recruitment ceiling. You can work with specialist centers, registries and patient organizations. You can consider collaboration across countries, eligibility criteria and ways to reduce travel and follow-up burden. Your explanation should distinguish the number of people with the disease from the number eligible and willing to participate [@fdarare2023].
 2. You can use knowledge of the disease's natural course. Previous studies and registries can inform progression, variability, suitable assessment times and meaningful outcomes. You should check whether these data describe the population you intend to study. If this knowledge is insufficient, a natural-history study may be a useful research objective in its own right [@fdanaturalhistory2019].
@@ -292,7 +292,7 @@ In rare-disease studies, the Type I error probability and any alternative design
 
 The earlier treatment comparisons asked whether a novel treatment improves outcomes. A new treatment may also offer easier administration, fewer adverse effects, or lower costs. You may then want to establish whether it retains sufficient efficacy to be an acceptable alternative to an established treatment. This can motivate a noninferiority trial. An equivalence trial assesses whether the treatments differ only within prespecified, clinically acceptable limits [@schumi2011lookingglass].
 
-The margin defines the boundary used to assess the treatment difference. For noninferiority, it represents the largest acceptable loss of efficacy. Equivalence uses lower and upper boundaries. These margins concern the population-level difference between treatment groups. Their justification should reflect the outcome, follow-up period, clinical consequences, and evidence about the established treatment's benefit. The 20-percentage-point clinical threshold in the chronic-pain example describes a worthwhile improvement; an acceptable loss requires a separate justification [@fda2016noninferiority].
+The margin defines the boundary used to assess the treatment difference. For noninferiority, it represents the largest acceptable loss of efficacy. Equivalence uses lower and upper boundaries. These margins concern the population-level difference between treatment groups. Their justification should reflect the outcome, follow-up period, clinical consequences, and evidence about the established treatment's benefit. The 20-percentage-point clinical threshold in the chronic pain trial describes a worthwhile improvement; an acceptable loss requires a separate justification [@fda2016noninferiority].
 
 For an outcome such as pain relief, where higher percentages are better and the difference is novel minus standard treatment, noninferiority requires the lower confidence limit to lie above the prespecified lower boundary. Equivalence requires the entire confidence interval to lie within the two equivalence boundaries. The confidence level should match the planned test and Type I error probability. A nonsignificant superiority result alone cannot establish either conclusion [@piaggio2012consortni].
 

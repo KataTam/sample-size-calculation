@@ -20,9 +20,9 @@ const base=process.argv[2]||'http://127.0.0.1:8769';
     return duplicates;
   });
   assert.deepEqual(repeated,[], 'Glossary terms should be linked only once per chapter');
-  const term=page.locator('a[data-glossary-term="precision"]').first();
+  const term=page.locator('a[data-glossary-term="precision"]:not(.no-glossary-tooltip)').first();
   await term.hover();await page.locator('#glossary-tooltip:not([hidden])').waitFor();
-  assert((await page.locator('#glossary-tooltip').innerText()).includes('Bias concerns systematic error in the estimate.'));
+  assert((await page.locator('#glossary-tooltip').innerText()).includes('narrower confidence interval indicates greater precision'));
   await page.keyboard.press('Escape');assert(await page.locator('#glossary-tooltip').isHidden());
   await term.focus();assert(await page.locator('#glossary-tooltip').isVisible());
   const bounds=await page.locator('#glossary-tooltip').boundingBox();
@@ -36,7 +36,22 @@ const base=process.argv[2]||'http://127.0.0.1:8769';
   await page.setViewportSize({width:1280,height:900});
  }
  await page.goto(base+'/book/clinical-question.html');
- await page.locator('a[data-glossary-term="clinical-threshold"]:visible').first().hover();
+ const ci=page.locator('a[data-glossary-term="confidence-interval"]');
+ await ci.hover();
+ assert.match(await page.locator('#glossary-tooltip').innerText(),/range of values compatible with the data/);
+ await page.keyboard.press('Escape');
+ const groupDifference=page.locator('a[data-glossary-term="between-group-differences"]');
+ await groupDifference.hover();
+ assert.match(await page.locator('#glossary-tooltip').innerText(),/Individual patients.*each person/s);
+ await page.keyboard.press('Escape');
+ for (const [box,id] of [['q6','alpha'],['q7','beta']]) {
+  await page.locator('#sample-size-question-'+box+' > summary').click();
+  const inline=page.locator('#sample-size-question-'+box+' a[data-glossary-term="'+id+'"]');
+  assert((await inline.getAttribute('href')).endsWith('#'+id));
+  await inline.hover();assert(await page.locator('#glossary-tooltip').isHidden());
+  await inline.focus();assert(await page.locator('#glossary-tooltip').isHidden());
+ }
+ await ci.hover();
  await page.screenshot({path:'build/browser-checks/glossary-tooltip.png'});
  const definitions=JSON.parse(fs.readFileSync('data/glossary-terms.json','utf8'));
  await page.goto(base+'/book/glossary.html');

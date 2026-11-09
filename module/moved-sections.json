@@ -44,5 +44,6 @@
   "eq:single-proportion": "study-designs",
   "tab:single-proportion-precision": "study-designs",
   "gpower-assumptions": "appendix",
-  "tab:gpower-effect-sizes": "appendix"
+  "tab:gpower-effect-sizes": "appendix",
+  "model-answer-protocol-counts": "feasibility"
 }

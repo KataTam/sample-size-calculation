@@ -58,6 +58,9 @@
       if (bound.has(link)) return;
       bound.add(link);
       link.dataset.glossaryTerm = specific.id;
+      // An inline definition already explains these occurrences. Keep the link
+      // to the full glossary without repeating that explanation on hover/focus.
+      if (link.closest('.no-glossary-tooltip')) return;
       link.addEventListener('mouseenter', () => show(link, specific));
       link.addEventListener('mouseleave', later);
       link.addEventListener('focus', () => show(link, specific));

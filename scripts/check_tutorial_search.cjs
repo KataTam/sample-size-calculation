@@ -29,9 +29,15 @@ const base = process.argv[2] || 'http://127.0.0.1:8769';
     await page.waitForURL('**/common-mistakes.html#does-20-better-mean-20-percentage-points');
     assert(await page.locator('#does-20-better-mean-20-percentage-points').evaluate(n => n.open));
     await page.goto(`${base}/book/clinical-question.html`);
-    const pico = page.locator('tr', {hasText:'Research question: PICO'});
-    assert((await pico.innerText()).includes('Richardson'));
+    const pico = page.locator('.page-inner p').filter({hasText:'A clear treatment-comparison question identifies'});
     assert(await pico.locator('a[href*="ref-richardson1995"]').count());
+    assert(await pico.evaluate(el => Boolean(el.compareDocumentPosition(document.querySelector('.planning-assumptions')) & Node.DOCUMENT_POSITION_FOLLOWING)));
+    const chapterLinks=await page.locator('.planning-assumptions a[href]').evaluateAll(links=>links.map(a=>new URL(a.href).pathname));
+    for (const chapter of ['clinical-question','power','calculations','feasibility'])
+      assert(chapterLinks.some(path=>path.endsWith('/'+chapter+'.html')), 'Report table links to '+chapter);
+    assert.equal(await page.locator('#model-answer-protocol-counts').count(),0);
+    await page.goto(`${base}/book/feasibility.html`);
+    assert.equal(await page.locator('#model-answer-protocol-counts').count(),1);
     console.log('Reference-page disclosures, PICO citation, whole-tutorial search and anchored results verified.');
   } finally { await browser.close(); }
 })().catch(e => {console.error(e); process.exit(1);});

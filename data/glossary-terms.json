@@ -6,7 +6,7 @@
       "population parameter",
       "population parameters"
     ],
-    "definition": "A numerical feature of the population, such as its mean or treatment difference. It is distinguished from an estimate calculated from a sample."
+    "definition": "A numerical feature of the population, such as its mean or the difference between treatment groups."
   },
   {
     "id": "sample-estimate",
@@ -15,7 +15,7 @@
       "sample estimate",
       "sample estimates"
     ],
-    "definition": "A value calculated from observed data to estimate a population parameter. It varies from sample to sample."
+    "definition": "A value calculated from a sample to estimate a population quantity. Another sample may give a different value."
   },
   {
     "id": "expected-difference",
@@ -23,7 +23,7 @@
     "aliases": [
       "expected difference"
     ],
-    "definition": "The between-group population difference anticipated from current evidence, with uncertainty."
+    "definition": "The difference between treatment groups that you anticipate from current evidence, with uncertainty."
   },
   {
     "id": "target-difference",
@@ -39,16 +39,17 @@
     "aliases": [
       "clinical threshold"
     ],
-    "definition": "The smallest between-group benefit judged worthwhile, considering burdens, risks, costs and alternatives."
+    "definition": "The smallest between-group benefit judged worthwhile, considering risks, burden, costs and alternatives."
   },
   {
     "id": "between-group-differences",
-    "label": "Between-group difference",
+    "label": "Between-group differences and individual benefit",
     "aliases": [
       "between-group difference",
-      "between-group differences"
+      "between-group differences",
+      "between-group differences and individual benefit"
     ],
-    "definition": "A comparison of population outcomes under two treatments, such as a difference in means or event percentages."
+    "definition": "A comparison of group averages or percentages. Individual patients may benefit by different amounts; the group comparison cannot identify how much each person would benefit."
   },
   {
     "id": "percentage-points",
@@ -57,7 +58,7 @@
       "percentage points",
       "percentage-point"
     ],
-    "definition": "The absolute difference between two percentages: 60% minus 30% equals 30 percentage points. This differs from a relative percentage change."
+    "definition": "The absolute difference between two percentages: 60% minus 30% equals 30 percentage points."
   },
   {
     "id": "mean-difference",
@@ -65,7 +66,7 @@
     "aliases": [
       "mean difference"
     ],
-    "definition": "The difference between two population means, expressed in the outcome's original units. Here, treatment minus control."
+    "definition": "The difference between two group averages, in the outcome's original units. Here, novel treatment minus standard treatment."
   },
   {
     "id": "effect-size",
@@ -73,7 +74,7 @@
     "aliases": [
       "effect size"
     ],
-    "definition": "A numerical description of the size of a difference or association. Its meaning depends on the outcome, comparison and scale. Clinical importance requires a judgment in the study context."
+    "definition": "A number describing the size of a difference or association, on a stated scale."
   },
   {
     "id": "standard-deviation",
@@ -81,7 +82,7 @@
     "aliases": [
       "standard deviation"
     ],
-    "definition": "SD describes the spread of individual observations, measured in the outcome's units."
+    "definition": "How much individual observations vary, measured in the outcome's units. Often abbreviated SD."
   },
   {
     "id": "standard-error",
@@ -89,7 +90,7 @@
     "aliases": [
       "standard error"
     ],
-    "definition": "How much an estimate would vary across repeated samples. For a mean from n independent observations, SE = SD / sqrt(n); the population SD is usually estimated from the sample. Other estimates and dependent observations need different formulas."
+    "definition": "How much an estimate would vary across repeated samples. A smaller standard error means greater precision."
   },
   {
     "id": "confidence-interval",
@@ -98,7 +99,7 @@
       "confidence interval",
       "confidence intervals"
     ],
-    "definition": "A range showing uncertainty around an estimate under the analysis assumptions. A 95% confidence interval captures the true population value in about 95% of repeated studies, when recalculated for each study under the method's assumptions. With a matching two-sided test, a 95% interval excluding zero corresponds to significance at 5%; different methods may disagree."
+    "definition": "A range of values compatible with the data under the analysis assumptions. A narrower interval indicates greater precision at the same confidence level."
   },
   {
     "id": "estimation",
@@ -106,7 +107,7 @@
     "aliases": [
       "estimation"
     ],
-    "definition": "Using sample data to estimate a population quantity, such as a mean, prevalence or treatment difference. A point estimate gives a value; an interval estimate expresses uncertainty. Precision describes how narrowly the quantity is estimated."
+    "definition": "Using sample data to estimate a population quantity, such as a mean or a treatment difference."
   },
   {
     "id": "precision",
@@ -114,7 +115,7 @@
     "aliases": [
       "precision"
     ],
-    "definition": "How little an estimate varies across repeated samples, assessed using its standard error or interval width at a specified confidence level. Smaller standard errors and narrower intervals indicate greater precision. Bias concerns systematic error in the estimate. Estimation is the process of estimating; precision is a property of the estimate."
+    "definition": "How little an estimate varies across repeated samples. At the same confidence level, a narrower confidence interval indicates greater precision."
   },
   {
     "id": "margin-of-error",
@@ -123,7 +124,7 @@
       "margin of error",
       "half-width"
     ],
-    "definition": "For a symmetric confidence interval, its half-width: the distance from the estimate to either limit. It depends on the confidence level and sampling uncertainty."
+    "definition": "For a symmetric confidence interval, the distance from the estimate to either limit: half the full width."
   },
   {
     "id": "full-width",
@@ -139,7 +140,7 @@
     "aliases": [
       "null hypothesis"
     ],
-    "definition": "In these treatment comparisons, the claim that population outcomes are equal. A non-significant result leaves uncertainty about the population difference; its confidence interval helps describe that uncertainty."
+    "definition": "The statement tested against the data. In these treatment comparisons, it says there is no population difference between treatments."
   },
   {
     "id": "alternative-hypothesis",
@@ -156,7 +157,7 @@
       "Type I error probability",
       "Type 1 error probability"
     ],
-    "definition": "The probability of falsely rejecting the null hypothesis: a false positive. Here, it means finding a statistically significant difference when population outcomes are equal."
+    "definition": "The probability of rejecting the null hypothesis when it is true: a false positive."
   },
   {
     "id": "beta",
@@ -165,7 +166,7 @@
       "Type II error probability",
       "Type 2 error probability"
     ],
-    "definition": "The probability of missing a specified true treatment difference: a false negative. It depends on the true difference, sample size and analysis."
+    "definition": "The probability of missing a specified true difference: a false negative."
   },
   {
     "id": "statistical-power",
@@ -174,7 +175,7 @@
       "statistical power",
       "power"
     ],
-    "definition": "The probability that the planned test detects a specified true difference: the true-positive probability. It equals 1 minus the Type II error probability."
+    "definition": "The probability that the planned test detects a specified true difference. It equals 1 minus the Type II error probability."
   },
   {
     "id": "p-value",
@@ -200,7 +201,7 @@
     "aliases": [
       "independent groups"
     ],
-    "definition": "Different patients belong to the two groups, each contributing one outcome. The analysis assumes their outcomes are independent: one outcome does not provide information about another beyond what the model accounts for. Paired, repeated, or clustered observations need methods that account for their relationships."
+    "definition": "Separate groups of participants whose outcomes are assumed independent. Paired measurements or people grouped within clinics may need a different analysis."
   },
   {
     "id": "analyzable-sample-size",
@@ -209,7 +210,7 @@
       "analyzable sample size",
       "analyzable sample"
     ],
-    "definition": "The number of participants included in the stated analysis. In the two-group examples, distinguish per-group counts from the total and from the recruitment target."
+    "definition": "The number of participants contributing to the planned analysis. Counts should specify whether they are per group or total."
   },
   {
     "id": "sampling-variability",
@@ -218,7 +219,7 @@
       "sampling variability",
       "sampling variation"
     ],
-    "definition": "Differences between estimates from repeated samples drawn under the same population assumptions. Larger independent samples generally reduce this variability."
+    "definition": "The variation in results between samples from the same population. Larger independent samples generally reduce it."
   },
   {
     "id": "bias",
@@ -226,7 +227,7 @@
     "aliases": [
       "bias"
     ],
-    "definition": "Systematic deviation from the population quantity being estimated. For example, patients with poor outcomes disproportionately missing follow-up may bias the observed comparison. More participants alone do not correct this mechanism."
+    "definition": "Systematic error that shifts an estimate away from the population value, for example when missing outcomes disproportionately come from patients with poor results."
   },
   {
     "id": "sensitivity-analysis",
@@ -235,7 +236,7 @@
       "sensitivity analysis",
       "sensitivity analyses"
     ],
-    "definition": "Examining how results or conclusions change under plausible alternative assumptions, such as the treatment difference, variability, or reasons for missing outcomes. In planning, you can recalculate the required sample or keep a chosen sample fixed and assess its performance."
+    "definition": "Checking how a result changes when you use other plausible assumptions, such as a smaller treatment difference or more missing outcomes."
   },
   {
     "id": "estimand",
@@ -243,7 +244,7 @@
     "aliases": [
       "estimand"
     ],
-    "definition": "The precisely defined population quantity the study aims to estimate: which treatments, population and outcome are compared, on what scale, and how relevant events such as treatment discontinuation are handled."
+    "definition": "The precise population quantity your study aims to estimate, including which treatments and outcome are compared and how treatment changes are handled."
   },
   {
     "id": "monte-carlo-error",
@@ -252,7 +253,7 @@
       "Monte Carlo error",
       "Monte Carlo uncertainty"
     ],
-    "definition": "Random variation caused by using a limited number of simulated studies. More repetitions improve the precision of estimated power while each trial's design stays fixed."
+    "definition": "Random variation caused by using a limited number of simulated studies. More simulation repetitions reduce this uncertainty."
   },
   {
     "id": "false-positive",
@@ -288,7 +289,7 @@
       "true negative",
       "true-negative probability"
     ],
-    "definition": "A non-significant finding when population outcomes are equal. In a real study, a non-significant result can be either a true negative or a false negative."
+    "definition": "A non-significant result when the null hypothesis is true."
   },
   {
     "id": "z-value",
@@ -297,7 +298,7 @@
       "z-value",
       "z-values"
     ],
-    "definition": "A position on the standard normal bell-shaped curve, measured in standard deviations from its center. For example, 1.96 is 1.96 standard deviations above zero."
+    "definition": "A position on the standard normal bell-shaped curve, measured in standard deviations from its center."
   },
   {
     "id": "quantile",
@@ -306,7 +307,7 @@
       "quantile",
       "quantiles"
     ],
-    "definition": "A cutoff below which a stated proportion of a distribution lies. For example, 97.5% of the standard normal distribution lies below 1.96."
+    "definition": "A cutoff with a specified percentage of values below it. For example, 97.5% of the standard normal distribution lies below 1.96."
   },
   {
     "id": "wmo",
@@ -314,7 +315,7 @@
     "aliases": [
       "Medical Research Involving Human Subjects Act (WMO)"
     ],
-    "definition": "Dutch legislation governing medical research involving human participants within its scope. Applicable studies require prior review; the appropriate route depends on the study and legal framework."
+    "definition": "The Medical Research Involving Human Subjects Act: Dutch legislation covering specified medical research involving people."
   },
   {
     "id": "metc",
@@ -322,13 +323,13 @@
     "aliases": [
       "medical research ethics committee (METC, or MREC in English)"
     ],
-    "definition": "An accredited medical research ethics committee (MREC in English). It reviews most research subject to the Dutch WMO, including scientific value, participant protection, and the balance of risks and benefits."
+    "definition": "An accredited medical research ethics committee in the Netherlands. It reviews studies assigned to it under the applicable rules."
   },
   {
     "id": "ccmo",
     "label": "CCMO",
     "aliases": [],
-    "definition": "The Central Committee on Research Involving Human Subjects in the Netherlands. It directly reviews specified categories of research and has national oversight responsibilities. It is distinct from a local accredited METC."
+    "definition": "The Central Committee on Research Involving Human Subjects in the Netherlands. It oversees ethics review and directly reviews specified categories of research."
   },
   {
     "id": "research-ethics-committee",
@@ -336,7 +337,7 @@
     "aliases": [
       "research ethics committee (REC)"
     ],
-    "definition": "An independent committee that reviews the scientific justification and participant protections of research. Its name and legal responsibilities depend on the country."
+    "definition": "An independent committee that reviews a study's scientific justification and protection of participants. Its name and responsibilities vary by country."
   },
   {
     "id": "institutional-review-board",
@@ -345,7 +346,7 @@
       "institutional review board (IRB)",
       "IRB"
     ],
-    "definition": "The usual US term for a committee reviewing research involving human participants under the applicable regulatory framework."
+    "definition": "The usual US term for a committee that reviews research involving human participants."
   },
   {
     "id": "unit-of-randomization",
@@ -353,7 +354,7 @@
     "aliases": [
       "unit of randomization"
     ],
-    "definition": "The entity assigned to a treatment, such as a participant, hospital, or body site. The allocation structure determines where independent treatment assignments occur."
+    "definition": "What is assigned to a treatment: for example, a participant, hospital, or body site."
   },
   {
     "id": "unit-of-measurement",
@@ -361,7 +362,7 @@
     "aliases": [
       "unit of measurement"
     ],
-    "definition": "The entity or occasion for which an outcome is recorded, such as a participant, lesion, or visit. Several measurements can come from the same participant."
+    "definition": "What each recorded outcome describes: for example, a participant, lesion, or visit."
   },
   {
     "id": "unit-of-analysis",
@@ -369,7 +370,7 @@
     "aliases": [
       "unit of analysis"
     ],
-    "definition": "The entity represented in the analysis. Individual measurements can be analyzed with a model that accounts for dependence within participants or clusters."
+    "definition": "What the analysis treats as a unit. The method must account for relationships among measurements from the same participant or group."
   },
   {
     "id": "paired-observations",
@@ -377,7 +378,7 @@
     "aliases": [
       "paired observations"
     ],
-    "definition": "Two linked observations, such as outcomes from two treated sites in one participant. A paired analysis uses the within-pair comparison and accounts for the relationship between the observations."
+    "definition": "Two linked measurements, such as outcomes from two body sites in one participant. Their relationship is accounted for in a paired analysis."
   },
   {
     "id": "intracluster-correlation",
@@ -386,7 +387,7 @@
       "intracluster correlation coefficient",
       "ICC"
     ],
-    "definition": "A measure of similarity between outcomes within the same cluster. In a simple random-intercept model, it is the proportion of total outcome variance attributable to differences between clusters."
+    "definition": "A measure of how similar outcomes are within the same group, such as patients within a hospital."
   },
   {
     "id": "design-effect",
@@ -394,7 +395,7 @@
     "aliases": [
       "design effect"
     ],
-    "definition": "The ratio of the variance of an estimate under a specified design to that under a comparable independent-observation design. For a simple cluster design with equal cluster size m and ICC rho, it is approximately 1 + (m - 1)rho; this can guide an initial sample size inflation."
+    "definition": "A factor describing how a study design changes the variance of an estimate compared with a design using independent observations."
   },
   {
     "id": "retention",
@@ -403,7 +404,7 @@
       "retention",
       "retention proportion"
     ],
-    "definition": "The proportion of enrolled participants contributing the required outcome at the specified time. If 180 of 200 contribute, retention is 90% and loss is 10%. Planning should reflect comparable evidence and uncertainty."
+    "definition": "The percentage of enrolled participants who provide the required outcome at the specified time. If 180 of 200 contribute, retention is 90%."
   },
   {
     "id": "relative-increase",
@@ -420,7 +421,7 @@
     "aliases": [
       "covariate adjustment"
     ],
-    "definition": "An analysis using prespecified baseline characteristics. Prognostic characteristics can improve precision in randomized comparisons. Studying variation in treatment effects requires separate treatment-by-characteristic comparisons."
+    "definition": "Using characteristics measured before treatment, such as baseline pain, in the analysis. These can help improve precision."
   },
   {
     "id": "treatment-crossover",
@@ -429,7 +430,7 @@
       "treatment crossover",
       "treatment switching"
     ],
-    "definition": "Receiving the other treatment after randomization. It can reduce the difference between randomized groups; participants retain their original assignment in an analysis of treatment assignment. A planned crossover trial assigns treatment sequences by design."
+    "definition": "Receiving the other treatment after randomization. This can reduce the difference between randomized groups."
   },
   {
     "id": "treatment-contamination",
@@ -438,5 +439,109 @@
       "treatment contamination"
     ],
     "definition": "Participants assigned to the comparator receive some or all of the intervention, potentially reducing the difference between randomized groups."
+  },
+  {
+    "id": "primary-outcome",
+    "label": "Primary outcome",
+    "aliases": [
+      "primary outcome"
+    ],
+    "definition": "The main outcome chosen to answer the research question and guide the sample size calculation."
+  },
+  {
+    "id": "pilot-study",
+    "label": "Pilot study",
+    "aliases": [
+      "pilot study"
+    ],
+    "definition": "A small preliminary study used to assess whether and how a larger study can be carried out."
+  },
+  {
+    "id": "study-protocol",
+    "label": "Study protocol",
+    "aliases": [
+      "study protocol"
+    ],
+    "definition": "The written plan for a study, including its question, design, procedures and intended analysis."
+  },
+  {
+    "id": "binary-outcome",
+    "label": "Binary outcome",
+    "aliases": [
+      "binary outcome"
+    ],
+    "definition": "An outcome with two possible categories, such as pain relief: yes or no."
+  },
+  {
+    "id": "pico",
+    "label": "PICO",
+    "aliases": [
+      "pico"
+    ],
+    "definition": "Population, Intervention, Comparator, and Outcome: four parts of a clear treatment-comparison question."
+  },
+  {
+    "id": "ich-e9",
+    "label": "ICH E9",
+    "aliases": [
+      "ich e9"
+    ],
+    "definition": "Statistical guidance from the International Council for Harmonisation for planning, analyzing and reporting clinical trials of medicines."
+  },
+  {
+    "id": "spirit",
+    "label": "SPIRIT",
+    "aliases": [
+      "spirit"
+    ],
+    "definition": "Standard Protocol Items: Recommendations for Interventional Trials. Guidance on what to include in a trial protocol."
+  },
+  {
+    "id": "consort",
+    "label": "CONSORT",
+    "aliases": [
+      "consort"
+    ],
+    "definition": "Consolidated Standards of Reporting Trials. Guidance on what to report about a randomized trial and its results."
+  },
+  {
+    "id": "strobe",
+    "label": "STROBE",
+    "aliases": [
+      "strobe"
+    ],
+    "definition": "Strengthening the Reporting of Observational Studies in Epidemiology. Guidance for reporting observational studies."
+  },
+  {
+    "id": "stard",
+    "label": "STARD",
+    "aliases": [
+      "stard"
+    ],
+    "definition": "Standards for Reporting Diagnostic Accuracy Studies. Guidance for reporting studies of how well diagnostic tests work."
+  },
+  {
+    "id": "delta2",
+    "label": "DELTA²",
+    "aliases": [
+      "delta²"
+    ],
+    "definition": "Difference ELicitation in TriAls, second guidance project. Guidance on choosing and justifying the target difference for a sample size calculation."
+  },
+  {
+    "id": "frequentist-methods",
+    "label": "Frequentist methods",
+    "aliases": [
+      "frequentist methods"
+    ],
+    "definition": "Statistical methods interpreted through their performance across hypothetical repetitions of the same study."
+  },
+  {
+    "id": "statistical-significance",
+    "label": "Statistical significance",
+    "aliases": [
+      "statistical significance"
+    ],
+    "definition": "A result meeting the planned threshold for evidence against the null hypothesis."
   }
 ]

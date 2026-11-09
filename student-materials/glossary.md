@@ -4,6 +4,23 @@ Definitions support both routes. Advanced terms are identified individually; you
 
 This glossary provides reminders of terms used in the tutorial and apps. The main tutorial includes formulas and expandable R code blocks.
 
+## Research question and study plan {.core-heading .unnumbered}
+
+<span id="pico">PICO</span>
+: Population, Intervention, Comparator, and Outcome. These four elements help define a treatment-comparison question [@richardson1995]. The outcome should include the assessment time. In the chronic pain trial, they are patients with chronic pain, the novel treatment, standard treatment, and pain relief at four weeks.
+
+<span id="primary-outcome">Primary outcome</span>
+: The main outcome chosen to answer the study's principal question. In the basic examples, it guides the sample size calculation. Its definition should specify what is measured, how it is measured, and when it is assessed. The chronic pain trial uses reported pain relief at four weeks.
+
+<span id="binary-outcome">Binary outcome</span>
+: An outcome with two categories, such as pain relief: yes or no. Each group's outcome can be summarized as a count and a percentage, such as 6 of 10 patients (60%) reporting relief.
+
+<span id="pilot-study">Pilot study</span>
+: A preliminary study used to assess whether and how a larger study can be carried out. It can inform recruitment, procedures, and outcome collection. Treatment differences estimated from a small pilot are uncertain; the [pilot and feasibility discussion](#pilot-feasibility) explains appropriate planning goals [@eldridge2016].
+
+<span id="study-protocol">Study protocol</span>
+: The written plan for a study, prepared before it starts. It describes the question, design, participants, interventions, outcomes, sample size justification and analysis. Relevant reporting guidance helps identify what should be documented [@spiritconsort2025].
+
 ## Probability, percentages and rates {.core-heading .unnumbered}
 
 A probability describes how likely an event is under stated assumptions. It lies between zero and one and can be expressed as a percentage: a probability of 0.60 is 60%. An observed proportion describes the fraction of observations with an outcome, such as 6 of 10 patients reporting relief; the observed percentage is 60%. That percentage estimates the population probability but need not equal it.
@@ -12,7 +29,7 @@ In this tutorial, Type I and Type II error probabilities and power describe how 
 
 ## Population, sample and planning values {.core-heading .unnumbered}
 
-The [chronic pain case](#clinical-question) distinguishes the pilot estimates from the assumptions used for planning.
+The [chronic pain trial](#clinical-question) distinguishes the pilot estimates from the assumptions used for planning.
 
 <span id="population-parameter">Population parameter</span>
 : A population parameter is a feature of the population you want to learn about, such as its mean, proportion, or treatment difference.
@@ -21,13 +38,13 @@ The [chronic pain case](#clinical-question) distinguishes the pilot estimates fr
 : A sample estimate is calculated from the observations you obtained. In the pain pilot, 7/10 is a sample proportion, expressed as 70%. The treatment probability of 60% used in the sample size calculation is a planning assumption whose justification should draw on evidence and sensitivity analysis. A proportion such as 7/10 can also be written as 0.70 or expressed as a percentage, 70%.
 
 <span id="expected-difference">Expected difference</span>
-: The [expected difference](#between-group-differences) is the anticipated between-group population difference based on current evidence, with uncertainty. An observed difference is calculated from a particular sample, such as the pilot.
+: The [expected difference](#between-group-differences){.no-glossary-tooltip} is the anticipated between-group population difference based on current evidence, with uncertainty. An observed difference is calculated from a particular sample, such as the pilot.
 
 <span id="target-difference">Target difference</span>
-: The [target difference](#between-group-differences) is the between-group difference used in the sample size calculation, at which you calculate [power](#statistical-power).
+: The [target difference](#between-group-differences){.no-glossary-tooltip} is the between-group difference used in the sample size calculation, at which you calculate [power](#statistical-power).
 
 <span id="clinical-threshold">Clinical threshold</span>
-: The [clinical threshold](#between-group-differences) is the smallest between-group benefit judged worthwhile, considering the treatment's burdens, risks, costs, and alternatives. These judgments may coincide in practice, but the worked examples use distinct values to show their different roles. For the pain trial, they are 40, 30, and 20 percentage points, respectively.
+: The [clinical threshold](#between-group-differences){.no-glossary-tooltip} is the smallest between-group benefit judged worthwhile, considering the treatment's burdens, risks, costs, and alternatives. These judgments may coincide in practice, but the worked examples use distinct values to show their different roles. For the chronic pain trial, they are 40, 30, and 20 percentage points, respectively.
 
 The target difference should be justified as realistic and important. Planning for a difference larger than the clinical threshold generally gives lower power at some worthwhile differences. See [the target-difference discussion](#what-do-we-expect-what-will-we-plan-for-and-what-matters-clinically) and [DELTA2 guidance (Cook et al., 2018)](https://doi.org/10.1136/bmj.k3750).
 
@@ -68,7 +85,9 @@ The [two-means example](#two-means) illustrates individual variability; the [one
 : Standard error (SE) describes how much an estimate would vary if you repeated the study with new patients. For one mean, SE = SD/sqrt(n). If the population SD is 15 mmHg, 25 independent patients give an SE of 3 mmHg; 100 patients give 1.5 mmHg. Increasing the sample size reduces the standard error of the mean while the population SD remains fixed. If the population SD is unknown, the sample SD is used to estimate the SE.
 
 <span id="confidence-interval">Confidence interval</span>
-: A confidence interval shows uncertainty around an estimate under the analysis assumptions. At the same confidence level, a narrower interval indicates greater precision. For a treatment difference, you should compare its limits with zero and the clinical threshold. A 95% interval excludes zero when its corresponding two-sided test rejects at the 5% level; intervals and tests using different methods may disagree. The [clinical interval examples](#interpret-a-confidence-interval-clinically) explain these comparisons. The 95% refers to the method: across repeated studies, about 95% of intervals calculated this way would contain the true population value, if the assumptions hold.
+: A confidence interval is a range of values compatible with the study data under the analysis assumptions. It shows uncertainty around an estimate. At the same confidence level, a narrower interval indicates greater precision. For a treatment difference, its position relative to zero and the clinical threshold helps you interpret the result; the [clinical interval examples](#interpret-a-confidence-interval-clinically) illustrate this.
+
+The 95% refers to the method: across repeated studies, about 95% of intervals calculated this way would contain the true population value, if the assumptions hold. Each study produces its own interval. The [methods record](#tutorial-methods) provides details of the interval calculations used in the apps.
 
 <span id="full-width">Full interval width</span>
 : Full width is the upper confidence limit minus the lower. For a symmetric interval its half-width, or margin of error, is half the full width.
@@ -88,7 +107,7 @@ Precision describes how little an estimate varies across repeated samples; estim
 
 ### Sampling variability {#sampling-variability .core-heading .unnumbered}
 
-Sampling variability is the variation between estimates from repeated samples drawn under the same population assumptions. In the chronic pain example, the population relief probabilities stay fixed while the observed percentages and their difference vary between trials. This differs from variability between individual patients, measured by quantities such as the standard deviation.
+Sampling variability is the variation between estimates from repeated samples drawn under the same population assumptions. In the chronic pain trial, the population relief probabilities stay fixed while the observed percentages and their difference vary between trials. This differs from variability between individual patients, measured by quantities such as the standard deviation.
 
 ### Bias {#bias .core-heading .unnumbered}
 
@@ -105,6 +124,12 @@ A sensitivity analysis examines how results or conclusions change under plausibl
 ## Hypotheses, Type I error probability, Type II error probability and power {.core-heading .unnumbered}
 
 The [power chapter](#power) connects these terms to repeated hypothetical studies.
+
+<span id="frequentist-methods">Frequentist methods</span>
+: Statistical methods interpreted through their performance across hypothetical repetitions of the same study. For example, power describes how often a test detects a specified true difference, and a confidence level describes how often the interval method captures the population value.
+
+<span id="statistical-significance">Statistical significance</span>
+: A result that meets the prespecified threshold for evidence against the null hypothesis. Here, this means a p-value below the chosen Type I error probability. The estimated difference and confidence interval are also needed to assess the size and clinical importance of a treatment benefit.
 
 <span id="null-hypothesis">Null hypothesis</span>
 : The null hypothesis in these treatment comparisons says that the population outcomes are equal: the between-group difference is zero. Rejecting it means that the chosen test provides sufficient statistical evidence of a difference. When the test does not reject the null hypothesis, the evidence is insufficient to establish a difference. The confidence interval shows which treatment differences remain compatible with the data.
@@ -123,15 +148,15 @@ The [power chapter](#power) connects these terms to repeated hypothetical studie
 
 ### Type I error probability {#alpha .core-heading .unnumbered}
 
-Type I error probability ($\alpha$) is the probability of falsely rejecting the null hypothesis: the [false-positive probability](#false-positive). Here, that means finding a statistically significant treatment difference when the population outcomes are actually equal. A 5% probability means about 5 false positives per 100 repeated studies when there is no true difference, under the test's assumptions. It does not mean that 5% of all significant findings are false positives.
+Type I error probability ($\alpha$) is the probability of falsely rejecting the null hypothesis: the [false-positive probability](#false-positive){.no-glossary-tooltip}. Here, that means finding a statistically significant treatment difference when the population outcomes are actually equal. A 5% probability means about 5 false positives per 100 repeated studies when there is no true difference, under the test's assumptions. It does not mean that 5% of all significant findings are false positives.
 
 ### Type II error probability {#beta .core-heading .unnumbered}
 
-Type II error probability ($\beta$) is the probability of failing to reject a false null hypothesis: the [false-negative probability](#false-negative). Here, that means missing a specified true treatment difference. For example, a 10% Type II error probability at a true 30-percentage-point difference means about 10 missed differences per 100 repetitions of that trial. This probability depends on the true difference, sample size and analysis.
+Type II error probability ($\beta$) is the probability of failing to reject a false null hypothesis: the [false-negative probability](#false-negative){.no-glossary-tooltip}. Here, that means missing a specified true treatment difference. For example, a 10% Type II error probability at a true 30-percentage-point difference means about 10 missed differences per 100 repetitions of that trial. This probability depends on the true difference, sample size and analysis.
 
 ### Statistical power {#statistical-power .core-heading .unnumbered}
 
-Power is the probability of detecting a specified true treatment difference with the planned test: the [true-positive probability](#true-positive). It equals $1-\beta$, or 1 minus the Type II error probability. With 90% power, about 90 of 100 repetitions of the planned trial would detect that difference and 10 would miss it. Each repetition involves new patients. A non-significant result can remain compatible with both no effect and a worthwhile benefit.
+Power is the probability of detecting a specified true treatment difference with the planned test: the [true-positive probability](#true-positive){.no-glossary-tooltip}. It equals $1-\beta$, or 1 minus the Type II error probability. With 90% power, about 90 of 100 repetitions of the planned trial would detect that difference and 10 would miss it. Each repetition involves new patients. A non-significant result can remain compatible with both no effect and a worthwhile benefit.
 
 ### P-value {#p-value .core-heading .unnumbered}
 
@@ -230,7 +255,7 @@ An independent committee that reviews research involving human participants, inc
 
 ### Institutional review board (IRB) {#institutional-review-board .unnumbered}
 
-The usual US term for a committee that reviews research involving human participants. Applicable FDA or HHS rules define its responsibilities and the studies requiring review. See the [FDA guidance](https://www.fda.gov/regulatory-information/search-fda-guidance-documents/institutional-review-boards-frequently-asked-questions) and [HHS overview](https://www.hhs.gov/ohrp/regulations-and-policy/guidance/faq/45-cfr-46/index.html).
+The usual US term for a committee that reviews research involving human participants. Applicable Food and Drug Administration (FDA) or Department of Health and Human Services (HHS) rules define its responsibilities and the studies requiring review. See the [FDA guidance](https://www.fda.gov/regulatory-information/search-fda-guidance-documents/institutional-review-boards-frequently-asked-questions) and [HHS overview](https://www.hhs.gov/ohrp/regulations-and-policy/guidance/faq/45-cfr-46/index.html).
 
 The following three terms describe the Netherlands specifically.
 
@@ -245,3 +270,23 @@ An accredited medical research ethics committee, or MREC in English, reviews mos
 ### CCMO {#ccmo .unnumbered}
 
 The Central Committee on Research Involving Human Subjects directly reviews specified categories of research and has national oversight responsibilities. The [official review guidance](https://english.ccmo.nl/investigators/primary-submission-to-the-review-committee) specifies which studies are reviewed by the CCMO and which by an accredited METC.
+
+## Statistical and reporting guidance {.unnumbered}
+
+<span id="ich-e9">ICH E9</span>
+: The statistical principles guideline of the International Council for Harmonisation of Technical Requirements for Pharmaceuticals for Human Use (ICH). It provides internationally used guidance for the design, analysis and reporting of clinical trials of medicines, including sample size justification [@iche91998].
+
+<span id="spirit">SPIRIT</span>
+: Standard Protocol Items: Recommendations for Interventional Trials. It identifies information to include in a randomized trial protocol, including participants, interventions, outcomes, sample size and analysis [@spiritconsort2025].
+
+<span id="consort">CONSORT</span>
+: Consolidated Standards of Reporting Trials. It identifies information to report about a randomized trial and its results, including how sample size was determined. Relevant extensions address particular designs [@consortee2025].
+
+<span id="strobe">STROBE</span>
+: Strengthening the Reporting of Observational Studies in Epidemiology. It covers reporting of cohort, case-control and cross-sectional studies. The [STROBE statement](https://www.strobe-statement.org/) provides the checklists and explanations.
+
+<span id="stard">STARD</span>
+: Standards for Reporting Diagnostic Accuracy Studies. It covers reporting of studies that assess how well a test identifies a target condition. The [STARD checklist](https://www.equator-network.org/reporting-guidelines/stard/) explains the items.
+
+<span id="delta2">DELTA&sup2;</span>
+: Difference ELicitation in TriAls, second guidance project. The guidance explains how to choose and justify a target difference for a randomized trial, drawing on evidence about plausible differences and judgments about clinical importance [@cook2018delta2; @cook2019delta2].
