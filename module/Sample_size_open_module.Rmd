@@ -121,7 +121,7 @@ Figure \@ref(fig:pain-pilot-patients) illustrates these pilot results.
 draw_pain_pilot_patients()
 ```
 
-This looks promising, but twenty patients give you limited information. How many patients would make the main trial informative? In what follows, you will build a plan step by step, then examine what different repetitions of that study could show.
+This looks promising, but twenty patients give you limited information. How many patients would make the main trial informative? Using this example, you will calculate how many patients to recruit and explore simulated trials to see how pain-relief percentages and the difference between treatments vary from study to study.
 
 This first section focuses on two-arm randomized superiority trials: patients are assigned by chance to one of two treatment groups, and the aim is to investigate whether one treatment performs better than the other. Later chapters extend the reasoning to other outcomes, estimation, existing datasets and other study designs.
 
