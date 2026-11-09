@@ -142,7 +142,7 @@ The final plan should address all four.
 
 A scientifically sound study is an ethical requirement. The Declaration of Helsinki links reliable, valuable research to a justified protocol and prior [research ethics committee](#research-ethics-committee) review [@wmahelsinki2024]. Your protocol should explain the proposed sample size, the evidence behind its assumptions, and the information expected in relation to participants' burden and risk.
 
-For clinical trials of medicines, ICH E9 provides a shared statistical framework used in Europe and the United States. Its sample-size guidance calls for an explicit outcome, target difference, analysis, error probabilities and assumptions, with sensitivity to uncertainty considered [@iche91998]. The statistical justification should follow your study question and planned analysis.
+For clinical trials of medicines, ICH E9 provides a shared statistical framework used worldwide. Its sample-size guidance calls for an explicit outcome, target difference, analysis, error probabilities and assumptions, with sensitivity to uncertainty considered [@iche91998]. The statistical justification should follow your study question and planned analysis.
 
 Review procedures depend on the country and study type:
 
