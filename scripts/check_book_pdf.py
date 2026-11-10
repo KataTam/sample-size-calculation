@@ -46,7 +46,7 @@ for heading,target,bookmark in zip(headings,target_pages,bookmarks[2:]):
  assert compact(bookmark.title)==compact(heading['title'])
  assert r.get_destination_page_number(bookmark)==target
 assert 'Draft version' in r.pages[0].extract_text()
-assert len(r.outline)>=13
+assert len(r.outline)>=14
 assert 'Welcome' in r.pages[offset].extract_text()
 assert len(r.pages)>offset+20
 print(f'PDF checks passed: {len(links)} contents links and matching bookmarks resolve to their headings within the correct chapters; draft title, Roman front matter and body page 1 verified.')
@@ -60,7 +60,7 @@ raw_page_text=[page.extract_text() for page in r.pages]
 assert not any(re.search(r'<U\+[0-9A-Fa-f]{4,6}>', text) for text in raw_page_text), 'PDF contains an escaped Unicode label'
 roadmap_pages=[text for text in raw_page_text if 'Roadmap' in text and 'Flashcards' in text]
 assert len(roadmap_pages)==1, 'The roadmap must remain legible text on one page'
-for label in ['Chapters 1-4', 'Chapters 5-8', 'Flashcards: review and recall']:
+for label in ['Chapters 1-4', 'Chapters 5-9', 'Flashcards: review and recall']:
  assert label in roadmap_pages[0].replace(chr(0x2013), '-'), f'Missing or damaged roadmap label: {label}'
 page_text=[semantic(text) for text in raw_page_text]
 chapter_bounds={}

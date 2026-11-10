@@ -96,4 +96,4 @@ Record parts that worked well and should be preserved.
 
 ## Observe the revised sequence
 
-Record time spent interpreting versus operating software, whether students separate expected differences, target differences and clinical thresholds, whether they confuse B and n, and whether they revise conclusions after viewing precision. Record static-route participation, missing assessment pairs and the number needing technical help. Collect no patient data.
+Record time spent interpreting versus operating software, whether students separate differences observed in previous data, target differences and clinical thresholds, whether they confuse B and n, and whether they revise conclusions after viewing precision. Record static-route participation, missing assessment pairs and the number needing technical help. Collect no patient data.

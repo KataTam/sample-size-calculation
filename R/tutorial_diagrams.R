@@ -73,9 +73,9 @@ draw_planning_differences <- function() {
   segments(0, rows, values, rows, col = colors, lwd = 3, lend = "butt")
   points(values, rows, pch = c(17, 15, 18), cex = 1.25, col = colors)
   text(values + 1.6, rows, values, adj = 0, cex = .95, col = colors)
-  text(-2, rows + .13, c("Expected difference", "Target difference", "Clinical threshold"),
+  text(-2, rows + .13, c("Observed in the pilot", "Target difference", "Clinical threshold"),
     adj = 1, cex = .95, xpd = NA)
-  text(-2, rows - .22, c("Best current expectation", "Used to evaluate power",
+  text(-2, rows - .22, c("Result in the pilot sample", "Used to evaluate power",
     "Smallest worthwhile benefit"), adj = 1, cex = .78, xpd = NA)
   axis(1, at = seq(0, 50, 10), cex.axis = .9)
   mtext("Difference in pain-relief percentages", side = 1, line = 2.1, cex = .95)

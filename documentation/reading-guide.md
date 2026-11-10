@@ -7,8 +7,8 @@ Use the [full references](references.md) for bibliographic details and publisher
 | Decision | Suggested reading | Use it in the tutorial |
 |---|---|---|
 | Connect the question, outcome and analysis | Fong et al. (2026); Wang and Ji (2020); Zrineh et al. (2026) | Check the chronic-pain question before using a calculator; distinguish sampling quality from sample size |
-| Expectations and clinical judgments in a real trial | [ST01: Fayers et al. (2000)](https://doi.org/10.1054/bjoc.1999.0902) | The [Chapter 5 example](https://katatam.github.io/sample-size-calculation/book/curves.html#st01-expectations) compares a calculation target with separately surveyed expectations and clinical judgments |
-| Choose and justify the target difference | [DELTA²: Cook et al. (2018)](https://doi.org/10.1136/bmj.k3750) | Explain importance and realism, then compare the target with the expected difference and clinical threshold |
+| Expectations and clinical judgments in a real trial | [ST01: Fayers et al. (2000)](https://doi.org/10.1054/bjoc.1999.0902) | The [Chapter 6 example](https://katatam.github.io/sample-size-calculation/book/curves.html#st01-expectations) compares a calculation target with separately surveyed expectations and clinical judgments |
+| Choose and justify the target difference | [DELTA²: Cook et al. (2018)](https://doi.org/10.1136/bmj.k3750) | Explain importance and realism, then compare the target with the difference observed in previous data and clinical threshold |
 | Select a defensible planning goal | [Lakens (2022)](https://doi.org/10.1525/collabra.33267) | Explain whether a power target, a precision target for estimation, or fixed resources determines the sample size |
 | Assess prior evidence | Albers and Lakens (2018); Caldwell and Vigotsky (2020) | Treat small pilot differences as uncertain; use clinically interpretable units and plausible ranges |
 | Interpret raw and standardized differences | [Kallogjeri and Piccirillo (2023)](https://doi.org/10.1001/jamaoto.2023.0159) | Keep clinical units visible; distinguish clinical importance from a difference relative to the SD |
@@ -23,9 +23,9 @@ Complete the [assumptions report](https://katatam.github.io/sample-size-calculat
 
 | Question | Reading | Related activity or resource |
 |---|---|---|
-| How precisely can I estimate a percentage? | Pourhoseingholi et al. (2013); Wang and Ji (2020) | [Prevalence estimation](../book/study-designs.html#prevalence) |
-| What must a pilot establish before a main trial? | Ying et al. (2025); Eldridge et al. (2016) | [Pilot retention](../book/study-designs.html#pilot-feasibility): denominator, useful precision and progression criteria |
-| What can existing data answer? | Lakens (2022); CONSORT's caution about observed post hoc power | [Dataset reuse](../book/study-designs.html#dataset-reuse): assess a new question, data completeness and attainable precision |
+| How precisely can I estimate a percentage? | Pourhoseingholi et al. (2013); Wang and Ji (2020) | [Prevalence estimation](../book/estimation-planning.html#prevalence) |
+| What must a pilot establish before a main trial? | Ying et al. (2025); Eldridge et al. (2016) | [Pilot retention](../book/estimation-planning.html#pilot-feasibility): denominator, useful precision and progression criteria |
+| What can existing data answer? | Lakens (2022); CONSORT's caution about observed post hoc power | [Dataset reuse](../book/estimation-planning.html#dataset-reuse): assess a new question, data completeness and attainable precision |
 | Can a valid design obtain more information? | Candel and van Breukelen (2023); Hayes and Bennett (1999) | Ways to increase power; paired and cluster designs in the study-design guide |
 | How should a prediction model be planned? | Riley et al. (2020); TRIPOD+AI (2024) | Parkinson speech example; separate model development from evaluation in new patients |
 | What changes when recruitment is limited by a rare disease? | EMA small-population guidance; FDA rare-disease guidance | Rare-disease planning; distinguish final guidance from the cited natural-history and external-control drafts |
@@ -66,9 +66,9 @@ For prerequisite reminders and common questions, use the [glossary](../student-m
 
 ## Multiple outcomes and decisions during a trial
 
-[Chapter 7](../book/study-designs.html#multiple-outcomes-comparisons) explains success rules, interim analyses and sample-size re-estimation. The [FDA multiple-endpoints guidance (2022)](https://www.fda.gov/regulatory-information/search-fda-guidance-documents/multiple-endpoints-clinical-trials) distinguishes co-primary outcomes, alternative routes to success, composites and testing hierarchies. Its examples help identify the intended claim before choosing a calculation.
+[Chapter 8](../book/study-designs.html#multiple-outcomes-comparisons) explains success rules, interim analyses and sample-size re-estimation. The [FDA multiple-endpoints guidance (2022)](https://www.fda.gov/regulatory-information/search-fda-guidance-documents/multiple-endpoints-clinical-trials) distinguishes co-primary outcomes, alternative routes to success, composites and testing hierarchies. Its examples help identify the intended claim before choosing a calculation.
 
-[ICH E9](https://database.ich.org/sites/default/files/E9_Guideline.pdf), Sections 3.4 and 4.4-4.6, covers group-sequential designs, sample-size adjustment, interim analyses and independent monitoring. The [FDA adaptive-design guidance (2019)](https://www.fda.gov/regulatory-information/search-fda-guidance-documents/adaptive-design-clinical-trials-drugs-and-biologics-guidance-industry), Sections IV-VI, distinguishes adaptations based on blinded and comparative data and describes simulation-based evaluation. The [Chapter 8 checklist](../book/appendix.html#complex-design-record) connects these methods to a reproducible protocol and SAP record.
+[ICH E9](https://database.ich.org/sites/default/files/E9_Guideline.pdf), Sections 3.4 and 4.4-4.6, covers group-sequential designs, sample-size adjustment, interim analyses and independent monitoring. The [FDA adaptive-design guidance (2019)](https://www.fda.gov/regulatory-information/search-fda-guidance-documents/adaptive-design-clinical-trials-drugs-and-biologics-guidance-industry), Sections IV-VI, distinguishes adaptations based on blinded and comparative data and describes simulation-based evaluation. The [Chapter 4 checklist](../book/reporting.html#complex-design-record) connects these methods to a reproducible protocol and SAP record.
 
 ## International ethics and protocol planning
 

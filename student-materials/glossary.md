@@ -37,20 +37,20 @@ The [chronic pain trial](#clinical-question) distinguishes the pilot estimates f
 <span id="sample-estimate">Sample estimate</span>
 : A sample estimate is calculated from the observations you obtained. In the pain pilot, 7/10 is a sample proportion, expressed as 70%. The treatment probability of 60% used in the sample size calculation is a planning assumption whose justification should draw on evidence and sensitivity analysis. A proportion such as 7/10 can also be written as 0.70 or expressed as a percentage, 70%.
 
-<span id="expected-difference">Expected difference</span>
-: The [expected difference](#between-group-differences){.no-glossary-tooltip} is the anticipated between-group population difference based on current evidence, with uncertainty. An observed difference is calculated from a particular sample, such as the pilot.
+<span id="expected-difference">Difference observed in previous data</span>
+: The between-group difference calculated from an earlier sample, such as a pilot. It provides evidence for planning, with uncertainty. In the chronic pain pilot, 70% minus 30% gives an observed difference of 40 percentage points.
 
 <span id="target-difference">Target difference</span>
 : The [target difference](#between-group-differences){.no-glossary-tooltip} is the between-group difference used in the sample size calculation, at which you calculate [power](#statistical-power).
 
 <span id="clinical-threshold">Clinical threshold</span>
-: The [clinical threshold](#between-group-differences){.no-glossary-tooltip} is the smallest between-group benefit judged worthwhile, considering the treatment's burdens, risks, and alternatives. The expected difference, target difference and clinical threshold can coincide and have no fixed numerical order. The chronic pain trial uses 40, 30, and 20 percentage points, respectively, to illustrate their different roles. Each value needs its own justification; the [ST01 example](#st01-expectations) illustrates a different relationship.
+: The [clinical threshold](#between-group-differences){.no-glossary-tooltip} is the smallest between-group benefit judged worthwhile, considering the treatment's burdens, risks, and alternatives. The difference observed in previous data, target difference and clinical threshold can coincide and have no fixed numerical order. The chronic pain trial uses 40, 30, and 20 percentage points, respectively, to illustrate their different roles. The observed result should be traceable to its source; the target and threshold need justification; the [ST01 example](#st01-expectations) illustrates a different relationship.
 
 The target difference should be justified as realistic and important. Planning for a difference larger than the clinical threshold generally gives lower power at some worthwhile differences. See [the target-difference discussion](#what-do-we-expect-what-will-we-plan-for-and-what-matters-clinically) and [DELTA2 guidance (Cook et al., 2018)](https://doi.org/10.1136/bmj.k3750).
 
 ## Between-group differences and individual benefit {#between-group-differences .core-heading .unnumbered}
 
-A between-group difference compares outcomes under two treatments in a specified population. For a binary outcome, it can be expressed as a difference in the percentages experiencing the outcome. For a continuous outcome, it may be a difference in mean scores. The expected difference, target difference, and clinical threshold in this tutorial all concern these between-group comparisons.
+A between-group difference compares outcomes under two treatments in a specified population. For a binary outcome, it can be expressed as a difference in the percentages experiencing the outcome. For a continuous outcome, it may be a difference in mean scores. The difference observed in previous data, target difference, and clinical threshold in this tutorial all concern these between-group comparisons.
 
 If 60% of patients experience pain relief with the novel treatment and 30% with standard treatment, the difference is 30 percentage points: approximately 30 more patients per 100 would experience relief with the novel treatment under these assumptions. This does not mean that each patient experiences 30% more pain relief. Similarly, a 3-point difference between group means does not mean that every patient gains 3 additional points. Individual outcomes also vary: patients receiving the same treatment may report substantial, little or no relief. Baseline severity and other characteristics may help explain this variation. Differences between observed outcomes alone do not establish how the treatment effect varies between individuals; in a parallel-group trial, you cannot observe the same patient's outcome under both treatments.
 

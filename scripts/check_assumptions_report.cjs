@@ -219,7 +219,7 @@ const {saveReportPair} = require('./report_test_helpers.cjs');
     await page.screenshot({path: 'build/assumptions-report-two-panel.png'});
     const lesson = page.frameLocator('#lesson-frame');
     await lesson.getByRole('link', {name:'Toggle Sidebar', exact:true}).click();
-    await lesson.locator('.book-summary a[href="power.html"]').first().click();
+    await lesson.locator('.book-summary a[href="calculations.html"]').first().click();
     assert.equal(await activity.locator('#question').inputValue(), 'Keep this plan while navigating the tutorial');
     const lessonPane = await page.locator('#lesson-pane').boundingBox(), separator = await page.locator('#panel-separator').boundingBox();
     await page.mouse.move(separator.x + separator.width / 2, separator.y + 50); await page.mouse.down();

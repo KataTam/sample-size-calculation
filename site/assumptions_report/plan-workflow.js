@@ -3,10 +3,10 @@
   'use strict';
   const metaNames = ['plan_title', 'plan_basis', 'decision_statuses', 'calculation_records'];
   const stages = {
-    question: {title:'Chapter 1: question and design', sections:[0], fields:['question','population','intervention','comparator','outcome_detail','design'], text:'Your first contribution is the research question and study design. Initial assumptions can remain provisional while you look for evidence.'},
-    power: {title:'Chapter 2: power and interpretation', sections:[2,3], fields:['power','conclusion'], text:'Your plan should explain the chosen error probability and power, and what the study could establish under its assumptions.'},
-    calculation: {title:'Chapter 3: calculation', sections:[1,2], fields:['expected','clinical','planning','variation','analysis','software','counts'], text:'Your calculation record should contain the inputs, method, analyzable sample size, and your justification. A calculator can add a selected result to this report.'},
-    recruitment: {title:'Chapter 4: recruitment and reporting', sections:[3], fields:['recruitment','sensitivity','resources','conclusion'], text:'Your final contribution is the recruitment target and its justification. You can then review the concise sample size calculation report and its supporting study plan, generated from your existing answers.'},
+    question: {title:'Question and design', sections:[0], fields:['question','population','intervention','comparator','outcome_detail','design'], text:'Your first contribution is the research question and study design. Initial assumptions can remain provisional while you look for evidence.'},
+    power: {title:'Statistical criteria', sections:[2,3], fields:['power','conclusion'], text:'Your plan should explain the chosen error probability and power, and what the study could establish under its assumptions.'},
+    calculation: {title:'Calculation', sections:[1,2], fields:['expected','clinical','planning','variation','analysis','software','counts'], text:'Your calculation record should contain the inputs, method, analyzable sample size, and your justification. A calculator can add a selected result to this report.'},
+    recruitment: {title:'Recruitment and conclusion', sections:[3], fields:['recruitment','sensitivity','resources','conclusion'], text:'Your final contribution is the recruitment target and its justification. You can then review the concise sample size calculation report and its supporting study plan, generated from your existing answers.'},
     review: {title:'Review your complete study plan', sections:[], fields:[], text:'The review below identifies unresolved decisions and mismatches between saved calculations. Your reasoning and evidence still need your own review.'}
   };
   const read = (text, fallback) => { try {return JSON.parse(text || '')} catch (_) {return fallback} };
@@ -54,7 +54,7 @@
     review=document.getElementById('plan-review');
     const nav=document.getElementById('plan-stages');
     for(const [id,s] of Object.entries(stages)){
-      const a=element('a',({question:'1 Question',power:'2 Power',calculation:'3 Calculation',recruitment:'4 Recruitment',review:'Review'})[id]);a.href='?stage='+id;a.addEventListener('click',e=>{e.preventDefault();showStage(id);});nav.append(a);
+      const a=element('a',({question:'Question',power:'Statistical criteria',calculation:'Calculation',recruitment:'Recruitment',review:'Review'})[id]);a.href='?stage='+id;a.addEventListener('click',e=>{e.preventDefault();showStage(id);});nav.append(a);
     }
     document.getElementById('study_type').addEventListener('change',()=>{
       if(form.elements.study_type.value==='other'){document.getElementById('plan-section-0').open=true;document.getElementById('design').focus();}

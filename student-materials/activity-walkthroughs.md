@@ -8,7 +8,7 @@ You can drag a slider or type its value in the adjacent number field. Percentage
 
 In the reasoning lab, planning tables and curves update when inputs change. Simulated results update only when you run the relevant simulation again and retain their saved assumptions until then. More patients change a study's information; more simulation repetitions improve the numerical precision of the estimated performance.
 
-The expected difference records your best expectation. It can equal the target difference or clinical threshold; the three roles have no fixed numerical order and each needs justification. With “Same as planning assumptions” selected, the simulations use the target difference and planning event probabilities. A custom population scenario lets you examine another true difference without changing the original plan. All treatment differences here are between-group differences.
+The difference observed in previous data records a sample result that can inform planning, with uncertainty. It can equal the target difference or clinical threshold; the three roles have no fixed numerical order and each needs justification. With “Same as planning assumptions” selected, the simulations use the target difference and planning event probabilities. A custom population scenario lets you examine another true difference without changing the original plan. All treatment differences here are between-group differences.
 
 ## Reports and saved work
 
@@ -30,29 +30,29 @@ The reasoning lab and single-percentage app omit saved simulation results from t
 
 ## Develop and justify your study plan
 
-[Open your plan](../assumptions_report/?stage=question) · [Matching explanation](../book/clinical-question.html#record-assumptions)
+[Open your plan](../assumptions_report/?stage=question) · [Matching explanation](../book/reporting.html#record-assumptions)
 
 1. Your starting point can be your own study or the chronic-pain teaching example. A study title identifies the plan. Answers start empty. “Suggested structure” gives a framework for your own study. Selecting the teaching case shows its example answers; “Start the pain-relief plan” supplies the question and design when you choose it.
-2. Each core chapter has a study-plan contribution: Chapter 1 covers the question, design and initial assumptions; Chapter 2 the statistical criteria and interpretation; Chapter 3 the method, software and result; Chapter 4 recruitment and the concise calculation report. The chapter links open the relevant questions in the same study plan.
+2. Chapters 1–3 explain the question and power, calculation, and recruitment. Chapter 4 brings together the reporting guidance, checklist and complete example. You can record decisions in the same activity throughout and review the complete report in Chapter 4.
 3. Your evidence review should identify the key uncertain input and its plausible range, including relevant less favorable findings. The sensitivity answer explains how an alternative changes the plan. Each section's “Ready for review” checkbox becomes available when its applicable questions are answered.
 4. In an app’s Report view, “Add this calculation to my study plan” opens a preview of the current inputs, result and method. You choose whether to attach it and whether to replace an earlier result of that type. Your written answers remain in place; affected sections are marked for another review.
 5. “Review before downloading” lists unresolved decisions and compares the analyzable requirement with the starting count in an attached recruitment calculation. Values written in free text still need your review. Optional simulations can be attached as explorations.
 6. The preview and PDF/Word downloads start with a concise sample size calculation report, followed by the supporting study plan, section review and attached results. Both parts update from the same answers; example hints are included only if you use them in an answer. “Save work for later” preserves the editable app state. Entries also persist in the same browser; the saved file supports another computer. The plan is complete for the core assignment when its applicable decisions and calculation have been reviewed. Advanced activities can extend it when relevant.
 
 
-The [annotated report in Chapter 4](../book/feasibility.html#write-a-sample-size-justification) shows the completed two-proportion calculation. The chronic pain example uses 5% expected missing primary outcomes: 56 analyzable patients and 59 recruits per group, or 118 recruits total. Selecting this example makes its prepared calculation and software record available under the software question. Attached calculator results retain their own inputs and runtime versions; example answers for calculation fields follow that selected result. Your written answers should be reviewed when the calculation changes.
+The [annotated report in Chapter 4](../book/reporting.html#write-a-sample-size-justification) shows the completed two-proportion calculation. The chronic pain example uses 5% expected missing primary outcomes: 56 analyzable patients and 59 recruits per group, or 118 recruits total. Selecting this example makes its prepared calculation and software record available under the software question. Attached calculator results retain their own inputs and runtime versions; example answers for calculation fields follow that selected result. Your written answers should be reviewed when the calculation changes.
 
 ## Chronic pain: one study and many studies — core
 
-[Open activity](../study/?activity=pain_one_many) · [Matching explanation](../book/power.html#activity-1-one-study-then-many)
+[Open activity](../study/?activity=pain_one_many) · [Matching explanation](../book/clinical-question.html#activity-1-one-study-then-many)
 
 Purpose: see why sample estimates differ from population values, interpret the uncertainty in one trial, and relate repeated trials to power.
 
 1. The starting population has 30% relief with standard treatment and 60% with novel treatment, with 20 analyzable patients per group and a 5% Type I error probability.
 2. In “One study and many studies,” “Simulate one study” generates patient outcomes. The animation follows the patient outcomes into the estimated difference and then the sampling distribution, with the population difference marked on both axes. “Animate 20 trials” builds a short sequence; pause, replay and reduced motion support closer inspection. Each accumulated dot represents one complete trial. “Additional calculations and simulations” opens the other calculation and study-planning views when needed.
-3. The 20-trial animation shows different possible trials while the population probabilities remain fixed. For each interval, you can compare the compatible differences with zero and the 20-percentage-point clinical threshold, following the [interval interpretation](../book/power.html#interpret-a-confidence-interval-clinically).
+3. The 20-trial animation shows different possible trials while the population probabilities remain fixed. Patient outcomes produce each observed difference, which falls into the distribution of repeated-study estimates.
 4. “Many studies and a larger sample” opens further down the same page. “Simulate many studies” generates 5,000 independent trials. The distribution shows sampling variability; the percentage of significant results estimates power for this population scenario.
-5. Before repeating at 50 and 80 patients per group, you can predict how the estimates, intervals and power will change, holding the population assumptions and repetition count fixed. Larger trials usually give narrower intervals and greater power. “Settings” provides the other assumptions. Advanced controls start closed; coverage and Monte Carlo summaries can wait until the advanced chapter.
+5. Before repeating at 50 and 80 patients per group, you can predict how the estimates and power will change, holding the population assumptions and repetition count fixed. Larger trials usually produce less variable estimates and greater power at a nonzero population difference. “Settings” provides the other assumptions. Advanced controls start closed; coverage and Monte Carlo summaries can wait until the advanced chapter.
 6. The expandable “Model answer” sections support reflection. “Report” summarizes the population assumptions, pain-relief counts in one study, and results across many studies, with an explanation of sampling variability. You can add your reflection and download a PDF or editable Word report. After changing the sample size, a new run is needed for those results to appear in the report.
 
 ## Type I and Type II error probabilities and power — advanced
@@ -86,7 +86,7 @@ Purpose: reproduce the binary-outcome sample size calculation. The calculator us
 
 Purpose: calculate a sample size for a binary outcome and examine its sensitivity to the target difference.
 
-1. The favorable event is remaining free of gestational diabetes: 80% without probiotics and 90% with probiotics. The expected difference is 12 points, target difference 10 and clinical threshold 5. These are hypothetical assumptions.
+1. The favorable event is remaining free of gestational diabetes: 80% without probiotics and 90% with probiotics. The difference observed in previous data is 12 points, target difference 10 and clinical threshold 5. These are hypothetical assumptions.
 2. The calculator uses 90% power and a 5% Type I error probability. Its result gives the analyzable count and recruitment after 15% expected loss.
 3. “Compare two scenarios” preserves the original plan beside a calculation using 85% with probiotics. Your explanation should address why detecting the smaller target difference needs more participants.
 4. Recruitment can be compared with the example's limit of 240 women. “Add this calculation to my study plan” attaches a selected result after your review.
@@ -111,7 +111,7 @@ Purpose: see how a target difference and between-patient variability determine a
 
 Purpose: connect a continuous-outcome calculation with the interpretation of a possible trial result.
 
-1. The hypothetical score has expected between-group improvement difference 4 units, target difference 3, clinical threshold 2 and common SD 5.
+1. The hypothetical score has a 4-unit improvement difference observed in earlier data, target difference 3, clinical threshold 2 and common SD 5.
 2. “Overview” uses a pooled two-sample t-test plan with 90% target power. You can compare recruitment after 10% losses with the limit of 200.
 3. In “One study,” a run generates independent normal improvement scores using the planning difference of 3 units. The observed difference and interval vary across simulated trials.
 4. You can compare the interval with zero and the 2-unit threshold. A statistically significant difference can still be too small to matter to patients.
@@ -168,19 +168,19 @@ Purpose: connect the analyzable requirement to anticipated outcome losses and tr
 
 ## Estimate a mean difference with a precision target — advanced
 
-[Open activity](../study/?activity=mean_precision) · [Matching explanation](../book/study-designs.html#plan-for-precision)
+[Open activity](../study/?activity=mean_precision) · [Matching explanation](../book/estimation-planning.html#plan-for-precision)
 
-Purpose: extend the rehabilitation calculation to planning a useful confidence-interval width and compare that criterion with target power.
+Purpose: plan a useful confidence-interval width for a mean difference and examine its performance across repeated samples.
 
-1. The activity uses expected difference 4 units, target difference 3, common SD 5, clinical threshold 2 and target full interval width 4 units.
-2. “Overview” shows the sample for the interval-width goal. You can compare it with the count for 80% target power by switching the planning goal.
-3. Returning to the precision goal, “One study” generates a realized interval. Realized interval widths vary.
+1. The estimation activity uses SD 5, 95% confidence and a target full interval width of 4 units. A population difference of 3 units supplies a known value for evaluating the simulations.
+2. “Overview” shows the sample for the interval-width goal. A narrower target or larger SD increases the required count.
+3. “One study” generates a realized interval. Realized interval widths vary.
 4. “Many studies” estimates the percentage meeting the full-width target. A full width of 4 corresponds to a margin of about 2 for a symmetric interval.
-5. Your justification should explain which interval widths would be useful and whether both power and precision requirements matter for the question.
+5. Your justification should explain why this interval width would support a useful interpretation and which evidence supports the assumed SD.
 
 ## Estimate a population percentage — advanced
 
-[Open activity](../study/?activity=prevalence) · [Matching explanation](../book/study-designs.html#prevalence)
+[Open activity](../study/?activity=prevalence) · [Matching explanation](../book/estimation-planning.html#prevalence)
 
 Purpose: connect the precision needed for a descriptive decision with survey size and a possible realized estimate.
 
@@ -193,7 +193,7 @@ Purpose: connect the precision needed for a descriptive decision with survey siz
 
 ## Pilot study: retention — advanced
 
-[Open activity](../study/?activity=pilot_feasibility) · [Matching explanation](../book/study-designs.html#pilot-feasibility)
+[Open activity](../study/?activity=pilot_feasibility) · [Matching explanation](../book/estimation-planning.html#pilot-feasibility)
 
 Purpose: assess whether a limited pilot provides useful information for a feasibility decision.
 
@@ -209,7 +209,7 @@ Purpose: assess whether a limited pilot provides useful information for a feasib
 
 Purpose: compare three sample size plans for a hypothetical trial of discharge within seven days, distinguishing relative changes from percentage-point differences.
 
-1. The standard-care percentage stays at 80%. The expected difference stays at 18 percentage points and the clinical threshold at 8. All three plans use a two-sided test, a 5% Type I error probability and no loss allowance.
+1. The standard-care percentage stays at 80%. The difference observed in previous data stays at 18 percentage points and the clinical threshold at 8. All three plans use a two-sided test, a 5% Type I error probability and no loss allowance.
 2. For Plan A, the 20% relative increase gives 96% discharge with the new program (80% × 1.20), a 16-point target difference. In “Settings,” the two planning percentages should be 80% and 96%, with target power 80%. “Overview” shows the analyzable counts per group and in total.
 3. For Plan B, the novel-treatment percentage becomes 90%, giving a 10-point target difference; power stays at 80%. How does the required sample compare with Plan A?
 4. For Plan C, the novel-treatment percentage returns to 96%, and power increases to 90%. How does the required sample compare with Plan A?
@@ -241,7 +241,7 @@ Purpose: identify a suitable design family and the decisions that determine its 
 3. “Show design suggestions” presents a candidate design, the reasoning, unresolved choices and sample-size implications.
 4. The resource links provide a relevant activity or specialist guidance. Changing an answer clears the previous suggestion until you request an update. “Start again” clears the form.
 
-After identifying a design family, a plan with several outcomes or comparisons should also specify its [testing strategy](../book/study-designs.html#multiple-outcomes-comparisons). Planned [interim analyses](../book/study-designs.html#interim-analyses-stopping) or [sample-size re-estimation](../book/study-designs.html#sample-size-re-estimation) need specialist planning and the [additional reporting record](../book/appendix.html#complex-design-record).
+After identifying a design family, a plan with several outcomes or comparisons should also specify its [testing strategy](../book/study-designs.html#multiple-outcomes-comparisons). Planned [interim analyses](../book/study-designs.html#interim-analyses-stopping) or [sample-size re-estimation](../book/study-designs.html#sample-size-re-estimation) need specialist planning and the [additional reporting record](../book/reporting.html#complex-design-record).
 
 Teaching text: [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/). Original software code: [MIT](https://opensource.org/license/mit). Third-party attributions and exceptions remain applicable.
 

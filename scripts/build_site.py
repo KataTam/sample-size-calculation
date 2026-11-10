@@ -42,14 +42,23 @@ if SITE.exists():
         shutil.rmtree(SITE)
 shutil.copytree(ROOT / "docs/apps", SITE)
 shutil.copytree(ROOT / "docs/book", SITE / "book")
+# Retired chapter files can survive Bookdown's incremental render. Their anchors
+# now belong to the merged introduction or estimation chapter.
+retired_power = SITE / "book/power.html"
+if retired_power.exists():
+    retired_power.unlink()
 # Bookdown can retain a 404 page from an older table of contents.
 (SITE / "book/404.html").write_text('<!doctype html><html lang="en"><head><meta charset="utf-8">'
     '<title>Page not found</title></head><body><h1>Page not found</h1>'
     '<p><a href="index.html">Open the current tutorial contents</a></p></body></html>', encoding="utf-8")
 # Nest each activity under its relevant section in every book sidebar.
 activity_contents = json.loads((ROOT / "module/activity-contents.json").read_text(encoding="utf-8"))
+moved_sections = json.loads((ROOT / "module/moved-sections.json").read_text(encoding="utf-8"))
 for target in (SITE / "book").glob("*.html"):
     text = target.read_text(encoding="utf-8")
+    for data_id, data in [("activity-menu-data", activity_contents), ("moved-section-data", moved_sections)]:
+        text = re.sub(r'(<script[^>]+id="' + data_id + r'"[^>]*>).*?(</script>)',
+            lambda match: match[1] + json.dumps(data, ensure_ascii=True) + match[2], text, flags=re.S)
     # Pandoc closes the final level-three wrapper after this raw details tag.
     # Close it inside the disclosure so the browser preserves the chapter container.
     if target.name == 'curves.html':
@@ -191,6 +200,16 @@ for chapter in sorted((SITE / "book").glob("*.html")):
     if chapter.name != "Sample_size_open_module.html":
         ChapterAnchors().feed(chapter.read_text(encoding="utf-8"))
 (SITE / "chapter-anchors.json").write_text(json.dumps(chapter_anchors, indent=2), encoding="utf-8")
+
+# Preserve bookmarks to the former power chapter, including sections moved to
+# estimation and the advanced simulation chapter. This file is not a TOC entry.
+power_routes = {key: value.removeprefix("book/") for key, value in chapter_anchors.items()}
+(SITE / "book/power.html").write_text(
+    '<!doctype html><html lang="en"><meta charset="utf-8"><title>Research question and power</title>'
+    '<p><a href="clinical-question.html#power">Open Research question and power</a></p>'
+    '<script>const routes=' + json.dumps(power_routes) + ';'
+    'const anchor=decodeURIComponent(location.hash.slice(1));'
+    'location.replace(routes[anchor] || "clinical-question.html#power");</script></html>', encoding="utf-8")
 
 # The help sources also live inside the book. On their separate pages, chapter
 # fragments must point back to the book while their own headings stay local.

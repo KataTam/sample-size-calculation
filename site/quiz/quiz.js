@@ -101,7 +101,8 @@
     for (const [value, text] of Object.entries(bank.chapters)) {
       const option = element('option', text); option.value = value; chapter.append(option);
     }
-    const requested = new URLSearchParams(location.search).get('chapter');
+    const previous = new URLSearchParams(location.search).get('chapter');
+    const requested = previous === 'power' ? 'clinical-question' : previous;
     if (requested && bank.chapters[requested]) chapter.value = requested;
     if (chapter.value !== 'all' && !bank.questions.some(q => q.chapter === chapter.value && q.level === 'core')) route.value = 'all';
     $('status').textContent = ''; describe();

@@ -2,8 +2,8 @@ const {chromium}=require('playwright'),assert=require('node:assert/strict'),fs=r
 const base=process.argv[2]||'http://127.0.0.1:8769';
 (async()=>{const b=await chromium.launch({headless:true,...(process.platform==='win32'?{channel:'msedge'}:{})});try{
  const p=await b.newPage({viewport:{width:1400,height:1000}});
- const order=['clinical-question','power','calculations','feasibility','curves','simulation','study-designs','appendix'];
- const expected={power:[],calculations:[],feasibility:[],curves:['critical-observed-difference','alpha-beta','available-sample','a-fixed-total-of-70-patients'],simulation:['precision-of-a-simulation','discharge-simulation'], 'study-designs':['plan-for-precision','dataset-reuse','rare-diseases','pilot-feasibility'],appendix:['own-study','software-support','gpower-assumptions']};
+ const order=JSON.parse(fs.readFileSync('module/chapter-order.json','utf8')).map(x=>x.id);
+ const expected={power:[],calculations:[],feasibility:[],curves:['critical-observed-difference','alpha-beta','available-sample','a-fixed-total-of-70-patients'],simulation:['precision-of-a-simulation','discharge-simulation'], 'estimation-planning':['plan-for-precision','dataset-reuse','pilot-feasibility'], 'study-designs':['rare-diseases'],appendix:['own-study','software-support','gpower-assumptions']};
  for(const [i,chapter] of order.entries()){
   await p.goto(base+'/book/'+chapter+'.html',{waitUntil:'networkidle'});
   const heading=p.locator('.page-inner .section.level1 > h1');
@@ -14,7 +14,7 @@ const base=process.argv[2]||'http://127.0.0.1:8769';
   if(i<4) {
     const disclosures=p.locator('.page-inner details.advanced-explanation');
     const optional={feasibility:'treatment-switching'}[chapter];
-    assert.equal(await disclosures.count(),chapter==='calculations'?2:optional?1:0,'Optional advanced explanations stay beside their related core calculation');
+    assert.equal(await disclosures.count(),chapter==='calculations'?2:chapter==='reporting'?1:optional?1:0,'Optional advanced explanations stay beside their related core calculation');
     for(const disclosure of await disclosures.all())assert.equal(await disclosure.getAttribute('open'),null,'Advanced explanation starts collapsed');
     if(chapter==='calculations')assert.deepEqual(await disclosures.evaluateAll(nodes=>nodes.map(n=>n.closest('.section').id)),['adherence','rehabilitation']);
     if(optional) {
@@ -28,13 +28,13 @@ const base=process.argv[2]||'http://127.0.0.1:8769';
   assert.equal(await p.locator('.page-inner h1 .header-section-number').count(),0);
   assert.equal(await p.locator('.page-inner .learning-goals, .page-inner .chapter-recap').count(),0);
  }
- for(const [old,anchor,chapter] of [['power','alpha-beta','curves'],['power','eq:mcse','simulation'],['calculations','plan-for-precision','study-designs'],['feasibility','dataset-reuse','study-designs'],['exercises','discharge','calculations'],['exercises','own-study','appendix'],['calculations','gpower-assumptions','appendix'],['calculations','tab:gpower-effect-sizes','appendix']]){
+ for(const [old,anchor,chapter] of [['power','alpha-beta','curves'],['power','eq:mcse','simulation'],['calculations','plan-for-precision','estimation-planning'],['feasibility','dataset-reuse','estimation-planning'],['exercises','discharge','calculations'],['exercises','own-study','appendix'],['calculations','gpower-assumptions','appendix'],['calculations','tab:gpower-effect-sizes','appendix']]){
   await p.goto(base+'/book/'+old+'.html#'+anchor);
   await p.waitForURL('**/'+chapter+'.html#'+anchor);
   assert(await p.locator('[id="'+anchor+'"]').isVisible());
  }
  const menu=require('../module/activity-contents.json');
- for(const [activity,chapter] of [['mean_precision','study-designs'],['pilot_feasibility','study-designs'],['alpha_beta','curves'],['own_study','appendix']]){
+ for(const [activity,chapter] of [['mean_precision','estimation-planning'],['pilot_feasibility','estimation-planning'],['alpha_beta','curves'],['own_study','appendix']]){
   const entries=menu.flatMap(c=>c.activities.filter(a=>a.path==='study/?activity='+activity).map(a=>({...a,chapter:c.chapter})));
   assert.equal(entries.length,1);assert.equal(entries[0].chapter,chapter);
  }

@@ -6,7 +6,8 @@ const bank=JSON.parse(fs.readFileSync('site/quiz/questions.json','utf8'));
  try{
   const page=await browser.newPage({viewport:{width:1200,height:950}}),errors=[];
   page.on('pageerror',e=>errors.push(e.message));
-  const chapters=['clinical-question','power','calculations','curves','simulation','feasibility','exercises','study-designs','appendix'];
+  const chapters=[...Object.keys(bank.chapters),'exercises'];
+  const introductoryCount=bank.questions.filter(q=>q.chapter==='clinical-question').length;
   for(const chapter of chapters){
    await page.goto(`${base}/book/${chapter}.html`);
    const quiz=page.locator('.chapter-quiz');
@@ -37,7 +38,7 @@ const bank=JSON.parse(fs.readFileSync('site/quiz/questions.json','utf8'));
   await page.goto(`${base}/book/clinical-question.html`);
   const quiz=page.locator('.chapter-quiz');
   await quiz.evaluate(q=>q.closest('details').open=true);
-  assert.equal(await quiz.locator('fieldset:visible').count(),5);
+  assert.equal(await quiz.locator('fieldset:visible').count(),introductoryCount);
   await quiz.locator('button[type=submit]').click();
   assert.equal(await quiz.locator('.quiz-results').isVisible(),false);
   for(const [i,q] of (await quiz.locator('fieldset:visible').all()).entries()){
@@ -45,8 +46,8 @@ const bank=JSON.parse(fs.readFileSync('site/quiz/questions.json','utf8'));
    await q.locator(`input[value="${i===0?(right+1)%4:right}"]`).check();
   }
   await quiz.locator('button[type=submit]').click();
-  assert.match(await quiz.locator('.quiz-score').innerText(),/^4 of 5 correct/);
-  assert.equal(await quiz.locator('.quiz-answer:visible').count(),5);
+  assert.match(await quiz.locator('.quiz-score').innerText(),new RegExp('^'+(introductoryCount-1)+' of '+introductoryCount+' correct'));
+  assert.equal(await quiz.locator('.quiz-answer:visible').count(),introductoryCount);
   await quiz.locator('.quiz-retry').click();
   assert.equal(await quiz.locator('fieldset:visible').count(),1);
   const q=quiz.locator('fieldset:visible');
@@ -61,12 +62,12 @@ const bank=JSON.parse(fs.readFileSync('site/quiz/questions.json','utf8'));
   assert.equal(await quiz.locator('select option:checked').innerText(),'All topics');
   await page.evaluate(()=>localStorage.removeItem('sample-size-embedded-quiz-clinical-question-v2'));
   await page.goto(`${base}/book/Sample_size_open_module.html`);
-  assert.equal(await page.locator('.chapter-quiz').count(),9);
+  assert.equal(await page.locator('.chapter-quiz').count(),Object.keys(bank.chapters).length+1);
   const offline=page.locator('#quiz-clinical-question');
   await offline.evaluate(q=>q.closest('details').open=true);
   for(const q of await offline.locator('fieldset:visible').all())await q.locator(`input[value="${await q.getAttribute('data-answer')}"]`).check();
   await offline.locator('button[type=submit]').click();
-  assert.match(await offline.locator('.quiz-score').innerText(),/^5 of 5 correct/);
+  assert.match(await offline.locator('.quiz-score').innerText(),new RegExp('^'+introductoryCount+' of '+introductoryCount+' correct'));
   await page.setViewportSize({width:390,height:844});
   await page.goto(`${base}/book/clinical-question.html#check-clinical-question`);
   await quiz.evaluate(q=>q.closest('details').open=true);

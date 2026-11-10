@@ -2,21 +2,7 @@
   {
     "chapter": "clinical-question",
     "anchor": "clinical-question",
-    "title": "Research question and planning assumptions",
-    "route": "Core",
-    "activities": [
-      {
-        "label": "Develop and justify your study plan",
-        "path": "study/?activity=assumptions_report",
-        "route": "Core",
-        "section": "record-assumptions"
-      }
-    ]
-  },
-  {
-    "chapter": "power",
-    "anchor": "power",
-    "title": "Understanding power and uncertainty",
+    "title": "Research question and power",
     "route": "Core",
     "activities": [
       {
@@ -56,7 +42,7 @@
   {
     "chapter": "feasibility",
     "anchor": "feasibility",
-    "title": "Recruitment and reporting",
+    "title": "Recruitment and feasibility",
     "route": "Core",
     "activities": [
       {
@@ -64,6 +50,20 @@
         "path": "study/?activity=recruitment",
         "route": "Core",
         "section": "account-for-expected-losses"
+      }
+    ]
+  },
+  {
+    "chapter": "reporting",
+    "anchor": "reporting",
+    "title": "The sample size calculation report",
+    "route": "Core",
+    "activities": [
+      {
+        "label": "Develop and justify your study plan",
+        "path": "study/?activity=assumptions_report",
+        "route": "Core",
+        "section": "record-assumptions"
       },
       {
         "label": "Complete your assumptions report",
@@ -72,6 +72,32 @@
         "section": "write-a-sample-size-justification"
       }
     ]
+  },
+  {
+    "chapter": "estimation-planning",
+    "anchor": "estimation-planning",
+    "route": "Advanced",
+    "activities": [
+      {
+        "label": "Estimate a mean difference with a precision target",
+        "path": "study/?activity=mean_precision",
+        "route": "Advanced",
+        "section": "plan-for-precision"
+      },
+      {
+        "label": "Pilot study: estimate retention",
+        "path": "study/?activity=pilot_feasibility",
+        "route": "Advanced",
+        "section": "pilot-feasibility"
+      },
+      {
+        "label": "Estimate a percentage with useful precision",
+        "path": "study/?activity=prevalence",
+        "route": "Advanced",
+        "section": "prevalence"
+      }
+    ],
+    "title": "Sample size for estimation"
   },
   {
     "chapter": "curves",
@@ -120,28 +146,10 @@
     "route": "Advanced",
     "activities": [
       {
-        "label": "Estimate a mean difference with a precision target",
-        "path": "study/?activity=mean_precision",
-        "route": "Advanced",
-        "section": "plan-for-precision"
-      },
-      {
-        "label": "Pilot study: estimate retention",
-        "path": "study/?activity=pilot_feasibility",
-        "route": "Advanced",
-        "section": "pilot-feasibility"
-      },
-      {
         "label": "Choosing a study design",
         "path": "study/?activity=design_questionnaire",
         "route": "Advanced",
         "section": "design-questionnaire"
-      },
-      {
-        "label": "Estimate a percentage with useful precision",
-        "path": "study/?activity=prevalence",
-        "route": "Advanced",
-        "section": "prevalence"
       }
     ]
   },

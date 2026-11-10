@@ -47,7 +47,7 @@ teaching_cases <- function() {
         plan_p0 = .30, plan_p1 = .60, width_p = .30, seed = 20260921,
         stage = "Many studies")),
     mean_precision = case("mean_precision", "Improvement scores: estimation with a precision target",
-      "You can choose a confidence interval width and calculate the required sample, then compare it with a power-based plan. Changing the width or SD shows which assumptions drive the requirement; your explanation should connect the remaining uncertainty to the intended decision.",
+      "You can choose a confidence interval width and calculate the required sample. Repeated studies show how interval widths and estimates vary. Changing the width or SD shows which assumptions drive the requirement; your explanation should connect the remaining uncertainty to the intended decision.",
       "plan-for-precision", list(outcome = "means", goal = "precision", plan_delta = 3,
         plan_sd = 5, threshold_m = 2, width_m = 4, target_power = .80, seed = 20260922)),
     own_study = case("own_study", "Build your own study justification",

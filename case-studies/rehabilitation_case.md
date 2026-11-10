@@ -2,7 +2,7 @@
 
 All values are hypothetical teaching assumptions.
 
-Compare two individually allocated rehabilitation programs using improvement at six weeks on an approximately normal continuous mobility score. The expected mean difference is 4 units; use a more cautious target difference of 3 units and common SD 5. Separately, suppose patient and clinical consultation identifies a 2-unit benefit as clinically meaningful. The expected difference, target difference and clinical threshold are distinct; only the target difference enters the sample size calculation.
+Compare two individually allocated rehabilitation programs using improvement at six weeks on an approximately normal continuous mobility score. An earlier study in this example observed a 4-unit mean difference; the calculation uses a 3-unit target difference and common SD 5. Patient and clinical consultation identifies a 2-unit benefit as clinically meaningful. The earlier observed difference informs planning, with uncertainty. The target difference specifies where power is evaluated.
 
 Use a two-sided pooled t test, Type I error probability 5%, target power 90%, equal groups and 10% expected loss per arm. The total recruitment cap is 200. The shared case definition is `rehabilitation` in `R/teaching_cases.R`.
 

@@ -392,7 +392,7 @@ interval_interpretation <- function(result, spec) {
   paste0(test, clinical, " Equivalence and noninferiority require their own prespecified margins, hypotheses and analyses.")
 }
 
-plot_trial_intervals <- function(results, spec, max_display = 30, show_legend = TRUE) {
+plot_trial_intervals <- function(results, spec, max_display = 30, show_legend = TRUE, show_tests = TRUE) {
   x <- head(results, max_display); y <- seq_len(nrow(x))
   # Rescale the display only; methods, input values and returned data stay unchanged.
   scale <- if (spec$outcome == "proportions") 100 else 1
@@ -400,7 +400,7 @@ plot_trial_intervals <- function(results, spec, max_display = 30, show_legend = 
   truth <- scale * true_difference(spec)
   limits <- range(c(scale * x$lower, scale * x$upper, 0, clinical, truth))
   plot(scale * x$estimate, y, xlim = limits, ylim = c(.5, nrow(x) + .5),
-       pch = ifelse(x$reject, 19, 1),
+       pch = if (show_tests) ifelse(x$reject, 19, 1) else 19,
        xlab = if (spec$outcome == "proportions") "Treatment minus control (percentage points)" else "Treatment minus control (outcome units)", ylab = "Study",
        main = "Intervals from individual studies")
   segments(scale * x$lower, y, scale * x$upper, y)

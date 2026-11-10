@@ -1,0 +1,47 @@
+[
+  {
+    "id": "clinical-question",
+    "title": "Research question and power",
+    "level": "core"
+  },
+  {
+    "id": "calculations",
+    "title": "Calculating sample size",
+    "level": "core"
+  },
+  {
+    "id": "feasibility",
+    "title": "Recruitment and feasibility",
+    "level": "core"
+  },
+  {
+    "id": "reporting",
+    "title": "The sample size calculation report",
+    "level": "core"
+  },
+  {
+    "id": "estimation-planning",
+    "title": "Sample size for estimation",
+    "level": "advanced"
+  },
+  {
+    "id": "curves",
+    "title": "Exploring power and uncertain assumptions",
+    "level": "advanced"
+  },
+  {
+    "id": "simulation",
+    "title": "Building and evaluating simulations",
+    "level": "advanced"
+  },
+  {
+    "id": "study-designs",
+    "title": "Study designs and testing strategies",
+    "level": "advanced"
+  },
+  {
+    "id": "appendix",
+    "title": "Reproducibility and open science",
+    "level": "advanced"
+  }
+]

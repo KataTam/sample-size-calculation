@@ -29,14 +29,15 @@ Intended conclusion and what would make the information useful:
 | Item | Value or decision | Source and rationale | Plausible alternative or uncertainty |
 |---|---|---|---|
 | Effect scale and beneficial direction | Treatment minus control | | |
-| Expected difference | | | |
+| Difference observed in previous data | | | |
 | Smallest clinically important benefit | | Patient or clinical rationale | |
-| Target difference | | Explain importance, realism and differences from the expected difference or clinical threshold | |
+| Target difference | | Explain importance, realism and differences from the difference observed in previous data or clinical threshold | |
 | Expected event probabilities in control and treatment groups, if binary | Percentages; difference in percentage points | | |
 | Common SD, if continuous | | | |
-| Two-sided test and CI method | | | |
+| Planned test and sidedness, if comparing groups | | | |
 | Type I error probability and power target, if testing | | | |
 | Confidence level and full interval-width target, if estimating | | Explain why this precision is useful | |
+| Confidence interval method, if estimating | | | |
 | Analyzable sample available, if fixed resources | | | |
 | Allocation | Equal groups | Core implementation restriction | |
 | Expected loss per arm | | Comparable studies, records or pilot follow-up; population and time point | Plausible range and reasons for uncertainty |

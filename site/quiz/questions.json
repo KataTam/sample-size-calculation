@@ -1,13 +1,14 @@
 {
   "chapters": {
-    "clinical-question": "Chapter 1: Research question and planning assumptions",
-    "power": "Chapter 2: Understanding power and uncertainty",
-    "calculations": "Chapter 3: Calculating sample size",
-    "feasibility": "Chapter 4: Recruitment and reporting",
-    "curves": "Chapter 5: Exploring power and uncertain assumptions",
-    "simulation": "Chapter 6: Building and evaluating simulations",
-    "study-designs": "Chapter 7: Study designs and testing strategies",
-    "appendix": "Chapter 8: Reproducibility and open science"
+    "clinical-question": "Chapter 1: Research question and power",
+    "calculations": "Chapter 2: Calculating sample size",
+    "feasibility": "Chapter 3: Recruitment and feasibility",
+    "reporting": "Chapter 4: The sample size calculation report",
+    "estimation-planning": "Chapter 5: Sample size for estimation",
+    "curves": "Chapter 6: Exploring power and uncertain assumptions",
+    "simulation": "Chapter 7: Building and evaluating simulations",
+    "study-designs": "Chapter 8: Study designs and testing strategies",
+    "appendix": "Chapter 9: Reproducibility and open science"
   },
   "questions": [
     {
@@ -15,7 +16,7 @@
       "chapter": "clinical-question",
       "level": "core",
       "section": "PICO and the study plan",
-      "link": "clinical-question.html#record-assumptions",
+      "link": "clinical-question.html#how-do-you-determine-the-minimum-required-sample-size",
       "question": "Which description most clearly specifies a primary outcome for the chronic-pain trial?",
       "options": [
         "Pain relief at four weeks, using a prespecified definition",
@@ -36,9 +37,9 @@
       "id": "q02",
       "chapter": "clinical-question",
       "level": "core",
-      "section": "Expected difference, target difference and clinical threshold",
+      "section": "Difference observed in previous data, target difference and clinical threshold",
       "link": "clinical-question.html#what-do-we-expect-what-will-we-plan-for-and-what-matters-clinically",
-      "question": "A trial expects a 40-point difference, plans at 30 points, and regards 20 points as clinically important. At which difference is its stated target power evaluated?",
+      "question": "A pilot showed a 40-point difference. The new trial plans at 30 points and regards 20 points as clinically important. At which difference is its stated target power evaluated?",
       "options": [
         "20 percentage points",
         "40 percentage points",
@@ -46,12 +47,12 @@
         "30 percentage points"
       ],
       "answer": 3,
-      "explanation": "The target difference is the effect used in the power calculation. The expected difference and clinical threshold answer separate questions. Their values can coincide or follow a different order; this example uses three different values.",
+      "explanation": "The target difference is the effect used in the power calculation. The difference observed in previous data and clinical threshold answer separate questions. Their values can coincide or follow a different order; this example uses three different values.",
       "feedback": [
         "Twenty points is the clinical threshold. Power at that smaller difference needs a separate assessment.",
-        "Forty points is the expected difference. The stated power calculation uses the target difference.",
+        "Forty points is the difference observed in previous data. The stated power calculation uses the target difference.",
         "Power changes with the size of the true difference.",
-        "The target difference is the effect used in the power calculation. The expected difference and clinical threshold answer separate questions. Their values can coincide or follow a different order; this example uses three different values."
+        "The target difference is the effect used in the power calculation. The difference observed in previous data and clinical threshold answer separate questions. Their values can coincide or follow a different order; this example uses three different values."
       ]
     },
     {
@@ -100,10 +101,10 @@
     },
     {
       "id": "q37",
-      "chapter": "clinical-question",
+      "chapter": "reporting",
       "level": "core",
       "section": "Evidence for the target difference",
-      "link": "clinical-question.html#record-assumptions",
+      "link": "reporting.html#record-assumptions",
       "question": "A sample size calculation report selects a 30-point target difference. Which explanation best justifies this numerical entry?",
       "options": [
         "A difference judged important and realistic using relevant evidence and clinical input",
@@ -122,10 +123,10 @@
     },
     {
       "id": "q05",
-      "chapter": "power",
+      "chapter": "clinical-question",
       "level": "core",
       "section": "Hypotheses and error probabilities",
-      "link": "power.html#hypotheses-and-error-probabilities",
+      "link": "clinical-question.html#hypotheses-and-error-probabilities",
       "question": "A Type I error probability of 5% describes which event?",
       "options": [
         "Rejecting the null when the null hypothesis is true, under the test assumptions",
@@ -144,10 +145,10 @@
     },
     {
       "id": "q06",
-      "chapter": "power",
+      "chapter": "clinical-question",
       "level": "core",
       "section": "Power under specified assumptions",
-      "link": "power.html#report-statistical-criteria",
+      "link": "clinical-question.html#power",
       "question": "A report specifies 90% power at a 30-percentage-point target difference. What does this mean?",
       "options": [
         "The next study will estimate the effect with 90% accuracy",
@@ -166,10 +167,10 @@
     },
     {
       "id": "q07",
-      "chapter": "power",
+      "chapter": "clinical-question",
       "level": "core",
       "section": "One study and many studies",
-      "link": "power.html#activity-1-one-study-then-many",
+      "link": "clinical-question.html#activity-1-one-study-then-many",
       "question": "Two simulated studies use the same population probabilities and sample size but give treatment differences of 22 and 34 percentage points. What is the most plausible explanation?",
       "options": [
         "The population difference must have changed",
@@ -188,10 +189,10 @@
     },
     {
       "id": "q38",
-      "chapter": "power",
-      "level": "core",
+      "chapter": "estimation-planning",
+      "level": "advanced",
       "section": "Confidence intervals across repeated studies",
-      "link": "power.html#interpret-a-confidence-interval-clinically",
+      "link": "estimation-planning.html#interpret-a-confidence-interval-clinically",
       "question": "What does 95% confidence interval coverage mean under the method’s assumptions?",
       "options": [
         "95% of individual patients have outcomes inside the interval",
@@ -210,10 +211,10 @@
     },
     {
       "id": "q22",
-      "chapter": "power",
-      "level": "core",
+      "chapter": "estimation-planning",
+      "level": "advanced",
       "section": "Clinical interpretation of a confidence interval",
-      "link": "power.html#interpret-a-confidence-interval-clinically",
+      "link": "estimation-planning.html#interpret-a-confidence-interval-clinically",
       "question": "A trial estimates a 25-percentage-point benefit, with a 95% interval from 5 to 45 points. The clinical threshold is 20 points. What does the interval support?",
       "options": [
         "Every treated patient benefits by at least 20 points",
@@ -237,10 +238,10 @@
     },
     {
       "id": "q09",
-      "chapter": "calculations",
+      "chapter": "reporting",
       "level": "core",
       "section": "Two proportions",
-      "link": "calculations.html#report-calculation-method",
+      "link": "reporting.html#report-calculation-method",
       "question": "Your sample size calculation report gives an unrounded requirement of 55.2 analyzable patients per group with equal allocation. What is the rounded analyzable target?",
       "options": [
         "56 per group, 112 total",
@@ -309,7 +310,7 @@
     {
       "id": "q12",
       "chapter": "calculations",
-      "level": "advanced",
+      "level": "core",
       "section": "Comparing calculation methods",
       "link": "calculations.html#two-means",
       "question": "Why might the introductory two-means calculator and the reasoning lab return different planning results with matching inputs?",
@@ -418,10 +419,10 @@
     },
     {
       "id": "q26",
-      "chapter": "feasibility",
+      "chapter": "reporting",
       "level": "core",
       "section": "Reporting your sample size calculation",
-      "link": "feasibility.html#write-a-sample-size-justification",
+      "link": "reporting.html#write-a-sample-size-justification",
       "question": "A sample size calculation report gives the outcome, event percentages, allocation, power, Type I error probability and participant counts. What would most help another researcher reproduce the calculation?",
       "options": [
         "The calculator name alone",
@@ -726,10 +727,10 @@
     },
     {
       "id": "q23",
-      "chapter": "study-designs",
+      "chapter": "estimation-planning",
       "level": "advanced",
       "section": "Estimation with a precision target",
-      "link": "study-designs.html#plan-for-precision",
+      "link": "estimation-planning.html#plan-for-precision",
       "question": "What is specified when planning estimation with a precision target?",
       "options": [
         "The desired number of significant results",
@@ -748,10 +749,10 @@
     },
     {
       "id": "q24",
-      "chapter": "study-designs",
+      "chapter": "estimation-planning",
       "level": "advanced",
       "section": "Planning a pilot or feasibility study",
-      "link": "study-designs.html#pilot-feasibility",
+      "link": "estimation-planning.html#pilot-feasibility",
       "question": "What is an appropriate primary planning focus for a pilot studying retention?",
       "options": [
         "Assuming a universal sample size applies to every pilot",
@@ -792,10 +793,10 @@
     },
     {
       "id": "q43",
-      "chapter": "study-designs",
+      "chapter": "estimation-planning",
       "level": "advanced",
       "section": "Reuse an existing dataset",
-      "link": "study-designs.html#dataset-reuse",
+      "link": "estimation-planning.html#dataset-reuse",
       "question": "A trial dataset is reused to estimate baseline sleep difficulty. Why is the original treatment-effect power calculation insufficient for this new question?",
       "options": [
         "Randomization guarantees a representative estimate of all patients",
@@ -924,10 +925,10 @@
     },
     {
       "id": "q44",
-      "chapter": "study-designs",
+      "chapter": "estimation-planning",
       "level": "advanced",
       "section": "Estimate one proportion: a prevalence survey",
-      "link": "study-designs.html#prevalence",
+      "link": "estimation-planning.html#prevalence",
       "question": "A service wants to estimate how common a symptom is at a defined time. Which inputs match the simple independent-sample prevalence calculation?",
       "options": [
         "A treatment-control difference and target power",
@@ -1078,10 +1079,10 @@
     },
     {
       "id": "q35",
-      "chapter": "appendix",
+      "chapter": "study-designs",
       "level": "advanced",
       "section": "Additional records for complex designs",
-      "link": "appendix.html#complex-design-record",
+      "link": "reporting.html#complex-design-record",
       "question": "A sample size calculation report concerns a trial with multiple outcomes and an interim analysis. Which record best supports reproducibility?",
       "options": [
         "Only the final recruitment total.",
@@ -1119,6 +1120,38 @@
         "Software and algorithms affect how a seed maps to generated values.",
         "Plot colors do not control random-number generation."
       ]
+    },
+    {
+      "id": "q51",
+      "chapter": "reporting",
+      "level": "core",
+      "section": "A complete sample size calculation report",
+      "link": "reporting.html#write-a-sample-size-justification",
+      "question": "A draft reports pilot relief of 70% versus 30%, but its attached calculation uses 60% versus 30%. What should the report clarify?",
+      "options": [
+        "Which percentages were observed and which were selected for planning, with the reason for the chosen target",
+        "That the pilot percentages guarantee the future trial results",
+        "That software always selects a smaller difference automatically",
+        "Only the final total; the inputs can be omitted"
+      ],
+      "answer": 0,
+      "explanation": "The 40-point pilot result informs planning. The 30-point target comes from the selected 60% and 30% assumptions. The report should state and justify the inputs that reproduce its sample size."
+    },
+    {
+      "id": "q52",
+      "chapter": "reporting",
+      "level": "core",
+      "section": "Reproducibility and supporting records",
+      "link": "reporting.html#reproducibility-record",
+      "question": "How should the concise calculation report relate to the supporting study plan?",
+      "options": [
+        "They should contain separate answers collected independently",
+        "The concise report should summarize the selected calculation and its justification; the supporting plan retains evidence, alternatives and unresolved decisions",
+        "The supporting plan replaces the need to state calculation inputs",
+        "The concise report should include every explored simulation"
+      ],
+      "answer": 1,
+      "explanation": "One set of answers supports both documents. The concise report makes the selected calculation reproducible; the supporting plan preserves the fuller reasoning and evidence."
     }
   ]
 }

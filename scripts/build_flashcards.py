@@ -126,7 +126,7 @@ def build():
               '<p id="flashcard-empty" hidden>No cards match this search and level. You can try a shorter search or choose another level.</p>', '']
     counts = Counter(c['level'] for c in cards)
     for level in ('core', 'advanced'):
-        review += [f'<section class="flashcard-level" data-level="{level}" aria-labelledby="{level}-{counts[level]}-cards">',
+        review += [f'<section id="{level}" class="flashcard-level" data-level="{level}" aria-labelledby="{level}-{counts[level]}-cards">',
                    f'<h2 id="{level}-{counts[level]}-cards">{level.capitalize()} <span class="level-count">({counts[level]} cards)</span></h2>',
                    '<table><caption>' + level.capitalize() + ' questions and answers</caption><thead><tr><th scope="col">Question</th><th scope="col">Answer</th></tr></thead><tbody>']
         for c in cards:

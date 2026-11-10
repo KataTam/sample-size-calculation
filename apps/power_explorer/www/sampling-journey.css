@@ -8,6 +8,7 @@
 .simulation-actions button {margin:0!important}
 #journey-status {font-size:.9rem;color:#415663;margin:6px 0}
 #lab-more-views {margin:0 0 10px;font-size:.9rem;float:right}
+#lab-more-views[hidden] {display:none!important}
 .lab-activity-options {max-width:620px;margin:0 0 12px}
 .lab-activity-options > summary {font-size:.95rem}
 .pain-focus .activity-context {display:none}

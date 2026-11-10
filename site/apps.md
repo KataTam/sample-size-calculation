@@ -20,6 +20,8 @@ Apps are interactive software. Activities provide questions and exercises to hel
 
 ## Advanced apps and explorations
 
+- [Mean-difference estimation](power_explorer/?activity=mean_precision): calculate a sample size for a useful confidence-interval width and examine intervals across simulated studies. [Tutorial explanation](book/estimation-planning.html#plan-for-precision).
+
 - [Sample size reasoning lab](power_explorer/?activity=pain_simulation): simulate how treatment estimates, confidence intervals, and detection probabilities change under different assumptions and missing-outcome scenarios. [Activity: Simulate repeated chronic-pain trials](study/?activity=pain_simulation).
 
 - [Estimate a population percentage](prevalence_precision/): calculate sample size for a chosen confidence interval width, or assess the anticipated width for an available sample. [Activity: Estimate a percentage with useful precision](study/?activity=prevalence).

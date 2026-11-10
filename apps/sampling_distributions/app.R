@@ -75,7 +75,7 @@ ui <- fluidPage(
     tabPanel("Methods and references", h3("Calculation with your current values"), uiOutput("worked_method"),
       p("The normal model gives exact error probabilities for independent normal observations with known population SD. The reasoning lab uses an estimated SD and a two-sample t test for continuous outcomes."),
       p(tags$a(href = "https://stat.ethz.ch/R-manual/R-devel/library/stats/html/Normal.html", target = "_blank", rel = "noopener", "R: normal distributions, quantiles and probabilities"), " · ",
-        tags$a(href = "../book/power.html", target = "_blank", rel = "noopener", "Tutorial: power and error probabilities")),
+        tags$a(href = "../book/clinical-question.html", target = "_blank", rel = "noopener", "Tutorial: power and error probabilities")),
       app_citation("Error probabilities and power", "sampling_distributions"))))))
 
 server <- function(input, output, session) {

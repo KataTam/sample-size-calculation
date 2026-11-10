@@ -16,16 +16,16 @@
     ]],
     ['Assumptions and evidence', [
       ['scale', 'Effect scale and direction of benefit', 'An event-percentage difference is measured in percentage points; a mean difference uses the outcome units. Your answer should define treatment minus control and which sign favors treatment.', 'The effect scale and direction of benefit are'],
-      ['expected', 'Expected difference', 'Your estimate should use comparable evidence, including less favorable findings. A plausible range should reflect uncertainty, especially with small pilots.', 'The expected difference and supporting evidence are'],
+      ['expected', 'Difference observed in previous data', 'Your answer should identify the observed difference, its source and uncertainty. If relevant earlier data are unavailable, you can describe that gap and the evidence needed.', 'The difference observed in previous data and supporting evidence are'],
       ['clinical', 'Clinically important difference (clinical threshold)', 'Which additional visits, adverse effects or other burdens must the benefit justify? Patient and clinical input should support the threshold, in the same units as the outcome.', 'The clinical threshold and its justification are', 'comparison'],
-      ['planning', 'Target difference: used in the calculation', 'Power is evaluated at this plausible, clinically worthwhile between-group difference. It can equal the expected difference or clinical threshold; the three roles have no fixed order and each needs justification.', 'The target difference and its justification are', 'power'],
+      ['planning', 'Target difference: used in the calculation', 'Power is evaluated at this plausible, clinically worthwhile between-group difference. It can equal the difference observed in previous data or clinical threshold; the three roles have no fixed order and each needs justification.', 'The target difference and its justification are', 'power'],
       ['variation', 'Variation or event probabilities', 'A continuous outcome needs an SD in its units; a binary outcome needs each group\'s event percentage. The source should match your population, outcome definition, assessment time and background care.', 'The variation or event probabilities used for planning are'],
       ['evidence_review', 'Evidence relevance and uncertainty', 'Could differences in patients, diagnosis or background care explain the apparent benefit? Your answer should identify the least certain input and what further evidence or independent review would help.', 'The relevance and uncertainty of the evidence are'],
       ['sensitivity', 'Sensitivity analysis: alternative assumptions', 'Alternatives should follow from the evidence review, including less favorable plausible values. Your answer should state whether sample size stays fixed or is recalculated, and explain any change in your recommendation.', 'The sensitivity scenarios and their evidence are'],
       ['progression', 'Feasibility objectives and progression criteria', 'For each feasibility outcome, you should specify a denominator, acceptable and unacceptable levels, and the action associated with each result.', 'The feasibility objectives and progression criteria are', 'feasibility']
     ]],
     ['Calculation', [
-      ['analysis', 'Planned analysis', 'Your record should name the test, confidence interval method, sidedness, and how any pairing or clustering will be handled.', 'The planned analysis is'],
+      ['analysis', 'Planned analysis', 'Your record should name the planned test for a testing goal, or the interval method and confidence level for an estimation goal. It should explain any pairing or clustering.', 'The planned analysis is'],
       ['software', 'Calculation procedure and software', 'A reproducible record needs the method, software and code versions, and saved inputs. Simulations also need the data-generating assumptions, repetitions, and random-number settings.', 'The calculation procedure, software and reproducibility record are'],
       ['power', 'Type I error probability and target power', 'Both values should be percentages, with the difference used to evaluate power. A fixed sample requires reporting attainable power at specified true differences.', 'The Type I error probability and power specification is', 'power'],
       ['precision', 'Precision: desired confidence interval width', 'Your answer should give the full width, units, and confidence level. A fixed sample requires assessing the anticipated width under the stated assumptions.', 'The precision specification is', 'precision']
@@ -59,7 +59,7 @@
     outcome_detail: 'What outcome will you measure, and when? (Outcome)',
     design: 'How will participants be selected and assigned, and how are their observations related?',
     scale: 'How will you express the difference between groups?',
-    expected: 'What difference do you expect, and what supports it?',
+    expected: 'What difference was observed in previous data, and how relevant is it?',
     clinical: 'What between-group difference would matter clinically?',
     planning: 'What target difference will you use for the power calculation?',
     variation: 'What event percentages or standard deviation will you assume?',
@@ -90,7 +90,7 @@
     evidence_review: 'The small pilot leaves both relief percentages uncertain. I would compare pain severity, background medication and relief definitions across four-week studies, including less favorable findings, before judging which percentages apply.',
     sensitivity: 'I would assess power at 20-, 30-, and 40-point benefits with the sample fixed, then vary standard-treatment relief over an evidence-supported range to judge whether the recommendation changes.',
     progression: 'Retention at four weeks would inform feasibility. The proceed, amend, and stop thresholds remain to be agreed before data collection.',
-    analysis: 'A two-sided pooled score test for independent proportions without continuity correction, with a 95% confidence interval for the difference in relief percentages.',
+    analysis: 'A two-sided pooled score test for independent proportions without continuity correction.',
     software: 'The two-proportion app and its normal approximation, with inputs, rounding, software versions, and source version saved alongside the calculation.',
     power: 'A 5% Type I error probability and 90% target power at a 30-percentage-point difference, using a two-sided test.',
     precision: 'A 95% interval with full width 20 percentage points gives a margin of about 10 points; its clinical usefulness remains to be justified.',
@@ -117,14 +117,14 @@
         : 'Treatment minus control in ' + units + '; [positive or negative] values favor treatment.',
       expected: (pilot ? (binary ? '[Expected feasibility percentage]' : '[Expected mean feasibility outcome]')
         : single ? (binary ? '[Anticipated population percentage]' : '[Anticipated population mean]')
-        : '[Expected between-group difference] ' + units) + ' from [source], with uncertainty of [range or interval].',
+        : '[Difference observed in previous data] ' + units) + ' from [source], with uncertainty of [range or interval].',
       clinical: '[Minimum worthwhile between-group benefit] ' + units + ', justified by [patient and clinical input about treatment harms, burden and alternatives].',
       planning: '[Target difference] ' + units + ', supported as worthwhile and plausible by [evidence].',
       variation: binary ? '[Event percentage(s)] for [population and assessment time], supported by [source].' : 'SD [value] ' + units + ' from [comparable population and measurement method].',
       evidence_review: '[Source] is relevant because [patients, background care, outcome and follow-up are comparable]. [Design limitation or conflicting finding] makes [input] uncertain; [further evidence or independent review] would help.',
       sensitivity: 'Based on [evidence], I would examine [plausible range, including less favorable values], holding [quantities] fixed. [Result] would change my recommendation to [decision].',
       progression: 'Proceed at [acceptable result], amend at [intermediate result], and stop at [unacceptable result], using [outcome and denominator].',
-      analysis: '[Test and sidedness, if applicable] and [confidence interval method], accounting for [design and dependence between observations].',
+      analysis: value.goal === 'testing' ? '[Test and sidedness], accounting for [design and dependence between observations].' : '[Confidence interval method and level], accounting for [design and dependence between observations].',
       software: '[Method] in [software and version], with [code version, inputs, and rounding]. For simulation: [generating assumptions, repetitions, and random-number settings].',
       power: value.goal === 'fixed' ? 'At [available sample size] and [specified true difference], attainable power is [value]%, using [Type I error probability]% and [test sidedness].'
         : '[Type I error probability]% and [target power]% at [target difference], using [test sidedness].',
@@ -149,7 +149,7 @@
       question: 'Does the novel treatment improve the mean pain-improvement score at four weeks compared with standard treatment in adults with chronic pain?',
       outcome_detail: 'Mean improvement in pain score from baseline to four weeks, using a prespecified scoring rule. Larger improvement means greater benefit.',
       scale: 'The between-group mean difference in pain-improvement score, novel minus standard treatment, in score units.',
-      expected: '4 score units, the best current expectation in the teaching example. Its evidence source and uncertainty need to be justified.',
+      expected: 'An earlier study in this teaching example observed a 4-unit difference. Its population, outcome definition and uncertainty should inform whether it is useful for planning.',
       clinical: '2 score units between groups, an illustrative threshold requiring patient and clinical justification.',
       planning: '3 score units, the target difference used for power. A smaller 2-unit benefit would have lower power at the same sample size.',
       variation: 'A common SD of 5 score units is assumed for this teaching example; comparable patient data are needed to justify it.',
@@ -297,7 +297,7 @@
       ['recruitment']
     ];
     const labels = {question:'', outcome_detail:'Primary outcome', design:'Design and allocation',
-      scale:'Effect scale', expected:'Expected difference', clinical:'Clinical threshold',
+      scale:'Effect scale', expected:'Difference observed in previous data', clinical:'Clinical threshold',
       planning:'Target difference', variation:value.outcome==='binary'?'Event probabilities':'Standard deviation',
       analysis:'Planned analysis', power:'Type I error probability and power',
       precision:'Precision target', progression:'Progression criteria', counts:'Analyzable sample',

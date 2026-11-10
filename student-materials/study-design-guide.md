@@ -4,7 +4,7 @@
 After this chapter, you should be able to:
 
 - Match a research question to a design, planning goal and suitable methodological resource.
-- Plan for useful precision, existing-data reuse, pilot objectives or restricted recruitment.
+- Identify design-specific requirements for dependence, restricted recruitment and testing strategies.
 - Explain how paired and clustered observations affect sample size and analysis.
 - Distinguish success on any primary outcome, success on all [co-primary outcomes](#co-primary-outcomes) and hierarchical testing.
 - Recognize when interim analyses, stopping guidelines or sample-size re-estimation require additional planning.
@@ -13,7 +13,7 @@ After this chapter, you should be able to:
 
 The study design and planning method should follow the research question, outcome, sampling structure and intended analysis. "Clinical," "retrospective," "diagnostic" and "within-subject" describe different aspects of a study and can apply together. A diagnostic study can be clinical and retrospective, and a preclinical experiment can have repeated measurements.
 
-This chapter offers optional branches beyond the basic two-independent-group calculation. The [questionnaire](#design-questionnaire) helps identify the study design. The following sections consider dependence between observations, alternative planning goals and recruitment constraints. The [testing strategies](#multiple-outcomes-comparisons) then explain how the definition of study success and decisions during recruitment affect planning. The [resource table](#match-the-question-to-a-method-and-resource) helps you choose further guidance for your own question.
+This chapter offers optional branches beyond the basic two-independent-group calculation. The [questionnaire](#design-questionnaire) helps identify the study design. The following sections consider dependence between observations, recruitment constraints and design-specific calculations. The [testing strategies](#multiple-outcomes-comparisons) then explain how the definition of study success and decisions during recruitment affect planning. The [resource table](#match-the-question-to-a-method-and-resource) helps you choose further guidance for your own question.
 
 ## Activity: Choosing a study design {#design-questionnaire .advanced-heading}
 
@@ -81,197 +81,6 @@ A study with 30 participants and two treated sites per participant provides 30 p
 Correlation has different consequences depending on where treatments are assigned. In a cluster-randomized trial, members of the same cluster receive the same treatment, so their correlated outcomes contribute partly overlapping information to the comparison between treatments. In a paired-site trial, the two treatments are compared within the same participant, allowing shared participant characteristics to cancel out in the difference.
 
 The sample size calculation should therefore match the allocation structure and the planned analysis. Your [reproducibility record](#reproducibility-record) should specify what is randomized, what is measured, how many independent units are available, and how dependence among measurements will be handled.
-
-## Estimation with a precision target {#plan-for-precision .advanced-heading}
-
-The rehabilitation comparison can also be planned around how precisely it should estimate the population mean difference. Estimation identifies the quantity of interest; precision concerns the uncertainty around its estimate. A useful confidence level and interval width can therefore guide sample size planning alongside the power criterion in [Calculating sample size](#calculations) [@wang2020; @lakens2022].
-
-The [lab](https://katatam.github.io/sample-size-calculation/study/?activity=mean_precision) offers *Estimation with a target interval width* alongside testing and fixed-resource goals. Your plan should specify the [full width](#full-width), in the outcome's original units. For the rehabilitation improvement score, the expected difference remains 4 units, the target difference 3 units and the clinical threshold 2 units. You can use SD 5 and a target full width of 4 units:
-
-```{r precision-plan}
-# Set the outcome, SD and desired full confidence interval width.
-precision_spec <- study_spec(outcome = "means", delta = 3, sd = 5,
-  threshold = 2, width_target = 4, B = 5000, seed = 20260922)
-# Choose the group size to meet the interval-width target.
-precision_spec$n <- plan_n(precision_spec, goal = "precision")
-c(per_group = precision_spec$n,
-  expected_full_width = anticipated_width(precision_spec),
-  power_at_planning_effect = spec_power(precision_spec))
-# Simulate repeated studies to examine the resulting power and interval widths.
-precision_batch <- simulate_trials(precision_spec)
-knitr::kable(display_simulation_summary(simulation_summary(precision_batch)),
-  caption = "Simulated performance of a study planned for estimation with a specified interval-width target.")
-```
-
-```{r precision-plan-formatted, echo=FALSE}
-knitr::kable(data.frame(`Analyzable per group`=precision_spec$n, `Anticipated full interval width`=round(anticipated_width(precision_spec),2), `Power at the target difference`=percent(spec_power(precision_spec)),check.names=FALSE), caption="Sample size, anticipated precision and power for the improvement-score comparison.")
-```
-
-For normal data, the curve gives expected full t-interval width. For binary outcomes, the planning width is calculated by inserting the assumed probabilities into the Newcombe-Wilson interval formula. It approximates the width anticipated before observing data. Realized interval widths vary; the simulation reports the fraction that meets the target separately [@sandoval2025; @newcombe1998].
-
-::: {.activity}
-<p class="question-label">Question to consider</p>
-
-You can compare planning goals in [Activity: Estimate a mean difference with a precision target](https://katatam.github.io/sample-size-calculation/study/?activity=mean_precision). In the [lab](https://katatam.github.io/sample-size-calculation/study/?activity=mean_precision), you can choose *Continuous outcome*, expected difference 4, target difference 3, SD 5, clinical threshold 2, [Type I error probability](#alpha) 5% and full width 4. The outcome here is an improvement score. You can compare the sample selected for the specified interval-width target with the sample selected for 80% power. Your explanation should address why the same research question might require considering both criteria.
-
-The motivation is that detecting a difference and estimating it precisely need not require the same sample size. The planning curve calculates anticipated interval width. *One study* generates a realized interval, and *Many studies* estimates how often intervals meet the requested full width. A full width of 4 units corresponds to a margin of approximately 2 units on either side for a symmetric interval.
-
-<details class="model-answer" id="model-answer-precision-versus-power">
-<summary>Model answer</summary>
-
-With SD 5 and the same two-group analysis, the expected full-width target of 4 units requires `r precision_spec$n` analyzable patients per group; the 80% power target at a 3-unit difference requires `r plan_n(precision_spec, goal = "testing", target_power = .80)` per group. Both plans allow estimation of the difference. The precision criterion concerns how narrow its confidence interval is expected to be; the power criterion concerns how often the test rejects zero at the specified true difference. Your study question may require both a useful interval width and an adequate probability of detecting a worthwhile effect. If both are requirements, the plan should satisfy both under justified assumptions.
-
-</details>
-
-:::
-
-## Estimate one proportion: a prevalence survey {#prevalence .advanced-heading}
-
-
-
-
-
-
-The design dimensions above also explain why some questions need a different calculation. A prevalence survey estimates one population proportion at a defined time. Each participant contributes a binary outcome to one sample; you choose its size for a useful [margin of error](#margin-of-error).
-
-Such estimates can inform service planning or recruitment and retention assumptions for a future trial. The planning question is how precisely the study should estimate the population percentage [@pourhoseingholi2013; @ying2025].
-
-Suppose a service wants to estimate the percentage of eligible patients reporting a symptom. It wants a 95% confidence interval with an approximate margin of error of 5 [percentage points](#percentage-points): half-width $d=0.05$, or a full width of 10 percentage points. This is a simple independent-sample prevalence example. Here, n is the total number of participants in a single sample.
-
-For an anticipated population proportion $p_0$, the normal approximation gives:
-
-\begin{equation}
-n\approx\frac{z_{1-\alpha/2}^{2}p_0(1-p_0)}{d^2}.
-(\#eq:single-proportion)
-\end{equation}
-
-Here $p_0$ is the anticipated population proportion used to plan the study. If comparable evidence suggests a prevalence of 20% ($p_0=0.20$), the approximate requirement is 246 completed observations. If there is no useful prior estimate, 50% ($p_0=0.50$) gives the largest value of $p_0(1-p_0)$ and an approximate requirement of 385.
-
-```{r single-proportion-precision}
-# Plan for a full width of 10 percentage points at 95% confidence.
-prevalence_known <- proportion_precision_plan(p = .20,
-  full_width = .10, confidence = .95)
-# unknown_p = TRUE uses 50%, the conservative value for this approximation.
-prevalence_unknown <- proportion_precision_plan(p = .20,
-  full_width = .10, confidence = .95, unknown_p = TRUE)
-knitr::kable(data.frame(
-  Scenario = c("Prior estimate 20%", "Unknown: use 50% for planning"),
-  `Assumed population percentage` = percent(c(prevalence_known$planning_p,
-    prevalence_unknown$planning_p)),
-  `Completed observations` = c(prevalence_known$n, prevalence_unknown$n),
-  check.names = FALSE),
-  caption = "Approximate prevalence sample sizes for a 95% interval with a 5-percentage-point margin of error.")
-```
-
-The conservative 50% choice concerns absolute precision for one proportion under this approximation. It is not a general substitute for unknown control and treatment percentages in a power calculation. For a rare outcome, an absolute margin of five percentage points might be unhelpfully wide; event counts and the chosen interval method also matter.
-
-[Activity: Estimate a percentage with useful precision](https://katatam.github.io/sample-size-calculation/study/?activity=prevalence). You can compare margins of error of 5 and 2.5 percentage points. The latter requires about four times as many completed observations under the formula. The app shows a Wilson interval for an illustrative realized sample; its width can differ from the planning approximation. No formula here guarantees that every realized interval meets the target. Representative recruitment matters as well: a larger convenience sample does not automatically remove selection bias [@whitley2002; @wang2020].
-
-
-
-
-The worked survey illustrates one planning method. The table below places it alongside treatment comparisons and other research objectives.
-
-## Reuse an existing dataset for a different question {#dataset-reuse .advanced-heading}
-
-An existing dataset is another fixed-resource setting, common in bachelor projects. Suppose a completed chronic pain trial included 200 patients and also recorded sleep difficulty before treatment. Your new question is: what percentage of these trial participants reported sleep difficulty at baseline? This differs from the trial's original question about treatment effectiveness.
-
-Baseline sleep information is available for 180 participants; 72 reported difficulty. The observed percentage is 72/180 = 40%. With the sample already fixed, the planning task is to assess the precision the available data can provide.
-
-```{r reused-dataset}
-# Estimate a percentage and interval from 72 events among 180 observations.
-sleep_result <- single_proportion_interval(events = 72, n = 180,
-  confidence = .95)
-sleep_result
-```
-
-```{r reused-dataset-summary, echo=FALSE}
-sleep_limits <- wilson_interval(.40, 180)
-knitr::kable(data.frame(
-  Measure = c("Patients in the dataset", "With baseline sleep information",
-    "Reporting sleep difficulty", "Observed percentage", "95% Wilson confidence interval"),
-  Result = c("200", "180", "72", "40.0%",
-    paste(percent(sleep_limits[1, 1]), "to", percent(sleep_limits[1, 2])))),
-  caption = "A new descriptive question answered using an existing chronic pain trial dataset.")
-```
-
-The interval describes sampling uncertainty under the model. Possible differences between the 20 patients with missing information and those who answered require separate assessment. The trial's eligibility criteria also restrict whom these results describe: its participants may not represent all patients with chronic pain. Random allocation supports the original treatment comparison.
-
-The new question needs its own assessment of adequacy. You should check that the required variables and time points are available, that reuse is permitted, and that the analysis fits the new objective. For a new association question, you would also need to consider confounding and the relevant model. The estimate, interval and limitations should guide interpretation; observed post hoc power adds no evidence about the same result [@lakens2022; @consortee2025].
-
-Before examining the new results, your report should document why the sample is fixed and what precision would be useful. The available sample sets the resource limit. Its adequacy depends on the precision required for the new question. For a comparison, you can evaluate independently justified differences at that fixed sample size; for this descriptive question, you can examine the attainable interval width. If it is too wide for the intended decision, you should narrow the claim or explain that more data would be needed. Your report should identify analyses developed after examining the data as exploratory.
-
-::: {.activity}
-<p class="question-label">Question to consider</p>
-
-For your adapted research question, your plan should identify the new outcome, target population, available sample and missing observations. Would an interval of this width answer your project question? Your report should record these decisions in the [Activity: Develop and justify your study plan](https://katatam.github.io/sample-size-calculation/study/?activity=assumptions_report), using a fixed-resource estimation goal.
-
-<details class="model-answer" id="model-answer-existing-data">
-<summary>Model answer</summary>
-
-The new outcome is baseline sleep difficulty. The results directly describe the population defined by the original trial's eligibility criteria. The dataset contains 200 patients, with sleep information for 180 and missing information for 20. Among those with information, 72/180 = 40% reported difficulty; the 95% Wilson interval is `r percent(sleep_limits[1, 1])` to `r percent(sleep_limits[1, 2])`.
-
-Whether this precision is useful depends on a decision specified for the project. It may support a broad descriptive estimate, but would not support a requirement to estimate the percentage within 2 percentage points. The report should explain the fixed sample, missing information and restricted population. Adequacy here depends on precision for the descriptive objective.
-
-</details>
-
-:::
-
-## Planning a pilot or feasibility study {#pilot-feasibility .advanced-heading}
-
-So far, feasibility has meant whether you can carry out an informative main study. A preliminary pilot or feasibility study has its own research objectives: investigating whether recruitment, retention, delivery, or other procedures will work. Its sample size should support those decisions.
-
-Suppose a team wants to test a new rehabilitation pathway and needs evidence about recruitment and follow-up. It can recruit 40 patients over three months to investigate these procedures.
-
-You can start with systematic reviews, relevant previous studies, routine service data and clinical expertise. Your report should record the population, outcome, time point and uncertainty of each source. You should agree the main trial's clinically meaningful outcome with patients and clinicians. The pilot can investigate recruitment and retention, measurement procedures, acceptability and variability. Planning the definitive trial should combine these findings with relevant external evidence [@albers2018].
-
-For the pilot, your plan should connect the available resources with the precision needed for these feasibility decisions. The [single-proportion example](#prevalence) explains the corresponding interval-width calculation. Here the hypothetical cap is 40 participants, and expected completion of follow-up is 80%. If 32 of 40 complete follow-up, what would that tell the team about retention?
-
-```{r pilot-retention}
-# Estimate retention and its interval from 32 completions among 40 participants.
-pilot_retention <- single_proportion_interval(events = 32, n = 40,
-  confidence = .95)
-pilot_retention
-```
-
-```{r pilot-retention-formatted, echo=FALSE}
-knitr::kable(data.frame(`Completed follow-up`="32/40 (80%)", `95% Wilson confidence interval`=paste(percent(pilot_retention$lower), "to", percent(pilot_retention$upper)), check.names=FALSE), caption="Retention and its uncertainty in a 40-participant feasibility study.")
-```
-
-The observed 80% retention still has a wide interval. You can compare it with a prospectively agreed progression criterion and consider reasons for missing outcomes. A point estimate of 80% alone cannot establish that the main trial will retain at least 80%.
-
-Your pilot size should reflect the decision it must support. Ying and colleagues distinguish estimating feasibility with useful precision, assessing progression criteria, detecting practical problems and informing variability for the main trial [@ying2025]. You should specify each outcome's denominator: retention concerns participants enrolled, while a recruitment percentage may concern eligible people approached. Forty enrolled patients do not supply forty observations for every feasibility outcome.
-
-::: {.activity}
-<p class="question-label">Question to consider</p>
-
-Before seeing retention results, your feasibility plan should specify an unacceptable level, a desirable level and what would lead to proceeding, amending or stopping. You can compare the intervals for 40 and 80 participants. Your explanation should address whether either sample supplies useful information for those decisions, alongside acceptability and reasons for missing follow-up. The progression criteria should have a clinical and operational justification.
-
-<details class="model-answer" id="model-answer-pilot-progression">
-<summary>Model answer</summary>
-
-One possible set of prospectively specified criteria would treat retention below 70% as unacceptable and 80% as desirable. A team could proceed if the estimate is at least 80%, the lower 95% confidence limit exceeds 70%, and delivery and acceptability are satisfactory; amend the pathway if the interval still includes unacceptable retention; and stop or substantially redesign it if the interval lies below 70%. These illustrative thresholds and rules need clinical and operational justification before the results are seen.
-
-For 32/40 retained participants, the 95% Wilson interval is `r percent(wilson_interval(.80, 40)[1, 1])` to `r percent(wilson_interval(.80, 40)[1, 2])`; for 64/80 it is `r percent(wilson_interval(.80, 80)[1, 1])` to `r percent(wilson_interval(.80, 80)[1, 2])`. The 40-person result would lead to amendment or further investigation under these illustrative rules. The 80-person result just meets the numerical progression rule using the unrounded lower limit, but the reasons for missing follow-up and acceptability would still matter. Neither result establishes that true retention is at least 80%. Recruiting 80 would also need its own feasible time and resource plan.
-
-</details>
-
-:::
-
-For another objective, suppose a practical problem independently affects 10% of participants. The probability of observing at least one problem in $n$ participants is $1-(1-0.10)^n$; 29 give at least a 95% probability. Much rarer problems require larger samples for reliable detection. A problem can remain undetected in a small pilot [@ying2025]. Different pilot objectives can therefore imply different numbers.
-
-<details class="misconception" id="misconception-pilot-goal">
-<summary>Common misconception: every pilot needs a treatment-effect power calculation</summary>
-
-A pilot may primarily investigate recruitment, retention or whether procedures are workable. The sample size should support the feasibility questions and provide useful precision for the intended decisions. Planning the definitive trial should combine the pilot findings with relevant external evidence [@albers2018].
-
-</details>
-
-[Activity: Pilot study: estimate retention](https://katatam.github.io/sample-size-calculation/study/?activity=pilot_feasibility). It starts with a fixed total of 40 and anticipated retention of 80%. You can compare illustrative intervals at 40 and 80 observations; make clear whether another recruitment period or collaboration could obtain the larger sample.
-
-The app can generate one hypothetical retention count from the assumed 80% probability. It will not necessarily produce exactly 32 of 40. Both retained and non-retained participants contribute to the retention estimate when their status is known.
-
-Before writing the protocol, you should check relevant guidance and the current funder's requirements. For examples, [NIHR HTA guidance on feasibility and pilot studies](https://njl-admin.nihr.ac.uk/document/download/2023130) distinguishes feasibility questions from definitive efficacy questions; this is an archived guidance example. The [CONSORT extension for randomized pilot and feasibility trials](https://www.bmj.com/content/355/bmj.i5239) asks for a rationale for pilot numbers and criteria for progression [@nihrfeasibility; @eldridge2016]. Reporting guidance helps you document the design. The sample size method should match the study question and planned analysis.
 
 ## What if the disease is rare? {#rare-diseases .advanced-heading}
 
@@ -347,7 +156,7 @@ Re-estimation is one form of [adaptive design](#adaptive-design){.no-glossary-to
 
 ## Planning under uncertainty {#further-planning-approaches .advanced-heading}
 
-The core calculations evaluate power at specified values. Expected differences, target differences and clinical thresholds can coincide or follow different orders; their evidence and purpose determine the choices. The [ST01 example](#st01-expectations) shows why expectations and clinical judgments should be assessed separately. More specialized approaches account for additional uncertainty or a different research objective:
+The core calculations evaluate power at specified values. Differences observed in previous data, target differences and clinical thresholds can coincide or follow different orders; their evidence and purpose determine the choices. The [ST01 example](#st01-expectations) shows why expectations and clinical judgments should be assessed separately. More specialized approaches account for additional uncertainty or a different research objective:
 
 - Safeguard power uses uncertainty in a previous difference estimate when planning. It can imply a much larger sample when the evidence is weak [@perugini2014].
 - Bayesian and hybrid approaches can average performance over a justified distribution of plausible parameter values. Assurance or expected power answers a different question from power at one fixed difference; the distribution and decision rule need justification [@kunzmann2021review; @pezeshk2003].
@@ -408,7 +217,7 @@ For an unsupported design, take the question, assumptions, desired conclusion an
 ### Take-home points {.unnumbered}
 
 - The research goal, allocation structure and planned analysis determine which sample size method applies.
-- Precision, pilot feasibility and existing-data questions need planning criteria suited to their objectives.
+- Restricted recruitment in rare diseases calls for a justified objective, efficient design and appropriate specialist guidance.
 - Paired and clustered observations require assumptions about dependence and the independent units available.
 - With several outcomes or comparisons, the success rule determines the relevant power and error control.
 - Interim analyses and sample-size adaptations require prespecified decisions and design-specific evaluation.

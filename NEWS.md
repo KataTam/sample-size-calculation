@@ -1,5 +1,12 @@
 # Changelog
 
+## Comparison planning and reporting — 10 November 2026
+
+- Organized four core chapters around the research question and power, calculation, recruitment, and the sample size calculation report.
+- Added a separate estimation chapter introducing confidence intervals and precision-based sample sizes.
+- Replaced the chronic pain expected-difference label with “difference observed in the pilot,” distinguishing earlier sample data from planning judgments.
+- Updated activities, reports, quizzes, flashcards, teaching guidance and chapter links.
+
 ## Written assumptions activity — 2 October 2026
 
 - Added a study-plan activity with live text output, shared pain-relief example, browser persistence, saved-entry files and report downloads.

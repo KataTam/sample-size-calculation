@@ -115,19 +115,19 @@ lab_model_answers <- function(v, details, case_id, x = NULL, capacity = NULL, sa
     " [Source] supports the selected assumptions; [plausible alternatives] give [sensitivity results]. [Remaining limitations] affect the recommendation.")
   if (!is.null(saved)) {
     valid <- is.finite(saved$results$estimate)
-    rate <- if (any(valid)) format_percent(mean(saved$results$reject[valid]), 1) else "unavailable"
+    rate <- if (any(valid)) format_percent(mean(if (v$goal == "precision") saved$results$cover[valid] else saved$results$reject[valid]), 1) else "unavailable"
     justification <- paste0(justification, " The saved batch of ", saved$spec$B, " studies (", saved$spec$n,
       if (is.null(saved$missing)) " analyzable" else " recruited", " per group) gives ", rate,
-      " rejection at ", model_effect(true_difference(saved$spec), saved$spec$outcome), ". ",
+      if (v$goal == "precision") " interval coverage at " else " rejection at ", model_effect(true_difference(saved$spec), saved$spec$outcome), ". ",
       if (!identical(saved$meta, current)) "It uses earlier inputs. " else "",
       if (!is.null(saved$missing)) "Missing-outcome bias and interval coverage also inform the decision." else "")
   }
   list(study_question = context$question, participant_burden = context$burden,
     clinical_relevance = if (v$goal == "precision") paste0("A full interval width of ", effect(x$width_target),
       " should distinguish [values leading to different decisions] around the ", effect(x$threshold), " between-group clinical threshold. [Patient or clinical input] should justify that choice.")
-      else paste0("The selected minimum worthwhile between-group benefit is ", effect(x$threshold), ". [Patient or clinical input] should justify this benefit in relation to treatment harms, burden and alternatives. An interval spanning this threshold would leave clinical importance uncertain."),
-    evidence_sources = paste0(context$evidence, " Values to justify: expected difference ", effect(if (x$outcome == "means") v$expected_m else v$expected_p),
-      "; target ", effect(true_difference(x)), "; ",
+      else paste0("The selected minimum worthwhile between-group benefit is ", effect(x$threshold), ". [Patient or clinical input] should justify this benefit in relation to treatment harms, burden and alternatives. The clinical threshold should inform the chosen target difference."),
+    evidence_sources = paste0(context$evidence, " Earlier observed difference: ", effect(if (x$outcome == "means") v$expected_m else v$expected_p),
+      if (v$goal == "precision") "; simulation population difference " else "; target ", effect(true_difference(x)), "; ",
       if (x$outcome == "means") paste0("SD ", model_number(x$sd), ".")
       else paste0("control ", format_percent(x$p_control), ", treatment ", format_percent(x$p_treatment), "."),
       " [Source] reports [comparable population, outcome, and assessment time], with uncertainty of [range]. I would examine [plausible alternative inputs]."),

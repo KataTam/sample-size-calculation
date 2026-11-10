@@ -16,7 +16,7 @@ let browser;
    if(url.hash) assert((await response.text()).includes('id="'+decodeURIComponent(url.hash.slice(1))+'"'),href+' has no target section');
   }
  }
- await page.goto(base+'/book/power.html');
+ await page.goto(base+'/book/clinical-question.html');
  assert.equal(await page.locator('#alpha-beta').count(),0);
  const continuation=await page.locator('.chapter-end-nav .chapter-arrow-next').getAttribute('href');
  assert(continuation.includes('calculations'), 'The core route should skip error-region and simulation extensions');

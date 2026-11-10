@@ -59,6 +59,7 @@ const bank=JSON.parse(fs.readFileSync('site/quiz/questions.json','utf8'));
   await page.setViewportSize({width:390,height:844});
   await page.goto(base+'/quiz/?chapter=power');
   await page.waitForFunction(()=>!document.getElementById('start').disabled);
+  assert.equal(await page.locator('#chapter').inputValue(),'clinical-question','Former power chapter links open the merged chapter check');
   await page.locator('#start').click();
   await page.screenshot({path:'build/browser-checks/quiz-mobile.png'});
   assert(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth));

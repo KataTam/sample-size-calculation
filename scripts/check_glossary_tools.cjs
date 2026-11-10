@@ -6,9 +6,8 @@ const base=process.argv[2]||'http://127.0.0.1:8769';
  const browser=await chromium.launch({headless:true,...(process.platform==='win32'?{channel:'msedge'}:{})});
  const page=await browser.newPage({viewport:{width:1280,height:900}});
  const errors=[];page.on('pageerror',e=>errors.push(e.message));
- // Precision is discussed with the calculations; Chapter 4 now focuses on
- // recruitment and completing the sample size calculation report.
- for(const path of ['/book/calculations.html','/book/Sample_size_open_module.html']) {
+ // Precision is introduced in the dedicated estimation chapter.
+ for(const path of ['/book/estimation-planning.html','/book/Sample_size_open_module.html']) {
   console.log("Checking",path); await page.goto(base+path);
   const repeated = await page.evaluate(() => {
     const seen = new Map(), duplicates = [];
@@ -22,9 +21,9 @@ const base=process.argv[2]||'http://127.0.0.1:8769';
     return duplicates;
   });
   assert.deepEqual(repeated,[], 'Glossary terms should be linked only once per chapter');
-  const term=page.locator('a[data-glossary-term="precision"]:not(.no-glossary-tooltip)').first();
+  const term=page.locator('a[data-glossary-term="full-width"]:not(.no-glossary-tooltip)').first();
   await term.hover();await page.locator('#glossary-tooltip:not([hidden])').waitFor();
-  assert((await page.locator('#glossary-tooltip').innerText()).includes('narrower confidence interval indicates greater precision'));
+  assert((await page.locator('#glossary-tooltip').innerText()).includes('upper'));
   await page.keyboard.press('Escape');assert(await page.locator('#glossary-tooltip').isHidden());
   await term.focus();assert(await page.locator('#glossary-tooltip').isVisible());
   const bounds=await page.locator('#glossary-tooltip').boundingBox();
@@ -33,15 +32,11 @@ const base=process.argv[2]||'http://127.0.0.1:8769';
   await page.keyboard.press('Escape');
   await term.evaluate(el=>el.blur());await page.setViewportSize({width:390,height:844});await term.focus();
   assert(await page.locator('#glossary-tooltip').evaluate(el=>{let r=el.getBoundingClientRect();return r.left>=0&&r.right<=innerWidth}));
-  assert((await term.getAttribute('href')).includes('#precision'));
+  assert((await term.getAttribute('href')).includes('#full-width'));
   assert.equal(await page.locator('pre a[data-glossary-term]').count(),0);
   await page.setViewportSize({width:1280,height:900});
  }
  await page.goto(base+'/book/clinical-question.html');
- const ci=page.locator('a[data-glossary-term="confidence-interval"]');
- await ci.hover();
- assert.match(await page.locator('#glossary-tooltip').innerText(),/range of values compatible with the data/);
- await page.keyboard.press('Escape');
  const groupDifference=page.locator('a[data-glossary-term="between-group-differences"]');
  await groupDifference.hover();
  assert.match(await page.locator('#glossary-tooltip').innerText(),/Individual patients.*each person/s);
@@ -53,7 +48,7 @@ const base=process.argv[2]||'http://127.0.0.1:8769';
   await inline.hover();assert(await page.locator('#glossary-tooltip').isHidden());
   await inline.focus();assert(await page.locator('#glossary-tooltip').isHidden());
  }
- await ci.hover();
+ await groupDifference.hover();
  await page.screenshot({path:'build/browser-checks/glossary-tooltip.png'});
  const definitions=JSON.parse(fs.readFileSync('data/glossary-terms.json','utf8'));
  await page.goto(base+'/book/glossary.html');

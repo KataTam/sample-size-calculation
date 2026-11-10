@@ -76,6 +76,8 @@ check_app_reports <- function() {
     has(report_paragraphs(), "patients (" )
     has(report_paragraphs(), "latest batch contains 100 independently simulated studies")
     has(report_paragraphs(), "percentage estimates power")
+    lacks(report_paragraphs(), "confidence interval")
+    stopifnot(!intervals_visible())
     has(report_paragraphs(), "My simulation reflection.")
     session$setInputs(fixed_n = 50, plan_p0 = .4, plan_p1 = .7)
     has(report_paragraphs(), "50 patients per group (100 in total)")
@@ -90,6 +92,23 @@ check_app_reports <- function() {
     has(model_answers()$justification, "significant results are false positives")
     session$setInputs(missing_mode = "selective")
     stopifnot(!pain_report(), "Resources and feasibility" %in% names(report_sections()))
+  })
+  shiny::testServer(app_server("power_explorer"), {
+    do.call(session$setInputs, lab_input_defaults())
+    do.call(session$setInputs, study_input_defaults())
+    current_activity("mean_precision")
+    session$setInputs(outcome="means", goal="precision", plan_delta=3,
+      plan_sd=5, width_m=4, alpha=.05, B=100, show_advanced=FALSE)
+    stopifnot(intervals_visible())
+    has(report_paragraphs(), "target full width 4")
+    lacks(report_paragraphs(), "target power")
+    lacks(report_paragraphs(), "Type I error probability")
+    session$setInputs(run_one=1,run_many=1)
+    has(report_sections()[["One simulated study"]], "95% confidence interval")
+    has(report_sections()[["Many simulated studies"]], "meet the width target")
+    lacks(report_sections()[["Many simulated studies"]], "reject")
+    session$setInputs(plan_sd=6)
+    has(report_sections()[["One simulated study"]], "omitted")
   })
   shiny::testServer(app_server("prevalence_precision"), {
     session$setInputs(goal = "precision", anticipated_p = .20, full_width = .10, confidence = .95,

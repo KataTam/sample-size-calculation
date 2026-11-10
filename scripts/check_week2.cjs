@@ -20,7 +20,7 @@ const base=(process.argv[2]||'http://127.0.0.1:8769').replace(/\/$/,'');
  assert.equal((await page.locator('#'+ref+' .reference-number').innerText()),'['+number+']');
  assert.match(await page.locator('.citation:not(.citation-numbered)').allTextContents().then(x=>x.join(' ')),/Kirkwood/);
  assert.match(await page.locator('#ref-richardson1995').innerText(),/1995.*well-built clinical question/s);
- await page.goto(base+'/book/power.html');
+ await page.goto(base+'/book/clinical-question.html');
  assert.equal(await page.locator('details.advanced-explanation[open]').count(),0);
  assert(await page.locator('.chapter-recap').isVisible());
  await page.locator('#activity-menu-button').click();
@@ -31,7 +31,7 @@ const base=(process.argv[2]||'http://127.0.0.1:8769').replace(/\/$/,'');
  await page.goto(base+'/book/power.html#eq:mcse');
  await page.waitForURL('**/simulation.html#eq:mcse');
  assert(await page.locator('[id="eq:mcse"]').isVisible());
- for(const chapter of ['clinical-question','power','calculations','curves','simulation','feasibility','study-designs','appendix']) {
+ for(const chapter of JSON.parse(fs.readFileSync('module/chapter-order.json','utf8')).map(x=>x.id)) {
   await page.goto(base+'/book/'+chapter+'.html');
   assert.equal(await page.locator('.chapter-recap').count(),1,chapter);
   assert(await page.locator('.chapter-recap').isVisible(),chapter);

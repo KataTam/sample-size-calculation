@@ -12,14 +12,14 @@ basic_calculator_ui <- function(outcome) {
       app_input_group("Study assumptions",
         if (means) tagList(
           numericInput("delta", "Target between-group difference (outcome units)", 3, min = .01),
-          activity_help("Use a clinically worthwhile, plausible difference in the outcome's units. Power is evaluated at this value. It can equal the expected difference or clinical threshold; the three roles have no fixed order.", for_input = "delta"),
+          activity_help("Use a clinically worthwhile, plausible difference in the outcome's units. Power is evaluated at this value. It can equal the difference observed in previous data or clinical threshold; the three roles have no fixed order.", for_input = "delta"),
           numericInput("sd", "Common standard deviation (outcome units)", 5, min = .01),
           activity_help("Use an SD from comparable participants, on the same outcome scale. This describes variation between individuals; the calculation assumes equal SDs in both groups.", for_input = "sd"))
         else tagList(
           percent_slider("pi2", "Standard treatment: assumed event probability (%)", .01, .99, .30, step = .01),
           percent_slider("pi1", "Novel treatment: assumed event probability (%)", .01, .99, .60, step = .01),
           activity_help("Use evidence for the same event definition, population, and follow-up time. Both groups should use the same definition and assessment time.", for_input = "pi2"),
-          activity_help("Its difference from the standard-treatment percentage sets the target difference. This can equal the expected difference or clinical threshold; the three roles have no fixed order. Higher values favor recovery events and worsen adverse events.", for_input = "pi1"))),
+          activity_help("Its difference from the standard-treatment percentage sets the target difference. This can equal the difference observed in previous data or clinical threshold; the three roles have no fixed order. Higher values favor recovery events and worsen adverse events.", for_input = "pi1"))),
       app_input_group("Statistical settings", collapsed = TRUE,
         percent_slider("alpha", "Type I error probability (%)", .001, .10, .05, step = .001),
         percent_slider("power", "Target power (%)", .50, .99, .90, step = .01),

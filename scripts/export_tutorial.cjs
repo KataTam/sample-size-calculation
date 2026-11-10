@@ -6,7 +6,7 @@ const {execFileSync} = require('node:child_process');
 const {chromium} = require('playwright');
 const base = (process.argv[2] || 'http://127.0.0.1:8769').replace(/\/$/, '');
 if (!['127.0.0.1', 'localhost'].includes(new URL(base).hostname)) throw Error('Use the private loopback preview.');
-const allChapters = ['index', 'clinical-question', 'power', 'calculations', 'feasibility', 'curves', 'simulation', 'study-designs', 'appendix', 'exercises', 'glossary', 'common-mistakes', 'references'];
+const allChapters = ['index', ...JSON.parse(fs.readFileSync('module/chapter-order.json','utf8')).map(x => x.id), 'exercises', 'glossary', 'common-mistakes', 'references'];
 const chapters = allChapters;
 const publicBase = 'https://katatam.github.io/sample-size-calculation';
 const activityContents = JSON.parse(fs.readFileSync('module/activity-contents.json', 'utf8'));
@@ -88,7 +88,7 @@ let browser;
         a.removeAttribute('data-reference-preview');
         if (a.getAttribute('aria-describedby') === 'reference-preview') a.removeAttribute('aria-describedby');
         const url = new URL(a.getAttribute('href'), location.href);
-        const chapter = url.pathname.match(/\/(index|clinical-question|power|calculations|curves|simulation|feasibility|exercises|study-designs|glossary|common-mistakes|appendix|references)\.html$/);
+        const chapter = url.pathname.match(/\/(index|clinical-question|power|reporting|estimation-planning|calculations|curves|simulation|feasibility|exercises|study-designs|glossary|common-mistakes|appendix|references)\.html$/);
         const internal = url.origin === location.origin && chapter &&
           url.pathname.startsWith(new URL(location.href).pathname.replace(/[^/]+$/, ''));
         a.setAttribute('href', internal ? (url.hash || '#tutorial-' + chapter[1]) :

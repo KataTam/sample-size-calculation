@@ -27,7 +27,7 @@ const base=(process.argv[2]||'http://127.0.0.1:8769').replace(/\/$/,'');
   assert.equal(await page.locator('.navigation-next').evaluate(el=>getComputedStyle(el).position),'static','Navigation must leave room for a narrow reading pane');
   await handle.dblclick();assert.equal(await width(),300);
   await drag(handle,120);assert.equal(await width(),420);
-  await page.locator('.book-summary a[href="power.html"]').first().click();await page.waitForURL('**/power.html');
+  await page.locator('.book-summary a[href="calculations.html"]').first().click();await page.waitForURL('**/calculations.html');
   await page.waitForFunction(()=>document.querySelector('#toc-resizer')?.getAttribute('aria-valuenow')==='420');
   await page.reload({waitUntil:'networkidle'});assert.equal(await width(),420);
   await page.getByRole('link',{name:'Toggle Sidebar',exact:true}).click();assert(!await handle.isVisible());
