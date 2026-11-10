@@ -347,7 +347,7 @@ Re-estimation is one form of [adaptive design](#adaptive-design){.no-glossary-to
 
 ## Planning under uncertainty {#further-planning-approaches .advanced-heading}
 
-The core calculations evaluate power at specified values. More specialized approaches account for additional uncertainty or a different research objective:
+The core calculations evaluate power at specified values. Expected differences, target differences and clinical thresholds can coincide or follow different orders; their evidence and purpose determine the choices. The [ST01 example](#st01-expectations) shows why expectations and clinical judgments should be assessed separately. More specialized approaches account for additional uncertainty or a different research objective:
 
 - Safeguard power uses uncertainty in a previous difference estimate when planning. It can imply a much larger sample when the evidence is weak [@perugini2014].
 - Bayesian and hybrid approaches can average performance over a justified distribution of plausible parameter values. Assurance or expected power answers a different question from power at one fixed difference; the distribution and decision rule need justification [@kunzmann2021review; @pezeshk2003].

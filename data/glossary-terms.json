@@ -31,7 +31,7 @@
     "aliases": [
       "target difference"
     ],
-    "definition": "The between-group difference used to calculate the sample size at the chosen power."
+    "definition": "The between-group difference used to calculate the sample size at the chosen power. It can equal the expected difference or clinical threshold; the three roles have no fixed numerical order."
   },
   {
     "id": "clinical-threshold",

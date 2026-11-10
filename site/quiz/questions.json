@@ -46,12 +46,12 @@
         "30 percentage points"
       ],
       "answer": 3,
-      "explanation": "The target difference is the effect used in the power calculation. The expected difference and clinical threshold answer separate questions.",
+      "explanation": "The target difference is the effect used in the power calculation. The expected difference and clinical threshold answer separate questions. Their values can coincide or follow a different order; this example uses three different values.",
       "feedback": [
         "Twenty points is the clinical threshold. Power at that smaller difference needs a separate assessment.",
         "Forty points is the expected difference. The stated power calculation uses the target difference.",
         "Power changes with the size of the true difference.",
-        "The target difference is the effect used in the power calculation. The expected difference and clinical threshold answer separate questions."
+        "The target difference is the effect used in the power calculation. The expected difference and clinical threshold answer separate questions. Their values can coincide or follow a different order; this example uses three different values."
       ]
     },
     {

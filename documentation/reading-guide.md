@@ -7,6 +7,7 @@ Use the [full references](references.md) for bibliographic details and publisher
 | Decision | Suggested reading | Use it in the tutorial |
 |---|---|---|
 | Connect the question, outcome and analysis | Fong et al. (2026); Wang and Ji (2020); Zrineh et al. (2026) | Check the chronic-pain question before using a calculator; distinguish sampling quality from sample size |
+| Expectations and clinical judgments in a real trial | [ST01: Fayers et al. (2000)](https://doi.org/10.1054/bjoc.1999.0902) | The [Chapter 5 example](https://katatam.github.io/sample-size-calculation/book/curves.html#st01-expectations) compares a calculation target with separately surveyed expectations and clinical judgments |
 | Choose and justify the target difference | [DELTA²: Cook et al. (2018)](https://doi.org/10.1136/bmj.k3750) | Explain importance and realism, then compare the target with the expected difference and clinical threshold |
 | Select a defensible planning goal | [Lakens (2022)](https://doi.org/10.1525/collabra.33267) | Explain whether a power target, a precision target for estimation, or fixed resources determines the sample size |
 | Assess prior evidence | Albers and Lakens (2018); Caldwell and Vigotsky (2020) | Treat small pilot differences as uncertain; use clinically interpretable units and plausible ranges |

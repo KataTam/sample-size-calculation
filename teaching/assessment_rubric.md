@@ -5,7 +5,7 @@ Assess a case worksheet or assumptions report and a 300–600 word justification
 | Criterion | Evidence for 2 points |
 |---|---|
 | 1. Question and goal | Clear outcome/time point and a testing, estimation or fixed-resource aim aligned with the intended conclusion |
-| 2. Differences and clinical importance | Expected difference, target difference and clinical threshold are distinguished; units, sign, patient relevance and consequences of the chosen target are clear |
+| 2. Differences and clinical importance | Roles of expected difference, target difference and clinical threshold are distinguished; equal values or different numerical orders are accepted when justified. Units, sign, patient relevance and consequences of the chosen target are clear |
 | 3. Assumption evidence | Sources or hypothetical status, population and time point are stated; uncertain pilot estimates and plausible ranges are acknowledged |
 | 4. Analysis and calculation | Appropriate stated test/interval and assumptions; reproducible calculation with method limits acknowledged |
 | 5. Sample and recruitment counts | Correct per-group and total rounding; dropout inflation distinguished from fixing missing-data bias |

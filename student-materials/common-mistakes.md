@@ -19,7 +19,7 @@ For the ordinary two-sided superiority test, the alternative is any nonzero diff
 <details class="misconception" id="does-planning-for-90-power-cover-every-clinically-worthwhile-difference">
 <summary>Does planning for 90% power cover every clinically worthwhile difference?</summary>
 
-No. Power is evaluated at the specified target difference. If that target exceeds the smallest clinically important difference, power will generally be lower at some worthwhile benefits. Your justification should explain why the target is important and realistic, including how the study would perform at the clinical threshold. The expected difference, target difference and clinical threshold may coincide, but each has a different role.
+No. Power is evaluated at the specified target difference. If that target exceeds the smallest clinically important difference, power will generally be lower at some worthwhile benefits. Your justification should explain why the target is important and realistic, including how the study would perform at the clinical threshold. The expected difference, target difference and clinical threshold can coincide and have no fixed numerical order. Each role still needs justification.
 
 </details>
 

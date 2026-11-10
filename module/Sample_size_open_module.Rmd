@@ -191,7 +191,7 @@ The examples use [frequentist methods](#frequentist-methods): [two-sided tests](
 
 ## What do you expect, what will you plan for, and what matters clinically? {#what-do-we-expect-what-will-we-plan-for-and-what-matters-clinically .core-heading}
 
-In this tutorial, the [expected difference](#expected-difference){.no-glossary-tooltip}, [target difference](#target-difference){.no-glossary-tooltip}, and [clinical threshold](#clinical-threshold){.no-glossary-tooltip} all refer to differences between treatment groups in the population of interest. They describe what you anticipate, what you use in the sample size calculation, and what additional benefit would be clinically worthwhile. Their values may coincide; the examples use different values to illustrate their roles. These group-level differences should not be interpreted as the benefit each individual patient would experience. See [Between-group differences and individual benefit](#between-group-differences).
+In this tutorial, the [expected difference](#expected-difference){.no-glossary-tooltip}, [target difference](#target-difference){.no-glossary-tooltip}, and [clinical threshold](#clinical-threshold){.no-glossary-tooltip} all refer to differences between treatment groups in the population of interest. They describe what you anticipate, what you use in the sample size calculation, and what additional benefit would be clinically worthwhile. Two or all three values may coincide, and their definitions impose no fixed numerical order. The ordering in the worked examples illustrates particular choices; each role still needs its own justification. These group-level differences should not be interpreted as the benefit each individual patient would experience. See [Between-group differences and individual benefit](#between-group-differences).
 
 Suppose the pilot and other relevant evidence support an expected difference of 40 percentage points. For the sample size calculation, the assumed target difference is 30 percentage points: 60% relief with the novel treatment versus 30% with standard treatment. Separately, after consulting with patients and clinicians, you set the minimally clinically relevant difference (i.e., the clinical threshold) at 20 percentage points.
 
@@ -210,15 +210,15 @@ The event probability here is the assumed probability of pain relief at four wee
 | Target between-group difference | 30 percentage points: 60% versus 30% | Assumed true difference at which you evaluate power |
 | Clinically worthwhile between-group difference (clinical threshold) | 20 percentage points | Smallest additional benefit judged worthwhile, considering burdens, risks, and alternatives |
 
-Table: (\#tab:pain-planning-values) Three distinct decisions for the chronic pain trial.
+Table: (\#tab:pain-planning-values) Three planning roles for the chronic pain trial; the numerical values can coincide in other studies.
 
-Figure \@ref(fig:planning-differences) places the three values in Table \@ref(tab:pain-planning-values) on the same scale. They answer different questions. The smaller target difference reflects uncertainty in this pilot estimate. Its choice requires justification from the available evidence. Your choice should be supported by relevant evidence and an examination of plausible alternatives. Absolute differences should be expressed in percentage points. A generic description of an effect as small, medium or large is insufficient justification [@caldwell2020].
+Figure \@ref(fig:planning-differences) places the three values in Table \@ref(tab:pain-planning-values) on the same scale. They answer different questions. Here, the smaller target difference reflects uncertainty in the pilot estimate. This choice needs supporting evidence and an examination of plausible alternatives. The [ST01 trial example](#st01-expectations) shows how investigators assessed expectations, a calculation target and clinical importance separately in an actual trial [@fayers2000beliefs]. Absolute differences should be expressed in percentage points. A generic description of an effect as small, medium or large is insufficient justification [@caldwell2020].
 
-```{r planning-differences, echo=FALSE, fig.width=8, fig.height=3, fig.cap="Expected difference, target difference and clinical threshold for the hypothetical chronic pain trial. Each horizontal line extends from zero to its planning value on a shared axis. All three describe population differences between treatment groups, expressed in percentage points. Their values may coincide in other studies.", fig.alt="Three compact horizontal rows share an axis for novel minus standard treatment. Each line starts at zero and ends at its labeled value: expected difference, 40 percentage points, the best current expectation; target difference, 30 points, used to evaluate power; clinical threshold, 20 points, the smallest benefit judged worthwhile."}
+```{r planning-differences, echo=FALSE, fig.width=8, fig.height=3, fig.cap="Expected difference, target difference and clinical threshold for the hypothetical chronic pain trial. Each horizontal line extends from zero to its planning value on a shared axis. All three describe population differences between treatment groups, expressed in percentage points. Their values may coincide or follow a different order in other studies.", fig.alt="Three compact horizontal rows share an axis for novel minus standard treatment. Each line starts at zero and ends at its labeled value: expected difference, 40 percentage points, the best current expectation; target difference, 30 points, used to evaluate power; clinical threshold, 20 points, the smallest benefit judged worthwhile."}
 draw_planning_differences()
 ```
 
-Choosing 30 rather than 20 percentage points has a consequence: a study planned for high power at 30 will generally have lower power at a 20-point benefit, even though that smaller benefit matters clinically. For this illustration, suppose the team considers a 30-point benefit realistic and large enough to support adopting the treatment. Its plan must acknowledge that a 20-point benefit could remain inconclusive. If reliably detecting the smallest worthwhile benefit is essential, evaluate the sample required at 20 instead. Affordability alone is not a justification for choosing a larger target [@cook2018delta2].
+Choosing 30 rather than 20 percentage points has a consequence: a study planned for high power at 30 will generally have lower power at a 20-point benefit, even though that smaller benefit matters clinically. For this illustration, suppose the team considers a 30-point benefit realistic and large enough to support adopting the treatment. Its plan must acknowledge that a 20-point benefit could remain inconclusive. If reliably detecting the smallest worthwhile benefit is essential, the target difference could equal the clinical threshold of 20 points, with the sample size calculated accordingly. Affordability alone is not a justification for choosing a larger target [@cook2018delta2].
 
 ::: {.activity}
 <p class="question-label">Question to consider</p>
@@ -297,7 +297,7 @@ A clear sample size justification lets readers assess your choices and reproduce
 In the activity, your study title identifies the plan. Your answers are entered once. The preview begins with a concise sample size calculation report and then shows the supporting study plan, including detailed evidence, alternative scenarios, feasibility notes and saved calculations. You can mark each section ready for review once its applicable questions are answered; changes to key inputs flag affected sections for another review. The report is available as PDF or an editable Word document. “Save work for later” stores your entries for reopening in the activity.
 
 
-Small pilot effects are uncertain. Following up only pilots whose estimated effect gives an affordable main study can introduce additional bias [@albers2018]. A pilot can support conclusions about recruitment, acceptability, measurement procedures, and other feasibility objectives. It is generally not designed to establish treatment effectiveness, and its treatment-difference estimate may be highly uncertain [@eldridge2016]. In this tutorial, you examine plausible ranges explicitly; [further planning approaches](#further-planning-approaches) address more formal ways to account for uncertainty.
+Treatment differences estimated from small pilots are uncertain. Following up only pilots whose estimated effect gives an affordable main study can introduce additional bias [@albers2018]. A pilot can support conclusions about recruitment, acceptability, measurement procedures, and other feasibility objectives. It is generally not designed to establish treatment effectiveness, and its treatment-difference estimate may be highly uncertain [@eldridge2016]. In this tutorial, you examine plausible ranges explicitly; [further planning approaches](#further-planning-approaches) address more formal ways to account for uncertainty.
 
 <details class="misconception" id="model-answer-pilot-threshold">
 <summary>Common misconception: the clinical threshold should follow the pilot result</summary>
@@ -315,7 +315,7 @@ In the [study-plan activity](https://katatam.github.io/sample-size-calculation/a
 ### Take-home points {.unnumbered}
 
 - A study plan starts with the clinical question, outcome, and analysis.
-- Expected difference, target difference, and clinical threshold have different roles.
+- Expected difference, target difference, and clinical threshold have different roles; their values can coincide and have no fixed numerical order.
 - The report should connect each numerical assumption to relevant evidence or an explicit clinical judgment.
 
 </div>
@@ -1333,6 +1333,7 @@ After this chapter, you should be able to:
 - Read power curves under specified population assumptions.
 - Compare required sample sizes with performance at a fixed sample size.
 - Assess recruitment limits and smaller plausible treatment differences.
+- Distinguish expectations from clinical judgments and justify the target used for planning.
 - Explain how observed significance boundaries and sampling distributions relate to power.
 
 :::
@@ -1424,7 +1425,7 @@ The 15-percentage-point difference requires the largest sample for the same powe
 
 </details>
 
-You can explore these scenarios in [Activity: Chronic pain: explore power and recruitment](https://katatam.github.io/sample-size-calculation/study/?activity=pain_curves). In the [sample size reasoning app](https://katatam.github.io/sample-size-calculation/study/?activity=pain_curves), you can set a fixed sample of 90 per group, control 30%, and treatment 60%. You can compare true treatment relief of 50% and 45% while keeping the [expected difference](#expected-difference), [target difference](#target-difference) and clinical threshold distinct. You can use the prepared curves above to view all three scenarios together.
+You can explore these scenarios in [Activity: Chronic pain: explore power and recruitment](https://katatam.github.io/sample-size-calculation/study/?activity=pain_curves). In the [sample size reasoning app](https://katatam.github.io/sample-size-calculation/study/?activity=pain_curves), you can set a fixed sample of 90 per group, control 30%, and treatment 60%. You can compare true treatment relief of 50% and 45% while retaining the stated roles of the [expected difference](#expected-difference), [target difference](#target-difference) and clinical threshold. You can use the prepared curves above to view all three scenarios together.
 
 The curves in *Explore assumptions* are calculated from the planning formulas. They help you choose scenarios worth investigating. With advanced controls visible, *Custom effect or variability* lets you specify control relief of 30% and treatment relief of 50% or 45% while retaining 90 patients per group. The sensitivity table updates immediately; *Simulate many studies* then estimates performance from generated patient outcomes for the selected scenario.
 
@@ -1459,7 +1460,7 @@ The recruitment allowance uses one set of assumptions. A [sensitivity analysis](
 - Before choosing your sample size: how many patients would be needed under different plausible assumptions? Here, sample size changes.
 - After choosing a sample size: how would this same study perform if the true difference were smaller or variability were greater? Here, sample size stays fixed.
 
-The next table shows both answers. Its required-count column recalculates the sample size at the clinical threshold, target difference and expected difference. Its power column keeps the original planned sample fixed. In the [sample size reasoning app](https://katatam.github.io/sample-size-calculation/study/?activity=pain_curves), *Reality may differ from the plan* lets you explore this second question [@cook2018delta2; @lakens2022].
+The next table shows both answers. Its required-count column recalculates the sample size at the clinical threshold, target difference and expected difference. Its power column keeps the original planned sample fixed. The 20-, 30- and 40-point values belong to this example; the three roles can share a value and have no fixed order. In the [sample size reasoning app](https://katatam.github.io/sample-size-calculation/study/?activity=pain_curves), *Reality may differ from the plan* lets you explore this second question [@cook2018delta2; @lakens2022].
 
 ```{r pain-target-sensitivity, echo=FALSE}
 pain_target_n <- ceiling(power.prop.test(p1 = .60, p2 = .30,
@@ -1498,6 +1499,22 @@ knitr::kable(data.frame(
   check.names = FALSE),
   digits = 3, caption = "Continuous-outcome sensitivity with the sample selected for 90% target power held fixed.")
 ```
+
+## Treatment expectations in the ST01 trial {#st01-expectations .advanced-heading}
+
+The Medical Research Council ST01 trial compared conventional (D1) with more extensive (D2) gastric-cancer surgery. Before recruitment, investigators surveyed 26 surgeons separately about expected five-year survival benefits and benefits sufficient to change practice [@fayers2000beliefs].
+
+| Planning role | Reported value and basis |
+|:--|:--|
+| Expected difference | The wider survey anticipated a 9.4-percentage-point survival advantage; the three design-committee surgeons anticipated 13.1 points. |
+| Target difference | The detailed calculation used 13.5 points, from 20% to 33.5% survival, giving 400 patients at 90% power. It reflected the design committee's expectations. |
+| Clinical importance | The wider survey's average interval of clinical indecision was 4.6–10.8 points. Its upper boundary represented sufficient benefit to favor D2, given the operation's additional risks. Individual judgments varied. |
+
+Table: (\#tab:st01-planning-roles) ST01 planning roles: absolute between-group differences in five-year survival, expressed in percentage points [@fayers2000beliefs].
+
+The exploratory survey left the design unchanged. It revealed higher expectations in the design committee. The clinical boundaries summarize surgeons' judgments. ST01 used survival analysis, which is needed to reproduce its calculation.
+
+For your study, these roles can have equal values or a different order. The chosen target still needs evidence of plausibility and clinical importance. If the expected benefit is below the clinical threshold, you should reconsider the study's clinical value. If the target exceeds the expected benefit, your justification should explain its plausibility and examine power at the smaller expected difference. A [sensitivity analysis](#compare-planning-assumptions) makes the implications visible [@cook2018delta2].
 
 ## What can the available sample establish? {#available-sample .advanced-heading}
 
@@ -1671,6 +1688,7 @@ This activity explains why the patterns seen in repeated simulations occur. The 
 ### Take-home points {.unnumbered}
 
 - A power curve describes a specified analysis under explicit assumptions.
+- Expectations, the calculation target and clinical judgments need separate justification, even when their numerical values coincide.
 - The power at a smaller worthwhile difference may be lower than the target power.
 - A recruitment limit can leave an important benefit difficult to detect.
 
@@ -2114,7 +2132,7 @@ The study protocol sets out the design and objectives; the statistical analysis 
 Your report should connect the clinical question to its numerical result. The record should include:
 
 - The study design, primary outcome and time point, allocation and unit of analysis.
-- The expected difference, target difference and clinical threshold, where relevant, with their evidence and units. These are between-group differences in the treatment-comparison examples.
+- The expected difference, target difference and clinical threshold, where relevant, with their evidence and units. These are between-group differences in the treatment-comparison examples. Equal values are valid when justified; there is no required numerical ordering.
 - Event probabilities or SD, Type I error probability, target power or confidence level and interval-width target.
 - The planning calculation and the intended analysis, including sidedness, corrections and assumptions.
 - Unrounded calculated values where available, upward rounding within each group, and recruitment adjustments for expected losses.

@@ -91,8 +91,8 @@
     {
       "id": "C013",
       "level": "core",
-      "front": "Must the expected difference, target difference, and clinical threshold have different values?",
-      "back": "No. Their values may coincide, but each has a distinct role and needs justification.",
+      "front": "Must the expected difference, target difference, and clinical threshold differ or follow a fixed order?",
+      "back": "No. Two or all three values can coincide, and their roles impose no fixed numerical order. Each value needs justification; the target should be plausible and clinically worthwhile.",
       "source": "https://katatam.github.io/sample-size-calculation/book/clinical-question.html"
     },
     {

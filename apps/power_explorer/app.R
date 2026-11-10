@@ -42,7 +42,7 @@ ui <- fluidPage(
       numericInput("expected_m", "Expected difference: best current estimate (outcome units)", 4, step = .5),
       numericInput("plan_delta", "Target difference: used in the sample size calculation (outcome units)", 3, step = .5),
       numericInput("plan_sd", "Standard deviation: variation between patients (outcome units)", 5, min = .1),
-      activity_help("Use the best estimate from comparable studies, in the outcome's units. This records your expectation; the target difference separately determines the power calculation.", for_input = "expected_m"),
+      activity_help("Use the best estimate from comparable studies, in the outcome's units. The expected difference, target difference and clinical threshold can coincide and have no fixed order; each needs justification.", for_input = "expected_m"),
       activity_help("Use a clinically worthwhile, plausible between-group difference in the outcome's units. Power is evaluated at this value.", for_input = "plan_delta"),
       activity_help("Use an SD from comparable patients on the same outcome scale. It describes variation between individuals; this calculation assumes equal SDs in both groups.", for_input = "plan_sd"),
       tagList(
@@ -56,7 +56,7 @@ ui <- fluidPage(
       percent_slider("plan_p0", "Standard treatment: event probability used for planning (%)", .01, .99, .3, step = .01),
       percent_slider("plan_p1", "Novel treatment: event probability used for planning (%)", .01, .99, .6, step = .01),
       textOutput("probability_inputs"),
-      activity_help("Use the treatment-minus-control difference suggested by prior evidence, in percentage points. The two event percentages below separately set the target used in the calculation.", for_input = "expected_p"),
+      activity_help("Use the treatment-minus-control difference suggested by prior evidence, in percentage points. The two event percentages below set the target difference. It can equal your expectation or clinical threshold; the three roles have no fixed order.", for_input = "expected_p"),
       activity_help("Use evidence for the same favorable event, population, and follow-up time. This percentage sets the baseline for the comparison.", for_input = "plan_p0"),
       activity_help("Its difference from the standard-treatment percentage sets the target difference. Both groups should use the same favorable-event definition and follow-up time.", for_input = "plan_p1"),
       tagList(

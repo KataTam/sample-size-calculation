@@ -8,7 +8,7 @@ You can drag a slider or type its value in the adjacent number field. Percentage
 
 In the reasoning lab, planning tables and curves update when inputs change. Simulated results update only when you run the relevant simulation again and retain their saved assumptions until then. More patients change a study's information; more simulation repetitions improve the numerical precision of the estimated performance.
 
-The expected difference records your best expectation. With “Same as planning assumptions” selected, the simulations use the target difference and planning event probabilities. A custom population scenario lets you examine another true difference without changing the original plan. All treatment differences here are between-group differences.
+The expected difference records your best expectation. It can equal the target difference or clinical threshold; the three roles have no fixed numerical order and each needs justification. With “Same as planning assumptions” selected, the simulations use the target difference and planning event probabilities. A custom population scenario lets you examine another true difference without changing the original plan. All treatment differences here are between-group differences.
 
 ## Reports and saved work
 

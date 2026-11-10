@@ -35,7 +35,7 @@ For each of the four items: 0 incorrect/missing; 1 partly correct; 2 correct exp
 
 For core item 4, credit the distinction between clinical importance and the difference at which power is evaluated: smaller worthwhile differences can have lower power. For Form C, credit importance and realism based on evidence, with feasibility assessed separately. Use the Monte Carlo key above only for the advanced version.
 
-Score the transfer response 0–2 for each: goal; distinct differences; sensitivity/precision at fixed n; justified recommendation with limitations (total 8). Accept a range of justified recommendations; do not require that the trial proceed. Blind scorers to time point where feasible and calibrate on two sample responses.
+Score the transfer response 0–2 for each: goal; distinct roles for the differences (equal values and different orders are acceptable when justified); sensitivity/precision at fixed n; justified recommendation with limitations (total 8). Accept a range of justified recommendations; do not require that the trial proceed. Blind scorers to time point where feasible and calibrate on two sample responses.
 
 ## Reporting
 
