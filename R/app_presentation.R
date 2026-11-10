@@ -164,7 +164,7 @@ app_simulation_report <- function(saved, current, many = FALSE) {
 app_plan_transfer <- function(title, slug, kind, facts, lines) {
   version <- if (file.exists("source-version.txt")) paste(readLines("source-version.txt", warn = FALSE), collapse = "") else "local working copy"
   record <- list(title = title, kind = kind, source = slug, facts = facts,
-    lines = unname(c(unlist(lines, use.names = FALSE), paste("Software: R", getRversion(), "; Shiny", utils::packageVersion("shiny"), "; source version:", version))))
+    lines = unname(c(unlist(lines, use.names = FALSE), paste("Software: R", getRversion(), "; stats", utils::packageVersion("stats"), "; Shiny", utils::packageVersion("shiny"), "; source version:", version))))
   shiny::tags$div(class = "plan-transfer",
     shiny::tags$div(class = "plan-transfer-data", hidden = NA, jsonlite::toJSON(record, auto_unbox = TRUE, null = "null")),
     shiny::tags$button(type = "button", class = "btn btn-primary plan-transfer-button", "Add this calculation to my report"),

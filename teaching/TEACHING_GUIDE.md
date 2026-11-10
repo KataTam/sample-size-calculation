@@ -163,6 +163,10 @@ Teaching text: [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/). 
 
 ## One developing study-plan assignment
 
+Chapter 4's [annotated sample size report](https://katatam.github.io/sample-size-calculation/book/feasibility.html#write-a-sample-size-justification) provides a completed calculation and a deliberately flawed paragraph for review. Partners can identify incorrect claims and missing information, then compare their revisions with the collapsed model answer. The example follows the activity's four report groups and uses 5% expected loss: 56 analyzable patients and 59 recruits per group (118 recruits total). The supporting assumptions remain hypothetical and need evidence.
+
+The activity shows the prepared example's calculation date, R and stats versions, command and source version. A transferred result retains the calculator's actual runtime information. Students' written answers remain separate and should be checked against the selected calculation. The reporting elements also draw on section 4.1 of the [UMCG SAP template](https://umcg.zenya.work/document/2f52710d-3ebc-495e-a4dc-6dee95742c78), available to UMCG students and researchers.
+
 Students choose one study and maintain its report across the four core chapters. Teaching examples in other activities provide practice; students select which results belong in their own plan. Chapter 1 contributes PICO and design, Chapter 2 error probabilities and interpretation, Chapter 3 the calculation, and Chapter 4 recruitment, sensitivity and feasibility. Advanced extensions depend on the chosen question.
 
 A provisional answer is a useful starting point. Students can mark each section ready for review; edits to key assumptions flag the affected sections for another review. Students can identify missing evidence, its likely source and the decision it would inform. During peer review, partners can check whether the assumptions are justified and whether the attached calculation matches the written plan. The report's automated checks compare structured saved results; they cannot assess the credibility of evidence or validate numbers embedded in prose.

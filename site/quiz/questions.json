@@ -420,22 +420,22 @@
       "id": "q26",
       "chapter": "feasibility",
       "level": "core",
-      "section": "Sample-size justification",
+      "section": "Reporting your sample size calculation",
       "link": "feasibility.html#write-a-sample-size-justification",
-      "question": "Which report best supports checking a sample-size result?",
+      "question": "A report gives the outcome, event percentages, allocation, power, Type I error probability and participant counts. What would most help another researcher reproduce the calculation?",
       "options": [
-        "Only the final total sample size",
-        "Only the name of a calculator",
-        "Only a statement that power exceeds 80%",
-        "The assumptions, evidence, method, allocation, analyzable counts and recruitment adjustment"
+        "The calculator name alone",
+        "The exact procedure and settings, software version, rounding rule and supporting code",
+        "A statement that the chosen sample size is sufficient",
+        "The recruitment target repeated in the conclusion"
       ],
-      "answer": 3,
-      "explanation": "A reproducible justification connects the clinical assumptions, procedure and numerical result. A final count alone leaves the reasoning and calculation unclear.",
+      "answer": 1,
+      "explanation": "The procedure, settings, versions and rounding identify how the stated inputs produce the result. Supporting evidence also needs to justify those inputs.",
       "feedback": [
-        "The total alone omits the assumptions and procedure.",
-        "A calculator name leaves its inputs and settings unspecified.",
-        "A power percentage needs its effect, design and analysis assumptions.",
-        "A reproducible justification connects the clinical assumptions, procedure and numerical result. A final count alone leaves the reasoning and calculation unclear."
+        "A calculator can offer several methods with different settings.",
+        "The procedure, settings, versions and rounding identify how the stated inputs produce the result. Supporting evidence also needs to justify those inputs.",
+        "Sufficiency depends on the assumptions, method and intended conclusion.",
+        "Repeating a count adds no information about how it was obtained."
       ]
     },
     {

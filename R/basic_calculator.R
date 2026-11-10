@@ -160,8 +160,11 @@ basic_calculator_server <- function(outcome) function(input, output, session) {
   output$plan_transfer <- renderUI({
     x <- result()
     app_plan_transfer(title, slug, "calculation",
-      list(outcome = if (means) "continuous" else "binary", study_type = "comparison", goal = "testing", analyzable = x$n_per_group,
-        alpha = x$alpha, power = x$power, dropout = x$dropout_rate, recruitment = x$total_with_dropout/2),
+      c(list(outcome = if (means) "continuous" else "binary", study_type = "comparison", goal = "testing", analyzable = x$n_per_group,
+        alpha = x$alpha, power = x$power, dropout = x$dropout_rate, recruitment = x$total_with_dropout/2,
+        raw_n = x$raw_n_per_group),
+        if (means) list(target_difference = x$delta, sd = x$sd)
+        else list(p_treatment = x$pi1, p_control = x$pi2, target_difference = abs(x$pi1-x$pi2))),
       c(sample_size_interpretation(x), paste(assumptions()$Assumption, assumptions()$Value, sep = ": "), method_text()))
   })
   output$report_preview <- renderUI(app_report_body(report_paragraphs(), assumptions()))

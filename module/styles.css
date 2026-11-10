@@ -318,3 +318,17 @@ details.section-disclosure > summary > :is(h2,h3,h4,h5,h6) {
 @media print { #my-study-plan {display:none!important} }
 
 .plan-contribution{border-left:4px solid #3263a0;background:#e1edf9;padding:.75rem 1rem;margin:1.5rem 0}.book.color-theme-2 .plan-contribution{background:#243b4a;color:#edf4f8}
+
+/* Report annotations remain readable as text and in monochrome print. */
+.annotated-report {border:1px solid #8298a6;border-radius:6px;padding:1rem 1.2rem;margin:1.2rem 0;}
+.report-part {font-weight:700;margin-top:1.2em;break-after:avoid;}
+.report-mark {padding:.08em .18em;box-decoration-break:clone;-webkit-box-decoration-break:clone;color:#20343e;}
+.report-design {background:#dcecfb;}
+.report-assumption {background:#eadff2;}
+.report-result {background:#dcefe5;}
+.report-methods {border:1px solid #8298a6;padding:.7rem 1rem;margin:1.2rem 0;}
+.book.color-theme-2 .report-mark {color:#f3f5f7;}
+.book.color-theme-2 .report-design {background:#263f57;}
+.book.color-theme-2 .report-assumption {background:#463451;}
+.book.color-theme-2 .report-result {background:#204738;}
+@media print {.report-mark {print-color-adjust:exact;-webkit-print-color-adjust:exact;}.annotated-report {border-radius:0;}}

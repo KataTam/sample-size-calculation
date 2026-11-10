@@ -93,8 +93,8 @@
     power: 'A 5% Type I error probability and 90% target power at a 30-percentage-point difference, using a two-sided test.',
     precision: 'A 95% interval with full width 20 percentage points gives a margin of about 10 points; its clinical usefulness remains to be justified.',
     counts: '56 analyzable patients per group, 112 in total, using the tutorial approximation with 30% versus 60% relief, 5% Type I error probability and 90% power.',
-    recruitment: 'With illustrative 10% loss, 56 / 0.90 rounds up to 63 per group (126 total). I would also plan for missing-data bias and treatment changes.',
-    resources: 'The clinics expect 20 eligible patients per month and 70% consent: about 14 recruits per month. Recruiting 126 would take about nine months before allowing for interruptions.',
+    recruitment: 'With illustrative 5% unavailable primary outcomes, 56 / 0.95 rounds up to 59 per group (118 total). The loss assumption needs evidence, and the analysis plan should address missing outcomes and treatment changes.',
+    resources: 'The clinics expect 20 eligible patients per month and 70% consent: about 14 recruits per month. Recruiting 118 would take about nine months before allowing for interruptions.',
     conclusion: 'The plan targets the specified difference; smaller benefits could be missed. The estimate and interval would inform clinical importance, subject to the assumptions and recruitment feasibility.'
   };
   function answerFormats(value) {
@@ -156,8 +156,8 @@
       power: 'A 5% Type I error probability and 90% target power at a between-group mean difference of 3 score units.',
       precision: 'A 95% confidence interval with a full width of 4 score units would have a margin of about 2 units. Its usefulness needs clinical justification.',
       counts: '59 analyzable patients per group, 118 total, using the tutorial normal approximation with a 3-unit target, SD 5, 5% Type I error probability and 90% power.',
-      recruitment: 'With illustrative 10% expected losses, 59 / 0.90 rounds up to 66 patients per group (132 total). Missing outcomes and treatment changes also need an analysis plan.',
-      resources: 'At 20 eligible patients per month and 70% consent, recruitment of 132 would take about ten months, allowing only for whole months.',
+      recruitment: 'With illustrative 5% expected losses, 59 / 0.95 rounds up to 63 patients per group (126 total). Missing outcomes and treatment changes also need an analysis plan.',
+      resources: 'At 20 eligible patients per month and 70% consent, recruitment of 126 would take about nine months, allowing only for whole months.',
       sensitivity: 'I would assess power at 2-, 3-, and 4-unit differences and plausible SDs around 5, holding the sample fixed.',
       evidence_review: 'These are teaching assumptions. Comparable patient data are needed; small pilots give uncertain differences and SDs.'
     });
@@ -182,7 +182,7 @@
     if (value.goal === 'fixed') Object.assign(result, {
       counts: value.study_type === 'single' ? '246 eligible records are available for the new question. Outcome completeness and the achievable interval width should be assessed.' : '20 analyzable participants per group (40 total) are available in this illustrative scenario. The sample remains fixed when assessing power and precision.',
       power: value.outcome === 'binary' ? 'A 5% Type I error probability; attainable power at a 30-point difference and 20 patients per group would come from the matched calculation.' : 'A 5% Type I error probability; attainable power at a 3-unit difference and 20 patients per group would come from the matched calculation.',
-      recruitment: value.study_type === 'single' ? 'The available records will be checked for missing outcomes and eligibility. The report will give the usable denominator and reasons for exclusions.' : 'With illustrative 10% expected losses, 20 / 0.90 rounds up to 23 per group (46 total). Actual retention can vary.',
+      recruitment: value.study_type === 'single' ? 'The available records will be checked for missing outcomes and eligibility. The report will give the usable denominator and reasons for exclusions.' : 'With illustrative 5% expected losses, 20 / 0.95 rounds up to 22 per group (44 total). Actual retention can vary.',
       conclusion: 'The available sample sets the limit on precision and power at prespecified differences. These results should determine which conclusions the study can support.'
     });
     if (value.goal === 'feasibility') Object.assign(result, {
@@ -199,7 +199,7 @@
       conclusion: 'The feasibility estimates and agreed progression criteria will inform whether the study should proceed, be amended or stop.'
     });
     if (value.goal === 'fixed' && value.study_type !== 'single') {
-      result.resources = 'The recruitment target in this example is 46 patients for an expected 40 analyzable outcomes. At 14 recruits per month, this would take about four whole months, allowing for no interruptions.';
+      result.resources = 'The recruitment target in this example is 44 patients for an expected 40 analyzable outcomes. At 14 recruits per month, this would take about four whole months, allowing for no interruptions.';
     }
     // The form does not infer calculations or progression criteria from prose.
     if (['precision', 'both', 'feasibility'].includes(value.goal)) {
@@ -247,6 +247,7 @@
     document.getElementById('fields').append(group);
   }
   document.getElementById('plan-section-0').append(document.getElementById('study-settings'));
+  document.getElementById('field-software').append(document.getElementById('example-calculation'));
   const preview = document.getElementById('preview');
   const wide = matchMedia('(min-width: 1100px)');
   let previewChosen = false;
@@ -297,7 +298,7 @@
       scale: ['Feasibility outcome scale', 'Retention needs a denominator, such as all enrolled participants. Assessment time needs units, such as minutes per visit.', 'The feasibility outcome scale is', 'How will you express the feasibility outcome?'],
       expected: ['Anticipated feasibility outcome', 'Comparable recruitment or follow-up procedures can support the planning value. Your answer should identify the source and plausible uncertainty.', 'The anticipated feasibility outcome is', 'What feasibility result do you anticipate?']
     });
-    const answers = examples(value);
+    const answers = PlanCalculationRecord.answers(value, examples(value), answerFormats(value));
     for (const field of fields) {
       const [id, title, help] = field, copy = wording[id];
       const label = document.querySelector('label[for="' + id + '"]');
@@ -334,6 +335,7 @@
     if (completed) article.prepend(intro);
     else { const empty = document.createElement('p'); empty.textContent = 'Your report will appear here as you answer the questions. You can leave decisions open and return to them later.'; article.append(empty); }
     PlanWorkflow.decorate(value, article, reportLines, active);
+    PlanCalculationRecord.decorate(value, article, reportLines);
     const progress = document.getElementById('progress');
     const progressText = completed === required ? 'All ' + required + ' prompts answered. Your assumptions and calculations still need review.' : 'Draft: ' + completed + ' of ' + required + ' prompts answered.';
     if (progress.textContent !== progressText) progress.textContent = progressText;
@@ -341,6 +343,7 @@
     notifyParent('state', {state: value});
   }
   function apply(value, persist = true) { const clean = validate(value); for (const name of names) if (form.elements[name].value !== clean[name]) form.elements[name].value = clean[name]; render(persist); }
+  window.addEventListener('plan-calculation-ready', () => render(false));
   window.addEventListener('storage', event => {
     if (event.key !== storageKey || !event.newValue) return;
     try {
@@ -360,7 +363,7 @@
   document.getElementById('clear').addEventListener('click', () => { if (!confirm('Clear this study plan? Save work for later first if you want to keep it.')) return; apply({}); status.textContent = 'Entries cleared. You can start a new plan.'; });
   const escapeHTML = text => String(text).replace(/[&<>"']/g, c => ({'&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;'}[c]));
   function reportDocument() {
-    const headings = new Set([...groups.map(group => group[0]), 'Section review']);
+    const headings = new Set([...groups.map(group => group[0]), 'Section review', 'Prepared chronic pain calculation']);
     const content = reportLines.map(line => headings.has(line) || line.startsWith('Saved calculation: ') ? '<h2>' + escapeHTML(line) + '</h2>' : '<p>' + escapeHTML(line) + '</p>').join('\n');
     return '<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Study-plan report</title>' +
       '<style>body{max-width:800px;margin:2rem auto;padding:0 1rem;font:17px/1.6 system-ui,sans-serif;color:#20343e}p{white-space:pre-wrap;overflow-wrap:anywhere}h2{margin-top:1.5em;font-size:1.2em}a{color:#006481}footer{border-top:1px solid #abc;margin-top:2rem;font-size:.9em}@media print{body{margin:0;max-width:none;font-size:11pt}h2{break-after:avoid}a{color:inherit}}</style></head><body><h1>Study-plan report</h1>' +

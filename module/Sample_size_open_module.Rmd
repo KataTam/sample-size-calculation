@@ -36,6 +36,13 @@ source("../R/teaching_cases.R")
 source("../R/question_map.R")
 source("../R/quiz_helpers.R")
 source("../R/tutorial_diagrams.R")
+source("../R/pain_report_record.R")
+report_example <- local({
+  previous_dir <- getwd()
+  on.exit(setwd(previous_dir))
+  setwd("..")
+  pain_report_record()
+})
 ```
 
 # Welcome {-}
@@ -273,7 +280,7 @@ Table: (\#tab:planning-assumptions) Decisions and assumptions to record in the s
 
 :::
 
-The report's prompts draw on PICO, selected SPIRIT 2025 protocol items on design, participants, interventions, outcomes, sample size and recruitment (items 12–16, 19–20), and [DELTA²](#delta2) guidance on choosing and justifying a target difference [@spiritconsort2025; @cook2018delta2]. A full protocol should follow the complete guidance for its study design.
+The report's prompts draw on PICO, selected SPIRIT 2025 protocol items on design, participants, interventions, outcomes, sample size and recruitment (items 12–16, 19–20), and [DELTA²](#delta2) guidance on choosing and justifying a target difference [@spiritconsort2025; @cook2018delta2]. A full protocol should follow the complete guidance for its study design. The [annotated sample size report](#write-a-sample-size-justification) shows how these decisions come together by the end of Chapter 4.
 
 The target difference tells the calculation where to evaluate power. The [standard deviation](#standard-deviation){.no-glossary-tooltip} describes variation between individuals; the [standard error](#standard-error){.no-glossary-tooltip} describes [sampling variability](#sampling-variability) of an estimate. For binary outcomes, you should report each group's event probability as a percentage and their absolute difference in percentage points. The section [Glossary](#glossary) explains these terms in more detail.
 
@@ -1163,13 +1170,101 @@ Clustered designs, nonparametric analyses and Bayesian planning need methods sui
 
 
 
-## Sample size justification {#write-a-sample-size-justification .core-heading}
+## Reporting your sample size calculation {#write-a-sample-size-justification .core-heading}
 
-Your justification should connect the research question, assumptions and calculation to a feasible recruitment target. A short paragraph should identify the primary outcome and time point, the target difference and its evidence, the assumed event probabilities or SD, Type I error probability, target power, calculation method, analyzable count and allowance for expected losses. It should also explain what a plausible change in an uncertain assumption would mean for the plan [@cook2018delta2; @consortee2025].
+Your sample size report should allow another researcher to reproduce the calculation and understand why you chose its assumptions. In [Activity: Develop and justify your study plan](https://katatam.github.io/sample-size-calculation/assumptions_report/?stage=review), the four report groups bring together the decisions developed through the core chapters: question and design, assumptions and evidence, calculation, and recruitment and conclusion.
 
-Recording the inputs, procedure and software makes the calculation checkable and allows you to revisit it when evidence changes. You can review your [complete study-plan report](https://katatam.github.io/sample-size-calculation/assumptions_report/?stage=review) developed through the core chapters. A saved result should retain the assumptions used to obtain it.
+The example below follows the reporting elements in SPIRIT 2025, CONSORT 2025 and DELTA² [@spiritconsort2025; @consortee2025; @cook2018delta2]. Its emphasis on the primary outcome, planned test, assumptions, adjustments and software also draws on section 4.1 of the UMCG statistical analysis plan (SAP) template, version 3 [@umcgsap]. The sample size statement should agree with the protocol and the planned primary analysis. Any later changes need a reason and a dated record.
 
-The [teaching guide](https://katatam.github.io/sample-size-calculation/teaching/TEACHING_GUIDE.html#extended-sample-size-justification) provides an optional longer assignment and review prompts. [Reproducibility and open science](#appendix) explains the fuller record needed for calculations and simulations.
+A published example is the COMET protocol. @roa2024comet report a two-proportion calculation using 60% and 75% surgical success, a two-sided 5% Type I error probability and 80% power. They distinguish 152 analyzable participants per group from 179 recruits per group after allowing for 15% loss to follow-up. Their paragraph connects the assumptions to prior evidence. The teaching report adds the calculation command and software version.
+
+<div class="annotated-report" aria-label="Annotated chronic pain sample size report">
+
+<p class="report-part">Question and design</p>
+
+The proposed trial will <span class="report-mark report-design">[A] individually randomize adults with chronic pain to novel or standard treatment in a 1:1 ratio. The primary outcome is patient-reported pain relief at four weeks, recorded as yes or no</span> using the same prespecified question in both groups. Each participant contributes one outcome, and observations from different participants are assumed independent. The comparison is novel minus standard treatment in percentage points.
+
+<p class="report-part">Assumptions and evidence</p>
+
+The calculation assumes <span class="report-mark report-assumption">[B] 30% relief with standard treatment and 60% with novel treatment, a target difference of 30 percentage points</span>. The hypothetical pilot observed 70% versus 30%, an estimated difference of 40 points based on ten patients per group. The illustrative clinical threshold is 20 points. These values require supporting clinical evidence and patient input before use in a real trial. The planning percentages describe outcomes in the assigned groups under the treatment use anticipated in the study.
+
+<p class="report-part">Calculation</p>
+
+The planned primary comparison is a <span class="report-mark report-design">[C] two-sided test of two independent proportions</span>, without covariate adjustment. This example specifies one primary comparison at the final assessment. A normal approximation with <span class="report-mark report-assumption">[D] a Type I error probability of 5% and power of 90%</span> at the 30-point target difference gives <span class="report-mark report-result">[E] `r sprintf("%.2f", report_example$facts$raw_n)` analyzable patients per group, rounded upward to `r report_example$facts$analyzable` per group (`r 2 * report_example$facts$analyzable` total)</span>. The calculation uses <span class="report-mark report-design">[F] R `r report_example$r_version`, package stats `r report_example$stats_version`, and `stats::power.prop.test()` with `alternative = "two.sided"` and `strict = TRUE`</span>.
+
+<p class="report-part">Recruitment and conclusion</p>
+
+Allowing for <span class="report-mark report-result">[E] 5% unavailable primary outcomes in each group gives `r report_example$facts$recruitment` recruits per group: `r report_example$facts$analyzable`/0.95, rounded upward, or `r 2 * report_example$facts$recruitment` recruits in total</span>. Follow-up should continue after treatment changes wherever possible; the protocol should specify how missing outcomes will be addressed. These clinical details remain to be completed for the hypothetical study.
+
+<span class="report-mark report-assumption">[G] If relief were 50% versus 30%, the calculation would require `r report_example$facts$sensitivity_n` analyzable patients per group for 90% power</span>. With the original `r report_example$facts$analyzable` per group, approximate power at this 20-point difference is `r round(100 * report_example$facts$sensitivity_power)`%. The plan therefore has less power at the clinical threshold than at the selected target difference. Recruitment capacity and the evidence for these assumptions should inform the final decision.
+
+</div>
+
+| Label | What this part makes explicit |
+|:--|:--|
+| A: Question and design | Who is studied, what is measured, when, and how participants are allocated. |
+| B: Numerical assumptions | Both event percentages and the target difference, with their meaning and evidence. |
+| C: Procedure | The planned test, sidedness, and relationship to the calculation. |
+| D: Statistical performance | The Type I error probability and power at the specified difference. |
+| E: Participant counts | Unrounded and rounded requirements, per-group and total counts, and the loss allowance. |
+| F: Software | The function, settings and versions needed to repeat the calculation. |
+| G: Uncertainty | A plausible alternative assumption, its numerical consequence, and the limits of the recommendation. |
+
+Table: (\#tab:report-annotations) Reading the essential parts of the sample size report. Letters identify the highlighted passages independently of color.
+
+```{r report-recruitment-flow, echo=FALSE, fig.width=8, fig.height=2.8, fig.cap="How the chronic pain assumptions lead to the analyzable sample size and recruitment target. Counts are rounded upward within each treatment group.", fig.alt="Standard relief 30 percent and novel relief 60 percent, with two-sided Type I error probability 5 percent and power 90 percent, give 56 analyzable patients per group. Dividing by 0.95 and rounding upward gives 59 recruits per group and 118 in total."}
+par(mar=c(.3,.3,.3,.3))
+plot.new(); plot.window(xlim=c(0,10), ylim=c(0,3))
+rect(c(.1,3.5,6.9), .55, c(3.1,6.5,9.9), 2.7,
+     col=c("#dcecfb", "#eadff2", "#dcefe5"), border="#536b78")
+arrows(c(3.15,6.55), 1.6, c(3.45,6.85), 1.6, length=.09, col="#334c5b")
+text(1.6,1.65,"Standard 30%; novel 60%\nType I error probability 5%\nTwo-sided; power 90%",cex=.9)
+text(5,1.65,paste0(report_example$facts$analyzable," analyzable per group\n",2*report_example$facts$analyzable," total"),cex=1)
+text(8.4,1.65,paste0("5% expected loss\n",report_example$facts$analyzable," / 0.95, rounded upward\n",report_example$facts$recruitment," per group; ",2*report_example$facts$recruitment," total"),cex=.9)
+```
+
+<details class="report-methods" id="sample-size-report-methods">
+<summary>Calculation procedure and software record</summary>
+
+The prepared example was calculated in R `r report_example$r_version` with stats `r report_example$stats_version`. The underlying analysis is a two-sided pooled score test for independent proportions without continuity correction. `power.prop.test()` uses a normal planning approximation; `strict = TRUE` counts rejection in either direction. The [methods record](#tutorial-methods) gives the analysis and confidence interval details used in the simulation app.
+
+```{r report-command}
+plan <- stats::power.prop.test(
+  p1 = 0.60, p2 = 0.30, sig.level = 0.05, power = 0.90,
+  alternative = "two.sided", strict = TRUE)
+analyzable_per_group <- ceiling(plan$n)
+recruit_per_group <- ceiling(analyzable_per_group / 0.95)
+c(unrounded_per_group = plan$n,
+  analyzable_per_group = analyzable_per_group,
+  analyzable_total = 2 * analyzable_per_group,
+  recruit_per_group = recruit_per_group,
+  recruit_total = 2 * recruit_per_group)
+```
+
+The [study-plan activity](https://katatam.github.io/sample-size-calculation/assumptions_report/?stage=review) includes a dated record of this prepared calculation when the chronic pain comparison is selected. An attached calculator result carries the inputs, software versions and source version used for that result. The [reproducibility chapter](#reproducibility-record) explains how to retain and check these records.
+
+</details>
+
+::: {.activity}
+<p class="question-label">Question to consider</p>
+
+Which claims in the report below are incorrect, and what information is missing? How would you revise it?
+
+> The pilot found pain relief in 70% of patients receiving novel treatment and 30% receiving standard treatment, so the treatment improves every patient's pain by 40%. Using these percentages, an online calculator gave a sample size of 56. With 90% power, there is a 90% probability that the novel treatment works. Adding 5% for dropout gives 58.8, which we round down to 58 patients in total. This will demonstrate a clinically important benefit. Further calculation details are unnecessary because the software is standard.
+
+<details class="model-answer" id="model-answer-report-review">
+<summary>Model answer</summary>
+
+The pilot estimates a between-group difference of 40 percentage points. Individual treatment benefits require different information. The tutorial's requirement of 56 patients per group uses 60% versus 30%, so the stated inputs do not match that result. Power is the probability of rejecting the null under the specified true difference and analysis assumptions. It does not give the probability that the treatment works.
+
+The requirement is 56 analyzable patients per group, or 112 total. Allowing for 5% missing outcomes gives `ceiling(56 / 0.95)` = 59 recruits per group, or 118 total. Clinical interpretation should consider the estimated difference and its confidence interval relative to the clinical threshold.
+
+The report also needs the outcome and time point, allocation, statistical procedure and sidedness, Type I error probability, software version and settings, supporting evidence, and sensitivity to uncertain assumptions. The revised report above supplies the calculation details and identifies clinical decisions still needing justification.
+
+</details>
+:::
+
+The [teaching guide](https://katatam.github.io/sample-size-calculation/teaching/TEACHING_GUIDE.html#extended-sample-size-justification) provides a longer assignment and peer-review prompts. Your complete report should include the reasoning behind its numerical entries.
 
 The four core chapters complete the basic planning route. You can review them in the [cumulative quiz](#cumulative-quiz), or continue with the advanced topics that fit your question.
 
@@ -1928,6 +2023,8 @@ Before using a result, you should check that the selected procedure matches the 
 For a planned analysis of covariance (ANCOVA), baseline adjustment introduces further assumptions about how the covariates relate to the outcome and how much variation remains after adjustment. The effect-size input should reflect that analysis. The simple $f=d/2$ conversion above applies to the stated unadjusted two-group comparison. The FDA's guidance discusses planning and prespecifying covariate adjustment [@fda2023covariates].
 
 ## What a reproducible justification contains {#reproducibility-record .advanced-heading}
+
+The study protocol sets out the design and objectives; the statistical analysis plan (SAP) specifies the analyses in enough detail to implement them. Their outcome definitions, sample size assumptions and primary analysis should agree, with amendments documented. UMCG students and researchers can access the [UMCG statistical analysis plan template in Zenya](https://umcg.zenya.work/document/2f52710d-3ebc-495e-a4dc-6dee95742c78) [@umcgsap]. The [annotated report](#write-a-sample-size-justification) uses its sample-size reporting elements.
 
 Your report should connect the clinical question to its numerical result. The record should include:
 

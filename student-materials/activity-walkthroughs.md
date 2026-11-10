@@ -40,6 +40,8 @@ The reasoning lab and single-percentage app omit saved simulation results from t
 6. PDF and Word downloads contain the plan, section review and attached results. “Save work for later” preserves the editable app state. Entries also persist in the same browser; the saved file supports another computer. The plan is complete for the core assignment when its applicable decisions and calculation have been reviewed. Advanced activities can extend it when relevant.
 
 
+The [annotated report in Chapter 4](../book/feasibility.html#write-a-sample-size-justification) shows the completed two-proportion calculation. The chronic pain example uses 5% expected missing primary outcomes: 56 analyzable patients and 59 recruits per group, or 118 recruits total. Selecting this example makes its prepared calculation and software record available under the software question. Attached calculator results retain their own inputs and runtime versions; example answers for calculation fields follow that selected result. Your written answers should be reviewed when the calculation changes.
+
 ## Chronic pain: one study and many studies — core
 
 [Open activity](../study/?activity=pain_one_many) · [Matching explanation](../book/power.html#activity-1-one-study-then-many)

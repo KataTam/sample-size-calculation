@@ -3,6 +3,8 @@ render_resource <- function(include_pdf = TRUE) {
   if (capabilities("cairo")) options(bitmapType = "cairo")
   root <- normalizePath(".", winslash = "/", mustWork = TRUE)
   stopifnot(file.exists("module/Sample_size_open_module.Rmd"))
+  source("R/pain_report_record.R")
+  write_pain_report_record()
   source("R/draw_learning_figures.R")
   draw_learning_figures()
   on.exit(setwd(root), add = TRUE)

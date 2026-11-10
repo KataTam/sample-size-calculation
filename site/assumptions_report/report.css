@@ -72,3 +72,6 @@ body :where(h1,h2,h3,h4,h5,h6,summary,legend) :where(a,span,strong,b,code) { fon
 #answer-fields{border:0;padding:0;margin:0;min-width:0}#resume-plan{border:1px solid #7897ac;padding:1rem;margin:1rem 0}#resume-plan[hidden]{display:none}
 #answer-fields>legend{position:absolute;width:1px;height:1px;padding:0;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
 #plan-review {border:1px solid #7897ac;padding:.75rem;margin:1rem 0} #saved-calculations details{border-top:1px solid #7897ac;padding:.5rem}
+#example-calculation {border:1px solid #8298a6;padding:.7rem;margin:1rem 0;background:#edf3fa;overflow-wrap:anywhere;}
+#example-calculation[hidden] {display:none;}
+#example-calculation pre, #report pre {white-space:pre-wrap;overflow-wrap:anywhere;font-size:.85rem;}
