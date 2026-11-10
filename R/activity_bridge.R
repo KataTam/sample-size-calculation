@@ -39,6 +39,8 @@ activity_guidance_script <- function() {
     ";document.head.append(style);})();\n", read_asset("input-guidance.js"), "\n", read_asset("app-layout.js"), "\n", read_asset("plan-transfer.js"), "\n", read_asset("report-exports.js"))
 }
 activity_details <- function(title, ...) shiny::tags$details(class = "activity-details", shiny::tags$summary(title), ...)
+activity_description <- function(...) shiny::tags$details(class = "activity-description activity-details",
+  shiny::tags$summary("Description"), ...)
 activity_count_result <- function(x) shiny::tags$div(class = "calculation-result",
   shiny::tags$p(paste(x$n_per_group, "participants per group for analysis")),
   shiny::tags$p(paste(x$total_n, "participants in total for analysis")),
@@ -238,7 +240,7 @@ activity_bridge_script <- function(app = "power_explorer") {
   document.documentElement.lang='en';
   document.head.append(typography);
   typography.textContent += '\nsummary{display:list-item}summary::marker{color:#3263a0}.form-control,.btn{font-size:inherit}';
-  typography.textContent += '\nbody{font-size:17px;line-height:1.55}p{max-width:72ch}details.activity-details,details.activity-help{margin:1rem 0;border-top:1px solid #c4d2df;padding:.25rem .5rem}summary{cursor:pointer;min-height:44px;padding:.6rem .2rem;font-weight:600}details p{margin:.65rem 0}button,.btn{min-height:44px;white-space:normal}input,select,textarea{max-width:100%}.calculation-result{padding:1rem;background:#e3effa;border-left:4px solid #3263a0;margin:1rem 0}.calculation-result p{margin:.3rem 0}.guided .app-intro,.guided .activity-picker,.guided .activity-context,.guided .app-title{display:none}.well{background:#f6f8fa}.activity-question{padding:1rem 0;border-top:1px solid #c4d2df} .activity-question p{margin:.5rem 0}';
+  typography.textContent += '\nbody{font-size:17px;line-height:1.55}p{max-width:72ch}details.activity-details,details.activity-help{margin:1rem 0;border-top:1px solid #c4d2df;padding:.25rem .5rem}summary{cursor:pointer;min-height:44px;padding:.6rem .2rem;font-weight:600}details p{margin:.65rem 0}button,.btn{min-height:44px;white-space:normal}input,select,textarea{max-width:100%}.calculation-result{padding:1rem;background:#e3effa;border-left:4px solid #3263a0;margin:1rem 0}.calculation-result p{margin:.3rem 0}.guided .app-intro,.guided .activity-description,.guided .activity-picker,.guided .activity-context,.guided .app-title{display:none}.well{background:#f6f8fa}.activity-question{padding:1rem 0;border-top:1px solid #c4d2df} .activity-question p{margin:.5rem 0}';
   const frames = [];
   let current = window, context = null, origin = null, siteRoot = null;
   while (current) {

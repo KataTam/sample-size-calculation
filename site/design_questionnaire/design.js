@@ -1,6 +1,7 @@
 /* Original software, MIT license. */
 (()=>{
 'use strict';
+if (new URL(location.href).searchParams.get('guided') === '1') document.body.classList.add('guided');
 const {fields,relevant,recommend,links}=DesignQuestionnaire;
 const form=document.getElementById('design-form'),result=document.getElementById('result'),status=document.getElementById('status');
 let shown=false;

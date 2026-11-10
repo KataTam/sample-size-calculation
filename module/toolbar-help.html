@@ -189,6 +189,14 @@ contents rather than this book toolbar. Use your browser’s
       if (!label) return;
       var original = label.closest('.figure, table') || (id.indexOf('tab:') === 0 && label.closest('caption') && label.closest('caption').parentElement);
       if (!original) return;
+      // A visible original is more useful than a duplicate over the reading area.
+      if (doc === document && original.getClientRects().length) {
+        var bounds = original.getBoundingClientRect();
+        var visibleHeight = Math.min(bounds.bottom, innerHeight) - Math.max(bounds.top, 0);
+        if (visibleHeight >= Math.min(100, bounds.height) && bounds.right > 0 && bounds.left < innerWidth) {
+          closePreview(); return;
+        }
+      }
       if (!popup) {
         popup = document.createElement('div'); popup.id = 'reference-preview'; popup.className = 'reference-preview';
         popup.setAttribute('role', 'region'); popup.setAttribute('aria-label', 'Figure or table preview');
@@ -217,14 +225,16 @@ contents rather than this book toolbar. Use your browser’s
       if (link.dataset.referencePreview) return;
       var url = new URL(link.href, location.href);
       if (url.origin !== location.origin || !/^#(?:fig|tab)(?::|%3A)/i.test(url.hash)) return;
-      // The preceding reference needs no duplicate preview when its target is next.
+      // Nearby references keep their navigation, without an extra preview control.
       if (url.pathname === location.pathname) {
         var target = document.getElementById(decodeURIComponent(url.hash.slice(1)));
         var block = link.closest('p');
-        var next = block && block.nextElementSibling;
-        for (var nearby = 0; target && next && nearby < 3; nearby++, next = next.nextElementSibling) {
-          if (next.matches('h1,h2,h3,h4,details,.section')) break;
-          if (next === target || next.contains(target)) return;
+        for (var direction of ['previousElementSibling', 'nextElementSibling']) {
+          var next = block && block[direction];
+          for (var nearby = 0; target && next && nearby < 3; nearby++, next = next[direction]) {
+            if (next.matches('h1,h2,h3,h4,details,.section')) break;
+            if (next === target || next.contains(target)) return;
+          }
         }
       }
       link.dataset.referencePreview = 'true';

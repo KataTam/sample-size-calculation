@@ -17,10 +17,10 @@
     ['Assumptions and evidence', [
       ['scale', 'Effect scale and direction of benefit', 'An event-percentage difference is measured in percentage points; a mean difference uses the outcome units. Your answer should define treatment minus control and which sign favors treatment.', 'The effect scale and direction of benefit are'],
       ['expected', 'Expected difference', 'Your estimate should use comparable evidence, including less favorable findings. A plausible range should reflect uncertainty, especially with small pilots.', 'The expected difference and supporting evidence are'],
-      ['clinical', 'Clinically important difference (clinical threshold)', 'Patient and clinical input should justify the minimum worthwhile benefit between groups. The units should match the outcome scale.', 'The clinical threshold and its justification are', 'comparison'],
+      ['clinical', 'Clinically important difference (clinical threshold)', 'Which additional visits, adverse effects or other burdens must the benefit justify? Patient and clinical input should support the threshold, in the same units as the outcome.', 'The clinical threshold and its justification are', 'comparison'],
       ['planning', 'Target difference: used in the calculation', 'Power is evaluated at this plausible, clinically worthwhile between-group difference. It can equal the expected difference or clinical threshold; the three roles have no fixed order and each needs justification.', 'The target difference and its justification are', 'power'],
-      ['variation', 'Variation or event probabilities', 'For a continuous outcome, you need an SD in its units; for a binary outcome, event percentages. You should cite the study supporting each value and explain whether its population, outcome measurement, and follow-up time are comparable to yours.', 'The variation or event probabilities used for planning are'],
-      ['evidence_review', 'Evidence relevance and uncertainty', 'Your review should consider comparability, small samples and selectively reported findings. It should identify the main uncertain input and what evidence or independent review would help assess it.', 'The relevance and uncertainty of the evidence are'],
+      ['variation', 'Variation or event probabilities', 'A continuous outcome needs an SD in its units; a binary outcome needs each group\'s event percentage. The source should match your population, outcome definition, assessment time and background care.', 'The variation or event probabilities used for planning are'],
+      ['evidence_review', 'Evidence relevance and uncertainty', 'Could differences in patients, diagnosis or background care explain the apparent benefit? Your answer should identify the least certain input and what further evidence or independent review would help.', 'The relevance and uncertainty of the evidence are'],
       ['sensitivity', 'Sensitivity analysis: alternative assumptions', 'Alternatives should follow from the evidence review, including less favorable plausible values. Your answer should state whether sample size stays fixed or is recalculated, and explain any change in your recommendation.', 'The sensitivity scenarios and their evidence are'],
       ['progression', 'Feasibility objectives and progression criteria', 'For each feasibility outcome, you should specify a denominator, acceptable and unacceptable levels, and the action associated with each result.', 'The feasibility objectives and progression criteria are', 'feasibility']
     ]],
@@ -78,17 +78,17 @@
   const modelAnswers = {
     question: 'Does a novel treatment improve pain relief at four weeks compared with standard treatment in adults with chronic pain?',
     population: 'Adults with chronic pain attending the participating clinics; the specific condition, duration, and exclusions remain to be agreed.',
-    intervention: 'A novel pain treatment. Its dose or intensity, delivery, provider and schedule still need to be specified in the protocol.',
-    comparator: 'Standard treatment over the same follow-up period; its content and permitted additional care remain to be specified.',
+    intervention: 'A novel pain treatment involving four additional clinic visits, with a risk of short-lived dizziness. Both groups may continue the same background pain medication; dose and delivery details need specification.',
+    comparator: 'Standard treatment over four weeks, with the same permitted background pain medication as the novel-treatment group.',
     outcome_detail: 'The percentage of patients reporting pain relief four weeks after treatment starts, using the same prespecified definition of relief in both groups.',
     design: 'Eligible adults will be recruited from participating clinics using [selection method] and individually randomized to novel or standard treatment in equal numbers. For this teaching calculation, each participant contributes one four-week outcome, and outcomes from different participants are assumed independent.',
     scale: 'The difference in pain-relief percentages, novel minus standard treatment, in percentage points. A positive difference favors the novel treatment.',
     expected: '40 percentage points: the pilot observed relief in 7 of 10 patients (70%) versus 3 of 10 (30%). The small groups make this estimate uncertain.',
-    clinical: '20 percentage points: one additional patient with relief for every five treated. This is the minimum additional benefit judged worthwhile given the treatment burden in this example.',
+    clinical: '20 percentage points: one additional patient with relief per five treated. In this teaching case, patient and clinical advisers judge this the minimum benefit to justify four extra visits and the risk of short-lived dizziness.',
     planning: '30 percentage points (60% versus 30% relief), below the uncertain 40-point pilot estimate and above the 20-point minimum worthwhile benefit. Power is evaluated at this target difference.',
     variation: '30% relief with standard treatment and 60% with novel treatment for the calculation. These illustrative percentages imply the 30-point target difference.',
-    evidence_review: 'The pilot has only ten patients per group. I would review comparable four-week studies, including less favorable findings, and ask an independent reviewer to assess the plausible relief percentages.',
-    sensitivity: 'I would assess power at 20-, 30-, and 40-point benefits, keeping the sample size and 30% standard-treatment relief fixed.',
+    evidence_review: 'The small pilot leaves both relief percentages uncertain. I would compare pain severity, background medication and relief definitions across four-week studies, including less favorable findings, before judging which percentages apply.',
+    sensitivity: 'I would assess power at 20-, 30-, and 40-point benefits with the sample fixed, then vary standard-treatment relief over an evidence-supported range to judge whether the recommendation changes.',
     progression: 'Retention at four weeks would inform feasibility. The proceed, amend, and stop thresholds remain to be agreed before data collection.',
     analysis: 'A two-sided pooled score test for independent proportions without continuity correction, with a 95% confidence interval for the difference in relief percentages.',
     software: 'The two-proportion app and its normal approximation, with inputs, rounding, software versions, and source version saved alongside the calculation.',
@@ -118,10 +118,10 @@
       expected: (pilot ? (binary ? '[Expected feasibility percentage]' : '[Expected mean feasibility outcome]')
         : single ? (binary ? '[Anticipated population percentage]' : '[Anticipated population mean]')
         : '[Expected between-group difference] ' + units) + ' from [source], with uncertainty of [range or interval].',
-      clinical: '[Minimum worthwhile between-group benefit] ' + units + ', justified by [patient and clinical input].',
+      clinical: '[Minimum worthwhile between-group benefit] ' + units + ', justified by [patient and clinical input about treatment harms, burden and alternatives].',
       planning: '[Target difference] ' + units + ', supported as worthwhile and plausible by [evidence].',
       variation: binary ? '[Event percentage(s)] for [population and assessment time], supported by [source].' : 'SD [value] ' + units + ' from [comparable population and measurement method].',
-      evidence_review: '[Source] is relevant because [population, outcome and follow-up match]. [Limitation or conflicting finding] makes [input] uncertain; [further evidence or independent review] would help assess it.',
+      evidence_review: '[Source] is relevant because [patients, background care, outcome and follow-up are comparable]. [Design limitation or conflicting finding] makes [input] uncertain; [further evidence or independent review] would help.',
       sensitivity: 'Based on [evidence], I would examine [plausible range, including less favorable values], holding [quantities] fixed. [Result] would change my recommendation to [decision].',
       progression: 'Proceed at [acceptable result], amend at [intermediate result], and stop at [unacceptable result], using [outcome and denominator].',
       analysis: '[Test and sidedness, if applicable] and [confidence interval method], accounting for [design and dependence between observations].',
@@ -161,7 +161,7 @@
       recruitment: 'With illustrative 5% expected losses, 59 / 0.95 rounds up to 63 patients per group (126 total). Missing outcomes and treatment changes also need an analysis plan.',
       resources: 'At 20 eligible patients per month and 70% consent, recruitment of 126 would take about nine months, allowing only for whole months.',
       sensitivity: 'I would assess power at 2-, 3-, and 4-unit differences and plausible SDs around 5, holding the sample fixed.',
-      evidence_review: 'I would review comparable patient data, including less favorable findings, and ask an independent reviewer to assess plausible differences and SDs. Small pilots leave both uncertain.'
+      evidence_review: 'I would compare baseline pain, background care, measurement and four-week follow-up across studies. Differences in these features and small samples leave the mean difference and SD uncertain; less favorable findings should inform the ranges.'
     });
     if (value.study_type === 'single') Object.assign(result, {
       question: value.outcome === 'binary' ? 'What percentage of adults in the target population have the condition during the specified survey period?' : 'What is the mean pain score in the target population at the specified assessment time?',

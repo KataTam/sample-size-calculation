@@ -39,6 +39,7 @@
     app.title = record.title;
     document.title = record.title + ' | Sample size calculation';
     document.getElementById('activity-prompt').textContent = record.prompt || record.title;
+    document.querySelector('.activity-description').open = false;
     const targetLesson = lessonUrl(record);
     if (lesson.src !== targetLesson) lesson.src = targetLesson;
     lessonSeparate.href = targetLesson;

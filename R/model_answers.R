@@ -80,8 +80,8 @@ lab_model_context <- function(id, outcome, design) {
     evidence = "These are hypothetical inputs; comparable care pathways with the same discharge deadline are needed to justify them."))
   if (grepl("^pain_", id) && outcome == "proportions") return(list(
     question = "Does the novel treatment increase the percentage of adults with chronic pain reporting relief at four weeks compared with standard treatment?",
-    burden = "Treatment and four-week assessments take participant time. I would weigh discomfort and possible harms against potential pain relief and the value of the findings.",
-    evidence = "The small hypothetical pain pilot gives uncertain estimates. Comparable four-week studies are needed to justify the selected assumptions."))
+    burden = "The novel treatment adds four clinic visits and a risk of short-lived dizziness. Patient and clinical judgments should weigh these against additional four-week pain relief.",
+    evidence = "The small pain pilot leaves relief percentages uncertain. Differences in pain severity, background medication or relief definitions could limit how other four-week studies apply."))
   list(question = if (outcome == "means") "Does the intervention improve the mean outcome compared with the control condition in the specified population at the chosen assessment time?"
       else "Does the intervention improve the percentage with the favorable outcome compared with the control condition in the specified population at the chosen assessment time?",
     burden = "I would weigh visits, assessments, and possible harms against the expected patient benefit, with appropriate consent.",
@@ -125,7 +125,7 @@ lab_model_answers <- function(v, details, case_id, x = NULL, capacity = NULL, sa
   list(study_question = context$question, participant_burden = context$burden,
     clinical_relevance = if (v$goal == "precision") paste0("A full interval width of ", effect(x$width_target),
       " should distinguish [values leading to different decisions] around the ", effect(x$threshold), " between-group clinical threshold. [Patient or clinical input] should justify that choice.")
-      else paste0("The selected minimum worthwhile between-group benefit is ", effect(x$threshold), ". [Patient or clinical input] should justify it for [treatment decision]. An interval spanning this threshold would leave clinical importance uncertain."),
+      else paste0("The selected minimum worthwhile between-group benefit is ", effect(x$threshold), ". [Patient or clinical input] should justify this benefit in relation to treatment harms, burden and alternatives. An interval spanning this threshold would leave clinical importance uncertain."),
     evidence_sources = paste0(context$evidence, " Values to justify: expected difference ", effect(if (x$outcome == "means") v$expected_m else v$expected_p),
       "; target ", effect(true_difference(x)), "; ",
       if (x$outcome == "means") paste0("SD ", model_number(x$sd), ".")

@@ -22,10 +22,9 @@ ui <- fluidPage(
   tags$p(id = "download-status", role = "status", `aria-live` = "polite"),
   tags$head(tags$style(HTML("body{font-size:17px;line-height:1.55}.well{background:#f4f7fa}table{font-size:15px}.shiny-html-output{overflow-x:auto}.shiny-output-error-validation{color:#8a3410}.caption{font-size:.9em;color:#505b64;margin:8px 0 20px}"))),
   titlePanel("Sample size reasoning lab", windowTitle = "Sample size reasoning lab"),
-  p(class = "app-intro", "You can calculate sample size or assess power and precision for two-group comparisons, then simulate studies to see how results vary."),
   tags$div(class = "activity-picker", selectInput("activity_choice", "Prepared activity", c("Choose an activity or use your own inputs" = "",
     setNames(names(teaching_cases()), vapply(teaching_cases(), function(x) x$title, character(1)))), width = "100%")),
-  tags$div(class = "activity-context", uiOutput("activity_context")),
+  activity_description(uiOutput("activity_context")),
   textOutput("plan_import_status"),
   textOutput("missing_note"),
   sidebarLayout(sidebarPanel(width = 4,
@@ -191,13 +190,13 @@ ui <- fluidPage(
       uiOutput("design_route"),
       activity_text_input("clinical_relevance", "Why would this difference or precision matter clinically?",
         "The example updates with the selected case and current calculation inputs.",
-        "Your answer should connect the clinical threshold or precision target to the clinical or scientific decision and identify whose judgment or evidence supports it."),
+        "Which treatment decision depends on this difference or interval width? The justification should identify the harms, burden and alternatives considered, and whose judgment supports it."),
       activity_text_input("participant_burden", "What participant burden, benefits and ethical issues should you consider?",
         "The example updates with the selected case and current calculation inputs.",
         "Relevant details include visit frequency, discomfort, time, and possible harms, alongside the patient benefit expected from the knowledge gained."),
       activity_text_input("evidence_sources", "What evidence supports your inputs, and how uncertain is it?",
         "The example updates with the selected case and current calculation inputs.",
-        "Each source should identify the population, outcome, assessment time, and uncertainty. Less certain inputs need plausible alternative values for sensitivity analysis."),
+        "Could differences in patients, diagnosis or background care explain the reported advantage? Your sources should support the outcome definition and assessment time, with plausible alternatives for uncertain inputs."),
       fluidRow(column(6, numericInput("eligible_monthly", "Eligible participants per month", 20, min = 0)),
         column(6, percent_slider("consent_fraction", "Expected percentage consenting (%)", 0, 1, .7, step = .01))),
       activity_help("Your estimate should use screening records from all participating sites and count patients who meet the eligibility criteria. The app then applies the consent percentage. Slower recruitment and site-opening delays should inform your feasibility judgment.", for_input = "eligible_monthly"),
@@ -388,9 +387,9 @@ server <- function(input, output, session) {
   observeEvent(input$bridge_error, import_status(input$bridge_error), ignoreInit = FALSE)
   output$plan_import_status <- renderText(import_status())
   output$activity_context <- renderUI({
-    req(nzchar(current_activity()))
+    if (!nzchar(current_activity())) return(p("You can calculate sample size or assess power and precision for two independent groups, then simulate studies to examine how results vary. A prepared activity supplies a scenario; your own settings can be used instead."))
     x <- teaching_case(current_activity())
-    tagList(h3(x$title), p(x$prompt),
+    tagList(p(x$prompt),
       if (!is.null(routed_case())) p(tags$a(href = paste0("../", x$app, "/?activity=", x$id),
         target = "_blank", rel = "noopener", "Open the matching activity")),
       p(tags$a(href = paste0("../", x$return_path), target = "_blank", rel = "noopener", "Return to this passage in the tutorial")))

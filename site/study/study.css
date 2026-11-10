@@ -50,3 +50,8 @@ body :where(h1,h2,h3,h4,h5,h6,summary,legend) :where(a,span,strong,b,code) { fon
 .reference-preview > strong { font-weight: 600 !important; }
 
 @media (max-width: 900px) { .heading h1 { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); } #activity-prompt { max-height: none; } }
+
+.activity-description { flex: 0 0 auto; background: #eef4f5; border-bottom: 1px solid #b5c8ce; max-height: 35vh; overflow: auto; }
+.activity-description summary { cursor: pointer; padding: .65rem .8rem; min-height: 44px; }
+.activity-description summary:focus-visible { outline: 3px solid #a45115; outline-offset: -3px; }
+.activity-description #activity-prompt { max-height: none; border: 0; }

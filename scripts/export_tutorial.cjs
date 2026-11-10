@@ -83,6 +83,10 @@ let browser;
         img.src = await new Promise(resolve => { const reader = new FileReader(); reader.onload = () => resolve(reader.result); reader.readAsDataURL(blob); });
       }
       clone.querySelectorAll('a[href]').forEach(a => {
+        // Rebind preview handlers in the standalone document. DOM cloning keeps
+        // the initialization marker but cannot retain its event listeners.
+        a.removeAttribute('data-reference-preview');
+        if (a.getAttribute('aria-describedby') === 'reference-preview') a.removeAttribute('aria-describedby');
         const url = new URL(a.getAttribute('href'), location.href);
         const chapter = url.pathname.match(/\/(index|clinical-question|power|calculations|curves|simulation|feasibility|exercises|study-designs|glossary|common-mistakes|appendix|references)\.html$/);
         const internal = url.origin === location.origin && chapter &&

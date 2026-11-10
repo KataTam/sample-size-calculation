@@ -98,3 +98,7 @@ textarea.form-control { min-height:88px; resize:vertical; }
 }
 
 .plan-transfer {margin:1rem 0}.plan-transfer-data[hidden]{display:none!important}.plan-transfer [role=status]:empty{display:none}
+
+.activity-description { margin: .7rem 0 1rem; padding: .2rem .8rem; border: 1px solid #b5c8d9; border-radius: 6px; background: #eef4fa; color: #25313b; }
+.activity-description > summary { cursor: pointer; padding: .65rem 0; min-height: 44px; font-weight: 600; }
+.guided .activity-description { display: none; }
