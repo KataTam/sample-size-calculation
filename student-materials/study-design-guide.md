@@ -297,7 +297,7 @@ In rare-disease studies, the Type I error probability and any alternative design
 
 ## Noninferiority and equivalence trials {#noninferiority-equivalence .advanced-heading}
 
-The earlier treatment comparisons asked whether a novel treatment improves outcomes. A new treatment may also offer easier administration, fewer adverse effects, or lower costs. You may then want to establish whether it retains sufficient efficacy to be an acceptable alternative to an established treatment. This can motivate a noninferiority trial. An equivalence trial assesses whether the treatments differ only within prespecified, clinically acceptable limits [@schumi2011lookingglass].
+The earlier treatment comparisons asked whether a novel treatment improves outcomes. A new treatment may also offer easier administration or fewer adverse effects. You may then want to establish whether it retains sufficient efficacy to be an acceptable alternative to an established treatment. This can motivate a noninferiority trial. An equivalence trial assesses whether the treatments differ only within prespecified, clinically acceptable limits [@schumi2011lookingglass].
 
 The margin defines the boundary used to assess the treatment difference. For noninferiority, it represents the largest acceptable loss of efficacy. Equivalence uses lower and upper boundaries. These margins concern the population-level difference between treatment groups. Their justification should reflect the outcome, follow-up period, clinical consequences, and evidence about the established treatment's benefit. The 20-percentage-point clinical threshold in the chronic pain trial describes a worthwhile improvement; an acceptable loss requires a separate justification [@fda2016noninferiority].
 

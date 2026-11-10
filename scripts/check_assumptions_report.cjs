@@ -9,9 +9,9 @@ const {saveReportPair} = require('./report_test_helpers.cjs');
 (async () => {
   let server, browser;
   try {
-    let base = process.argv[2];
+    let base = process.argv[2] === '--source' ? undefined : process.argv[2];
     if (!base) {
-      const root = path.resolve('_site');
+      const root = path.resolve(process.argv.includes('--source') ? 'site' : '_site');
       server = http.createServer((request, response) => {
         const url = new URL(request.url, 'http://localhost');
         const file = path.resolve(root, '.' + decodeURIComponent(url.pathname), url.pathname.endsWith('/') ? 'index.html' : '');
@@ -66,6 +66,20 @@ const {saveReportPair} = require('./report_test_helpers.cjs');
     await page.locator('#question').fill('Does treatment improve pain relief in adults?');
     await page.locator('#clinical').fill('20 percentage points, based on patient priorities');
     assert.match(await page.locator('#report').innerText(), /20 percentage points, based on patient priorities/);
+    assert.equal(await page.locator('#report-title').innerText(),'Study plan');
+    assert.deepEqual(await page.locator('#report > section > h3').allTextContents(),['Sample size calculation report','Supporting study plan']);
+    assert.match(await page.locator('#calculation-summary').innerText(),/20 percentage points, based on patient priorities/);
+    assert.match(await page.locator('#supporting-study-plan').innerText(),/20 percentage points, based on patient priorities/);
+    await page.locator('#clinical').fill('15 percentage points, based on revised evidence');
+    for(const part of ['#calculation-summary','#supporting-study-plan']) {
+      assert.match(await page.locator(part).innerText(),/15 percentage points, based on revised evidence/);
+      assert.doesNotMatch(await page.locator(part).innerText(),/20 percentage points, based on patient priorities/);
+    }
+    await page.locator('#evidence_review').fill('A detailed evidence note for the supporting plan');
+    assert.doesNotMatch(await page.locator('#calculation-summary').innerText(),/A detailed evidence note/);
+    assert.match(await page.locator('#supporting-study-plan').innerText(),/A detailed evidence note/);
+    await page.locator('#evidence_review').fill('');
+    await page.locator('#clinical').fill('20 percentage points, based on patient priorities');
     assert.doesNotMatch(await page.locator('#report').innerText(), /not yet specified/);
     await page.locator('#plan-review > summary').click();
     assert.match(await page.locator('#plan-review').innerText(), /Target difference/);
@@ -80,6 +94,7 @@ const {saveReportPair} = require('./report_test_helpers.cjs');
     assert.equal(await page.locator('#power').isVisible(), false);
     assert.equal(await page.locator('#planning').isVisible(), false);
     assert.equal(await page.locator('#precision').isVisible(), true);
+    assert.doesNotMatch(await page.locator('#calculation-summary').innerText(),/Target difference:|Type I error probability and power:/);
     assert.doesNotMatch(await page.locator('#report').innerText(), /alpha and power specification|Alpha and power: not/);
     await page.locator('#goal').selectOption('both');
     assert.equal(await page.locator('#power').isVisible(), true);
@@ -128,10 +143,14 @@ const {saveReportPair} = require('./report_test_helpers.cjs');
     assert.equal(saved.suggestedFilename(), 'study-plan-work.json');
     const document = JSON.parse(fs.readFileSync(await saved.path(), 'utf8'));
     assert.equal(document.version, 3);
+    assert.equal(document.entries.question,await page.locator('#question').inputValue());
+    assert(!('summary' in document.entries) && !('calculation_summary' in document.entries),'Only one set of answers is saved');
     assert(!savedHTML.includes('study-plan-data'), 'Readable reports contain no embedded backup');
     const offline = await context.newPage();
     await offline.setContent(savedHTML);
     assert.match(await offline.locator('body').innerText(), /40 percentage points/);
+    assert.deepEqual(await offline.locator('body > h2').allTextContents(),['Sample size calculation report','Supporting study plan']);
+    assert(savedHTML.indexOf('<h2>Sample size calculation report</h2>')<savedHTML.indexOf('<h2>Supporting study plan</h2>'));
     assert.match(await offline.locator('body').innerText(), /SPIRIT 2025/);
     assert.match(await offline.locator('body').innerText(), /Prepared chronic pain calculation/);
     assert.match(await offline.locator('body').innerText(), /Software: R.*stats.*source version/);
@@ -167,6 +186,12 @@ const {saveReportPair} = require('./report_test_helpers.cjs');
     pending = page.waitForEvent('download'); await page.locator('#download-text').click();
     const report = await pending, reportText = fs.readFileSync(await report.path(), 'utf8');
     assert.match(reportText, /40 percentage points/); assert.match(reportText, /63 per group, 126 in total/);
+    // The two-panel lesson and activity registry are generated by the site build.
+    if (process.argv.includes('--source')) {
+      assert.deepEqual(errors,[]);
+      console.log('Study-plan source checks passed: one answer set, concise/supporting sections, current edits, goal changes, safe text, saved work and PDF/Word exports.');
+      return;
+    }
     await page.goto(base + 'study/?activity=assumptions_report');
     await page.waitForFunction(() => document.querySelector('#app-status').textContent.startsWith('App loaded'));
     const activity = page.frameLocator('#app-frame');

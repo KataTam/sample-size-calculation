@@ -44,7 +44,7 @@ The [chronic pain trial](#clinical-question) distinguishes the pilot estimates f
 : The [target difference](#between-group-differences){.no-glossary-tooltip} is the between-group difference used in the sample size calculation, at which you calculate [power](#statistical-power).
 
 <span id="clinical-threshold">Clinical threshold</span>
-: The [clinical threshold](#between-group-differences){.no-glossary-tooltip} is the smallest between-group benefit judged worthwhile, considering the treatment's burdens, risks, costs, and alternatives. These judgments may coincide in practice, but the worked examples use distinct values to show their different roles. For the chronic pain trial, they are 40, 30, and 20 percentage points, respectively.
+: The [clinical threshold](#between-group-differences){.no-glossary-tooltip} is the smallest between-group benefit judged worthwhile, considering the treatment's burdens, risks, and alternatives. These judgments may coincide in practice, but the worked examples use distinct values to show their different roles. For the chronic pain trial, they are 40, 30, and 20 percentage points, respectively.
 
 The target difference should be justified as realistic and important. Planning for a difference larger than the clinical threshold generally gives lower power at some worthwhile differences. See [the target-difference discussion](#what-do-we-expect-what-will-we-plan-for-and-what-matters-clinically) and [DELTA2 guidance (Cook et al., 2018)](https://doi.org/10.1136/bmj.k3750).
 

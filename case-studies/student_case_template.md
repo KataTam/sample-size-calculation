@@ -2,7 +2,7 @@
 
 You can develop a hypothetical clinical case or use a topic with public evidence, keeping patient-identifiable information out of the material. Invented values should be labeled as teaching assumptions. The core comparison fields support equal independent groups with normal continuous outcomes or binary outcomes. The single-proportion extension supports descriptive/feasibility estimation; use a different validated method for other designs.
 
-You can enter and save your answers in the [study-plan report activity](https://katatam.github.io/sample-size-calculation/study/?activity=assumptions_report), or copy these prompts into your own document. The report develops across the core chapters; unresolved entries identify the evidence you still need. You can download the report as PDF or an editable Word document. “Save work for later” stores your entries for reopening in the activity.
+You can enter and save your answers in the [study-plan activity](https://katatam.github.io/sample-size-calculation/study/?activity=assumptions_report), or copy these prompts into your own document. The study plan develops across the core chapters; unresolved entries identify the evidence you still need. In the activity, these answers generate a concise sample size calculation report followed by the supporting study plan. You can download the report as PDF or an editable Word document. “Save work for later” stores your entries for reopening in the activity.
 
 ## Question and inferential goal
 
@@ -50,11 +50,11 @@ For every evidence source, check its population, outcome definition, time point 
 
 Who judges the outcome and smallest benefit worthwhile? Record patient/clinical input:
 
-What participant burden, potential harms or opportunity costs must the information justify?
+What participant burden or potential harms must the information justify?
 
 What conclusion would change practice or determine the next research step?
 
-Expected eligible participants per month; recruitment period; per-participant cost; fixed costs; funding/resource cap:
+Expected eligible participants per month; consent percentage; recruitment period; maximum recruitment capacity:
 
 Could collaboration, better measurement or a narrower purpose make the study informative?
 

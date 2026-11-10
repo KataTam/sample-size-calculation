@@ -14,7 +14,7 @@ This repository contains both teaching materials and code.
 
 The source package contains the maintained teaching files, software and build instructions. A reasoning-lab JSON backup contains one learner's selected example, settings and answers for restoration in that lab. App reports and backups are created when you download them from an app.
 
-The developing study-plan report brings selected calculation snapshots together with the learner's own justification. Chapter-specific links open the relevant part of the same saved plan. Its version-3 work file preserves the entries, section review states and attached results; older work files remain supported.
+The developing study plan brings selected calculation snapshots together with the learner's own justification. Its preview and PDF/Word exports begin with a concise sample size calculation report, followed by the supporting study plan. Both parts are generated from one set of answers; no separate summary is stored. Chapter-specific links open the relevant part of the same saved plan. Its version-3 work file preserves the entries, section review states and attached results; older work files remain supported.
 
 ## Adapting apps and reports
 

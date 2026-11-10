@@ -55,7 +55,7 @@ Although the examples are clinical, the principles of justifying assumptions, ch
 
 This tutorial is for students and researchers. Chapters 1–4 form the Core route for basic two-arm trial planning. Chapters 5–8 offer Advanced topics that you can consult according to your study question. The glossary and common questions are reference pages for either route.
 
-Activities are learning exercises. Apps are the interactive software used in some activities, such as calculators, simulations and the report builder. Your [sample size calculation report](https://katatam.github.io/sample-size-calculation/assumptions_report/?stage=question) develops through the four core chapters; advanced activities can extend it when relevant to your question. Expandable misconception boxes explain common difficulties; the toolbar help explains the other reading features.
+Activities are learning exercises. Apps are the interactive software used in some activities, such as calculators, simulations and the report builder. Your [study plan](https://katatam.github.io/sample-size-calculation/assumptions_report/?stage=question) develops through the four core chapters. The same answers produce a concise sample size calculation report followed by the supporting study plan; advanced activities can extend that supporting material. Expandable misconception boxes explain common difficulties; the toolbar help explains the other reading features.
 
 ```{r tutorial-roadmap, echo=FALSE, results='asis'}
 roadmap <- paste(readLines("../figures/tutorial-roadmap.svg",
@@ -115,7 +115,7 @@ After this section, you should be able to:
 - Explain why sample size starts with the clinical question.
 - Identify the assumptions needed before calculating.
 - Distinguish expected differences, target differences and clinical thresholds in a two-arm clinical trial.
-- Write the question, design and justified assumptions for a sample size calculation report.
+- Record the question, design and justified assumptions in a study plan.
 :::
 
 ## The chronic pain trial: how many patients do you need? {#the-chronic-pain-study-how-many-patients-do-we-need .core-heading}
@@ -138,12 +138,12 @@ You can develop a study plan alongside the tutorial, beginning with the question
 
 ## What should this study establish? {.core-heading}
 
-A sample size calculation helps assess what the planned study could establish under its assumptions. With too few patients, a study may miss a clinically worthwhile difference and produce a wide [confidence interval](#confidence-interval). Recruiting more patients than the question requires also adds burden, time, and cost. For the chronic pain trial, your plan should address four connected questions:
+A sample size calculation helps assess what the planned study could establish under its assumptions. With too few patients, a study may miss a clinically worthwhile difference and produce a wide [confidence interval](#confidence-interval). Recruiting more patients than the question requires also adds participant burden and time. For the chronic pain trial, your plan should address four connected questions:
 
 - Statistical: can the study detect a treatment benefit and estimate its size precisely enough?
 - Clinical: how much additional pain relief would matter to patients?
 - Ethical: does the information the study could provide justify participants' burden and risk?
-- Practical: can you recruit the required patients within the available time and budget?
+- Practical: can you recruit the required patients within the available time and recruitment capacity?
 
 The final plan should address all four.
 
@@ -181,7 +181,7 @@ Before selecting calculation inputs, you should also consult guidance for the st
 
 The map below gathers the remaining decisions for the chronic pain trial. Its outcome is [binary](#binary-outcome){.no-glossary-tooltip}: each patient either reports pain relief or does not. A different question or analysis may need a different sample size method.
 
-You can begin your [sample size calculation report](https://katatam.github.io/sample-size-calculation/assumptions_report/?stage=question) with the population, treatment comparison, outcome and assessment time. As you consider each question on the map, your report can record a provisional decision or what evidence is still needed. Later chapters supply the calculations and interpretation needed to complete it.
+You can begin your [study plan](https://katatam.github.io/sample-size-calculation/assumptions_report/?stage=question) with the population, treatment comparison, outcome and assessment time. As you consider each question on the map, your study plan can record a provisional decision or what evidence is still needed. Later chapters supply the calculations and interpretation needed to complete it.
 
 ```{r study-questions-map, echo=FALSE, results='asis'}
 knitr::asis_output(render_question_map())
@@ -208,7 +208,7 @@ The event probability here is the assumed probability of pain relief at four wee
 |:--|:--|:--|
 | Expected between-group difference | 40 percentage points | Best current expectation, with uncertainty |
 | Target between-group difference | 30 percentage points: 60% versus 30% | Assumed true difference at which you evaluate power |
-| Clinically worthwhile between-group difference (clinical threshold) | 20 percentage points | Smallest additional benefit judged worthwhile, considering burdens, risks, costs, and alternatives |
+| Clinically worthwhile between-group difference (clinical threshold) | 20 percentage points | Smallest additional benefit judged worthwhile, considering burdens, risks, and alternatives |
 
 Table: (\#tab:pain-planning-values) Three distinct decisions for the chronic pain trial.
 
@@ -244,13 +244,13 @@ The pilot's observed relief percentages, 70% versus 30%, are [sample estimates](
 
 The pilot suggests a possible benefit, but its estimate is uncertain. It provides preliminary information for planning the study. After introducing error probabilities and power, you can [compare the pilot result with what a larger study could establish](#critical-observed-difference).
 
-## Your sample size calculation report: question and assumptions {#record-assumptions .core-heading}
+## Your study plan: question and assumptions {#record-assumptions .core-heading}
 
 The [Activity: Develop and justify your study plan](https://katatam.github.io/sample-size-calculation/assumptions_report/?stage=question) helps you write a short plan explaining your research question, sample size and the evidence behind your choices. It opens with a two-group comparison planned for power and empty answer boxes. You can use the suggested structures for your own study, load the hypothetical chronic pain trial, or reopen a plan you previously saved. In this chapter, you can record the question, design and initial assumptions. The links in Table \@ref(tab:planning-assumptions) show which core chapters help you complete each part. Decisions that need more evidence can remain provisional.
 
 When you revise an assumption, a short note about what changed and why will help you explain the final plan.
 
-The table follows the activity's four report sections. The core route uses a two-group comparison planned for power. Other planning goals are available in *Study settings* and introduced in the advanced chapters.
+The table follows the activity's four study-plan sections. The core route uses a two-group comparison planned for power. Other planning goals are available in *Study settings* and introduced in the advanced chapters.
 
 ::: {.planning-assumptions}
 
@@ -278,11 +278,11 @@ The table follows the activity's four report sections. The core route uses a two
 | Feasibility and resources | Expected recruitment rate, recruitment period, available resources and other practical constraints |
 | Intended conclusion | What the design could establish and what remains uncertain |
 
-Table: (\#tab:planning-assumptions) Decisions and assumptions to record in the study-plan activity, with links to the core chapters that develop each report section.
+Table: (\#tab:planning-assumptions) Decisions and assumptions to record in the study-plan activity, with links to the core chapters that develop each part of the study plan.
 
 :::
 
-The report's prompts draw on PICO, SPIRIT 2025, CONSORT 2025, [DELTA²](#delta2), and section 4.1 of the UMCG statistical analysis plan (SAP) template [@richardson1995; @spiritconsort2025; @consortee2025; @cook2018delta2; @umcgsap]. Each core chapter develops the relevant part of the report: question and assumptions here, [statistical criteria in Chapter 2](#report-statistical-criteria), [calculation and software in Chapter 3](#report-calculation-method), and [recruitment and the completed example in Chapter 4](#write-a-sample-size-justification).
+The study plan's prompts draw on PICO, SPIRIT 2025, CONSORT 2025, [DELTA²](#delta2), and section 4.1 of the UMCG statistical analysis plan (SAP) template [@richardson1995; @spiritconsort2025; @consortee2025; @cook2018delta2; @umcgsap]. Each core chapter develops the relevant part of the study plan: question and assumptions here, [statistical criteria in Chapter 2](#report-statistical-criteria), [calculation and software in Chapter 3](#report-calculation-method), and [recruitment and the completed example in Chapter 4](#write-a-sample-size-justification).
 
 The target difference tells the calculation where to evaluate power. The [standard deviation](#standard-deviation){.no-glossary-tooltip} describes variation between individuals; the [standard error](#standard-error){.no-glossary-tooltip} describes [sampling variability](#sampling-variability) of an estimate. For binary outcomes, you should report each group's event probability as a percentage and their absolute difference in percentage points. The section [Glossary](#glossary) explains these terms in more detail.
 
@@ -292,9 +292,9 @@ Reasoning connects an input to a decision. For example, a report can explain why
 
 For the chronic pain case, the pilot observed relief in 70% versus 30%, but each percentage was based on only ten patients. The report uses a smaller target difference of 30 points and explains the pilot uncertainty. Its clinical threshold of 20 points corresponds to 20 additional patients reporting relief per 100 treated, or one additional favorable outcome per five patients treated with the novel treatment instead of standard treatment. This makes the proposed criterion interpretable when weighing benefit against treatment burden; the choice remains a clinical judgment. The [completed example](#sample-size-calculation-report) shows how these reasons can be written concisely.
 
-A clear sample size justification lets readers assess your choices and reproduce the calculation. Reporting is the starting point: in a review of 185 studies using the BREAST-Q Reconstruction Module, a patient-reported questionnaire for breast reconstruction, only 17 reported a sample-size calculation [@gallo2022]. The missing descriptions left readers unable to assess how the other studies had chosen their sample sizes. Recording your inputs, method, result and supporting evidence in the sample size calculation report makes your reasoning available for review and reuse.
+A clear sample size justification lets readers assess your choices and reproduce the calculation. Reporting is the starting point: in a review of 185 studies using the BREAST-Q Reconstruction Module, a patient-reported questionnaire for breast reconstruction, only 17 reported a sample-size calculation [@gallo2022]. The missing descriptions left readers unable to assess how the other studies had chosen their sample sizes. Recording your inputs, method, result and supporting evidence in the study plan makes your reasoning available for review and reuse.
 
-In the activity, your study title identifies the plan. The preview brings your written answers and any calculation records together. You can mark each section ready for review once its applicable questions are answered; changes to key inputs flag affected sections for another review. The report is available as PDF or an editable Word document. “Save work for later” stores your entries for reopening in the activity.
+In the activity, your study title identifies the plan. Your answers are entered once. The preview begins with a concise sample size calculation report and then shows the supporting study plan, including detailed evidence, alternative scenarios, feasibility notes and saved calculations. You can mark each section ready for review once its applicable questions are answered; changes to key inputs flag affected sections for another review. The report is available as PDF or an editable Word document. “Save work for later” stores your entries for reopening in the activity.
 
 
 Small pilot effects are uncertain. Following up only pilots whose estimated effect gives an affordable main study can introduce additional bias [@albers2018]. A pilot can support conclusions about recruitment, acceptability, measurement procedures, and other feasibility objectives. It is generally not designed to establish treatment effectiveness, and its treatment-difference estimate may be highly uncertain [@eldridge2016]. In this tutorial, you examine plausible ranges explicitly; [further planning approaches](#further-planning-approaches) address more formal ways to account for uncertainty.
@@ -336,7 +336,7 @@ After this section, you should be able to:
 - Explain [Type I error probability](#alpha), [Type II error probability](#beta) and [power](#statistical-power) under a specified population scenario.
 - Distinguish [sample estimates](#sample-estimate) from [population parameters](#population-parameter), and the outcome of one study from the performance of a design across repeated studies.
 - Interpret a confidence interval against zero and the between-group clinical threshold, and explain its repeated-study meaning.
-- Specify and explain the statistical criteria in a sample size calculation report.
+- Specify and explain the statistical criteria in your study plan.
 :::
 
 Suppose you repeated the same planned study many times, with the same sample size, analysis and specified true treatment effect. Power is the percentage of those studies that would reject the [null hypothesis](#null-hypothesis) given that the null hypothesis is false. At 90% power, about 90 out of 100 repetitions would detect that effect if it exists, while about 10 would not. This describes the design's long-run performance. You do not need to conduct the trial repeatedly: calculations or simulations estimate this probability under the stated assumptions.
@@ -566,7 +566,7 @@ This repeated-study approach follows the introductory teaching idea in @superpow
 
 The advanced chapter on [power and uncertain assumptions](#curves) explains the sampling-distribution diagrams and the pilot's significance boundary. The simple simulation here provides the background needed for the basic calculations.
 
-## Your sample size calculation report: statistical criteria {#report-statistical-criteria .core-heading}
+## Your study plan: statistical criteria {#report-statistical-criteria .core-heading}
 
 Your report should specify the Type I error probability, sidedness and target power, together with the difference at which power is evaluated. The chronic pain plan uses a two-sided test because differences in either direction matter. A Type I error probability of 5% sets the planned false-positive probability; 90% power limits the false-negative probability to 10% when the true difference is 30 percentage points under the calculation's assumptions.
 
@@ -582,7 +582,7 @@ In the [study-plan activity](https://katatam.github.io/sample-size-calculation/a
 - Different samples can give different results even under identical population assumptions.
 - A confidence interval shows uncertainty in the between-group estimate and can be compared with zero and a justified clinical threshold.
 - More patients and more simulation repetitions serve different purposes.
-- The report should state power together with its target difference and explain the chosen error probabilities.
+- Your study plan should justify the error probabilities and record power together with its target difference; these entries also appear in the concise report.
 
 </div>
 
@@ -966,7 +966,7 @@ The advanced [discharge simulation](#discharge-simulation) examines how the appr
 
 A study can also be planned around a useful confidence-interval width. The advanced section on [estimation with a precision target](#plan-for-precision) develops that alternative planning goal.
 
-## Your sample size calculation report: method and result {#report-calculation-method .core-heading}
+## Your study plan: method and result {#report-calculation-method .core-heading}
 
 A reproducible calculation identifies the procedure, its inputs, the unrounded result and how it was rounded. For the chronic pain trial, the method is a normal approximation for a two-sided pooled score test of independent proportions without continuity correction. The comparison uses equal allocation and no covariate adjustment. The report should name this procedure and the software that implements the calculation.
 
@@ -994,7 +994,7 @@ The [study-plan activity](https://katatam.github.io/sample-size-calculation/assu
 
 </details>
 
-In the calculator app's Report view, “Add this calculation to my report” lets you review the result before attaching it. Your [calculation section](https://katatam.github.io/sample-size-calculation/assumptions_report/?stage=calculation) should explain why the method suits your design and retain its settings and versions.
+In the calculator app's Report view, “Add this calculation to my study plan” lets you review the result before attaching it. Your [calculation section](https://katatam.github.io/sample-size-calculation/assumptions_report/?stage=calculation) should explain why the method suits your design and retain its settings and versions.
 
 <div class="chapter-recap">
 
@@ -1023,11 +1023,11 @@ After this chapter, you should be able to:
 - Explain how treatment changes can affect the difference between randomized groups and the recruitment plan.
 - Assess one plausible alternative assumption and the practical recruitment requirement.
 - Complete a sample size calculation report with a justified recruitment target.
-- Check that the report’s assumptions, procedure, power, counts and software are consistent.
+- Summarize the calculation concisely while retaining evidence and alternative scenarios in the supporting study plan.
 
 :::
 
-Earlier chapters developed your report’s question, assumptions, statistical criteria and calculation. This chapter completes the recruitment plan and brings those contributions together in a sample size calculation report. Feasibility depends on whether you can obtain enough usable observations to answer your research question. For the chronic pain trial, you first translate the analyzable requirement into recruitment, then examine less favorable assumptions and resource limits. A simple sensitivity comparison helps you assess whether a changed assumption would make the recruitment target impractical. Detailed [fixed-sample analyses](#available-sample) and [study designs and testing strategies](#study-designs) are available in the advanced route.
+Earlier chapters developed your study plan’s question, assumptions, statistical criteria and calculation. This chapter completes the recruitment plan and brings those contributions together in a sample size calculation report. Feasibility depends on whether you can obtain enough usable observations to answer your research question. For the chronic pain trial, you first translate the analyzable requirement into recruitment, then examine less favorable assumptions and resource limits. A simple sensitivity comparison helps you assess whether a changed assumption would make the recruitment target impractical. Detailed [fixed-sample analyses](#available-sample) and [study designs and testing strategies](#study-designs) are available in the advanced route.
 
 ## Account for expected losses {.core-heading}
 
@@ -1206,7 +1206,7 @@ For continuous outcomes, allocation, baseline information and within-person comp
 | Improve follow-up and outcome completeness | Retaining more outcomes protects the analyzable sample. | For the chronic pain trial, accessible follow-up appointments and reminders may improve outcome collection. Reasons for missing outcomes still inform the analysis. |
 | Improve measurement | More reliable measurement can reduce unexplained variability in a continuous outcome and improve precision. | For pain relief, a clear, consistent definition and assessment time are important. A different outcome needs its own assumptions and calculation. |
 | Use an appropriate, efficient design and analysis | Prespecified adjustment for informative baseline measures, or a suitable paired or repeated-measures design, can improve precision. | For a continuous pain score, prespecified adjustment for baseline pain may improve precision. A paired design requires a suitable clinical setting. Planning must match the adjusted model or dependent observations. |
-| Keep allocation balanced when appropriate | For the equal-variance, equal-cost comparisons illustrated here, equal group sizes make efficient use of a fixed total. | The chronic pain trial assigns equal numbers to novel and standard treatment. Unequal costs, variances or other requirements may justify another allocation and calculation. |
+| Keep allocation balanced when appropriate | For comparisons assuming equal variances, equal group sizes make efficient use of a fixed total sample size. | The chronic pain trial assigns equal numbers to novel and standard treatment. Unequal variances or other design requirements may justify another allocation and calculation. |
 | Accept a higher Type I error probability | A less stringent rejection rule increases power at the specified alternative. | It also increases the probability of rejecting a true null. The error probability should be justified prospectively; changing it to make a result significant is not sound planning. |
 | Use a one-sided test when the scientific question warrants it | Directing the rejection region to a prespecified direction can increase power for effects in that direction. | It does not test both directions in the same way. Your protocol should specify and justify it before you see the data; a smaller required sample is not sufficient justification [@moye2002]. |
 
@@ -1240,9 +1240,9 @@ Clustered designs, nonparametric analyses and Bayesian planning need methods sui
 
 
 
-## Completing your sample size calculation report {#write-a-sample-size-justification .core-heading}
+## Your study plan: the sample size calculation report {#write-a-sample-size-justification .core-heading}
 
-The earlier chapters developed the question, assumptions, statistical criteria and calculation record. Your final contribution explains expected losses and the recruitment target, then checks that all parts agree. [Example 4.1](#sample-size-calculation-report) brings these elements together for the chronic pain trial. Its pilot results and judgments about treatment burden and follow-up provide the assumptions for this worked example; in your own report, each input should be traceable to evidence or an explicitly justified judgment.
+Your study plan holds the question, evidence, assumptions, calculations, feasibility assessment and unresolved decisions. Its sample size calculation report presents the relevant design, justified inputs, procedure, software and participant counts concisely. The activity assembles this report first, followed by the supporting study plan, from the same answers. Your final contribution explains expected losses and the recruitment target, then checks that all parts agree. [Example 4.1](#sample-size-calculation-report) brings these elements together for the chronic pain trial. Its pilot results and judgments about treatment burden and follow-up provide the assumptions for this worked example; in your own report, each input should be traceable to evidence or an explicitly justified judgment.
 
 The example follows reporting elements in SPIRIT 2025, CONSORT 2025, DELTA² and the UMCG SAP template (version 3, section 4.1) [@spiritconsort2025; @consortee2025; @cook2018delta2; @umcgsap; @roa2024comet]. The sample size calculation report, protocol and SAP should use consistent outcomes, assumptions and analysis methods.
 
@@ -1303,7 +1303,7 @@ The [teaching guide](https://katatam.github.io/sample-size-calculation/teaching/
 
 The four core chapters complete the basic planning route. You can review them in the [cumulative quiz](#cumulative-quiz), or continue with the advanced topics that fit your question.
 
-Your final review should check that the percentages, target difference, power, method and counts agree across your text and attached calculations. In [Activity: Develop and justify your study plan](https://katatam.github.io/sample-size-calculation/assumptions_report/?stage=recruitment), you can complete the recruitment and conclusion fields, then download the sample size calculation report as PDF or Word.
+Your final review should check that the percentages, target difference, power, method and counts agree across your text and attached calculations. In [Activity: Develop and justify your study plan](https://katatam.github.io/sample-size-calculation/assumptions_report/?stage=recruitment), you can complete the recruitment and conclusion fields, then download the study plan as PDF or Word. The concise sample size calculation report appears first; supporting answers, review notes and saved calculations follow.
 
 <div class="chapter-recap">
 
@@ -1312,8 +1312,8 @@ Your final review should check that the percentages, target difference, power, m
 - Recruitment targets allow for expected losses; prevention and analysis should address missing-data bias.
 - A simple sensitivity comparison shows how an uncertain assumption changes the required sample size.
 - An informative plan identifies what the available sample could establish and what remains uncertain.
-- The completed sample size calculation report joins the question, justified inputs, procedure, software and recruitment count.
-- Supporting sensitivity comparisons can be retained in the protocol or a supplement.
+- The sample size calculation report summarizes the relevant design, justified inputs, procedure, software and participant counts.
+- The supporting study plan retains the detailed evidence, sensitivity comparisons, feasibility assessment and unresolved decisions.
 
 </div>
 
@@ -2037,7 +2037,7 @@ Real studies often involve additional decisions. Early consultation with a stati
 - the study involves several primary outcomes, multiple comparisons, interim analyses, or non-inferiority or equivalence objectives;
 - the target difference or variability is uncertain, recruitment is limited, or missing outcomes and treatment switching may affect the analysis.
 
-Involving a statistician while the research question and protocol are still being developed can help you choose a suitable design and analysis, justify the planning assumptions, and identify information you need to collect. These decisions can prevent costly changes later. Clinical-trial guidance emphasizes statistical collaboration, documentation of assumptions, and investigation of their consequences [@iche91998; @cook2018delta2]. The example below illustrates why the meaning of a software input deserves the same attention as its numerical value.
+Involving a statistician while the research question and protocol are still being developed can help you choose a suitable design and analysis, justify the planning assumptions, and identify information you need to collect. These decisions can prevent avoidable changes later. Clinical-trial guidance emphasizes statistical collaboration, documentation of assumptions, and investigation of their consequences [@iche91998; @cook2018delta2]. The example below illustrates why the meaning of a software input deserves the same attention as its numerical value.
 
 ### Beware of your assumptions in every calculation tool or software you use {#gpower-assumptions .advanced-heading}
 

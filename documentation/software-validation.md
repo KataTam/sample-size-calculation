@@ -49,7 +49,7 @@ The tutorial's advanced example, [Beware of your assumptions in every calculatio
 
 ## Reporting a study plan
 
-A report should record the clinical question, primary outcome and planned analysis; target difference and variability or event probabilities; evidence and sensitivity scenarios; Type I error probability, power or full interval-width target; allocation; analyzable and recruitment counts; expected losses; feasibility and costs; software/functions and versions; and the limits of the intended conclusion. Your written justification should explain these choices.
+The supporting study plan should record the clinical question, primary outcome and planned analysis; target difference and variability or event probabilities; evidence and sensitivity scenarios; Type I error probability, power or full interval-width target; allocation; analyzable and recruitment counts; expected losses; recruitment feasibility; software/functions and versions; and the limits of the intended conclusion. Your written justification should explain these choices.
 
 The lab's PDF and Word reports record the selected example, current calculation, written answers and matching simulation results. Earlier simulation results are omitted with a rerun notice. The optional JSON backup restores settings and answers and clears previous simulations; CSV exports preserve the assumptions of their saved run, while the R script uses the current simulation settings. The [walkthrough download guide](../student-materials/activity-walkthroughs.html#reports-and-saved-work) explains which file serves each purpose.
 

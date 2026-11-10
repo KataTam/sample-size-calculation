@@ -39,7 +39,7 @@
     "aliases": [
       "clinical threshold"
     ],
-    "definition": "The smallest between-group benefit judged worthwhile, considering risks, burden, costs and alternatives."
+    "definition": "The smallest between-group benefit judged worthwhile, considering risks, burden and alternatives."
   },
   {
     "id": "between-group-differences",

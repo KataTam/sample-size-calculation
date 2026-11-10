@@ -85,7 +85,7 @@
       "id": "C012",
       "level": "core",
       "front": "What is the clinical threshold?",
-      "back": "The smallest between-group benefit judged clinically worthwhile, considering harms, burden, costs, and alternatives.",
+      "back": "The smallest between-group benefit judged clinically worthwhile, considering harms, burden, and alternatives.",
       "source": "https://katatam.github.io/sample-size-calculation/book/glossary.html#clinical-threshold"
     },
     {
@@ -701,7 +701,7 @@
       "id": "C078",
       "level": "core",
       "front": "When is equal allocation efficient for a fixed total sample?",
-      "back": "In the equal-variance, equal-cost comparisons illustrated here. Other costs, variances, or design requirements can justify unequal allocation.",
+      "back": "For comparisons assuming equal variances and a fixed total sample size. Unequal variances or other design requirements can justify unequal allocation.",
       "source": "https://katatam.github.io/sample-size-calculation/book/feasibility.html#increase-power"
     },
     {

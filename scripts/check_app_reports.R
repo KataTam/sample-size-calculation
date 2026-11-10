@@ -7,7 +7,9 @@ check_app_reports <- function() {
   lacks <- function(text, value) stopifnot(!any(grepl(value, text, fixed = TRUE)))
   app_server <- function(slug) {
     setwd(file.path(root, "apps", slug))
-    env <- new.env(parent = globalenv()); sys.source("app.R", envir = env); env$server
+    env <- new.env(parent = globalenv()); sys.source("app.R", envir = env)
+    if (slug == "power_explorer") stopifnot(!grepl("cost_base|cost_per_patient", as.character(env$ui)))
+    env$server
   }
   shiny::testServer(app_server("power_explorer"), {
     do.call(session$setInputs, lab_input_defaults())
@@ -17,6 +19,8 @@ check_app_reports <- function() {
       goal = "fixed", fixed_n = 17, dropout = .2, B = 100)
     has(report_paragraphs(), "17 per group; 34 total")
     has(report_paragraphs(), "22 per group; 44 total")
+    lacks(report_paragraphs(), "Cost at")
+    lacks(report_paragraphs(), "Costs in the entered currency")
     for (answer in c("My research question <kept exactly>", "My clinical rationale", "My burden assessment", "My evidence", "My conclusion")) has(report_paragraphs(), answer)
     has(report_sections()[["One simulated study"]], "No single-study simulation")
     session$setInputs(run_one = 1, run_many = 1)

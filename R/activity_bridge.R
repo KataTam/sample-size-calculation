@@ -57,8 +57,7 @@ lab_input_defaults <- function() list(
 study_input_defaults <- function() list(
   study_question = "", study_design = "two_groups", clinical_relevance = "",
   participant_burden = "", evidence_sources = "", eligible_monthly = 20,
-  consent_fraction = .7, recruitment_months = 12, cost_base = 0,
-  cost_per_patient = 0, justification = "")
+  consent_fraction = .7, recruitment_months = 12, justification = "")
 
 validate_lab_inputs <- function(values, complete = TRUE) {
   if (!is.list(values) || is.null(names(values)) || anyDuplicated(names(values)))
@@ -97,11 +96,13 @@ validate_lab_inputs <- function(values, complete = TRUE) {
 validate_study_inputs <- function(values, complete = TRUE) {
   if (!is.list(values) || is.null(names(values)) || anyDuplicated(names(values)))
     stop("Study details must be a named object.", call. = FALSE)
+  # Older saved plans may contain retired financial fields; ignore them on import.
+  values <- values[!names(values) %in% c("cost_base", "cost_per_patient")]
   defaults <- study_input_defaults()
   if (any(!names(values) %in% names(defaults))) stop("Unsupported study detail.", call. = FALSE)
   designs <- c("two_groups", "paired", "single_proportion", "observational", "diagnostic", "prediction", "other")
   limits <- list(eligible_monthly = c(0, 1e6), consent_fraction = c(0, 1),
-    recruitment_months = c(0, 1200), cost_base = c(0, 1e12), cost_per_patient = c(0, 1e9))
+    recruitment_months = c(0, 1200))
   for (name in names(values)) {
     value <- values[[name]]
     if (name %in% names(limits)) {

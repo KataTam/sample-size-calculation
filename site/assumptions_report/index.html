@@ -17,7 +17,7 @@
 <body>
   <header>
     <h1>Develop and justify your study plan</h1>
-    <p>Your study plan develops through the four core chapters. You can begin with your question, record decisions that need evidence, and return to complete the calculation and recruitment sections.</p>
+    <p>Your study plan develops through the four core chapters. One set of answers produces a concise sample size calculation report, followed by your supporting study plan.</p>
     <section id="resume-plan" hidden aria-label="Saved study plan">
       <p>A saved plan is available in this browser. You can resume it or start a new plan. Editing the title or starting point also resumes your saved answers.</p>
       <button id="resume-plan-button" type="button">Resume saved plan</button>
@@ -38,12 +38,12 @@
       <button id="accept-transfer" type="button">Add this result</button><button id="cancel-transfer" type="button">Cancel</button>
     </section>
     <div class="actions">
-      <button id="preview" type="button" aria-expanded="false" aria-controls="report-pane">Preview report</button>
-      <button id="save" type="button">Download report (PDF)</button>
-      <button id="save-word" type="button" class="secondary-action">Download editable report (Word)</button>
+      <button id="preview" type="button" aria-expanded="false" aria-controls="report-pane">Preview study plan</button>
+      <button id="save" type="button">Download study plan (PDF)</button>
+      <button id="save-word" type="button" class="secondary-action">Download editable study plan (Word)</button>
     </div>
     <div class="secondary-controls"><details id="file-actions"><summary>Help</summary>
-    <p class="note">Underlined questions have hover, keyboard, and tap help. “Suggested structure” offers a framework for your own study; “Example answer” illustrates the selected teaching case. Each section can be marked ready for review after its applicable questions are answered.</p>
+    <p class="note">Underlined questions have hover, keyboard, and tap help. “Suggested structure” offers a framework for your own study; “Example answer” illustrates the selected teaching case. Each section can be marked ready for review after its applicable questions are answered. The concise report uses your written question, outcome, design, assumptions, calculation and recruitment answers. Detailed evidence, alternatives and saved calculations appear in the supporting study plan.</p>
     <div class="actions">
       <button id="download-text" type="button">Download plain text</button>
     </div>
@@ -78,11 +78,11 @@
       </form>
     </section>
     <section id="report-pane" class="report-pane" aria-labelledby="report-title" hidden>
-      <div class="report-heading"><h2 id="report-title" tabindex="-1">Sample size calculation report</h2><p id="progress" role="status" aria-live="polite"></p></div>
+      <div class="report-heading"><h2 id="report-title" tabindex="-1">Study plan</h2><p id="progress" role="status" aria-live="polite"></p></div>
       <article id="report"></article>
-      <p class="note">The downloaded report includes unanswered items so you can see what remains to be decided.</p>
-      <div class="report-downloads"><button id="download" type="button">Download report (PDF)</button>
-        <button id="download-word" type="button" class="secondary-action">Download editable report (Word)</button></div>
+      <p class="note">Both parts update from your answers. The supporting study plan includes unresolved items and saved calculations.</p>
+      <div class="report-downloads"><button id="download" type="button">Download study plan (PDF)</button>
+        <button id="download-word" type="button" class="secondary-action">Download editable study plan (Word)</button></div>
     </section>
   </main>
   <footer id="guidance-credit">

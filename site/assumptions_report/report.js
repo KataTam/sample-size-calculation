@@ -33,7 +33,7 @@
     ['Recruitment and conclusion', [
       ['counts', 'Sample size needed or available for analysis', 'Your record should give the method, result, upward rounding, and per-group and total counts where applicable. Existing-data projects should explain eligibility, exclusions, and the available count.', 'The analyzable sample size and calculation are'],
       ['recruitment', 'Losses, missing data and recruitment', 'Your answer should justify loss assumptions and recruitment counts, assess possible missing-data bias, and document treatment changes already allowed for. Existing-data projects should describe completeness; uncertain assumptions need plausible alternatives.', 'The loss allowance, missing data and recruitment are'],
-      ['resources', 'Feasibility and resources', 'Screening and enrollment records should support your eligible numbers and consent estimate. Your answer should allow for time, costs, slower recruitment and site-opening delays. For unknown values, describe the evidence needed and who could provide it.', 'The recruitment feasibility and resources are'],
+      ['resources', 'Feasibility and resources', 'Screening and enrollment records should support your eligible numbers and consent estimate. Your answer should allow for time, slower recruitment and site-opening delays. For unknown values, describe the evidence needed and who could provide it.', 'The recruitment feasibility and resources are'],
       ['conclusion', 'Intended conclusion and limitations', 'Your conclusion should reflect the design, attainable power or precision, and sensitivity results. Unresolved assumptions and limits on interpretation should be explicit.', 'The intended conclusion and limitations are']
     ]]
   ];
@@ -137,7 +137,7 @@
         : pilot && binary ? '[Denominator] includes everyone eligible for the feasibility outcome. For retention, known departures count as outcomes; unknown retention status needs an allowance.'
         : single ? '[Recruitment count] allows for [nonresponse and missing measurements], supported by [evidence].'
         : '[Recruitment count] after allowing for [expected loss]%. [Treatment changes] are [already included or handled separately]; [analysis plan] addresses missing outcomes.',
-      resources: '[Eligible people per month] × [consent fraction] × [months] gives [expected recruitment], compared with [required count], [time], and [budget]. Unknown [input] needs evidence from [source or person]; [possible delays] need an allowance.',
+      resources: '[Eligible people per month] × [consent fraction] × [months] gives [expected recruitment], compared with [required count] and [available time]. Unknown [input] needs evidence from [source or person]; [possible delays] need an allowance.',
       conclusion: pilot ? '[Feasibility results] would support [proceed, amend, or stop] under [agreed criteria].'
         : 'The study could establish [finding] with [power or precision]. [Uncertain assumptions or design limitations] restrict the conclusion.'
     };
@@ -257,7 +257,7 @@
     const pane = document.getElementById('report-pane');
     pane.hidden = !show; document.body.classList.toggle('report-visible', show);
     preview.setAttribute('aria-expanded', String(show));
-    preview.textContent = show ? (wide.matches ? 'Hide report preview' : 'Back to questions') : 'Preview report';
+    preview.textContent = show ? (wide.matches ? 'Hide study plan preview' : 'Back to questions') : 'Preview study plan';
     if (focus && show) document.getElementById('report-title').focus();
     else if (focus) preview.focus();
     window.dispatchEvent(new Event('resize'));
@@ -287,6 +287,29 @@
     return true;
   }
   function notifyParent(type, extra = {}) { if (parent !== window) parent.postMessage({type: 'sample-size:' + type, app, ...extra}, location.origin); }
+  // Both parts are generated from the same answers. Never copy example hints
+  // or inferred values into the concise report, or keep a second editable draft.
+  function conciseParagraphs(value, wording) {
+    const sections = [
+      ['question', 'outcome_detail', 'design'],
+      ['scale', 'expected', 'clinical', 'planning', 'variation'],
+      ['analysis', 'power', 'precision', 'progression', 'counts', 'software'],
+      ['recruitment']
+    ];
+    const labels = {question:'', outcome_detail:'Primary outcome', design:'Design and allocation',
+      scale:'Effect scale', expected:'Expected difference', clinical:'Clinical threshold',
+      planning:'Target difference', variation:value.outcome==='binary'?'Event probabilities':'Standard deviation',
+      analysis:'Planned analysis', power:'Type I error probability and power',
+      precision:'Precision target', progression:'Progression criteria', counts:'Analyzable sample',
+      software:'Calculation procedure and software', recruitment:'Recruitment and losses'};
+    return sections.map(ids => ids.map(id => {
+      const field=fields.find(item=>item[0]===id);
+      if (!active(field,value) || !value[id].trim()) return '';
+      const answer=value[id].trim().replace(/\s+/g,' ');
+      const label=wording[id]?.[0] || labels[id];
+      return (label?label+': ':'')+answer+(/[.!?]["'\u201d\u2019)]?$/.test(answer)?'':'.');
+    }).filter(Boolean).join(' ')).filter(Boolean);
+  }
   function render(persist = true) {
     const value = snapshot(), article = document.getElementById('report'); article.replaceChildren();
     const single = value.study_type === 'single';
@@ -310,10 +333,22 @@
     const intro = document.createElement('p');
     const structure = {comparison: 'a two-group comparison', single: 'an estimate of one population percentage or mean', other: 'another design requiring a specified planning method'};
     intro.textContent = 'This study concerns ' + structure[value.study_type] + ' with a ' + value.outcome + ' outcome. Its planning goal is ' + goalText[value.goal] + '.';
-    reportLines = [intro.textContent];
+    const studyTitle=value.plan_title.trim();
+    if (studyTitle) {const title=document.createElement('h3');title.textContent=studyTitle;article.append(title);}
+    const concise=document.createElement('section');concise.id='calculation-summary';
+    const conciseHeading=document.createElement('h3');conciseHeading.textContent='Sample size calculation report';concise.append(conciseHeading);
+    const paragraphs=conciseParagraphs(value,wording);
+    for (const text of paragraphs) {const p=document.createElement('p');p.textContent=text;concise.append(p);}
+    if (!paragraphs.length) {const p=document.createElement('p');p.className='note';p.textContent='Your calculation report will appear here as you complete the study plan.';concise.append(p);}
+    const supporting=document.createElement('section');supporting.id='supporting-study-plan';
+    const supportingHeading=document.createElement('h3');supportingHeading.textContent='Supporting study plan';supporting.append(supportingHeading);
+    article.append(concise,supporting);
+    reportLines = [...(studyTitle?['Study: '+studyTitle]:[]), 'Sample size calculation report',
+      ...(paragraphs.length?paragraphs:['The sample size calculation report is not yet completed.']),
+      'Supporting study plan', intro.textContent];
     let completed = 0, required = 0;
     for (const [groupIndex, [title, definitions]] of groups.entries()) {
-      const heading = document.createElement('h3'); heading.textContent = title;
+      const heading = document.createElement('h4'); heading.textContent = title;
       const paragraphs = [];
       let groupCompleted = 0, groupRequired = 0;
       reportLines.push(title);
@@ -328,16 +363,16 @@
         else { paragraph.textContent = label + ': not yet specified.'; }
         reportLines.push(paragraph.textContent);
       }
-      if (paragraphs.length) article.append(heading, ...paragraphs);
+      if (paragraphs.length) supporting.append(heading, ...paragraphs);
       const summary = document.querySelector('#plan-section-' + groupIndex + ' > summary');
       let count = summary.querySelector('.section-progress');
       if (!count) { count = document.createElement('span'); count.className = 'section-progress'; summary.append(count); }
       count.textContent = `${groupCompleted} of ${groupRequired} answered`;
     }
-    if (completed) article.prepend(intro);
-    else { const empty = document.createElement('p'); empty.textContent = 'Your report will appear here as you answer the questions. You can leave decisions open and return to them later.'; article.append(empty); }
-    PlanWorkflow.decorate(value, article, reportLines, active);
-    PlanCalculationRecord.decorate(value, article, reportLines);
+    if (completed) supportingHeading.after(intro);
+    else { const empty = document.createElement('p'); empty.textContent = 'Your full answers, supporting evidence and saved calculations will appear here.'; supporting.append(empty); }
+    PlanWorkflow.decorate(value, supporting, reportLines, active);
+    PlanCalculationRecord.decorate(value, supporting, reportLines);
     const progress = document.getElementById('progress');
     const progressText = completed === required ? 'All ' + required + ' prompts answered. Your assumptions and calculations still need review.' : 'Draft: ' + completed + ' of ' + required + ' prompts answered.';
     if (progress.textContent !== progressText) progress.textContent = progressText;
@@ -376,9 +411,13 @@
   const escapeHTML = text => String(text).replace(/[&<>"']/g, c => ({'&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;'}[c]));
   function reportDocument() {
     const headings = new Set([...groups.map(group => group[0]), 'Section review', 'Prepared chronic pain calculation']);
-    const content = reportLines.map(line => headings.has(line) || line.startsWith('Saved calculation: ') ? '<h2>' + escapeHTML(line) + '</h2>' : '<p>' + escapeHTML(line) + '</p>').join('\n');
-    return '<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Sample size calculation report</title>' +
-      '<style>body{max-width:800px;margin:2rem auto;padding:0 1rem;font:17px/1.6 system-ui,sans-serif;color:#20343e}p{white-space:pre-wrap;overflow-wrap:anywhere}h2{margin-top:1.5em;font-size:1.2em}a{color:#006481}footer{border-top:1px solid #abc;margin-top:2rem;font-size:.9em}@media print{body{margin:0;max-width:none;font-size:11pt}h2{break-after:avoid}a{color:inherit}}</style></head><body><h1>Sample size calculation report</h1>' +
+    const content = reportLines.map(line => {
+      const tag=['Sample size calculation report','Supporting study plan'].includes(line)?'h2':
+        headings.has(line)||line.startsWith('Saved calculation: ')?'h3':'p';
+      return '<'+tag+'>'+escapeHTML(line)+'</'+tag+'>';
+    }).join('\n');
+    return '<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Study plan</title>' +
+      '<style>body{max-width:800px;margin:2rem auto;padding:0 1rem;font:17px/1.6 system-ui,sans-serif;color:#20343e}p{white-space:pre-wrap;overflow-wrap:anywhere}h2{margin-top:1.5em;font-size:1.2em}h3{font-size:1.05em}a{color:#006481}footer{border-top:1px solid #abc;margin-top:2rem;font-size:.9em}@media print{body{margin:0;max-width:none;font-size:11pt}h2,h3{break-after:avoid}a{color:inherit}}</style></head><body><h1>Study plan</h1>' +
       '<p>Generated ' + new Intl.DateTimeFormat('en-US', {dateStyle:'long'}).format(new Date()) + '</p>' +
       '<p>' + escapeHTML(document.getElementById('progress').textContent) + '</p>' + content +
       '<footer><p>This draft contains your entries and identifies unanswered decisions.</p>' +
@@ -406,7 +445,7 @@
     status.textContent = 'Work saved. Reopen this file here to continue editing.';
   });
   document.getElementById('download-text').addEventListener('click', () => {
-    const lines = ['Sample size calculation report', document.getElementById('progress').textContent, '', ...reportLines,
+    const lines = ['Study plan', document.getElementById('progress').textContent, '', ...reportLines,
       'Guidance: PICO (Richardson et al., 1995), https://doi.org/10.7326/ACPJC-1995-123-3-A12; SPIRIT 2025, https://www.consort-spirit.org/; DELTA² (Cook et al., 2018), https://doi.org/10.1136/bmj.k3750. Educational selection; a full protocol should use its complete design-specific guidance.',
       'Teaching materials: CC BY-SA 4.0, https://creativecommons.org/licenses/by-sa/4.0/. Software: MIT, https://opensource.org/license/mit.'];
     download(lines.join('\n\n'), 'text/plain;charset=utf-8', 'study-plan-report.txt'); status.textContent = 'Plain-text report downloaded.';

@@ -41,7 +41,7 @@
     if(!visible) return;
     const heading='Prepared chronic pain calculation';
     container.replaceChildren(node('summary','Example calculation and software'));
-    const section=document.createElement('section');section.append(node('h3',heading));
+    const section=document.createElement('section');section.append(node('h4',heading));
     const stamp='Calculated '+prepared.captured.slice(0,10)+'. This record uses the prepared 5% loss assumption. Your written answers remain separate.';
     for(const parent of [container,section]) {
       parent.append(node('p',stamp));

@@ -6,7 +6,7 @@
     question: {title:'Chapter 1: question and design', sections:[0], fields:['question','population','intervention','comparator','outcome_detail','design'], text:'Your first contribution is the research question and study design. Initial assumptions can remain provisional while you look for evidence.'},
     power: {title:'Chapter 2: power and interpretation', sections:[2,3], fields:['power','conclusion'], text:'Your plan should explain the chosen error probability and power, and what the study could establish under its assumptions.'},
     calculation: {title:'Chapter 3: calculation', sections:[1,2], fields:['expected','clinical','planning','variation','analysis','software','counts'], text:'Your calculation record should contain the inputs, method, analyzable sample size, and your justification. A calculator can add a selected result to this report.'},
-    recruitment: {title:'Chapter 4: recruitment and reporting', sections:[3], fields:['recruitment','sensitivity','resources','conclusion'], text:'Your final contribution is the recruitment target and its justification. You can then review the complete sample size calculation report and record supporting sensitivity analyses separately.'},
+    recruitment: {title:'Chapter 4: recruitment and reporting', sections:[3], fields:['recruitment','sensitivity','resources','conclusion'], text:'Your final contribution is the recruitment target and its justification. You can then review the concise sample size calculation report and its supporting study plan, generated from your existing answers.'},
     review: {title:'Review your complete study plan', sections:[], fields:[], text:'The review below identifies unresolved decisions and mismatches between saved calculations. Your reasoning and evidence still need your own review.'}
   };
   const read = (text, fallback) => { try {return JSON.parse(text || '')} catch (_) {return fallback} };
@@ -99,16 +99,15 @@
     const list=review.querySelector('ul');list.replaceChildren(...issues.map(text=>element('li',text)));
     if(!issues.length)list.append(element('li','All applicable answers are ready for your final review. Check the evidence, written values, and interpretation before submitting.'));
     review.querySelector('.review-note').textContent='Checks compare saved structured results. Numerical values in your written answers need your own review.';
-    const heading=element('h3',value.plan_title.trim()||'My study plan');article.prepend(heading);
+    const studyTitle=value.plan_title.trim()||'My study plan';
     document.querySelector('#plan-identity > summary').textContent=value.plan_title.trim()?'Study title and starting point: '+value.plan_title.trim():'Study title and starting point';
-    lines.unshift('Study: '+heading.textContent);
-    if(pending&&!document.getElementById('transfer-preview').hidden)document.querySelector('.transfer-title').textContent='Add '+pending.title+' to '+heading.textContent+'?';
+    if(pending&&!document.getElementById('transfer-preview').hidden)document.querySelector('.transfer-title').textContent='Add '+pending.title+' to '+studyTitle+'?';
     lines.push('Section review',...issues);
     const summary=element('p',`${readySections} of ${groups.length} sections marked ready for review.`);
     article.append(summary);lines.push(summary.textContent);
     const recordList=document.getElementById('saved-calculations');recordList.parentElement.hidden=records.length===0;recordList.replaceChildren();
     records.forEach((record,index)=>{
-      const section=element('section');section.append(element('h3',record.title));
+      const section=element('section');section.append(element('h4',record.title));
       const stamp='Saved '+new Date(record.captured||Date.now()).toLocaleString('en-US');
       section.append(element('p',stamp),...record.lines.map(line=>element('p',line)));
       const remove=element('button','Remove this saved result');remove.type='button';remove.addEventListener('click',()=>{const next=[...currentRecords];next.splice(index,1);form.elements.calculation_records.value=JSON.stringify(next);changed();});

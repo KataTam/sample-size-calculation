@@ -2,6 +2,7 @@ check_activity <- function() {
   source("R/activity_bridge.R", local = TRUE)
   source("R/teaching_cases.R", local = TRUE)
   expect_error <- function(code) stopifnot(inherits(tryCatch({ force(code); NULL }, error = identity), "error"))
+  stopifnot(!any(c("cost_base", "cost_per_patient") %in% names(study_input_defaults())))
   defaults <- lab_input_defaults()
   stopifnot(identical(validate_lab_inputs(defaults), defaults))
   expect_error(validate_lab_inputs(list(fixed_n = 12.5)))
@@ -12,7 +13,11 @@ check_activity <- function() {
   expect_error(validate_lab_inputs(list(expected_m = NA_real_)))
   expect_error(validate_lab_inputs(list(unrecognized = 1)))
   expect_error(validate_study_inputs(list(consent_fraction = 1.5)))
-  expect_error(validate_study_inputs(list(cost_per_patient = -1)))
+  expect_error(validate_study_inputs(list(recruitment_months = -1)))
+  # Retired inputs do not prevent learners reopening their earlier plans.
+  legacy <- validate_study_inputs(list(study_question = "Saved question", cost_base = 1000, cost_per_patient = 50))
+  stopifnot(legacy$study_question == "Saved question",
+    !any(c("cost_base", "cost_per_patient") %in% names(legacy)))
   for (x in teaching_cases()) if (x$app == "power_explorer") {
     values <- x$inputs[names(x$inputs) %in% names(defaults)]
     stopifnot(validate_lab_inputs(values)$outcome %in% c("means", "proportions"))
@@ -67,10 +72,11 @@ check_activity <- function() {
     stopifnot(grepl("Unknown teaching case", import_status()))
     session$setInputs(goal = "fixed", fixed_n = 31, reality = "custom", true_delta = 1,
       true_sd = 7, run_one = 1, eligible_monthly = 20, consent_fraction = .5,
-      recruitment_months = 10, cost_base = 1000, cost_per_patient = 50)
+      recruitment_months = 10)
     before <- one()
     stopifnot(planned()$n == 31, planned()$delta == 3, generating()$delta == 1,
-      feasibility()$recruits == 100, feasibility()$budget == 6000)
+      feasibility()$recruits == 100, feasibility()$balanced == 100,
+      feasibility()$expected_analysable == 90, !"budget" %in% names(feasibility()))
     session$setInputs(fixed_n = 40)
     stopifnot(identical(before, one()), grepl("Inputs changed", output$one_status))
     original_limit <- plot_limit()

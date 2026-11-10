@@ -203,20 +203,18 @@ ui <- fluidPage(
       activity_help("Your estimate should use screening records from all participating sites and count patients who meet the eligibility criteria. The app then applies the consent percentage. Slower recruitment and site-opening delays should inform your feasibility judgment.", for_input = "eligible_monthly"),
       p(class = "note", tags$a(href = "../book/feasibility.html#lasagnas-law", target = "_blank", rel = "noopener", "Lasagna's law: checking recruitment forecasts")),
       activity_help("The denominator is eligible people invited to participate. Prior recruitment records can support the percentage; losses after consent are handled separately.", for_input = "consent_fraction"),
-      fluidRow(column(4, numericInput("recruitment_months", "Months available for recruitment", 12, min = 0)),
-        column(4, numericInput("cost_base", "Fixed study costs (your currency)", 0, min = 0)),
-        column(4, numericInput("cost_per_patient", "Cost per recruited participant", 0, min = 0))),
+      numericInput("recruitment_months", "Months available for recruitment", 12, min = 0),
       activity_help("This is the enrollment period. Setup and final follow-up need additional time if they extend beyond recruitment.", for_input = "recruitment_months"),
       tableOutput("feasibility_table"),
-      p(class = "caption", "Table 7. Expected recruitment, analyzable counts and costs under the stated eligibility, consent and loss assumptions."),
-      activity_help("These scenarios describe expected recruitment and costs. Actual numbers can vary; your assessment should account for other exclusions and costs where relevant."),
+      p(class = "caption", "Table 7. Expected recruitment and analyzable counts under the stated eligibility, consent and loss assumptions."),
+      activity_help("These estimates depend on the eligibility, consent, recruitment-period and loss assumptions. Screening records and possible delays should inform your feasibility judgment."),
       actionButton("use_feasible_cap", "Use expected recruitment as the lab limit"),
       p(tags$a(href = "../book/appendix.html#own-study", target = "_blank", rel = "noopener", "Read the study justification guidance"))),
     tabPanel("Report", value = "Justify and communicate", uiOutput("plan_transfer"), h3(id = "report-question-heading", "Explain your decision"),
       activity_text_input("justification", "What study plan would you recommend, and why?",
         "The example updates with the selected case and current calculation inputs.",
         "Your recommendation should give analyzable and recruitment counts, supporting evidence, and the effect of plausible alternative assumptions. It should identify remaining limitations.", rows = 8),
-      p(id = "study-plan-guidance", "A structured ", tags$a(href = "../assumptions_report/", "study-plan report"), " brings these decisions together using PICO, selected SPIRIT 2025 items and DELTA² guidance."),
+      p(id = "study-plan-guidance", "A structured ", tags$a(href = "../assumptions_report/", "study plan"), " brings these decisions together using PICO, selected SPIRIT 2025 items and DELTA² guidance."),
       uiOutput("report_preview"), activity_report_downloads("download_plan"),
       activity_details("Save work for later",
       downloadButton("download_plan_json", "Save work for later"),
@@ -408,19 +406,17 @@ server <- function(input, output, session) {
     x <- study_details()
     recruits <- floor(x$eligible_monthly * x$consent_fraction * x$recruitment_months)
     list(recruits = recruits, balanced = 2 * floor(recruits / 2),
-      expected_analysable = 2 * floor(floor(recruits / 2) * (1 - input$dropout)),
-      budget = x$cost_base + recruits * x$cost_per_patient)
+      expected_analysable = 2 * floor(floor(recruits / 2) * (1 - input$dropout)))
   })
   output$feasibility_table <- renderTable({
     x <- feasibility()
     if (study_details()$study_design != "two_groups") return(data.frame(
-      Item = c("Expected recruitment: all participants", "Cost at expected recruitment"), Value = c(x$recruits, x$budget)))
+      Item = "Expected recruitment: all participants", Value = x$recruits))
     required <- 2 * adjust_for_dropout(planned()$n, input$dropout)
-    details <- study_details()
-    data.frame(Item = c("Expected recruitment: all participants", "Available under equal allocation", "Expected participants for analysis, both groups", "Cost at expected recruitment",
-      "Recruitment required for the current plan", "Cost at required recruitment", "Expected recruitment covers the current plan"),
-      Value = c(x$recruits, x$balanced, x$expected_analysable, x$budget, required,
-        details$cost_base + required * details$cost_per_patient, if (x$balanced >= required) "Yes" else "No"))
+    data.frame(Item = c("Expected recruitment: all participants", "Available under equal allocation", "Expected participants for analysis, both groups",
+      "Recruitment required for the current plan", "Expected recruitment covers the current plan"),
+      Value = c(x$recruits, x$balanced, x$expected_analysable, required,
+        if (x$balanced >= required) "Yes" else "No"))
   })
   observeEvent(input$use_feasible_cap, handle({
     x <- feasibility()
@@ -789,9 +785,7 @@ server <- function(input, output, session) {
         if (compatible) paste0("Under equal allocation: ", capacity$balanced, " recruits and approximately ", capacity$expected_analysable,
           " participants available for analysis. Selected recruitment limit: ", input$recruit_cap, " in total. Required recruitment ",
           if (2*recruit > capacity$balanced) "exceeds" else "fits within", " the expected recruitment capacity and ",
-          if (2*recruit > input$recruit_cap) "exceeds" else "fits within", " the selected limit."),
-        paste0("Costs in the entered currency units: fixed ", details$cost_base, "; per recruit ", details$cost_per_patient,
-          "; total at expected recruitment ", capacity$budget, ".")))
+          if (2*recruit > input$recruit_cap) "exceeds" else "fits within", " the selected limit.")))
     if (compatible) {
       meta <- snapshot(); g <- meta$generating
       sections[["Simulation assumptions"]] <- c(
@@ -810,7 +804,7 @@ server <- function(input, output, session) {
     sections
   })
   report_paragraphs <- reactive(unlist(report_sections(), use.names = FALSE))
-  report_heading <- reactive(if (pain_report()) "Pain relief: simulation report" else "Study-plan report")
+  report_heading <- reactive(if (pain_report()) "Pain relief: simulation report" else "Sample size reasoning lab report")
   report_intro <- reactive(if (pain_report())
     "This report summarizes the population assumptions, simulated results, and your reflection on how results vary between studies. The results come from Simulate one study and Simulate many studies; rerunning either replaces its previous results."
     else "This report records the current study plan, matching simulation results, and your written justification.")

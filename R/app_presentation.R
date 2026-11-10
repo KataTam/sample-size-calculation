@@ -81,7 +81,7 @@ app_sampling_explanation <- function(x) paste0(
   "More simulation repetitions stabilize the summary of repeated studies; each study still has the same sample size and power.")
 
 # The introductory pain activity reports the experiment the learner explored.
-# Unfilled research-planning fields belong to the full study-plan report.
+# Unfilled research-planning fields belong to the full study plan.
 app_pain_simulation_report <- function(current, one, many, details) {
   x <- current$generating
   effect <- function(v) paste0(round(100 * v, 2), " percentage points")
@@ -167,6 +167,6 @@ app_plan_transfer <- function(title, slug, kind, facts, lines) {
     lines = unname(c(unlist(lines, use.names = FALSE), paste("Software: R", getRversion(), "; stats", utils::packageVersion("stats"), "; Shiny", utils::packageVersion("shiny"), "; source version:", version))))
   shiny::tags$div(class = "plan-transfer",
     shiny::tags$div(class = "plan-transfer-data", hidden = NA, jsonlite::toJSON(record, auto_unbox = TRUE, null = "null")),
-    shiny::tags$button(type = "button", class = "btn btn-primary plan-transfer-button", "Add this calculation to my report"),
+    shiny::tags$button(type = "button", class = "btn btn-primary plan-transfer-button", "Add this calculation to my study plan"),
     shiny::tags$p(role = "status", `aria-live` = "polite"))
 }

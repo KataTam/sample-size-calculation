@@ -2,7 +2,7 @@
 
 ## Written assumptions activity — 2 October 2026
 
-- Added a study-plan report activity with live text output, shared pain-relief example, browser persistence, saved-entry files and report downloads.
+- Added a study-plan activity with live text output, shared pain-relief example, browser persistence, saved-entry files and report downloads.
 - Tightened the assumptions checklist and aligned its effect, percentage, power, precision and recruitment terminology with the tutorial.
 - Added the approved Codex disclosure and versioned software reference to References.
 - Removed the public writing-style notes and statements that coding or programming is not required. Kept the printable PDF unchanged.

@@ -11,7 +11,7 @@ Each learner can attempt a small selection of tasks, with observation or brief t
 | Task | Evidence to observe | Time / assistance / difficulty |
 |---|---|---|
 | Find the Core route and open its matching activity | Can the learner locate the next relevant material and explain the activity's purpose? | |
-| Begin a study-plan report | Can they distinguish known assumptions from missing evidence and save their answers? | |
+| Begin a study plan | Can they distinguish known assumptions from missing evidence and save their answers? | |
 | Predict and compare 50 versus 80 patients per group | Can they identify fixed population assumptions and changing sample estimates? | |
 | Complete one discharge calculation | Are the treatment percentage, rounding, per-group count and total clear? | |
 | Justify an expected loss percentage | Do they seek comparable evidence and acknowledge uncertainty? | |

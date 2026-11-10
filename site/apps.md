@@ -6,7 +6,7 @@ Apps are interactive software. Activities provide questions and exercises to hel
 
 ## Core apps
 
-- [Study-plan report](assumptions_report/): develop a PICO question and justify the sample size, evidence and recruitment plan in a readable, reopenable report. [Activity: Develop and justify your study plan](study/?activity=assumptions_report).
+- [Study plan](assumptions_report/): develop a PICO question and justify the calculation and recruitment plan. One set of answers generates a concise sample size calculation report followed by the supporting study plan. [Activity: Develop and justify your study plan](study/?activity=assumptions_report).
 
 - [Sample size reasoning lab](power_explorer/?activity=pain_one_many): simulate patient outcomes and compare results across studies. [Activity: Chronic pain: one study and many studies](study/?activity=pain_one_many).
 
@@ -28,9 +28,9 @@ Apps are interactive software. Activities provide questions and exercises to hel
 
 - [Study-design questionnaire](design_questionnaire/): consider designs suited to your research question. [Activity: Choosing a study design](study/?activity=design_questionnaire).
 
-Your [study-plan report](assumptions_report/?stage=question) develops through the core chapters. The Report view in each app offers “Add this calculation to my report.” A preview lets you attach the selected result and its inputs; your written answers remain in place. “Review before downloading” identifies unresolved decisions and checks attached calculation and recruitment counts.
+Your [study plan](assumptions_report/?stage=question) develops through the core chapters. The Report view in each app offers “Add this calculation to my study plan.” A preview lets you attach the selected result and its inputs; your written answers remain in place. “Review before downloading” identifies unresolved decisions and checks attached calculation and recruitment counts.
 
-The calculation apps use four views: “Overview” for the main result, “Explore assumptions” for graphs and comparisons, “Report” for a readable summary of current inputs and results, and “Methods and references” for calculation details. Reports download as PDF by default, with an editable Word alternative. The reasoning lab also has simulation and “My study” views; the study-plan report follows four writing stages. In the lab and study-plan form, separate “Save work for later” controls preserve settings and answers for reopening.
+The calculation apps use four views: “Overview” for the main result, “Explore assumptions” for graphs and comparisons, “Report” for a readable summary of current inputs and results, and “Methods and references” for calculation details. Reports download as PDF by default, with an editable Word alternative. The reasoning lab also has simulation and “My study” views; the study plan follows four writing stages. In the lab and study-plan form, separate “Save work for later” controls preserve settings and answers for reopening.
 
 Each slider has an editable number beside it. Percentages use the displayed percentage scale: entering 5 means 5%. “Study settings” collapses in a narrow panel to leave room for the result. The introductory pain activity starts with its simulation, report and methods views; “Additional calculations and simulations” reveals the remaining views.
 
