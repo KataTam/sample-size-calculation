@@ -41,9 +41,10 @@ apply_sampling_inputs <- function(session, values) {
 }
 
 ui <- fluidPage(
-  tags$head(tags$script(HTML(activity_bridge_script("sampling_distributions"))), tags$script(HTML(activity_download_script()))),
+  tags$head(tags$script(HTML(activity_bridge_script("sampling_distributions"))), tags$script(HTML(activity_download_script())),
+    tags$link(rel = "stylesheet", href = "boundary-drag.css"), tags$script(src = "boundary-drag.js", defer = NA)),
   titlePanel("Error probabilities and power", windowTitle = "Error probabilities and power"),
-  activity_description(p(class = "app-intro", "The graphs show false-positive and false-negative probabilities and power for a test of one population mean. You can see how power changes with sample size and the assumed true difference.")),
+  activity_description(p(class = "app-intro", "The graphs show false-positive and false-negative probabilities and power for a test of one population mean. Moving the rejection boundary changes these probabilities; changing sample size or the assumed true difference changes power.")),
   sidebarLayout(sidebarPanel(width = 4,
     app_input_group("Study assumptions", actionButton("load_case", "Restore the blood pressure example"),
       numericInput("mu0", "Mean under the null hypothesis (mmHg)", 120),
@@ -54,15 +55,19 @@ ui <- fluidPage(
       activity_help("This is the sample size of each study. Larger samples narrow the distributions of sample means; their effect on power also depends on the true difference and test direction.", for_input = "n"),
       sliderInput("sigma", "Known population SD (mmHg)", .1, 100, 15, step = .1),
       activity_help("This describes variation between individual measurements. The app treats it as known; the spread of sample means is SD divided by the square root of sample size.", for_input = "sigma")),
-    app_input_group("Statistical settings", collapsed = TRUE, percent_slider("alpha", "Type I error probability (%)", .001, .20, .05, step = .001),
+    app_input_group("Statistical settings", collapsed = TRUE, percent_slider("alpha", "Type I error probability (%)", .001, .20, .05, step = .0001),
       activity_help("This sets the shaded false-positive area under the null distribution. Reducing it makes rejection harder and lowers power at the same sample size and true difference.", for_input = "alpha"),
       selectInput("sidedness", "Direction chosen before analysis", c("Greater than the null (one-sided)" = "greater", "Less than the null (one-sided)" = "less", "Either direction (two-sided)" = "two.sided")),
       activity_help("A two-sided test can reject in either direction. A one-sided choice should follow the prespecified question; a true difference in the opposite direction can give very low power.", for_input = "sidedness"))),
   mainPanel(width = 8, textOutput("bridge_status"), tabsetPanel(id = "sampling_view",
     tabPanel("Overview", uiOutput("overview_metrics"),
-      app_overview(tagList(plotOutput("distributions", height = "560px"), p(class = "caption", "Figure. Sample-mean distributions under the null and specified alternative. Shaded regions represent false positives, false negatives and detected differences.")), textOutput("explanation")),
+      app_overview(tagList(p(id = "boundary-instructions", class = "app-note", "You can drag a dotted boundary in either graph to change the rejection rule. Both graphs and the probabilities update together. For a two-sided test, the boundaries move symmetrically."),
+        tags$div(class = "boundary-explorer", plotOutput("distributions", height = "560px"),
+          tags$div(id = "boundary-controls", class = "boundary-controls")),
+        p(class = "caption", "Figure. Sample-mean distributions under the null and specified alternative. Shaded regions represent false positives, false negatives and detected differences.")), textOutput("explanation")),
       activity_details("Current numerical results", tableOutput("operating_table")),
-      activity_details("Help with the shaded areas", p("Type I error probability describes false positives under the null. Type II error probability describes false negatives at the specified alternative. Power is the corresponding true-positive probability. The two panels refer to different population assumptions."))),
+      activity_details("Help with the shaded areas", p("Type I error probability describes false positives under the null. Type II error probability describes false negatives at the specified alternative. Power is the corresponding true-positive probability. The two panels refer to different population assumptions."),
+        p(id = "boundary-keyboard-help", "The boundary handles also support the Left and Right arrow keys; Shift takes larger steps. Home and End move to the permitted limits. The Type I error probability slider provides the same control, from 0.1% to 20%."))),
     tabPanel("Explore assumptions", h3("Power across sample sizes"),
       p("The curve varies sample size while keeping population means, SD, test direction and Type I error probability fixed."),
       plotOutput("power_curve", height = "350px"), p(class = "caption", "Figure. Power at the specified alternative; the point marks your current sample size."),
@@ -103,6 +108,14 @@ server <- function(input, output, session) {
   observeEvent(input$bridge_error, bridge_status(input$bridge_error))
   observe({ session$sendCustomMessage("sample-size-state", c(snapshot(), list(case_id = "alpha_beta"))) })
   operating <- reactive(safe(do.call(normal_sampling_operating_characteristics, snapshot())))
+  boundary_context <- reactive(snapshot()[c("mu0", "mu1", "sigma", "n", "sidedness")])
+  observeEvent(input$boundary_drag, {
+    request <- input$boundary_drag
+    # Ignore a gesture sent from a plot that predates a reset or changed assumptions.
+    if (!is.list(request) || !isTRUE(all.equal(request$context, boundary_context(), check.attributes = FALSE))) return()
+    alpha <- tryCatch(normal_alpha_from_boundary(operating(), request$value, request$side), error = function(e) NULL)
+    if (!is.null(alpha)) updateSliderInput(session, "alpha", value = alpha)
+  })
   model_answers <- reactive(list(interpretation = sampling_model_answer(operating())))
   activity_model_answers(session, model_answers, "interpretation")
   observe({
@@ -116,7 +129,19 @@ server <- function(input, output, session) {
       interpretation = list(help = paste("Your explanation should connect the power curve to the shaded detection area, with population means, SD, and test settings held fixed.", direction))))
   })
   output$bridge_status <- renderText(bridge_status())
-  output$distributions <- renderPlot(plot_sample_mean_distributions(operating()), res = 96,
+  output$distributions <- renderPlot({
+    x <- operating()
+    panels <- plot_sample_mean_distributions(x, interactive = TRUE)
+    tails <- if (x$sidedness == "two.sided") 2 else 1
+    distances <- qnorm(1 - c(.20, .001) / tails) * x$se
+    sides <- switch(x$sidedness, greater = "upper", less = "lower", two.sided = c("lower", "upper"))
+    boundaries <- lapply(sides, function(side) {
+      limits <- sort(x$mu0 + if (side == "upper") distances else -distances)
+      list(side = side, value = x[[side]], min = limits[1], max = limits[2])
+    })
+    session$sendCustomMessage("sampling-boundaries", list(panels = panels, boundaries = boundaries,
+      context = boundary_context(), alpha = x$type1, power = x$power, se = x$se))
+  }, res = 96, execOnResize = TRUE,
     alt = "Distributions of the sample mean under the null and specified alternative. Rejection tails under the null show Type I error probability; the non-rejection region under the alternative shows Type II error probability. Values and boundaries are listed below.")
   output$operating_table <- renderTable({
     x <- operating()

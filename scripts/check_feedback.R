@@ -101,6 +101,18 @@ check_feedback_servers <- function() {
   root <- getwd(); on.exit(setwd(root))
   setwd(file.path(root,"apps/prevalence_precision"))
   app <- new.env(parent=globalenv()); sys.source("app.R",envir=app)
+  # Dragging is the inverse of choosing alpha, with equal tails for two-sided tests.
+  for (direction in c("greater", "less", "two.sided")) {
+    for (alpha in c(.001, .05, .20)) {
+      x <- normal_sampling_operating_characteristics(alpha=alpha,sidedness=direction)
+      sides <- switch(direction, greater="upper", less="lower", two.sided=c("lower","upper"))
+      for (side in sides) stopifnot(abs(normal_alpha_from_boundary(x,x[[side]],side)-alpha)<1e-10)
+    }
+  }
+  x <- normal_sampling_operating_characteristics()
+  stopifnot(normal_alpha_from_boundary(x,1e6,"upper")==.001,
+    normal_alpha_from_boundary(x,-1e6,"upper")==.20,
+    inherits(try(normal_alpha_from_boundary(x,125,"lower"),silent=TRUE),"try-error"))
   shiny::testServer(app$server, {
     do.call(session$setInputs,app$precision_defaults())
     session$setInputs(simulate=0,case_id="prevalence",justification="A hypothetical survey.")

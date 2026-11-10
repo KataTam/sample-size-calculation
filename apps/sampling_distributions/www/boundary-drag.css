@@ -1,0 +1,13 @@
+/* Original software: MIT. Handles sit over the R plot's measured coordinates. */
+.boundary-explorer { position: relative; }
+.boundary-controls { position: absolute; inset: 0; pointer-events: none; }
+.boundary-handle { position: absolute; width: 44px; min-height: 44px; transform: translateX(-50%); cursor: ew-resize; touch-action: none; pointer-events: auto; outline: none; }
+.boundary-handle::before { content: ""; position: absolute; left: 21px; top: 0; bottom: 0; border-left: 2px dashed #415663; }
+.boundary-grip { position: absolute; top: 5px; left: 5px; width: 34px; height: 30px; display: grid; place-items: center; background: #e0edfa; color: #163e5f; border: 2px solid #245e90; border-radius: 6px; font: 22px/1 system-ui, sans-serif; }
+.boundary-handle:hover .boundary-grip, .boundary-handle.dragging .boundary-grip { background: #b9d8f4; }
+.boundary-handle:focus-visible .boundary-grip { outline: 3px solid #713d8f; outline-offset: 3px; }
+@media (forced-colors: active) {
+  .boundary-grip { color: ButtonText; background: ButtonFace; border-color: ButtonText; }
+  .boundary-handle::before { border-color: CanvasText; }
+  .boundary-handle:focus-visible .boundary-grip { outline-color: Highlight; }
+}

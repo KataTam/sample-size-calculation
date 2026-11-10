@@ -62,7 +62,7 @@ Purpose: see why sample estimates differ from population values, interpret the u
 Purpose: connect false positives, false negatives and power with the distributions that underlie repeated-study behavior. The app calculates the shaded areas from the normal distribution.
 
 1. The example compares a null mean of 120 with an alternative mean of 125 mmHg, known population SD 15 and 25 independent observations.
-2. You can locate the rejection boundary and the shaded false-positive area under the null distribution.
+2. You can drag a dotted rejection boundary in either graph and watch the shaded areas and probabilities update together. For a two-sided test, both boundaries move symmetrically. The handles support Left/Right arrow keys, and the Type I error probability slider provides the same control.
 3. Under the alternative distribution, the non-rejection area represents false negatives and the rejection area represents power.
 4. Increasing the sample size while keeping the means and SD fixed narrows both distributions of the sample mean. You can explain the resulting change in power without claiming that patients have become less variable.
 5. Comparing one-sided and two-sided rules illustrates their consequences; the scientific question should determine the rule before data collection. This one-sample known-SD model differs from the two-arm trials elsewhere.

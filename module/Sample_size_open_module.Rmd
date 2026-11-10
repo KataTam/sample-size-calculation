@@ -1908,7 +1908,7 @@ plot_sample_mean_distributions(sampling_example)
 
 Here the critical mean is about 124.9 mmHg and power is about 51%. Repeating the study at the specified alternative would produce a mean above that threshold about half the time.
 
-[Activity: Explore Type I and Type II error probabilities and power](https://katatam.github.io/sample-size-calculation/study/?activity=alpha_beta) connects sample size to the areas representing false positives, false negatives and power.
+[Activity: Explore Type I and Type II error probabilities and power](https://katatam.github.io/sample-size-calculation/study/?activity=alpha_beta) lets you move a rejection boundary and see how false positives, false negatives and power change. You can also examine the effect of sample size.
 
 These areas are calculated directly from a one-sample normal model with a known population SD.
 

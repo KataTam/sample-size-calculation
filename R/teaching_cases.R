@@ -80,7 +80,7 @@ teaching_cases <- function() {
         anticipated_p = .80, full_width = .20, confidence = .95, unknown_p = FALSE,
         fixed_n = 40, dropout = 0, seed = 20260943), app = "prevalence_precision"),
     alpha_beta = case("alpha_beta", "Blood pressure: Type I error probability, Type II error probability and power",
-      "The graphs show false positives, false negatives and power for one population mean with a known SD. You can increase sample size while holding both means and the SD fixed, then compare one-sided and two-sided rules. The shaded areas are calculated from the normal model.",
+      "The graphs show false positives, false negatives and power for one population mean with a known SD. You can drag a rejection boundary to change the shaded areas, then explore sample size and one-sided or two-sided rules. The areas are calculated from the normal model.",
       "alpha-beta", list(outcome = "mean_one_sample", goal = "testing", mu0 = 120,
         mu1 = 125, sigma = 15, n = 25, alpha = .05, sidedness = "greater"),
       app = "sampling_distributions")

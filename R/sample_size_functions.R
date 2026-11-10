@@ -496,13 +496,26 @@ normal_sampling_operating_characteristics <- function(mu0 = 120, mu1 = 125,
     method = "Normal sample mean; independent observations; known population SD")
 }
 
-plot_sample_mean_distributions <- function(x) {
+# Convert a dragged rejection boundary back to the probability under the null.
+# A two-sided test keeps equal tails, so moving either boundary moves both.
+normal_alpha_from_boundary <- function(x, boundary, side) {
+  check_scalar(boundary, "Rejection boundary")
+  allowed <- switch(x$sidedness, greater = "upper", less = "lower", two.sided = c("lower", "upper"))
+  if (length(side) != 1 || !side %in% allowed) stop("Invalid rejection boundary.", call. = FALSE)
+  tail <- if (side == "upper") pnorm(boundary, x$mu0, x$se, lower.tail = FALSE)
+          else pnorm(boundary, x$mu0, x$se)
+  # Match the app's supported range and slider resolution.
+  round(max(.001, min(.20, tail * if (x$sidedness == "two.sided") 2 else 1)), 4)
+}
+
+plot_sample_mean_distributions <- function(x, interactive = FALSE) {
   old_par <- par(no.readonly = TRUE)
   on.exit(par(old_par), add = TRUE)
   par(mfrow = c(2, 1), mar = c(3.4, 3.8, 4.8, 1), mgp = c(2.2, .6, 0),
     ps = if (dev.size("in")[1] < 5.5) 11 else 13, cex = 1, cex.axis = .9, cex.lab = 1,
     col.axis = "#415663", col.lab = "#20343e", fg = "#9cb5c7", bty = "l")
-  limits <- range(c(x$mu0, x$mu1, x$critical)) + c(-4.5, 4.5) * x$se
+  # Keep the horizontal scale fixed while a reader drags the boundary.
+  limits <- range(c(x$mu0, x$mu1, if (!interactive) x$critical)) + c(-4.5, 4.5) * x$se
   grid <- seq(limits[1], limits[2], length.out = 1200)
   ymax <- dnorm(x$mu0, x$mu0, x$se) * 1.12
   shade <- function(from, to, mean, color) {
@@ -517,6 +530,12 @@ plot_sample_mean_distributions <- function(x) {
     abline(h = axTicks(2), col = "#e4ebef", lwd = .8)
     mtext(title, side=3, line=3.2, adj=0, cex=.95, col="#20343e")
   }
+  plot_region <- function() {
+    fig <- par("fig"); plt <- par("plt"); usr <- par("usr")
+    list(left = fig[1] + diff(fig[1:2]) * plt[1], right = fig[1] + diff(fig[1:2]) * plt[2],
+      top = 1 - (fig[3] + diff(fig[3:4]) * plt[4]), bottom = 1 - (fig[3] + diff(fig[3:4]) * plt[3]),
+      xmin = usr[1], xmax = usr[2])
+  }
   boundary <- switch(x$sidedness,
     greater = paste0("Reject above ", round(x$upper,2)), less = paste0("Reject below ",round(x$lower,2)),
     two.sided = paste0("Reject below ",round(x$lower,2)," or above ",round(x$upper,2)))
@@ -526,6 +545,7 @@ plot_sample_mean_distributions <- function(x) {
   abline(v = x$critical, col = "#415663", lty = 3)
   mtext(paste0("False positives (shaded): ", round(100*x$type1,1), "%"), side=3, line=1.8, adj=0, cex=.9, col="#8d3b1e")
   mtext(paste0("Dotted boundary: ",boundary), side=3, line=.4, adj=0, cex=.85, col="#415663")
+  null_region <- plot_region()
   panel(x$mu1, paste0("Specified population mean ", x$mu1, "; n = ", x$n))
   shade(x$lower, x$upper, x$mu1, "#d5c4eb")
   shade(-Inf, x$lower, x$mu1, "#a7d7cc"); shade(x$upper, Inf, x$mu1, "#a7d7cc")
@@ -535,6 +555,7 @@ plot_sample_mean_distributions <- function(x) {
     side=3, line=1.8, adj=0, cex=.9, col="#67448c")
   mtext(paste0(if(x$mu0==x$mu1) "False positives" else "Power", " (rejection area): ", round(100*x$power,1), "%"),
     side=3, line=.4, adj=0, cex=.9, col="#176675")
+  invisible(list(null_region, plot_region()))
 }
 
 
