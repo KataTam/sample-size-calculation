@@ -9,9 +9,28 @@
   const fraction = (value, panel) => panel.left + (value - panel.xmin) / (panel.xmax - panel.xmin) * (panel.right - panel.left);
   const boundary = side => state.boundaries.find(item => item.side === side);
 
+  function alphaFor(value, side) {
+    const z = (value - state.context.mu0) / state.se * (side === 'upper' ? 1 : -1);
+    // R supplies descending quantiles at the midpoints between slider settings.
+    let lo = 0, hi = state.alpha_breaks.length;
+    while (lo < hi) {
+      const mid = (lo + hi) >>> 1;
+      if (state.alpha_breaks[mid] > z) lo = mid + 1;
+      else hi = mid;
+    }
+    return Math.round((.001 + lo * .0001) * 10000) / 10000;
+  }
+
   function flush() {
     clearTimeout(timer); timer = null;
-    if (pending && window.Shiny) Shiny.setInputValue('boundary_drag', pending, {priority: 'event'});
+    if (pending && window.Shiny) {
+      const alpha = alphaFor(pending.value, pending.side);
+      // Update the real input directly, avoiding delayed server-to-slider echoes.
+      window.jQuery('#alpha').data('ionRangeSlider').update({from: alpha});
+      const number = document.getElementById('alpha-number');
+      if (number) number.value = Math.round(alpha * 10000) / 100;
+      Shiny.setInputValue('alpha', alpha, {priority: 'event'});
+    }
     pending = null;
   }
   function queue(value, side, immediate = false) {

@@ -4,11 +4,11 @@ const assert=require('node:assert/strict'),fs=require('node:fs');
 const base=(process.argv[2]||'http://127.0.0.1:8769').replace(/\/$/,'');
 (async()=>{
  const browser=await chromium.launch({headless:true,...(process.platform==='win32'?{channel:'msedge'}:{})});
+ let page,frame;
  try {
   fs.mkdirSync('build/boundary-drag',{recursive:true});
-  const page=await browser.newPage({viewport:{width:1600,height:1100}});
+  page=await browser.newPage({viewport:{width:1600,height:1100}});
   await page.goto(base+'/study/?activity=alpha_beta');
-  let frame;
   for(let i=0;i<150;i++){
    for(const candidate of page.frames()) if(await candidate.locator('#boundary-controls').count()) frame=candidate;
    if(frame) break;
@@ -36,6 +36,21 @@ const base=(process.argv[2]||'http://127.0.0.1:8769').replace(/\/$/,'');
    await frame.waitForFunction(()=>Math.abs(Number(document.querySelector('#boundary-controls').dataset.alpha)-.05)<1e-10 && document.querySelectorAll('.boundary-handle').length===2);
    await settled();
   };
+  const setAlpha=async(value)=>{
+   await frame.evaluate(value=>{
+    const input=window.jQuery('#alpha');
+    input.data('ionRangeSlider').update({from:value});
+    input.trigger('change');
+   },value);
+   await frame.waitForFunction(value=>Math.abs(Number(document.querySelector('#boundary-controls').dataset.alpha)-value)<1e-10,value);
+   await settled();
+  };
+  const direction=async(value,count)=>{
+   await frame.evaluate(value=>document.getElementById('sidedness').selectize.setValue(value),value);
+   await frame.waitForFunction(({value,count})=>Shiny.shinyapp.$inputValues.sidedness===value &&
+    document.querySelectorAll('.boundary-handle').length===count,{value,count});
+   await settled();
+  };
   const drag=async(locator,dx)=>{
    await settled();
    await locator.locator('.boundary-grip').scrollIntoViewIfNeeded();
@@ -57,12 +72,11 @@ const base=(process.argv[2]||'http://127.0.0.1:8769').replace(/\/$/,'');
   await frame.locator('#report_preview').filter({hasText:'Type I error probability: 20%'}).waitFor();
   console.log('Mouse, keyboard limits and current report passed.');
   await frame.locator('a[data-value="Overview"]').click();
-  await reset();
+  await setAlpha(.05);
   await drag(handle('upper',1),30);
   await frame.waitForFunction(()=>Number(document.querySelector('#boundary-controls').dataset.alpha)<.05);
-  await reset();
-  await frame.evaluate(()=>document.getElementById('sidedness').selectize.setValue('two.sided'));
-  await frame.waitForFunction(()=>document.querySelectorAll('.boundary-handle').length===4);
+  await setAlpha(.05);
+  await direction('two.sided',4);
   await drag(handle('lower'),25);
   await frame.waitForFunction(()=>Number(document.querySelector('#boundary-controls').dataset.alpha)>.05);
   const lower=Number(await handle('lower').getAttribute('aria-valuenow'));
@@ -72,11 +86,11 @@ const base=(process.argv[2]||'http://127.0.0.1:8769').replace(/\/$/,'');
   console.log('Both panels and two-sided symmetry passed.');
   await settled();
   await page.screenshot({path:'build/boundary-drag/two-sided.png'});
-  await frame.evaluate(()=>document.getElementById('sidedness').selectize.setValue('less'));
-  await frame.waitForFunction(()=>document.querySelectorAll('.boundary-handle').length===2 && document.querySelector('.boundary-handle').dataset.side==='lower');
+  await direction('less',2);
   await handle('lower').press('End');
   await frame.waitForFunction(()=>Math.abs(Number(document.querySelector('#boundary-controls').dataset.alpha)-.20)<1e-10);
-  await reset();
+  await direction('greater',2);
+  await setAlpha(.05);
   await page.setViewportSize({width:720,height:1100});
   await frame.locator('#distributions').scrollIntoViewIfNeeded();
   await page.waitForTimeout(1200);
@@ -97,5 +111,12 @@ const base=(process.argv[2]||'http://127.0.0.1:8769').replace(/\/$/,'');
   assert.deepEqual(violations,[],'Boundary controls pass accessibility checks');
   await reset();
   console.log('Boundary interaction passed: both panels, greater/less/two-sided tests, symmetry, mouse, touch after resize, keyboard limits, current report, reset and accessibility.');
+ }catch(error){
+  if(frame) console.error('Boundary state at failure:',await frame.evaluate(()=>({
+   inputs:Shiny.shinyapp.$inputValues,controls:document.querySelector('#boundary-controls')?.dataset,
+   handles:[...document.querySelectorAll('.boundary-handle')].map(e=>({side:e.dataset.side,value:e.getAttribute('aria-valuenow')}))
+  })).catch(()=>null));
+  if(page) await page.screenshot({path:'build/boundary-drag/failure.png'}).catch(()=>{});
+  throw error;
  }finally{await browser.close();}
 })().catch(error=>{console.error(error);process.exit(1)});

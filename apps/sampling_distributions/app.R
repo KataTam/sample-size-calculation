@@ -109,13 +109,6 @@ server <- function(input, output, session) {
   observe({ session$sendCustomMessage("sample-size-state", c(snapshot(), list(case_id = "alpha_beta"))) })
   operating <- reactive(safe(do.call(normal_sampling_operating_characteristics, snapshot())))
   boundary_context <- reactive(snapshot()[c("mu0", "mu1", "sigma", "n", "sidedness")])
-  observeEvent(input$boundary_drag, {
-    request <- input$boundary_drag
-    # Ignore a gesture sent from a plot that predates a reset or changed assumptions.
-    if (!is.list(request) || !isTRUE(all.equal(request$context, boundary_context(), check.attributes = FALSE))) return()
-    alpha <- tryCatch(normal_alpha_from_boundary(operating(), request$value, request$side), error = function(e) NULL)
-    if (!is.null(alpha)) updateSliderInput(session, "alpha", value = alpha)
-  })
   model_answers <- reactive(list(interpretation = sampling_model_answer(operating())))
   activity_model_answers(session, model_answers, "interpretation")
   observe({
@@ -140,7 +133,10 @@ server <- function(input, output, session) {
       list(side = side, value = x[[side]], min = limits[1], max = limits[2])
     })
     session$sendCustomMessage("sampling-boundaries", list(panels = panels, boundaries = boundaries,
-      context = boundary_context(), alpha = x$type1, power = x$power, se = x$se))
+      context = boundary_context(), alpha = x$type1, power = x$power, se = x$se,
+      # Midpoints between supported alpha values let the browser select the
+      # nearest slider setting using R's normal quantiles, without a round trip.
+      alpha_breaks = qnorm(1 - (seq(.001, .1999, by = .0001) + .00005) / tails)))
   }, res = 96, execOnResize = TRUE,
     alt = "Distributions of the sample mean under the null and specified alternative. Rejection tails under the null show Type I error probability; the non-rejection region under the alternative shows Type II error probability. Values and boundaries are listed below.")
   output$operating_table <- renderTable({
