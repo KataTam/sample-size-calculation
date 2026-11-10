@@ -7,6 +7,7 @@ Use these checks before a pilot, course use, or public release. They complement 
 From the repository root, run:
 
 ```r
+# Load and run the project checks from the repository root.
 source("scripts/check_resource.R")
 ```
 
@@ -26,7 +27,9 @@ The check does not replace reading the rendered module. It is meant to catch sim
 To render the learner module as part of the check, run:
 
 ```r
+# Load and run the project checks from the repository root.
 source("scripts/check_resource.R")
+# Also build the tutorial so rendering problems are included in the check.
 check_resource(render_module = TRUE)
 ```
 

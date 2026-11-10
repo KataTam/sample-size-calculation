@@ -29,7 +29,7 @@ For the core route assess criteria 1–8 and 10; add criterion 9 only after teac
 | Power curves (chapter 5) | Interpret plausible effects, recruitment cap and fixed-n sensitivity | 5, 6, 10 |
 | Simulated trial (chapter 6) | State generating process and analysis; report operating characteristics and uncertainty | 4, 7, 8, 9 |
 | Precision planning (chapter 7, advanced) | Compare target power with an interval-width criterion; distinguish anticipated and realized width | 1, 8 |
-| Recruitment and feasibility (chapter 4) | Evaluate expected losses, plausible assumptions, fixed resources, and options for an informative study | 5, 6, 10 |
+| Recruitment and reporting (chapter 4) | Evaluate expected losses, plausible assumptions, fixed resources, and options for an informative study | 5, 6, 10 |
 | Pilot retention (chapter 7, advanced) | Connect retention precision with justified progression criteria | 1, 8, 10 |
 | Prevalence estimation (chapter 7) | Identify the population, denominator, confidence level and useful margin of error | 1, 8 |
 

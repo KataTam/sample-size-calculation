@@ -210,9 +210,9 @@
     {
       "id": "C030",
       "level": "core",
-      "front": "What does 90% power mean across repeated studies?",
-      "back": "About 90% would reject the null under the specified true difference and study assumptions. Individual studies can still be inconclusive.",
-      "source": "https://katatam.github.io/sample-size-calculation/book/power.html"
+      "front": "What does 90% power at a 30-point target difference mean?",
+      "back": "If the true difference is 30 percentage points and assumptions hold, about 90% of repeated trials would reject zero difference. Showing that the benefit exceeds a 20-point clinical threshold is a separate question.",
+      "source": "https://katatam.github.io/sample-size-calculation/book/power.html#report-statistical-criteria"
     },
     {
       "id": "C031",
@@ -392,9 +392,9 @@
     {
       "id": "C056",
       "level": "core",
-      "front": "What should make a sample size justification reproducible?",
-      "back": "The method, numerical assumptions and their sources, planned analysis, error probability, power or precision target, allocation, rounding, and allowance for losses.",
-      "source": "https://katatam.github.io/sample-size-calculation/book/clinical-question.html#record-assumptions"
+      "front": "What makes a sample size calculation report reproducible?",
+      "back": "The analysis and calculation method, justified numerical inputs and their sources, sidedness, power or precision target, allocation, rounding, loss allowance, software function and versions.",
+      "source": "https://katatam.github.io/sample-size-calculation/book/feasibility.html#write-a-sample-size-justification"
     },
     {
       "id": "C057",

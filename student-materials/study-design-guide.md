@@ -89,12 +89,15 @@ The rehabilitation comparison can also be planned around how precisely it should
 The [lab](https://katatam.github.io/sample-size-calculation/study/?activity=mean_precision) offers *Estimation with a target interval width* alongside testing and fixed-resource goals. Your plan should specify the [full width](#full-width), in the outcome's original units. For the rehabilitation improvement score, the expected difference remains 4 units, the target difference 3 units and the clinical threshold 2 units. You can use SD 5 and a target full width of 4 units:
 
 ```{r precision-plan}
+# Set the outcome, SD and desired full confidence interval width.
 precision_spec <- study_spec(outcome = "means", delta = 3, sd = 5,
   threshold = 2, width_target = 4, B = 5000, seed = 20260922)
+# Choose the group size to meet the interval-width target.
 precision_spec$n <- plan_n(precision_spec, goal = "precision")
 c(per_group = precision_spec$n,
   expected_full_width = anticipated_width(precision_spec),
   power_at_planning_effect = spec_power(precision_spec))
+# Simulate repeated studies to examine the resulting power and interval widths.
 precision_batch <- simulate_trials(precision_spec)
 knitr::kable(display_simulation_summary(simulation_summary(precision_batch)),
   caption = "Simulated performance of a study planned for estimation with a specified interval-width target.")
@@ -145,8 +148,10 @@ n\approx\frac{z_{1-\alpha/2}^{2}p_0(1-p_0)}{d^2}.
 Here $p_0$ is the anticipated population proportion used to plan the study. If comparable evidence suggests a prevalence of 20% ($p_0=0.20$), the approximate requirement is 246 completed observations. If there is no useful prior estimate, 50% ($p_0=0.50$) gives the largest value of $p_0(1-p_0)$ and an approximate requirement of 385.
 
 ```{r single-proportion-precision}
+# Plan for a full width of 10 percentage points at 95% confidence.
 prevalence_known <- proportion_precision_plan(p = .20,
   full_width = .10, confidence = .95)
+# unknown_p = TRUE uses 50%, the conservative value for this approximation.
 prevalence_unknown <- proportion_precision_plan(p = .20,
   full_width = .10, confidence = .95, unknown_p = TRUE)
 knitr::kable(data.frame(
@@ -174,6 +179,7 @@ An existing dataset is another fixed-resource setting, common in bachelor projec
 Baseline sleep information is available for 180 participants; 72 reported difficulty. The observed percentage is 72/180 = 40%. With the sample already fixed, the planning task is to assess the precision the available data can provide.
 
 ```{r reused-dataset}
+# Estimate a percentage and interval from 72 events among 180 observations.
 sleep_result <- single_proportion_interval(events = 72, n = 180,
   confidence = .95)
 sleep_result
@@ -222,6 +228,7 @@ You can start with systematic reviews, relevant previous studies, routine servic
 For the pilot, your plan should connect the available resources with the precision needed for these feasibility decisions. The [single-proportion example](#prevalence) explains the corresponding interval-width calculation. Here the hypothetical cap is 40 participants, and expected completion of follow-up is 80%. If 32 of 40 complete follow-up, what would that tell the team about retention?
 
 ```{r pilot-retention}
+# Estimate retention and its interval from 32 completions among 40 participants.
 pilot_retention <- single_proportion_interval(events = 32, n = 40,
   confidence = .95)
 pilot_retention

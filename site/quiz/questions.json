@@ -3,7 +3,7 @@
     "clinical-question": "Chapter 1: Research question and planning assumptions",
     "power": "Chapter 2: Understanding power and uncertainty",
     "calculations": "Chapter 3: Calculating sample size",
-    "feasibility": "Chapter 4: Recruitment and feasibility",
+    "feasibility": "Chapter 4: Recruitment and reporting",
     "curves": "Chapter 5: Exploring power and uncertain assumptions",
     "simulation": "Chapter 6: Building and evaluating simulations",
     "study-designs": "Chapter 7: Study designs and testing strategies",
@@ -103,8 +103,8 @@
       "chapter": "clinical-question",
       "level": "core",
       "section": "Evidence for the target difference",
-      "link": "clinical-question.html#what-do-we-expect-what-will-we-plan-for-and-what-matters-clinically",
-      "question": "What best supports the choice of a target difference?",
+      "link": "clinical-question.html#record-assumptions",
+      "question": "A sample size calculation report selects a 30-point target difference. Which explanation best justifies this numerical entry?",
       "options": [
         "A difference judged important and realistic using relevant evidence and clinical input",
         "The largest effect reported in any small study",
@@ -147,8 +147,8 @@
       "chapter": "power",
       "level": "core",
       "section": "Power under specified assumptions",
-      "link": "power.html#hypotheses-and-error-probabilities",
-      "question": "What does 90% power at the target difference mean?",
+      "link": "power.html#report-statistical-criteria",
+      "question": "A report specifies 90% power at a 30-percentage-point target difference. What does this mean?",
       "options": [
         "The next study will estimate the effect with 90% accuracy",
         "The alternative hypothesis has a 90% probability of being true",
@@ -240,8 +240,8 @@
       "chapter": "calculations",
       "level": "core",
       "section": "Two proportions",
-      "link": "calculations.html#two-proportions",
-      "question": "A calculation gives 55.2 analyzable patients per group with equal allocation. What is the rounded analyzable target?",
+      "link": "calculations.html#report-calculation-method",
+      "question": "Your sample size calculation report gives an unrounded requirement of 55.2 analyzable patients per group with equal allocation. What is the rounded analyzable target?",
       "options": [
         "56 per group, 112 total",
         "55 per group, 110 total",
@@ -422,7 +422,7 @@
       "level": "core",
       "section": "Reporting your sample size calculation",
       "link": "feasibility.html#write-a-sample-size-justification",
-      "question": "A report gives the outcome, event percentages, allocation, power, Type I error probability and participant counts. What would most help another researcher reproduce the calculation?",
+      "question": "A sample size calculation report gives the outcome, event percentages, allocation, power, Type I error probability and participant counts. What would most help another researcher reproduce the calculation?",
       "options": [
         "The calculator name alone",
         "The exact procedure and settings, software version, rounding rule and supporting code",
@@ -443,7 +443,7 @@
       "chapter": "feasibility",
       "level": "core",
       "section": "Sensitivity and justification",
-      "link": "feasibility.html#write-a-sample-size-justification",
+      "link": "feasibility.html#stress-test-the-study-plan",
       "question": "Two plausible sets of assumptions produce substantially different sample sizes. What should the justification do?",
       "options": [
         "Average the answers without justification",
@@ -1082,7 +1082,7 @@
       "level": "advanced",
       "section": "Additional records for complex designs",
       "link": "appendix.html#complex-design-record",
-      "question": "A sample-size report concerns a trial with multiple outcomes and an interim analysis. Which record best supports reproducibility?",
+      "question": "A sample size calculation report concerns a trial with multiple outcomes and an interim analysis. Which record best supports reproducibility?",
       "options": [
         "Only the final recruitment total.",
         "Only the software name and target power.",

@@ -4,13 +4,14 @@ Students and reviewers using the website need a browser, not R or RStudio.
 
 ## Build and adapt
 
-Use R 4.5.1, Python 3.10 or later, and Pandoc (available separately or with RStudio). Python uses only its standard library. R Markdown rendering uses rmarkdown, bookdown and knitr; the apps use shiny; browser export uses shinylive. JSON study plans and the activity registry use jsonlite. Exact R package versions and their dependencies are recorded in the root renv.lock.
+Use R 4.5.1, Python 3.10 or later, and Pandoc (available separately or with RStudio). Python dependencies for PDF and flashcard exports are listed in the requirements files under `scripts/`. R Markdown rendering uses rmarkdown, bookdown and knitr; the apps use shiny; browser export uses shinylive. JSON study plans and the activity registry use jsonlite. Exact R package versions and their dependencies are recorded in the root renv.lock.
 
-Rebuilding the printable PDF also needs a TeX distribution with XeLaTeX. TinyTeX is supported; `tinytex::install_tinytex()` installs it if required on an adapter's machine. When a PDF rebuild is explicitly requested, the publication workflow uses [r-lib's setup-tinytex action](https://github.com/r-lib/actions/tree/v2/setup-tinytex) and installs `babel-english`, `hyphen-english` and `fvextra` for English text and wrapped code. On a local TinyTeX installation, use `tinytex::tlmgr_install(c("babel-english", "hyphen-english", "fvextra"))` if needed. Routine HTML builds do not need TeX and retain the existing printable edition.
+The published PDF is exported from the rendered HTML using Playwright and Chromium, then assembled with the Python packages in `scripts/pdf-requirements.txt`. This preserves the expanded code, model answers, figures and internal links. Both complete HTML and PDF editions are refreshed during publication. The optional direct R Markdown PDF format requires XeLaTeX; it is separate from the published browser-based export.
 
 From the project root, install renv if needed, then activate and restore the environment:
 
 ```r
+# Install the dependency manager, then restore the recorded package versions.
 install.packages("renv") # only if renv is not installed
 renv::activate()
 renv::restore(prompt = FALSE)

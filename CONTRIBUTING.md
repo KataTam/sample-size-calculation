@@ -49,6 +49,7 @@ For changes to R functions or Shiny apps:
 Before sharing a code change, run:
 
 ```r
+# Find all R files below the current folder and check their syntax.
 files <- list.files(pattern = "\\.R$", recursive = TRUE, full.names = TRUE)
 for (f in files) parse(f)
 ```

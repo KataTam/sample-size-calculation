@@ -45,7 +45,9 @@
     pendingSaved = saved;
     document.getElementById('resume-plan').hidden = !saved;
     document.getElementById('answer-fields').disabled = !!saved;
-    document.querySelectorAll('#plan-start input, #plan-start select, #example').forEach(el => el.disabled = !!saved);
+    document.getElementById('example').disabled = !!saved;
+    // Identity edits resume the saved answers before changing metadata.
+    if (saved) for (const name of ['plan_title', 'plan_basis']) form.elements[name].value = saved[name];
     document.getElementById('accept-transfer').disabled = !!saved;
     document.querySelectorAll('#save,#save-word,#download,#download-word,#download-text,#save-work').forEach(el => el.disabled = !!saved);
   }
@@ -81,14 +83,14 @@
     outcome_detail: 'The percentage of patients reporting pain relief four weeks after treatment starts, using the same prespecified definition of relief in both groups.',
     design: 'Eligible adults will be recruited from participating clinics using [selection method] and individually randomized to novel or standard treatment in equal numbers. For this teaching calculation, each participant contributes one four-week outcome, and outcomes from different participants are assumed independent.',
     scale: 'The difference in pain-relief percentages, novel minus standard treatment, in percentage points. A positive difference favors the novel treatment.',
-    expected: '40 percentage points: the hypothetical pilot observed relief in 70% versus 30%. With 10 patients per group, this estimate is uncertain.',
-    clinical: '20 percentage points between groups, an illustrative minimum worthwhile benefit requiring patient and clinical justification.',
-    planning: '30 percentage points for this teaching example. Power is lower at the 20-point clinical threshold; the target still needs supporting evidence.',
+    expected: '40 percentage points: the pilot observed relief in 7 of 10 patients (70%) versus 3 of 10 (30%). The small groups make this estimate uncertain.',
+    clinical: '20 percentage points: one additional patient with relief for every five treated. This is the minimum additional benefit judged worthwhile given the treatment burden in this example.',
+    planning: '30 percentage points (60% versus 30% relief), below the uncertain 40-point pilot estimate and above the 20-point minimum worthwhile benefit. Power is evaluated at this target difference.',
     variation: '30% relief with standard treatment and 60% with novel treatment for the calculation. These illustrative percentages imply the 30-point target difference.',
     evidence_review: 'The small pilot gives uncertain event percentages. I would check comparable four-week studies before treating these inputs as reliable.',
     sensitivity: 'I would assess power at 20-, 30-, and 40-point benefits, keeping the sample size and 30% standard-treatment relief fixed.',
     progression: 'Retention at four weeks would inform feasibility. The proceed, amend, and stop thresholds remain to be agreed before data collection.',
-    analysis: 'A two-sided comparison of independent pain-relief percentages, with a 95% confidence interval for the difference.',
+    analysis: 'A two-sided pooled score test for independent proportions without continuity correction, with a 95% confidence interval for the difference in relief percentages.',
     software: 'The two-proportion app and its normal approximation, with inputs, rounding, software versions, and source version saved alongside the calculation.',
     power: 'A 5% Type I error probability and 90% target power at a 30-percentage-point difference, using a two-sided test.',
     precision: 'A 95% interval with full width 20 percentage points gives a margin of about 10 points; its clinical usefulness remains to be justified.',
@@ -358,6 +360,16 @@
     link.href = url; link.download = filename; document.body.append(link); link.click(); link.remove();
     setTimeout(() => URL.revokeObjectURL(url), 1000);
   }
+  form.addEventListener('plan-identity-input', event => {
+    const {name, value} = event.detail;
+    if (pendingSaved) {
+      const saved = {...pendingSaved, [name]: value};
+      apply(saved, false);
+      PlanWorkflow.onEdit(name);
+      render();
+      status.textContent = 'Saved plan resumed. Your answers and calculations have been retained.';
+    } else { PlanWorkflow.onEdit(name); render(); }
+  });
   form.addEventListener('input', event => {PlanWorkflow.onEdit(event.target.name);render();});
   form.addEventListener('submit', event => event.preventDefault());
   document.getElementById('clear').addEventListener('click', () => { if (!confirm('Clear this study plan? Save work for later first if you want to keep it.')) return; apply({}); status.textContent = 'Entries cleared. You can start a new plan.'; });
@@ -365,8 +377,8 @@
   function reportDocument() {
     const headings = new Set([...groups.map(group => group[0]), 'Section review', 'Prepared chronic pain calculation']);
     const content = reportLines.map(line => headings.has(line) || line.startsWith('Saved calculation: ') ? '<h2>' + escapeHTML(line) + '</h2>' : '<p>' + escapeHTML(line) + '</p>').join('\n');
-    return '<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Study-plan report</title>' +
-      '<style>body{max-width:800px;margin:2rem auto;padding:0 1rem;font:17px/1.6 system-ui,sans-serif;color:#20343e}p{white-space:pre-wrap;overflow-wrap:anywhere}h2{margin-top:1.5em;font-size:1.2em}a{color:#006481}footer{border-top:1px solid #abc;margin-top:2rem;font-size:.9em}@media print{body{margin:0;max-width:none;font-size:11pt}h2{break-after:avoid}a{color:inherit}}</style></head><body><h1>Study-plan report</h1>' +
+    return '<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Sample size calculation report</title>' +
+      '<style>body{max-width:800px;margin:2rem auto;padding:0 1rem;font:17px/1.6 system-ui,sans-serif;color:#20343e}p{white-space:pre-wrap;overflow-wrap:anywhere}h2{margin-top:1.5em;font-size:1.2em}a{color:#006481}footer{border-top:1px solid #abc;margin-top:2rem;font-size:.9em}@media print{body{margin:0;max-width:none;font-size:11pt}h2{break-after:avoid}a{color:inherit}}</style></head><body><h1>Sample size calculation report</h1>' +
       '<p>Generated ' + new Intl.DateTimeFormat('en-US', {dateStyle:'long'}).format(new Date()) + '</p>' +
       '<p>' + escapeHTML(document.getElementById('progress').textContent) + '</p>' + content +
       '<footer><p>This draft contains your entries and identifies unanswered decisions.</p>' +
@@ -394,7 +406,7 @@
     status.textContent = 'Work saved. Reopen this file here to continue editing.';
   });
   document.getElementById('download-text').addEventListener('click', () => {
-    const lines = ['Study-plan report', document.getElementById('progress').textContent, '', ...reportLines,
+    const lines = ['Sample size calculation report', document.getElementById('progress').textContent, '', ...reportLines,
       'Guidance: PICO (Richardson et al., 1995), https://doi.org/10.7326/ACPJC-1995-123-3-A12; SPIRIT 2025, https://www.consort-spirit.org/; DELTA² (Cook et al., 2018), https://doi.org/10.1136/bmj.k3750. Educational selection; a full protocol should use its complete design-specific guidance.',
       'Teaching materials: CC BY-SA 4.0, https://creativecommons.org/licenses/by-sa/4.0/. Software: MIT, https://opensource.org/license/mit.'];
     download(lines.join('\n\n'), 'text/plain;charset=utf-8', 'study-plan-report.txt'); status.textContent = 'Plain-text report downloaded.';

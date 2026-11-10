@@ -15,10 +15,13 @@ pain_report_record <- function() {
   source_version <- paste0(revision[1], if (dirty || !tracked) " (working copy)" else "",
     "; calculation-file MD5: ", unname(tools::md5sum("R/pain_report_record.R")))
   command <- paste(c(
+    "# Set the event probabilities, error probability and desired power.",
     "plan <- stats::power.prop.test(",
     "  p1 = 0.60, p2 = 0.30, sig.level = 0.05, power = 0.90,",
     "  alternative = \"two.sided\", strict = TRUE)",
+    "# Extract the count per group and round up to a whole patient.",
     "analyzable_per_group <- ceiling(plan$n)",
+    "# Divide by the expected retained fraction to allow for 5% missing outcomes.",
     "recruit_per_group <- ceiling(analyzable_per_group / 0.95)"), collapse = "\n")
   list(title = "Prepared chronic pain calculation", kind = "calculation", source = "tutorial-example",
     captured = format(Sys.time(), "%Y-%m-%dT%H:%M:%SZ", tz = "UTC"),
@@ -29,12 +32,11 @@ pain_report_record <- function() {
     r_version = as.character(getRversion()), stats_version = as.character(utils::packageVersion("stats")),
     source_version = source_version, code = command,
     lines = c(
-      "Prepared teaching example: hypothetical assumptions; R versions below belong to the tutorial build.",
-      "Procedure: normal approximation for a two-sided comparison of two independent proportions; equal allocation; both rejection tails included.",
+      "Prepared chronic pain calculation; software versions refer to the calculation build.",
+      "Procedure: normal approximation for a two-sided pooled score test of independent proportions, without continuity correction; equal allocation; both rejection tails included.",
       "Inputs: standard-treatment relief 30%; novel-treatment relief 60%; target difference 30 percentage points; Type I error probability 5%; target power 90%.",
       sprintf("Analyzable sample: %.5f per group before rounding; %d per group, %d total after rounding upward.", fit$n, n, 2*n),
       sprintf("Expected unavailable primary outcomes: 5%% in each group. Recruitment: ceiling(%d / 0.95) = %d per group, %d total.", n, recruit, 2*recruit),
-      sprintf("Sensitivity: 50%% versus 30%% relief requires %d analyzable patients per group for 90%% power; power with %d per group is approximately %.0f%%.", alternative_n, n, 100*alternative_power),
       paste("Software: R", getRversion(), "; stats", utils::packageVersion("stats"), "; source version:", source_version),
       paste("Reproducible R command:\n", command)))
 }

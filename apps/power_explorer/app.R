@@ -833,10 +833,22 @@ server <- function(input, output, session) {
   })
   output$download_code <- downloadHandler(filename = function() "reproduce_studies.R", content = function(file) {
     x <- snapshot()
-    calls <- if (is.null(x$missing)) c('one <- simulate_one_study(generating)', 'many <- simulate_trials(generating)', 'simulation_summary(many)') else
-      c('settings <-', capture.output(dput(x$missing)), 'one <- simulate_missing_one(generating, settings)', 'many <- simulate_missing_trials(generating, settings)', 'missing_outcome_summary(many)')
+    calls <- if (is.null(x$missing)) c(
+      '# Generate and analyze one study, then the requested number of repetitions.',
+      'one <- simulate_one_study(generating)', 'many <- simulate_trials(generating)',
+      '# Summarize performance across the repeated studies.', 'simulation_summary(many)') else
+      c('# Specify which outcomes may be missing and how they will be analyzed.',
+        'settings <-', capture.output(dput(x$missing)),
+        '# Apply those assumptions to one study and to repeated studies.',
+        'one <- simulate_missing_one(generating, settings)', 'many <- simulate_missing_trials(generating, settings)',
+        '# Summarize missingness, bias and interval performance.', 'missing_outcome_summary(many)')
     writeLines(c('# Current inputs. Run from the repository root.', 'source("R/sample_size_functions.R")',
-      'plan <-', capture.output(dput(x$plan)), 'generating <-', capture.output(dput(x$generating)), calls, 'one$result',
+      '# Planning assumptions used to choose the sample size.',
+      'plan <-', capture.output(dput(x$plan)),
+      '# Assumed population values used to generate the simulated studies.',
+      'generating <-', capture.output(dput(x$generating)), calls,
+      '# Display the result from the single study.', 'one$result',
+      '# Keep studies with an estimable difference before plotting their intervals.',
       'valid <- many$results[is.finite(many$results$estimate), , drop=FALSE]',
       'if (nrow(valid)) plot_trial_intervals(valid, many$spec)'), file)
   })

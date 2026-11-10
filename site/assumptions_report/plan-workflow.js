@@ -6,7 +6,7 @@
     question: {title:'Chapter 1: question and design', sections:[0], fields:['question','population','intervention','comparator','outcome_detail','design'], text:'Your first contribution is the research question and study design. Initial assumptions can remain provisional while you look for evidence.'},
     power: {title:'Chapter 2: power and interpretation', sections:[2,3], fields:['power','conclusion'], text:'Your plan should explain the chosen error probability and power, and what the study could establish under its assumptions.'},
     calculation: {title:'Chapter 3: calculation', sections:[1,2], fields:['expected','clinical','planning','variation','analysis','software','counts'], text:'Your calculation record should contain the inputs, method, analyzable sample size, and your justification. A calculator can add a selected result to this report.'},
-    recruitment: {title:'Chapter 4: recruitment and feasibility', sections:[3], fields:['recruitment','sensitivity','resources','conclusion'], text:'Your final contribution is a recruitment target, a plausible sensitivity comparison, feasibility, and your recommendation.'},
+    recruitment: {title:'Chapter 4: recruitment and reporting', sections:[3], fields:['recruitment','sensitivity','resources','conclusion'], text:'Your final contribution is the recruitment target and its justification. You can then review the complete sample size calculation report and record supporting sensitivity analyses separately.'},
     review: {title:'Review your complete study plan', sections:[], fields:[], text:'The review below identifies unresolved decisions and mismatches between saved calculations. Your reasoning and evidence still need your own review.'}
   };
   const read = (text, fallback) => { try {return JSON.parse(text || '')} catch (_) {return fallback} };
@@ -34,7 +34,7 @@
     form=f;fields=definitions;groups=sections;
     for(const name of metaNames.filter(n=>!form.elements[n])){const input=element('input');input.type='hidden';input.name=name;form.append(input);}
     const setup=document.getElementById('plan-start');
-    setup.querySelectorAll('input,select').forEach(input=>{input.setAttribute('form',form.id);input.addEventListener('input',()=>{onEdit(input.name);changed();});});
+    setup.querySelectorAll('input,select').forEach(input=>{input.setAttribute('form',form.id);input.addEventListener('input',()=>form.dispatchEvent(new CustomEvent('plan-identity-input',{detail:{name:input.name,value:input.value}})));});
     groups.forEach(([title, definitions],index)=>{
       const box=element('div',undefined,'section-review'),row=element('label');
       const checkbox=element('input');checkbox.type='checkbox';checkbox.id='section-'+index+'-reviewed';
@@ -60,7 +60,7 @@
       if(form.elements.study_type.value==='other'){document.getElementById('plan-section-0').open=true;document.getElementById('design').focus();}
     });
     document.getElementById('plan-basis').addEventListener('change',()=>{
-      document.getElementById('example').hidden=document.getElementById('plan-basis').value!=='pain';changed();
+      document.getElementById('example').hidden=document.getElementById('plan-basis').value!=='pain';
     });
   }
   function showStage(id) {
@@ -100,7 +100,7 @@
     if(!issues.length)list.append(element('li','All applicable answers are ready for your final review. Check the evidence, written values, and interpretation before submitting.'));
     review.querySelector('.review-note').textContent='Checks compare saved structured results. Numerical values in your written answers need your own review.';
     const heading=element('h3',value.plan_title.trim()||'My study plan');article.prepend(heading);
-    document.querySelector('#plan-identity > summary').textContent=value.plan_title.trim()?'Study: '+value.plan_title.trim():'Study title and starting point';
+    document.querySelector('#plan-identity > summary').textContent=value.plan_title.trim()?'Study title and starting point: '+value.plan_title.trim():'Study title and starting point';
     lines.unshift('Study: '+heading.textContent);
     if(pending&&!document.getElementById('transfer-preview').hidden)document.querySelector('.transfer-title').textContent='Add '+pending.title+' to '+heading.textContent+'?';
     lines.push('Section review',...issues);
@@ -120,7 +120,7 @@
   function loadPending() {
     const params=new URLSearchParams(location.search),id=params.get('transfer');
     showStage(params.get('stage')||'question');
-    if(form.elements.plan_title.value.trim()){document.getElementById('plan-identity').open=false;document.querySelector('#plan-identity > summary').textContent='Study: '+form.elements.plan_title.value.trim();}
+    // Keep title and starting point available when returning to a saved plan.
     if(!id||!/^[-a-zA-Z0-9]+$/.test(id))return;
     try {
       const raw=localStorage.getItem('sample-size-pending-'+id);if(!raw)throw Error('This transfer is no longer available. You can return to the app and add its current calculation.');

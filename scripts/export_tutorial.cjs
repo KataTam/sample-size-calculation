@@ -37,6 +37,7 @@ a { color: #17658a; } .tutorial-downloads { display: none; }
  details { break-inside: auto; }
  pre { white-space: pre-wrap !important; overflow-wrap: anywhere; break-inside: auto; }
  .MathJax_SVG_Display { overflow: visible !important; }
+ .MathJax_SVG_Display[id^="eq:"] { break-inside: avoid; break-after: avoid; }
 }
 `;
 const readerScripts = fs.readFileSync('module/toolbar-help.html', 'utf8') + fs.readFileSync('module/glossary-support.html', 'utf8');
@@ -61,6 +62,19 @@ let browser;
       const normal = document.querySelector('.page-inner .normal');
       if (!normal) throw Error('Chapter body not found');
       const clone = normal.cloneNode(true);
+      // A display SVG must be a block, outside the source paragraph. Otherwise
+      // reparsing HTML leaves an empty equation anchor before the SVG, which
+      // can land on the preceding PDF page.
+      for (const anchor of clone.querySelectorAll('[id^="eq:"]')) {
+        const paragraph = anchor.parentElement;
+        const display = anchor.querySelector('.MathJax_SVG_Display') || paragraph.nextElementSibling;
+        if (paragraph.tagName === 'P' && display?.classList.contains('MathJax_SVG_Display')) {
+          display.id = anchor.id;
+          anchor.removeAttribute('id');
+          if (paragraph.contains(display)) paragraph.replaceWith(display);
+          else if (!paragraph.textContent.trim()) paragraph.remove();
+        }
+      }
       clone.querySelectorAll('.chapter-quiz').forEach(el => el.removeAttribute('data-quiz-ready'));
       clone.querySelectorAll('.chapter-end-nav, .chapter-downloads, .tutorial-downloads, .reference-preview-button, script, .MathJax_Preview').forEach(el => el.remove());
       for (const img of clone.querySelectorAll('img')) {
@@ -151,7 +165,10 @@ let browser;
       const chapter = el.closest('.print-chapter') || el.querySelector('.print-chapter');
       const kind = id.startsWith('fig:') ? 'figure' : id.startsWith('tab:') ? 'table' : id.startsWith('eq:') ? 'equation' :
         el.matches('.csl-entry') ? 'reference' : chapter?.id === 'tutorial-glossary' ? 'glossary' : 'section';
-      const heading = /^H[1-6]$/.test(el.tagName) || kind === 'reference' ? el :
+      // SVG glyphs have no extractable PDF text. Numbered equations are kept
+      // with the following prose, which provides a page-level destination check.
+      const heading = kind === 'equation' ? el.nextElementSibling :
+        /^H[1-6]$/.test(el.tagName) || kind === 'reference' ? el :
         /^(fig|tab):/.test(id) ? el.parentElement : firstHeading(el);
       let text;
       if (heading) {

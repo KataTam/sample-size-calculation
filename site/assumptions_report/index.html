@@ -18,18 +18,18 @@
   <header>
     <h1>Develop and justify your study plan</h1>
     <p>Your study plan develops through the four core chapters. You can begin with your question, record decisions that need evidence, and return to complete the calculation and recruitment sections.</p>
+    <section id="resume-plan" hidden aria-label="Saved study plan">
+      <p>A saved plan is available in this browser. You can resume it or start a new plan. Editing the title or starting point also resumes your saved answers.</p>
+      <button id="resume-plan-button" type="button">Resume saved plan</button>
+      <button id="new-plan-button" type="button" class="secondary-action">Start a new plan</button>
+    </section>
     <details id="plan-identity" open><summary>Study title and starting point</summary>
     <section id="plan-start" aria-label="Your developing study plan">
       <label for="plan-title">Study title<input id="plan-title" name="plan_title" form="plan-form" maxlength="200" placeholder="A short title for your study"></label>
       <label for="plan-basis">Starting point<select id="plan-basis" name="plan_basis" form="plan-form"><option value="own">My own study</option><option value="pain">Chronic-pain teaching example</option></select></label>
       <button id="example" type="button" hidden>Start the pain-relief plan</button>
-      <p>The core starting point is a two-group comparison planned for power. Written answers start empty; selecting “Start the pain-relief plan” supplies an example. Saved work can be resumed below.</p>
+      <p>The core starting point is a two-group comparison planned for power. Written answers start empty; selecting “Start the pain-relief plan” supplies an example. Saved work can be resumed using the controls above.</p>
     </section></details>
-    <section id="resume-plan" hidden aria-label="Saved study plan">
-      <p>A saved plan is available in this browser. You can resume it or start a new plan with the core settings.</p>
-      <button id="resume-plan-button" type="button">Resume saved plan</button>
-      <button id="new-plan-button" type="button" class="secondary-action">Start a new plan</button>
-    </section>
     <nav id="plan-stages" aria-label="Contributions to your study plan"></nav>
     <div id="plan-stage-guidance" tabindex="-1"></div>
     <section id="transfer-preview" hidden aria-label="Review a calculation before adding it">
@@ -78,7 +78,7 @@
       </form>
     </section>
     <section id="report-pane" class="report-pane" aria-labelledby="report-title" hidden>
-      <div class="report-heading"><h2 id="report-title" tabindex="-1">Study-plan report</h2><p id="progress" role="status" aria-live="polite"></p></div>
+      <div class="report-heading"><h2 id="report-title" tabindex="-1">Sample size calculation report</h2><p id="progress" role="status" aria-live="polite"></p></div>
       <article id="report"></article>
       <p class="note">The downloaded report includes unanswered items so you can see what remains to be decided.</p>
       <div class="report-downloads"><button id="download" type="button">Download report (PDF)</button>
