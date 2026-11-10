@@ -36,6 +36,12 @@
         "path": "study/?activity=discharge",
         "route": "Optional core practice",
         "section": "discharge"
+      },
+      {
+        "label": "Review the discharge calculations",
+        "path": "book/calculations.html#discharge-error-activity",
+        "route": "Optional core practice",
+        "section": "discharge"
       }
     ]
   },
@@ -50,6 +56,12 @@
         "path": "study/?activity=recruitment",
         "route": "Core",
         "section": "account-for-expected-losses"
+      },
+      {
+        "label": "Review the recruitment plan",
+        "path": "book/feasibility.html#recruitment-error-activity",
+        "route": "Core",
+        "section": "treatment-changes"
       }
     ]
   },
@@ -68,6 +80,12 @@
       {
         "label": "Complete your assumptions report",
         "path": "assumptions_report/?stage=review",
+        "route": "Core",
+        "section": "write-a-sample-size-justification"
+      },
+      {
+        "label": "Review a sample size calculation report",
+        "path": "book/reporting.html#report-error-activity",
         "route": "Core",
         "section": "write-a-sample-size-justification"
       }
@@ -164,6 +182,12 @@
         "path": "study/?activity=own_study",
         "route": "Advanced",
         "section": "own-study"
+      },
+      {
+        "label": "Review the software choices",
+        "path": "book/appendix.html#software-error-activity",
+        "route": "Advanced",
+        "section": "gpower-assumptions"
       }
     ]
   },

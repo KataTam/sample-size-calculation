@@ -64,6 +64,7 @@ jobs:
           node scripts/check_reader_tools.cjs
           node scripts/check_contents_resize.cjs
           node scripts/check_boundary_drag.cjs
+          node scripts/check_error_activities.cjs
           node scripts/check_glossary_tools.cjs
           node scripts/check_week2.cjs
           node scripts/check_advanced_headings.cjs http://127.0.0.1:8769

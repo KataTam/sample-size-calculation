@@ -55,6 +55,15 @@ Purpose: see why sample estimates differ from population values, interpret the u
 5. Before repeating at 50 and 80 patients per group, you can predict how the estimates and power will change, holding the population assumptions and repetition count fixed. Larger trials usually produce less variable estimates and greater power at a nonzero population difference. “Settings” provides the other assumptions. Advanced controls start closed; coverage and Monte Carlo summaries can wait until the advanced chapter.
 6. The expandable “Model answer” sections support reflection. “Report” summarizes the population assumptions, pain-relief counts in one study, and results across many studies, with an explanation of sampling variability. You can add your reflection and download a PDF or editable Word report. After changing the sample size, a new run is needed for those results to appear in the report.
 
+## Reviewing short examples
+
+The tutorial includes selectable passages in four review activities: [discharge calculations](../book/calculations.html#discharge-error-activity), [recruitment planning](../book/feasibility.html#recruitment-error-activity), [a sample size calculation report](../book/reporting.html#report-error-activity) and [advanced software choices](../book/appendix.html#software-error-activity).
+
+1. You can read the proposed statement and choose a passage that may need correction. Some passages are appropriate.
+2. Clicking or tapping a passage opens an explanation and a link to the relevant teaching material. With a keyboard, Tab reaches each passage and Enter or Space opens its explanation; Escape closes it.
+3. Passages already checked can be revisited by hovering or selecting them again. The count records problem areas found, and Reset activity starts again. Progress is stored in the current browser.
+4. The explanations can support a corrected version in your own words. The PDF and the expandable answer key provide the same explanations for offline review.
+
 ## Type I and Type II error probabilities and power — advanced
 
 [Open activity](../study/?activity=alpha_beta) · [Matching explanation](../book/curves.html#alpha-beta)

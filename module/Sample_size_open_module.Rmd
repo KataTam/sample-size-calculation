@@ -35,6 +35,7 @@ source("../R/tutorial_helpers.R")
 source("../R/teaching_cases.R")
 source("../R/question_map.R")
 source("../R/quiz_helpers.R")
+source("../R/error_activities.R")
 source("../R/tutorial_diagrams.R")
 source("../R/pain_report_record.R")
 report_example <- local({
@@ -727,9 +728,14 @@ Table: (\#tab:discharge-task) Three discharge-study plans with a 5% Type I error
 
 ### Your task {.unnumbered}
 
-1. For each plan, what percentage would be discharged with the new program, and what is its target difference in percentage points? A relative increase of 20% means multiplying the standard-care percentage by 1.20. An increase of 10 percentage points means adding 10 points. Before calculating sample size, which plan do you expect to need the most patients?
-2. You can calculate each plan using the [two-proportions method](#two-proportions) or [Activity: Discharge percentages](https://katatam.github.io/sample-size-calculation/study/?activity=discharge). In the app's *Settings*, the standard-treatment percentage stays at 80%; the novel-treatment percentage and target power should match the plan. The *Overview* shows the required sample size. Your record should include both the analyzable count per group and the total. Each per-group count is rounded upward before doubling for two equal groups.
-3. How does changing the target difference affect sample size when power stays at 80% (A versus B)? How does increasing power affect sample size when the target difference stays the same (A versus C)? A short explanation should connect these comparisons to your prediction.
+The short note below contains proposed interpretations of the three plans. Reviewing it gives you a prediction to check with the calculator.
+
+```{r discharge-error-review, echo=FALSE, results='asis'}
+render_error_activity("discharge")
+```
+
+1. You can calculate each plan using the [two-proportions method](#two-proportions) or [Activity: Discharge percentages](https://katatam.github.io/sample-size-calculation/study/?activity=discharge). In the app's *Settings*, the standard-treatment percentage stays at 80%; the novel-treatment percentage and target power should match the plan. The *Overview* shows the required sample size. Your record should include both the analyzable count per group and the total. Each per-group count is rounded upward before doubling for two equal groups.
+2. Your explanation should connect the results to the target difference and power chosen in each plan. Which parts of the proposed interpretation would you retain, and which would you revise?
 
 <details>
 <summary>Show the calculation and interpretation</summary>
@@ -798,7 +804,9 @@ After this chapter, you should be able to:
 
 :::
 
-The calculation gives the number needed for analysis. This chapter considers how to recruit enough participants with usable outcomes, how treatment changes affect planning, and whether the study remains feasible under plausible alternative assumptions. The [reporting chapter](#reporting) then brings these decisions together.
+The chronic pain calculation in [Chapter 2](#two-proportions) requires `r pain_lab_n` patients in each group with a usable four-week outcome. The clinics now need a recruitment target. Some patients may miss that assessment; others may change treatment and still provide their outcome. These possibilities affect different parts of the plan.
+
+You first allow for expected missing outcomes, then consider how treatment changes could affect the between-group difference. Finally, you check whether the clinics can recruit enough patients and whether the plan remains workable under less favorable assumptions. The [reporting chapter](#reporting) brings the resulting decisions together.
 
 ## Account for expected losses {.core-heading}
 
@@ -836,18 +844,8 @@ If you expect 10% of participants to be lost, approximately 90% will remain. You
 
 For the chronic pain trial, 5% expected loss means approximately 95% of recruits will contribute to the analysis. To obtain `r analyzable_per_group` patients per group with usable outcomes, you would plan to recruit `r analyzable_per_group`/0.95 = `r round(analyzable_per_group / .95, 2)`, rounded upward to `r recruit_per_group` per group.
 
-::: {.activity}
-<p class="question-label">Question to consider</p>
-
-Which counts should the chronic pain trial's protocol report after allowing for expected losses?
-
-<details class="model-answer" id="model-answer-protocol-counts">
-<summary>Model answer</summary>
-
-The protocol should state both the required [analyzable sample](#analyzable-sample-size) and the recruitment target, with per-group and total counts. Here, `r analyzable_per_group` analyzable patients per group means `r 2 * analyzable_per_group` in total. Allowing for 5% expected loss gives a recruitment target of `r recruit_per_group` per group, or `r 2 * recruit_per_group` in total. The protocol should justify that loss assumption and describe how missing outcomes will be handled. Actual retention can vary.
-
-</details>
-:::
+<span id="model-answer-protocol-counts"></span>
+The protocol should report both the required [analyzable sample](#analyzable-sample-size) and the recruitment target, per group and in total: here, `r 2 * analyzable_per_group` analyzable patients and `r 2 * recruit_per_group` recruits across the two groups. Actual retention can vary.
 
 The percentage of participants lost to follow-up may differ between treatment groups. This is called *differential dropout*. For example, outcomes might be missing for 20% of participants receiving the novel treatment and 10% receiving standard treatment. When such differences are anticipated, sample size planning should account for the expected retention in each group and the planned allocation ratio. A single overall dropout percentage can conceal a shortfall in one group.
 
@@ -870,7 +868,7 @@ Recruiting extra participants can help preserve the analyzable sample size and s
 
 Participants may stop their assigned treatment, miss doses, switch to the other treatment, or receive additional treatment during follow-up. These changes can affect the difference between randomized groups and the sample size needed for the planned power. For example, patients assigned to standard treatment might start the novel treatment, making the groups' outcomes more similar. This is a form of [treatment contamination](#treatment-contamination) [@wittes2002].
 
-Treatment discontinuation and loss to follow-up should be recorded separately. A patient who stops treatment may still attend the final assessment and contribute an outcome. When your question concerns the effect of assignment to treatment, four-week outcomes remain relevant after stopping or switching treatment. Participants are analyzed in their randomized groups, with follow-up continuing wherever possible. This treatment-policy approach follows the [estimand framework](#estimand); the protocol and SAP specify follow-up and missing-data methods [@iche9r1]. Excluding patients because they switched treatments can introduce bias [@dodd2017].
+Treatment discontinuation and loss to follow-up should be recorded separately. When your question concerns the effect of assignment to treatment, participants are analyzed in their randomized groups and follow-up continues wherever possible. This treatment-policy approach follows the [estimand framework](#estimand); the protocol and SAP specify follow-up and missing-data methods [@iche9r1]. Excluding patients because they switched treatments can introduce bias [@dodd2017].
 
 Your sample size assumptions should reflect the treatment changes expected in your study and the treatment effect you intend to estimate. If the outcome percentages or mean difference already incorporate realistic adherence, an additional adjustment for the same changes would count their impact twice [@iche9r1]. Table \@ref(tab:anticipated-events) summarizes the implications of common events.
 
@@ -883,10 +881,16 @@ Your sample size assumptions should reflect the treatment changes expected in yo
 
 Table: (\#tab:anticipated-events) Anticipated events and their implications for sample size planning. Treatment changes and events such as death require an approach matched to the research question [@iche9r1].
 
-Figure \@ref(fig:treatment-followup) separates treatment received from outcome availability within each randomized group. Either treatment path can lead to a recorded or missing final outcome.
+Does switching treatment mean that a patient is lost from the study? Figure \@ref(fig:treatment-followup) helps separate the two decisions you need for planning: which treatment a patient receives, and whether the four-week outcome is available. You can follow each shaded row from randomized group, through treatment received, to final assessment.
 
-```{r treatment-followup, echo=FALSE, fig.width=8, fig.height=5.3, fig.cap="Treatment switching and outcome availability are separate aspects of follow-up. Each randomized group includes patients who receive their assigned treatment or switch to the other treatment; either path can have a recorded or missing outcome. For a question about the effect of treatment assignment, analysis follows the randomized groups.", fig.alt="Two parallel flows retain the novel and standard randomized groups. Within each group, patients may receive the assigned treatment or switch to the other treatment. Both treatment paths lead to the same two possible assessment statuses: outcome recorded or outcome missing. Follow-up should continue after treatment changes."}
+```{r treatment-followup, echo=FALSE, fig.width=8, fig.height=5.3, fig.cap="Following the chronic pain trial after randomization. Each row retains the original assigned group. The middle column shows treatment received; the final column shows whether pain relief at four weeks was recorded. Switching can change the treatment difference, while missing outcomes reduce the observed-outcome count. Both matter for sample size planning.", fig.alt="Three numbered columns show randomized group, treatment received, and four-week outcome. Each of the novel and standard randomized groups branches into receiving the assigned treatment or switching. Either treatment path can have an outcome recorded or missing. A participant who switches and provides an outcome remains in the originally randomized group for the effect of treatment assignment."}
 draw_treatment_followup()
+```
+
+For example, a patient assigned to the novel treatment may switch to standard treatment and still report pain relief at four weeks. That recorded outcome remains in the novel-treatment group when estimating the effect of treatment assignment. The missing-outcome allowance concerns the final column; the assumed treatment difference should also reflect relevant changes in treatment received in the middle column.
+
+```{r recruitment-error-review, echo=FALSE, results='asis'}
+render_error_activity("recruitment")
 ```
 
 <details class="advanced-explanation" id="treatment-switching">
@@ -1174,24 +1178,11 @@ Table: (\#tab:report-annotations) Essential elements of the sample size calculat
 
 The [commented calculation](#sample-size-report-methods) reproduces the analyzable count. The [recruitment calculation](#account-for-expected-losses) shows the loss adjustment. A plan with multiple outcomes, interim analyses or sample-size adaptations also needs the [advanced design-specific record](#complex-design-record).
 
-::: {.activity}
-<p class="question-label">Question to consider</p>
+The report below contains several problems. Its linked explanations show how you could revise it using the decisions introduced in the core chapters.
 
-Which claims in the report below are incorrect, and what information is missing? How would you revise it?
-
-> The pilot found pain relief in 70% of patients receiving novel treatment and 30% receiving standard treatment, so the treatment improves every patient's pain by 40%. Using these percentages, an R-based calculator gave a sample size of 56. With 90% power, there is a 90% probability that the novel treatment works. Adding 5% for dropout gives 58.8, which we round down to 58 patients in total. This will demonstrate a clinically important benefit. The sample size was calculated using R with its default settings.
-
-<details class="model-answer" id="model-answer-report-review">
-<summary>Model answer</summary>
-
-The pilot estimates a [between-group difference](#between-group-differences) of 40 percentage points. The requirement of 56 patients per group uses 60% versus 30%, so the reported inputs do not reproduce it. [Chapter 1](#what-do-we-expect-what-will-we-plan-for-and-what-matters-clinically) explains the pilot result and target difference. [Power](#statistical-power) describes the probability of rejecting the null under a specified true difference; Chapter 1 explains why it cannot give the probability that a treatment works.
-
-The requirement is 56 analyzable patients per group, or 112 total. The [loss adjustment](#account-for-expected-losses) gives `ceiling(56 / 0.95)` = 59 recruits per group, or 118 total. The [confidence-interval discussion](#interpret-a-confidence-interval-clinically) explains how to assess the eventual result against zero and the clinical threshold.
-
-“R with its default settings” leaves the function, version and relevant settings unspecified. The [calculation record](#report-calculation-method) shows how to record these. Example 4.1 also supplies the outcome, assessment time, allocation, test, Type I error probability and the rationale for the target difference. Supporting [sensitivity analyses](#stress-test-the-study-plan) can be documented separately in the protocol or supplement.
-
-</details>
-:::
+```{r report-error-review, echo=FALSE, results='asis'}
+render_error_activity("report")
+```
 
 The [teaching guide](https://katatam.github.io/sample-size-calculation/teaching/TEACHING_GUIDE.html#extended-sample-size-justification) provides a longer assignment and peer-review prompts. Before completing the report, you should be able to explain the evidence for the event percentages, why the selected target matters clinically, the choice of power, and the basis for the loss allowance.
 
@@ -2354,6 +2345,10 @@ These counts were calculated in R using the corresponding noncentral t and F dis
 Before using a result, you should check that the selected procedure matches the planned analysis and that each input has the meaning the software expects. Recording the target difference and SD in their original units makes the calculation easier to check. The [methods and software record](#tutorial-methods) explains what to retain.
 
 For a planned analysis of covariance (ANCOVA), baseline adjustment introduces further assumptions about how the covariates relate to the outcome and how much variation remains after adjustment. The effect-size input should reflect that analysis. The simple $f=d/2$ conversion above applies to the stated unadjusted two-group comparison. The FDA's guidance discusses planning and prespecifying covariate adjustment [@fda2023covariates].
+
+```{r software-error-review, echo=FALSE, results='asis'}
+render_error_activity("software")
+```
 
 ## Methods used in this tutorial {#tutorial-methods .advanced-heading}
 

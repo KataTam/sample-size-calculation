@@ -7,6 +7,10 @@ The module teaches sample size as a justified research-design decision. Activiti
 
 ## Preparation and access
 
+The embedded [report review](../book/reporting.html#report-error-activity), [discharge review](../book/calculations.html#discharge-error-activity), [recruitment review](../book/feasibility.html#recruitment-error-activity) and advanced [software review](../book/appendix.html#software-error-activity) ask learners to identify questionable passages. Some passages are appropriate. Learners can first give a reason for their choice, then open the explanation and draft a correction. A partner can check whether the revision preserves the intended study question and matches the calculation. The PDF provides the same passages and answer key. A count of passages opened measures participation in this exercise; an independently written correction gives stronger evidence of understanding.
+
+For a pilot, the [observation notes](pilot_observation_notes.html#optional-page-time-recording) describe a possible opt-in page-time recorder, how to handle split-screen use and the limits of timing data. Recording is not currently enabled.
+
 Learners should know sample versus population, binary versus continuous outcomes, and the basic purpose of a statistical test. The estimation chapter introduces confidence intervals. Send the case, short concept notes and access link in advance. Provide the complete tutorial HTML/PDF and `static_activity.md` with prepared outputs as alternatives to live apps. Formulas and formatted results remain visible; expandable R code and output support reproducibility and further learning.
 
 The apps keep the main result visible while secondary settings can remain closed. Learners can drag sliders or type values on the displayed scale; percentage fields use 5 for 5%. The introductory pain activity begins with three views, with the rest available through “Additional calculations and simulations.” For independent practice, the flashcard table can hide answers until requested. The study-plan form shows completion counts and a live report beside the questions when the screen is wide enough.

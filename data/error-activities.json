@@ -1,0 +1,68 @@
+{
+  "report": {
+    "id": "report-error-activity",
+    "title": "Activity: Review a sample size calculation report",
+    "answer_id": "model-answer-report-review",
+    "segments": [
+      {"text": "The pilot found pain relief in 70% of patients receiving novel treatment and 30% receiving standard treatment", "error": false, "explanation": "These are the observed pilot percentages. They describe the pilot sample and provide uncertain evidence for planning the new trial.", "link": "clinical-question.html#what-do-we-expect-what-will-we-plan-for-and-what-matters-clinically", "section": "Pilot observations and planning decisions"},
+      {"text": ", so the treatment improves every patient's pain by 40%", "error": true, "explanation": "The pilot found a 40-percentage-point difference between groups in the percentage reporting relief. It does not estimate an improvement of 40% in each patient's pain score.", "link": "clinical-question.html#what-do-we-expect-what-will-we-plan-for-and-what-matters-clinically", "section": "Between-group differences"},
+      {"text": ". "},
+      {"text": "Using these percentages, an R-based calculator gave a sample size of 56", "error": true, "explanation": "The chronic pain requirement of 56 analyzable patients per group uses 60% versus 30% and a 30-percentage-point target difference. The report should give those calculation inputs and identify both the per-group count and the total of 112.", "link": "calculations.html#two-proportions", "section": "Two-proportion calculation"},
+      {"text": ". "},
+      {"text": "With 90% power, there is a 90% probability that the novel treatment works", "error": true, "explanation": "Here, 90% power describes the probability that the planned test rejects the null if the true population difference is 30 percentage points and the other assumptions hold. It is conditional on that specified difference.", "link": "clinical-question.html#power", "section": "Power in repeated studies"},
+      {"text": ". "},
+      {"text": "Adding 5% for dropout gives 58.8", "error": true, "explanation": "With 5% expected missing outcomes, 95% are expected to remain available. The recruitment calculation is 56 / 0.95 = 58.95 per group before rounding.", "link": "feasibility.html#account-for-expected-losses", "section": "Expected losses"},
+      {"text": ", "},
+      {"text": "which we round down to 58 patients in total", "error": true, "explanation": "Rounding upward gives 59 recruits per group, or 118 in total. The analyzable requirement remains 56 per group, or 112 in total.", "link": "feasibility.html#account-for-expected-losses", "section": "Recruitment and analyzable counts"},
+      {"text": ". "},
+      {"text": "This will demonstrate a clinically important benefit", "error": true, "explanation": "A planned sample size provides specified power under assumptions. Clinical interpretation depends on the eventual estimated difference and its uncertainty, judged against the 20-percentage-point clinical threshold. A significant result alone cannot establish that this threshold has been exceeded.", "link": "estimation-planning.html#interpret-a-confidence-interval-clinically", "section": "Clinical interpretation of the eventual result"},
+      {"text": ". "},
+      {"text": "The sample size was calculated using R with its default settings", "error": true, "explanation": "A reproducible report identifies R and package versions, the function, inputs and settings. This example uses stats::power.prop.test(), a two-sided test, strict = TRUE, a 5% Type I error probability and 90% power. It should also specify the population, binary outcome at four weeks, equal allocation, planned analysis and reasons for its assumptions.", "link": "reporting.html#write-a-sample-size-justification", "section": "The complete annotated report"},
+      {"text": "."}
+    ]
+  },
+  "discharge": {
+    "id": "discharge-error-activity",
+    "title": "Activity: Review the discharge calculations",
+    "segments": [
+      {"text": "Standard care has an 80% discharge percentage", "error": false, "explanation": "This is the stated baseline for all three plans. Keeping it fixed makes the target differences comparable.", "link": "calculations.html#discharge", "section": "The discharge plans"},
+      {"text": ". "},
+      {"text": "A 20% relative increase in Plan A gives 100% discharged", "error": true, "explanation": "A relative increase of 20% gives 80% x 1.20 = 96%, an increase of 16 percentage points. Adding 20 percentage points would give 100%.", "link": "calculations.html#discharge", "section": "Relative increases and percentage points"},
+      {"text": ". "},
+      {"text": "Plan B's increase of 10 percentage points gives 90% discharged", "error": false, "explanation": "Adding 10 percentage points to 80% gives 90%. This is an absolute change.", "link": "calculations.html#discharge", "section": "The discharge plans"},
+      {"text": ". "},
+      {"text": "At the same 80% power, Plan B needs fewer patients than Plan A", "error": true, "explanation": "In these plans, detecting the smaller 10-point difference in Plan B requires more patients than detecting the 16-point difference in Plan A. The calculation also uses the two event percentages.", "link": "calculations.html#discharge", "section": "Comparing the discharge plans"},
+      {"text": ". "},
+      {"text": "Increasing power to 90% in Plan C reduces the required sample", "error": true, "explanation": "Plan C retains Plan A's event percentages and Type I error probability. Achieving the higher power requires more patients.", "link": "calculations.html#how-error-rates-and-power-affect-sample-size", "section": "Power and sample size"},
+      {"text": "."}
+    ]
+  },
+  "recruitment": {
+    "id": "recruitment-error-activity",
+    "title": "Activity: Review the recruitment plan",
+    "segments": [
+      {"text": "For 56 analyzable patients per group and 5% expected missing outcomes, we plan to recruit 59 per group", "error": false, "explanation": "Dividing 56 by 0.95 and rounding upward gives 59 recruits per group. Actual retention can vary.", "link": "feasibility.html#account-for-expected-losses", "section": "Expected losses"},
+      {"text": ". "},
+      {"text": "Anyone who switches treatment will automatically count as lost to follow-up", "error": true, "explanation": "A participant who switches treatment can still provide the four-week pain-relief outcome. For the effect of treatment assignment, that outcome remains in the participant's randomized group. Figure 3.1 shows these separate decisions.", "link": "feasibility.html#fig:treatment-followup", "section": "Treatment received and outcome availability"},
+      {"text": ". "},
+      {"text": "If expected losses are 10% in one group and 20% in the other, an overall 15% allowance will meet the expected analyzable requirement in both groups", "error": true, "explanation": "The groups need separate retention assumptions. For 56 analyzable patients, the recruitment calculations give 63 at 10% expected loss and 70 at 20%. With equal recruitment, the app uses 70 per group so that the higher-loss group meets the expected requirement.", "link": "feasibility.html#account-for-expected-losses", "section": "Differential dropout"},
+      {"text": ". "},
+      {"text": "Recruiting extra participants will remove bias caused by missing outcomes", "error": true, "explanation": "Extra recruitment can protect the expected count. Missing-outcome bias depends on why outcomes are missing and how they are analyzed. Prevention, appropriate analysis and sensitivity analyses remain necessary.", "link": "feasibility.html#misconception-dropout", "section": "Missing outcomes and bias"},
+      {"text": "."}
+    ]
+  },
+  "software": {
+    "id": "software-error-activity",
+    "title": "Activity: Review the software choices",
+    "segments": [
+      {"text": "For a target mean difference of 3 units and an SD of 5, Cohen's d is 0.60", "error": false, "explanation": "For this independent two-group comparison, d = 3 / 5 = 0.60.", "link": "appendix.html#gpower-assumptions", "section": "Checking software assumptions"},
+      {"text": ". "},
+      {"text": "The corresponding two-group ANOVA therefore uses f = 0.60", "error": true, "explanation": "For the stated unadjusted comparison with two equally sized groups, f = d / 2 = 0.30. Entering f = 0.60 represents a mean difference of 6 units at SD 5.", "link": "appendix.html#tab:gpower-effect-sizes", "section": "Effect-size inputs and sample sizes"},
+      {"text": ". "},
+      {"text": "A software result labeled total sample size can be recorded as patients per group", "error": true, "explanation": "The output label determines what the count represents. For two equally sized groups, the total is twice the per-group count. The final report should state both counts explicitly.", "link": "reporting.html#report-calculation-method", "section": "Recording the calculation result"},
+      {"text": ". "},
+      {"text": "Selecting this unadjusted ANOVA automatically accounts for baseline pain scores", "error": true, "explanation": "Baseline-adjusted analysis requires a method and assumptions for the intended covariate adjustment. The simple two-group ANOVA calculation here contains no baseline covariate.", "link": "appendix.html#gpower-assumptions", "section": "Covariate adjustment and planning"},
+      {"text": "."}
+    ]
+  }
+}

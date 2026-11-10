@@ -76,6 +76,10 @@ let browser;
         }
       }
       clone.querySelectorAll('.chapter-quiz').forEach(el => el.removeAttribute('data-quiz-ready'));
+      clone.querySelectorAll('.spot-activity').forEach(el => {
+        el.removeAttribute('data-spot-ready');
+        el.querySelector('.spot-popover')?.remove();
+      });
       clone.querySelectorAll('.chapter-end-nav, .chapter-downloads, .tutorial-downloads, .reference-preview-button, script, .MathJax_Preview').forEach(el => el.remove());
       for (const img of clone.querySelectorAll('img')) {
         const response = await fetch(img.src); if (!response.ok) throw Error('Missing image '+img.src);
@@ -123,6 +127,9 @@ let browser;
       root.querySelectorAll('.quiz-answer').forEach((el, i) => el.querySelector('.quiz-number').textContent = i + 1);
     });
     document.querySelectorAll('details').forEach(el => el.open=true);
+    document.querySelectorAll('.spot-choice').forEach(el => {
+      for (const attribute of ['role','tabindex','aria-expanded','aria-controls','aria-haspopup']) el.removeAttribute(attribute);
+    });
     if (Array.from(document.querySelectorAll('details')).some(el => !el.open)) throw Error('A PDF box remained closed');
     await Promise.all(Array.from(document.images).map(img => img.decode().catch(() => {})));
     await document.fonts.ready;

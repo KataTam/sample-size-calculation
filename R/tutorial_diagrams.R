@@ -116,8 +116,8 @@ draw_treatment_followup <- function() {
   old <- par(no.readonly = TRUE)
   on.exit(par(old))
   diagram_canvas()
-  text(c(16, 50, 85), 96,
-    c("Randomized group", "Treatment received", "Final assessment"), font = 2, cex = .97)
+  text(c(16, 50, 85), 95,
+    c("1. Randomized\ngroup", "2. Treatment\nreceived", "3. Four-week\noutcome"), font = 2, cex = .97)
   for (i in 1:2) {
     y <- c(70, 30)[i]
     border <- c("#17658a", "#72428b")[i]

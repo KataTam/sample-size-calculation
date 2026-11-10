@@ -22,6 +22,16 @@ For each task, the observer should record the learner's explanation as well as t
 
 The existing [learning-assessment form](pilot_learning_assessment.md) can assess conceptual responses separately from [usability and confidence feedback](pilot_student_feedback.md). Results should be reported descriptively with participant and response counts. Before a larger classroom session, the team should agree which issues need correction and which require another observation round.
 
+## Optional page-time recording
+
+Page-time recording is not currently enabled. A small pilot could use an opt-in recorder with participant codes such as P01, a session code and a CSV download at the end. The file could record the resource, visits, visible-page seconds, pauses and whether the tutorial and app were displayed together. The participant-code key and exported records should be kept in the approved study location, outside the public source repository.
+
+The browser's [Page Visibility API](https://developer.mozilla.org/en-US/docs/Web/API/Page_Visibility_API) can distinguish visible pages from background tabs. The split-screen view needs additional checks: hiding an app panel with CSS does not trigger a visibility change inside its iframe. A shared tutorial-and-app interval should be recorded once, with both resource identifiers; it cannot establish which panel held the reader's attention. Summing overlapping tab or panel times would overstate the session duration.
+
+Time with a visible page open is an approximate engagement measure. An optional inactivity rule would need a stated cutoff and can undercount quiet reading; visible time and idle-adjusted time should therefore remain separate. Observation notes, explanations and pre/post questions should accompany timings. [Chan et al. (2019)](https://doi.org/10.2196/11241) discusses the limits of learning analytics.
+
+[GitHub Pages serves a static website](https://docs.github.com/en/pages/getting-started-with-github-pages/what-is-github-pages), so participant-level records need a separate collection method. For a small supervised pilot, local recording and participant CSV export are a practical first option. Automatic central collection would require an institution-approved service, agreed access and retention, and participant information before activation.
+
 ## Session Details
 
 | Item | Notes |
