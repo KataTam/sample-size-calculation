@@ -36,6 +36,8 @@ The BREAST-Q review by [Gallo et al. (2022)](https://doi.org/10.1097/PRS.0000000
 
 ## Advanced methods and reference books
 
+For [evidence, expectations and uncertainty](../book/curves.html#planning-uncertainty), [Benjamin et al. (2022)](https://doi.org/10.1371/journal.pone.0262862) directly assess investigators' forecasts; [Rothwell et al. (2018)](https://doi.org/10.1186/s13063-018-2886-y) compare target and observed effects. [Liu et al. (2024)](https://doi.org/10.1007/s43441-024-00697-4) explain why that comparison alone is insufficient to assess optimism. [Noticewala et al. (2025)](https://doi.org/10.1093/jnci/djaf097) examine effect assumptions and their justification in oncology trials. These sources support explicit uncertainty, evidence review and sensitivity analysis.
+
 *Power Analysis with Superpower* and Lakens and Caldwell (2021) support exploring repeated studies and power curves; Pargent et al. (2024) provides a structured mixed-model simulation workflow. Use these with the one-study, power-curve and repeated-trial activities, preserving the clinical tutorial's stated analysis methods. Sandoval, DICE and Rudolph provide complementary teaching examples. More simulation repetitions improve Monte Carlo precision, not the proposed study's power.
 
 Perugini et al. (2014) introduces safeguard power; Kunzmann et al. (2021) and Pezeshk (2003) discuss approaches that account for parameter uncertainty. These belong with a justified advanced objective, not as automatic sample-size reductions. Shamsutdinova et al. (2026) is a prediction-planning preprint and should be read as emerging work.

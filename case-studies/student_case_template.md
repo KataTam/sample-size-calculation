@@ -44,7 +44,7 @@ Intended conclusion and what would make the information useful:
 
 For a single-proportion estimation or pilot process-measure case, replace the two-group fields with the parameter, confidence level, useful margin of error, available total n and sampling plan. Paired or crossover studies, cluster-randomized trials, time-to-event outcomes and multi-arm comparisons need calculations matched to those designs. You can still use this worksheet to document the question and assumptions. The [study-design guide](../book/study-designs.html) points to relevant methods; the basic two-independent-group calculators cover a narrower scope.
 
-For every evidence source, check its population, outcome definition, time point and analysis. Identify the least certain assumptions. A clinical threshold needs stakeholder justification. Choosing a target larger than the clinical threshold means accepting lower power at some worthwhile differences.
+Your evidence review should consider each source's population, outcome definition, time point and analysis, including less favorable or conflicting findings. It should connect the least certain input to a plausible range and identify further evidence or independent review that would help assess it. A clinical threshold needs stakeholder justification. Choosing a target larger than the clinical threshold means accepting lower power at some worthwhile differences.
 
 ## Clinical, ethical and resource questions
 

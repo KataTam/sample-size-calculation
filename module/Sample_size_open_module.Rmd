@@ -297,7 +297,7 @@ A clear sample size justification lets readers assess your choices and reproduce
 In the activity, your study title identifies the plan. Your answers are entered once. The preview begins with a concise sample size calculation report and then shows the supporting study plan, including detailed evidence, alternative scenarios, feasibility notes and saved calculations. You can mark each section ready for review once its applicable questions are answered; changes to key inputs flag affected sections for another review. The report is available as PDF or an editable Word document. “Save work for later” stores your entries for reopening in the activity.
 
 
-Treatment differences estimated from small pilots are uncertain. Following up only pilots whose estimated effect gives an affordable main study can introduce additional bias [@albers2018]. A pilot can support conclusions about recruitment, acceptability, measurement procedures, and other feasibility objectives. It is generally not designed to establish treatment effectiveness, and its treatment-difference estimate may be highly uncertain [@eldridge2016]. In this tutorial, you examine plausible ranges explicitly; [further planning approaches](#further-planning-approaches) address more formal ways to account for uncertainty.
+Treatment differences estimated from small pilots are uncertain. Following up only pilots whose estimated effect gives an affordable main study can introduce additional bias [@albers2018]. Pilots mainly inform feasibility, including recruitment and measurement procedures [@eldridge2016]. Your expectations should draw on the full relevant evidence, including less favorable findings. An independent clinical or statistical review can help identify assumptions needing closer examination. The advanced discussion of [evidence and uncertainty](#planning-uncertainty) connects these judgments to sensitivity analysis.
 
 <details class="misconception" id="model-answer-pilot-threshold">
 <summary>Common misconception: the clinical threshold should follow the pilot result</summary>
@@ -1174,6 +1174,8 @@ The smaller difference should have a scientific justification. These comparisons
 
 *Lasagna's law* describes the tendency to overestimate how many patients will actually be available for a study. Eligibility criteria, willingness to participate, competing studies, and practical barriers can substantially reduce recruitment [@lasagna1979].
 
+In a prospective survey, investigators' average forecast for reaching recruitment targets was 78.8%, compared with 42.7% actually succeeding among 281 evaluated trials. For completing primary data collection on time, the corresponding figures were 72.2% and 13.4% among 536 trials [@benjamin2022forecasts]. The [advanced discussion](#planning-uncertainty) explains the survey's limitations. These findings support allowing for uncertainty in recruitment and timing.
+
 For the chronic pain trial, recruitment estimates should draw on recent screening and enrollment records. For example, if 100 potentially relevant patients are seen each month, 40 meet the eligibility criteria, and half of those consent, expected recruitment is 20 participants per month. Your plan should also consider slower recruitment and delays in opening study sites.
 
 </details>
@@ -1246,8 +1248,8 @@ Your study plan holds the question, evidence, assumptions, calculations, feasibi
 
 The example follows reporting elements in SPIRIT 2025, CONSORT 2025, DELTA² and the UMCG SAP template (version 3, section 4.1) [@spiritconsort2025; @consortee2025; @cook2018delta2; @umcgsap; @roa2024comet]. The sample size calculation report, protocol and SAP should use consistent outcomes, assumptions and analysis methods.
 
-<div class="annotated-report" id="sample-size-calculation-report" role="group" aria-labelledby="sample-size-report-caption">
-<p class="caption" id="sample-size-report-caption">Example 4.1: Sample size calculation report for the chronic pain trial.</p>
+<div class="annotated-report" role="group" aria-labelledby="sample-size-report-caption">
+<p class="caption" id="sample-size-report-caption"><span id="sample-size-calculation-report">Example 4.1: Sample size calculation report for the chronic pain trial.</span></p>
 
 <p class="report-part">Question and design</p>
 
@@ -1333,7 +1335,7 @@ After this chapter, you should be able to:
 - Read power curves under specified population assumptions.
 - Compare required sample sizes with performance at a fixed sample size.
 - Assess recruitment limits and smaller plausible treatment differences.
-- Distinguish expectations from clinical judgments and justify the target used for planning.
+- Assess the evidence and uncertainty behind expectations, clinical judgments and the calculation target.
 - Explain how observed significance boundaries and sampling distributions relate to power.
 
 :::
@@ -1500,7 +1502,7 @@ knitr::kable(data.frame(
   digits = 3, caption = "Continuous-outcome sensitivity with the sample selected for 90% target power held fixed.")
 ```
 
-## Treatment expectations in the ST01 trial {#st01-expectations .advanced-heading}
+## Evidence, expectations and uncertainty {#st01-expectations .advanced-heading}
 
 The Medical Research Council ST01 trial compared conventional (D1) with more extensive (D2) gastric-cancer surgery. Before recruitment, investigators surveyed 26 surgeons separately about expected five-year survival benefits and benefits sufficient to change practice [@fayers2000beliefs].
 
@@ -1514,7 +1516,13 @@ Table: (\#tab:st01-planning-roles) ST01 planning roles: absolute between-group d
 
 The exploratory survey left the design unchanged. It revealed higher expectations in the design committee. The clinical boundaries summarize surgeons' judgments. ST01 used survival analysis, which is needed to reproduce its calculation.
 
-For your study, these roles can have equal values or a different order. The chosen target still needs evidence of plausibility and clinical importance. If the expected benefit is below the clinical threshold, you should reconsider the study's clinical value. If the target exceeds the expected benefit, your justification should explain its plausibility and examine power at the smaller expected difference. A [sensitivity analysis](#compare-planning-assumptions) makes the implications visible [@cook2018delta2].
+<span id="planning-uncertainty"></span>
+
+Uncertainty remains even when assumptions are carefully justified. In a review of 107 randomized trials, the median standardized target effect was 0.30, compared with a median observed effect of 0.11 [@rothwell2018targets]. Differences between targets and results can reflect uncertain treatment effects and sampling variability. Assessing investigator optimism also requires evidence about beliefs and their uncertainty before results are known [@liu2024uncertainty].
+
+@benjamin2022forecasts collected forecasts from 740 principal investigators. Among the 104 trials with primary outcome results available, the mean predicted probability of a statistically significant result favoring the intervention was 59.6%; 43.3% produced one. The 16.7% survey response rate and incomplete follow-up limit generalization. These forecasts concern overall trial success; statistical power is conditional on specified assumptions. A separate review of 385 phase III oncology trials found clinical-data justification for effect assumptions in only 41 (10.6%), reinforcing the importance of documenting the evidence [@noticewala2025effects].
+
+For your study, the expected difference, target difference and clinical threshold can have equal values or a different order. The chosen target still needs evidence of plausibility and clinical importance. If the expected benefit is below the clinical threshold, you should reconsider the study's clinical value. If the target exceeds the expected benefit, your justification should explain its plausibility and examine power at the smaller expected difference. A [sensitivity analysis](#compare-planning-assumptions) makes the implications visible [@cook2018delta2].
 
 ## What can the available sample establish? {#available-sample .advanced-heading}
 
@@ -1688,7 +1696,7 @@ This activity explains why the patterns seen in repeated simulations occur. The 
 ### Take-home points {.unnumbered}
 
 - A power curve describes a specified analysis under explicit assumptions.
-- Expectations, the calculation target and clinical judgments need separate justification, even when their numerical values coincide.
+- Evidence and its uncertainty should inform expectations and the calculation target; clinical importance also needs justification.
 - The power at a smaller worthwhile difference may be lower than the target power.
 - A recruitment limit can leave an important benefit difficult to detect.
 

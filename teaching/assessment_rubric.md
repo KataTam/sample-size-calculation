@@ -6,7 +6,7 @@ Assess a case worksheet or assumptions report and a 300–600 word justification
 |---|---|
 | 1. Question and goal | Clear outcome/time point and a testing, estimation or fixed-resource aim aligned with the intended conclusion |
 | 2. Differences and clinical importance | Roles of expected difference, target difference and clinical threshold are distinguished; equal values or different numerical orders are accepted when justified. Units, sign, patient relevance and consequences of the chosen target are clear |
-| 3. Assumption evidence | Sources or hypothetical status, population and time point are stated; uncertain pilot estimates and plausible ranges are acknowledged |
+| 3. Assumption evidence | Sources or hypothetical status, population and time point are stated; limitations, conflicting findings where available, and plausible ranges inform the assumptions |
 | 4. Analysis and calculation | Appropriate stated test/interval and assumptions; reproducible calculation with method limits acknowledged |
 | 5. Sample and recruitment counts | Correct per-group and total rounding; dropout inflation distinguished from fixing missing-data bias |
 | 6. Sensitivity | Plausible alternative effect, SD or risk evaluated at fixed planned n and interpreted |
@@ -20,6 +20,7 @@ For a short activity use criteria 1, 2, 7, 8 and 10 (maximum 10), with prepared 
 ## Feedback prompts
 
 - Which effect is an expectation, and which is a judgment about importance?
+- Which evidence supports the plausible range, and what finding would change your assumption?
 - Your interval excludes zero. Does it also exclude effects below the clinical threshold?
 - What is fixed while you change the generating scenario?
 - Would increasing replications alter the power of each study?

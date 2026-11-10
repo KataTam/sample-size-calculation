@@ -16,12 +16,12 @@
     ]],
     ['Assumptions and evidence', [
       ['scale', 'Effect scale and direction of benefit', 'An event-percentage difference is measured in percentage points; a mean difference uses the outcome units. Your answer should define treatment minus control and which sign favors treatment.', 'The effect scale and direction of benefit are'],
-      ['expected', 'Expected difference', 'Your estimate should cite comparable evidence and acknowledge uncertainty, especially when based on a small pilot.', 'The expected difference and supporting evidence are'],
+      ['expected', 'Expected difference', 'Your estimate should use comparable evidence, including less favorable findings. A plausible range should reflect uncertainty, especially with small pilots.', 'The expected difference and supporting evidence are'],
       ['clinical', 'Clinically important difference (clinical threshold)', 'Patient and clinical input should justify the minimum worthwhile benefit between groups. The units should match the outcome scale.', 'The clinical threshold and its justification are', 'comparison'],
       ['planning', 'Target difference: used in the calculation', 'Power is evaluated at this plausible, clinically worthwhile between-group difference. It can equal the expected difference or clinical threshold; the three roles have no fixed order and each needs justification.', 'The target difference and its justification are', 'power'],
       ['variation', 'Variation or event probabilities', 'For a continuous outcome, you need an SD in its units; for a binary outcome, event percentages. You should cite the study supporting each value and explain whether its population, outcome measurement, and follow-up time are comparable to yours.', 'The variation or event probabilities used for planning are'],
-      ['evidence_review', 'Evidence relevance and uncertainty', 'You should assess differences in population, outcome definition, and follow-up time, then identify uncertain inputs needing sensitivity analysis.', 'The relevance and uncertainty of the evidence are'],
-      ['sensitivity', 'Sensitivity analysis: alternative assumptions', 'Plausible alternatives should reflect uncertainty in the evidence. Your report should distinguish power at a fixed sample size from recalculated counts needed to meet the target.', 'The sensitivity scenarios and their evidence are'],
+      ['evidence_review', 'Evidence relevance and uncertainty', 'Your review should consider comparability, small samples and selectively reported findings. It should identify the main uncertain input and what evidence or independent review would help assess it.', 'The relevance and uncertainty of the evidence are'],
+      ['sensitivity', 'Sensitivity analysis: alternative assumptions', 'Alternatives should follow from the evidence review, including less favorable plausible values. Your answer should state whether sample size stays fixed or is recalculated, and explain any change in your recommendation.', 'The sensitivity scenarios and their evidence are'],
       ['progression', 'Feasibility objectives and progression criteria', 'For each feasibility outcome, you should specify a denominator, acceptable and unacceptable levels, and the action associated with each result.', 'The feasibility objectives and progression criteria are', 'feasibility']
     ]],
     ['Calculation', [
@@ -87,7 +87,7 @@
     clinical: '20 percentage points: one additional patient with relief for every five treated. This is the minimum additional benefit judged worthwhile given the treatment burden in this example.',
     planning: '30 percentage points (60% versus 30% relief), below the uncertain 40-point pilot estimate and above the 20-point minimum worthwhile benefit. Power is evaluated at this target difference.',
     variation: '30% relief with standard treatment and 60% with novel treatment for the calculation. These illustrative percentages imply the 30-point target difference.',
-    evidence_review: 'The small pilot gives uncertain event percentages. I would check comparable four-week studies before treating these inputs as reliable.',
+    evidence_review: 'The pilot has only ten patients per group. I would review comparable four-week studies, including less favorable findings, and ask an independent reviewer to assess the plausible relief percentages.',
     sensitivity: 'I would assess power at 20-, 30-, and 40-point benefits, keeping the sample size and 30% standard-treatment relief fixed.',
     progression: 'Retention at four weeks would inform feasibility. The proceed, amend, and stop thresholds remain to be agreed before data collection.',
     analysis: 'A two-sided pooled score test for independent proportions without continuity correction, with a 95% confidence interval for the difference in relief percentages.',
@@ -121,8 +121,8 @@
       clinical: '[Minimum worthwhile between-group benefit] ' + units + ', justified by [patient and clinical input].',
       planning: '[Target difference] ' + units + ', supported as worthwhile and plausible by [evidence].',
       variation: binary ? '[Event percentage(s)] for [population and assessment time], supported by [source].' : 'SD [value] ' + units + ' from [comparable population and measurement method].',
-      evidence_review: '[Source] has [comparable population, outcome definition, and follow-up time]. [Limitation] makes [input] uncertain; I would examine [plausible alternatives].',
-      sensitivity: 'I would evaluate [plausible alternatives] at the selected sample size and record any revised count needed to meet the target.',
+      evidence_review: '[Source] is relevant because [population, outcome and follow-up match]. [Limitation or conflicting finding] makes [input] uncertain; [further evidence or independent review] would help assess it.',
+      sensitivity: 'Based on [evidence], I would examine [plausible range, including less favorable values], holding [quantities] fixed. [Result] would change my recommendation to [decision].',
       progression: 'Proceed at [acceptable result], amend at [intermediate result], and stop at [unacceptable result], using [outcome and denominator].',
       analysis: '[Test and sidedness, if applicable] and [confidence interval method], accounting for [design and dependence between observations].',
       software: '[Method] in [software and version], with [code version, inputs, and rounding]. For simulation: [generating assumptions, repetitions, and random-number settings].',
@@ -161,7 +161,7 @@
       recruitment: 'With illustrative 5% expected losses, 59 / 0.95 rounds up to 63 patients per group (126 total). Missing outcomes and treatment changes also need an analysis plan.',
       resources: 'At 20 eligible patients per month and 70% consent, recruitment of 126 would take about nine months, allowing only for whole months.',
       sensitivity: 'I would assess power at 2-, 3-, and 4-unit differences and plausible SDs around 5, holding the sample fixed.',
-      evidence_review: 'These are teaching assumptions. Comparable patient data are needed; small pilots give uncertain differences and SDs.'
+      evidence_review: 'I would review comparable patient data, including less favorable findings, and ask an independent reviewer to assess plausible differences and SDs. Small pilots leave both uncertain.'
     });
     if (value.study_type === 'single') Object.assign(result, {
       question: value.outcome === 'binary' ? 'What percentage of adults in the target population have the condition during the specified survey period?' : 'What is the mean pain score in the target population at the specified assessment time?',
@@ -178,7 +178,7 @@
       resources: 'The sampling frame, contact rate, expected consent and assessment time should support the required total within the available period.',
       software: 'The calculation record includes the one-population method, confidence level, interval-width target, assumptions, software version and rounding.',
       sensitivity: 'I would compare required counts across plausible population values, then assess interval width at the selected sample size.',
-      evidence_review: 'The earlier survey should be checked for comparable sampling, outcome definitions and assessment time. Nonresponse could limit applicability.',
+      evidence_review: 'I would compare the sampling, outcome definition and assessment time across relevant surveys. Nonresponse or conflicting findings could widen the plausible range; an independent review could help assess it.',
       conclusion: 'The study will estimate the population value with a confidence interval. Sampling coverage and nonresponse affect how well the findings represent the population.'
     });
     if (value.goal === 'fixed') Object.assign(result, {
@@ -210,7 +210,7 @@
       if (value.goal === 'feasibility') {
         result.precision = formats.precision;
         result.sensitivity = 'I would vary the retention or assessment-time assumptions and check whether the progression decision changes.';
-        result.evidence_review = 'Comparable recruitment and follow-up procedures would support these assumptions; their reliability remains to be assessed.';
+        result.evidence_review = 'I would compare recruitment and follow-up records from similar procedures, including slower or less successful studies, and ask a colleague to assess the plausible range.';
       }
     }
     return result;
