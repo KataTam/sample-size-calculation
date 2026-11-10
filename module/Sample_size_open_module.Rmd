@@ -49,7 +49,7 @@ report_example <- local({
 
 How many patients would you need to compare a new pain treatment with standard treatment? This tutorial helps you justify a sample size that can answer your research question, using clinical examples, calculations and simulation.
 
-Although the examples are clinical, the principles of justifying assumptions, choosing a target difference, and examining power and precision also apply in psychology, education, and other quantitative disciplines [@lakens2022]. The tutorial is a suitable starting point for learning these principles and planning comparisons of two independent groups with a continuous or binary outcome, provided the calculation’s assumptions match your study. Later chapters introduce other planning goals and help you recognize when a different method is needed. For factorial experiments and repeated-measures ANOVA, including designs common in psychology, *[Power Analysis with Superpower](https://aaroncaldwell.us/SuperpowerBook/)* provides more directly applicable examples and simulations [@superpowerbook2022]. Studies involving multilevel models, prediction, or time-to-event outcomes need guidance matched to those analyses; [Other study goals and designs](#study-designs) points you toward relevant resources. What counts as a worthwhile difference should also reflect your field and research question.
+Although the examples are clinical, the principles of justifying assumptions, choosing a target difference, and examining power and precision also apply in psychology, education, and other quantitative disciplines [@lakens2022]. The tutorial is a suitable starting point for learning these principles and planning comparisons of two independent groups with a continuous or binary outcome, provided the calculation’s assumptions match your study. Later chapters introduce other planning goals and help you recognize when a different method is needed. For factorial experiments and repeated-measures ANOVA, including designs common in psychology, *[Power Analysis with Superpower](https://aaroncaldwell.us/SuperpowerBook/)* provides more directly applicable examples and simulations [@superpowerbook2022]. Studies involving multilevel models, prediction, or time-to-event outcomes need guidance matched to those analyses; [Study designs and testing strategies](#study-designs) points you toward relevant resources. What counts as a worthwhile difference should also reflect your field and research question.
 
 ## How to use this tutorial {-}
 
@@ -70,7 +70,7 @@ cat('<figure class="tutorial-roadmap">',
 
 Each teaching chapter ends with an embedded *Check your understanding* quiz. The material comes together in a [cumulative quiz](#cumulative-quiz).
 
-You can open [the tutorial and an app together](https://katatam.github.io/sample-size-calculation/study/?activity=pain_one_many), consult the [activity walkthroughs](https://katatam.github.io/sample-size-calculation/student-materials/activity-walkthroughs.html), or review terms in the [Glossary](#glossary). For your own project, [Other study goals and designs](#study-designs) helps you choose an approach. Its advanced section on [units of randomization, measurement, and analysis](#units-of-analysis) explains how grouping and paired measurements affect the information a study provides.
+You can open [the tutorial and an app together](https://katatam.github.io/sample-size-calculation/study/?activity=pain_one_many), consult the [activity walkthroughs](https://katatam.github.io/sample-size-calculation/student-materials/activity-walkthroughs.html), or review terms in the [Glossary](#glossary). For your own project, [Study designs and testing strategies](#study-designs) helps you choose an approach. Its advanced section on [units of randomization, measurement, and analysis](#units-of-analysis) explains how grouping and paired measurements affect the information a study provides.
 
 [Flashcards](https://katatam.github.io/sample-size-calculation/student-materials/flashcards/index.html) are available for Core and Core + Advanced, with a [question-and-answer preview](https://katatam.github.io/sample-size-calculation/student-materials/flashcards/cards.html) and Anki/Quizlet downloads. Questions and suggestions are welcome through [Feedback](https://forms.cloud.microsoft/e/j00AMibqi5).
 
@@ -99,6 +99,7 @@ The extensions below may be relevant to your study question. They should help yo
 - Plan a [two-group comparison for useful precision](#plan-for-precision) or a [single-population prevalence estimate](#prevalence), matching the criterion to the research question.
 - Assess [existing-data reuse](#dataset-reuse), [rare-disease constraints](#rare-diseases), and the information needed for decisions in a [pilot or feasibility study](#pilot-feasibility).
 - Recognize [study designs that need another method](#study-designs), including paired measurements and prediction models.
+- Explain how [multiple comparisons](#multiple-outcomes-comparisons), [interim analyses](#interim-analyses-stopping) and [sample-size re-estimation](#sample-size-re-estimation) affect planning and reporting.
 - [Reproduce calculations and simulations](#appendix) with their assumptions and methods documented.
 
 :::
@@ -175,7 +176,7 @@ A clear treatment-comparison question identifies the Population, Intervention, C
 
 For the chronic pain trial, the population is patients with chronic pain, the intervention is the novel treatment, the comparator is standard treatment, and the outcome is pain relief at four weeks. Patients are randomly allocated to two equally sized groups. The quantity of interest is the absolute difference between the groups' pain-relief percentages. The planned analysis compares two independent proportions and reports the estimated difference with a confidence interval.
 
-Before selecting calculation inputs, you should also consult guidance for the study design. For a randomized trial, [SPIRIT](#spirit) 2025 covers the protocol and [CONSORT](#consort) 2025 covers reporting the results [@spiritconsort2025]. Other designs have corresponding guidelines, such as [STROBE](#strobe) for observational studies and [STARD](#stard) for diagnostic accuracy. These reporting guidelines identify decisions to document; [Other study goals and designs](#study-designs) links to the guidance for each design.
+Before selecting calculation inputs, you should also consult guidance for the study design. For a randomized trial, [SPIRIT](#spirit) 2025 covers the protocol and [CONSORT](#consort) 2025 covers reporting the results [@spiritconsort2025]. Other designs have corresponding guidelines, such as [STROBE](#strobe) for observational studies and [STARD](#stard) for diagnostic accuracy. These reporting guidelines identify decisions to document; [Study designs and testing strategies](#study-designs) links to the guidance for each design.
 
 The map below gathers the remaining decisions for the chronic pain trial. Its outcome is [binary](#binary-outcome){.no-glossary-tooltip}: each patient either reports pain relief or does not. A different question or analysis may need a different sample size method.
 
@@ -185,7 +186,7 @@ You can begin your [study-plan report](https://katatam.github.io/sample-size-cal
 knitr::asis_output(render_question_map())
 ```
 
-The examples use [frequentist methods](#frequentist-methods): [two-sided tests](#two-sided-test) for superiority and confidence intervals for estimation. [Estimation](#estimation){.no-glossary-tooltip} uses sample data to estimate a population quantity, such as a between-group difference. [Precision](#precision){.no-glossary-tooltip} describes how much uncertainty remains around that estimate, assessed here by interval width at a specified confidence level. A trial planned for power can also estimate the treatment difference; choosing a precision target changes how its sample size is determined. Non-inferiority, equivalence and clustered trials require different hypotheses or calculations; [Other study goals and designs](#study-designs) helps identify these designs. For Bayesian planning, see [@kunzmann2021review].
+The examples use [frequentist methods](#frequentist-methods): [two-sided tests](#two-sided-test) for superiority and confidence intervals for estimation. [Estimation](#estimation){.no-glossary-tooltip} uses sample data to estimate a population quantity, such as a between-group difference. [Precision](#precision){.no-glossary-tooltip} describes how much uncertainty remains around that estimate, assessed here by interval width at a specified confidence level. A trial planned for power can also estimate the treatment difference; choosing a precision target changes how its sample size is determined. Non-inferiority, equivalence and clustered trials require different hypotheses or calculations; [Study designs and testing strategies](#study-designs) helps identify these designs. For Bayesian planning, see [@kunzmann2021review].
 
 ## What do you expect, what will you plan for, and what matters clinically? {#what-do-we-expect-what-will-we-plan-for-and-what-matters-clinically .core-heading}
 
@@ -593,7 +594,7 @@ After this section, you should be able to:
 - In the advanced section, compare planning for target power with planning for a useful confidence-interval width.
 :::
 
-You can now apply these ideas to two-arm treatment comparisons. The formulas below assume two [independent groups](#independent-groups) with equal allocation and a [two-sided test](#two-sided-test). Studies that randomize hospitals, compare body sites within participants, or collect repeated measurements require calculations that account for dependence; see [units of randomization, measurement, and analysis](#units-of-analysis). The advanced section on [estimation with a precision target](#plan-for-precision) explains another way to plan the comparison. [Recruitment and feasibility](#feasibility) then considers whether you can obtain enough usable outcomes. [Other study goals and designs](#study-designs) introduces single-population estimation and other designs.
+You can now apply these ideas to two-arm treatment comparisons. The formulas below assume two [independent groups](#independent-groups) with equal allocation and a [two-sided test](#two-sided-test). Studies that randomize hospitals, compare body sites within participants, or collect repeated measurements require calculations that account for dependence; see [units of randomization, measurement, and analysis](#units-of-analysis). The advanced section on [estimation with a precision target](#plan-for-precision) explains another way to plan the comparison. [Recruitment and feasibility](#feasibility) then considers whether you can obtain enough usable outcomes. [Study designs and testing strategies](#study-designs) introduces single-population estimation and other designs.
 
 Having specified the chronic pain target difference and acceptable error risks, you can calculate the required number of analyzable patients. The first calculation concerns that trial; the next concerns a continuous-outcome comparison.
 
@@ -1166,13 +1167,15 @@ If the study remains infeasible, you may need to reconsider its aim, collaborate
 
 Broader eligibility may make the study more representative of the intended population. If it also increases outcome variability, power at a fixed sample and treatment difference may fall. The calculation should reflect the resulting population and analysis.
 
-Clustered designs, nonparametric analyses and Bayesian planning need methods suited to their assumptions; [Other study goals and designs](#study-designs) provides starting points [@hayes1999; @happ2019; @pezeshk2003]. The advanced [rare-disease section](#rare-diseases) considers a particularly restrictive recruitment ceiling.
+Clustered designs, nonparametric analyses and Bayesian planning need methods suited to their assumptions; [Study designs and testing strategies](#study-designs) provides starting points [@hayes1999; @happ2019; @pezeshk2003]. The advanced [rare-disease section](#rare-diseases) considers a particularly restrictive recruitment ceiling.
 
 
 
 ## Reporting your sample size calculation {#write-a-sample-size-justification .core-heading}
 
 Your sample size report should allow another researcher to reproduce the calculation and understand why you chose its assumptions. In [Activity: Develop and justify your study plan](https://katatam.github.io/sample-size-calculation/assumptions_report/?stage=review), the four report groups bring together the decisions developed through the core chapters: question and design, assumptions and evidence, calculation, and recruitment and conclusion.
+
+The example below assumes one primary comparison and one final analysis. Studies with multiple outcomes or comparisons, interim analyses, or planned sample-size adaptations require additional [design-specific planning](#multiple-outcomes-comparisons).
 
 The example below follows the reporting elements in SPIRIT 2025, CONSORT 2025 and DELTA² [@spiritconsort2025; @consortee2025; @cook2018delta2]. Its emphasis on the primary outcome, planned test, assumptions, adjustments and software also draws on section 4.1 of the UMCG statistical analysis plan (SAP) template, version 3 [@umcgsap]. The sample size statement should agree with the protocol and the planned primary analysis. Any later changes need a reason and a dated record.
 
@@ -1640,6 +1643,7 @@ After this section, you should be able to:
 - Generate and analyze one hypothetical trial.
 - Repeat the trial to assess rejection and interval coverage.
 - Explain how [Monte Carlo uncertainty](#monte-carlo-error) differs from uncertainty in the planning assumptions.
+- Describe how evaluating interim decisions and adaptations extends the simulation workflow.
 :::
 
 This chapter returns to the two-arm chronic pain trial and its planned analysis.
@@ -1866,6 +1870,14 @@ The original plan evaluates power at a true 30-point difference. If the true dif
 :::
 
 
+## Simulating interim decisions and adaptations {#simulating-decision-rules .advanced-heading}
+
+The examples above simulate a study with one final analysis. A design with [interim analyses or stopping guidelines](#interim-analyses-stopping) needs each simulated trial to follow its complete decision process: generate the data available at the first planned analysis, apply the relevant rule, then stop or continue. If [sample-size re-estimation](#sample-size-re-estimation) is planned, the simulation should apply that rule and the corresponding final analysis [@fdaadaptive2019].
+
+The evaluation should include scenarios with no treatment difference to estimate false-positive probability, and plausible beneficial differences to estimate power. With [several confirmatory claims](#multiple-outcomes-comparisons), it should also consider scenarios where some null hypotheses are true and others are false. Useful summaries include the probability of stopping at each stage, the expected sample size and its distribution, and the accuracy of effect estimates and confidence intervals. These are operating characteristics: how the complete design behaves across repeated studies [@iche91998; @fdaadaptive2019].
+
+For example, a proposed interim look in the chronic pain trial would require a simulation that includes four-week outcome availability, the stopping boundary and any recruitment already underway when a decision is made. The current [chronic pain simulation activity](https://katatam.github.io/sample-size-calculation/study/?activity=pain_simulation) illustrates the fixed-sample workflow. Evaluating interim decisions requires a design-specific implementation with a statistician and the [additional reporting record](#complex-design-record).
+
 ## Evaluating the discharge calculation {#discharge-simulation .advanced-heading}
 
 The [discharge exercise](#discharge) compares standard care at 80% with treatment at 96% or 90%, using target power of 80% or 90%. Outcomes near 100% leave few patients without the event, so the test approximation deserves closer examination.
@@ -1886,6 +1898,7 @@ This activity tests the planning approximation in a setting where few participan
 - Simulation generates data, applies the planned analysis, and summarizes repeated results.
 - Simulated power and coverage depend on the assumed population and analysis.
 - More repetitions improve the numerical precision of the simulation estimate. Evidence from relevant studies helps assess uncertainty about the population.
+- Evaluating an adaptive design requires simulating its complete decision rules, including when it stops and how it changes sample size.
 
 </div>
 
@@ -1921,6 +1934,7 @@ After this section, you should be able to:
 - Distinguish computational reproducibility from replication with new data.
 - Choose software suited to the planned analysis and recognize when statistical advice is useful.
 - Compare software results using matching methods and assumptions.
+- Document the testing strategy, interim decisions and adaptations when these are part of the design.
 :::
 
 ## Why reproducibility matters {#why-reproducibility-matters .advanced-heading}
@@ -2038,6 +2052,18 @@ Your report should connect the clinical question to its numerical result. The re
 
 A simulation report should also describe how data were generated, the number of independent studies, the analysis of each study, and how performance was summarized. Your [assumptions report](https://katatam.github.io/sample-size-calculation/assumptions_report/?stage=question) can bring the clinical justification and these computational details together. Each saved result should retain the inputs used to produce it; changed controls require a new calculation or simulation.
 
+### Additional records for complex designs {#complex-design-record .advanced-heading}
+
+For the [testing strategies in Chapter 7](#multiple-outcomes-comparisons), the protocol and SAP should also specify the following items where relevant [@iche91998; @fdamultiple2022; @fdaadaptive2019; @umcgsap]:
+
+- The primary and key secondary outcomes, treatment comparisons, success rule and family of confirmatory claims, including their testing order and error-control procedure.
+- The number and timing of interim analyses, information used, efficacy or futility boundaries, safety review arrangements and who has access to unblinded results and makes decisions.
+- The sample-size re-estimation or other adaptation rule, its trigger and limits, and the corresponding final testing and estimation methods.
+- Maximum and expected sample sizes under stated scenarios, with the planning method or simulation used to evaluate false-positive probability, power and other relevant performance measures.
+- The dated protocol and SAP versions, software, code and inputs needed to reproduce the decisions, and a record of any amendments and the information available when they were made.
+
+The [UMCG SAP template](https://umcg.zenya.work/document/2f52710d-3ebc-495e-a4dc-6dee95742c78) includes sections on significance and multiplicity, interim analyses and changes from the protocol. In the [study-plan activity](https://katatam.github.io/sample-size-calculation/assumptions_report/?stage=review), the planned analysis, software and conclusion fields can identify the design-specific plan, supporting documents and unresolved decisions. The [annotated core report](#write-a-sample-size-justification) remains a worked example for one comparison and a final analysis.
+
 ## Methods used in this tutorial {#tutorial-methods .advanced-heading}
 
 The table distinguishes the planning calculation from the analysis of simulated data. Equal allocation and independent observations are assumed in the basic two-group examples. Differences are treatment minus control; their units and direction should be explicit.
@@ -2128,6 +2154,7 @@ Your project may involve estimation, a fixed dataset or dependent observations. 
 - Software and its settings should match the planned analysis, including the meaning and units of each input.
 - A calculation record should include assumptions, methods, results, rounding rules, and software and code versions.
 - A simulation record also needs data-generating assumptions, the analysis, the number of repetitions, and random-number settings.
+- Complex designs also need their success rule, interim and adaptation decisions, final analysis and dated protocol/SAP versions.
 - Sharing protocols and code supports checking and reuse. Data access should respect consent, confidentiality and other applicable restrictions.
 
 </div>
@@ -2178,6 +2205,7 @@ Your choice of reading can follow the decision you need to make; the [reading gu
 
 - @fong2026 and @zrineh2026 introduce clinical planning; @lakens2022 explains alternative sample size justifications; @cook2018delta2 supports choosing and reporting a [target difference](#target-difference). Apply these to the assumptions report.
 - Design-specific guidance: @ying2025 and @eldridge2016 address pilot objectives; @candel2023 addresses efficient designs; @riley2020 addresses prediction-model development. CONSORT's explanation and elaboration details reporting, including sample size assumptions in item 16a [@consortee2025].
+- For multiple outcomes and testing hierarchies, see @fdamultiple2022. For interim analyses, stopping guidelines and sample-size re-estimation, see ICH E9, Sections 3.4 and 4.4-4.6 [@iche91998], and @fdaadaptive2019. These support the [testing strategies](#multiple-outcomes-comparisons) and [additional reporting checklist](#complex-design-record).
 - For the distinction between an observed significance boundary and planned power, see @lakens2022 and section 1.7 of *Power Analysis with Superpower* [@superpowerbook2022]. Chapters 11 and 15 of that book extend the simulation examples.
 - Advanced methods and reference books: @pargent2024 explains mixed-model simulation, and @superpowerbook2022 supports exploring repeated studies. @julious2004 reviews normal-outcome trial calculations; @julious2023 provides broader design-specific sample size methods. @piantadosi2024 places planning within broader trial methodology. These books offer further detail on design-specific methods.
 

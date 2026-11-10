@@ -229,6 +229,26 @@ The [advanced explanation of units and dependence](#units-of-analysis) compares 
 <span id="treatment-contamination">Treatment contamination</span>
 : Receipt of some or all of the intervention by participants assigned to the comparator. This can make the randomized groups' outcomes more similar and affect power. Planning should reflect the expected extent and consequences of contamination. See [Treatment changes](#treatment-changes).
 
+## Advanced testing and adaptation terms {.advanced-heading .unnumbered}
+
+<span id="multiplicity">Multiplicity</span>
+: Multiple opportunities to make false-positive claims across a specified set of tests, such as several outcomes, treatment comparisons or interim analyses. The intended claims and success rule determine the appropriate error control. See [multiple outcomes and comparisons](#multiple-outcomes-comparisons).
+
+<span id="co-primary-outcomes">Co-primary outcomes</span>
+: Two or more primary outcomes for which every required test must succeed to support the intended joint claim. Planning concerns the probability that all tests succeed, with their dependence taken into account. See [testing strategies](#multiple-outcomes-comparisons).
+
+<span id="interim-analysis">Interim analysis</span>
+: An analysis of accumulating trial results before the planned final analysis. Its purpose, timing and possible consequences should be specified in advance. See [interim analyses and stopping guidelines](#interim-analyses-stopping).
+
+<span id="futility">Futility</span>
+: A low prospect of demonstrating the planned benefit under a specified decision rule and assumptions. A futility guideline can support stopping a trial early; the conclusion concerns that design's prospects of success. See [stopping guidelines](#interim-analyses-stopping).
+
+<span id="group-sequential-design">Group-sequential design</span>
+: A trial design with planned analyses of accumulating data and prespecified opportunities to stop. Its testing procedure accounts for the repeated analyses to control the overall Type I error probability. See [interim analyses](#interim-analyses-stopping).
+
+<span id="adaptive-design">Adaptive design</span>
+: A design allowing prespecified changes in response to accumulating trial data, such as revising sample size or selecting treatment arms. The decision rules and final analysis are planned and evaluated together. See [sample-size re-estimation](#sample-size-re-estimation).
+
 ## Advanced simulation terms {.advanced-heading .unnumbered}
 
 Planning and generating scenarios

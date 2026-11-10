@@ -80,7 +80,15 @@ The chapter quizzes supply individual knowledge checks. A teacher can select one
 - In your own research question, what would a false positive or false negative mean in practice? A strong explanation states what is assumed true and distinguishes the statistical conclusion from a subsequent clinical decision.
 - Two groups recommend different sample sizes. What inputs and methods should be compared first? A strong explanation checks outcome, effect scale, analysis, error probabilities, allocation, loss assumptions and rounding.
 
-Learners can use a hypothetical case when their own project has an unsuitable design or insufficient public evidence. [Other study goals and designs](../book/study-designs.html) helps identify an appropriate route. Assessment should follow the chosen research objective and the [rubric](assessment_rubric.md).
+Learners can use a hypothetical case when their own project has an unsuitable design or insufficient public evidence. [Study designs and testing strategies](../book/study-designs.html) helps identify an appropriate route. Assessment should follow the chosen research objective and the [rubric](assessment_rubric.md).
+
+## Optional discussion of complex trial plans
+
+Chapter 7, [Study designs and testing strategies](../book/study-designs.html), brings together alternative planning goals, dependent observations, multiple outcomes and decisions during a trial. Learners can select the branch relevant to their question. The core calculation activities assume a final analysis of a simple design.
+
+For an advanced discussion, a pair of learners could extend the chronic pain plan with a sleep outcome and compare three success rules: benefit on either outcome, benefit on both, or pain relief followed by sleep improvement in a fixed sequence. Their explanation should identify the claims and the corresponding error-control and power questions. A second discussion could consider a proposed interim analysis: what decision would it inform, what would trigger stopping, and which assumptions determine the maximum and expected recruitment?
+
+The [chapter check](../book/study-designs.html#check-study-designs) assesses these distinctions. Chapter 6 explains [simulation of the complete decision procedure](../book/simulation.html#simulating-decision-rules), and Chapter 8 provides the [additional reporting checklist](../book/appendix.html#complex-design-record). Assessment can focus on recognizing and documenting the required decisions; implementing a new adaptive-design calculation requires specialist methods. The advanced flashcards provide short reminders.
 
 ## Optional learner-created dilemmas
 

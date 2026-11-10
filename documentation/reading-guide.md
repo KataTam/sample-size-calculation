@@ -61,6 +61,12 @@ For pilot planning, begin with the [CONSORT randomized pilot/feasibility extensi
 
 For prerequisite reminders and common questions, use the [glossary](../student-materials/glossary.md) and [common mistakes](../student-materials/common-mistakes.md), also included in the tutorial. Formulas and formatted results remain visible; R code and raw output can be expanded together.
 
+## Multiple outcomes and decisions during a trial
+
+[Chapter 7](../book/study-designs.html#multiple-outcomes-comparisons) explains success rules, interim analyses and sample-size re-estimation. The [FDA multiple-endpoints guidance (2022)](https://www.fda.gov/regulatory-information/search-fda-guidance-documents/multiple-endpoints-clinical-trials) distinguishes co-primary outcomes, alternative routes to success, composites and testing hierarchies. Its examples help identify the intended claim before choosing a calculation.
+
+[ICH E9](https://database.ich.org/sites/default/files/E9_Guideline.pdf), Sections 3.4 and 4.4-4.6, covers group-sequential designs, sample-size adjustment, interim analyses and independent monitoring. The [FDA adaptive-design guidance (2019)](https://www.fda.gov/regulatory-information/search-fda-guidance-documents/adaptive-design-clinical-trials-drugs-and-biologics-guidance-industry), Sections IV-VI, distinguishes adaptations based on blinded and comparative data and describes simulation-based evaluation. The [Chapter 8 checklist](../book/appendix.html#complex-design-record) connects these methods to a reproducible protocol and SAP record.
+
 ## International ethics and protocol planning
 
 The [Declaration of Helsinki (2024)](https://www.wma.net/policies-post/wma-declaration-of-helsinki/) connects scientific validity, a justified protocol and independent ethics review. The International Council for Harmonisation's [ICH E9, section 3.5](https://database.ich.org/sites/default/files/E9_Guideline.pdf) explains sample size assumptions and their justification in trials of medicines. Its international use includes adoption in [Australia](https://www.tga.gov.au/resources/resources/international-scientific-guidelines-adopted-australia/ich-topic-e-9-statistical-principles-clinical-trials) and [Singapore](https://www.hsa.gov.sg/international-collaboration/tp/ich/).

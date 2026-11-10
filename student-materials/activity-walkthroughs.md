@@ -150,6 +150,8 @@ Within the same activity, *Settings* and *Explore further* contain *Explore miss
 5. Across the four scenarios, Many studies compares the mean estimate, bias, coverage, interval width, retained counts, and significance percentage. A high significance percentage can coexist with bias and poor coverage. The model answer is in the [missing-outcome explanation](../book/simulation.html#explore-missing-outcomes).
 6. The report identifies recruited versus analyzable counts and, for matching simulations, retained counts, bias and coverage. Saved simulation CSV files retain the settings used when they were generated; the R script reproduces the current scenario. *Usual simulation* restores the original analysis with fixed analyzable counts.
 
+The simulation above uses one final analysis. For a design with interim stopping or sample-size adaptation, the [advanced simulation discussion](../book/simulation.html#simulating-decision-rules) explains the additional decisions that a design-specific simulation must reproduce.
+
 ## Recruitment adjustment — core
 
 [Open calculator](../dropout_adjustment/) · [Matching explanation](../book/feasibility.html#account-for-expected-losses)
@@ -238,6 +240,8 @@ Purpose: identify a suitable design family and the decisions that determine its 
 2. Treatment questions address allocation, comparisons and the intended claim. Observational, diagnostic and prediction questions use their own follow-ups.
 3. “Show design suggestions” presents a candidate design, the reasoning, unresolved choices and sample-size implications.
 4. The resource links provide a relevant activity or specialist guidance. Changing an answer clears the previous suggestion until you request an update. “Start again” clears the form.
+
+After identifying a design family, a plan with several outcomes or comparisons should also specify its [testing strategy](../book/study-designs.html#multiple-outcomes-comparisons). Planned [interim analyses](../book/study-designs.html#interim-analyses-stopping) or [sample-size re-estimation](../book/study-designs.html#sample-size-re-estimation) need specialist planning and the [additional reporting record](../book/appendix.html#complex-design-record).
 
 Teaching text: [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/). Original software code: [MIT](https://opensource.org/license/mit). Third-party attributions and exceptions remain applicable.
 

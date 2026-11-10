@@ -543,5 +543,57 @@
       "statistical significance"
     ],
     "definition": "A result meeting the planned threshold for evidence against the null hypothesis."
+  },
+  {
+    "id": "multiplicity",
+    "label": "Multiplicity",
+    "aliases": [
+      "multiplicity"
+    ],
+    "definition": "Multiple opportunities for false-positive claims across a specified set of tests. The intended claims determine the appropriate error control."
+  },
+  {
+    "id": "co-primary-outcomes",
+    "label": "Co-primary outcomes",
+    "aliases": [
+      "co-primary outcomes",
+      "co-primary endpoints"
+    ],
+    "definition": "Primary outcomes whose required tests must all succeed to support the intended joint claim."
+  },
+  {
+    "id": "interim-analysis",
+    "label": "Interim analysis",
+    "aliases": [
+      "interim analysis",
+      "interim analyses"
+    ],
+    "definition": "An analysis of accumulating trial results before the planned final analysis."
+  },
+  {
+    "id": "futility",
+    "label": "Futility",
+    "aliases": [
+      "futility"
+    ],
+    "definition": "A low prospect of demonstrating the planned benefit under a specified decision rule and assumptions."
+  },
+  {
+    "id": "group-sequential-design",
+    "label": "Group-sequential design",
+    "aliases": [
+      "group-sequential design",
+      "group-sequential designs"
+    ],
+    "definition": "A trial with planned analyses and stopping opportunities, using a testing procedure that accounts for the repeated analyses."
+  },
+  {
+    "id": "adaptive-design",
+    "label": "Adaptive design",
+    "aliases": [
+      "adaptive design",
+      "adaptive designs"
+    ],
+    "definition": "A design allowing prespecified changes, such as revising sample size, in response to accumulating trial data."
   }
 ]

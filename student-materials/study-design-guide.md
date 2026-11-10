@@ -1,19 +1,19 @@
-# Other study goals and designs {#study-designs .advanced-heading}
+# Study designs and testing strategies {#study-designs .advanced-heading}
 
 ::: {.learning-goals .advanced-outcomes}
 After this chapter, you should be able to:
 
-- Use the study-design questionnaire to identify suitable design families and unresolved decisions.
-- Match the planning goal to the question: treatment comparison, estimation or feasibility.
-- Plan for useful precision in a mean difference or a prevalence estimate.
-- Assess existing datasets, pilot studies and restricted recruitment populations.
-- Recognize how paired and clustered observations affect planning and analysis.
+- Match a research question to a design, planning goal and suitable methodological resource.
+- Plan for useful precision, existing-data reuse, pilot objectives or restricted recruitment.
+- Explain how paired and clustered observations affect sample size and analysis.
+- Distinguish success on any primary outcome, success on all [co-primary outcomes](#co-primary-outcomes) and hierarchical testing.
+- Recognize when interim analyses, stopping guidelines or sample-size re-estimation require additional planning.
 
 :::
 
 The study design and planning method should follow the research question, outcome, sampling structure and intended analysis. "Clinical," "retrospective," "diagnostic" and "within-subject" describe different aspects of a study and can apply together. A diagnostic study can be clinical and retrospective, and a preclinical experiment can have repeated measurements.
 
-This chapter offers optional branches for questions beyond the basic two-independent-group calculation. The questionnaire provides a starting point; the sections cover dependent observations, precision-based planning, existing data, pilot studies and rare-disease constraints. You can consult the branch relevant to your study.
+This chapter offers optional branches beyond the basic two-independent-group calculation. The [questionnaire](#design-questionnaire) helps identify the study design. The following sections consider dependence between observations, alternative planning goals and recruitment constraints. The [testing strategies](#multiple-outcomes-comparisons) then explain how the definition of study success and decisions during recruitment affect planning. The [resource table](#match-the-question-to-a-method-and-resource) helps you choose further guidance for your own question.
 
 ## Activity: Choosing a study design {#design-questionnaire .advanced-heading}
 
@@ -300,6 +300,56 @@ Sample-size planning should specify both the margin and the assumed true between
 
 *Further resource: Katalin Tam&aacute;si's tutorial and interactive apps on noninferiority and equivalence trials [link to be added].*
 
+## Multiple outcomes and comparisons {#multiple-outcomes-comparisons .advanced-heading}
+
+The chronic pain calculation assumes one primary comparison at one final assessment. Suppose the study also measures sleep quality and physical function. Before calculating a sample size, your plan should specify which findings would support its main conclusion. [Multiplicity](#multiplicity){.no-glossary-tooltip} concerns the opportunities to make false-positive claims across the planned tests. The success rule determines both error control and the relevant definition of power [@iche91998; @fong2026].
+
+| Intended conclusion | Testing strategy | What sample size planning should address |
+|:--|:--|:--|
+| Benefit on at least one primary outcome is sufficient | A multiple-testing procedure controls the probability of any false-positive claim in the specified family of tests | Outcome-specific assumptions, the procedure and power for the intended claims |
+| Benefit on every co-primary outcome is required | Each required test must succeed | Joint power: the probability that all tests succeed, including dependence between outcomes |
+| Claims follow a prespecified order, such as pain relief followed by sleep improvement | In a simple fixed sequence, confirmatory testing proceeds only after the preceding test succeeds | Power for reaching and passing the relevant tests; justified ordering of primary and key secondary outcomes |
+| One composite outcome combines several events | One prespecified endpoint, such as the first occurrence of hospitalization or death, is analyzed | Component frequencies, their relationship and the effect on the combined endpoint |
+
+Table: Success rules and their implications for planning several outcomes. Further treatment groups, doses, assessment times and subgroup claims can also create multiple testing opportunities.
+
+For an illustration with two independent co-primary tests, each with 90% power, the probability that both succeed is $0.90 \times 0.90 = 0.81$, or 81%. Correlated outcomes require a joint calculation using plausible dependence assumptions. When every co-primary test must succeed to support one joint claim, splitting the Type I error probability between them is not automatically required. Separate claims about individual outcomes need their own error-control strategy [@fdamultiple2022].
+
+The [FDA multiple-endpoints guidance](https://www.fda.gov/regulatory-information/search-fda-guidance-documents/multiple-endpoints-clinical-trials) describes these distinctions and methods such as Bonferroni, Holm, fixed-sequence testing and gatekeeping. Gatekeeping specifies which earlier tests or families must succeed before later claims can be evaluated. The procedure should be chosen with a statistician before fixing the sample size [@fdamultiple2022].
+
+## Interim analyses and stopping guidelines {#interim-analyses-stopping .advanced-heading}
+
+An [interim analysis](#interim-analysis){.no-glossary-tooltip} examines accumulating results before the planned final analysis. A trial may have prespecified opportunities to stop for convincing benefit, [futility](#futility){.no-glossary-tooltip} (a low prospect of demonstrating the planned benefit), or safety concerns. Repeated efficacy tests at the usual 5% threshold can increase the overall false-positive probability. A [group-sequential design](#group-sequential-design){.no-glossary-tooltip} accounts for the planned analyses and stopping opportunities [@iche91998].
+
+For the chronic pain trial, an interim efficacy analysis after some participants complete four-week follow-up would change the design used for the original calculation. The plan should identify when analyses occur, which results could trigger a recommendation to stop, and who reviews the unblinded results. Timing may use an information fraction, meaning the share of the planned statistical information available. For time-to-event outcomes, this often depends on observed events. A statistician can specify suitable boundaries, for example using an alpha-spending approach that allocates the overall Type I error probability across analyses [@iche91998; @fdaadaptive2019].
+
+Recruitment planning should distinguish the maximum sample size from the expected sample size under different population scenarios. Early stopping may reduce expected recruitment; the maximum required sample can exceed that of a comparable design with only a final analysis. Safety monitoring also requires clinical judgment, and stopping guidelines should support the agreed review process. An independent data monitoring committee may review unblinded evidence while protecting trial conduct [@iche91998].
+
+The [pilot progression criteria](#pilot-feasibility) address whether a future study is feasible. Interim efficacy and futility guidelines address decisions within the ongoing trial. The [reproducibility record](#complex-design-record) lists what should be documented for those decisions.
+
+## Sample-size re-estimation {#sample-size-re-estimation .advanced-heading}
+
+A trial can prespecify an opportunity to revise its sample size using accumulating information. For example, uncertainty about the SD in the rehabilitation case could motivate a planned reassessment of outcome variability. The method depends on which information is used [@fdaadaptive2019]:
+
+- Blinded re-estimation uses information without treatment-group comparisons, such as a pooled estimate of variability. Its effect on the false-positive probability depends on the procedure and design.
+- Unblinded re-estimation can use an interim treatment difference. The final testing and estimation procedures must account for this data-dependent adaptation.
+
+Your plan should specify the reason for re-estimation, its timing, the calculation and decision rule, sample-size limits and the final analysis. A suitable evaluation considers power, the probability of false-positive conclusions and the sample sizes produced under plausible scenarios. A design-specific method and statistical advice are needed before introducing this option [@iche91998; @fdaadaptive2019].
+
+Re-estimation is one form of [adaptive design](#adaptive-design){.no-glossary-tooltip}, in which prespecified changes depend on accumulating trial data. Other possibilities include selecting treatment arms or a target population. The [FDA adaptive-design guidance](https://www.fda.gov/regulatory-information/search-fda-guidance-documents/adaptive-design-clinical-trials-drugs-and-biologics-guidance-industry) provides further guidance. The [simulation chapter](#simulating-decision-rules) explains how evaluating such a design extends the generate-analyze-repeat workflow.
+
+## Planning under uncertainty {#further-planning-approaches .advanced-heading}
+
+The core calculations evaluate power at specified values. More specialized approaches account for additional uncertainty or a different research objective:
+
+- Safeguard power uses uncertainty in a previous difference estimate when planning. It can imply a much larger sample when the evidence is weak [@perugini2014].
+- Bayesian and hybrid approaches can average performance over a justified distribution of plausible parameter values. Assurance or expected power answers a different question from power at one fixed difference; the distribution and decision rule need justification [@kunzmann2021review; @pezeshk2003].
+- Mixed-model simulation can represent clustered or repeated observations and the intended analysis, but needs credible dependency assumptions, convergence checks and [sensitivity analysis](#sensitivity-analysis) [@pargent2024].
+
+These extensions require design-specific planning with a methodological collaborator. The [resource table](#match-the-question-to-a-method-and-resource) provides starting points for other analyses.
+
+A review of Bayesian randomized trials found that hybrid sample-size methods were common and fully Bayesian methods were rarely used [@marks2026]. A Bayesian trial can use a fixed sample size or prespecified adaptations. Its planning method should reflect the chosen decision rule; the [adaptive-design discussion](#sample-size-re-estimation) explains the additional decisions to document.
+
 ## Match the question to a method and resource {.advanced-heading}
 
 | Example question | Planning focus | Route |
@@ -309,14 +359,18 @@ Sample-size planning should specify both the margin and the assumed true between
 | What proportion of eligible patients has a symptom? | Representative sample, confidence level and useful absolute margin of error | [Single-proportion precision activity](#prevalence); a simple independent sample |
 | Can a pathway recruit and retain enough patients for a future trial? | Feasibility outcomes, progression criteria and their precision | [Pilot case](#pilot-feasibility); [CONSORT pilot extension](https://www.bmj.com/content/355/bmj.i5239) for randomized pilots |
 | How accurately does a screening test identify disease? | Precision of sensitivity/specificity and enough reference-positive/reference-negative participants | [STARD 2015](https://www.bmj.com/content/351/bmj.h5527) for reporting; obtain diagnostic-accuracy planning methods |
-| Do speech measurements differ between the same Parkinson patient's OFF and ON medication states? | Within-person differences, repeated-measures analysis and correlation | Use a paired/repeated-measures method for this change question; both recordings belong to the same participant |
-| Does an intervention allocated to wards improve outcomes? | Number/size of clusters, within-cluster correlation and analysis | Use cluster planning; see [Hayes and Bennett (1999)](https://doi.org/10.1093/ije/28.2.319) |
+| Do speech measurements differ between the same Parkinson patient's OFF and ON medication states? | Within-person differences, repeated-measures analysis and correlation | [Units and dependence](#units-of-analysis); both recordings belong to the same participant. For several visits, mixed-model simulation can represent the planned analysis [@pargent2024] |
+| Does an intervention allocated to wards improve outcomes? | Number/size of clusters, within-cluster correlation and analysis | [Cluster planning](#treatment-assigned-to-groups); see [Hayes and Bennett (1999)](https://doi.org/10.1093/ije/28.2.319) |
 | Is a treatment sufficiently similar to an established treatment, or not worse by more than an acceptable margin? | Equivalence or noninferiority hypotheses, justified margin, analysis and error control | [Noninferiority and equivalence trials](#noninferiority-equivalence) explains the margins and planning assumptions. See Julious (2023) in the tutorial references |
 | What can a trial establish when a rare disease limits recruitment? | Recruitment ceiling, meaningful outcomes, valid comparison and attainable information | [Rare-disease planning](#rare-diseases); the sample size should follow the study objectives, recruitment ceiling and design-specific guidance |
 | Is a risk factor associated with an outcome in a cohort or case-control study? | Association scale, event frequency, exposure frequency, confounder adjustment and missingness | Obtain analysis-specific regression/association planning; [STROBE](https://www.strobe-statement.org/) supports reporting |
 | Do semantic speech features predict Parkinson's medication state more accurately than syntactic features? | Paired ON/OFF recordings, paired comparison of model performance, number of patients and predictor parameters, and evaluation without patient overlap | [Riley et al. (2020)](https://www.bmj.com/content/368/bmj.m441) gives general model-development planning guidance; the paired comparison needs additional methods. [TRIPOD+AI](https://www.tripod-statement.org/) supports reporting |
 | How informative is an existing retrospective dataset? | Available analyzable n, selection, missingness, intended model and achievable precision | Assess fixed resources at independently justified scenarios; avoid observed-effect post-hoc power |
 | How many units does an animal or laboratory experiment need? | Experimental unit, replication, allocation, outcome, variability and animal burden | [ARRIVE 2.0 sample-size guidance](https://arriveguidelines.org/arrive-guidelines/sample-size) and design-specific planning; the calculation should reflect dependence among repeated wells or measurements |
+| Does treatment delay an event such as relapse? | Required events, effect over time, recruitment duration, follow-up and censoring | Time-to-event methods in @julious2023; participant recruitment depends on how many events can be observed |
+| Does one treatment's effect depend on another treatment or on a patient characteristic? | The interaction to estimate, cell or subgroup sizes and planned model | Factorial-design examples in [Superpower](https://aaroncaldwell.us/SuperpowerBook/) [@superpowerbook2022]; subgroup and interaction principles in ICH E9, Section 5.7 [@iche91998] |
+| Which outcomes or treatment comparisons must succeed? | Success rule, testing family, ordering and dependence | [Multiple outcomes and comparisons](#multiple-outcomes-comparisons) |
+| Can the trial stop early or revise its sample size? | Analysis timing, stopping boundaries, adaptation rules and final analysis | [Interim analyses](#interim-analyses-stopping), [re-estimation](#sample-size-re-estimation) and [simulation of decision rules](#simulating-decision-rules) |
 
 Table: Planning questions and resources for different study designs.
 
@@ -342,27 +396,15 @@ Your plan should follow the current funding program's requirements. [NIHR fundin
 
 For an unsupported design, take the question, assumptions, desired conclusion and analysis plan to a methodological collaborator before choosing a calculator. The [own-study guide](#own-study) and case template organize that information. The numerical examples use hypothetical assumptions for teaching. An actual study requires evidence appropriate to its population, outcome and design.
 
-## Further planning approaches {#further-planning-approaches .advanced-heading}
-
-The core calculations evaluate power at specified values. More specialized approaches account for additional uncertainty or a different research objective:
-
-- Safeguard power uses uncertainty in a previous difference estimate when planning. It can imply a much larger sample when the evidence is weak [@perugini2014].
-- Bayesian and hybrid approaches can average performance over a justified distribution of plausible parameter values. Assurance or expected power answers a different question from power at one fixed difference; the distribution and decision rule need justification [@kunzmann2021review; @pezeshk2003].
-- Mixed-model simulation can represent clustered or repeated observations and the intended analysis, but needs credible dependency assumptions, convergence checks and [sensitivity analysis](#sensitivity-analysis) [@pargent2024].
-- Multiple outcomes or treatment comparisons need a prespecified success rule and appropriate error control. Power for each comparison separately does not establish the probability that all required comparisons succeed [@fong2026].
-
-These extensions require design-specific planning with a methodological collaborator. [Other study goals and designs](#study-designs) and the references below provide routes to design-specific methods.
-
-A review of Bayesian randomized trials found that hybrid sample-size methods were common and fully Bayesian methods were rarely used [@marks2026]. A Bayesian analysis does not automatically imply a fully Bayesian sample-size calculation or an adaptive design. Bayesian trials can have a fixed sample size; adaptive designs also require prespecified rules and evaluation of their operating characteristics.
-
-
 <div class="chapter-recap">
 
 ### Take-home points {.unnumbered}
 
-- The design and planned analysis determine which sample size method applies.
-- Paired measurements, clusters, and prediction models require appropriate methods.
-- For prevalence estimation, the confidence level, anticipated percentage, and useful margin of error determine the simple independent-sample calculation.
-- Reporting guidance helps document decisions. The calculation should match the study question and planned analysis.
+- The research goal, allocation structure and planned analysis determine which sample size method applies.
+- Precision, pilot feasibility and existing-data questions need planning criteria suited to their objectives.
+- Paired and clustered observations require assumptions about dependence and the independent units available.
+- With several outcomes or comparisons, the success rule determines the relevant power and error control.
+- Interim analyses and sample-size adaptations require prespecified decisions and design-specific evaluation.
+- The resource table and reproducibility checklist help you prepare a plan for discussion with a statistician.
 
 </div>

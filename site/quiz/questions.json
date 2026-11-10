@@ -6,7 +6,7 @@
     "feasibility": "Chapter 4: Recruitment and feasibility",
     "curves": "Chapter 5: Exploring power and uncertain assumptions",
     "simulation": "Chapter 6: Building and evaluating simulations",
-    "study-designs": "Chapter 7: Other study goals and designs",
+    "study-designs": "Chapter 7: Study designs and testing strategies",
     "appendix": "Chapter 8: Reproducibility and open science"
   },
   "questions": [
@@ -703,6 +703,28 @@
       ]
     },
     {
+      "id": "q50",
+      "chapter": "simulation",
+      "level": "advanced",
+      "section": "Simulating interim decisions and adaptations",
+      "link": "simulation.html#simulating-decision-rules",
+      "question": "Which simulation can evaluate a trial with an interim futility rule and possible sample-size re-estimation?",
+      "options": [
+        "A fixed-sample simulation followed by deleting unfavorable results.",
+        "A simulation of the final test only, using the largest allowed sample.",
+        "A simulation that applies each interim decision and the resulting final analysis within every trial.",
+        "A simulation under a large benefit only."
+      ],
+      "answer": 2,
+      "explanation": "Each simulated trial should follow the complete decision process. Evaluation includes false-positive probability, power, stopping probabilities and sample-size behavior under suitable scenarios.",
+      "feedback": [
+        "Removing unfavorable simulations distorts the performance estimate.",
+        "The largest fixed sample omits the interim stopping and adaptation decisions.",
+        "Each simulated trial should follow the complete decision process. Evaluation includes false-positive probability, power, stopping probabilities and sample-size behavior under suitable scenarios.",
+        "No-effect and other plausible scenarios are needed to evaluate errors and robustness."
+      ]
+    },
+    {
       "id": "q23",
       "chapter": "study-designs",
       "level": "advanced",
@@ -923,6 +945,94 @@
       ]
     },
     {
+      "id": "q46",
+      "chapter": "study-designs",
+      "level": "advanced",
+      "section": "Multiple outcomes and comparisons",
+      "link": "study-designs.html#multiple-outcomes-comparisons",
+      "question": "A trial requires success on both of two independent co-primary outcomes. Each test has 90% power. What is the probability that both succeed?",
+      "options": [
+        "90%",
+        "81%",
+        "95%",
+        "180%"
+      ],
+      "answer": 1,
+      "explanation": "For independent tests, the joint probability is 0.90 × 0.90 = 0.81. Correlated outcomes require a calculation that accounts for their dependence.",
+      "feedback": [
+        "Ninety percent describes each test separately; the trial requires both to succeed.",
+        "For independent tests, the joint probability is 0.90 × 0.90 = 0.81. Correlated outcomes require a calculation that accounts for their dependence.",
+        "The Type I error probability does not determine this joint power.",
+        "Adding the powers does not give the probability that both tests succeed."
+      ]
+    },
+    {
+      "id": "q47",
+      "chapter": "study-designs",
+      "level": "advanced",
+      "section": "Multiple outcomes and comparisons",
+      "link": "study-designs.html#multiple-outcomes-comparisons",
+      "question": "A trial will claim benefit if any one of three primary outcomes is significant. Which plan addresses the resulting testing structure?",
+      "options": [
+        "Choose the most favorable outcome after the trial.",
+        "Use an unadjusted 5% test for each outcome.",
+        "Choose a prespecified multiple-testing procedure and plan power for the intended claims.",
+        "Require all three outcomes to succeed while describing success as any one."
+      ],
+      "answer": 2,
+      "explanation": "Any one of several outcomes can support a claim, so the plan needs error control across those opportunities and power appropriate to the intended conclusion.",
+      "feedback": [
+        "Selecting an outcome after seeing results adds data-dependent opportunities for a claim.",
+        "Separate unadjusted 5% tests can increase the overall probability of a false-positive claim.",
+        "Any one of several outcomes can support a claim, so the plan needs error control across those opportunities and power appropriate to the intended conclusion.",
+        "Requiring all outcomes answers a different success rule. The stated objective and calculation should agree."
+      ]
+    },
+    {
+      "id": "q48",
+      "chapter": "study-designs",
+      "level": "advanced",
+      "section": "Interim analyses and stopping guidelines",
+      "link": "study-designs.html#interim-analyses-stopping",
+      "question": "Researchers want to examine efficacy halfway through a trial and stop early for benefit. What should change in the planning?",
+      "options": [
+        "Keep the original final-analysis calculation and test at 5% at both looks.",
+        "Assume the required maximum sample size is halved.",
+        "Choose a stopping threshold after seeing the interim difference.",
+        "Specify the timing, stopping boundary and final test together, and evaluate the design."
+      ],
+      "answer": 3,
+      "explanation": "The procedure should account for all planned opportunities to stop and the final analysis. Maximum and expected sample sizes should be assessed under relevant scenarios.",
+      "feedback": [
+        "Repeated unadjusted efficacy testing can increase the overall false-positive probability.",
+        "An early stopping opportunity does not imply a smaller maximum sample size.",
+        "A data-dependent threshold can change the false-positive probability and introduce bias.",
+        "The procedure should account for all planned opportunities to stop and the final analysis. Maximum and expected sample sizes should be assessed under relevant scenarios."
+      ]
+    },
+    {
+      "id": "q49",
+      "chapter": "study-designs",
+      "level": "advanced",
+      "section": "Sample-size re-estimation",
+      "link": "study-designs.html#sample-size-re-estimation",
+      "question": "What should a plan to revise sample size using an interim treatment difference include?",
+      "options": [
+        "A prespecified adaptation rule, sample-size limits and a final analysis evaluated for that rule.",
+        "A rule to recruit until an ordinary test becomes significant.",
+        "Only the revised number of participants.",
+        "The assumption that every re-estimation method preserves the original false-positive probability."
+      ],
+      "answer": 0,
+      "explanation": "Using an interim treatment difference makes sample size data-dependent. The adaptation and final analysis need joint planning and evaluation of their statistical performance.",
+      "feedback": [
+        "Using an interim treatment difference makes sample size data-dependent. The adaptation and final analysis need joint planning and evaluation of their statistical performance.",
+        "Repeated ordinary testing while adding participants can inflate false-positive probability.",
+        "The result alone does not specify how the decision was made or how the final analysis accounts for it.",
+        "Performance depends on the information used, adaptation rule, analysis and design."
+      ]
+    },
+    {
       "id": "q33",
       "chapter": "appendix",
       "level": "advanced",
@@ -970,22 +1080,22 @@
       "id": "q35",
       "chapter": "appendix",
       "level": "advanced",
-      "section": "Reproducibility records",
-      "link": "appendix.html#reproducibility-record",
-      "question": "What should accompany an exported numerical result?",
+      "section": "Additional records for complex designs",
+      "link": "appendix.html#complex-design-record",
+      "question": "A sample-size report concerns a trial with multiple outcomes and an interim analysis. Which record best supports reproducibility?",
       "options": [
-        "Only the date of the screenshot",
-        "Only the rounded sample size",
-        "The inputs and procedures that produced it, with software and code versions",
-        "Whatever slider values happen to be displayed later"
+        "Only the final recruitment total.",
+        "Only the software name and target power.",
+        "The smallest p-value and the chosen sample size.",
+        "The inputs, methods and software, plus the success rule, interim decisions, final analysis and dated protocol/SAP versions."
       ],
-      "answer": 2,
-      "explanation": "Saved results retain the assumptions and computational context used to produce them, including after controls change.",
+      "answer": 3,
+      "explanation": "The full decision procedure affects the calculation. Dated plans, software, code and inputs let another researcher check how the result and decisions were obtained.",
       "feedback": [
-        "A date alone does not identify the numerical assumptions or procedure.",
-        "A rounded count alone leaves the calculation uncheckable.",
-        "Saved results retain the assumptions and computational context used to produce them, including after controls change.",
-        "Later slider settings may differ from those used to produce the saved result."
+        "The total omits the assumptions and decision procedure.",
+        "The software name and power omit the settings, success rule and interim procedure.",
+        "A selected p-value does not document the planning process.",
+        "The full decision procedure affects the calculation. Dated plans, software, code and inputs let another researcher check how the result and decisions were obtained."
       ]
     },
     {

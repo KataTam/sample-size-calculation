@@ -17,6 +17,9 @@ The main principle is simple: if you change the teaching context, update the exa
 | If you want to change... | Edit this file or folder |
 |---|---|
 | Learner-facing explanation | `module/Sample_size_open_module.Rmd` |
+| Chapter 7 design and testing-strategy guidance | `student-materials/study-design-guide.md`; included in the main R Markdown source |
+| Chapter checks and cumulative quiz | `site/quiz/questions.json`; the same bank supplies both versions |
+| Flashcards and short glossary explanations | `data/flashcards.json`, `data/glossary-terms.json`, and `student-materials/glossary.md` |
 | Font size or rendered HTML styling | `module/styles.css` |
 | Sample size formulas or statistical methods | `R/sample_size_functions.R` |
 | Shared two-group calculator labels, defaults, comparisons and reports | `R/basic_calculator.R`; called by `apps/two_means/app.R` and `apps/two_proportions/app.R` |

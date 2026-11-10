@@ -1163,8 +1163,8 @@
       "id": "A078",
       "level": "advanced",
       "front": "Why do multiple outcomes or comparisons need a prespecified success rule?",
-      "back": "Planning should evaluate the probability of satisfying the prespecified success rule across the required comparisons, with appropriate error control.",
-      "source": "https://katatam.github.io/sample-size-calculation/book/study-designs.html#further-planning-approaches"
+      "back": "The success rule specifies whether any outcome, all co-primary outcomes, or an ordered sequence of tests must succeed. It determines the relevant power and error control.",
+      "source": "https://katatam.github.io/sample-size-calculation/book/study-designs.html#multiple-outcomes-comparisons"
     },
     {
       "id": "A079",
@@ -1179,6 +1179,62 @@
       "front": "What should be retained to reproduce or adapt the tutorial's calculations?",
       "back": "Editable source, shared case settings and functions, analysis code, software/package versions, and build instructions.",
       "source": "https://katatam.github.io/sample-size-calculation/book/appendix.html"
+    },
+    {
+      "id": "A081",
+      "level": "advanced",
+      "front": "What is joint power for co-primary outcomes?",
+      "back": "The probability that all required tests succeed. Two independent tests with 90% power each have 81% joint power; correlated outcomes require a joint calculation.",
+      "source": "https://katatam.github.io/sample-size-calculation/book/study-designs.html#multiple-outcomes-comparisons"
+    },
+    {
+      "id": "A082",
+      "level": "advanced",
+      "front": "How does simple fixed-sequence testing work?",
+      "back": "Tests follow a prespecified order. A later confirmatory claim is evaluated only after the preceding test succeeds.",
+      "source": "https://katatam.github.io/sample-size-calculation/book/study-designs.html#multiple-outcomes-comparisons"
+    },
+    {
+      "id": "A083",
+      "level": "advanced",
+      "front": "Why does a planned interim efficacy analysis affect sample size planning?",
+      "back": "The procedure must account for the repeated opportunities to stop and the final test. Planning should evaluate power and the overall false-positive probability.",
+      "source": "https://katatam.github.io/sample-size-calculation/book/study-designs.html#interim-analyses-stopping"
+    },
+    {
+      "id": "A084",
+      "level": "advanced",
+      "front": "How do maximum and expected sample size differ in a trial that can stop early?",
+      "back": "The maximum is the largest sample allowed by the design. The expected sample size averages the sample sizes used across repeated trials under specified assumptions.",
+      "source": "https://katatam.github.io/sample-size-calculation/book/study-designs.html#interim-analyses-stopping"
+    },
+    {
+      "id": "A085",
+      "level": "advanced",
+      "front": "What does a futility guideline address?",
+      "back": "Whether the trial has sufficiently low prospects of demonstrating the planned benefit to support stopping, under a specified rule and assumptions.",
+      "source": "https://katatam.github.io/sample-size-calculation/book/study-designs.html#interim-analyses-stopping"
+    },
+    {
+      "id": "A086",
+      "level": "advanced",
+      "front": "What distinguishes blinded and unblinded sample-size re-estimation?",
+      "back": "Blinded re-estimation uses information without treatment comparisons, such as pooled variability. Unblinded re-estimation can use an interim treatment difference. Both need a suitable prespecified method.",
+      "source": "https://katatam.github.io/sample-size-calculation/book/study-designs.html#sample-size-re-estimation"
+    },
+    {
+      "id": "A087",
+      "level": "advanced",
+      "front": "What must a simulation include when a trial has interim decisions?",
+      "back": "Every planned stopping and adaptation rule and the corresponding final analysis. Evaluation includes false-positive probability, power and the distribution of sample sizes.",
+      "source": "https://katatam.github.io/sample-size-calculation/book/simulation.html#simulating-decision-rules"
+    },
+    {
+      "id": "A088",
+      "level": "advanced",
+      "front": "What extra documentation does a complex testing design need?",
+      "back": "Its success rule, testing procedure, interim timing and boundaries, adaptation rules and limits, final analysis, and dated protocol/SAP versions.",
+      "source": "https://katatam.github.io/sample-size-calculation/book/appendix.html#complex-design-record"
     }
   ]
 }

@@ -12,6 +12,8 @@ Use the same case and assumptions through the module, [lab](https://katatam.gith
 | Core: understand power under specified assumptions | Explain one inconclusive result despite high planned power | Conditional probability and limits of non-rejection; simulation optional | 7 |
 | Evaluate precision | Compare CI width and clinical threshold | Interpretation of three prepared intervals | 8 |
 | Advanced: explain simulation uncertainty | Change B while keeping n fixed; check assumptions and analysis | Monte Carlo interval, seed, generating assumptions and failures | 9 |
+| Advanced: recognize complex testing decisions | Compare success rules and discuss a planned interim look using Chapter 7 | Explanation of required claims, error control, joint power, stopping and re-estimation decisions | Formative chapter check |
+| Advanced: document a complex design | Review a hypothetical protocol against the Chapter 8 checklist | Prespecified rules, final analysis, software and dated protocol/SAP record | 4, 10; 9 if simulation is included |
 | Communicate informational value | Write justification and peer review | Feasibility recommendation with limits | 10 |
 | Contribute an OER case | Adapt and review a case | Reviewed contribution, optional publication consent | Formative feedback |
 
