@@ -6,7 +6,9 @@ const base=process.argv[2]||'http://127.0.0.1:8769';
  const browser=await chromium.launch({headless:true,...(process.platform==='win32'?{channel:'msedge'}:{})});
  const page=await browser.newPage({viewport:{width:1280,height:900}});
  const errors=[];page.on('pageerror',e=>errors.push(e.message));
- for(const path of ['/book/feasibility.html','/book/Sample_size_open_module.html']) {
+ // Precision is discussed with the calculations; Chapter 4 now focuses on
+ // recruitment and completing the sample size calculation report.
+ for(const path of ['/book/calculations.html','/book/Sample_size_open_module.html']) {
   console.log("Checking",path); await page.goto(base+path);
   const repeated = await page.evaluate(() => {
     const seen = new Map(), duplicates = [];
