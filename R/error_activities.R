@@ -8,7 +8,8 @@ render_error_activity <- function(name) {
   passages <- list(); answers <- list(); index <- 0L
   for (segment in activity$segments) {
     if (is.null(segment$error)) {
-      passages <- c(passages, list(segment$text))
+      spacer <- if (nzchar(segment$text) && !nzchar(trimws(segment$text))) htmltools::HTML("&#32;") else segment$text
+      passages <- c(passages, list(spacer))
     } else {
       index <- index + 1L
       key <- paste0(activity$id, "-", index)
@@ -23,7 +24,7 @@ render_error_activity <- function(name) {
     }
   }
   # Emit one raw HTML block so Markdown does not parse indented nested tags.
-  widget <- as.character(tags$div(class = "spot-activity", id = activity$id, `data-version` = "1", role = "region",
+  widget <- as.character(tags$div(class = "spot-activity", id = activity$id, `data-version` = if (is.null(activity$version)) "1" else as.character(activity$version), role = "region",
     `aria-labelledby` = paste0(activity$id, "-title"),
     title_tag(class = "spot-title", id = paste0(activity$id, "-title"), activity$title),
     tags$p(class = "spot-instructions", "Which passages need correction? Selecting a passage opens its explanation. Some passages are appropriate."),

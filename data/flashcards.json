@@ -730,7 +730,7 @@
       "level": "core",
       "front": "What is the difference between increasing discharge from 80% to 96% and increasing it by 20 percentage points?",
       "back": "80% to 96% is a 16-percentage-point increase and a 20% relative increase. Adding 20 percentage points to 80% gives 100%.",
-      "source": "https://katatam.github.io/sample-size-calculation/book/calculations.html#discharge"
+      "source": "https://katatam.github.io/sample-size-calculation/book/exercises.html#discharge"
     },
     {
       "id": "C083",

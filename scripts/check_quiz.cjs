@@ -17,13 +17,13 @@ const bank=JSON.parse(fs.readFileSync('site/quiz/questions.json','utf8'));
  try{
   const page=await browser.newPage({viewport:{width:1200,height:950}});
   const errors=[];page.on('pageerror',e=>errors.push(e.message));
-  for(const ch of Object.keys(bank.chapters)){
+  for(const ch of bank.chapter_checks){
    await page.goto(base+'/quiz/?chapter='+ch);
    await page.waitForFunction(()=>!document.getElementById('start').disabled);
    assert.equal(await page.locator('#chapter').inputValue(),ch);
    await page.locator('#route').selectOption('all');
    await page.locator('#start').click();
-   assert.equal(await page.locator('fieldset').count(),bank.questions.filter(q=>q.chapter===ch).length);
+   assert.equal(await page.locator('fieldset').count(),bank.questions.filter(q=>q.chapter===ch&&q.chapter_check!==false).length);
    assert.equal(await page.locator('#questions .quiz-level').count(),0,'Chapter name is not repeated under each question');
    assert(!/\b(Core|Advanced)\b/.test(await page.locator('#quiz').innerText()));
    assert.equal(await page.locator('#results').isVisible(),false);

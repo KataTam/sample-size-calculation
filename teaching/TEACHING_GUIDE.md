@@ -7,7 +7,7 @@ The module teaches sample size as a justified research-design decision. Activiti
 
 ## Preparation and access
 
-The embedded [report review](../book/reporting.html#report-error-activity), [discharge review](../book/calculations.html#discharge-error-activity), [recruitment review](../book/feasibility.html#recruitment-error-activity) and advanced [software review](../book/appendix.html#software-error-activity) ask learners to identify questionable passages. Some passages are appropriate. Learners can first give a reason for their choice, then open the explanation and draft a correction. A partner can check whether the revision preserves the intended study question and matches the calculation. The PDF provides the same passages and answer key. A count of passages opened measures participation in this exercise; an independently written correction gives stronger evidence of understanding.
+The embedded [report review](../book/reporting.html#report-error-activity), [discharge review](../book/exercises.html#discharge-error-activity), [recruitment review](../book/simulation.html#recruitment-error-activity) and advanced [software review](../book/appendix.html#software-error-activity) ask learners to identify questionable passages. Some passages are appropriate. Learners can first give a reason for their choice, then open the explanation and draft a correction. A partner can check whether the revision preserves the intended study question and matches the calculation. The PDF provides the same passages and answer key. A count of passages opened measures participation in this exercise; an independently written correction gives stronger evidence of understanding.
 
 For a pilot, the [observation notes](pilot_observation_notes.html#optional-page-time-recording) describe a possible opt-in page-time recorder, how to handle split-screen use and the limits of timing data. Recording is not currently enabled.
 
@@ -23,6 +23,19 @@ Chapters 1–4 form the core sequence, and Chapters 5–9 provide optional advan
 
 The chronic-pain case provides the narrative thread: question, evidence, target difference, power, calculation, recruitment, sensitivity and recommendation. Students progressively develop one assumptions report as they work through the tutorial. Later sections change the question while retaining this planning logic: describe a symptom percentage, reuse the trial's baseline data, or plan a pilot's retention estimate. Extensions should serve the session's aim; the core route includes interpreting one simulated trial and many trials in the app or prepared results; constructing simulations and analyzing Monte Carlo uncertainty remain advanced. Binary and continuous outcomes can be compared in a later session if time permits.
 
+### Four core activities
+
+| Chapter | Core activity | Contribution to the continuing report |
+|---|---|---|
+| 1. Research question and power | [Chronic pain: one study and many studies](../study/?activity=pain_one_many) | Question, assumptions and interpretation of power |
+| 2. Calculating sample size | [One calculation: probiotics or rehabilitation](../book/calculations.html#calculate-sample-size) | Inputs, procedure, software and analyzable counts |
+| 3. Recruitment and feasibility | [Adjust recruitment](../study/?activity=recruitment) using one shared loss percentage | Recruitment per group and in total, with a short justification |
+| 4. The sample size calculation report | [Review and complete a report](../book/reporting.html#check-reporting) | Four-error review followed by a consistency check of the learner's report |
+
+The report builder is a continuing workspace for these activities. Its core view has 12 prompts for a two-group power calculation. Learners can use a supplied case and short explanations. The two calculation examples are alternatives; completing both is optional. The Chapter 4 report review replaces that chapter's multiple-choice check. Chapters 1–3 retain short quizzes, and the cumulative quiz is optional review.
+
+The [additional discharge practice](../book/exercises.html#discharge) reinforces introductory calculations. Advanced extensions cover [unequal losses and treatment switching](../book/simulation.html#recruitment-extensions), independent evidence appraisal, plausible ranges, several sensitivity scenarios, and a fuller supporting study plan. In the report builder, opening “Advanced study plan” reveals these additional prompts while retaining the same answers. Full independent planning should be assigned only when it serves the course objectives.
+
 ## Session formats
 
 The session plans select activities from the tutorial. They allow for prior preparation and should be adjusted after observing the group. Completing the entire Core route, writing a justification and receiving feedback requires additional time.
@@ -30,7 +43,7 @@ The session plans select activities from the tutorial. They allow for prior prep
 | Format | Preparation | In-session focus | Expected product |
 |---|---|---|---|
 | 30-minute introduction | Teacher supplies the pain case and three simulated trials | 5 minutes on the question; 5 on assumptions; 10 on sample variability and power; 10 on explanation and discussion | An explanation of what stays fixed and what varies, with one uncertain assumption |
-| 60-minute core workshop | Learners read Chapters 1–3 and attempt their chapter checks; teacher selects one calculation | 10 minutes reviewing assumptions; 10 predicting and exploring simulations; 15 calculation and recruitment; 10 sensitivity; 15 report revision and paired feedback | A partially completed report and one justified revision |
+| 60-minute core workshop | Learners read Chapters 1–3 and attempt their chapter checks; teacher selects one calculation | 10 minutes on the question and supplied assumptions; 10 on simulation; 15 on one calculation; 10 on recruitment; 15 on report review and paired feedback | A partially completed report and one justified revision |
 | 90-minute workshop | Core preparation plus one selected advanced reading | The 60-minute workshop plus 30 minutes on fixed resources, simulation or precision, matched to the group's question | A report with one advanced extension |
 | Extended practical or homework | Relevant core chapters and a chosen clinical question | Calculation, evidence search, sensitivity analysis, a 300–600-word justification and peer review across separate stages | A revised report with sources and a response to feedback |
 
@@ -44,7 +57,7 @@ The [study-plan activity](https://katatam.github.io/sample-size-calculation/stud
 |---|---|---|
 | Chapter 1: research question and power | PICO, observed earlier data, target difference, clinical threshold, error probabilities and power | How does the evidence support the planning assumptions? |
 | Chapter 2: calculating sample size | Inputs, procedure, software and analyzable counts | Does the calculation match the intended comparison? |
-| Chapter 3: recruitment and feasibility | Loss assumptions, recruitment counts, sensitivity and resource limits | Which uncertain assumption most affects feasibility? |
+| Chapter 3: recruitment and feasibility | One shared loss assumption and recruitment counts | Are the per-group and total counts consistent with the selected calculation? |
 | Chapter 4: the sample size calculation report | Concise calculation report followed by the supporting study plan | Could another researcher reproduce the calculation and assess its justification? |
 
 The seven planning questions in Chapter 1 can guide short individual decisions within this report. A learner may initially write “evidence needed” for a field and revise it after a relevant chapter. The teacher should assess the reasoning behind revisions.
@@ -122,7 +135,7 @@ The [alignment table](constructive_alignment_table.md), [assessment rubric](asse
 
 Students can adapt cases, challenge unclear assumptions and suggest explanations. The [case-quality checklist](../case-studies/case_quality_checklist.md) and [peer-review form](../case-studies/peer_review_form.md) support teacher approval. Keep consent records outside the public repository and do not make public contribution consent a condition of participation.
 
-Assess only what the selected route teaches. Core learners submit a justified calculation and sensitivity analysis; criterion 9 of the rubric is an optional advanced simulation extension. The learning-assessment form provides separate core and simulation versions of item 4. For an estimation or pilot project, assess the target quantity, denominator, useful precision and decision criteria rather than requiring a treatment hypothesis. Prepared outputs can support the same interpretation tasks. Orsini's workshop feedback and the simulation teaching papers motivate these activities, but do not establish their effectiveness here.
+Assessment should follow the selected route. Core learners submit one concise calculation report developed through the four activities. Independent evidence appraisal and sensitivity scenarios are advanced extensions, as are precision planning and simulation uncertainty. The learning-assessment form provides separate core and simulation versions of item 4. For an estimation or pilot project, the assessment should cover the target quantity, denominator, useful precision and decision criteria. Prepared outputs can support the same interpretation tasks. Orsini's workshop feedback and the simulation teaching papers motivate these activities; their effectiveness in this tutorial still needs evaluation.
 
 The review by [Chan, Botelho, and Lam (2019)](https://doi.org/10.2196/11241) highlights why resource access and time online should not stand in for learning. For this module, a useful evaluation would compare whether learners can justify their target difference, identify a relevant SD or event-probability source, and explain how an uncertain assumption affects the plan. The unfamiliar transfer case and delayed assessment can revisit those decisions. Activity completion and satisfaction should be reported separately; no additional tracking dashboard is needed for these assessments.
 
@@ -136,8 +149,8 @@ The single learner source is `module/Sample_size_open_module.Rmd`. Short session
 
 | Route | Book chapters and evidence |
 |---|---|
-| Core | Chronic-pain assumptions report, power interpretation, worked calculation, recruitment, sensitivity table and clinical interval interpretation |
-| Simulation extension | the one-study, power-curve and repeated-trial activities with generating assumptions, analysis and Monte Carlo uncertainty; use prepared results if needed |
+| Core | Four core activities and one concise report: simulation, one selected calculation, shared-loss adjustment and report review |
+| Simulation extension | power curves, confidence interval coverage, missing-outcome scenarios and Monte Carlo uncertainty; use prepared results if needed |
 | Estimation or feasibility extension | Prevalence, pilot retention or existing-dataset reuse, with useful precision and justified conclusions |
 | Own project | Check the design first; use an appropriate planning method and adapt the assessment criteria to the goal |
 
@@ -149,7 +162,7 @@ Use the [glossary](../student-materials/glossary.md), [FAQ](../student-materials
 
 For an own-study exercise, students can complete the [lab](https://katatam.github.io/sample-size-calculation/study/?activity=own_study)'s “My study” and “Report” views. You should review their evidence, clinical threshold, participant burden and recruitment assumptions against the intended design. The [software validation guide](../documentation/software-validation.md) provides optional teacher checks.
 
-The separate [assumptions report activity](https://katatam.github.io/sample-size-calculation/study/?activity=assumptions_report) records sources, their relevance, uncertain assumptions and the resulting recommendation. It also supports single-population estimation, fixed data and pilot objectives. It does not compute or validate a new sample size. Students should distinguish the default fixed-sample pain illustration from the sample selected to meet 90% target power in the tutorial.
+The continuing [study-plan workspace](https://katatam.github.io/sample-size-calculation/study/?activity=assumptions_report) records sources, their relevance, uncertain assumptions and the resulting recommendation. It also supports single-population estimation, fixed data and pilot objectives. It does not compute or validate a new sample size. Students should distinguish the default fixed-sample pain illustration from the sample selected to meet 90% target power in the tutorial.
 
 
 ## Extended sample size justification
@@ -160,7 +173,7 @@ For an extended assignment, a 300–600-word justification should cover the clin
 
 You can use the chronic pain report you have developed through the tutorial, or a justified two-arm case of your own. Your explanation should justify the target difference's importance and realism using relevant evidence. The report should identify the calculation method and distinguish required analyzable counts from recruitment. These elements follow [Cook et al. (2018)](https://katatam.github.io/sample-size-calculation/book/references.html#ref-cook2018delta2) and [CONSORT's sample size reporting guidance (2025)](https://katatam.github.io/sample-size-calculation/book/references.html#ref-consortee2025).
 
-You can complete and save your text in [Activity: Develop and justify your study plan](https://katatam.github.io/sample-size-calculation/study/?activity=assumptions_report). The [case template](https://katatam.github.io/sample-size-calculation/case-studies/student_case_template.html) provides the same planning prompts for an offline document. The core [assessment rubric](https://katatam.github.io/sample-size-calculation/teaching/assessment_rubric.html) explains how to review your justification. A brief final note should identify an assumption you revised and the evidence or reasoning that changed it. For an advanced estimation, feasibility or fixed-dataset project, replace the treatment-power requirement with its relevant information target and denominator.
+You can complete and save your text in [Activity: Develop and justify your study plan](https://katatam.github.io/sample-size-calculation/study/?activity=assumptions_report). The [case template](https://katatam.github.io/sample-size-calculation/case-studies/student_case_template.html) provides the same planning prompts for an offline document. The [assessment rubric](https://katatam.github.io/sample-size-calculation/teaching/assessment_rubric.html) explains how to review your justification. A brief final note should identify an assumption you revised and the evidence or reasoning that changed it. For an advanced estimation, feasibility or fixed-dataset project, replace the treatment-power requirement with its relevant information target and denominator.
 
 You can discuss these review questions with a collaborator:
 
@@ -180,7 +193,7 @@ The activity shows the prepared example's calculation date, R and stats versions
 
 Students choose one study and maintain one set of answers across the four core chapters. Teaching examples in other activities provide practice; students select which results belong in their own plan. Chapters 1–3 introduce the question and power, calculation, and recruitment. Chapter 4 gathers the reporting instructions and complete example. Students can record decisions as they read, then review the report and supporting evidence together. Sensitivity analyses can be documented alongside the principal calculation. Advanced extensions depend on the chosen question.
 
-A provisional answer is a useful starting point. Students can mark each section ready for review; edits to key assumptions flag the affected sections for another review. Students can identify missing evidence, its likely source and the decision it would inform. The report's automated checks compare structured saved results; evidence credibility and numbers embedded in prose need review.
+A provisional answer is a useful starting point. Students can mark each section ready for review; edits to key assumptions flag the affected sections for another review. The advanced view supports a fuller evidence review, plausible ranges and several sensitivity scenarios. The report's automated checks compare structured saved results; evidence credibility and numbers embedded in prose need review.
 
 For paired review, one learner explains the evidence and plausible range for a key input. Their partner checks comparability and asks whether less favorable or conflicting findings were considered. Together they examine one alternative using an existing calculation or the [sample size reasoning app](https://katatam.github.io/sample-size-calculation/study/?activity=pain_curves). The learner then revises the same report answer, or explains why it stands. Assessment should credit recognition of uncertainty and justified decisions. The [evidence and uncertainty discussion](https://katatam.github.io/sample-size-calculation/book/curves.html#planning-uncertainty) supplies empirical examples for the debrief.
 

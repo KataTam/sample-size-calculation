@@ -20,28 +20,10 @@
     "route": "Core",
     "activities": [
       {
-        "label": "Probiotics: calculate a binary-outcome sample size",
-        "path": "study/?activity=probiotics_calculation",
+        "label": "Calculate a sample size: choose one example",
+        "path": "book/calculations.html#calculate-sample-size",
         "route": "Core",
-        "section": "adherence"
-      },
-      {
-        "label": "Rehabilitation: calculate a mean-difference sample size",
-        "path": "study/?activity=rehabilitation_calculation",
-        "route": "Core",
-        "section": "rehabilitation"
-      },
-      {
-        "label": "Hospital discharge: additional practice",
-        "path": "study/?activity=discharge",
-        "route": "Optional core practice",
-        "section": "discharge"
-      },
-      {
-        "label": "Review the discharge calculations",
-        "path": "book/calculations.html#discharge-error-activity",
-        "route": "Optional core practice",
-        "section": "discharge"
+        "section": "calculate-sample-size"
       }
     ]
   },
@@ -56,12 +38,6 @@
         "path": "study/?activity=recruitment",
         "route": "Core",
         "section": "account-for-expected-losses"
-      },
-      {
-        "label": "Review the recruitment plan",
-        "path": "book/feasibility.html#recruitment-error-activity",
-        "route": "Core",
-        "section": "treatment-changes"
       }
     ]
   },
@@ -72,22 +48,10 @@
     "route": "Core",
     "activities": [
       {
-        "label": "Develop and justify your study plan",
-        "path": "study/?activity=assumptions_report",
+        "label": "Review and complete a sample size calculation report",
+        "path": "book/reporting.html#check-reporting",
         "route": "Core",
-        "section": "record-assumptions"
-      },
-      {
-        "label": "Complete your assumptions report",
-        "path": "assumptions_report/?stage=review",
-        "route": "Core",
-        "section": "write-a-sample-size-justification"
-      },
-      {
-        "label": "Review a sample size calculation report",
-        "path": "book/reporting.html#report-error-activity",
-        "route": "Core",
-        "section": "write-a-sample-size-justification"
+        "section": "check-reporting"
       }
     ]
   },
@@ -154,6 +118,18 @@
         "path": "study/?activity=discharge",
         "route": "Advanced",
         "section": "discharge-simulation"
+      },
+      {
+        "label": "Unequal losses and treatment switching",
+        "path": "study/?activity=recruitment_advanced",
+        "route": "Advanced",
+        "section": "recruitment-extensions"
+      },
+      {
+        "label": "Review the recruitment plan",
+        "path": "book/simulation.html#recruitment-error-activity",
+        "route": "Advanced",
+        "section": "recruitment-extensions"
       }
     ]
   },
@@ -197,6 +173,12 @@
     "title": "Test your understanding",
     "route": "Core and advanced",
     "activities": [
+      {
+        "label": "Hospital discharge: additional calculation practice",
+        "path": "book/exercises.html#discharge",
+        "route": "Optional basic practice",
+        "section": "discharge"
+      },
       {
         "label": "Check your understanding: cumulative quiz",
         "path": "book/exercises.html#cumulative-quiz",

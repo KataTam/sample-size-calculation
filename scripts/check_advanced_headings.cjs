@@ -13,7 +13,7 @@ const base=process.argv[2]||'http://127.0.0.1:8769';
   for(const id of expected[chapter]||[])assert.equal(await p.locator('[id="'+id+'"]').count(),1,id);
   if(i<4) {
     const disclosures=p.locator('.page-inner details.advanced-explanation');
-    const optional={feasibility:'treatment-switching'}[chapter];
+    const optional=undefined;
     assert.equal(await disclosures.count(),chapter==='calculations'?2:chapter==='reporting'?1:optional?1:0,'Optional advanced explanations stay beside their related core calculation');
     for(const disclosure of await disclosures.all())assert.equal(await disclosure.getAttribute('open'),null,'Advanced explanation starts collapsed');
     if(chapter==='calculations')assert.deepEqual(await disclosures.evaluateAll(nodes=>nodes.map(n=>n.closest('.section').id)),['adherence','rehabilitation']);
@@ -28,7 +28,7 @@ const base=process.argv[2]||'http://127.0.0.1:8769';
   assert.equal(await p.locator('.page-inner h1 .header-section-number').count(),0);
   assert.equal(await p.locator('.page-inner .learning-goals, .page-inner .chapter-recap').count(),0);
  }
- for(const [old,anchor,chapter] of [['power','alpha-beta','curves'],['power','eq:mcse','simulation'],['calculations','plan-for-precision','estimation-planning'],['feasibility','dataset-reuse','estimation-planning'],['exercises','discharge','calculations'],['exercises','own-study','appendix'],['calculations','gpower-assumptions','appendix'],['calculations','tab:gpower-effect-sizes','appendix']]){
+ for(const [old,anchor,chapter] of [['power','alpha-beta','curves'],['power','eq:mcse','simulation'],['calculations','plan-for-precision','estimation-planning'],['feasibility','dataset-reuse','estimation-planning'],['calculations','discharge','exercises'],['exercises','own-study','appendix'],['calculations','gpower-assumptions','appendix'],['calculations','tab:gpower-effect-sizes','appendix']]){
   await p.goto(base+'/book/'+old+'.html#'+anchor);
   await p.waitForURL('**/'+chapter+'.html#'+anchor);
   assert(await p.locator('[id="'+anchor+'"]').isVisible());

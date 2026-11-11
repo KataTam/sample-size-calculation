@@ -64,11 +64,11 @@ basic_calculator_server <- function(outcome) function(input, output, session) {
     id <- input$activity_request$activity
     if (identical(id, "probiotics_calculation") && !means) {
       updateSliderInput(session, "pi1", value = .90); updateSliderInput(session, "pi2", value = .80)
-      updateSliderInput(session, "compare_pi1", value = .85); updateSliderInput(session, "dropout", value = .15)
+      updateSliderInput(session, "compare_pi1", value = .90); updateSliderInput(session, "dropout", value = 0)
       updateSliderInput(session, "power", value = .90); updateSliderInput(session, "alpha", value = .05)
     } else if (identical(id, "rehabilitation_calculation") && means) {
       updateNumericInput(session, "delta", value = 3); updateNumericInput(session, "sd", value = 5)
-      updateNumericInput(session, "compare_delta", value = 1.5); updateSliderInput(session, "dropout", value = .10)
+      updateNumericInput(session, "compare_delta", value = 3); updateSliderInput(session, "dropout", value = 0)
       updateSliderInput(session, "power", value = .90); updateSliderInput(session, "alpha", value = .05)
     }
   })

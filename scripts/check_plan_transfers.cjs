@@ -19,6 +19,7 @@ const base=(process.argv[2]||'http://127.0.0.1:8769').replace(/\/$/,'');
    if(slug==='two_means')assert.equal(record.facts.analyzable,59);
    const [report]=await Promise.all([context.waitForEvent('page'),f.locator('.plan-transfer-button').click()]);
    await report.waitForLoadState();await report.locator('#accept-transfer').waitFor();
+   if(await report.locator('#resume-plan').isVisible())await report.locator('#resume-plan-button').click();
    if(slug==='two_proportions'){
     await report.locator('#plan-title').fill('My continuing trial');
     await report.locator('#plan-section-0').evaluate(el=>el.open=true);
@@ -31,13 +32,22 @@ const base=(process.argv[2]||'http://127.0.0.1:8769').replace(/\/$/,'');
   }
   const f=await app('/study/?activity=probiotics_calculation','pi1');
   await f.waitForFunction(()=>Math.abs(Shiny.shinyapp.$inputValues.pi1-.9)<1e-8&&Math.abs(Shiny.shinyapp.$inputValues.pi2-.8)<1e-8);
-  assert.equal(await page.locator('#activity optgroup[label="Core"]').count(),1);
+  assert.equal(await page.locator('#activity optgroup[label="Core calculation: choose one"]').count(),1);
+  assert.equal(await f.evaluate(()=>Shiny.shinyapp.$inputValues.dropout),0,'Core calculation precedes the loss adjustment');
   await page.setViewportSize({width:1200,height:950});
   await f.waitForFunction(()=>![...document.querySelectorAll('.recalculating')].some(e=>e.checkVisibility()));
   const heights=[];for(let i=0;i<20;i++){heights.push(await f.evaluate(()=>document.documentElement.scrollHeight));await page.waitForTimeout(250);if(heights.length>=8&&new Set(heights.slice(-8)).size===1)break;}
   assert.equal(new Set(heights.slice(-8)).size,1,'Split activity layout settles without repeated resizing: '+heights.join(', '));
   fs.mkdirSync('build/week4-qa',{recursive:true});await page.screenshot({path:'build/week4-qa/probiotics-split.png'});
   const recruit=await app('/study/?activity=recruitment','n');assert.equal(await page.locator('#app-panel-title').innerText(),'Adjust recruitment');
+  assert.equal(await recruit.locator('#recruitment-advanced').evaluate(el=>el.open),false);
+  await page.locator('#activity').selectOption('recruitment_advanced');
+  await recruit.waitForFunction(()=>document.getElementById('recruitment-advanced').open);
+  if(!await recruit.locator('#different_losses').isVisible())await recruit.locator('.app-settings > summary').click();
+  await recruit.locator('#different_losses').check();
+  await page.locator('#activity').selectOption('recruitment');
+  await recruit.waitForFunction(()=>document.getElementById('different_losses').checked&&document.getElementById('recruitment-advanced').open);
+  await recruit.locator('#different_losses').uncheck();
   if(!await recruit.locator('#n').isVisible())await recruit.locator('.app-settings > summary').click();
   await recruit.locator('#n').fill('56');await recruit.locator('#n').press('Tab');
   await page.waitForTimeout(400);await page.reload();

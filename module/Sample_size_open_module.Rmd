@@ -56,7 +56,7 @@ Although the examples are clinical, the principles of justifying assumptions, ch
 
 This tutorial is for students and researchers. Chapters 1–4 form the Core route for basic two-arm trial planning. Chapters 5–9 offer Advanced topics that you can consult according to your study question. The glossary and common questions are reference pages for either route.
 
-Activities are learning exercises. Apps are the interactive software used in some activities, such as calculators, simulations and the report builder. You can record your decisions in the [study-plan activity](https://katatam.github.io/sample-size-calculation/assumptions_report/?stage=question) as you read. Chapter 4 brings together the report guidance and a completed example. The same answers produce a concise sample size calculation report followed by the supporting study plan; advanced activities can extend that supporting material. Expandable misconception boxes explain common difficulties; the toolbar help explains the other reading features.
+The core route has four activities: [simulate trials](#activity-1-one-study-then-many), [choose one sample size calculation](#calculate-sample-size), [adjust recruitment](#account-for-expected-losses), and [review and complete a report](#check-reporting). Activities are learning exercises; apps are the software used to carry them out. You can record your decisions in the [study-plan activity](https://katatam.github.io/sample-size-calculation/assumptions_report/?stage=question) as you read. Chapter 4 brings together the report guidance and a completed example. The same answers produce a concise sample size calculation report followed by the supporting study plan; advanced activities can extend that supporting material. Expandable misconception boxes explain common difficulties; the toolbar help explains the other reading features.
 
 ```{r tutorial-roadmap, echo=FALSE, results='asis'}
 roadmap <- paste(readLines("../figures/tutorial-roadmap.svg",
@@ -69,7 +69,7 @@ cat('<figure class="tutorial-roadmap">',
     roadmap, '</figure>')
 ```
 
-Each teaching chapter ends with an embedded *Check your understanding* quiz. The material comes together in a [cumulative quiz](#cumulative-quiz).
+Chapters 1–3 have short *Check your understanding* quizzes. The report-review activity serves as Chapter 4's check; advanced chapters have their own quizzes. The material comes together in a [cumulative quiz](#cumulative-quiz).
 
 You can open [the tutorial and an app together](https://katatam.github.io/sample-size-calculation/study/?activity=pain_one_many), consult the [activity walkthroughs](https://katatam.github.io/sample-size-calculation/student-materials/activity-walkthroughs.html), or review terms in the [Glossary](#glossary). For your own project, [Study designs and testing strategies](#study-designs) helps you choose an approach. Its advanced section on [units of randomization, measurement, and analysis](#units-of-analysis) explains how grouping and paired measurements affect the information a study provides.
 
@@ -85,7 +85,7 @@ The linked sections should help you develop a sample size justification for a ba
 - Use [one simulated study and many studies](#activity-1-one-study-then-many) to distinguish [sample estimates](#sample-estimate) from [population parameters](#population-parameter) and see how results vary.
 - [Calculate sample size for two proportions or two means](#calculations) and [adjust recruitment for expected losses](#account-for-expected-losses), distinguishing analyzable counts from recruitment counts.
 - [Examine a plausible alternative assumption](#stress-test-the-study-plan), recognize [underpowered studies](#what-if-the-study-is-too-small-for-its-purpose) and assess [ways to increase power](#increase-power).
-- [Write a short sample size justification](#write-a-sample-size-justification) recording assumptions, calculation and recruitment, using the [Activity: Develop and justify your study plan](https://katatam.github.io/sample-size-calculation/assumptions_report/?stage=question).
+- [Write a short sample size justification](#write-a-sample-size-justification) recording assumptions, calculation and recruitment, using [your continuing report](https://katatam.github.io/sample-size-calculation/assumptions_report/?stage=question).
 
 :::
 
@@ -523,7 +523,7 @@ For a yes/no outcome, the calculation uses the event percentage in each group. F
 
 Read a row as a conditional statement: if those event probabilities and that analysis are reasonable, then this is the approximate number required for the specified error targets. The smaller-difference row needs more participants because sampling variability makes that difference harder to distinguish from zero.
 
-In [Activity: Two-proportion calculator](https://katatam.github.io/sample-size-calculation/two_proportions/), you can compare the sample sizes needed at different power targets.
+In the [two-proportion app](https://katatam.github.io/sample-size-calculation/two_proportions/), you can compare the sample sizes needed at different power targets.
 
 ### Preventing gestational diabetes {#adherence .core-heading}
 
@@ -549,19 +549,18 @@ adherence_plan <- teaching_case_spec("adherence")
 # Calculate patients per group for the example's target power.
 adherence_plan$n <- plan_n(adherence_plan, "testing",
   adherence_case$inputs$target_power)
-# Display the analysis count, loss-adjusted recruitment, and resulting power.
+# Display the analyzable count in each group and across both groups.
 c(analyzable_per_group = adherence_plan$n,
-  recruit_per_group = adjust_for_dropout(adherence_plan$n,
-    adherence_case$inputs$dropout),
+  analyzable_total = 2 * adherence_plan$n,
   planning_power = spec_power(adherence_plan))
 ```
 
 ```{r adherence-case-formatted, echo=FALSE}
-knitr::kable(data.frame(`Analyzable per group`=adherence_plan$n, `Recruit per group`=adjust_for_dropout(adherence_plan$n,adherence_case$inputs$dropout), `Planning power`=percent(spec_power(adherence_plan)),check.names=FALSE),
-  caption = "Sample size and recruitment requirements for the hypothetical gestational-diabetes prevention trial.")
+knitr::kable(data.frame(`Analyzable per group`=adherence_plan$n, `Analyzable total`=2*adherence_plan$n, `Planning power`=percent(spec_power(adherence_plan)),check.names=FALSE),
+  caption = "Analyzable sample size for the hypothetical gestational-diabetes prevention trial.")
 ```
 
-[Activity: Probiotics: calculate a binary-outcome sample size](https://katatam.github.io/sample-size-calculation/study/?activity=probiotics_calculation) explores how a smaller target difference changes the required sample and recruitment target.
+The [calculation activity](#calculate-sample-size) offers this example as one of two choices.
 
 <details class="advanced-explanation">
 <summary>Advanced: simulate the prevention trial</summary>
@@ -674,7 +673,7 @@ knitr::kable(display_probabilities(mean_cases, c("alpha", "power")),
 
 Before rounding, halving the difference or doubling the SD multiplies the required sample size by four. You can explain this relationship using equation \@ref(eq:means).
 
-The [Activity: Rehabilitation: calculate a mean-difference sample size](https://katatam.github.io/sample-size-calculation/study/?activity=rehabilitation_calculation) lets you compare sample requirements as the target difference or SD changes.
+The [calculation activity](#calculate-sample-size) offers this mean-difference example as one of two choices.
 
 ### A rehabilitation case {#rehabilitation .core-heading}
 
@@ -688,18 +687,16 @@ rehabilitation_plan <- teaching_case_spec("rehabilitation")
 rehabilitation_plan$n <- sample_size_two_means(
   rehabilitation_case$inputs$plan_delta, rehabilitation_case$inputs$plan_sd,
   rehabilitation_case$inputs$alpha, rehabilitation_case$inputs$target_power)
-# Allow for expected losses separately when calculating recruitment.
+# Report the analyzable requirement before the recruitment adjustment in Chapter 3.
 c(analyzable_per_group = rehabilitation_plan$n,
-  total = 2 * rehabilitation_plan$n,
-  recruitment_total = 2 * adjust_for_dropout(rehabilitation_plan$n,
-    rehabilitation_case$inputs$dropout))
+  total = 2 * rehabilitation_plan$n)
 ```
 
 ```{r rehabilitation-case-formatted, echo=FALSE}
-knitr::kable(data.frame(`Analyzable per group`=rehabilitation_plan$n, `Analyzable total`=2*rehabilitation_plan$n, `Recruit total`=2*adjust_for_dropout(rehabilitation_plan$n, rehabilitation_case$inputs$dropout), check.names=FALSE), caption="Sample size and recruitment requirements for the rehabilitation comparison.")
+knitr::kable(data.frame(`Analyzable per group`=rehabilitation_plan$n, `Analyzable total`=2*rehabilitation_plan$n, check.names=FALSE), caption="Analyzable sample size for the rehabilitation comparison.")
 ```
 
-[Activity: Rehabilitation: calculate a mean-difference sample size](https://katatam.github.io/sample-size-calculation/study/?activity=rehabilitation_calculation). Before changing the SD from 5 to 7, how would you expect the required sample size to change? Your exploration should hold the target difference, error probabilities and analysis fixed. Greater individual variability makes the same mean difference harder to distinguish, so the plan needs more patients. You can then assess whether 10% expected loss and a recruitment limit of 200 make each plan feasible. Although an improvement score uses before/after information within each patient, this example analyzes one score per patient across two independent groups. A single-group paired comparison, repeated-measures model, or baseline-adjusted analysis needs its own planning method.
+Although an improvement score uses before/after information within each patient, this example analyzes one score per patient across two independent groups. A single-group paired comparison, repeated-measures model, or baseline-adjusted analysis needs its own planning method.
 
 <details class="advanced-explanation">
 <summary>Advanced: simulate rehabilitation outcomes</summary>
@@ -708,72 +705,16 @@ The [rehabilitation simulation](https://katatam.github.io/sample-size-calculatio
 
 </details>
 
-The expected-loss adjustment gives a recruitment total of `r 2 * adjust_for_dropout(rehabilitation_plan$n, rehabilitation_case$inputs$dropout)`, below this example's cap of 200. Meeting the cap and power target still leaves questions about the credibility of the assumptions, measurement quality and the clinical relevance of the target difference.
+The [recruitment activity](#account-for-expected-losses) starts with this analyzable count and applies the expected loss percentage separately.
 
-## Discharge percentages {#discharge .core-heading}
+## Activity: Calculate a sample size {#calculate-sample-size .core-heading}
 
-In this optional practice, you compare three sample size plans for the same hospital-discharge trial. The aim is to see how a relative increase differs from an increase in percentage points, and how the target difference and target power affect the number of patients needed.
+One of the following examples is sufficient for this activity:
 
-Suppose a hospital is planning a trial of a new discharge-support program against standard care. The outcome is discharge within seven days of admission: yes or no. With standard care, 80% of patients are expected to be discharged by then. All values in this example are hypothetical.
+- [Probiotics: two percentages](https://katatam.github.io/sample-size-calculation/study/?activity=probiotics_calculation).
+- [Rehabilitation: two means](https://katatam.github.io/sample-size-calculation/study/?activity=rehabilitation_calculation).
 
-For the new program, the [difference observed in earlier data](#expected-difference) is 18 percentage points (98% versus 80%), and the clinical threshold is 8 percentage points. These remain fixed reference values. Each plan below specifies the target difference used in its calculation. All three plans use equal group sizes, a two-sided test, a 5% Type I error probability, and no allowance for losses at this stage.
-
-| Plan | Target difference | Target power |
-|:--|:--|:--|
-| A | A 20% relative increase from the 80% standard-care percentage | 80% |
-| B | An absolute increase of 10 [percentage points](#percentage-points) | 80% |
-| C | The same target difference as Plan A | 90% |
-
-Table: (\#tab:discharge-task) Three discharge-study plans with a 5% Type I error probability and a two-sided comparison.
-
-### Your task {.unnumbered}
-
-The short note below contains proposed interpretations of the three plans. Reviewing it gives you a prediction to check with the calculator.
-
-```{r discharge-error-review, echo=FALSE, results='asis'}
-render_error_activity("discharge")
-```
-
-1. You can calculate each plan using the [two-proportions method](#two-proportions) or [Activity: Discharge percentages](https://katatam.github.io/sample-size-calculation/study/?activity=discharge). In the app's *Settings*, the standard-treatment percentage stays at 80%; the novel-treatment percentage and target power should match the plan. The *Overview* shows the required sample size. Your record should include both the analyzable count per group and the total. Each per-group count is rounded upward before doubling for two equal groups.
-2. Your explanation should connect the results to the target difference and power chosen in each plan. Which parts of the proposed interpretation would you retain, and which would you revise?
-
-<details>
-<summary>Show the calculation and interpretation</summary>
-
-```{r discharge-answers}
-# A relative increase multiplies 80% by 1.20; an absolute increase adds .10.
-discharge <- data.frame(
-  scenario = c("20% relative increase", "10 percentage points", "Higher power"),
-  control = .80, treatment = c(.80 * 1.20, .80 + .10, .80 * 1.20),
-  power = c(.80, .80, .90))
-# Recalculate for each treatment probability and power target.
-discharge$per_group <- mapply(function(p, power) {
-  sample_size_two_proportions(p, .80, alpha = .05, power = power)
-}, discharge$treatment, discharge$power)
-discharge$total <- 2 * discharge$per_group
-# Show per-group and total counts with probabilities formatted as percentages.
-knitr::kable(display_probabilities(discharge, c("control", "treatment", "power")),
-  caption = "Analyzable discharge-study sample sizes using the normal planning approximation in power.prop.test().")
-```
-
-The treatment percentages are 96%, 90% and 96%, giving target differences of 16, 10 and 16 percentage points for A, B and C. The approximate totals are `r paste(discharge$total, collapse = ", ")`, respectively. Plan B needs more patients than A because its smaller target difference is harder to detect at the same power. Plan C needs more patients than A because it aims for higher power at the same difference. Of these three plans, B requires the most patients. The difference observed in previous data remains 18 points and the clinical threshold remains 8 points in each comparison.
-
-Figure \@ref(fig:discharge-grids) shows how the relative increase in Plans A and C and the absolute increase in Plan B translate into discharge percentages.
-
-```{r discharge-grids, echo=FALSE, fig.width=8, fig.height=5.3, fig.cap="Discharge percentages in illustrative groups of 100 patients. A 20% relative increase from 80% gives 96%; an increase of 10 percentage points gives 90%. The grids display assumed percentages; the sample size calculation determines how many patients the study requires.", fig.alt="Three grids of 100 squares. Standard care has 80 discharged and 20 not discharged. A 20% relative increase adds 16 discharges, giving 96 of 100. An increase of 10 percentage points adds 10 discharges, giving 90 of 100."}
-draw_discharge_grids()
-```
-
-<details class="misconception" id="misconception-percentage-points">
-<summary>Common misconception: percentages and percentage points are interchangeable</summary>
-
-From a baseline of 80%, a 20% relative increase gives 96% ($0.80\times1.20=0.96$), an increase of 16 percentage points. An increase of 20 percentage points gives 100%. The baseline and whether the change is relative or absolute should be clear before you enter probabilities into a calculator.
-
-</details>
-
-</details>
-
-The advanced [discharge simulation](#discharge-simulation) examines how the approximation performs when the assumed event probability is close to 100%.
+Your record should identify the inputs, method and analyzable count per group and in total. The next chapter uses this count to calculate recruitment. Both worked examples remain available above; the [discharge exercise](#discharge) offers additional practice.
 
 <div class="chapter-recap">
 
@@ -799,8 +740,8 @@ After this chapter, you should be able to:
 
 - Adjust an analyzable sample size for expected losses and round within each group.
 - Explain why missing outcomes also require prevention and an appropriate analysis.
-- Explain how treatment changes can affect the difference between randomized groups and the recruitment plan.
-- Assess one plausible alternative assumption and the practical recruitment requirement.
+- Distinguish treatment changes from missing outcomes and recognize when further planning is needed.
+- Interpret the illustrated alternative assumption and assess the practical recruitment requirement.
 
 :::
 
@@ -847,15 +788,9 @@ For the chronic pain trial, 5% expected loss means approximately 95% of recruits
 <span id="model-answer-protocol-counts"></span>
 The protocol should report both the required [analyzable sample](#analyzable-sample-size) and the recruitment target, per group and in total: here, `r 2 * analyzable_per_group` analyzable patients and `r 2 * recruit_per_group` recruits across the two groups. Actual retention can vary.
 
-The percentage of participants lost to follow-up may differ between treatment groups. This is called *differential dropout*. For example, outcomes might be missing for 20% of participants receiving the novel treatment and 10% receiving standard treatment. When such differences are anticipated, sample size planning should account for the expected retention in each group and the planned allocation ratio. A single overall dropout percentage can conceal a shortfall in one group.
+Missing outcomes may be more common in one treatment group or among patients with poor outcomes. Your study should plan for follow-up and an appropriate analysis as well as the expected count. The advanced [missing-outcome extension](#explore-missing-outcomes) examines unequal losses and possible bias.
 
-The reasons for missing outcomes also matter. In the chronic pain trial, patients who experience little relief might be more likely to miss the final assessment. If this happens more often in the novel-treatment group, an analysis restricted to participants with observed outcomes could overestimate its benefit. [Bias](#bias) can occur with equal or unequal dropout percentages. Assessing it requires information about why outcomes are missing, the treatment effect being estimated, and the analysis used [@bell2013dropout].
-
-Your study plan should describe how missing outcomes will be minimized, how their reasons will be recorded in each group, and how the analysis will handle them. [Sensitivity analyses](#sensitivity-analysis) should examine whether conclusions change under plausible alternative assumptions about the missing outcomes [@little2012missing].
-
-The usual simulations start with the stated number of patients available for analysis. The advanced [missing-outcome extension](#explore-missing-outcomes) starts with recruited participants and explores equal, unequal, and outcome-related losses in the [repeated-trial activity](https://katatam.github.io/sample-size-calculation/study/?activity=pain_simulation).
-
-The [Activity: Adjust recruitment](https://katatam.github.io/sample-size-calculation/study/?activity=recruitment) explores how shared or different expected losses change the recruitment target.
+The [Activity: Adjust recruitment](https://katatam.github.io/sample-size-calculation/study/?activity=recruitment) uses the analyzable count from your chosen calculation and one expected loss percentage for both groups. Your answer should give the recruitment count per group and in total, rounded upward.
 
 <details class="misconception" id="misconception-dropout">
 <summary>Common misconception: recruiting extra participants resolves missing-data problems</summary>
@@ -889,44 +824,10 @@ draw_treatment_followup()
 
 For example, a patient assigned to the novel treatment may switch to standard treatment and still report pain relief at four weeks. That recorded outcome remains in the novel-treatment group when estimating the effect of treatment assignment. The missing-outcome allowance concerns the final column; the assumed treatment difference should also reflect relevant changes in treatment received in the middle column.
 
-```{r recruitment-error-review, echo=FALSE, results='asis'}
-render_error_activity("recruitment")
-```
 
-<details class="advanced-explanation" id="treatment-switching">
-<summary>Allowing for treatment switching</summary>
 
-[Treatment crossover](#treatment-crossover){.no-glossary-tooltip} here means receiving the other treatment after randomization. A planned crossover trial, in which participants receive treatments in a prespecified sequence, requires a calculation suited to that design.
 
-A simplified model describes complete switching between treatments. Let $a$ be the fraction assigned to the novel treatment who receive standard treatment, and $b$ the fraction assigned to standard treatment who receive the novel treatment. If switchers have the same outcome distribution as other recipients of the treatment they receive, the between-group difference becomes $1-a-b$ times the difference under full adherence. Assuming little change in outcome variance, the approximate per-group requirement is [@wittes2002]:
-
-\begin{equation}
-n_{\mathrm{switching}} \approx \frac{n_{\mathrm{full\ adherence}}}{(1-a-b)^2}.
-(\#eq:switching)
-\end{equation}
-
-With 10% switching from novel to standard and 5% in the other direction, the multiplier is $1/(1-0.10-0.05)^2=1.38$: approximately 38% more participants. The squared denominator reflects the inverse-square relationship between the difference and required sample size. This approximation requires $a+b<1$.
-
-Partial adherence, delayed switching, and switching prompted by poor response need more detailed assumptions. Methods that account for changes in variance and differences between adherence groups are available [@shardell2009].
-
-For binary outcomes, you can recalculate sample size using the revised event percentages. As a separate sensitivity scenario for chronic pain, suppose 60% and 30% describe relief under full adherence. With the switching percentages above, the simplified model gives:
-
-\[
-\begin{aligned}
-\text{Assigned novel treatment: }&0.90(60\%)+0.10(30\%)=57\%,\\
-\text{Assigned standard treatment: }&0.95(30\%)+0.05(60\%)=31.5\%.
-\end{aligned}
-\]
-
-The resulting between-group difference is 25.5 percentage points. The [two-proportion app](https://katatam.github.io/sample-size-calculation/two_proportions/) can calculate the sample needed at these revised percentages. This sensitivity scenario changes the assumed comparison; the main example's difference observed in the pilot of 40 percentage points, target difference of 30 percentage points and clinical threshold of 20 percentage points retain their stated roles.
-
-In the [recruitment adjustment activity](https://katatam.github.io/sample-size-calculation/study/?activity=recruitment), the optional switching calculation starts with a sample size that assumes full adherence. A separate loss allowance then reflects expected outcome completeness. Intermediate values remain unrounded until the final recruitment count. For example, starting with 100 per group, the switching assumptions above and 5% missing outcomes in both groups gives $\lceil100/(0.85^2\times0.95)\rceil=146$ recruits per group. With unequal losses, equal recruitment uses the larger requirement for both groups.
-
-Your report should document the switching assumptions, their evidence, the method used, and sensitivity to alternative assumptions. The downloadable app report includes these calculation steps and your written justification; the [reproducibility chapter](#tutorial-methods) explains the procedures.
-
-</details>
-
-The [recruitment adjustment activity](https://katatam.github.io/sample-size-calculation/study/?activity=recruitment) includes a prediction-and-justification question with a model answer. Its advanced option explores how switching and missing assessments affect the same recruitment plan. It calculates expected requirements without generating individual patient outcomes.
+The advanced [recruitment extension](#recruitment-extensions) examines unequal losses and treatment-switching calculations.
 
 ## Sensitivity to planning assumptions {#stress-test-the-study-plan .core-heading}
 
@@ -991,31 +892,8 @@ Table: (\#tab:increase-power) Options for increasing power and the assumptions o
 
 Power calculations describe performance under assumed treatment benefits. Those assumptions should be grounded in relevant evidence. Running more simulations improves the precision of the estimated power.
 
-::: {.activity}
-<p class="question-label">Question to consider</p>
-
-You can compare plans in [Activity: Chronic pain: one study and many studies](https://katatam.github.io/sample-size-calculation/study/?activity=pain_one_many). You should keep standard-treatment relief at 30%, novel-treatment relief at 60% and the Type I error probability at 5%. You can compare 50 and 80 analyzable patients per group. Which plan detects the specified benefit more often?
-
-What would obtaining the larger sample require in practice?
-
-Your study plan should explain the recruitment implications.
-
-<details class="model-answer" id="model-answer-larger-study-resources">
-<summary>Model answer</summary>
-
-With the same population assumptions and test, 80 analyzable patients per group should detect the 30-point difference more often than 50 per group. In the prepared simulation, estimated power is `r percent(power_results$simulated_power[3])` and `r percent(power_results$simulated_power[2])`, respectively. At 10% expected loss, the corresponding recruitment targets are 89 per group (178 total) and 56 per group (112 total), after rounding within each arm. The larger design therefore needs capacity for 66 additional recruits, with implications for recruitment time, staffing, funding and participant burden. More information can reduce uncertainty, but the feasibility of obtaining it also needs justification.
-
-</details>
-
-:::
-
-If the study remains infeasible, you may need to reconsider its aim, collaborate, or decide not to proceed with an efficacy study. For example, a small preliminary pain study could estimate whether patients complete the four-week assessment. Its sample size would then follow that feasibility objective; the original treatment comparison would retain its limited power. The [pilot example](#pilot-feasibility) shows how to justify this revised purpose [@lakens2022].
-
-Broader eligibility may make the study more representative of the intended population. If it also increases outcome variability, power at a fixed sample and treatment difference may fall. The calculation should reflect the resulting population and analysis.
-
-Clustered designs, nonparametric analyses and Bayesian planning need methods suited to their assumptions; [Study designs and testing strategies](#study-designs) provides starting points [@hayes1999; @happ2019; @pezeshk2003]. The advanced [rare-disease section](#rare-diseases) considers a particularly restrictive recruitment ceiling.
-
-
+<span id="model-answer-larger-study-resources"></span>
+The [simulation in Chapter 1](#activity-1-one-study-then-many) illustrates why increasing the sample can improve power when the population assumptions stay fixed. Detailed comparisons of several scenarios are available in the advanced [power-curve activity](https://katatam.github.io/sample-size-calculation/study/?activity=pain_curves).
 
 <div class="chapter-recap">
 
@@ -1040,7 +918,7 @@ render_chapter_quiz("feasibility")
 After this chapter, you should be able to:
 
 - Write a concise sample size calculation report supported by a study plan.
-- Explain the evidence and judgments behind the numerical assumptions.
+- Explain the supplied assumptions and their role in the calculation.
 - Record the procedure, software, inputs, rounding and recruitment adjustment reproducibly.
 - Recognize incomplete or inconsistent reporting and revise it.
 :::
@@ -1049,7 +927,7 @@ A useful report lets another researcher understand your decisions and reproduce 
 
 ## What belongs in the report? {#record-assumptions .core-heading}
 
-Table \@ref(tab:planning-assumptions) organizes reporting decisions under the [study-plan activity](https://katatam.github.io/sample-size-calculation/assumptions_report/?stage=question)'s four headings and links to the chapters explaining each part. Decisions needing more evidence can remain provisional. The [estimation reporting guidance](#estimation-report) gives the corresponding entries for a precision-based plan.
+Table \@ref(tab:planning-assumptions) organizes reporting decisions under the [study-plan activity](https://katatam.github.io/sample-size-calculation/assumptions_report/?stage=question)'s four headings and links to the chapters explaining each part. The core view asks for the question, outcome, design, clinical threshold, target difference, event percentages or SD, analysis, statistical criteria, software, counts, recruitment and conclusion. The advanced view adds detailed PICO, evidence appraisal, sensitivity and feasibility prompts. Decisions needing more evidence can remain provisional. The [estimation reporting guidance](#estimation-report) gives the corresponding entries for a precision-based plan.
 
 ::: {.planning-assumptions}
 
@@ -1178,11 +1056,8 @@ Table: (\#tab:report-annotations) Essential elements of the sample size calculat
 
 The [commented calculation](#sample-size-report-methods) reproduces the analyzable count. The [recruitment calculation](#account-for-expected-losses) shows the loss adjustment. A plan with multiple outcomes, interim analyses or sample-size adaptations also needs the [advanced design-specific record](#complex-design-record).
 
-The report below contains several problems. Its linked explanations show how you could revise it using the decisions introduced in the core chapters.
+The [report-review activity](#report-error-activity) at the end of this chapter checks the inputs, power interpretation and participant counts.
 
-```{r report-error-review, echo=FALSE, results='asis'}
-render_error_activity("report")
-```
 
 The [teaching guide](https://katatam.github.io/sample-size-calculation/teaching/TEACHING_GUIDE.html#extended-sample-size-justification) provides a longer assignment and peer-review prompts. Before completing the report, you should be able to explain the evidence for the event percentages, why the selected target matters clinically, the choice of power, and the basis for the loss allowance.
 
@@ -1192,7 +1067,7 @@ Your final review should check that the percentages, target difference, power, m
 
 The study protocol sets out the design and objectives; the statistical analysis plan (SAP) specifies the analyses in enough detail to implement them. Their outcome definitions, sample size assumptions and primary analysis should agree, with amendments documented. UMCG students and researchers can access the [UMCG statistical analysis plan template in Zenya](https://umcg.zenya.work/document/2f52710d-3ebc-495e-a4dc-6dee95742c78) [@umcgsap]. The [annotated report](#write-a-sample-size-justification) uses its sample-size reporting elements.
 
-Table \@ref(tab:planning-assumptions) covers the core reporting items. The selected calculation should retain its exact inputs, software versions and rounding; the supporting record should make revised assumptions and their reasons traceable.
+Table \@ref(tab:planning-assumptions) covers the reporting items and supporting planning record. The selected calculation should retain its exact inputs, software versions and rounding; the supporting record should make revised assumptions and their reasons traceable.
 
 A simulation report should also describe how data were generated, the number of independent studies, the analysis of each study, and how performance was summarized. Your [assumptions report](https://katatam.github.io/sample-size-calculation/assumptions_report/?stage=question) can bring the clinical justification and these computational details together. Each saved result should retain the inputs used to produce it; changed controls require a new calculation or simulation.
 
@@ -1226,9 +1101,13 @@ The [UMCG SAP template](https://umcg.zenya.work/document/2f52710d-3ebc-495e-a4dc
 
 ## Check your understanding {#check-reporting .unnumbered}
 
-```{r quiz-reporting, echo=FALSE, results="asis"}
-render_chapter_quiz("reporting")
+The short report below contains four problem areas. After reviewing them, you can check the same elements in [your continuing report](https://katatam.github.io/sample-size-calculation/assumptions_report/?stage=review).
+
+```{r report-error-review, echo=FALSE, results='asis'}
+render_error_activity("report")
 ```
+
+Your final report should give consistent calculation inputs, explain power at the target difference, distinguish per-group and total counts, and show the loss adjustment. The app's core view brings these entries together. The [advanced planning extension](#extend-study-plan) develops the supporting evidence and alternative scenarios.
 
 # Sample size for estimation {#estimation-planning .advanced-heading}
 
@@ -2077,7 +1956,56 @@ Here, $n$ denotes patients per group and $B$ denotes the number of simulated stu
 
 With statistically significant results in 80% of simulated studies and $B=5000$, MCSE is about `r round(100 * sqrt(.8 * .2 / 5000), 2)` percentage points. The tables use Wilson intervals for Monte Carlo uncertainty. These intervals remain informative even when a simulation observes no rejections or all rejections. Increasing $B$ does not resolve uncertainty about the real treatment effect.
 
+## Recruitment extensions {#recruitment-extensions .advanced-heading}
+
+The [recruitment adjustment app](https://katatam.github.io/sample-size-calculation/study/?activity=recruitment_advanced) extends the shared-loss calculation with separate loss percentages and treatment switching. These options use the same starting analyzable requirement; their assumptions need justification.
+
+<details class="advanced-explanation" id="treatment-switching">
+<summary>Allowing for treatment switching</summary>
+
+[Treatment crossover](#treatment-crossover){.no-glossary-tooltip} here means receiving the other treatment after randomization. A planned crossover trial, in which participants receive treatments in a prespecified sequence, requires a calculation suited to that design.
+
+A simplified model describes complete switching between treatments. Let $a$ be the fraction assigned to the novel treatment who receive standard treatment, and $b$ the fraction assigned to standard treatment who receive the novel treatment. If switchers have the same outcome distribution as other recipients of the treatment they receive, the between-group difference becomes $1-a-b$ times the difference under full adherence. Assuming little change in outcome variance, the approximate per-group requirement is [@wittes2002]:
+
+\begin{equation}
+n_{\mathrm{switching}} \approx \frac{n_{\mathrm{full\ adherence}}}{(1-a-b)^2}.
+(\#eq:switching)
+\end{equation}
+
+With 10% switching from novel to standard and 5% in the other direction, the multiplier is $1/(1-0.10-0.05)^2=1.38$: approximately 38% more participants. The squared denominator reflects the inverse-square relationship between the difference and required sample size. This approximation requires $a+b<1$.
+
+Partial adherence, delayed switching, and switching prompted by poor response need more detailed assumptions. Methods that account for changes in variance and differences between adherence groups are available [@shardell2009].
+
+For binary outcomes, you can recalculate sample size using the revised event percentages. As a separate sensitivity scenario for chronic pain, suppose 60% and 30% describe relief under full adherence. With the switching percentages above, the simplified model gives:
+
+\[
+\begin{aligned}
+\text{Assigned novel treatment: }&0.90(60\%)+0.10(30\%)=57\%,\\
+\text{Assigned standard treatment: }&0.95(30\%)+0.05(60\%)=31.5\%.
+\end{aligned}
+\]
+
+The resulting between-group difference is 25.5 percentage points. The [two-proportion app](https://katatam.github.io/sample-size-calculation/two_proportions/) can calculate the sample needed at these revised percentages. This sensitivity scenario changes the assumed comparison; the main example's difference observed in the pilot of 40 percentage points, target difference of 30 percentage points and clinical threshold of 20 percentage points retain their stated roles.
+
+In the [advanced recruitment extension](https://katatam.github.io/sample-size-calculation/study/?activity=recruitment_advanced), the switching calculation starts with a sample size that assumes full adherence. A separate loss allowance then reflects expected outcome completeness. Intermediate values remain unrounded until the final recruitment count. For example, starting with 100 per group, the switching assumptions above and 5% missing outcomes in both groups gives $\lceil100/(0.85^2\times0.95)\rceil=146$ recruits per group. With unequal losses, equal recruitment uses the larger requirement for both groups.
+
+Your report should document the switching assumptions, their evidence, the method used, and sensitivity to alternative assumptions. The downloadable app report includes these calculation steps and your written justification; the [reproducibility chapter](#tutorial-methods) explains the procedures.
+
+</details>
+
+```{r recruitment-error-review, echo=FALSE, results='asis'}
+render_error_activity("recruitment")
+```
+
 ## Explore missing outcomes {#explore-missing-outcomes .advanced-heading}
+
+The percentage of participants lost to follow-up may differ between treatment groups. This is called *differential dropout*. For example, outcomes might be missing for 20% of participants receiving the novel treatment and 10% receiving standard treatment. When such differences are anticipated, sample size planning should account for the expected retention in each group and the planned allocation ratio. A single overall dropout percentage can conceal a shortfall in one group.
+
+The reasons for missing outcomes also matter. In the chronic pain trial, patients who experience little relief might be more likely to miss the final assessment. If this happens more often in the novel-treatment group, an analysis restricted to participants with observed outcomes could overestimate its benefit. [Bias](#bias) can occur with equal or unequal dropout percentages. Assessing it requires information about why outcomes are missing, the treatment effect being estimated, and the analysis used [@bell2013dropout].
+
+Your study plan should describe how missing outcomes will be minimized, how their reasons will be recorded in each group, and how the analysis will handle them. [Sensitivity analyses](#sensitivity-analysis) should examine whether conclusions change under plausible alternative assumptions about the missing outcomes [@little2012missing].
+
+The simulations below start with recruited participants so that losses affect the number available for analysis.
 
 The [repeated chronic pain trial activity](https://katatam.github.io/sample-size-calculation/study/?activity=pain_simulation) also lets you examine how missing outcomes affect a treatment comparison. Under *Explore further*, the expandable *Explore missing outcomes* controls offer four scenarios. Each uses the same recruited count and the same population relief probabilities, so you can distinguish the consequences of losing information from those of selectively losing particular outcomes.
 
@@ -2239,6 +2167,10 @@ After this section, you should be able to:
 - Compare software results using matching methods and assumptions.
 - Identify which methods and software settings could explain different numerical results.
 :::
+
+## Extend your study plan {#extend-study-plan .advanced-heading}
+
+In [your continuing report](https://katatam.github.io/sample-size-calculation/assumptions_report/?level=advanced&stage=question), the advanced prompts expand the same answers into a fuller study plan. You can appraise evidence for each input, justify plausible ranges, compare several sensitivity scenarios, and document feasibility and unresolved decisions. Switching views preserves your writing and attached calculations. The [teaching guide](https://katatam.github.io/sample-size-calculation/teaching/TEACHING_GUIDE.html#extended-sample-size-justification) provides an extended assignment and peer-review questions.
 
 ## Why reproducibility matters {#why-reproducibility-matters .advanced-heading}
 
@@ -2459,7 +2391,72 @@ render_chapter_quiz("appendix")
 
 # Test your understanding {#exercises .unnumbered .reference-heading}
 
-The cumulative quiz brings together the tutorial's main decisions. Your results include explanations and links to sections you can review.
+The discharge exercise provides optional practice with basic calculations. The cumulative quiz brings together the tutorial's main decisions, with explanations and links for review.
+
+## Additional practice: discharge percentages {#discharge .unnumbered}
+
+In this optional practice, you compare three sample size plans for the same hospital-discharge trial. The aim is to see how a relative increase differs from an increase in percentage points, and how the target difference and target power affect the number of patients needed.
+
+Suppose a hospital is planning a trial of a new discharge-support program against standard care. The outcome is discharge within seven days of admission: yes or no. With standard care, 80% of patients are expected to be discharged by then. All values in this example are hypothetical.
+
+For the new program, the [difference observed in earlier data](#expected-difference) is 18 percentage points (98% versus 80%), and the clinical threshold is 8 percentage points. These remain fixed reference values. Each plan below specifies the target difference used in its calculation. All three plans use equal group sizes, a two-sided test, a 5% Type I error probability, and no allowance for losses at this stage.
+
+| Plan | Target difference | Target power |
+|:--|:--|:--|
+| A | A 20% relative increase from the 80% standard-care percentage | 80% |
+| B | An absolute increase of 10 [percentage points](#percentage-points) | 80% |
+| C | The same target difference as Plan A | 90% |
+
+Table: (\#tab:discharge-task) Three discharge-study plans with a 5% Type I error probability and a two-sided comparison.
+
+### Your task {.unnumbered}
+
+The short note below contains proposed interpretations of the three plans. Reviewing it gives you a prediction to check with the calculator.
+
+```{r discharge-error-review, echo=FALSE, results='asis'}
+render_error_activity("discharge")
+```
+
+1. You can calculate each plan using the [two-proportions method](#two-proportions) or [Activity: Discharge percentages](https://katatam.github.io/sample-size-calculation/study/?activity=discharge). In the app's *Settings*, the standard-treatment percentage stays at 80%; the novel-treatment percentage and target power should match the plan. The *Overview* shows the required sample size. Your record should include both the analyzable count per group and the total. Each per-group count is rounded upward before doubling for two equal groups.
+2. Your explanation should connect the results to the target difference and power chosen in each plan. Which parts of the proposed interpretation would you retain, and which would you revise?
+
+<details>
+<summary>Show the calculation and interpretation</summary>
+
+```{r discharge-answers}
+# A relative increase multiplies 80% by 1.20; an absolute increase adds .10.
+discharge <- data.frame(
+  scenario = c("20% relative increase", "10 percentage points", "Higher power"),
+  control = .80, treatment = c(.80 * 1.20, .80 + .10, .80 * 1.20),
+  power = c(.80, .80, .90))
+# Recalculate for each treatment probability and power target.
+discharge$per_group <- mapply(function(p, power) {
+  sample_size_two_proportions(p, .80, alpha = .05, power = power)
+}, discharge$treatment, discharge$power)
+discharge$total <- 2 * discharge$per_group
+# Show per-group and total counts with probabilities formatted as percentages.
+knitr::kable(display_probabilities(discharge, c("control", "treatment", "power")),
+  caption = "Analyzable discharge-study sample sizes using the normal planning approximation in power.prop.test().")
+```
+
+The treatment percentages are 96%, 90% and 96%, giving target differences of 16, 10 and 16 percentage points for A, B and C. The approximate totals are `r paste(discharge$total, collapse = ", ")`, respectively. Plan B needs more patients than A because its smaller target difference is harder to detect at the same power. Plan C needs more patients than A because it aims for higher power at the same difference. Of these three plans, B requires the most patients. The difference observed in previous data remains 18 points and the clinical threshold remains 8 points in each comparison.
+
+Figure \@ref(fig:discharge-grids) shows how the relative increase in Plans A and C and the absolute increase in Plan B translate into discharge percentages.
+
+```{r discharge-grids, echo=FALSE, fig.width=8, fig.height=5.3, fig.cap="Discharge percentages in illustrative groups of 100 patients. A 20% relative increase from 80% gives 96%; an increase of 10 percentage points gives 90%. The grids display assumed percentages; the sample size calculation determines how many patients the study requires.", fig.alt="Three grids of 100 squares. Standard care has 80 discharged and 20 not discharged. A 20% relative increase adds 16 discharges, giving 96 of 100. An increase of 10 percentage points adds 10 discharges, giving 90 of 100."}
+draw_discharge_grids()
+```
+
+<details class="misconception" id="misconception-percentage-points">
+<summary>Common misconception: percentages and percentage points are interchangeable</summary>
+
+From a baseline of 80%, a 20% relative increase gives 96% ($0.80\times1.20=0.96$), an increase of 16 percentage points. An increase of 20 percentage points gives 100%. The baseline and whether the change is relative or absolute should be clear before you enter probabilities into a calculator.
+
+</details>
+
+</details>
+
+The advanced [discharge simulation](#discharge-simulation) examines how the approximation performs when the assumed event probability is close to 100%.
 
 ## Cumulative quiz {#cumulative-quiz .unnumbered}
 

@@ -50,6 +50,8 @@ const {saveReportPair}=require('./report_test_helpers.cjs');
   assert.equal(await page.locator('#question').inputValue(),'A pain question');
   assert.equal(await page.locator('#question').getAttribute('data-example-answer'),questionFormat);
   await page.locator('#plan-title').fill('My trial');await page.locator('#question').fill('Does the intervention help?');
+  await page.locator('#advanced-plan').evaluate(el=>el.open=true);
+  await page.waitForFunction(()=>document.querySelector('[name=plan_level]').value==='advanced');
   for(const id of ['population','intervention','comparator','outcome_detail','design'])await page.locator('#'+id).fill('My '+id);
   await page.locator('#section-0-reviewed').check();
   assert.equal(await page.locator('#section-0-reviewed').isChecked(),true);

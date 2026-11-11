@@ -6,7 +6,7 @@ const bank=JSON.parse(fs.readFileSync('site/quiz/questions.json','utf8'));
  try{
   const page=await browser.newPage({viewport:{width:1200,height:950}}),errors=[];
   page.on('pageerror',e=>errors.push(e.message));
-  const chapters=[...Object.keys(bank.chapters),'exercises'];
+  const chapters=[...bank.chapter_checks,'exercises'];
   const introductoryCount=bank.questions.filter(q=>q.chapter==='clinical-question').length;
   for(const chapter of chapters){
    await page.goto(`${base}/book/${chapter}.html`);
@@ -62,7 +62,7 @@ const bank=JSON.parse(fs.readFileSync('site/quiz/questions.json','utf8'));
   assert.equal(await quiz.locator('select option:checked').innerText(),'All topics');
   await page.evaluate(()=>localStorage.removeItem('sample-size-embedded-quiz-clinical-question-v2'));
   await page.goto(`${base}/book/Sample_size_open_module.html`);
-  assert.equal(await page.locator('.chapter-quiz').count(),Object.keys(bank.chapters).length+1);
+  assert.equal(await page.locator('.chapter-quiz').count(),bank.chapter_checks.length+1);
   const offline=page.locator('#quiz-clinical-question');
   await offline.evaluate(q=>q.closest('details').open=true);
   for(const q of await offline.locator('fieldset:visible').all())await q.locator(`input[value="${await q.getAttribute('data-answer')}"]`).check();

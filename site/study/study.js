@@ -151,11 +151,12 @@
     .then(([registry, map]) => {
       cases = registry; anchors = map;
       selector.replaceChildren();
-      const core=new Set(['assumptions_report','pain_one_many','probiotics_calculation','rehabilitation_calculation','recruitment']);
-      const options={};for(const level of ['Core','Advanced']){const group=document.createElement('optgroup');group.label=level;selector.append(group);options[level]=group;}
+      const core=new Set(['pain_one_many','recruitment']);
+      const choices=new Set(['probiotics_calculation','rehabilitation_calculation']);
+      const options={};for(const level of ['Core activities','Core calculation: choose one','Continuing report','Additional basic practice','Advanced extensions']){const group=document.createElement('optgroup');group.label=level;selector.append(group);options[level]=group;}
       Object.entries(cases).forEach(([id, record]) => {
         if (!allowedApps.has(record.app)) return;
-        const option = document.createElement('option'); option.value = id; option.textContent = record.title; options[core.has(id)?'Core':'Advanced'].appendChild(option);
+        const option = document.createElement('option'); option.value = id; option.textContent = record.title; options[id==='assumptions_report'?'Continuing report':choices.has(id)?'Core calculation: choose one':core.has(id)?'Core activities':id==='discharge'?'Additional basic practice':'Advanced extensions'].appendChild(option);
       });
       const requested = new URL(location.href).searchParams.get('activity');
       openActivity(cases[requested] ? requested : 'pain_one_many');

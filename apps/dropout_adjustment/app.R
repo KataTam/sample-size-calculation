@@ -16,16 +16,17 @@ downloadButton <- function(...) {
 download_script <- activity_download_script()
 
 ui <- fluidPage(
-  tags$head(tags$script(HTML(download_script)), tags$script(HTML(activity_bridge_script("dropout_adjustment"))),
+  tags$head(tags$script(HTML("$(document).on('shiny:connected',function(){Shiny.addCustomMessageHandler('recruitment-extension',function(open){document.getElementById('recruitment-advanced').open=open;});});")), tags$script(HTML(download_script)), tags$script(HTML(activity_bridge_script("dropout_adjustment"))),
     tags$style(HTML(".advanced-options>summary{background:#e9def5;padding:10px;border-radius:5px}details{margin:1em 0}summary{cursor:pointer;font-weight:600}table{width:100%}caption{color:#444}.recruitment-result{background:#dcecfb;padding:14px;border-radius:6px}.recruitment-result p{margin:0}.shiny-download-link{margin:12px 0}"))),
   titlePanel("Recruitment adjustment", windowTitle = "Recruitment adjustment"),
-  activity_description(p(class = "app-intro", "This app calculates how many participants to recruit per group to allow for expected loss to follow-up. Optional settings cover unequal losses and treatment switching.")),
+  activity_description(p(class = "app-intro", "This app calculates how many participants to recruit per group to allow for expected loss to follow-up. The core activity uses your preceding analyzable count and one shared loss percentage. Advanced settings cover unequal losses and treatment switching.")),
   sidebarLayout(
     sidebarPanel(
-      numericInput("n", "Starting participants needed for analysis, per group", 100, min = 1, step = 1),
+      numericInput("n", "Starting participants needed for analysis, per group", 56, min = 1, step = 1),
       activity_help("Use the analyzable count from your sample-size calculation, before allowing for missing outcomes. Any treatment-switching allowance already included should be recorded below.", for_input = "n"),
-      percent_slider("dropout", "Expected loss to follow-up (%)", 0, .50, .10, step = .01),
+      percent_slider("dropout", "Expected loss to follow-up (%)", 0, .50, .05, step = .01),
       activity_help("Use the percentage expected to lack the primary outcome at follow-up. This applies to both groups unless different losses are selected; then it applies to the novel-treatment group.", for_input = "dropout"),
+      tags$details(id = "recruitment-advanced", class = "advanced-options", tags$summary("Advanced: unequal losses and treatment switching"),
       checkboxInput("different_losses", "Use different expected losses for the two groups", FALSE),
       conditionalPanel("input.different_losses",
         percent_slider("loss_standard", "Expected loss: standard-treatment group (%)", 0, .50, .10, step = .01),
@@ -45,11 +46,11 @@ ui <- fluidPage(
           activity_help("The extra allowance applies only to a calculation assuming full adherence. Selecting an existing switching allowance prevents counting its effect twice.", for_input = "starting_assumption")),
         p("For a binary outcome, the ", tags$a(href = "../two_proportions/", "two-proportion app"),
           " can recalculate sample size using revised event percentages. In the tutorial example these become 57% and 31.5%."),
-        p(tags$a(href = "../book/feasibility.html#treatment-switching", "Explanation and assumptions")))
+        p(tags$a(href = "../book/simulation.html#treatment-switching", "Explanation and assumptions"))))
     ),
     mainPanel(tabsetPanel(id = "recruitment_view",
       tabPanel("Overview", h3("Recruitment target"), p("Recruitment per group is the analyzable requirement divided by the expected retained fraction, rounded upward. With 10% expected loss, the retained fraction is 0.90."), uiOutput("result"), uiOutput("recruitment_steps"),
-        p("Recruitment is equal in both groups, using the larger requirement when expected losses differ. Actual retention varies; extra recruitment cannot remove bias from missing outcomes."),
+        p("The result gives equal recruitment per group and the total. Actual retention varies; preventing missing outcomes and planning their analysis remain important."),
         activity_details("Calculation steps and group counts", uiOutput("stages"), uiOutput("group_counts"))),
       tabPanel("Explore assumptions", plotOutput("dropout_plot", height = "340px"),
         textOutput("plot_caption", container = function(...) p(class = "caption", ...)),
@@ -63,18 +64,17 @@ ui <- fluidPage(
           percent_slider("lab_p1", "Novel treatment: event probability used for planning (%)", .01, .99, .6, step = .01)),
         uiOutput("lab_link"))),
       tabPanel("Report", uiOutput("plan_transfer"),
-      tags$details(tags$summary("Activity: Treatment changes and missing outcomes"),
-        p("Suppose some participants switch treatments, while others miss their final assessment."),
-        tags$ol(tags$li("How would treatment switching change the recruitment requirement?"), tags$li("How would missing assessments change it?"), tags$li("Which assumptions need supporting evidence?")),
+      tags$details(tags$summary("Your recruitment explanation"),
+        p("Your explanation should connect the starting analyzable count, expected losses and final recruitment count."),
         activity_text_input("reasoning", "How would switching and missing assessments affect your recruitment plan?",
           "The example updates with the selected case and current calculation inputs.",
           "Your explanation should compare the starting and final counts, justify the loss and switching percentages, and identify how missing outcomes will be handled.", rows = 6)),
         uiOutput("report_preview"), activity_report_downloads("report"),
         p(id = "download-status", role = "status", `aria-live` = "polite")),
       tabPanel("Methods and references", h3("Calculation with your current values"), uiOutput("worked_method"),
-        p(tags$a(href = "../book/feasibility.html#recruitment-error-activity", "Activity: Review the recruitment plan")),
-        p("Starting n is multiplied by 1/(1 - a - b)^2 when the switching option applies. Here a and b are the fractions switching in the two directions. The result is divided by each group's expected retained fraction. The larger requirement is rounded upward once per group and doubled for equal recruitment."),
-        p("The approximation assumes complete switching, comparable outcome distributions among recipients of the same treatment, and little change in variance. Partial, delayed, or outcome-related switching needs a more detailed model. This app calculates expected counts without generating patient outcomes."),
+        p(tags$a(href = "../book/simulation.html#recruitment-error-activity", "Activity: Review the recruitment plan")),
+        tags$details(tags$summary("Advanced calculation assumptions"), p("Starting n is multiplied by 1/(1 - a - b)^2 when the switching option applies. Here a and b are the fractions switching in the two directions. The result is divided by each group's expected retained fraction. The larger requirement is rounded upward once per group and doubled for equal recruitment."),
+        p("The approximation assumes complete switching, comparable outcome distributions among recipients of the same treatment, and little change in variance. Partial, delayed, or outcome-related switching needs a more detailed model. This app calculates expected counts without generating patient outcomes.")),
         p("References: ", tags$a(href = "https://doi.org/10.1093/epirev/24.1.39", "Wittes (2002)"), "; ",
           tags$a(href = "https://doi.org/10.1111/j.1541-0420.2008.01114.x", "Shardell and El-Kamary (2009)"), "; ",
           tags$a(href = "https://www.fda.gov/media/148473/download", "ICH E9(R1)"), "."),
@@ -86,9 +86,15 @@ ui <- fluidPage(
 server <- function(input, output, session) {
   observeEvent(input$activity_request, {
     if (isTRUE(input$activity_request$reset)) {
-      updateNumericInput(session, "n", value = 100); updateSliderInput(session, "dropout", value = .10)
+      updateNumericInput(session, "n", value = 56); updateSliderInput(session, "dropout", value = .05)
       updateCheckboxInput(session, "different_losses", value = FALSE); updateCheckboxInput(session, "switching", value = FALSE)
     }
+  })
+  observe({
+    # Keep active advanced adjustments visible when changing activity routes.
+    session$sendCustomMessage("recruitment-extension",
+      identical(input$activity_request$activity, "recruitment_advanced") ||
+        isTRUE(input$different_losses) || isTRUE(input$switching))
   })
   valid_n <- reactive({
     validate(need(length(input$n) == 1 && is.finite(input$n) && input$n == floor(input$n) && input$n >= 1 && input$n <= 1e7,

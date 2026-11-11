@@ -1,7 +1,9 @@
 /* One developing assignment, explicit snapshots, and review states. MIT. */
 (() => {
   'use strict';
-  const metaNames = ['plan_title', 'plan_basis', 'decision_statuses', 'calculation_records'];
+  const metaNames = ['plan_title', 'plan_basis', 'plan_level', 'decision_statuses', 'calculation_records'];
+  const coreFields = new Set(['question','outcome_detail','design','clinical','planning','variation','analysis','software','power','counts','recruitment','conclusion']);
+  const required = (field,value) => value.plan_level === 'advanced' || value.study_type !== 'comparison' || value.goal !== 'testing' || coreFields.has(field[0]);
   const stages = {
     question: {title:'Question and design', sections:[0], fields:['question','population','intervention','comparator','outcome_detail','design'], text:'Your first contribution is the research question and study design. Initial assumptions can remain provisional while you look for evidence.'},
     power: {title:'Statistical criteria', sections:[2,3], fields:['power','conclusion'], text:'Your plan should explain the chosen error probability and power, and what the study could establish under its assumptions.'},
@@ -33,6 +35,13 @@
   function init(f, definitions, sections) {
     form=f;fields=definitions;groups=sections;
     for(const name of metaNames.filter(n=>!form.elements[n])){const input=element('input');input.type='hidden';input.name=name;form.append(input);}
+    const advanced=document.getElementById('advanced-plan');
+    advanced.addEventListener('toggle',()=>{
+      const level=advanced.open?'advanced':'core';
+      if(form.elements.plan_level.value===level)return;
+      form.elements.plan_level.value=level;
+      form.dispatchEvent(new CustomEvent('plan-identity-input',{detail:{name:'plan_level',value:level}}));
+    });
     const setup=document.getElementById('plan-start');
     setup.querySelectorAll('input,select').forEach(input=>{input.setAttribute('form',form.id);input.addEventListener('input',()=>form.dispatchEvent(new CustomEvent('plan-identity-input',{detail:{name:input.name,value:input.value}})));});
     groups.forEach(([title, definitions],index)=>{
@@ -76,7 +85,7 @@
     const statuses=read(value.decision_statuses,{}), records=validateRecords(value.calculation_records||'[]');currentRecords=records;
     const issues=[];let readySections=0;
     groups.forEach(([title,definitions],index)=>{
-      const relevant=definitions.filter(field=>active(field,value));
+      const relevant=definitions.filter(field=>active(field,value)&&required(field,value));
       const missing=relevant.filter(([id])=>!value[id].trim());
       const key='section-'+index;
       // Earlier work files used one status per field. Preserve their review meaning.
@@ -118,6 +127,9 @@
   }
   function loadPending() {
     const params=new URLSearchParams(location.search),id=params.get('transfer');
+    if(params.get('level')==='advanced'){
+      document.getElementById('advanced-plan').open=true;
+    }
     showStage(params.get('stage')||'question');
     // Keep title and starting point available when returning to a saved plan.
     if(!id||!/^[-a-zA-Z0-9]+$/.test(id))return;
@@ -157,5 +169,5 @@
     if(index<0)return;
     invalidate([index,...(['question','design','outcome_detail','expected','clinical','planning','variation','analysis','power','precision','counts','sensitivity'].includes(name)?[2,3]:[])]);
   }
-  window.PlanWorkflow={onEdit,metaNames,validateMetadata,init,decorate,loadPending,showStage};
+  window.PlanWorkflow={required,onEdit,metaNames,validateMetadata,init,decorate,loadPending,showStage};
 })();

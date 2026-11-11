@@ -7,7 +7,7 @@
   function save(){if(restoring||!bank||!current.length)return;try{localStorage.setItem(storageKey,JSON.stringify({version:JSON.stringify(bank),chapter:chapter.value,route:route.value,ids:current.map(q=>q.id),orders,answers:Object.fromEntries(new FormData($('quiz'))),submitted}));}catch(_) {}}
 
   const chapter = $('chapter'), route = $('route');
-  const selected = () => bank.questions.filter(q => (chapter.value === 'all' || q.chapter === chapter.value) && (route.value === 'all' || q.level === 'core'));
+  const selected = () => bank.questions.filter(q => (chapter.value === 'all' || (q.chapter === chapter.value && q.chapter_check !== false)) && (route.value === 'all' || q.level === 'core'));
   function describe() {
     const questions = selected();
     $('start').disabled = questions.length === 0;
@@ -99,10 +99,12 @@
   }).then(data => {
     bank = data;
     for (const [value, text] of Object.entries(bank.chapters)) {
+      if (!bank.chapter_checks.includes(value)) continue;
       const option = element('option', text); option.value = value; chapter.append(option);
     }
     const previous = new URLSearchParams(location.search).get('chapter');
     const requested = previous === 'power' ? 'clinical-question' : previous;
+    if(requested==='reporting'){location.replace('../book/reporting.html#check-reporting');return;}
     if (requested && bank.chapters[requested]) chapter.value = requested;
     if (chapter.value !== 'all' && !bank.questions.some(q => q.chapter === chapter.value && q.level === 'core')) route.value = 'all';
     $('status').textContent = ''; describe();

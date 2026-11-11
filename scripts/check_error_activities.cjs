@@ -1,7 +1,7 @@
 // The same review content must work with pointer, keyboard, print and no script.
 const {chromium}=require('playwright'),assert=require('node:assert/strict'),fs=require('node:fs');
 const base=(process.argv[2]||'http://127.0.0.1:8769').replace(/\/$/,'');
-const cases={discharge:'calculations',recruitment:'feasibility',report:'reporting',software:'appendix'};
+const cases={discharge:'exercises',recruitment:'simulation',report:'reporting',software:'appendix'};
 const bank=JSON.parse(fs.readFileSync('data/error-activities.json','utf8'));
 (async()=>{
  const browser=await chromium.launch({headless:true,...(process.platform==='win32'?{channel:'msedge'}:{})});

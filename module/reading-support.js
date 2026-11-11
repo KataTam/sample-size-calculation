@@ -8,7 +8,12 @@
     let anchor;
     try { anchor = decodeURIComponent(location.hash.slice(1)); } catch (_) { return false; }
     if (!destinations[anchor] || location.pathname.endsWith('/' + destinations[anchor] + '.html')) return false;
-    location.replace(new URL(destinations[anchor] + '.html' + location.search + location.hash, location.href));
+    const target = new URL(destinations[anchor] + '.html' + location.search + location.hash, location.href);
+    // Let the current page load its reader scripts before leaving; interrupting
+    // their loading can leave the final inline GitBook startup without its library.
+    const redirect = () => location.replace(target);
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', redirect, {once:true});
+    else redirect();
     return true;
   }
   if (redirectMovedSection()) return;
@@ -124,6 +129,16 @@
       if (scrollFrame) return;
       scrollFrame = requestAnimationFrame(() => {
         scrollFrame = null;
+        // At the bottom, a selected heading may be unable to reach the top.
+        // Keep its branch open while that heading remains in the viewport.
+        const requested = localEntries.find(a => new URL(a.href).hash === location.hash && location.hash);
+        const target = requested && document.getElementById(decodeURIComponent(location.hash.slice(1)));
+        const heading = target?.querySelector('h2, h3');
+        const atEnd = [...document.querySelectorAll('.book-body, .body-inner')].some(el =>
+          el.scrollHeight > el.clientHeight && el.scrollHeight - el.scrollTop - el.clientHeight < 2);
+        if (atEnd && heading && heading.getBoundingClientRect().top >= 0 && heading.getBoundingClientRect().top < innerHeight) {
+          selectEntry(requested); return;
+        }
         let current = document.querySelector('.page-inner .section.level1');
         for (const heading of document.querySelectorAll('.page-inner h2, .page-inner h3')) {
           if (heading.getClientRects().length && heading.getBoundingClientRect().top <= 120)

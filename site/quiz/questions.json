@@ -309,10 +309,10 @@
     },
     {
       "id": "q12",
-      "chapter": "calculations",
-      "level": "core",
+      "chapter": "appendix",
+      "level": "advanced",
       "section": "Comparing calculation methods",
-      "link": "calculations.html#two-means",
+      "link": "appendix.html#tutorial-methods",
       "question": "Why might the introductory two-means calculator and the reasoning lab return different planning results with matching inputs?",
       "options": [
         "The larger answer is automatically the correct method for every design",
@@ -334,7 +334,7 @@
       "chapter": "calculations",
       "level": "core",
       "section": "Discharge percentages",
-      "link": "calculations.html#discharge",
+      "link": "exercises.html#discharge",
       "question": "A service improves its discharge percentage from 40% to 50%. What is the relative increase?",
       "options": [
         "25%",
@@ -349,7 +349,8 @@
         "Ten is the absolute increase in percentage points.",
         "Fifty percent is the new discharge percentage.",
         "125% expresses the new value as a percentage of the old value; the increase is 25%."
-      ]
+      ],
+      "chapter_check": false
     },
     {
       "id": "q21",
@@ -441,10 +442,10 @@
     },
     {
       "id": "q27",
-      "chapter": "feasibility",
-      "level": "core",
+      "chapter": "curves",
+      "level": "advanced",
       "section": "Sensitivity and justification",
-      "link": "feasibility.html#stress-test-the-study-plan",
+      "link": "curves.html#planning-uncertainty",
       "question": "Two plausible sets of assumptions produce substantially different sample sizes. What should the justification do?",
       "options": [
         "Average the answers without justification",
@@ -1153,5 +1154,15 @@
       "answer": 1,
       "explanation": "One set of answers supports both documents. The concise report makes the selected calculation reproducible; the supporting plan preserves the fuller reasoning and evidence."
     }
+  ],
+  "chapter_checks": [
+    "clinical-question",
+    "calculations",
+    "feasibility",
+    "estimation-planning",
+    "curves",
+    "simulation",
+    "study-designs",
+    "appendix"
   ]
 }

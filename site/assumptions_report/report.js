@@ -7,7 +7,7 @@
   const status = document.getElementById('status');
   const groups = [
     ['Question and design', [
-      ['question', 'Research question', 'A useful question identifies the clinical or scientific decision the result will inform. The PICO fields below provide the study details.', 'The research question is'],
+      ['question', 'Research question', 'Your question should identify the Population, Intervention, Comparator and Outcome (PICO). The advanced prompts provide space for further detail.', 'The research question is'],
       ['population', 'Population', 'Your description should specify the setting and key eligibility criteria, including exclusions that limit who the findings apply to.', 'The population is'],
       ['intervention', 'Intervention or exposure', 'For treatment, relevant details include dose or intensity, schedule, duration, and provider. For an exposure, you should specify how it is measured and classified.', 'The intervention or exposure is', 'comparison'],
       ['comparator', 'Comparator', 'Your description should specify what usual care, placebo, or the comparison group involves, including permitted additional treatments and why this comparison is appropriate.', 'The comparator is', 'comparison'],
@@ -216,13 +216,13 @@
     return result;
   }
   const names = [...PlanWorkflow.metaNames, 'study_type', 'outcome', 'goal', ...fields.map(field => field[0])];
-  const choices = {plan_basis: ['own', 'pain'], study_type: ['comparison', 'single', 'other'], outcome: ['binary', 'continuous'], goal: ['testing', 'precision', 'fixed', 'both', 'feasibility']};
+  const choices = {plan_level: ['core', 'advanced'], plan_basis: ['own', 'pain'], study_type: ['comparison', 'single', 'other'], outcome: ['binary', 'continuous'], goal: ['testing', 'precision', 'fixed', 'both', 'feasibility']};
   const goalText = {testing: 'planning sample size to achieve specified power', precision: 'estimation with a precision target', fixed: 'assessing what fixed resources or existing data could establish', both: 'meeting both power and precision requirements', feasibility: 'supporting a pilot or feasibility decision'};
   function validate(value) {
     if (!value || typeof value !== 'object' || Array.isArray(value) || Object.keys(value).some(key => !names.includes(key))) throw Error('Choose a supported assumptions-report file.');
     const clean = {};
     for (const name of names) {
-      const text = value[name] ?? (name === 'plan_basis' ? 'own' : name === 'study_type' ? 'comparison' : name === 'outcome' ? 'binary' : name === 'goal' ? 'testing' : '');
+      const text = value[name] ?? (name === 'plan_level' ? 'core' : name === 'plan_basis' ? 'own' : name === 'study_type' ? 'comparison' : name === 'outcome' ? 'binary' : name === 'goal' ? 'testing' : '');
       if (typeof text !== 'string' || text.length > (name === 'calculation_records' ? 300000 : 5000) || (choices[name] && !choices[name].includes(text))) throw Error('The file contains an invalid answer or selection.');
       clean[name] = text;
     }
@@ -312,6 +312,7 @@
   }
   function render(persist = true) {
     const value = snapshot(), article = document.getElementById('report'); article.replaceChildren();
+    document.getElementById('advanced-plan').open=value.plan_level==='advanced';
     const single = value.study_type === 'single';
     for (const option of form.elements.goal.options) option.disabled = single && ['testing', 'both'].includes(option.value);
     if (single && ['testing', 'both'].includes(value.goal)) { value.goal = 'precision'; form.elements.goal.value = 'precision'; }
@@ -326,9 +327,14 @@
     const answers = PlanCalculationRecord.answers(value, examples(value), answerFormats(value));
     for (const field of fields) {
       const [id, title, help] = field, copy = wording[id];
+      const coreHelp = value.plan_level==='core' && value.study_type==='comparison' && value.goal==='testing' ? {
+        recruitment:'Your answer should give one expected loss percentage for both groups, its source, and the recruitment count per group and in total after dividing by the retained fraction and rounding upward.',
+        conclusion:'Your answer should explain what the planned comparison could establish at the target difference and note one remaining uncertainty.',
+        planning:'Your answer should give the target between-group difference in outcome units or percentage points and briefly explain its justification in the supplied case.'
+      } : {};
       const label = document.querySelector('label[for="' + id + '"]');
       label.textContent = copy ? copy[3] : questions[id] || title;
-      InputGuidance.attach(label, copy ? copy[1] : help, form.elements[id], answers[id], value.plan_basis === 'pain' && value.study_type !== 'other' ? 'Example answer' : 'Suggested structure');
+      InputGuidance.attach(label, copy ? copy[1] : coreHelp[id] || help, form.elements[id], answers[id], value.plan_basis === 'pain' && value.study_type !== 'other' ? 'Example answer' : 'Suggested structure');
     }
     const intro = document.createElement('p');
     const structure = {comparison: 'a two-group comparison', single: 'an estimate of one population percentage or mean', other: 'another design requiring a specified planning method'};
@@ -355,11 +361,12 @@
       for (const field of definitions) {
         const [id, originalLabel] = field, enabled = active(field, value);
         const label = wording[id] ? wording[id][0] : originalLabel;
-        document.getElementById('field-' + id).hidden = !enabled;
-        if (!enabled) continue;
-        required++; groupRequired++;
+        const needed=enabled && PlanWorkflow.required(field,value);
+        document.getElementById('field-' + id).hidden = !needed;
+        if (!enabled || (!needed && !value[id].trim())) continue;
+        if (needed) {required++; groupRequired++;}
         const answer = value[id].trim(), paragraph = document.createElement('p');
-        if (answer) { completed++; groupCompleted++; paragraph.textContent = label + ': ' + answer; paragraphs.push(paragraph); }
+        if (answer) { if (needed) {completed++; groupCompleted++;} paragraph.textContent = label + ': ' + answer; paragraphs.push(paragraph); }
         else { paragraph.textContent = label + ': not yet specified.'; }
         reportLines.push(paragraph.textContent);
       }

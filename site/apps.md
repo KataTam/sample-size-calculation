@@ -1,12 +1,12 @@
 # Apps
 
-Apps are interactive software. Activities provide questions and exercises to help you use them. The core apps accompany the [core tutorial](book/#core-route); the advanced options support further exploration.
+Apps are interactive software. Activities provide questions and exercises to help you use them. The [four core activities](book/#core-route) use the apps below. The continuing report brings their results together; advanced options support further exploration.
 
 <span id="core-calculations-simulation-and-justification"></span>
 
 ## Core apps
 
-- [Study plan](assumptions_report/): develop a PICO question and justify the calculation and recruitment plan. One set of answers generates a concise sample size calculation report followed by the supporting study plan. [Activity: Develop and justify your study plan](study/?activity=assumptions_report).
+- [Study plan](assumptions_report/): develop a PICO question and justify the calculation and recruitment plan. The short core view and expanded advanced view use one set of answers, producing a concise sample size calculation report followed by the supporting study plan.
 
 - [Sample size reasoning lab](power_explorer/?activity=pain_one_many): simulate patient outcomes and compare results across studies. [Activity: Chronic pain: one study and many studies](study/?activity=pain_one_many).
 
@@ -14,11 +14,17 @@ Apps are interactive software. Activities provide questions and exercises to hel
 
 - [Two-mean calculator](two_means/): calculate sample size for a difference between two group means. [Tutorial explanation](book/calculations.html#two-means).
 
-- [Recruitment adjustment](study/?activity=recruitment): calculate recruitment allowing for expected losses. [Tutorial explanation](book/feasibility.html#account-for-expected-losses).
+- [Recruitment adjustment](study/?activity=recruitment): apply one expected loss percentage to the analyzable count from your chosen calculation. [Tutorial explanation](book/feasibility.html#account-for-expected-losses).
+
+The core calculation activity offers a [choice of two percentages or two means](book/calculations.html#calculate-sample-size). One example is sufficient. The fourth core activity is the embedded [report review and completion](book/reporting.html#check-reporting).
 
 <span id="explore-further"></span>
 
 ## Advanced apps and explorations
+
+- [Recruitment extensions](study/?activity=recruitment_advanced): examine unequal losses and treatment switching. [Tutorial explanation](book/simulation.html#recruitment-extensions).
+
+- [Advanced study plan](assumptions_report/?level=advanced): appraise evidence, justify ranges and compare sensitivity scenarios in the same report.
 
 - [Mean-difference estimation](power_explorer/?activity=mean_precision): calculate a sample size for a useful confidence-interval width and examine intervals across simulated studies. [Tutorial explanation](book/estimation-planning.html#plan-for-precision).
 
@@ -40,7 +46,7 @@ The reasoning lab has core and advanced activities. Core activities start with a
 
 ## Review and practice
 
-- [Quizzes](quiz/): chapter checks and a cumulative quiz. Results link to the relevant explanations; missed questions can be retried. Chapter checks are also embedded in the [tutorial](book/).
+- [Quizzes](quiz/): chapter checks and a cumulative quiz. Results link to the relevant explanations; missed questions can be retried. Chapters 1–3 and the advanced chapters have embedded quizzes. Chapter 4 uses the [four-error report review](book/reporting.html#check-reporting). The [discharge exercise](book/exercises.html#discharge) offers additional basic calculation practice.
 - [Flashcard preview](student-materials/flashcards/cards.md): a question-and-answer table with level filtering, search and optional hidden answers for self-testing. [Anki and Quizlet downloads](student-materials/flashcards/index.md) are available for review outside the tutorial.
 
 ## Tutorial beside the app
