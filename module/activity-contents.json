@@ -16,7 +16,7 @@
   {
     "chapter": "calculations",
     "anchor": "calculations",
-    "title": "Calculating sample size",
+    "title": "Calculating sample size and recruitment",
     "route": "Core",
     "activities": [
       {
@@ -24,15 +24,7 @@
         "path": "book/calculations.html#calculate-sample-size",
         "route": "Core",
         "section": "adherence"
-      }
-    ]
-  },
-  {
-    "chapter": "feasibility",
-    "anchor": "feasibility",
-    "title": "Recruitment and feasibility",
-    "route": "Core",
-    "activities": [
+      },
       {
         "label": "Adjust recruitment",
         "path": "study/?activity=recruitment",

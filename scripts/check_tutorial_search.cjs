@@ -23,6 +23,9 @@ const base = process.argv[2] || 'http://127.0.0.1:8769';
     assert(urls.some(u => u.startsWith('simulation.html#')));
     assert(urls.some(u => u.startsWith('glossary.html#')));
     assert(await results.first().locator('.search-chapter').isVisible());
+    assert(await page.locator('#tutorial-search-results mark').count()>0,'Query words highlighted in results');
+    assert(await page.locator('.tutorial-search-status').evaluate(el=>el.nextElementSibling===null),'Count below results');
+    assert(await input.evaluate(el=>{const r=el.getBoundingClientRect();return r.width>150&&r.height>=44;}),'Query remains legible');
     await input.fill('20% better');
     await page.locator('#tutorial-search-results a[href*="does-20-better"]').waitFor();
     await page.locator('#tutorial-search-results a[href*="does-20-better"]').click();
@@ -34,10 +37,10 @@ const base = process.argv[2] || 'http://127.0.0.1:8769';
     assert.equal(await page.locator('.planning-assumptions').count(),0);
     await page.goto(`${base}/book/reporting.html`);
     const chapterLinks=await page.locator('.planning-assumptions a[href]').evaluateAll(links=>links.map(a=>new URL(a.href).pathname));
-    for (const chapter of ['clinical-question','calculations','feasibility'])
+    for (const chapter of ['clinical-question','calculations','curves'])
       assert(chapterLinks.some(path=>path.endsWith('/'+chapter+'.html')), 'Report table links to '+chapter);
     assert.equal(await page.locator('#model-answer-protocol-counts').count(),0);
-    await page.goto(`${base}/book/feasibility.html`);
+    await page.goto(`${base}/book/calculations.html`);
     assert.equal(await page.locator('#model-answer-protocol-counts').count(),1);
     console.log('Reference-page disclosures, PICO citation, whole-tutorial search and anchored results verified.');
   } finally { await browser.close(); }

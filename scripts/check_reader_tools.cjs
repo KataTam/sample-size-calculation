@@ -80,8 +80,9 @@ let browser;
  }
  const retired=await page.request.get(base+'/book/downloads/calculations.pdf');assert.equal(retired.status(),404);
  await page.goto(base+'/book/Sample_size_open_module.html');
- assert.equal(await page.locator('.print-chapter').count(),14);
- assert.equal(await page.locator('.tutorial-contents > ol > li > a').count(),14);
+ const chapterCount=require('../module/chapter-order.json').length+5;
+ assert.equal(await page.locator('.print-chapter').count(),chapterCount);
+ assert.equal(await page.locator('.tutorial-contents > ol > li > a').count(),chapterCount);
  assert(await page.locator('main img').evaluateAll(images=>images.every(img=>img.src.startsWith('data:'))));
  assert((await page.locator('#refs').innerText()).includes('Julious'));
  assert(await page.locator('svg').count()>0);

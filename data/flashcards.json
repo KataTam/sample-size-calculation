@@ -380,7 +380,7 @@
       "level": "core",
       "front": "How do analyzable sample size and recruitment target differ?",
       "back": "The analyzable sample is the number needed for the analysis. The recruitment target allows for expected losses.",
-      "source": "https://katatam.github.io/sample-size-calculation/book/feasibility.html#account-for-expected-losses"
+      "source": "https://katatam.github.io/sample-size-calculation/book/calculations.html#account-for-expected-losses"
     },
     {
       "id": "C055",
@@ -398,10 +398,10 @@
     },
     {
       "id": "C057",
-      "level": "core",
+      "level": "advanced",
       "front": "Why should you examine plausible alternative assumptions?",
       "back": "Required sample size and achieved power depend on uncertain inputs. Alternative scenarios show how sensitive the plan is to that uncertainty.",
-      "source": "https://katatam.github.io/sample-size-calculation/book/feasibility.html#stress-test-the-study-plan"
+      "source": "https://katatam.github.io/sample-size-calculation/book/curves.html#stress-test-the-study-plan"
     },
     {
       "id": "C058",
@@ -583,28 +583,28 @@
       "level": "core",
       "front": "What is the recruitment adjustment for an expected loss proportion r?",
       "back": "Divide the required analyzable count by (1 − r), then round upward within each group.",
-      "source": "https://katatam.github.io/sample-size-calculation/book/feasibility.html#account-for-expected-losses"
+      "source": "https://katatam.github.io/sample-size-calculation/book/calculations.html#account-for-expected-losses"
     },
     {
       "id": "C062",
       "level": "core",
       "front": "Why is adding 10% insufficient when you expect 10% loss?",
       "back": "Only 90% of recruits are expected to remain. Dividing by 0.90 requires about 11.1% extra before rounding.",
-      "source": "https://katatam.github.io/sample-size-calculation/book/feasibility.html#account-for-expected-losses"
+      "source": "https://katatam.github.io/sample-size-calculation/book/calculations.html#account-for-expected-losses"
     },
     {
       "id": "C063",
       "level": "core",
       "front": "For 56 analyzable patients per group and 5% expected loss, what is the recruitment target?",
       "back": "56/0.95 ≈ 58.95, rounded upward to 59 per group: 118 total.",
-      "source": "https://katatam.github.io/sample-size-calculation/book/feasibility.html#account-for-expected-losses"
+      "source": "https://katatam.github.io/sample-size-calculation/book/calculations.html#account-for-expected-losses"
     },
     {
       "id": "C064",
-      "level": "core",
-      "front": "Does a recruitment allowance guarantee enough analyzable outcomes or remove missing-data bias?",
-      "back": "No. Actual retention can vary, and the reasons for missing outcomes may bias the estimate. Follow-up and the analysis of missing data need separate attention.",
-      "source": "https://katatam.github.io/sample-size-calculation/book/feasibility.html#account-for-expected-losses"
+      "level": "advanced",
+      "front": "Why can missing outcomes affect a study even after increasing recruitment?",
+      "back": "Missing outcomes can introduce bias when their availability is related to treatment or outcome. Prevention, appropriate analysis and sensitivity analyses address this problem.",
+      "source": "https://katatam.github.io/sample-size-calculation/book/simulation.html#explore-missing-outcomes"
     },
     {
       "id": "C065",
@@ -671,59 +671,59 @@
     },
     {
       "id": "C074",
-      "level": "core",
+      "level": "advanced",
       "front": "What are the two main questions in a planning sensitivity analysis?",
       "back": "How the required sample changes under alternative assumptions, and how a fixed sample performs if reality differs from the planning assumptions.",
-      "source": "https://katatam.github.io/sample-size-calculation/book/feasibility.html#stress-test-the-study-plan"
+      "source": "https://katatam.github.io/sample-size-calculation/book/curves.html#stress-test-the-study-plan"
     },
     {
       "id": "C075",
-      "level": "core",
+      "level": "advanced",
       "front": "What does it mean for a study to be underpowered at a specified difference?",
       "back": "It has a low probability of detecting that true difference with the planned test, relative to the intended power target.",
-      "source": "https://katatam.github.io/sample-size-calculation/book/feasibility.html#what-if-the-study-is-too-small-for-its-purpose"
+      "source": "https://katatam.github.io/sample-size-calculation/book/curves.html#what-if-the-study-is-too-small-for-its-purpose"
     },
     {
       "id": "C076",
-      "level": "core",
+      "level": "advanced",
       "front": "Why can significant results from low-powered studies exaggerate a benefit?",
       "back": "Among studies with low power, significance often occurs when sampling variability produces an unusually large observed difference.",
-      "source": "https://katatam.github.io/sample-size-calculation/book/feasibility.html#what-if-the-study-is-too-small-for-its-purpose"
+      "source": "https://katatam.github.io/sample-size-calculation/book/curves.html#what-if-the-study-is-too-small-for-its-purpose"
     },
     {
       "id": "C077",
-      "level": "core",
+      "level": "advanced",
       "front": "Which practical changes can improve power without relaxing the Type I error probability?",
       "back": "More analyzable participants, better follow-up, more reliable measurement, and an appropriate efficient design or analysis, each with matching planning assumptions.",
-      "source": "https://katatam.github.io/sample-size-calculation/book/feasibility.html#increase-power"
+      "source": "https://katatam.github.io/sample-size-calculation/book/curves.html#increase-power"
     },
     {
       "id": "C078",
-      "level": "core",
+      "level": "advanced",
       "front": "When is equal allocation efficient for a fixed total sample?",
       "back": "For comparisons assuming equal variances and a fixed total sample size. Unequal variances or other design requirements can justify unequal allocation.",
-      "source": "https://katatam.github.io/sample-size-calculation/book/feasibility.html#increase-power"
+      "source": "https://katatam.github.io/sample-size-calculation/book/curves.html#increase-power"
     },
     {
       "id": "C079",
-      "level": "core",
+      "level": "advanced",
       "front": "What is the tradeoff when the Type I error probability is increased to gain power?",
       "back": "The test also becomes more likely to reject a true null. The choice needs prospective justification.",
-      "source": "https://katatam.github.io/sample-size-calculation/book/feasibility.html#increase-power"
+      "source": "https://katatam.github.io/sample-size-calculation/book/curves.html#increase-power"
     },
     {
       "id": "C080",
-      "level": "core",
+      "level": "advanced",
       "front": "When should a one-sided test be chosen?",
       "back": "Before seeing the data, when the scientific question and intended conclusions justify a directional rejection rule.",
-      "source": "https://katatam.github.io/sample-size-calculation/book/feasibility.html#increase-power"
+      "source": "https://katatam.github.io/sample-size-calculation/book/curves.html#increase-power"
     },
     {
       "id": "C081",
-      "level": "core",
+      "level": "advanced",
       "front": "Does lowering the clinical threshold alone increase power for a test of zero difference?",
       "back": "No. With the true difference, sample size, and test unchanged, the rejection probability is unchanged.",
-      "source": "https://katatam.github.io/sample-size-calculation/book/feasibility.html#increase-power"
+      "source": "https://katatam.github.io/sample-size-calculation/book/curves.html#increase-power"
     },
     {
       "id": "C082",
@@ -1234,7 +1234,28 @@
       "level": "advanced",
       "front": "What extra documentation does a complex testing design need?",
       "back": "Its success rule, testing procedure, interim timing and boundaries, adaptation rules and limits, final analysis, and dated protocol/SAP versions.",
-      "source": "https://katatam.github.io/sample-size-calculation/book/reporting.html#complex-design-record"
+      "source": "https://katatam.github.io/sample-size-calculation/book/appendix.html#complex-design-record"
+    },
+    {
+      "id": "C100",
+      "level": "core",
+      "front": "How does a recruitment funnel turn clinic numbers into an enrollment forecast?",
+      "back": "Each stage uses the remaining eligible and available people. For example: 100 potentially relevant patients → 40 eligible → 30 available → half consent, giving 15 recruits per month.",
+      "source": "https://katatam.github.io/sample-size-calculation/book/calculations.html#recruitment-feasibility"
+    },
+    {
+      "id": "A094",
+      "level": "advanced",
+      "front": "When would an additional treatment-switching allowance count the same effect twice?",
+      "back": "When the assumed randomized-group outcomes already include expected switching. The same switching effect should not also reduce the target difference or inflate the calculated count again.",
+      "source": "https://katatam.github.io/sample-size-calculation/book/study-designs.html#treatment-changes"
+    },
+    {
+      "id": "A095",
+      "level": "advanced",
+      "front": "Why should treatment changes and missing assessments be distinguished?",
+      "back": "Treatment changes can affect the treatment comparison even when the outcome is recorded. Missing assessments concern unavailable measurements. Both need a specified approach in the study question, follow-up and analysis.",
+      "source": "https://katatam.github.io/sample-size-calculation/book/study-designs.html#treatment-changes"
     }
   ]
 }

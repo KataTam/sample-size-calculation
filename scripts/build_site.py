@@ -47,6 +47,9 @@ shutil.copytree(ROOT / "docs/book", SITE / "book")
 retired_power = SITE / "book/power.html"
 if retired_power.exists():
     retired_power.unlink()
+retired_feasibility = SITE / "book/feasibility.html"
+if retired_feasibility.exists():
+    retired_feasibility.unlink()
 # Bookdown can retain a 404 page from an older table of contents.
 (SITE / "book/404.html").write_text('<!doctype html><html lang="en"><head><meta charset="utf-8">'
     '<title>Page not found</title></head><body><h1>Page not found</h1>'
@@ -139,12 +142,14 @@ def page(source, target):
     guide_text = None
     if source.name == "study-design-guide.md":
         # Chapter numbering is supplied by Bookdown only in the tutorial.
-        guide_text = re.sub(r"\(\\#(?:eq|tab):[^)]+\)\s*", "",
+        guide_text = re.sub(r"\(\\#eq:[^)]+\)\s*", "",
                             rendered_source.read_text(encoding="utf-8"))
         # Keep figures usable in this unnumbered guide as well as in Bookdown.
         guide_text = re.sub(r"Figure \\@ref\((fig:[^)]+)\)",
                             r"[The illustration](#\1)", guide_text)
-        guide_text = re.sub(r"\(\\#(fig:[^)]+)\)",
+        guide_text = re.sub(r"Table \\@ref\((tab:[^)]+)\)",
+                            r"[The table](#\1)", guide_text)
+        guide_text = re.sub(r"\(\\#((?:fig|tab):[^)]+)\)",
                             r'<span id="\1"></span>', guide_text)
         guide_text = re.sub(r'src="([^"/]+_files/figure-html/[^\"]+)"',
                             r'src="../book/\1"', guide_text)
@@ -210,6 +215,15 @@ power_routes = {key: value.removeprefix("book/") for key, value in chapter_ancho
     '<script>const routes=' + json.dumps(power_routes) + ';'
     'const anchor=decodeURIComponent(location.hash.slice(1));'
     'location.replace(routes[anchor] || "clinical-question.html#power");</script></html>', encoding="utf-8")
+
+# The former recruitment chapter now spans core recruitment and advanced topics.
+# Resolve old section bookmarks against the current book before falling back.
+(SITE / "book/feasibility.html").write_text(
+    '<!doctype html><html lang="en"><meta charset="utf-8"><title>Sample size and recruitment</title>'
+    '<p><a href="calculations.html#account-for-expected-losses">Open recruitment planning</a></p>'
+    '<script>const routes=' + json.dumps(power_routes) + ';'
+    'const anchor=decodeURIComponent(location.hash.slice(1));'
+    'location.replace(routes[anchor] || "calculations.html#account-for-expected-losses");</script></html>', encoding="utf-8")
 
 # The help sources also live inside the book. On their separate pages, chapter
 # fragments must point back to the book while their own headings stay local.

@@ -1,14 +1,13 @@
 {
   "chapters": {
     "clinical-question": "Chapter 1: Research question and power",
-    "calculations": "Chapter 2: Calculating sample size",
-    "feasibility": "Chapter 3: Recruitment and feasibility",
-    "reporting": "Chapter 4: The sample size calculation report",
-    "estimation-planning": "Chapter 5: Sample size for estimation",
-    "curves": "Chapter 6: Exploring power and uncertain assumptions",
-    "simulation": "Chapter 7: Building and evaluating simulations",
-    "study-designs": "Chapter 8: Study designs and testing strategies",
-    "appendix": "Chapter 9: Reproducibility and open science"
+    "calculations": "Chapter 2: Calculating sample size and recruitment",
+    "reporting": "Chapter 3: The sample size calculation report",
+    "estimation-planning": "Chapter 4: Sample size for estimation",
+    "curves": "Chapter 5: Exploring power and uncertain assumptions",
+    "simulation": "Chapter 6: Building and evaluating simulations",
+    "study-designs": "Chapter 7: Study designs and testing strategies",
+    "appendix": "Chapter 8: Reproducibility and open science"
   },
   "questions": [
     {
@@ -354,10 +353,10 @@
     },
     {
       "id": "q21",
-      "chapter": "feasibility",
+      "chapter": "calculations",
       "level": "core",
       "section": "Expected losses",
-      "link": "feasibility.html#account-for-expected-losses",
+      "link": "calculations.html#account-for-expected-losses",
       "question": "If 90 analyzable participants per group are required and 10% loss is expected, how many should be recruited per group?",
       "options": [
         "100",
@@ -376,32 +375,26 @@
     },
     {
       "id": "q42",
-      "chapter": "feasibility",
+      "chapter": "calculations",
       "level": "core",
-      "section": "Sensitivity to planning assumptions",
-      "link": "feasibility.html#stress-test-the-study-plan",
-      "question": "The assumed treatment difference becomes smaller while target power, the analysis and other inputs stay the same. How should the required sample size usually change?",
+      "section": "Recruitment feasibility",
+      "link": "calculations.html#recruitment-feasibility",
+      "question": "A clinic sees 100 potentially relevant patients per month. Of these, 40 are eligible, 30 remain available, and half of those consent. How many recruits per month should the forecast use?",
       "options": [
-        "It increases because the smaller difference is harder to detect",
-        "It decreases because the treatments are more alike",
-        "It stays the same for every possible difference",
-        "It is determined by the number of simulation repetitions"
+        "50",
+        "40",
+        "20",
+        "15"
       ],
-      "answer": 0,
-      "explanation": "A smaller true difference requires more patients to achieve the same power under otherwise comparable assumptions. The sensitivity comparison shows how this uncertainty affects the recruitment plan.",
-      "feedback": [
-        "A smaller true difference requires more patients to achieve the same power under otherwise comparable assumptions. The sensitivity comparison shows how this uncertainty affects the recruitment plan.",
-        "Similar treatments produce a smaller signal, which is harder to distinguish from sampling variability.",
-        "The effect size influences the information needed for detection.",
-        "Simulation repetitions affect the accuracy of a simulation estimate, rather than the size required within each trial."
-      ]
+      "answer": 3,
+      "explanation": "Each step uses the remaining patients: 30 are available and 50% of those enroll, giving 15 recruits per month."
     },
     {
       "id": "q45",
-      "chapter": "feasibility",
-      "level": "core",
+      "chapter": "simulation",
+      "level": "advanced",
       "section": "Expected losses and missing outcomes",
-      "link": "feasibility.html#account-for-expected-losses",
+      "link": "simulation.html#explore-missing-outcomes",
       "question": "A team increases recruitment to allow for losses, but participants without relief are more likely to have missing outcomes. What still needs attention?",
       "options": [
         "Only whether the final total is even",
@@ -1083,7 +1076,7 @@
       "chapter": "study-designs",
       "level": "advanced",
       "section": "Additional records for complex designs",
-      "link": "reporting.html#complex-design-record",
+      "link": "appendix.html#complex-design-record",
       "question": "A sample size calculation report concerns a trial with multiple outcomes and an interim analysis. Which record best supports reproducibility?",
       "options": [
         "Only the final recruitment total.",
@@ -1143,7 +1136,7 @@
       "chapter": "reporting",
       "level": "core",
       "section": "Reproducibility and supporting records",
-      "link": "reporting.html#reproducibility-record",
+      "link": "reporting.html#record-assumptions",
       "question": "How should the concise calculation report relate to the supporting study plan?",
       "options": [
         "They should contain separate answers collected independently",
@@ -1153,12 +1146,27 @@
       ],
       "answer": 1,
       "explanation": "One set of answers supports both documents. The concise report makes the selected calculation reproducible; the supporting plan preserves the fuller reasoning and evidence."
+    },
+    {
+      "id": "q53",
+      "chapter": "study-designs",
+      "level": "advanced",
+      "section": "Treatment changes and planning assumptions",
+      "link": "study-designs.html#treatment-changes",
+      "question": "The assumed relief percentages already include the expected missed doses and treatment switching. How should the same treatment changes enter the calculation?",
+      "options": [
+        "Apply a second switching multiplier to the resulting sample size",
+        "Use the randomized-group percentages without a second adjustment for the same changes",
+        "Add the switching percentages to the expected loss to follow-up",
+        "Exclude every patient who changes treatment"
+      ],
+      "answer": 1,
+      "explanation": "The assumed percentages already describe the expected treatment experience. Another adjustment for the same events would count their effect twice. Unavailable outcomes are considered separately."
     }
   ],
   "chapter_checks": [
     "clinical-question",
     "calculations",
-    "feasibility",
     "estimation-planning",
     "curves",
     "simulation",

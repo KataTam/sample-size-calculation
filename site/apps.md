@@ -14,7 +14,7 @@ Apps are interactive software. Activities provide questions and exercises to hel
 
 - [Two-mean calculator](two_means/): calculate sample size for a difference between two group means. [Tutorial explanation](book/calculations.html#two-means).
 
-- [Recruitment adjustment](study/?activity=recruitment): apply one expected loss percentage to the analyzable count from your chosen calculation. [Tutorial explanation](book/feasibility.html#account-for-expected-losses).
+- [Recruitment adjustment](study/?activity=recruitment): apply one expected loss percentage to the analyzable count from your chosen calculation. [Tutorial explanation](book/calculations.html#account-for-expected-losses).
 
 The core [calculation activity](book/calculations.html#calculate-sample-size) uses the probiotics example. The [rehabilitation calculation](book/calculations.html#rehabilitation) provides optional practice with two means. The fourth core activity is the embedded [report review and completion](book/reporting.html#check-reporting).
 
@@ -46,7 +46,7 @@ The reasoning lab has core and advanced activities. Core activities start with a
 
 ## Review and practice
 
-- [Quizzes](quiz/): chapter checks and a cumulative quiz. Results link to the relevant explanations; missed questions can be retried. Chapters 1–3 and the advanced chapters have embedded quizzes. Chapter 4 uses the [four-error report review](book/reporting.html#check-reporting). The [discharge exercise](book/exercises.html#discharge) offers additional basic calculation practice.
+- [Quizzes](quiz/): chapter checks and a cumulative quiz. Results link to the relevant explanations; missed questions can be retried. Chapters 1–2 and the advanced chapters have embedded quizzes. Chapter 3 uses the [four-error report review](book/reporting.html#check-reporting). The [discharge exercise](book/exercises.html#discharge) offers additional basic calculation practice.
 - [Flashcard preview](student-materials/flashcards/cards.md): a question-and-answer table with level filtering, search and optional hidden answers for self-testing. [Anki and Quizlet downloads](student-materials/flashcards/index.md) are available for review outside the tutorial.
 
 ## Tutorial beside the app

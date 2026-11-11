@@ -50,7 +50,7 @@ ui <- fluidPage(
     ),
     mainPanel(tabsetPanel(id = "recruitment_view",
       tabPanel("Overview", h3("Recruitment target"), p("Recruitment per group is the analyzable requirement divided by the expected retained fraction, rounded upward. With 10% expected loss, the retained fraction is 0.90."), uiOutput("result"), uiOutput("recruitment_steps"),
-        p("The result gives equal recruitment per group and the total. Actual retention varies; preventing missing outcomes and planning their analysis remain important."),
+        p("The result gives equal recruitment per group and the total. The study plan should also describe follow-up and how missing outcomes will be analyzed."),
         activity_details("Calculation steps and group counts", uiOutput("stages"), uiOutput("group_counts"))),
       tabPanel("Explore assumptions", plotOutput("dropout_plot", height = "340px"),
         textOutput("plot_caption", container = function(...) p(class = "caption", ...)),
@@ -184,7 +184,7 @@ server <- function(input, output, session) {
     paste0("Expected losses, novel / standard: ", paste(format_percent(plan()$losses), collapse = " / "),
       ". Expected outcomes available, novel / standard: ", paste(round(plan()$expected_retained, 2), collapse = " / "), "."),
     if (switching_applied()) "The switching approximation assumes complete switching, comparable outcome distributions among recipients of the same treatment, and little change in variance.",
-    "Actual retention varies. Missing outcomes need prevention and appropriate analysis.",
+    "The study plan should describe follow-up and the analysis of missing outcomes.",
     paste("Your explanation:", app_answer(input$reasoning)),
     "Your explanation is reproduced as entered and should be reviewed after changing the settings.",
     "Procedure: recruitment_plan() in R/sample_size_functions.R. References: Wittes (2002), doi:10.1093/epirev/24.1.39; Shardell and El-Kamary (2009), doi:10.1111/j.1541-0420.2008.01114.x; ICH E9(R1)."))

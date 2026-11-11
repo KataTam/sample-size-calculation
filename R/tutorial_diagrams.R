@@ -185,37 +185,52 @@ draw_discharge_grids <- function() {
   text(50, 6, "Each square represents one of 100 hypothetical patients.", cex = .94)
 }
 
+draw_recruitment_funnel <- function() {
+  old <- par(no.readonly = TRUE)
+  on.exit(par(old))
+  diagram_canvas()
+  counts <- c(100, 40, 30, 15)
+  labels <- c("Potentially relevant patients", "Meet eligibility criteria",
+    "Available after competing studies\nand practical barriers", "Consent and enroll")
+  colors <- c("#d1e9f4", "#aad5e8", "#79b6d1", "#367e9e")
+  text(50, 96, "Expected recruitment each month", font = 2, cex = 1.12)
+  for (i in seq_along(counts)) {
+    top <- 88 - (i - 1) * 21
+    # Width represents the remaining count; labels sit outside narrow stages.
+    width <- 46 * counts[i] / 100
+    next_width <- if (i < 4) 46 * counts[i + 1] / 100 else width
+    polygon(c(27-width/2, 27+width/2, 27+next_width/2, 27-next_width/2),
+      c(top, top, top-17, top-17), col = colors[i], border = "white", lwd = 2)
+    text(27, top-7, counts[i], font = 2, cex = 1.2,
+      col = if (i==4) "white" else "#17384b")
+    text(54, top-8, labels[i], adj = 0, cex = 1)
+    if (i < 4) diagram_arrow(27, top-17.5, 27, top-20)
+  }
+  text(50, 2, "Half of the 30 available patients enroll: 15 per month.", cex = .95)
+}
+
 draw_treatment_followup <- function() {
   old <- par(no.readonly = TRUE)
   on.exit(par(old))
   diagram_canvas()
-  text(c(16, 50, 85), 95,
-    c("1. Randomized\ngroup", "2. Treatment\nreceived", "3. Four-week\noutcome"), font = 2, cex = .97)
-  for (i in 1:2) {
-    y <- c(70, 30)[i]
-    border <- c("#17658a", "#72428b")[i]
-    fill <- c("#eef5f8", "#f4f0f8")[i]
-    rect(2, y - 19, 98, y + 19, col = fill, border = NA)
-    diagram_box(4, y - 9, 28, y + 9,
-      c("Assigned novel\ntreatment", "Assigned standard\ntreatment")[i],
-      fill = "white", border = border, cex = .95)
-    diagram_box(38, y + 3, 63, y + 14,
-      c("Novel treatment", "Standard treatment")[i],
-      fill = "white", border = border, cex = .91)
-    diagram_box(38, y - 15, 63, y - 2,
-      c("Standard treatment\n(switched)", "Novel treatment\n(switched)")[i],
-      fill = "white", border = border, cex = .91)
-    segments(28, y, 33, y, col = "#596773", lwd = 1.5)
-    segments(33, y - 8.5, 33, y + 8.5, col = "#596773", lwd = 1.5)
-    diagram_arrow(33, y + 8.5, 38, y + 8.5)
-    diagram_arrow(33, y - 8.5, 38, y - 8.5)
-    segments(63, y + c(-8.5, 8.5), 69, y + c(-8.5, 8.5), col = "#596773", lwd = 1.5)
-    segments(69, y - 8.5, 69, y + 8.5, col = "#596773", lwd = 1.5)
-    diagram_arrow(69, y, 74, y)
-    diagram_box(74, y - 15, 96, y + 14,
-      "Outcome recorded\nor\nOutcome missing", fill = "white", border = border, cex = .92)
-  }
-  text(50, 4, "Follow-up should continue after treatment changes.", cex = 1)
+  diagram_box(23, 84, 77, 98, "Randomized to Neravixa or duloxetine",
+    fill = "#e8f2f7", cex = 1.02)
+  diagram_arrow(30, 84, 26, 77)
+  diagram_arrow(70, 84, 74, 77)
+  rect(2, 19, 50, 77, col = "#f1e8f7", border = "#72428b")
+  rect(54, 19, 98, 77, col = "#e8f2f7", border = "#17658a")
+  text(26, 72, "Events after assignment", font = 2, cex = 1.04)
+  text(76, 72, "Outcome availability", font = 2, cex = 1.04)
+  text(5, 60, paste(c("Failure to start; missed doses", "Interruptions or dose changes",
+    "Permanent discontinuation", "Switching treatments", "Additional or rescue medication",
+    "Death before the pain assessment"), collapse = "\n"), adj = c(0, .5), cex = .96)
+  text(57, 55, "Missed assessments\nWithdrawal from follow-up\nUnusable measurements",
+    adj = c(0, .5), cex = .96)
+  text(26, 26, "Death makes the later pain\noutcome undefined.", cex = .94)
+  diagram_arrow(26, 19, 26, 14)
+  diagram_arrow(76, 19, 76, 14)
+  text(26, 7, "Specify how events enter\nthe treatment comparison.", cex = .96)
+  text(76, 7, "Plan follow-up, missing-data\nmethods and recruitment.", cex = .96)
 }
 
 draw_simulation_loop <- function() {

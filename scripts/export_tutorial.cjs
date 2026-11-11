@@ -54,6 +54,9 @@ let browser;
     const response = await page.goto(`${base}/book/${slug}.html`, {waitUntil:'networkidle'});
     if (!response.ok()) throw Error(`Missing chapter ${slug}`);
     await page.evaluate(async () => {
+      // Print/export includes screenshots below the fold and in disclosures.
+      // Lazy images otherwise leave decode() waiting for a viewport intersection.
+      for (const img of document.images) img.loading = 'eager';
       if (window.MathJax && MathJax.Hub) await new Promise(resolve => MathJax.Hub.Queue(['setRenderer', MathJax.Hub, 'SVG'], ['Rerender', MathJax.Hub], resolve));
       await Promise.all(Array.from(document.images).map(img => img.decode().catch(() => {})));
     });
@@ -177,6 +180,19 @@ let browser;
   pdfHeadings.push(...codeAppendix.headings);
   console.log(`Moved ${codeAppendix.count} R code/output disclosures to the PDF appendix; HTML unchanged.`);
   await page.evaluate(async () => {
+    // Legacy anchors for merged sections belong at the visible replacement.
+    // Otherwise a zero-height span can be stranded on the preceding PDF page.
+    for (const [alias, destination] of Object.entries({
+      'feasibility':'account-for-expected-losses',
+      'check-feasibility':'check-calculations',
+      'tab:pain-core-sensitivity':'tab:pain-target-sensitivity'
+    })) {
+      const anchor=document.getElementById(alias), target=document.getElementById(destination);
+      if (anchor && target && !anchor.textContent.trim()) {
+        const heading=target.querySelector('h1,h2,h3,h4,h5,h6') || target.parentElement;
+        heading.prepend(anchor);
+      }
+    }
     // A wrapper can start on the previous page when its preview card is kept
     // together. Anchor the visible card title itself for accurate PDF links.
     document.querySelectorAll('.app-preview').forEach(preview => {
@@ -264,7 +280,7 @@ let browser;
       if (!text.trim()) {
         // Legacy section aliases and SVG equations can have empty anchor spans.
         // Use the following heading or prose as a readable page-level check.
-        let next = el.parentElement.nextElementSibling;
+        let next = el.nextElementSibling || el.parentElement.nextElementSibling;
         while (next && (!next.textContent.trim() || next.matches('.MathJax_SVG_Display'))) next = next.nextElementSibling;
         text = next ? (firstHeading(next) || next).textContent : '';
       }

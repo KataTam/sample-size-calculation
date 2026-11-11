@@ -16,11 +16,14 @@ const base=(process.argv[2]||'http://127.0.0.1:8769').replace(/\/$/,'');
   assert.equal(await page.locator('.app-preview pre').count(),0,'Preview markup renders as content');
   const preview=page.locator('.app-preview').first();
   await preview.scrollIntoViewIfNeeded();
+  await preview.locator('img').evaluate(img=>img.decode());
   assert(await preview.locator('img').evaluate(img=>img.complete&&img.naturalWidth>0));
   fs.mkdirSync('build/app-previews',{recursive:true});
   for(const theme of [0,1,2]){
    await page.locator('.book').evaluate((el,t)=>{el.classList.remove('color-theme-0','color-theme-1','color-theme-2');el.classList.add('color-theme-'+t)},theme);
-   assert.equal(await preview.locator('[data-preview-open]').evaluate(el=>getComputedStyle(el).backgroundColor),'rgb(32, 89, 123)');
+   assert.equal(await preview.locator('[data-preview-open] img').count(),1);
+   assert.equal(await preview.locator('button,.app-preview-action').count(),0,'The screenshot itself opens the app');
+   assert(await preview.locator('img').evaluate(img=>img.naturalWidth>=1000));
    await preview.screenshot({path:'build/app-previews/theme-'+theme+'.png'});
   }
   await page.setViewportSize({width:390,height:844});

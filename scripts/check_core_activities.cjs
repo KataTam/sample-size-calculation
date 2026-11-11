@@ -4,7 +4,8 @@ const base=(process.argv[2]||'http://127.0.0.1:8769').replace(/\/$/,'');
 (async()=>{
  const menu=JSON.parse(fs.readFileSync('module/activity-contents.json','utf8'));
  const core=menu.filter(x=>x.route==='Core');
- assert.equal(core.length,4);core.forEach(ch=>assert.equal(ch.activities.length,1));
+ assert.equal(core.length,3);assert.equal(core.flatMap(ch=>ch.activities).length,4);
+ assert.equal(core.find(ch=>ch.chapter==='calculations').activities.length,2);
  const browser=await chromium.launch({headless:true,...(process.platform==='win32'?{channel:'msedge'}:{})});
  try{
   const context=await browser.newContext({viewport:{width:1360,height:1000}}),page=await context.newPage(),errors=[];

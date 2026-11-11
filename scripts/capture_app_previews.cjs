@@ -1,0 +1,56 @@
+/* Actual app screenshots for the tutorial's clickable previews.
+ * Run against a built local site after changing an app's visible interface.
+ * Screenshots show the named activity; no student entries are prefilled.
+ */
+const {chromium}=require('playwright');
+const fs=require('node:fs'),path=require('node:path'),assert=require('node:assert/strict');
+const base=(process.argv[2]||'http://127.0.0.1:8769').replace(/\/$/,'');
+const ids=(process.argv[3]||'pain_one_many,probiotics_calculation,rehabilitation_calculation,recruitment,assumptions_report,mean_precision,prevalence,pilot_feasibility,pain_curves,alpha_beta,pain_simulation,recruitment_advanced,design_questionnaire').split(',');
+(async()=>{
+ const browser=await chromium.launch({headless:true,...(process.platform==='win32'?{channel:'msedge'}:{})});
+ try {
+  const context=await browser.newContext({viewport:{width:1120,height:760},deviceScaleFactor:1});
+  const cases=await (await context.request.get(base+'/teaching-cases.json')).json();
+  fs.mkdirSync('figures/app-previews',{recursive:true});
+  for(const id of ids){
+   const record=Array.isArray(cases)?cases.find(c=>c.id===id):cases[id]; assert(record,id);
+   const page=await context.newPage();page.setDefaultTimeout(120000);
+   let clip;
+   if(!['assumptions_report','design_questionnaire'].includes(record.app))await page.setViewportSize({width:1120,height:1200});
+   await page.goto(`${base}/${record.app}/?activity=${id}`,{waitUntil:'domcontentloaded'});
+   if(!['assumptions_report','design_questionnaire'].includes(record.app)){
+    let app;
+    for(let i=0;i<180&&!app;i++){
+     for(const frame of page.frames())if(await frame.evaluate(()=>Boolean(window.Shiny?.shinyapp?.$socket?.readyState===1)).catch(()=>false))app=frame;
+     if(!app)await page.waitForTimeout(1000);
+    }
+    assert(app,id+' Shiny session ready');
+    // Case initialization follows the activity query parameter through the app bridge.
+    await app.waitForFunction(()=>!document.querySelector('.shiny-busy'));
+    if(id==='pain_one_many') {
+     await app.locator('#run_one').click();
+     await app.locator('#sampling-journey svg').waitFor({state:'visible'});
+    }else if(id==='pain_simulation') {
+     await app.locator('#run_many').click();
+    }else if(!['pain_simulation','alpha_beta'].includes(id)){
+     const overview=app.getByRole('tab',{name:'Overview',exact:true});
+     if(await overview.count())await overview.click();
+    }
+    await app.waitForFunction(()=>![...document.querySelectorAll('.recalculating')].some(el=>el.checkVisibility()));
+    const errors=await app.locator('.shiny-output-error:not(.shiny-output-error-validation)').allTextContents();
+    assert.deepEqual(errors,[],id+' rendered without an app error');
+    await app.waitForFunction(()=>[...document.querySelectorAll('.shiny-plot-output img')].filter(i=>i.checkVisibility()).every(i=>i.complete&&i.naturalWidth>0));
+    const sidebar=await app.locator('.well').first().boundingBox();
+    if(sidebar)clip={x:0,y:Math.floor(sidebar.y),width:1120,height:Math.min(900,1200-Math.floor(sidebar.y))};
+   } else {
+    await page.locator('main').waitFor();
+   }
+   await page.evaluate(()=>document.fonts.ready);
+   const file=`figures/app-previews/${id}.png`;
+   await page.screenshot({path:file,...(clip?{clip}:{})});
+   // Keep a running preview server in sync without another complete rebuild.
+   const served=path.join('_site',file);fs.mkdirSync(path.dirname(served),{recursive:true});fs.copyFileSync(file,served);
+   console.log('Captured '+id+' from '+record.app);await page.close();
+  }
+ }finally{await browser.close();}
+})().catch(e=>{console.error(e);process.exit(1)});

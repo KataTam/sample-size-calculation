@@ -12,7 +12,7 @@ recruitment_model_answer <- function(x, switching, already_included) {
     if (x$losses[1] == x$losses[2]) paste0("This allows for ", format_percent(x$losses[1]), " loss in each group. ")
     else paste0("This allows for ", format_percent(x$losses[1]), " novel-group and ", format_percent(x$losses[2]), " standard-group losses, using the larger requirement for both. "),
     "The ", if (switching || already_included) "loss and switching assumptions need" else "loss assumption needs",
-    " support from [comparable follow-up evidence]. Missing outcomes will be handled using [analysis plan]; actual retention can vary.")
+    " support from [comparable follow-up evidence]. Missing outcomes will be handled using [analysis plan].")
 }
 
 sampling_model_answer <- function(x) {

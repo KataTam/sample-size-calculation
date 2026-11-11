@@ -8,10 +8,34 @@
     if (!node) {
       node = document.createElement('div');
       node.id = 'tutorial-search-results';
-      node.setAttribute('aria-live', 'polite');
       document.querySelector('.book-search').after(node);
     }
     return node;
+  }
+  // Preserve the original spelling while matching case and accents. Append
+  // text nodes, never HTML from the query or the search index.
+  function highlight(node, value, words) {
+    const text = String(value), folded = normalize(text), ranges = [];
+    for (const word of words) {
+      if (!word) continue;
+      let from = 0, at;
+      while ((at = folded.indexOf(word, from)) !== -1) {
+        ranges.push([at, at + word.length]); from = at + word.length;
+      }
+    }
+    ranges.sort((a,b) => a[0]-b[0]);
+    const merged = [];
+    for (const range of ranges) {
+      const last = merged.at(-1);
+      if (last && range[0] <= last[1]) last[1] = Math.max(last[1],range[1]);
+      else merged.push(range);
+    }
+    let start = 0;
+    for (const [a,b] of merged) {
+      node.append(document.createTextNode(text.slice(start,a)));
+      const mark = document.createElement('mark'); mark.textContent = text.slice(a,b); node.append(mark); start = b;
+    }
+    node.append(document.createTextNode(text.slice(start)));
   }
   async function search(input) {
     const sequence = ++request, query = input.value.trim(), results = panel();
@@ -19,7 +43,9 @@
     document.querySelector('.book-summary').scrollTop = 0;
     document.querySelector('.book-summary').classList.toggle('tutorial-search-active', Boolean(query));
     if (!query) return;
-    results.textContent = 'Searching the whole tutorial…';
+    const status = document.createElement('p'); status.className = 'tutorial-search-status';
+    status.setAttribute('role','status'); status.setAttribute('aria-live','polite');
+    results.append(status); status.textContent = 'Searching the whole tutorial…';
     try {
       indexPromise ||= fetch(new URL('tutorial-search-index.json', location.href)).then(r => {
         if (!r.ok) throw new Error('Search index unavailable');
@@ -32,18 +58,16 @@
         const text = normalize(item.chapter + ' ' + item.section + ' ' + item.text);
         return words.every(word => text.includes(word));
       });
-      results.replaceChildren();
-      const status = document.createElement('p');
+      results.replaceChildren(status);
       status.textContent = `${matches.length} matching sections across the tutorial`;
-      results.append(status);
       for (const item of matches) {
         const link = document.createElement('a'); link.href = item.url;
         link.dataset.linkNavigation = 'same-tab';
-        const chapter = document.createElement('span'); chapter.className = 'search-chapter'; chapter.textContent = item.chapter;
-        const section = document.createElement('span'); section.className = 'search-section'; section.textContent = item.section;
+        const chapter = document.createElement('span'); chapter.className = 'search-chapter'; highlight(chapter,item.chapter,words);
+        const section = document.createElement('span'); section.className = 'search-section'; highlight(section,item.section,words);
         const excerpt = document.createElement('span'); excerpt.className = 'search-excerpt';
         const first = Math.max(0, normalize(item.text).indexOf(words[0]) - 55);
-        excerpt.textContent = (first ? '…' : '') + item.text.slice(first, first + 180) + (item.text.length > first + 180 ? '…' : '');
+        highlight(excerpt,(first ? '…' : '') + item.text.slice(first, first + 180) + (item.text.length > first + 180 ? '…' : ''),words);
         link.append(chapter);
         if (item.section !== item.chapter) link.append(section);
         link.append(excerpt);
@@ -52,11 +76,11 @@
           if (e.button || e.ctrlKey || e.metaKey || e.shiftKey || e.altKey) return;
           e.preventDefault(); e.stopPropagation(); location.assign(link.href);
         });
-        results.append(link);
+        results.insertBefore(link,status);
       }
     } catch (_) {
       indexPromise = null;
-      if (sequence === request) results.textContent = 'Search could not load. Please try again.';
+      if (sequence === request) status.textContent = 'Search could not load. Please try again.';
     }
   }
   document.addEventListener('input', e => {

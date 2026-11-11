@@ -333,8 +333,11 @@ details.section-disclosure > summary > :is(h2,h3,h4,h5,h6) {
 .book.color-theme-2 .report-assumption {background:#263f57;}
 .book.color-theme-2 .report-result {background:#263f57;}
 @media print {.report-mark {print-color-adjust:exact;-webkit-print-color-adjust:exact;}.annotated-report {border-radius:0;}}
-.app-preview { display:flex; gap:18px; align-items:center; border:1px solid #94adc3; border-radius:9px; background:#e6f0fa; color:#20343e; padding:16px; margin:1.5em 0; break-inside:avoid; }
-.app-preview-image { width:38%; max-height:200px; object-fit:contain; border:1px solid #c5d5e3; background:white; }
+.app-preview { border:1px solid #94adc3; border-radius:9px; background:#e6f0fa; color:#20343e; padding:12px; margin:1.5em 0; break-inside:avoid; }
+.app-preview-image { display:block; width:100%; height:auto; border:1px solid #c5d5e3; background:white; }
+.app-preview > a { display:block; cursor:pointer; border-radius:3px; }
+.app-preview > a:focus-visible { outline:3px solid #a45115; outline-offset:4px; }
+.app-preview > a:hover { outline:2px solid #20597b; outline-offset:2px; }
 .app-preview-content { min-width:0; flex:1; font-size:16px; line-height:1.5; }
 .app-preview-content p { margin:0 0 10px; }
 .app-preview-label { font-size:13px; letter-spacing:.03em; }
@@ -345,5 +348,16 @@ details.section-disclosure > summary > :is(h2,h3,h4,h5,h6) {
 .book.color-theme-1 .app-preview { background:#f0e8d9; color:#453c30; }
 .book.color-theme-2 .app-preview { background:#253f52; color:#edf5fb; border-color:#7799af; }
 .book.color-theme-2 .app-preview p { color:inherit; }
-@media(max-width:600px) { .app-preview { flex-direction:column; align-items:stretch; } .app-preview-image { width:100%; max-height:220px; } }
-@media print { .app-preview-image, .app-preview-label { display:none!important; } .app-preview { display:block; padding:9px; background:white; border-color:#aaa; } .app-preview-content { font-size:10pt; } .app-preview-action a { color:#202020!important; background:none!important; padding:0; min-height:0; } }
+@media print { .app-preview { display:block; padding:7px; background:white; border-color:#aaa; } .app-preview-title { font-size:10pt; margin:0 0 5pt; } .app-preview-image { display:block!important; width:100%; height:auto; max-height:100mm; object-fit:contain; } }
+
+/* Keep the search query above results; only the separate status is announced. */
+.book.with-search .book-summary .book-search { position:sticky; top:0; z-index:10; padding:12px; background:#f7f9fb; }
+.book.with-search .book-summary .book-search input { position:static; box-sizing:border-box; display:block; width:100%; height:auto; min-height:44px; padding:10px; background:#fff; color:#172d3d; border:1px solid #6c7d89; }
+.book-summary.tutorial-search-active .search-results { display:none!important; }
+#tutorial-search-results .tutorial-search-status { border-top:1px solid #a7b5c0; padding:12px 0; margin:8px 0; font-size:13px; }
+#tutorial-search-results mark { background:#ffe09a; color:#352602; padding:0; }
+.book.color-theme-1.with-search .book-summary .book-search { background:#f4eedf; }
+.book.color-theme-1.with-search .book-summary .book-search input { background:#fffaf0; color:#382e20; }
+.book.color-theme-2.with-search .book-summary .book-search { background:#22323f; }
+.book.color-theme-2.with-search .book-summary .book-search input { background:#172630; color:#f4f8fa; border-color:#a5b9c7; }
+.book.color-theme-2 #tutorial-search-results mark { background:#f4d38c; color:#292011; }

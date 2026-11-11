@@ -96,7 +96,7 @@
     precision: 'A 95% interval with full width 20 percentage points gives a margin of about 10 points; its clinical usefulness remains to be justified.',
     counts: '56 analyzable patients per group, 112 in total, using the tutorial approximation with 30% versus 60% relief, 5% Type I error probability and 90% power.',
     recruitment: 'With illustrative 5% unavailable primary outcomes, 56 / 0.95 rounds up to 59 per group (118 total). The loss assumption needs evidence, and the analysis plan should address missing outcomes and treatment changes.',
-    resources: 'The clinics expect 20 eligible patients per month and 70% consent: about 14 recruits per month. Recruiting 118 would take about nine months before allowing for interruptions.',
+    resources: 'Screening records suggest 100 potentially relevant patients per month: 40 eligible, 30 available after competing studies and practical barriers, and half consenting. At 15 recruits per month, 118 recruits require about eight months; the plan also allows for site-opening delays.',
     conclusion: 'The plan provides 90% power at a true 30-point difference under the stated assumptions. Power is lower at a smaller true difference, including the 20-point clinical threshold. The supporting evidence and recruitment feasibility need review.'
   };
   function answerFormats(value) {
@@ -137,7 +137,7 @@
         : pilot && binary ? '[Denominator] includes everyone eligible for the feasibility outcome. For retention, known departures count as outcomes; unknown retention status needs an allowance.'
         : single ? '[Recruitment count] allows for [nonresponse and missing measurements], supported by [evidence].'
         : '[Recruitment count] after allowing for [expected loss]%. [Treatment changes] are [already included or handled separately]; [analysis plan] addresses missing outcomes.',
-      resources: '[Eligible people per month] × [consent fraction] × [months] gives [expected recruitment], compared with [required count] and [available time]. Unknown [input] needs evidence from [source or person]; [possible delays] need an allowance.',
+      resources: '[Potentially relevant people per month] are reduced to [eligible], then [available after competing studies and barriers]; [consent fraction] of those available gives [recruits per month]. Over [months], this gives [expected recruitment], compared with [required count]. Unknown [input] needs evidence from [source or person]; [possible delays] need an allowance.',
       conclusion: pilot ? '[Feasibility results] would support [proceed, amend, or stop] under [agreed criteria].'
         : 'The study could establish [finding] with [power or precision]. [Uncertain assumptions or design limitations] restrict the conclusion.'
     };
@@ -184,7 +184,7 @@
     if (value.goal === 'fixed') Object.assign(result, {
       counts: value.study_type === 'single' ? '246 eligible records are available for the new question. Outcome completeness and the achievable interval width should be assessed.' : '20 analyzable participants per group (40 total) are available in this illustrative scenario. The sample remains fixed when assessing power and precision.',
       power: value.outcome === 'binary' ? 'A 5% Type I error probability; attainable power at a 30-point difference and 20 patients per group would come from the matched calculation.' : 'A 5% Type I error probability; attainable power at a 3-unit difference and 20 patients per group would come from the matched calculation.',
-      recruitment: value.study_type === 'single' ? 'The available records will be checked for missing outcomes and eligibility. The report will give the usable denominator and reasons for exclusions.' : 'With illustrative 5% expected losses, 20 / 0.95 rounds up to 22 per group (44 total). Actual retention can vary.',
+      recruitment: value.study_type === 'single' ? 'The available records will be checked for missing outcomes and eligibility. The report will give the usable denominator and reasons for exclusions.' : 'With illustrative 5% expected losses, 20 / 0.95 rounds up to 22 per group (44 total).',
       conclusion: 'The available sample sets the limit on precision and power at prespecified differences. These results should determine which conclusions the study can support.'
     });
     if (value.goal === 'feasibility') Object.assign(result, {
@@ -240,7 +240,7 @@
       wrapper.append(label, input); group.append(wrapper);
       if (id === 'resources') {
         const note = document.createElement('p'); note.className = 'note';
-        const link = document.createElement('a'); link.href = '../book/feasibility.html#lasagnas-law';
+        const link = document.createElement('a'); link.href = '../book/calculations.html#lasagnas-law';
         link.target = '_blank'; link.rel = 'noopener'; link.textContent = "Lasagna's law: checking recruitment forecasts";
         note.append(link); wrapper.append(note);
       }

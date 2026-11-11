@@ -6,6 +6,7 @@ After this chapter, you should be able to:
 - Match a research question to a design, planning goal and suitable methodological resource.
 - Identify design-specific requirements for dependence, restricted recruitment and testing strategies.
 - Explain how paired and clustered observations affect sample size and analysis.
+- Distinguish treatment changes from unavailable outcomes and avoid counting the same event twice.
 - Distinguish success on any primary outcome, success on all [co-primary outcomes](#co-primary-outcomes) and hierarchical testing.
 - Recognize when interim analyses, stopping guidelines or sample-size re-estimation require additional planning.
 
@@ -212,6 +213,38 @@ Your plan should follow the current funding program's requirements. [NIHR fundin
 
 For an unsupported design, take the question, assumptions, desired conclusion and analysis plan to a methodological collaborator before choosing a calculator. The [own-study guide](#own-study) and case template organize that information. The numerical examples use hypothetical assumptions for teaching. An actual study requires evidence appropriate to its population, outcome and design.
 
+## Treatment changes and the outcome you want to compare {#treatment-changes .advanced-heading}
+
+Participants may never start their assigned treatment, miss doses, interrupt or change the dose, stop permanently, switch treatments, or receive rescue medication during follow-up. These changes can affect the difference between randomized groups and the sample size needed for the planned power. For example, patients assigned to standard treatment might start the novel treatment, making the groups' outcomes more similar. This is a form of [treatment contamination](#treatment-contamination) [@wittes2002].
+
+Treatment discontinuation and loss to follow-up should be recorded separately. When your question concerns the effect of assignment to treatment, participants are analyzed in their randomized groups and follow-up continues wherever possible. This treatment-policy approach follows the [estimand framework](#estimand); the protocol and SAP specify follow-up and missing-data methods [@iche9r1]. Excluding patients because they switched treatments can introduce bias [@dodd2017].
+
+Your sample size assumptions should reflect the treatment changes expected in your study and the treatment effect you intend to estimate. Suppose the assumed 60% relief with Neravixa and 30% with duloxetine describe outcomes among patients assigned to each treatment, including expected missed doses, treatment changes and rescue medication. These assumptions already reflect those events. Applying another adjustment for the same changes would reduce the difference a second time and inflate the required sample again.
+
+If the percentages instead describe full adherence, expected treatment changes should be considered when deriving the randomized-group assumptions. The [switching example](#treatment-switching) illustrates this calculation. A separate allowance for unavailable four-week outcomes concerns whether the outcome is measured [@iche9r1]. Table \@ref(tab:anticipated-events) summarizes the implications of common events.
+
+| Anticipated event | Implication for planning |
+|:--|:--|
+| Missing final assessments, unusable samples, or equipment failure | Allow for the expected percentage of unavailable primary outcomes, considering each group separately. |
+| Treatment switching or contamination | Account for the resulting difference between randomized groups when calculating sample size. |
+| Failure to start treatment, missed doses, temporary interruptions, dose changes, permanent discontinuation, or rescue medication | Consider how the timing and extent of these changes affect outcomes and the treatment effect being estimated. |
+| Death before a planned assessment | Specify how death enters the research question and outcome definition. A pain score after death is undefined; the study design and analysis need an explicit approach. |
+
+Table: (\#tab:anticipated-events) Anticipated events and their implications for sample size planning. Treatment changes and events such as death require an approach matched to the research question [@iche9r1].
+
+The protocol should distinguish events that change treatment exposure or the meaning of the outcome from reasons why an outcome was not recorded. Figure \@ref(fig:treatment-followup) organizes these decisions. Death before the pain assessment requires an explicit outcome strategy because pain relief at that time is undefined [@iche9r1].
+
+```{r treatment-followup, echo=FALSE, fig.width=8, fig.height=5.8, fig.cap="Events and outcome availability after randomization. Treatment changes and death affect how the study question is defined and analyzed. Missing assessments concern whether the required outcome was recorded. The protocol specifies how each relevant event is handled.", fig.alt="After treatment assignment, possible events include failure to start, missed doses, interruptions or dose changes, permanent discontinuation, switching, rescue medication and death. A separate panel lists missed follow-up, withdrawal from follow-up and unusable measurements. The study question determines how events enter the comparison; outcome availability informs follow-up, missing-data methods and recruitment."}
+draw_treatment_followup()
+```
+
+For example, a patient assigned to the novel treatment may switch to standard treatment and still report pain relief at four weeks. That recorded outcome remains in the novel-treatment group when estimating the effect of treatment assignment. The missing-outcome allowance concerns unavailable assessments; the assumed treatment difference should reflect relevant treatment changes.
+
+
+
+
+The advanced [recruitment extension](#recruitment-extensions) examines unequal losses and treatment-switching calculations.
+
 <div class="chapter-recap">
 
 ### Take-home points {.unnumbered}
@@ -221,6 +254,7 @@ For an unsupported design, take the question, assumptions, desired conclusion an
 - Paired and clustered observations require assumptions about dependence and the independent units available.
 - With several outcomes or comparisons, the success rule determines the relevant power and error control.
 - Interim analyses and sample-size adaptations require prespecified decisions and design-specific evaluation.
+- Treatment changes should enter the defined comparison and its planning assumptions; missing assessments also require follow-up and analysis decisions.
 - The resource table and reproducibility checklist help you prepare a plan for discussion with a statistician.
 
 </div>

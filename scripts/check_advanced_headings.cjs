@@ -9,12 +9,12 @@ const base=process.argv[2]||'http://127.0.0.1:8769';
   const heading=p.locator('.page-inner .section.level1 > h1');
   assert.equal(await heading.count(),1,chapter);
   assert.match(await heading.innerText(),new RegExp('Chapter '+(i+1)+'\\b'));
-  assert(await heading.evaluate((h,core)=>h.parentElement.classList.contains(core?'core-heading':'advanced-heading'),i<4));
+  assert(await heading.evaluate((h,core)=>h.parentElement.classList.contains(core?'core-heading':'advanced-heading'),i<3));
   for(const id of expected[chapter]||[])assert.equal(await p.locator('[id="'+id+'"]').count(),1,id);
-  if(i<4) {
+  if(i<3) {
     const disclosures=p.locator('.page-inner details.advanced-explanation');
     const optional=undefined;
-    assert.equal(await disclosures.count(),chapter==='calculations'?2:chapter==='reporting'?1:optional?1:0,'Optional advanced explanations stay beside their related core calculation');
+    assert.equal(await disclosures.count(),chapter==='calculations'?2:0,'Optional advanced explanations stay beside their related core calculation');
     for(const disclosure of await disclosures.all())assert.equal(await disclosure.getAttribute('open'),null,'Advanced explanation starts collapsed');
     if(chapter==='calculations')assert.deepEqual(await disclosures.evaluateAll(nodes=>nodes.map(n=>n.closest('.optional-practice, .section').id)),['adherence','rehabilitation']);
     if(optional) {

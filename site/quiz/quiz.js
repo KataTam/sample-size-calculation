@@ -103,7 +103,7 @@
       const option = element('option', text); option.value = value; chapter.append(option);
     }
     const previous = new URLSearchParams(location.search).get('chapter');
-    const requested = previous === 'power' ? 'clinical-question' : previous;
+    const requested = previous === 'power' ? 'clinical-question' : previous === 'feasibility' ? 'calculations' : previous;
     if(requested==='reporting'){location.replace('../book/reporting.html#check-reporting');return;}
     if (requested && bank.chapters[requested]) chapter.value = requested;
     if (chapter.value !== 'all' && !bank.questions.some(q => q.chapter === chapter.value && q.level === 'core')) route.value = 'all';

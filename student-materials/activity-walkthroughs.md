@@ -48,14 +48,14 @@ The reasoning lab and single-percentage app omit saved simulation results from t
 [Open your plan](../assumptions_report/?stage=question) · [Matching explanation](../book/reporting.html#record-assumptions)
 
 1. Your starting point can be your own study or the chronic-pain teaching example. A study title identifies the plan. Answers start empty. “Suggested structure” gives a framework for your own study. Selecting the teaching case shows its example answers; “Start the pain-relief plan” supplies the question and design when you choose it.
-2. Chapters 1–3 explain the question and power, calculation, and recruitment. Chapter 4 brings together the reporting guidance, checklist and complete example. You can record decisions in the same activity throughout and review the complete report in Chapter 4.
+2. Chapters 1–2 explain the question and power, calculation, and recruitment. Chapter 3 brings together the reporting guidance, checklist and complete example. You can record decisions in the same activity throughout and review the complete report in Chapter 3.
 3. In the core view, short explanations of the supplied assumptions are sufficient. Each section's “Ready for review” checkbox becomes available when its visible questions are answered. The advanced view adds evidence appraisal, plausible ranges, sensitivity scenarios and feasibility details; its completion checks include those extra prompts.
 4. In an app’s Report view, “Add this calculation to my study plan” opens a preview of the current inputs, result and method. You choose whether to attach it and whether to replace an earlier result of that type. Your written answers remain in place; affected sections are marked for another review.
 5. “Review before downloading” lists unresolved decisions and compares the analyzable requirement with the starting count in an attached recruitment calculation. Values written in free text still need your review. Optional simulations can be attached as explorations.
 6. The preview and PDF/Word downloads start with a concise sample size calculation report, followed by the supporting study plan, section review and attached results. Both parts update from the same answers; example hints are included only if you use them in an answer. “Save work for later” preserves the editable app state. Entries also persist in the same browser; the saved file supports another computer. The plan is complete for the core assignment when its applicable decisions and calculation have been reviewed. Advanced activities can extend it when relevant.
 
 
-The [annotated report in Chapter 4](../book/reporting.html#write-a-sample-size-justification) shows the completed two-proportion calculation. The chronic pain example uses 5% expected missing primary outcomes: 56 analyzable patients and 59 recruits per group, or 118 recruits total. Selecting this example makes its prepared calculation and software record available under the software question. Attached calculator results retain their own inputs and runtime versions; example answers for calculation fields follow that selected result. Your written answers should be reviewed when the calculation changes.
+The [annotated report in Chapter 3](../book/reporting.html#write-a-sample-size-justification) shows the completed two-proportion calculation. The chronic pain example uses 5% expected missing primary outcomes: 56 analyzable patients and 59 recruits per group, or 118 recruits total. Selecting this example makes its prepared calculation and software record available under the software question. Attached calculator results retain their own inputs and runtime versions; example answers for calculation fields follow that selected result. Your written answers should be reviewed when the calculation changes.
 
 ## Chronic pain: one study and many studies — core
 
@@ -176,7 +176,7 @@ The simulation above uses one final analysis. For a design with interim stopping
 
 ## Recruitment adjustment — core
 
-[Open activity](../study/?activity=recruitment) · [Matching explanation](../book/feasibility.html#account-for-expected-losses)
+[Open activity](../study/?activity=recruitment) · [Matching explanation](../book/calculations.html#account-for-expected-losses)
 
 1. The starting count should be the analyzable requirement per group from your chosen calculation. The app opens with the chronic pain example of 56 per group; you can replace that count with your selected result.
 2. One expected loss percentage applies to both groups. For the chronic pain example, 5% expected loss gives 56 / 0.95, rounded upward to 59 recruits per group and 118 total.
@@ -189,7 +189,7 @@ The simulation above uses one final analysis. For a design with interim stopping
 
 1. The short example contains four problem areas: calculation inputs, the interpretation of power, per-group versus total counts, and the loss adjustment. Selecting a passage opens an explanation; the PDF includes the same answer key.
 2. After correcting these problems, you can check the corresponding entries in your own report against its attached calculations and the annotated example.
-3. A PDF or editable Word download contains the concise calculation report followed by the supporting study plan. This review serves as Chapter 4's check. The cumulative quiz offers optional further review.
+3. A PDF or editable Word download contains the concise calculation report followed by the supporting study plan. This review serves as Chapter 3's check. The cumulative quiz offers optional further review.
 
 ## Unequal losses and treatment switching — advanced
 
@@ -275,7 +275,7 @@ Purpose: identify a suitable design family and the decisions that determine its 
 3. “Show design suggestions” presents a candidate design, the reasoning, unresolved choices and sample-size implications.
 4. The resource links provide a relevant activity or specialist guidance. Changing an answer clears the previous suggestion until you request an update. “Start again” clears the form.
 
-After identifying a design family, a plan with several outcomes or comparisons should also specify its [testing strategy](../book/study-designs.html#multiple-outcomes-comparisons). Planned [interim analyses](../book/study-designs.html#interim-analyses-stopping) or [sample-size re-estimation](../book/study-designs.html#sample-size-re-estimation) need specialist planning and the [additional reporting record](../book/reporting.html#complex-design-record).
+After identifying a design family, a plan with several outcomes or comparisons should also specify its [testing strategy](../book/study-designs.html#multiple-outcomes-comparisons). Planned [interim analyses](../book/study-designs.html#interim-analyses-stopping) or [sample-size re-estimation](../book/study-designs.html#sample-size-re-estimation) need specialist planning and the [additional reporting record](../book/appendix.html#complex-design-record).
 
 Teaching text: [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/). Original software code: [MIT](https://opensource.org/license/mit). Third-party attributions and exceptions remain applicable.
 

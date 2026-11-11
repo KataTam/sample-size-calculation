@@ -7,7 +7,7 @@ Use the [full references](references.md) for bibliographic details and publisher
 | Decision | Suggested reading | Use it in the tutorial |
 |---|---|---|
 | Connect the question, outcome and analysis | Fong et al. (2026); Wang and Ji (2020); Zrineh et al. (2026) | Check the chronic-pain question before using a calculator; distinguish sampling quality from sample size |
-| Expectations and clinical judgments in a real trial | [ST01: Fayers et al. (2000)](https://doi.org/10.1054/bjoc.1999.0902) | The [Chapter 6 example](https://katatam.github.io/sample-size-calculation/book/curves.html#st01-expectations) compares a calculation target with separately surveyed expectations and clinical judgments |
+| Expectations and clinical judgments in a real trial | [ST01: Fayers et al. (2000)](https://doi.org/10.1054/bjoc.1999.0902) | The [Chapter 5 example](https://katatam.github.io/sample-size-calculation/book/curves.html#st01-expectations) compares a calculation target with separately surveyed expectations and clinical judgments |
 | Choose and justify the target difference | [DELTA²: Cook et al. (2018)](https://doi.org/10.1136/bmj.k3750) | Explain importance and realism, then compare the target with the difference observed in previous data and clinical threshold |
 | Select a defensible planning goal | [Lakens (2022)](https://doi.org/10.1525/collabra.33267) | Explain whether a power target, a precision target for estimation, or fixed resources determines the sample size |
 | Assess prior evidence | Albers and Lakens (2018); Caldwell and Vigotsky (2020) | Treat small pilot differences as uncertain; use clinically interpretable units and plausible ranges |
@@ -66,9 +66,9 @@ For prerequisite reminders and common questions, use the [glossary](../student-m
 
 ## Multiple outcomes and decisions during a trial
 
-[Chapter 8](../book/study-designs.html#multiple-outcomes-comparisons) explains success rules, interim analyses and sample-size re-estimation. The [FDA multiple-endpoints guidance (2022)](https://www.fda.gov/regulatory-information/search-fda-guidance-documents/multiple-endpoints-clinical-trials) distinguishes co-primary outcomes, alternative routes to success, composites and testing hierarchies. Its examples help identify the intended claim before choosing a calculation.
+[Chapter 7](../book/study-designs.html#multiple-outcomes-comparisons) explains success rules, interim analyses and sample-size re-estimation. The [FDA multiple-endpoints guidance (2022)](https://www.fda.gov/regulatory-information/search-fda-guidance-documents/multiple-endpoints-clinical-trials) distinguishes co-primary outcomes, alternative routes to success, composites and testing hierarchies. Its examples help identify the intended claim before choosing a calculation.
 
-[ICH E9](https://database.ich.org/sites/default/files/E9_Guideline.pdf), Sections 3.4 and 4.4-4.6, covers group-sequential designs, sample-size adjustment, interim analyses and independent monitoring. The [FDA adaptive-design guidance (2019)](https://www.fda.gov/regulatory-information/search-fda-guidance-documents/adaptive-design-clinical-trials-drugs-and-biologics-guidance-industry), Sections IV-VI, distinguishes adaptations based on blinded and comparative data and describes simulation-based evaluation. The [Chapter 4 checklist](../book/reporting.html#complex-design-record) connects these methods to a reproducible protocol and SAP record.
+[ICH E9](https://database.ich.org/sites/default/files/E9_Guideline.pdf), Sections 3.4 and 4.4-4.6, covers group-sequential designs, sample-size adjustment, interim analyses and independent monitoring. The [FDA adaptive-design guidance (2019)](https://www.fda.gov/regulatory-information/search-fda-guidance-documents/adaptive-design-clinical-trials-drugs-and-biologics-guidance-industry), Sections IV-VI, distinguishes adaptations based on blinded and comparative data and describes simulation-based evaluation. The [Chapter 8 checklist](../book/appendix.html#complex-design-record) connects these methods to a reproducible protocol and SAP record.
 
 ## International ethics and protocol planning
 

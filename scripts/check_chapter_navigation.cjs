@@ -26,8 +26,8 @@ const base=process.argv[2] || 'http://127.0.0.1:8769';
  await page.locator('.chapter-end-nav').scrollIntoViewIfNeeded();
  await page.locator('.chapter-end-nav').screenshot({path:'build/browser-checks/chapter-navigation-mobile.png'});
  await page.locator('.chapter-arrow-next').click();
- await page.waitForURL('**/feasibility.html');
+ await page.waitForURL('**/reporting.html');
  assert.equal(new URL(page.url()).hash,'');
- console.log('All 14 chapter arrow controls verified: destinations, accessible labels, placement and mobile navigation.');
+ console.log('All chapter arrow controls verified: destinations, accessible labels, placement and mobile navigation.');
  }finally{await browser.close();}
 })().catch(e=>{console.error(e);process.exit(1)});

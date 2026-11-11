@@ -48,7 +48,7 @@
         "text": "To allow for 5% missing outcomes, adding 5% and rounding down gives 58 recruits per group.",
         "error": true,
         "explanation": "The retained fraction is 0.95. Dividing 56 by 0.95 and rounding upward gives 59 recruits per group, or 118 in total. The analyzable requirement remains 56 per group.",
-        "link": "feasibility.html#account-for-expected-losses",
+        "link": "calculations.html#account-for-expected-losses",
         "section": "Loss adjustment and rounding"
       }
     ],
@@ -117,8 +117,8 @@
       {
         "text": "For 56 analyzable patients per group and 5% expected missing outcomes, we plan to recruit 59 per group",
         "error": false,
-        "explanation": "Dividing 56 by 0.95 and rounding upward gives 59 recruits per group. Actual retention can vary.",
-        "link": "feasibility.html#account-for-expected-losses",
+        "explanation": "Dividing 56 by 0.95 and rounding upward gives 59 recruits per group.",
+        "link": "calculations.html#account-for-expected-losses",
         "section": "Expected losses"
       },
       {
@@ -128,7 +128,7 @@
         "text": "Anyone who switches treatment will automatically count as lost to follow-up",
         "error": true,
         "explanation": "A participant who switches treatment can still provide the four-week pain-relief outcome. For the effect of treatment assignment, that outcome remains in the participant's randomized group. Figure 3.1 shows treatment received and outcome availability separately.",
-        "link": "feasibility.html#fig:treatment-followup",
+        "link": "study-designs.html#fig:treatment-followup",
         "section": "Treatment received and outcome availability"
       },
       {
@@ -148,7 +148,7 @@
         "text": "Recruiting extra participants will remove bias caused by missing outcomes",
         "error": true,
         "explanation": "Extra recruitment can protect the expected count. Missing-outcome bias depends on why outcomes are missing and how they are analyzed. Prevention, appropriate analysis and sensitivity analyses remain necessary.",
-        "link": "feasibility.html#misconception-dropout",
+        "link": "calculations.html#misconception-dropout",
         "section": "Missing outcomes and bias"
       },
       {

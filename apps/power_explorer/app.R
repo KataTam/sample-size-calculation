@@ -202,7 +202,7 @@ ui <- fluidPage(
       fluidRow(column(6, numericInput("eligible_monthly", "Eligible participants per month", 20, min = 0)),
         column(6, percent_slider("consent_fraction", "Expected percentage consenting (%)", 0, 1, .7, step = .01))),
       activity_help("Your estimate should use screening records from all participating sites and count patients who meet the eligibility criteria. The app then applies the consent percentage. Slower recruitment and site-opening delays should inform your feasibility judgment.", for_input = "eligible_monthly"),
-      p(class = "note", tags$a(href = "../book/feasibility.html#lasagnas-law", target = "_blank", rel = "noopener", "Lasagna's law: checking recruitment forecasts")),
+      p(class = "note", tags$a(href = "../book/calculations.html#lasagnas-law", target = "_blank", rel = "noopener", "Lasagna's law: checking recruitment forecasts")),
       activity_help("The denominator is eligible people invited to participate. Prior recruitment records can support the percentage; losses after consent are handled separately.", for_input = "consent_fraction"),
       numericInput("recruitment_months", "Months available for recruitment", 12, min = 0),
       activity_help("This is the enrollment period. Setup and final follow-up need additional time if they extend beyond recruitment.", for_input = "recruitment_months"),
