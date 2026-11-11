@@ -20,10 +20,10 @@
     "route": "Core",
     "activities": [
       {
-        "label": "Calculate a sample size: choose one example",
+        "label": "Calculate a sample size: probiotics",
         "path": "book/calculations.html#calculate-sample-size",
         "route": "Core",
-        "section": "calculate-sample-size"
+        "section": "adherence"
       }
     ]
   },

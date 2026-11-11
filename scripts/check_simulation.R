@@ -11,7 +11,7 @@ check_simulation <- function() {
   stopifnot(2 * sample_size_two_proportions(.9, .8, power = .8) == 398,
             2 * sample_size_two_proportions(.96, .8, power = .9) == 170)
   x <- sample_size_two_means_details(10, 20, power = .8, dropout_rate = .15)
-  stopifnot(x$total_with_dropout == 150)
+  stopifnot(x$total_with_dropout == 152)
 
   s <- study_spec(n = 45, B = 30000)
   one <- simulate_one_study(s)

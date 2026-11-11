@@ -1,5 +1,41 @@
 # Original teaching illustrations, drawn by R when the tutorial is rendered.
 # These functions draw on the active graphics device and leave its settings intact.
+draw_normal_multiplier <- function() {
+  old <- par(no.readonly = TRUE)
+  on.exit(par(old))
+  par(mfrow = c(2, 1), mar = c(3.5, 2, 2.2, 1), oma = c(1.8, 0, 0, 0),
+      family = "sans", fg = "#26343d", bg = "white")
+  z <- seq(-3.7, 3.7, length.out = 1000)
+  shade <- function(lo, hi, color) {
+    xx <- seq(lo, hi, length.out = 250)
+    polygon(c(lo, xx, hi), c(0, dnorm(xx), 0), col = color, border = NA)
+  }
+  curve_panel <- function(title) {
+    plot(z, dnorm(z), type = "n", axes = FALSE, xlab = "", ylab = "",
+         ylim = c(0, .48), main = title, cex.main = 1)
+    axis(1, at = -3:3)
+    mtext("z-value (standard deviations from the center)", side = 1, line = 2.2, cex = .8)
+  }
+  critical <- qnorm(.975)
+  curve_panel("1. Type I error probability: 5% split between two tails")
+  shade(-3.7, -critical, "#e8b4b0"); shade(critical, 3.7, "#e8b4b0")
+  lines(z, dnorm(z), lwd = 2, col = "#245e90")
+  segments(c(-critical, critical), 0, c(-critical, critical), dnorm(critical), lty = 2)
+  text(c(-2.65, 2.65), .13, "2.5%", cex = .9)
+  text(c(-critical, critical), .22, c("-1.96", "+1.96"), cex = .9)
+  text(0, .43, "95% between the cutoffs", cex = .9)
+  cut <- qnorm(.90)
+  curve_panel("2. Target power: the 90th percentile")
+  shade(-3.7, cut, "#b9d7ec"); shade(cut, 3.7, "#e6e9ec")
+  lines(z, dnorm(z), lwd = 2, col = "#245e90")
+  segments(cut, 0, cut, dnorm(cut), lty = 2)
+  text(-.5, .20, "90% to the left", cex = .9)
+  text(2.35, .13, "10%", cex = .9)
+  text(cut, .31, "+1.28", cex = .9)
+  mtext("Multiplier M = (1.96 + 1.28)^2 = 10.51, using unrounded cutoffs", side = 1,
+        outer = TRUE, line = .3, cex = .85)
+}
+
 diagram_canvas <- function() {
   par(mar = rep(0, 4), bg = "white", fg = "#26343d", family = "sans",
     xaxs = "i", yaxs = "i")

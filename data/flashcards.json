@@ -350,8 +350,8 @@
     {
       "id": "C050",
       "level": "core",
-      "front": "What does the two-mean normal approximation give for a target difference of 3 units, SD 5, 5% Type I error probability, and 90% power?",
-      "back": "Approximately 58.4 analyzable patients per group, rounded upward to 59 per group: 118 total.",
+      "front": "What analyzable sample size does the pooled two-sample t-test calculation give for a target difference of 3 units, SD 5, 5% Type I error probability, and 90% power?",
+      "back": "60 patients per group: 120 total. The normal formula explains the calculation and rounds to 59; the apps and reports use the t-test result, which accounts for estimating the common SD.",
       "source": "https://katatam.github.io/sample-size-calculation/book/calculations.html"
     },
     {

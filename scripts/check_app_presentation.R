@@ -8,7 +8,7 @@ check_app_presentation <- function() {
     testServer(basic_calculator_server(outcome), {
       session$setInputs(delta = 3, sd = 5, pi1 = .6, pi2 = .3, alpha = .05, power = .9, dropout = 0,
         compare_delta = 2, compare_pi1 = .5)
-      stopifnot(result()$n_per_group == if (outcome == "means") 59 else 56,
+      stopifnot(result()$n_per_group == if (outcome == "means") 60 else 56,
         !is.null(output$result), !is.null(output$allocation_plot), !is.null(output$sample_size_plot),
         !is.null(output$comparison_table), grepl("ceiling", output$worked_method$html),
         grepl("Current report", output$report_preview$html))

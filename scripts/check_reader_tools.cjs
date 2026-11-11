@@ -25,7 +25,7 @@ let browser;
  assert(!(await page.locator('.book-summary a[href="calculations.html#adherence"]').isVisible()));
  await page.locator('.book-summary a[href="calculations.html#two-proportions"]').click();
  assert(await page.locator('.book-summary a[href="calculations.html#adherence"]').isVisible());
- await page.locator('.book-summary a[href="calculations.html#calculate-sample-size"]').click();
+ await page.locator('.book-summary a[href="calculations.html#adherence"]').click();
  await page.locator('.book-summary .activity-toc a[href="../book/calculations.html#calculate-sample-size"]').waitFor({state:'visible'});
  assert(!(await page.locator('.book-summary a[href="clinical-question.html#record-assumptions"]').isVisible()));
  await page.locator('.book-summary > nav > ul.summary > li.chapter > a[href="clinical-question.html"]').click();

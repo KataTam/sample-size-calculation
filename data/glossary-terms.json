@@ -597,5 +597,14 @@
       "adaptive designs"
     ],
     "definition": "A design allowing prespecified changes, such as revising sample size, in response to accumulating trial data."
+  },
+  {
+    "id": "event-probability",
+    "label": "Event probability",
+    "aliases": [
+      "event probability",
+      "event probabilities"
+    ],
+    "definition": "How likely an outcome is by the specified follow-up time. A probability of 0.60 means 60%; the observed percentage in a sample can differ."
   }
 ]

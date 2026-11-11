@@ -49,7 +49,7 @@ basic_calculator_ui <- function(outcome) {
       tabPanel("Report", uiOutput("plan_transfer"), uiOutput("report_preview"), activity_report_downloads("download_report"),
         p(id = "download-status", role = "status", `aria-live` = "polite")),
       tabPanel("Methods and references", h3("Calculation with your current values"), uiOutput("worked_method"),
-        p(if (means) "This introductory normal approximation uses a common population SD. The reasoning lab uses t-test power with an estimated SD and can require a different sample size."
+        p(if (means) "This app and the reasoning lab plan a pooled two-sample t test using a common population SD. The calculation accounts for estimating that SD from the trial data."
           else "This normal approximation uses R's two-sided power.prop.test calculation, with both rejection tails included. The reasoning lab uses the same binary planning approximation and can explore its finite-sample performance by simulation."),
         p("Required analyzable counts are rounded upward. Recruitment is then adjusted and rounded separately within each group."),
         p(tags$a(href = "../book/calculations.html", target = "_blank", rel = "noopener", "Tutorial: basic calculations"), " · ",
@@ -138,8 +138,10 @@ basic_calculator_server <- function(outcome) function(input, output, session) {
   }, striped = TRUE)
   method_text <- reactive({
     x <- result()
-    c(if (means) paste0("M = [z(1 - Type I error probability / 2) + z(target power)]² = ", round(x$multiplier, 4),
-      ". n per group = 2 × M × SD² / target difference² = 2 × ", round(x$multiplier, 4), " × ", x$sd, "² / ", x$delta, "² = ", round(x$raw_n_per_group, 3), "; rounded upward to ", x$n_per_group, ".")
+    c(if (means) paste0("Pooled two-sample t test: R stats::power.t.test(delta = ", x$delta,
+      ", sd = ", x$sd, ", sig.level = ", x$alpha, ", power = ", x$power,
+      ", type = 'two.sample', alternative = 'two.sided', strict = TRUE) gives ",
+      round(x$raw_n_per_group, 3), " analyzable participants per group, rounded upward to ", x$n_per_group, ".")
       else paste0("R stats::power.prop.test(p1 = ", x$pi1, ", p2 = ", x$pi2, ", sig.level = ", x$alpha,
         ", power = ", x$power, ", alternative = 'two.sided', strict = TRUE) gives ", round(x$raw_n_per_group, 3), " per group, rounded upward to ", x$n_per_group, "."),
       paste0("Recruitment per group = ceiling(", x$n_per_group, " / ", 1-x$dropout_rate, ") = ", x$total_with_dropout/2, "; total = ", x$total_with_dropout, "."))

@@ -116,7 +116,75 @@ let browser;
   }
   const html = `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>How many patients do you need for your study? Sample size calculation tutorial</title><style>${css}\n@media print {.tutorial-contents {display:none;} .print-chapter + .print-chapter {break-before:page;}}</style></head><body><nav class="tutorial-contents" aria-label="Tutorial contents"><h2>Contents</h2><ol>${contents.join('')}</ol></nav><main>${sections.join('\n')}</main>${readerScripts}</body></html>`;
   await page.setContent(html, {waitUntil:'load'});
+  // Relocate only the code disclosures in the PDF DOM. The standalone HTML
+  // above retains its collapsible code beside each calculation.
+  const codeAppendix = await page.evaluate(() => {
+    const clean = text => text.trim().replace(/\s+/g, ' ');
+    const originalText = Array.from(document.querySelectorAll('main details.r-code-output pre')).map(pre => pre.textContent);
+    // A printed R object can split one chunk into consecutive disclosures.
+    // Keep that code and its output together as one appendix entry.
+    document.querySelectorAll('main details.r-code-output').forEach(box => {
+      const previous = box.previousElementSibling;
+      if (!previous?.matches('details.r-code-output')) return;
+      box.querySelector('summary').remove(); previous.append(...box.childNodes); box.remove();
+      previous.querySelector('summary').textContent = 'R code and output';
+    });
+    const boxes = Array.from(document.querySelectorAll('main details.r-code-output'));
+    const figureCount = document.querySelectorAll('main .figure').length;
+    const tableCount = document.querySelectorAll('main table').length;
+    const appendix = document.createElement('section');
+    appendix.id = 'tutorial-r-code'; appendix.className = 'print-chapter code-appendix';
+    const title = document.createElement('h1'); title.textContent = 'Appendix: R code and output';
+    appendix.append(title);
+    const intro = document.createElement('p');
+    intro.textContent = 'The R code and console output are collected here by chapter. Each calculation links back to its explanation; the main chapters retain their equations, figures, and formatted results.';
+    appendix.append(intro);
+    const headings = [{title:title.textContent, level:0}], groups = new Map();
+    boxes.forEach((box, index) => {
+      if (box.querySelector('table, .figure')) throw Error('A code disclosure contains learner-facing results');
+      const chapter = box.closest('.print-chapter');
+      let group = groups.get(chapter.id);
+      if (!group) {
+        group = document.createElement('div');
+        const heading = document.createElement('h2');
+        heading.textContent = 'Code for ' + clean(chapter.querySelector('h1').textContent).replace(/^(Core|Advanced) /, '');
+        group.append(heading); appendix.append(group); groups.set(chapter.id, group);
+        headings.push({title:heading.textContent, level:1});
+      }
+      const previous = box.parentElement.closest('details')?.querySelector(':scope > summary') ||
+        Array.from(chapter.querySelectorAll('h2,h3,h4'))
+          .filter(h => !box.contains(h) && (h.compareDocumentPosition(box) & Node.DOCUMENT_POSITION_FOLLOWING)).pop();
+      const number = index + 1, label = previous ? clean(previous.textContent) : clean(chapter.querySelector('h1').textContent);
+      const source = document.createElement('p'); source.id = 'pdf-code-source-' + number;
+      source.className = 'pdf-code-link';
+      const forward = document.createElement('a'); forward.href = '#pdf-code-' + number;
+      forward.textContent = box.querySelector('summary').textContent + ' (appendix, calculation ' + number + ')';
+      source.append(forward); box.before(source);
+      const entry = document.createElement('div'); entry.id = 'pdf-code-' + number;
+      const heading = document.createElement('h3'); heading.textContent = 'Calculation ' + number + ': ' + label;
+      const back = document.createElement('a'); back.href = '#' + source.id; back.textContent = 'Return to the explanation';
+      const paragraph = document.createElement('p'); paragraph.append(back);
+      entry.append(heading, paragraph, box); group.append(entry);
+    });
+    if (!boxes.length) throw Error('No R code found for the PDF appendix');
+    document.querySelector('main').append(appendix);
+    const moved = Array.from(appendix.querySelectorAll('details.r-code-output'));
+    if (JSON.stringify(originalText) !== JSON.stringify(moved.flatMap(box => Array.from(box.querySelectorAll('pre'), pre => pre.textContent)))) throw Error('Code or raw output changed during relocation');
+    if (document.querySelectorAll('main .figure').length !== figureCount || document.querySelectorAll('main table').length !== tableCount) throw Error('Relocation changed formatted results');
+    if (document.querySelectorAll('main > section:not(.code-appendix) details.r-code-output').length) throw Error('R code remains in a main PDF chapter');
+    return {headings, count:boxes.length};
+  });
+  pdfHeadings.push(...codeAppendix.headings);
+  console.log(`Moved ${codeAppendix.count} R code/output disclosures to the PDF appendix; HTML unchanged.`);
   await page.evaluate(async () => {
+    // A wrapper can start on the previous page when its preview card is kept
+    // together. Anchor the visible card title itself for accurate PDF links.
+    document.querySelectorAll('.app-preview').forEach(preview => {
+      const wrapper = preview.parentElement, title = preview.querySelector('.app-preview-title');
+      if (wrapper.matches('div[id]') && wrapper.children.length === 1 && title && !title.id) {
+        title.id = wrapper.id; wrapper.removeAttribute('id');
+      }
+    });
     document.querySelectorAll('.chapter-quiz').forEach(root => {
       root.querySelectorAll('.quiz-help').forEach(el=>el.remove());
       root.querySelector('form').hidden = false;

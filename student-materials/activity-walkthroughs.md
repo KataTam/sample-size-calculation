@@ -17,7 +17,7 @@ The chronic pain case compares fictional Neravixa with duloxetine for painful di
 | Chapter | Core activity | Contribution to the continuing report |
 |---|---|---|
 | 1. Research question and power | [Chronic pain: one study and many studies](../study/?activity=pain_one_many) | Question, assumptions and interpretation of power |
-| 2. Calculating sample size | [One calculation: probiotics or rehabilitation](../book/calculations.html#calculate-sample-size) | Inputs, procedure, software and analyzable counts |
+| 2. Calculating sample size | [Calculate a sample size: probiotics](../book/calculations.html#calculate-sample-size) | Inputs, procedure, software and analyzable counts |
 | 3. Recruitment and feasibility | [Adjust recruitment](../study/?activity=recruitment) using one shared loss percentage | Recruitment per group and in total, with a short justification |
 | 4. The sample size calculation report | [Review and complete a report](../book/reporting.html#check-reporting) | Four-error review followed by a consistency check of the learner's report |
 
@@ -104,7 +104,7 @@ Purpose: reproduce the binary-outcome sample size calculation. The calculator us
 4. The link to the lab transfers this calculated count as a fixed sample. “Many studies” then lets you estimate the performance of the planned test through simulation and compare the estimated power with the planning target.
 5. “Explore assumptions” lets you compare a revised event percentage. “Report” includes both scenarios when they differ, together with their analyzable and recruitment counts and calculation method.
 
-## Calculate a sample size: probiotics option
+## Calculate a sample size: probiotics
 
 [Open activity](../study/?activity=probiotics_calculation) · [Matching explanation](../book/calculations.html#adherence)
 
@@ -124,17 +124,17 @@ Purpose: calculate a sample size for a binary outcome and examine its sensitivit
 Purpose: see how a target difference and between-patient variability determine an approximate sample size.
 
 1. You can enter target difference 3 units, common SD 5, Type I error probability 5% and target power 90%.
-2. With no losses, the normal approximation gives 59 analyzable patients per group.
+2. With no losses, the pooled two-sample t-test calculation gives 60 analyzable patients per group (120 total).
 3. Halving the target difference or doubling the SD approximately quadruples the required count, before rounding.
-4. The lab link carries the count across as a fixed sample for simulation. Its pooled t test estimates the common variance, so its power need not exactly equal the calculator's normal-approximation target.
+4. The lab link carries the count across as a fixed sample for simulation. It uses the same pooled t-test planning method. Rounding upward gives power slightly above the target.
 5. A revised target difference can be compared in “Explore assumptions.” “Report” records the main and revised scenarios, their counts and the calculation method.
 
-## Calculate a sample size: rehabilitation option
+## Additional practice: rehabilitation
 
 [Open activity](../study/?activity=rehabilitation_calculation) · [Matching explanation](../book/calculations.html#rehabilitation)
 
 1. The target mean difference is 3 units and the common SD is 5. The two-sided Type I error probability is 5% and target power is 90%.
-2. With expected loss left at zero for this calculation, the normal approximation gives 59 analyzable participants per group, or 118 total.
+2. With expected loss left at zero, the pooled two-sample t-test calculation gives 60 analyzable participants per group, or 120 total.
 3. Your record should identify these inputs, the method and software, and both counts. “Add this calculation to my study plan” attaches the result after your review. The recruitment activity starts with this analyzable requirement.
 
 The [advanced rehabilitation simulation](../study/?activity=rehabilitation) uses a t-test method and generated outcomes. It can examine confidence intervals and repeated-study performance after the core calculation.
@@ -281,4 +281,4 @@ Teaching text: [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/). 
 
 ## Rehabilitation calculation — core
 
-[Open activity](../study/?activity=rehabilitation_calculation). A 3-unit target difference, SD 5, 90% power and a 5% Type I error probability give 59 analyzable patients per group with the introductory normal approximation. You can compare a 1.5-unit target difference or an SD of 7 while holding the other assumptions fixed. Expected losses change recruitment. The Report view lets you attach the selected calculation to your developing study plan. The [t-test simulation extension](../study/?activity=rehabilitation) is optional advanced exploration.
+[Open activity](../study/?activity=rehabilitation_calculation). A 3-unit target difference, SD 5, 90% power and a 5% Type I error probability give 60 analyzable patients per group with the pooled two-sample t-test calculation. You can compare a 1.5-unit target difference or an SD of 7 while holding the other assumptions fixed. Expected losses change recruitment. The Report view lets you attach the selected calculation to your developing study plan. The [t-test simulation extension](../study/?activity=rehabilitation) is optional advanced exploration.

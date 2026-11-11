@@ -72,7 +72,7 @@ If the records already exist, your report should explain why that sample is avai
 <details class="misconception" id="why-do-the-hand-formula-r-and-another-calculator-give-different-numbers">
 <summary>Why do the hand formula, R and another calculator give different numbers?</summary>
 
-Differences can arise from the outcome, allocation, whether the test is one-sided or two-sided, effect scale, Type I error probability, target power, test assumptions, continuity correction or rounding. These settings should match before you compare calculator results. The simple mean calculator uses a normal approximation; the [lab](https://katatam.github.io/sample-size-calculation/study/?activity=own_study) plans for a pooled t test. Binary analytical power remains an approximation and can differ from finite-sample simulation.
+Differences can arise from the outcome, allocation, whether the test is one-sided or two-sided, effect scale, Type I error probability, target power, test assumptions, continuity correction or rounding. These settings should match before you compare calculator results. The two-means calculator and [lab](https://katatam.github.io/sample-size-calculation/study/?activity=own_study) both plan for a pooled two-sample t test. Binary analytical power remains an approximation and can differ from finite-sample simulation.
 
 </details>
 

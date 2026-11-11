@@ -291,7 +291,7 @@
       "level": "core",
       "section": "Error probabilities and power",
       "link": "calculations.html#how-error-rates-and-power-affect-sample-size",
-      "question": "What generally happens to required sample size when target power rises from 80% to 90%, holding other inputs fixed?",
+      "question": "What happens to the unrounded sample size requirement when target power rises from 80% to 90%, holding other inputs fixed?",
       "options": [
         "It stays the same",
         "It becomes independent of the target difference",
@@ -304,29 +304,29 @@
         "The requirement depends on the chosen power.",
         "Target difference remains an input when power changes.",
         "Higher target power requires greater ability to detect the specified difference. The normal-quantile multiplier increases, so the sample-size requirement increases.",
-        "A higher probability of detection generally requires more information."
+        "A higher probability of detection requires more information."
       ]
     },
     {
       "id": "q12",
       "chapter": "appendix",
       "level": "advanced",
-      "section": "Comparing calculation methods",
+      "section": "Planning for the analysis",
       "link": "appendix.html#tutorial-methods",
-      "question": "Why might the introductory two-means calculator and the reasoning lab return different planning results with matching inputs?",
+      "question": "Why does the pooled two-sample t-test calculation give 60 patients per group when the introductory normal formula rounds to 59?",
       "options": [
-        "The larger answer is automatically the correct method for every design",
-        "The calculator uses a normal approximation while the lab uses t-test-based power",
-        "Both necessarily contain a programming error",
-        "The lab treats two measurements as two patients"
+        "A larger number is always the correct choice for every study design",
+        "The t-test calculation accounts for estimating the common SD from the trial data",
+        "The t-test calculation already includes losses to follow-up",
+        "The normal formula counts measurements while the t test counts patients"
       ],
       "answer": 1,
-      "explanation": "Normal approximations and t-test calculations handle sampling uncertainty differently. Methods and assumptions should be checked before comparing numerical outputs.",
+      "explanation": "The t-test calculation accounts for estimating the common SD. The normal formula explains the input relationships; the apps and reports use the t-test result for this planned analysis.",
       "feedback": [
-        "A larger number alone cannot establish that a method suits the design.",
-        "Normal approximations and t-test calculations handle sampling uncertainty differently. Methods and assumptions should be checked before comparing numerical outputs.",
-        "Different justified methods can produce different numerical answers.",
-        "Both calculations assume independent participants in this comparison."
+        "The procedure should match the planned analysis.",
+        "The t-test calculation accounts for estimating the common SD. The normal formula explains the input relationships; the apps and reports use the t-test result for this planned analysis.",
+        "Losses to follow-up are accounted for separately after the analyzable requirement is calculated.",
+        "Both counts refer to analyzable patients per group."
       ]
     },
     {

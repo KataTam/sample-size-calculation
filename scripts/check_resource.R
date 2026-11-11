@@ -87,8 +87,15 @@ check_resource <- function(render_module = FALSE) {
     alpha = 0.05,
     power = 0.80
   )
-  stopifnot(mean_result$n_per_group == 63)
-  stopifnot(mean_result$total_n == 126)
+  stopifnot(mean_result$n_per_group == 64)
+  stopifnot(mean_result$total_n == 128)
+  # The rounded mean plan should meet power, and one fewer patient should not.
+  for (delta in c(3, 1.5)) {
+    mean_n <- sample_size_two_means(delta, 5)
+    stopifnot(mean_n == if (delta == 3) 60 else 235,
+      power_two_means(mean_n, delta, 5) >= .90,
+      power_two_means(mean_n - 1, delta, 5) < .90)
+  }
 
   dropout_result <- adjust_for_dropout(
     n = 126,

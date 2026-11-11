@@ -48,6 +48,8 @@ for heading,target,bookmark in zip(headings,target_pages,bookmarks[2:]):
 assert 'Draft version' in r.pages[0].extract_text()
 assert len(r.outline)>=14
 assert 'Welcome' in r.pages[offset].extract_text()
+assert headings[chapter_indices[-1]]['title'] == 'Appendix: R code and output'
+assert any(h['title'].startswith('Code for ') and h['title'].endswith('Calculating sample size') for h in headings)
 assert len(r.pages)>offset+20
 print(f'PDF checks passed: {len(links)} contents links and matching bookmarks resolve to their headings within the correct chapters; draft title, Roman front matter and body page 1 verified.')
 

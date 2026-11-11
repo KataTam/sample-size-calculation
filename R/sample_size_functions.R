@@ -70,8 +70,12 @@ sample_size_two_proportions_details <- function(pi1, pi2, alpha = 0.05, power = 
 sample_size_two_means_raw <- function(delta, sd, alpha = 0.05, power = 0.90) {
   check_positive_number(delta, "delta")
   check_positive_number(sd, "sd")
-  M <- multiplier_alpha_power(alpha, power)
-  2 * M * sd^2 / delta^2
+  check_probability(alpha, "alpha")
+  check_probability(power, "power")
+  # Plan the pooled two-sample t test; both rejection tails count toward power.
+  stats::power.t.test(delta = delta, sd = sd, sig.level = alpha,
+    power = power, type = "two.sample", alternative = "two.sided",
+    strict = TRUE)$n
 }
 
 sample_size_two_means <- function(delta, sd, alpha = 0.05, power = 0.90) {

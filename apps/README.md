@@ -26,4 +26,4 @@ See the [build and publish guide](../documentation/development/build-and-publish
 
 ## Sample size reasoning lab
 
-`power_explorer` now contains goal selection, one-study and repeated-study simulation, precision, sensitivity, saved outputs and reproducible downloads. It supports normal continuous and binary outcomes with equal groups. The standalone calculators remain introductory approximations; methods and answers can differ from the lab. See ../teaching/statistical_methods.md.
+`power_explorer` contains goal selection, one-study and repeated-study simulation, precision, sensitivity, saved outputs and reproducible downloads. It supports normal continuous and binary outcomes with equal groups. The standalone calculators use the same planning procedures as the lab: pooled two-sample t-test planning for means and a normal approximation for proportions. See [statistical methods](../documentation/statistical-methods.md).

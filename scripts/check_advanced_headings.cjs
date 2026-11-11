@@ -16,7 +16,7 @@ const base=process.argv[2]||'http://127.0.0.1:8769';
     const optional=undefined;
     assert.equal(await disclosures.count(),chapter==='calculations'?2:chapter==='reporting'?1:optional?1:0,'Optional advanced explanations stay beside their related core calculation');
     for(const disclosure of await disclosures.all())assert.equal(await disclosure.getAttribute('open'),null,'Advanced explanation starts collapsed');
-    if(chapter==='calculations')assert.deepEqual(await disclosures.evaluateAll(nodes=>nodes.map(n=>n.closest('.section').id)),['adherence','rehabilitation']);
+    if(chapter==='calculations')assert.deepEqual(await disclosures.evaluateAll(nodes=>nodes.map(n=>n.closest('.optional-practice, .section').id)),['adherence','rehabilitation']);
     if(optional) {
       assert.equal(await disclosures.getAttribute('id'),optional);
       assert.equal(await disclosures.getAttribute('open'),null,'Advanced explanation starts collapsed');
@@ -44,7 +44,7 @@ const base=process.argv[2]||'http://127.0.0.1:8769';
  assert.equal(await p.locator('.summary .activity-toc:visible').count(),0);
  await p.locator('.summary a[href="calculations.html#two-proportions"]').click();
  assert(await p.locator('.summary a[href="calculations.html#adherence"]').isVisible());
- assert(!(await p.locator('.summary a[href="calculations.html#rehabilitation"]').isVisible()));
+ assert.equal(await p.locator('.summary a[href="calculations.html#rehabilitation"]').count(),0);
  fs.mkdirSync('build/browser-checks',{recursive:true});
  await p.screenshot({path:'build/browser-checks/streamlined-contents.png'});
  await p.goto(base+'/book/Sample_size_open_module.html');

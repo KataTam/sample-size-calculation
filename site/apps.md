@@ -16,7 +16,7 @@ Apps are interactive software. Activities provide questions and exercises to hel
 
 - [Recruitment adjustment](study/?activity=recruitment): apply one expected loss percentage to the analyzable count from your chosen calculation. [Tutorial explanation](book/feasibility.html#account-for-expected-losses).
 
-The core calculation activity offers a [choice of two percentages or two means](book/calculations.html#calculate-sample-size). One example is sufficient. The fourth core activity is the embedded [report review and completion](book/reporting.html#check-reporting).
+The core [calculation activity](book/calculations.html#calculate-sample-size) uses the probiotics example. The [rehabilitation calculation](book/calculations.html#rehabilitation) provides optional practice with two means. The fourth core activity is the embedded [report review and completion](book/reporting.html#check-reporting).
 
 <span id="explore-further"></span>
 

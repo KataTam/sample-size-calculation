@@ -56,7 +56,7 @@ Although the examples are clinical, the principles of justifying assumptions, ch
 
 This tutorial is for students and researchers. Chapters 1–4 form the Core route for basic two-arm trial planning. Chapters 5–9 offer Advanced topics that you can consult according to your study question. The glossary and common questions are reference pages for either route.
 
-The core route has four activities: [simulate trials](#activity-1-one-study-then-many), [choose one sample size calculation](#calculate-sample-size), [adjust recruitment](#account-for-expected-losses), and [review and complete a report](#check-reporting). Activities are learning exercises; apps are the software used to carry them out. You can record your decisions in the [study-plan activity](https://katatam.github.io/sample-size-calculation/assumptions_report/?stage=question) as you read. Chapter 4 brings together the report guidance and a completed example. The same answers produce a concise sample size calculation report followed by the supporting study plan; advanced activities can extend that supporting material. Expandable misconception boxes explain common difficulties; the toolbar help explains the other reading features.
+The core route has four activities: [simulate trials](#activity-1-one-study-then-many), [calculate a sample size](#calculate-sample-size), [adjust recruitment](#account-for-expected-losses), and [review and complete a report](#check-reporting). Activities are learning exercises; apps are the software used to carry them out. You can record your decisions in the [study-plan activity](https://katatam.github.io/sample-size-calculation/assumptions_report/?stage=question) as you read. Chapter 4 brings together the report guidance and a completed example. The same answers produce a concise sample size calculation report followed by the supporting study plan; advanced activities can extend that supporting material. Expandable misconception boxes explain common difficulties; the toolbar help explains the other reading features.
 
 ```{r tutorial-roadmap, echo=FALSE, results='asis'}
 roadmap <- paste(readLines("../figures/tutorial-roadmap.svg",
@@ -395,10 +395,10 @@ render_chapter_quiz("clinical-question")
 ::: {.learning-goals .core-outcomes}
 After this section, you should be able to:
 
-- Calculate approximate sample sizes for two independent proportions or means.
-- Explain how the [target difference](#target-difference), variability, [Type I error probability](#alpha) and target [power](#statistical-power) affect the calculation.
-- Distinguish per-group from total counts.
-- Identify the procedure, inputs and rounding behind a calculation.
+- Explain how the [target difference](#target-difference), [event probabilities](#event-probability) or [standard deviation](#standard-deviation), [Type I error probability](#alpha), and target [power](#statistical-power) affect sample size.
+- Calculate the [analyzable sample size](#analyzable-sample-size) for two independent proportions or means.
+- Interpret per-group and total counts, including upward rounding.
+- Identify the procedure and inputs needed to reproduce a calculation.
 :::
 
 You can now apply these ideas to two-arm treatment comparisons. The formulas below assume two [independent groups](#independent-groups) with equal allocation and a [two-sided test](#two-sided-test). Studies that randomize hospitals, compare body sites within participants, or collect repeated measurements require calculations that account for dependence; see [units of randomization, measurement, and analysis](#units-of-analysis). The chapter [Recruitment and feasibility](#feasibility) then considers whether you can obtain enough usable outcomes; the [reporting chapter](#reporting) brings the calculation and its justification together.
@@ -409,7 +409,7 @@ Having specified the chronic pain target difference and acceptable error risks, 
 
 Your sample size calculation needs to account for two choices: the acceptable Type I error probability and the target power. A lower Type I error probability requires stronger evidence before concluding that the treatments differ. Higher power means a greater probability of detecting the target difference if it is the true population difference. In this calculation, lowering the Type I error probability or increasing target power increases the unrounded sample size requirement, with the other inputs unchanged.
 
-For the normal-approximation formulas below, these choices are combined into a sample size multiplier, $M$:
+For the normal approximation, these choices are translated into [$z$-values](#z-value): positions on the standard normal bell-shaped curve. They are then combined into a sample size multiplier, $M$:
 
 \begin{equation}
 M=\left(z_{1-\alpha/2}+z_{1-\beta}\right)^2.
@@ -418,7 +418,7 @@ M=\left(z_{1-\alpha/2}+z_{1-\beta}\right)^2.
 
 Here, $\alpha$ is the Type I error probability, $\beta$ is the [Type II error probability](#beta), and $1-\beta$ is the target power. The two $z$-values translate these probabilities into positions on the standard normal distribution: the familiar bell-shaped curve, centered at zero with a standard deviation of one.
 
-A [$z$-value](#z-value){.no-glossary-tooltip} describes how many standard deviations a position lies from the center of that curve. Its subscript gives the proportion of the distribution below that position. For example, $z_{0.975}=1.96$ means that 97.5% of the distribution lies below 1.96. This position is called a [quantile](#quantile){.no-glossary-tooltip}.
+A $z$-value describes how many standard deviations a position lies from the center of that curve. Its subscript gives the proportion of the distribution below that position. For example, $z_{0.975}=1.96$ means that 97.5% of the distribution lies below 1.96. This position is called a [quantile](#quantile).
 
 For a two-sided Type I error probability of 5% and target power of 90%:
 
@@ -438,7 +438,9 @@ M <- (qnorm(1 - alpha / 2) + qnorm(target_power))^2
 M
 ```
 
-For a Type I error probability of 5% and target power of 90%, the multiplier is $M=$ `r round(M, 2)`.
+```{r normal-multiplier, echo=FALSE, fig.width=7, fig.height=6, fig.cap="Standard normal cutoffs used in the sample size multiplier. The shaded areas identify the quantiles for a two-sided Type I error probability of 5% and target power of 90%. The lower panel locates the 90th percentile; a trial's power also depends on its sample size, target difference, and variability.", fig.alt="Two standard normal curves on the same z scale. The upper curve shades 2.5% below minus 1.96 and 2.5% above 1.96. The lower curve shades 90% below 1.28. These cutoffs give multiplier M of 10.51."}
+draw_normal_multiplier()
+```
 
 ```{r multiplier-table, echo=FALSE}
 grid <- expand.grid(alpha = c(.05, .01), power = c(.80, .90, .95))
@@ -549,7 +551,13 @@ knitr::kable(data.frame(`Analyzable per group`=adherence_plan$n, `Analyzable tot
   caption = "Analyzable sample size for the hypothetical gestational-diabetes prevention trial.")
 ```
 
-The [calculation activity](#calculate-sample-size) offers this example as one of two choices.
+<div id="calculate-sample-size">
+
+```{r calculation-app-preview, echo=FALSE, results='asis'}
+render_app_preview("probiotics_calculation", "Calculate the analyzable count for the prevention trial and record its inputs and method in your report.")
+```
+
+</div>
 
 <details class="advanced-explanation">
 <summary>Advanced: simulate the prevention trial</summary>
@@ -573,28 +581,43 @@ n\approx M\frac{2\sigma^2}{\delta^2}.
 
 Suppose an earlier study observed a 4-unit [between-group difference](#expected-difference) in a normally distributed improvement score. The calculation uses a target difference of 3 units and an SD of 5 units in both groups. Patients and clinicians judge a 2-unit benefit clinically important. The example uses a hypothetical, approximately normally distributed improvement score. The Type I error probability is 5% and target power is 90%.
 
-```{r means}
-# Target mean difference and common standard deviation, in score units.
-delta <- 3
-sigma <- 5
-# Insert the inputs into the normal formula, then round upward.
-# The factor 2 allows for variability in both independent groups.
-n_per_group <- ceiling(M * 2 * sigma^2 / delta^2)
-c(per_group = n_per_group, total = 2 * n_per_group)
-```
-
-```{r means-formatted, echo=FALSE}
-knitr::kable(data.frame(`Analyzable per group`=n_per_group, `Analyzable total`=2*n_per_group, check.names=FALSE),
-  caption = "Approximate analyzable sample size for the continuous-outcome comparison.")
-```
-
-Using the multiplier of approximately 10.51, a target difference of 3 units, and an SD of 5 units:
+The normal formula makes the calculation transparent:
 
 \[
 n\approx10.51\times\frac{2\times5^2}{3^2}\approx58.4.
 \]
 
-You therefore round upward to `r n_per_group` patients per group, or `r 2 * n_per_group` in total. Smaller differences are harder to distinguish from patient-to-patient variation and require larger samples.
+```{r means}
+# Target mean difference and common standard deviation, in score units.
+delta <- 3
+sigma <- 5
+# The normal formula illustrates how the inputs affect the requirement.
+# The factor 2 allows for variability in both independent groups.
+normal_n_raw <- M * 2 * sigma^2 / delta^2
+c(unrounded_per_group = normal_n_raw,
+  rounded_per_group = ceiling(normal_n_raw))
+```
+
+The normal approximation gives 58.4 patients per group, which rounds upward to 59. The planned analysis is a pooled two-sample t-test, which accounts for estimating the common SD from the trial data. Its sample size calculation gives 60 patients per group. The app and subsequent examples use this result.
+
+```{r t-test-planning}
+# Plan the pooled two-sample t test with the same inputs.
+# strict = TRUE includes rejection in either direction.
+t_plan <- power.t.test(delta = delta, sd = sigma, sig.level = alpha,
+  power = target_power, type = "two.sample", alternative = "two.sided",
+  strict = TRUE)
+# Round upward within each group, then add the two groups.
+n_per_group <- ceiling(t_plan$n)
+t_plan
+c(per_group = n_per_group, total = 2 * n_per_group)
+```
+
+```{r means-formatted, echo=FALSE}
+knitr::kable(data.frame(`Analyzable per group`=n_per_group, `Analyzable total`=2*n_per_group, check.names=FALSE),
+  caption = "Analyzable sample size for the continuous-outcome comparison, planned for a pooled two-sample t test.")
+```
+
+The result is `r n_per_group` analyzable patients per group, or `r 2 * n_per_group` in total. Expected losses are considered separately in the next chapter. Smaller target differences require larger samples because they are harder to distinguish from patient-to-patient variation. In the normal formula, halving the difference or doubling the SD multiplies the unrounded requirement by four. The t-test calculation gives approximately this increase.
 
 <details>
 <summary>Raw and standardized differences</summary>
@@ -608,63 +631,14 @@ The target difference of 3 score units is a raw between-group difference. Dividi
 
 Previous studies can inform the SD, but their patients, measurement scale, follow-up time and analysis should be relevant to your study. The SD of change from baseline is not interchangeable with the SD of final scores. A review of knee osteoarthritis trials found substantial variation in pain-score variability across studies [@bentin2026]. Its estimates concern continuous WOMAC pain scores. The binary pain-relief example requires assumptions about event percentages.
 
-Your study plan should identify the source of the assumed SD and explore a plausible range. Table \@ref(tab:mean-changes) shows what happens when the SD doubles; a published pooled SD should not be treated as a universal value for every pain study.
+Your study plan should document the source of the assumed SD and examine a plausible range using the [two-means app](https://katatam.github.io/sample-size-calculation/two_means/).
 
 </details>
 
-The simple formula helps explain how sample size depends on the target difference and variability. A calculation for the planned t test also accounts for the fact that the study must estimate variability from its patients. It therefore gives a slightly different sample size:
+Your study plan should record the inputs, pooled two-sample t-test procedure, software, two-sided test, equal allocation, and rounded counts. The advanced [software and statistical support guide](#software-support) reviews calculation software and explains when early advice from a statistician is useful. Its [worked example](#gpower-assumptions) shows how an effect-size input can change the result.
 
-```{r t-test-planning}
-# Plan for two independent means using the two-sample t test.
-# strict = TRUE includes rejection in either direction.
-t_plan <- power.t.test(delta = 3, sd = 5, sig.level = .05,
-  power = .90, type = "two.sample", alternative = "two.sided",
-  strict = TRUE)
-# Print the settings and unrounded result before rounding each group upward.
-t_plan
-c(per_group = ceiling(t_plan$n), total = 2 * ceiling(t_plan$n))
-```
-
-```{r t-test-planning-formatted, echo=FALSE}
-knitr::kable(data.frame(Method=c("Normal approximation", "Planned two-sample t test"), `Analyzable per group`=c(n_per_group,ceiling(t_plan$n)), `Analyzable total`=2*c(n_per_group,ceiling(t_plan$n)), check.names=FALSE),
-  caption = "Sample size requirements under two planning methods.")
-```
-
-For your protocol, you should use the calculation that matches the planned analysis. The two methods give different counts because they use different statistical approximations. You should round upward within each group before doubling the count; recruitment losses are considered separately.
-
-Your study plan should record the input values, software or formula, whether the test is one-sided or two-sided, allocation and rounded counts.
-
-Established software can help with straightforward calculations when its procedure and inputs match your study. The advanced [software and statistical support guide](#software-support) reviews free and paid options and explains when early advice from a statistician is useful. Its [worked example](#gpower-assumptions) shows how an effect-size input can change the result.
-
-<details>
-<summary>Why calculation methods can give different answers</summary>
-
-The mean calculation here assumes the same population SD in both groups and plans a pooled two-sample t test. R's default `t.test()` uses Welch's method, which allows unequal variances; choosing that analysis needs matching planning assumptions. Similarly, continuity corrections or exact methods can change binary results. Matching methods matters more than forcing two calculators to display the same number [@rcore; @julious2023].
-
-</details>
-
-```{r mean-changes}
-# Each row changes a planning assumption from the original example.
-mean_cases <- data.frame(
-  scenario = c("Original", "Half the difference", "Twice the SD",
-               "Type I error probability 1%", "Power 95%"),
-  difference = c(3, 1.5, 3, 3, 3), sd = c(5, 5, 10, 5, 5),
-  alpha = c(.05, .05, .05, .01, .05),
-  power = c(.90, .90, .90, .90, .95))
-# Apply the normal-approximation formula to each row.
-mean_cases$per_group <- mapply(sample_size_two_means,
-  mean_cases$difference, mean_cases$sd, mean_cases$alpha, mean_cases$power)
-mean_cases$total <- 2 * mean_cases$per_group
-# Display the counts, with error probabilities and power as percentages.
-knitr::kable(display_probabilities(mean_cases, c("alpha", "power")),
-  caption = "Analyzable sample sizes under alternative mean differences, variability and error targets, using the simple normal approximation.")
-```
-
-Before rounding, halving the difference or doubling the SD multiplies the required sample size by four. You can explain this relationship using equation \@ref(eq:means).
-
-The [calculation activity](#calculate-sample-size) offers this mean-difference example as one of two choices.
-
-### A rehabilitation case {#rehabilitation .core-heading}
+<details id="rehabilitation" class="optional-practice">
+<summary>Additional practice: rehabilitation</summary>
 
 The same calculation can compare two rehabilitation programs. Suppose the primary outcome is improvement at six weeks on a hypothetical continuous mobility score. The difference observed in previous data is 4 units, the target difference is 3 units, and patients and clinicians judge a 2-unit benefit clinically meaningful. The assumed common SD is 5 units. For this illustration, independent patients are randomized to the two programs and the improvement scores are approximately normal.
 
@@ -694,18 +668,13 @@ The [rehabilitation simulation](https://katatam.github.io/sample-size-calculatio
 
 </details>
 
-The [recruitment activity](#account-for-expected-losses) starts with this analyzable count and applies the expected loss percentage separately.
-
-## Activity: Calculate a sample size {#calculate-sample-size .core-heading}
-
-
-
-```{r calculation-app-preview, echo=FALSE, results='asis'}
-render_app_preview(c("probiotics_calculation", "rehabilitation_calculation"), "One example is sufficient. Record its inputs, calculation method and analyzable patient count.")
+```{r rehabilitation-app-preview, echo=FALSE, results='asis'}
+render_app_preview("rehabilitation_calculation", "Explore the mean-difference calculation by changing the target difference or SD while keeping the other inputs fixed.")
 ```
 
+</details>
 
-Your record should identify the inputs, method and analyzable count per group and in total. The next chapter uses this count to calculate recruitment. Both worked examples remain available above; the [discharge exercise](#discharge) offers additional practice.
+The next chapter uses the analyzable count to calculate recruitment. Your record should identify the inputs, method, and analyzable count per group and in total. The [discharge exercise](#discharge) offers further optional calculation practice.
 
 <div class="chapter-recap">
 
@@ -2334,7 +2303,7 @@ The table distinguishes the planning calculation from the analysis of simulated 
 | App or example | Planning or calculation procedure | Analysis or interval procedure |
 |:--|:--|:--|
 | Two proportions | Normal approximation using R's `stats::power.prop.test()`, two-sided with `strict = TRUE`; required patients rounded upward per group | The reasoning lab uses a two-sided pooled score test without continuity correction and a Newcombe-Wilson interval for the difference |
-| Two means: introductory calculator | Normal approximation using the target difference, common SD and normal quantiles | The reasoning lab uses a pooled-variance t test and t interval; test-based planning uses `stats::power.t.test()` |
+| Two means: calculator and reasoning lab | Pooled two-sample t-test planning using `stats::power.t.test()`, two-sided with `strict = TRUE`; required patients rounded upward per group | Pooled-variance t test and t interval; R analysis uses `t.test(..., var.equal = TRUE)` |
 | One population percentage | Normal approximation for the requested margin of error; the unknown-percentage option uses 50% for planning | A simulated binomial count is summarized with a Wilson interval |
 | Sampling distributions | Normal probabilities for one sample mean with a known population SD | Rejection boundaries and probabilities follow the selected one- or two-sided rule |
 | Recruitment adjustment | Optional switching multiplier $1/(1-a-b)^2$, followed by division by each group's retained fraction; the larger requirement is rounded upward once and used in both groups | Assumes complete switching and little variance change; equal recruitment with potentially unequal expected retained counts. It calculates requirements without generating patient outcomes |
