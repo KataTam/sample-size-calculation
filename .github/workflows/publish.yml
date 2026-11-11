@@ -57,6 +57,7 @@ jobs:
           node scripts/check_quiz.cjs
           node scripts/check_embedded_quiz.cjs
           node scripts/check_core_activities.cjs
+          node scripts/check_app_previews.cjs
           node scripts/check_learning_interfaces.cjs
           node scripts/check_assumptions_report.cjs http://127.0.0.1:8769
           node scripts/check_report_exports.cjs

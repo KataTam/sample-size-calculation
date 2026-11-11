@@ -13,49 +13,49 @@
       "question": "What is the main outcome measure of your study?",
       "original_excerpt": "At the design stage, you choose an outcome measure that addresses the primary objective of the trial. This is the measure on which sample size calculations will be based.",
       "original_line": 59,
-      "explanation": "At the design stage, choose an outcome measure that addresses the primary objective of the trial. Base the sample size calculation on this primary outcome."
+      "explanation": "The main outcome is achieved pain relief at four weeks, recorded as yes or no. The [research question and design](#how-do-you-determine-the-minimum-required-sample-size) specify who is studied and how the outcome is measured."
     },
     {
       "id": "q2",
       "question": "What outcome do you expect with standard treatment?",
       "original_excerpt": "In case there is a control group in your study in which the patients receive placebo or standard treatment, you can estimate the effect of such treatments from the existing literature including previous randomized and observational studies or from clinical practice.",
       "original_line": 63,
-      "explanation": "Estimate the expected outcome with standard treatment or placebo from previous randomized or observational studies, or from clinical practice. Record how comparable this evidence is to your study population, treatment and outcome measurement."
+      "explanation": "The calculation assumes 30% pain relief with duloxetine. The section [Pilot findings, target difference, and clinical importance](#what-do-we-expect-what-will-we-plan-for-and-what-matters-clinically) explains the evidence and planning decisions."
     },
     {
       "id": "q3",
       "question": "What outcome do you expect with the novel treatment?",
       "original_excerpt": "This is naturally trickier to estimate since you normally do not have a good idea about the effect of the novel treatment, which is why you want to conduct the study in the first place. In many cases, a pilot study is an appropriate way to obtain a rough estimate of the effect.",
       "original_line": 67,
-      "explanation": "The outcome with a novel treatment is usually harder to estimate, which is one reason for conducting the trial. A pilot study can provide a rough estimate, but small pilots give uncertain treatment estimates. Combine them with other evidence and examine plausible ranges. The [practical pilot case](#pilot-feasibility) shows how to use a pilot for feasibility objectives."
+      "explanation": "The pilot observed 70% relief with Neravixa; the calculation assumes 60%. The section [Pilot findings, target difference, and clinical importance](#what-do-we-expect-what-will-we-plan-for-and-what-matters-clinically) distinguishes these values."
     },
     {
       "id": "q4",
       "question": "What is a clinically relevant treatment difference that you want to detect?",
       "original_excerpt": "This is the most important decision you have to make in a sample size calculation. You can detect a relatively large treatment difference with few participants, while if you expect a relatively small treatment difference that requires more participants to demonstrate conclusively. It is important to be realistic when you estimate the appropriate treatment difference, what you need to aim for is the *smallest clinically relevant difference* that would be important to detect if true. In the absence of existing literature, you may need to consult with experts and/or conduct a pilot study to help with the estimation. Note that the issue of clinical relevance is completely separate from that of statistical significance. The former requires clinical judgment or consensus and statistical considerations have no bearing on it (e.g., is this treatment difference clinically relevant and thus meaningful for the patient?). The latter is a purely statistical concept that as you will see is a function of sample size and is arbitrary.",
       "original_line": 71,
-      "explanation": "The [difference observed in the pilot](#expected-difference){.no-glossary-tooltip} summarizes earlier sample data. The [target difference](#target-difference){.no-glossary-tooltip} is the assumed population difference at which the calculation evaluates power. The [clinical threshold](#clinical-threshold){.no-glossary-tooltip} is the smallest between-group benefit judged worthwhile. Their values can coincide and have no fixed order. The pilot result provides uncertain evidence; the target and threshold need a justification.\n\nSmaller differences usually require more patients to detect. The target should be plausible and clinically worthwhile."
+      "explanation": "The target difference is 30 percentage points and the clinical threshold is 20 points. Their roles are explained in [Pilot findings, target difference, and clinical importance](#what-do-we-expect-what-will-we-plan-for-and-what-matters-clinically)."
     },
     {
       "id": "q5",
       "question": "What are your null and alternative hypotheses?",
       "original_excerpt": "Once the clinically relevant treatment difference is determined, you can formulate your null and alternative hypotheses. In standard superiority trials, the null hypothesis is that there is no treatment difference while the alternative hypothesis is that there is a treatment difference.",
       "original_line": 75,
-      "explanation": "In these two-sided treatment comparisons, the [null hypothesis](#null-hypothesis){.no-glossary-tooltip} says that population outcomes are equal. The [alternative hypothesis](#alternative-hypothesis){.no-glossary-tooltip} allows a difference in either direction. Rejecting the null means sufficient statistical evidence of a difference; when the test does not reject the null hypothesis, the evidence is insufficient to establish a difference. The target difference specifies the population effect at which power is calculated. Statistical significance is assessed against the null hypothesis."
+      "explanation": "The planned two-sided comparison tests equal population relief percentages against a difference in either direction. The section [Hypotheses, error probabilities, and power](#power) explains the hypotheses."
     },
     {
       "id": "q6",
       "question": "What Type I error probability is acceptable for your study?",
       "original_excerpt": "$\\alpha$ is the probability of detecting a treatment difference when it does not exist (conventionally set at 0.05 or equivalently at 5%). In other words, you can think about $\\alpha$ as the risk of committing a type I error, i.e., when a treatment difference is found based on a statistically significant observed result when in reality there is no difference (false positive result).",
       "original_line": 114,
-      "explanation": "[Type I error probability ($\\alpha$)](#alpha){.no-glossary-tooltip} is the probability of falsely rejecting the null hypothesis: a [false positive](#false-positive){.no-glossary-tooltip}. Here, that means finding a statistically significant treatment difference when population outcomes are equal. A 5% probability means about 5 false positives per 100 repeated studies when no true difference exists, under the test's assumptions."
+      "explanation": "The plan uses a Type I error probability of 5%. The section [Hypotheses, error probabilities, and power](#power) explains this false-positive probability."
     },
     {
       "id": "q7",
       "question": "What Type II error probability is acceptable for the target difference?",
       "original_excerpt": "$\\beta$ is defined as the risk of committing a type II error, i.e., when the null hypothesis is retained by error because a true treatment difference was not detected (false negative result).\n\nThe power of a study is the complement of committing a type II error: Provided the true difference exists, there can again logically only be two study outcomes. With power set at 90%, you have a 90% chance that you detect the true difference and 10% that you don’t.",
       "original_line": 116,
-      "explanation": "[Type II error probability ($\\beta$)](#beta){.no-glossary-tooltip} is the probability of missing a specified true treatment difference: a [false negative](#false-negative){.no-glossary-tooltip}. [Power](#statistical-power){.no-glossary-tooltip} is the probability of detecting that difference, equal to $1-\\beta$.\n\nAt 90% power, about 90 of 100 repetitions of the planned trial would detect the specified difference (true positives) and 10 would miss it (false negatives). A non-significant result does not establish that the treatments are equally effective."
+      "explanation": "At the 30-point target difference, the plan uses 90% power and a Type II error probability of 10%. The section [Hypotheses, error probabilities, and power](#power) explains these probabilities."
     }
   ]
 }

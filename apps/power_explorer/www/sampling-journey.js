@@ -20,12 +20,13 @@
     const svg = node(host,'svg',{viewBox:`0 0 500 ${footer+30}`,role:'img','aria-label':'Patient outcomes, estimated difference and accumulated trial estimates'});
     const t = data.trials[index], reduced = el('journey-motion').checked;
     const counts = t.counts;
-    node(svg,'text',{x:15,y:23},`Assumed population: standard ${pct(data.p0)}; novel ${pct(data.p1)}`);
+    const labels = data.labels || ['Standard', 'Novel'];
+    node(svg,'text',{x:15,y:23},`Population: ${labels[0]} ${pct(data.p0)}; ${labels[1]} ${pct(data.p1)}`);
     node(svg,'text',{x:15,y:47},`1. Patient outcomes · trial ${index+1} of ${data.trials.length}`);
     node(svg,'text',{x:15,y:endPatients},`${data.n} patients per group`);
     [t.control,t.treatment].forEach((values,g) => {
       const x0 = 20 + g*245, color = g ? '#984b87' : '#19738c';
-      node(svg,'text',{x:x0,y:73},`${g?'Novel':'Standard'}: ${counts[g]}/${data.n} (${pct(counts[g]/data.n)})`);
+      node(svg,'text',{x:x0,y:73},`${labels[g]}: ${counts[g]}/${data.n} (${pct(counts[g]/data.n)})`);
       values.slice(0,80).forEach((v,i) => node(svg,'circle',{
         cx:x0+7+(i%16)*13,cy:94+Math.floor(i/16)*16,r:4.5,
         fill:v?color:'white',stroke:color,'stroke-width':1.5}));
@@ -34,7 +35,7 @@
     node(svg,'path',{d:`M250 ${endPatients+8} L250 ${heading2-14} M244 ${heading2-20} L250 ${heading2-14} L256 ${heading2-20}`,fill:'none',stroke:'#64748b','stroke-width':2});
     node(svg,'text',{x:15,y:heading2},'2. Estimated difference in this trial');
     node(svg,'text',{x:15,y:heading2+23},`Estimated difference: ${pct(counts[1]/data.n)} − ${pct(counts[0]/data.n)}`);
-    node(svg,'text',{x:15,y:heading2+44},`= ${Math.round(t.estimate*1000)/10} percentage points (novel − standard)`);
+    node(svg,'text',{x:15,y:heading2+44},`= ${Math.round(t.estimate*1000)/10} percentage points (${labels[1]} − ${labels[0]})`);
     [axis1,axis2].forEach(y => {
       node(svg,'line',{x1:45,x2:455,y1:y,y2:y,stroke:'#64748b'});
       [-1,-.5,0,.5,1].forEach(v => node(svg,'text',{x:point(v),y:y+19,'text-anchor':'middle'},v*100));
@@ -64,7 +65,8 @@
   }
   function status() {
     const t = data.trials[index];
-    el('journey-description').textContent = `Standard treatment: ${t.counts[0]} of ${data.n} patients (${pct(t.counts[0]/data.n)}); novel treatment: ${t.counts[1]} of ${data.n} (${pct(t.counts[1]/data.n)}). The estimated between-group difference is ${Math.round(t.estimate*1000)/10} percentage points. This estimate becomes dot ${index+1} in the sampling distribution. The assumed population difference stays at ${Math.round((data.p1-data.p0)*1000)/10} percentage points.`;
+    const labels = data.labels || ['Standard treatment', 'Novel treatment'];
+    el('journey-description').textContent = `${labels[0]}: ${t.counts[0]} of ${data.n} patients (${pct(t.counts[0]/data.n)}); ${labels[1]}: ${t.counts[1]} of ${data.n} (${pct(t.counts[1]/data.n)}). The estimated between-group difference is ${Math.round(t.estimate*1000)/10} percentage points. This estimate becomes dot ${index+1} in the sampling distribution. The assumed population difference stays at ${Math.round((data.p1-data.p0)*1000)/10} percentage points.`;
     el('journey-status').textContent = `${paused?'Paused. ':''}Trial ${index+1} of ${data.trials.length}; ${data.n} patients per group. ${stale?'Inputs changed; this sequence retains its saved assumptions. Run again to update.':''}`;
   }
   function tick(now) {

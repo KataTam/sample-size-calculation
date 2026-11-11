@@ -240,7 +240,7 @@ pre code { display: block; }
 .book.color-theme-2 #tutorial-search-results :is(a,.search-chapter,.search-excerpt) { color: #d8e8f7; }
 /* WCAG contrast and non-color link identification in every reader theme. */
 .book:not(.color-theme-2) .book-body .page-wrapper .page-inner section.normal a { color: #17547b; }
-.book .book-body .page-wrapper .page-inner section.normal :is(p,li,td,dd,figcaption,caption) a { text-decoration: underline; text-underline-offset: .15em; }
+.book .book-body .page-wrapper .page-inner section.normal :is(p,li,td,dd,figcaption,caption,.quiz-correct,.quiz-incorrect) a { text-decoration: underline; text-underline-offset: .15em; }
 .book:not(.color-theme-2) .book-summary ul.summary li.active > a { color: #17547b; }
 .book.color-theme-1 .book-summary ul.summary li a { color: #594d37; }
 .book:not(.color-theme-2) .book-body .page-wrapper .page-inner section.normal pre code,
@@ -333,3 +333,17 @@ details.section-disclosure > summary > :is(h2,h3,h4,h5,h6) {
 .book.color-theme-2 .report-assumption {background:#263f57;}
 .book.color-theme-2 .report-result {background:#263f57;}
 @media print {.report-mark {print-color-adjust:exact;-webkit-print-color-adjust:exact;}.annotated-report {border-radius:0;}}
+.app-preview { display:flex; gap:18px; align-items:center; border:1px solid #94adc3; border-radius:9px; background:#e6f0fa; color:#20343e; padding:16px; margin:1.5em 0; break-inside:avoid; }
+.app-preview-image { width:38%; max-height:200px; object-fit:contain; border:1px solid #c5d5e3; background:white; }
+.app-preview-content { min-width:0; flex:1; font-size:16px; line-height:1.5; }
+.app-preview-content p { margin:0 0 10px; }
+.app-preview-label { font-size:13px; letter-spacing:.03em; }
+.app-preview-title { font-weight:600; }
+.app-preview-action:last-child { margin-bottom:0; }
+.app-preview-action a { display:inline-block; padding:9px 12px; min-height:44px; box-sizing:border-box; background:#20597b!important; color:white!important; border-radius:5px; text-decoration:underline; }
+.app-preview-action a:focus-visible { outline:3px solid #a45115; outline-offset:3px; }
+.book.color-theme-1 .app-preview { background:#f0e8d9; color:#453c30; }
+.book.color-theme-2 .app-preview { background:#253f52; color:#edf5fb; border-color:#7799af; }
+.book.color-theme-2 .app-preview p { color:inherit; }
+@media(max-width:600px) { .app-preview { flex-direction:column; align-items:stretch; } .app-preview-image { width:100%; max-height:220px; } }
+@media print { .app-preview-image, .app-preview-label { display:none!important; } .app-preview { display:block; padding:9px; background:white; border-color:#aaa; } .app-preview-content { font-size:10pt; } .app-preview-action a { color:#202020!important; background:none!important; padding:0; min-height:0; } }

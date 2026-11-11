@@ -29,7 +29,7 @@ const base = process.argv[2] || 'http://127.0.0.1:8769';
     await page.waitForURL('**/common-mistakes.html#does-20-better-mean-20-percentage-points');
     assert(await page.locator('#does-20-better-mean-20-percentage-points').evaluate(n => n.open));
     await page.goto(`${base}/book/clinical-question.html`);
-    const pico = page.locator('.page-inner p').filter({hasText:'A clear treatment-comparison question identifies'});
+    const pico = page.locator('.page-inner p').filter({hasText:'PICO identifies the Population'});
     assert(await pico.locator('a[href*="ref-richardson1995"]').count());
     assert.equal(await page.locator('.planning-assumptions').count(),0);
     await page.goto(`${base}/book/reporting.html`);

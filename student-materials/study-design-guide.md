@@ -17,11 +17,11 @@ This chapter offers optional branches beyond the basic two-independent-group cal
 
 ## Activity: Choosing a study design {#design-questionnaire .advanced-heading}
 
-[Open the study-design questionnaire with this chapter](https://katatam.github.io/sample-size-calculation/study/?activity=design_questionnaire).
+```{r preview-study-design, echo=FALSE, results='asis'}
+render_app_preview("design_questionnaire", "Describe your study aim, outcome and observations to explore suitable designs and the decisions needed for sample size planning.")
+```
 
-Your answers cover the study aim, available data, outcome and relationships between observations. Follow-up questions address intervention allocation, treatment comparisons, observational sampling, diagnostic reference standards or prediction models as appropriate. The questionnaire app suggests a design family, explains why it fits, and identifies decisions still needed before sample size planning. Existing data can support different designs depending on how participants were selected and when measurements were made.
-
-Several designs may be reasonable for the same question. The suggestion should support discussion of feasibility, ethics and the intended analysis. Links lead to a matching calculation activity when its assumptions fit, or to design-specific resources. The questionnaire uses the distinctions explained in this chapter.
+Several designs may suit the same question. The questionnaire's suggestions should support discussion of feasibility, ethics and the intended analysis, using the distinctions explained in this chapter.
 
 The [CDC Field Epidemiology Manual](https://www.cdc.gov/field-epi-manual/php/chapters/design-conduct-analyze-field-studies.html) discusses cohort and case-control design considerations [@jackson2024]. The reporting and sample-size sources below support the other routes.
 

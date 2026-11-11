@@ -255,6 +255,8 @@ server <- function(input, output, session) {
   journey_payload <- function(trials) {
     x <- trials[[1]]
     list(n = x$spec$n, p0 = x$spec$p_control, p1 = x$spec$p_treatment,
+      labels = if (current_activity() %in% c("pain_one_many", "pain_curves", "pain_simulation"))
+        c("Duloxetine", "Neravixa") else c("Standard", "Novel"),
       seed = x$spec$seed, trials = lapply(trials, function(t) list(
         control = as.list(head(t$data$outcome[t$data$group == "Control"], 80)),
         treatment = as.list(head(t$data$outcome[t$data$group == "Treatment"], 80)),

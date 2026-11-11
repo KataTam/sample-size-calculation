@@ -79,9 +79,9 @@ lab_model_context <- function(id, outcome, design) {
     burden = "I would consider follow-up burden and readmission risk alongside the possible benefit of earlier discharge.",
     evidence = "These are hypothetical inputs; comparable care pathways with the same discharge deadline are needed to justify them."))
   if (grepl("^pain_", id) && outcome == "proportions") return(list(
-    question = "Does the novel treatment increase the percentage of adults with chronic pain reporting relief at four weeks compared with standard treatment?",
+    question = "Does Neravixa increase the percentage achieving pain relief at four weeks compared with duloxetine in adults with painful diabetic peripheral neuropathy?",
     burden = "The novel treatment adds four clinic visits and a risk of short-lived dizziness. Patient and clinical judgments should weigh these against additional four-week pain relief.",
-    evidence = "The small pain pilot leaves relief percentages uncertain. Differences in pain severity, background medication or relief definitions could limit how other four-week studies apply."))
+    evidence = "The small Neravixa-versus-duloxetine pilot leaves relief percentages uncertain. Differences in pain severity, background medication or relief definitions could limit how other four-week studies apply."))
   list(question = if (outcome == "means") "Does the intervention improve the mean outcome compared with the control condition in the specified population at the chosen assessment time?"
       else "Does the intervention improve the percentage with the favorable outcome compared with the control condition in the specified population at the chosen assessment time?",
     burden = "I would weigh visits, assessments, and possible harms against the expected patient benefit, with appropriate consent.",

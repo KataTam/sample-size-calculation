@@ -86,7 +86,7 @@ const base = (process.argv[2] || 'http://127.0.0.1:8769').replace(/\/$/, '');
     assert.equal(await page.locator('#question').inputValue(),'My own trial question');
     for (const id of ['population','intervention','comparator','outcome_detail','design']) {
       const example=await page.locator('#'+id).getAttribute('data-example-answer');
-      assert(!/chronic pain|novel pain|four weeks/i.test(example),id+' uses the custom study format');
+      assert(!/chronic pain|Neravixa|duloxetine|diabetic peripheral neuropathy|novel pain|four weeks/i.test(example),id+' uses the custom study format');
       assert(example.includes('['),id+' marks unspecified details');
     }
     await page.locator('#goal').selectOption('feasibility');

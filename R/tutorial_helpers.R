@@ -1,4 +1,23 @@
 # Presentation helpers; statistical methods live in sample_size_functions.R.
+render_app_preview <- function(ids, description, image = NULL) {
+  # A static preview keeps the reading page light. The link opens the existing
+  # tutorial/app view; print and no-JavaScript readers retain an ordinary link.
+  cases <- lapply(ids, teaching_case)
+  links <- lapply(cases, function(case) htmltools::tags$p(class = "app-preview-action",
+    htmltools::tags$a(href = paste0("https://katatam.github.io/sample-size-calculation/study/?activity=", case$id),
+      `data-preview-open` = case$id, `data-link-navigation` = "same-tab",
+      if (length(ids) > 1) paste0(case$title, " — open beside tutorial") else "Open app beside tutorial")))
+  markup <- as.character(htmltools::tags$aside(class = "app-preview", `aria-label` = "App preview",
+    if (!is.null(image)) htmltools::tags$img(class = "app-preview-image", src = image,
+      alt = "Preview of the patient outcomes and treatment differences explored in the app"),
+    htmltools::tags$div(class = "app-preview-content",
+      htmltools::tags$p(class = "app-preview-label", "App preview"),
+      htmltools::tags$p(class = "app-preview-title", if (length(ids) > 1) "Activity: Calculate a sample size — choose one example" else paste0("Activity: ", cases[[1]]$title)),
+      htmltools::tags$p(description), links)))
+  # Pandoc interprets four-space HTML indentation as a code block in R Markdown.
+  cat(gsub("\n[ \t]+", "\n", markup), "\n")
+}
+
 percent <- function(x, digits = 1) {
   paste0(formatC(100 * x, format = "f", digits = digits), "%")
 }

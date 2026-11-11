@@ -17,9 +17,9 @@
       "level": "core",
       "section": "PICO and the study plan",
       "link": "clinical-question.html#how-do-you-determine-the-minimum-required-sample-size",
-      "question": "Which description most clearly specifies a primary outcome for the chronic-pain trial?",
+      "question": "Which outcome matches the Neravixa-versus-duloxetine trial?",
       "options": [
-        "Pain relief at four weeks, using a prespecified definition",
+        "Achieved pain relief at four weeks: yes or no, assessed consistently in both groups",
         "Patient improvement at any convenient visit",
         "Any outcome showing a treatment difference",
         "The outcome producing the smallest sample size"
@@ -39,7 +39,7 @@
       "level": "core",
       "section": "Difference observed in previous data, target difference and clinical threshold",
       "link": "clinical-question.html#what-do-we-expect-what-will-we-plan-for-and-what-matters-clinically",
-      "question": "A pilot showed a 40-point difference. The new trial plans at 30 points and regards 20 points as clinically important. At which difference is its stated target power evaluated?",
+      "question": "The Neravixa-versus-duloxetine pilot showed a 40-point difference. The trial is planned at 30 points and has a 20-point clinical threshold. At which true difference is its stated target power evaluated?",
       "options": [
         "20 percentage points",
         "40 percentage points",
@@ -125,8 +125,8 @@
       "id": "q05",
       "chapter": "clinical-question",
       "level": "core",
-      "section": "Hypotheses and error probabilities",
-      "link": "clinical-question.html#hypotheses-and-error-probabilities",
+      "section": "Hypotheses, error probabilities, and power",
+      "link": "clinical-question.html#power",
       "question": "A Type I error probability of 5% describes which event?",
       "options": [
         "Rejecting the null when the null hypothesis is true, under the test assumptions",
@@ -147,9 +147,9 @@
       "id": "q06",
       "chapter": "clinical-question",
       "level": "core",
-      "section": "Power under specified assumptions",
+      "section": "Hypotheses, error probabilities, and power",
       "link": "clinical-question.html#power",
-      "question": "A report specifies 90% power at a 30-percentage-point target difference. What does this mean?",
+      "question": "The Neravixa-versus-duloxetine plan specifies 90% power at a true 30-point difference. What does this mean?",
       "options": [
         "The next study will estimate the effect with 90% accuracy",
         "The alternative hypothesis has a 90% probability of being true",
@@ -171,7 +171,7 @@
       "level": "core",
       "section": "One study and many studies",
       "link": "clinical-question.html#activity-1-one-study-then-many",
-      "question": "Two simulated studies use the same population probabilities and sample size but give treatment differences of 22 and 34 percentage points. What is the most plausible explanation?",
+      "question": "Two simulated Neravixa-versus-duloxetine trials use the same population probabilities and sample size but give different observed treatment differences. What explains this?",
       "options": [
         "The population difference must have changed",
         "One of the two studies must contain a coding error",

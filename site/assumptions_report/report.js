@@ -76,16 +76,16 @@
     conclusion: 'What could the study establish, and what remains uncertain?'
   };
   const modelAnswers = {
-    question: 'Does a novel treatment improve pain relief at four weeks compared with standard treatment in adults with chronic pain?',
-    population: 'Adults with chronic pain attending the participating clinics; the specific condition, duration, and exclusions remain to be agreed.',
-    intervention: 'A novel pain treatment involving four additional clinic visits, with a risk of short-lived dizziness. Both groups may continue the same background pain medication; dose and delivery details need specification.',
-    comparator: 'Standard treatment over four weeks, with the same permitted background pain medication as the novel-treatment group.',
-    outcome_detail: 'The percentage of patients reporting pain relief four weeks after treatment starts, using the same prespecified definition of relief in both groups.',
-    design: 'Eligible adults will be recruited from participating clinics using [selection method] and individually randomized to novel or standard treatment in equal numbers. For this teaching calculation, each participant contributes one four-week outcome, and outcomes from different participants are assumed independent.',
-    scale: 'The difference in pain-relief percentages, novel minus standard treatment, in percentage points. A positive difference favors the novel treatment.',
+    question: 'Does Neravixa increase the percentage achieving pain relief at four weeks compared with duloxetine in adults with painful diabetic peripheral neuropathy?',
+    population: 'Adults with type 1 or type 2 diabetes mellitus, bilateral lower-extremity pain due to diabetic peripheral neuropathy for at least one year, and BMI at least 18 and below 40 kg/m².',
+    intervention: 'Neravixa, the fictional novel treatment in this teaching case, requires four additional safety-monitoring visits and carries a risk of short-lived dizziness. The protocol should specify its regimen and permitted background care.',
+    comparator: 'Duloxetine, the standard treatment, over four weeks. The protocol should specify its regimen and the background care permitted in both groups.',
+    outcome_detail: 'Achieved measurable pain relief at four weeks: yes or no, assessed in the same way in both groups and summarized as the percentage achieving pain relief.',
+    design: 'Eligible adults will be recruited from participating clinics using [selection method] and individually randomized 1:1 to Neravixa or duloxetine. Each participant contributes one four-week outcome; outcomes from different participants are assumed independent. Bilateral pain contributes one patient-level outcome.',
+    scale: 'The difference in pain-relief percentages, Neravixa minus duloxetine, in percentage points. A positive difference favors Neravixa.',
     expected: '40 percentage points: the pilot observed relief in 7 of 10 patients (70%) versus 3 of 10 (30%). The small groups make this estimate uncertain.',
-    clinical: '20 percentage points: one additional patient with relief per five treated. In this teaching case, patient and clinical advisers judge this the minimum benefit to justify four extra visits and the risk of short-lived dizziness.',
-    planning: '30 percentage points (60% versus 30% relief), below the uncertain 40-point pilot estimate and above the 20-point minimum worthwhile benefit. Power is evaluated at this target difference.',
+    clinical: '20 percentage points: one additional patient with relief per five treated. In this teaching case, patient and clinical advisers judge this the minimum benefit to justify four additional safety-monitoring visits and the risk of short-lived dizziness.',
+    planning: '30 percentage points: 60% pain relief with Neravixa versus 30% with duloxetine. Power is evaluated at this assumed population difference. The 40-point pilot difference and 20-point clinical threshold inform separate judgments.',
     variation: '30% relief with standard treatment and 60% with novel treatment for the calculation. These illustrative percentages imply the 30-point target difference.',
     evidence_review: 'The small pilot leaves both relief percentages uncertain. I would compare pain severity, background medication and relief definitions across four-week studies, including less favorable findings, before judging which percentages apply.',
     sensitivity: 'I would assess power at 20-, 30-, and 40-point benefits with the sample fixed, then vary standard-treatment relief over an evidence-supported range to judge whether the recommendation changes.',
@@ -97,7 +97,7 @@
     counts: '56 analyzable patients per group, 112 in total, using the tutorial approximation with 30% versus 60% relief, 5% Type I error probability and 90% power.',
     recruitment: 'With illustrative 5% unavailable primary outcomes, 56 / 0.95 rounds up to 59 per group (118 total). The loss assumption needs evidence, and the analysis plan should address missing outcomes and treatment changes.',
     resources: 'The clinics expect 20 eligible patients per month and 70% consent: about 14 recruits per month. Recruiting 118 would take about nine months before allowing for interruptions.',
-    conclusion: 'The plan targets the specified difference; smaller benefits could be missed. The estimate and interval would inform clinical importance, subject to the assumptions and recruitment feasibility.'
+    conclusion: 'The plan provides 90% power at a true 30-point difference under the stated assumptions. Power is lower at a smaller true difference, including the 20-point clinical threshold. The supporting evidence and recruitment feasibility need review.'
   };
   function answerFormats(value) {
     const single = value.study_type === 'single', binary = value.outcome === 'binary', pilot = value.goal === 'feasibility';
@@ -146,7 +146,7 @@
     if (value.plan_basis !== 'pain' || value.study_type === 'other') return answerFormats(value);
     const result = {...modelAnswers};
     if (value.outcome === 'continuous') Object.assign(result, {
-      question: 'Does the novel treatment improve the mean pain-improvement score at four weeks compared with standard treatment in adults with chronic pain?',
+      question: 'Does Neravixa improve the mean pain-improvement score at four weeks compared with duloxetine in adults with painful diabetic peripheral neuropathy?',
       outcome_detail: 'Mean improvement in pain score from baseline to four weeks, using a prespecified scoring rule. Larger improvement means greater benefit.',
       scale: 'The between-group mean difference in pain-improvement score, novel minus standard treatment, in score units.',
       expected: 'An earlier study in this teaching example observed a 4-unit difference. Its population, outcome definition and uncertainty should inform whether it is useful for planning.',
@@ -471,10 +471,10 @@
   });
   document.getElementById('example').addEventListener('click', async () => {
     if (fields.some(([id]) => form.elements[id].value.trim()) && !confirm('Replace this plan with the partially completed teaching example? Your current entries can be kept with Save work for later.')) return;
-    apply({plan_title:'Chronic-pain treatment trial', plan_basis:'pain', study_type:'comparison', outcome:'binary', goal:'testing',
-      question:'Does a novel treatment improve pain relief at four weeks compared with standard treatment in adults with chronic pain?',
+    apply({plan_title:'Neravixa versus duloxetine: chronic pain trial', plan_basis:'pain', study_type:'comparison', outcome:'binary', goal:'testing',
+      question:'Does Neravixa increase the percentage achieving pain relief at four weeks compared with duloxetine in adults with painful diabetic peripheral neuropathy?',
       population:modelAnswers.population, intervention:modelAnswers.intervention, comparator:modelAnswers.comparator,
-      outcome_detail:'Pain relief (yes/no) at four weeks', design:modelAnswers.design});
+      outcome_detail:modelAnswers.outcome_detail, design:modelAnswers.design});
     PlanWorkflow.showStage('question');
     status.textContent='The research question and design are supplied. Later chapters help you justify the assumptions, calculation and recruitment.';
   });

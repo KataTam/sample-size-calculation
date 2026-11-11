@@ -32,9 +32,9 @@ pain_report_record <- function() {
     r_version = as.character(getRversion()), stats_version = as.character(utils::packageVersion("stats")),
     source_version = source_version, code = command,
     lines = c(
-      "Prepared chronic pain calculation; software versions refer to the calculation build.",
+      "Prepared Neravixa-versus-duloxetine calculation for painful diabetic peripheral neuropathy; software versions refer to the calculation build.",
       "Procedure: normal approximation for a two-sided pooled score test of independent proportions, without continuity correction; equal allocation; both rejection tails included.",
-      "Inputs: standard-treatment relief 30%; novel-treatment relief 60%; target difference 30 percentage points; Type I error probability 5%; target power 90%.",
+      "Inputs: duloxetine pain relief 30%; Neravixa pain relief 60%; target difference 30 percentage points; Type I error probability 5%; target power 90%.",
       sprintf("Analyzable sample: %.5f per group before rounding; %d per group, %d total after rounding upward.", fit$n, n, 2*n),
       sprintf("Expected unavailable primary outcomes: 5%% in each group. Recruitment: ceiling(%d / 0.95) = %d per group, %d total.", n, recruit, 2*recruit),
       paste("Software: R", getRversion(), "; stats", utils::packageVersion("stats"), "; source version:", source_version),

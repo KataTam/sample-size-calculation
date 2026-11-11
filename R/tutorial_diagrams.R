@@ -35,7 +35,7 @@ draw_pain_pilot_patients <- function() {
   }
   centers <- c(25, 75)
   responders <- c(3L, 7L)
-  text(centers, 96, c("Standard treatment", "Novel treatment"),
+  text(centers, 96, c("Duloxetine (standard)", "Neravixa (novel)"),
     font = 2, cex = 1.12)
   text(50, 86, "Before treatment: all 10 patients in each group have pain", cex = 1)
   segments(50, 23, 50, 79, col = "#e0e5e9")
@@ -50,11 +50,48 @@ draw_pain_pilot_patients <- function() {
   # Arm position and printed counts supplement the red/green color coding.
   rect(43, 50, 57, 58, col = "white", border = NA)
   text(50, 54, "4 weeks", cex = 1.02)
-  text(centers, 19, sprintf("%d of 10 (%d%%) report pain relief",
+  text(centers, 19, sprintf("%d of 10 (%d%%) achieved pain relief",
     responders, 10L * responders), cex = 1)
   points(c(15, 57), c(6, 6), pch = 16, cex = 1, col = c(pain, relief))
-  text(c(18, 60), c(6, 6), c("Pain / no reported relief", "Reported pain relief"),
+  text(c(18, 60), c(6, 6), c("Did not achieve pain relief", "Achieved pain relief"),
     adj = 0, cex = .92)
+}
+
+# The same simulated patient records feed the chapter table and this figure.
+draw_three_pain_trials <- function(trials) {
+  old <- par(no.readonly = TRUE)
+  on.exit(par(old))
+  par(mar = c(2.8, .6, .5, .6), bg = "white", family = "sans",
+    fg = "#26343d", xaxs = "i", yaxs = "i")
+  plot.new(); plot.window(c(0, 100), c(-18, 100))
+  text(c(29, 52, 83), 96, c("Duloxetine", "Neravixa", "Observed difference"),
+    font = 2, cex = .94)
+  text(c(29, 52), 90, c("Population: 30% relief", "Population: 60% relief"), cex = .82)
+  xs <- function(points) 69 + points / 60 * 28
+  segments(xs(30), 13, xs(30), 84, lty = 2, col = "#72428b", lwd = 1.5)
+  for (i in seq_along(trials)) {
+    y <- 73 - (i - 1) * 25
+    trial <- trials[[i]]
+    text(8, y - 3, paste("Trial", i), cex = .98)
+    for (g in 1:2) {
+      values <- trial$data$outcome[trial$data$group == c("Control", "Treatment")[g]]
+      center <- c(29, 52)[g]; color <- c("#19738c", "#984b87")[g]
+      # Filled/open symbols provide a distinction independent of color.
+      for (j in seq_along(values)) points(center - 9 + ((j - 1) %% 10) * 2,
+        y + 3 - ((j - 1) %/% 10) * 5, pch = 21, cex = .9,
+        col = color, bg = if (values[j] == 1) color else "white", lwd = 1.1)
+      text(center, y - 10, sprintf("%d of %d (%d%%)", sum(values), length(values),
+        round(100 * mean(values))), cex = .87)
+    }
+    delta <- 100 * trial$result$estimate
+    arrows(64, y - 2, xs(delta) - 1.6, y - 2, length = .07, col = "#687985", lwd = 1.2)
+    points(xs(delta), y - 2, pch = 21, bg = "#984b87", col = "white", cex = 1.7)
+    text(xs(delta), y - 9, paste0(round(delta), " points"), cex = .83)
+  }
+  axis(1, at = xs(seq(0, 60, 10)), labels = seq(0, 60, 10), pos = 8, cex.axis = .8)
+  text(83, -10, "Neravixa minus duloxetine\n(percentage points)", cex = .8)
+  points(c(10, 31), c(-10, -10), pch = 21, bg = c("#19738c", "white"), col = "#19738c", cex = .9)
+  text(c(12, 33), c(-10, -10), c("Achieved relief", "Did not achieve relief"), adj = 0, cex = .78)
 }
 
 draw_planning_differences <- function() {

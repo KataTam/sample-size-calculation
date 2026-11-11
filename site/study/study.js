@@ -75,6 +75,10 @@
     return false;
   }
   window.addEventListener('message', event => {
+    if (event.origin === location.origin && event.source === lesson.contentWindow &&
+        event.data?.type === 'sample-size:open-activity' && cases[event.data.activity]) {
+      openActivity(event.data.activity); setView('both'); return;
+    }
     if (event.origin !== location.origin || !isActivitySource(event.source)) return;
     const message = event.data;
     if (!message || message.app !== engine) return;

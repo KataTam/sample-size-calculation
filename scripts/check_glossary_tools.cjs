@@ -42,11 +42,13 @@ const base=process.argv[2]||'http://127.0.0.1:8769';
  assert.match(await page.locator('#glossary-tooltip').innerText(),/Individual patients.*each person/s);
  await page.keyboard.press('Escape');
  for (const [box,id] of [['q6','alpha'],['q7','beta']]) {
-  await page.locator('#sample-size-question-'+box+' > summary').click();
-  const inline=page.locator('#sample-size-question-'+box+' a[data-glossary-term="'+id+'"]');
-  assert((await inline.getAttribute('href')).endsWith('#'+id));
-  await inline.hover();assert(await page.locator('#glossary-tooltip').isHidden());
-  await inline.focus();assert(await page.locator('#glossary-tooltip').isHidden());
+  const inline=page.locator('#sample-size-question-'+box+' > summary[data-glossary-hint="'+id+'"]');
+  assert.equal(await inline.locator('a').count(),0,'Disclosure headings contain no nested controls');
+  assert((await page.locator('a[data-glossary-term="'+id+'"]').getAttribute('href')).endsWith('#'+id));
+  await inline.hover();assert(await page.locator('#glossary-tooltip').isVisible());
+  await page.keyboard.press('Escape');
+  await inline.focus();assert(await page.locator('#glossary-tooltip').isVisible());
+  await page.keyboard.press('Escape');
  }
  await groupDifference.hover();
  await page.screenshot({path:'build/browser-checks/glossary-tooltip.png'});

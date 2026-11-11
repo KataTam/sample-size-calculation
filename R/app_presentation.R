@@ -76,8 +76,8 @@ app_sampling_explanation <- function(x) paste0(
   format_percent(x$p_control), "; novel ", format_percent(x$p_treatment),
   ") and the sample size stay fixed across repeated studies. The sampled patients, pain-relief counts, and estimated differences vary. ",
   if (true_difference(x) == 0)
-    "More patients usually reduce sampling variability. With equal population probabilities, significant results are false positives. "
-  else "More patients usually reduce sampling variability and give greater power to detect this population difference. ",
+    "As a rule, larger samples produce less variable estimates. With equal population probabilities, significant results are false positives. "
+  else "As a rule, larger samples produce less variable estimates and greater power to detect this population difference. ",
   "More simulation repetitions stabilize the summary of repeated studies; each study still has the same sample size and power.")
 
 # The introductory pain activity reports the experiment the learner explored.
@@ -111,10 +111,10 @@ app_pain_simulation_report <- function(current, one, many, details) {
         else "power: the probability of detecting the specified population difference."))
   }
   sections <- list("Population assumptions and sample" = c(
-    paste0("These hypothetical trials compare pain relief with standard and novel treatment in two independent, equally sized groups. Each study has ",
-      x$n, " patients per group (", 2*x$n, " in total), all with observed outcomes."),
-    paste0("The assumed population pain-relief percentages are ", format_percent(x$p_control), " with standard treatment and ",
-      format_percent(x$p_treatment), " with novel treatment: a between-group difference of ", effect(true_difference(x)),
+    paste0("These simulated trials compare duloxetine (standard treatment) with Neravixa (novel treatment) for painful diabetic peripheral neuropathy in two independent, equally sized groups. Each study has ",
+      x$n, " patients per group (", 2*x$n, " in total), all with observed outcomes. Each patient either achieved pain relief or did not."),
+    paste0("The assumed population pain-relief percentages are ", format_percent(x$p_control), " with duloxetine and ",
+      format_percent(x$p_treatment), " with Neravixa: a between-group difference of ", effect(true_difference(x)),
       " (novel minus standard). These are the population values used to generate the simulated data."),
     paste0("The analysis uses a two-sided test with Type I error probability ", format_percent(x$alpha),
       ".")),

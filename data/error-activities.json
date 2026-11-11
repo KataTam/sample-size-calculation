@@ -5,7 +5,7 @@
     "answer_id": "model-answer-report-review",
     "segments": [
       {
-        "text": "Adults with chronic pain will be individually randomized in equal groups to novel or standard treatment. Pain relief at four weeks is the primary binary outcome.",
+        "text": "Adults with painful diabetic peripheral neuropathy will be individually randomized 1:1 to Neravixa or duloxetine. Achieved pain relief at four weeks is the primary binary outcome.",
         "error": false,
         "explanation": "This identifies the population, comparison, allocation and primary outcome with its assessment time.",
         "link": "reporting.html#sample-size-calculation-report",
@@ -52,7 +52,7 @@
         "section": "Loss adjustment and rounding"
       }
     ],
-    "version": 2
+    "version": 3
   },
   "discharge": {
     "id": "discharge-error-activity",

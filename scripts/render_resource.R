@@ -7,6 +7,15 @@ render_resource <- function(include_pdf = TRUE) {
   write_pain_report_record()
   source("R/draw_learning_figures.R")
   draw_learning_figures()
+  source("R/sample_size_functions.R")
+  source("R/tutorial_diagrams.R")
+  # Use the same seeds and generating assumptions as the chapter's worked trials.
+  preview_trials <- lapply(20260941:20260943, function(seed)
+    simulate_one_study(study_spec(outcome = "proportions", n = 20,
+      p_control = .30, p_treatment = .60, threshold = .20, seed = seed)))
+  png("figures/pain-trials-preview.png", width = 1440, height = 848, res = 160)
+  draw_three_pain_trials(preview_trials)
+  dev.off()
   on.exit(setwd(root), add = TRUE)
   glossary_json <- paste(readLines("data/glossary-terms.json", encoding = "UTF-8"), collapse = "\n")
   glossary_js <- paste(readLines("module/glossary-tooltips.js", encoding = "UTF-8"), collapse = "\n")
