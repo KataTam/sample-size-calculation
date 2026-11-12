@@ -24,7 +24,7 @@ Binary intervals use Newcombe's combination of uncorrected Wilson intervals. If 
 
 Estimation is the process of estimating a population quantity. Precision describes its sampling uncertainty, assessed here by interval width at a specified confidence level. Both power-based and width-based plans produce estimates and intervals; the distinction is the criterion used to select sample size.
 
-All targets mean FULL confidence interval width at confidence 1−alpha. For normal data, expected width is 2*tCritical*sigma*sqrt(2/n)*c4(df), where c4(df)=sqrt(2/df)*Gamma((df+1)/2)/Gamma(df/2). For binary data the anticipated curve plugs assumed probabilities into the Newcombe formula. It is not exact expected width. Planning for a precision target searches this expected or plug-in width criterion. Neither is a probability-of-width guarantee; simulations report mean width and the fraction attaining the target separately.
+All width targets mean FULL confidence interval width. For two-group comparisons, the supplementary width curve uses 2*tCritical*sigma*sqrt(2/n)*c4(df) for normal data, where c4(df)=sqrt(2/df)*Gamma((df+1)/2)/Gamma(df/2), or plugs both event probabilities into the Newcombe formula for binary data. The lab's estimation planning mode uses one population and a total count, as described below. Simulations report mean width and the fraction attaining the target separately.
 
 ## Reproducibility and uncertainty
 
@@ -55,6 +55,10 @@ This approximation is not a promise about realized Wilson interval width. The ac
 The fixed-resource pilot preset estimates one retention proportion with n = 40 and anticipated retention 0.80; it does not test treatment effectiveness. Its stated full-width target is a hypothetical learner goal. Recruitment is ceiling(n/(1−loss)); simulation conditions on analyzable n and does not simulate or correct missing-data mechanisms. Complex sampling, population corrections and imperfect diagnostic measurements require an appropriate extension beyond this introductory method.
 
 ## Sampling distributions of one normal mean
+
+The lab's estimation mode uses one population, with total sample size throughout. For a normal mean, `R/single_population.R` selects the smallest integer n whose expected full one-sample t interval width is at most the target: 2 × t(1−alpha/2, n−1) × sigma × c4(n−1) / sqrt(n), where c4 is the expected sample-SD correction. For a population percentage, the criterion is the Wilson interval width at the specified probability. This plug-in width criterion differs from the normal approximation used in the separate prevalence calculator; the report records the selected method.
+
+One-study simulations draw independent observations. Repeated mean simulations draw the normal sample mean and independent chi-squared sample variance; binary simulations draw binomial counts. Coverage and width attainment use the resulting t or Wilson intervals. `scripts/check_single_population.R` checks these against `stats::t.test` and uncorrected `stats::prop.test`, tests minimum integer sample sizes and stale-report handling, and checks saved-work restoration.
 
 The sampling_distributions activity is a separate known-SD reference model: independent observations from a normal population, one sample, SE = sigma/sqrt(n). For a greater-than test, c = mu0 + qnorm(1−alpha)×SE, alpha = P(mean > c | mu0), and power = P(mean > c | mu1). A less-than test uses the lower tail; a two-sided test divides alpha between both rejection tails. Beta is one minus power at the specified alternative. The null and alternative curves are distributions of the SAMPLE MEAN, not distributions of patient observations or probabilities assigned to the hypotheses.
 

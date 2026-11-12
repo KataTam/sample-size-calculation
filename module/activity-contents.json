@@ -53,7 +53,7 @@
     "route": "Advanced",
     "activities": [
       {
-        "label": "Estimate a mean difference with a precision target",
+        "label": "Estimate a population mean with a precision target",
         "path": "study/?activity=mean_precision",
         "route": "Advanced",
         "section": "plan-for-precision"

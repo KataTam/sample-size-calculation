@@ -125,7 +125,7 @@ apply_lab_inputs <- function(session, values) {
   sliders <- c("plan_p0", "plan_p1", "alpha", "target_power", "dropout", "true_p0", "true_p1", "expected_p", "threshold_p", "width_p")
   selectors <- c("outcome", "goal", "reality", "missing_mode")
   for (name in names(values)) {
-    if (name == "stage") shiny::updateTabsetPanel(session, "stage", selected = values[[name]])
+    if (name == "stage") shiny::updateTabsetPanel(session, "stage", selected = if(values[[name]] == "Methods") "Justify and communicate" else values[[name]])
     else if (name %in% sliders) shiny::updateSliderInput(session, name, value = values[[name]])
     else if (name %in% selectors) shiny::updateSelectInput(session, name, selected = values[[name]])
     else shiny::updateNumericInput(session, name, value = values[[name]])

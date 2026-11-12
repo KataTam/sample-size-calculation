@@ -96,8 +96,8 @@ check_lab_server <- function() {
     session$setInputs(run_many = 2); stopifnot(many()$spec$delta == 0)
     session$setInputs(goal = "fixed", fixed_n = 80, reality = "custom")
     stopifnot(planned()$n == 80, generating()$sd == 7)
-    session$setInputs(outcome = "proportions", goal = "precision", reality = "same")
-    stopifnot(anticipated_width(planned()) <= .2)
+    session$setInputs(outcome = "proportions", goal = "testing", reality = "same")
+    stopifnot(spec_power(planned()) >= .8)
     stopifnot(max(abs(comparison()$effects - c(.15,.20,.30))) < 1e-12,
       !is.null(output$comparison_plot), !is.null(output$effect_plot))
     session$setInputs(run_one = 2, run_many = 3)

@@ -13,7 +13,7 @@ const base=(process.argv[2]||'http://127.0.0.1:8769').replace(/\/$/,'');
       <h2>Population assumptions</h2><p>Standard treatment: 30%. Novel treatment: 60%. μ = 3; σ = 5; α = 0.05. Tamási’s example.</p>
       <table><caption>Assumptions and results</caption><thead><tr><th>Quantity</th><th>Value</th></tr></thead><tbody>
       <tr><td>Target difference</td><td>30 percentage points</td></tr><tr><td>Patients per group</td><td>20</td></tr><tr><td>Confidence interval</td><td>−5 to 20 percentage points</td></tr></tbody></table>
-      <h2>Your reflection</h2><p>&lt;img src=x onerror="window.injected=true"&gt;</p><p>${long}</p>
+      <h2>Simulation results</h2><p>&lt;img src=x onerror="window.injected=true"&gt;</p><p>${long}</p>
       <h2>Resources and licenses</h2><p>Teaching materials: <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>. Code: <a href="https://opensource.org/license/mit">MIT</a>.</p>
       <script type="application/json">{"schema":"private-backup"}</script></body></html>`;
     fs.mkdirSync('build/report-downloads',{recursive:true});

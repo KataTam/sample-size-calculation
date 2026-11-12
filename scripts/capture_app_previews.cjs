@@ -16,7 +16,7 @@ const ids=(process.argv[3]||'pain_one_many,probiotics_calculation,rehabilitation
    const record=Array.isArray(cases)?cases.find(c=>c.id===id):cases[id]; assert(record,id);
    const page=await context.newPage();page.setDefaultTimeout(120000);
    let clip;
-   if(!['assumptions_report','design_questionnaire'].includes(record.app))await page.setViewportSize({width:1120,height:1200});
+   if(!['assumptions_report','design_questionnaire'].includes(record.app))await page.setViewportSize({width:1120,height:id==='mean_precision'?1500:1200});
    await page.goto(`${base}/${record.app}/?activity=${id}`,{waitUntil:'domcontentloaded'});
    if(!['assumptions_report','design_questionnaire'].includes(record.app)){
     let app;
@@ -32,6 +32,10 @@ const ids=(process.argv[3]||'pain_one_many,probiotics_calculation,rehabilitation
      await app.locator('#sampling-journey svg').waitFor({state:'visible'});
     }else if(id==='pain_simulation') {
      await app.locator('#run_many').click();
+    }else if(id==='mean_precision'){
+     await app.waitForFunction(()=>Shiny.shinyapp.$inputValues.goal==='precision' && document.documentElement.classList.contains('single-population-mode'));
+     await app.locator('#precision-view a[data-value="Overview"]').click();
+     await app.locator('#precision-result').filter({hasText:'analyzable participants in total'}).waitFor();
     }else if(!['pain_simulation','alpha_beta'].includes(id)){
      const overview=app.getByRole('tab',{name:'Overview',exact:true});
      if(await overview.count())await overview.click();
@@ -40,8 +44,8 @@ const ids=(process.argv[3]||'pain_one_many,probiotics_calculation,rehabilitation
     const errors=await app.locator('.shiny-output-error:not(.shiny-output-error-validation)').allTextContents();
     assert.deepEqual(errors,[],id+' rendered without an app error');
     await app.waitForFunction(()=>[...document.querySelectorAll('.shiny-plot-output img')].filter(i=>i.checkVisibility()).every(i=>i.complete&&i.naturalWidth>0));
-    const sidebar=await app.locator('.well').first().boundingBox();
-    if(sidebar)clip={x:0,y:Math.floor(sidebar.y),width:1120,height:Math.min(900,1200-Math.floor(sidebar.y))};
+    const sidebar=await app.locator(id==='mean_precision'?'.single-population-inputs':'.well').first().boundingBox();
+    if(sidebar)clip={x:0,y:Math.floor(sidebar.y),width:1120,height:Math.min(id==='mean_precision'?1000:900,(id==='mean_precision'?1500:1200)-Math.floor(sidebar.y))};
    } else {
     await page.locator('main').waitFor();
    }

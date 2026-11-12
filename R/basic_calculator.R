@@ -47,14 +47,11 @@ basic_calculator_ui <- function(outcome) {
           p("Both columns use the same power, error probability, expected losses, and remaining assumptions."),
           tableOutput("comparison_table"))),
       tabPanel("Report", uiOutput("plan_transfer"), uiOutput("report_preview"), activity_report_downloads("download_report"),
-        p(id = "download-status", role = "status", `aria-live` = "polite")),
-      tabPanel("Methods and references", h3("Calculation with your current values"), uiOutput("worked_method"),
-        p(if (means) "This app and the reasoning lab plan a pooled two-sample t test using a common population SD. The calculation accounts for estimating that SD from the trial data."
-          else "This normal approximation uses R's two-sided power.prop.test calculation, with both rejection tails included. The reasoning lab uses the same binary planning approximation and can explore its finite-sample performance by simulation."),
-        p("Required analyzable counts are rounded upward. Recruitment is then adjusted and rounded separately within each group."),
+        p(id = "download-status", role = "status", `aria-live` = "polite"),
+      activity_details("Calculation details and references", uiOutput("worked_method"),
         p(tags$a(href = "../book/calculations.html", target = "_blank", rel = "noopener", "Tutorial: basic calculations"), " · ",
           tags$a(href = "../book/appendix.html#tutorial-methods", target = "_blank", rel = "noopener", "Methods and reproducibility")),
-        app_citation(title, slug))))))
+        app_citation(title, slug)))))))
 }
 
 basic_calculator_server <- function(outcome) function(input, output, session) {
@@ -87,11 +84,11 @@ basic_calculator_server <- function(outcome) function(input, output, session) {
   })
   output$result <- renderUI({
     x <- result()
-    app_primary_result(if (x$dropout_rate > 0) x$total_with_dropout/2 else x$n_per_group,
-      if (x$dropout_rate > 0) "to recruit per group" else "analyzable per group",
+    app_primary_result(paste0(if (x$dropout_rate > 0) x$total_with_dropout/2 else x$n_per_group, " per group"),
+      if (x$dropout_rate > 0) "participants to recruit" else "participants for analysis",
       if (x$dropout_rate > 0) paste0(x$total_with_dropout, " to recruit in total, allowing for ",
         format_percent(x$dropout_rate), " expected loss. Analysis requires ", x$n_per_group, " per group (", x$total_n, " total).")
-      else paste0(x$total_n, " in total · ", format_percent(x$power), " target power · ",
+      else paste0(x$n_per_group, " standard + ", x$n_per_group, " novel = ", x$total_n, " participants in total · ", format_percent(x$power), " target power · ",
         format_percent(x$alpha), " Type I error probability"))
   })
   output$interpretation <- renderText({
@@ -114,10 +111,10 @@ basic_calculator_server <- function(outcome) function(input, output, session) {
       ns <- vapply(x$pi2+direction*ds, sample_size_two_proportions, numeric(1), pi2=x$pi2, alpha=x$alpha, power=x$power)
       axis_x <- 100*ds; selected <- 100*x$difference; label <- "Absolute target difference (points)"
     }
-    plot(axis_x, ns, type = "n", ylim = c(0,max(ns)*1.05), xlab = label, ylab = "Analyzable per group")
+    plot(axis_x, ns, type = "n", ylim = c(0,max(ns)*1.05), xlab = label, ylab = "Participants per group")
     app_plot_grid(); lines(axis_x, ns, lwd = 2.5, col = "#245e90")
     app_current_point(selected, x$n_per_group)
-    app_point_label(selected, x$n_per_group, paste0("Current: ", x$n_per_group))
+    app_point_label(selected, x$n_per_group, paste0(x$n_per_group," per group"))
   }
   output$allocation_plot <- renderPlot(draw_curve(), res = 96,
     alt = "Required analyzable participants per group across target differences. A labeled dot marks the current plan, also given in the numerical result.")

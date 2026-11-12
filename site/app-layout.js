@@ -47,7 +47,7 @@
   function settings() {
     if (document.documentElement.classList.contains('tutorial-embedded')) return;
     document.querySelectorAll('.well').forEach(well => {
-      if (well.querySelector(':scope > .app-settings')) return;
+      if (well.matches('.single-population-inputs') || well.querySelector(':scope > .app-settings')) return;
       const disclosure = document.createElement('details'); disclosure.className = 'app-settings';
       disclosure.open = !narrow.matches;
       const summary = document.createElement('summary'); summary.textContent = 'Study settings';

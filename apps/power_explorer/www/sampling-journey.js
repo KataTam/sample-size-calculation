@@ -147,7 +147,7 @@
     el('journey-replay').onclick=()=>{index=0;elapsed=0;play();};
     el('journey-motion').onchange=()=>{if(data)draw(elapsed/3800);};
     Shiny.addCustomMessageHandler('lab-report-context',payload=>{
-      el('report-question-heading').textContent=payload.core?'Your reflection':'Explain your decision';
+      el('report-question-heading').textContent='Explain your decision';
       el('study-plan-guidance').hidden=payload.core;
       const field=el('justification'), label=document.querySelector('label[for="justification"]');
       const source=document.querySelector('.input-guidance-source[data-for="justification"]');
@@ -156,26 +156,31 @@
         window.InputGuidance?.attach(label,payload.help,field,source.dataset.model || '');
       }
     });
+    Shiny.addCustomMessageHandler('lab-mode',payload=>{
+      document.documentElement.classList.toggle('single-population-mode',payload.estimation);
+      const title=document.querySelector('.app-title'),intro=document.querySelector('.app-intro');
+      if(payload.estimation){
+        if(title)title.textContent='Estimate one population';
+        if(intro)intro.textContent='Choose a confidence interval width for a population mean or percentage, then explore repeated samples.';
+      }else{
+        if(title)title.textContent=document.documentElement.classList.contains('pain-focus')?'Pain relief: one study and many':'Sample size reasoning lab';
+        if(intro)intro.textContent='Explore how study results vary with the sample size and population assumptions.';
+      }
+    });
+    Shiny.addCustomMessageHandler('lab-advanced',payload=>{
+      document.documentElement.classList.toggle('lab-expanded',payload.enabled);
+    });
     Shiny.addCustomMessageHandler('combine-pain-panels',payload=>{
       const oneLink=document.querySelector('a[data-value="One study"]'), manyLink=document.querySelector('a[data-value="Many studies"]');
       if(!oneLink || !manyLink) return;
       document.documentElement.classList.toggle('pain-focus', payload.combine);
       const title=document.querySelector('.app-title'), intro=document.querySelector('.app-intro');
-      if(title) title.textContent=payload.combine?'Pain relief: one study and many':'Sample size reasoning lab';
-      if(intro) intro.textContent=payload.combine
+      const estimating=document.documentElement.classList.contains('single-population-mode');
+      if(title) title.textContent=estimating?'Estimate one population':payload.combine?'Pain relief: one study and many':'Sample size reasoning lab';
+      if(intro) intro.textContent=estimating?'Choose a confidence interval width for a population mean or percentage, then explore repeated samples.':payload.combine
         ?'You can sample patients from two treatment groups and see how their estimated difference varies across studies.'
         :'You can calculate sample size or assess power and precision for two-group comparisons, then simulate studies to see how results vary.';
-      const tabs=oneLink.closest('.nav-tabs');
-      let more=el('lab-more-views');
-      if(!more){
-        more=document.createElement('button');more.id='lab-more-views';more.type='button';more.className='btn btn-default';
-        more.textContent='Additional calculations and simulations';more.setAttribute('aria-expanded','false');
-        tabs.before(more);
-        more.onclick=()=>{const expanded=more.getAttribute('aria-expanded')!=='true';more.setAttribute('aria-expanded',String(expanded));
-          document.documentElement.classList.toggle('lab-expanded',expanded);more.textContent=expanded?'Hide additional views':'Additional calculations and simulations';};
-      }
-      more.hidden=!payload.combine;
-      if(!payload.combine){document.documentElement.classList.remove('lab-expanded');more.setAttribute('aria-expanded','false');more.textContent='Additional calculations and simulations';}
+      document.documentElement.classList.toggle('lab-expanded', Boolean(el('show_advanced')?.checked));
       ['Explore assumptions','Compare assumptions','My study'].forEach(value=>{
         const link=document.querySelector(`a[data-value="${value}"]`);if(link)link.parentElement.classList.add('lab-secondary-view');
       });
@@ -199,22 +204,9 @@
       oneLink.textContent=payload.combine?'One study and many studies':'One study';
       manyLink.parentElement.hidden=payload.combine;
       manyLink.parentElement.style.display=payload.combine?'none':'';
-      if (payload.combine && document.documentElement.classList.contains('tutorial-embedded') && !el('inline-study-explanation')) {
-        // Keep the experiment visible; interpretation and records remain one
-        // disclosure away in the compact tutorial presentation.
-        el('lab-settings').append(more);
+      if (payload.combine && document.documentElement.classList.contains('tutorial-embedded')) {
         const motion=el('journey-motion').closest('label');
         onePanel.querySelector('.simulation-actions').append(motion);
-        const explanation=document.createElement('details'); explanation.id='inline-study-explanation';
-        explanation.className='inline-study-explanation';
-        const summary=document.createElement('summary'); summary.textContent='Interpret the animation';
-        explanation.append(summary);
-        const question=onePanel.querySelector('.activity-question').closest('.shiny-panel-conditional');
-        const results=el('one_interpretation').closest('.shiny-panel-conditional');
-        el('journey-status').after(explanation); explanation.append(question);
-        const records=document.createElement('details'); records.className='inline-study-explanation';
-        const recordsTitle=document.createElement('summary'); recordsTitle.textContent='Study results and records';
-        results.before(records); records.append(recordsTitle,results);
       }
     });
     Shiny.addCustomMessageHandler('sampling-journey',payload=>{

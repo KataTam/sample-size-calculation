@@ -5,6 +5,7 @@ source("../../R/teaching_cases.R")
 source("../../R/activity_bridge.R")
 source("../../R/model_answers.R")
 source("../../R/app_presentation.R")
+source("../../R/single_population.R")
 
 # Let the download response supply the filename. Chromium's download attribute
 # can bypass the service worker serving a Shinylive download (issue 468227).
@@ -28,14 +29,15 @@ ui <- fluidPage(
   textOutput("plan_import_status"),
   textOutput("missing_note"),
   sidebarLayout(sidebarPanel(width = 4,
-    textOutput("scenario_summary"),
+    conditionalPanel("input.goal != 'precision'", textOutput("scenario_summary")),
     conditionalPanel("input.goal == 'fixed'", numericInput("fixed_n", "Participants per group in each study", 60, min = 2, max = 100000, step = 1),
       activity_help("This is the chosen analyzable sample size. The introductory activity starts with 20 per group to make sampling variability visible; larger samples can then be compared. Recruitment limits are assessed separately.", for_input = "fixed_n")),
     tags$details(id="lab-settings", class="activity-details", tags$summary("Settings"),
-    checkboxInput("show_advanced", "Explore further: advanced controls and explanations", FALSE),
-    selectInput("outcome", "Outcome", c("Continuous (numerical) outcome" = "means", "Binary (yes/no) outcome" = "proportions")),
     selectInput("goal", "Planning goal", c("Test a difference from zero" = "testing", "Estimation with a target interval width" = "precision", "Assess a fixed number of available participants" = "fixed")),
-    activity_help("Testing uses a power target; estimation uses a desired interval width. The fixed-sample option evaluates what the available participants can achieve under your assumptions.", for_input = "goal"),
+    activity_help("Testing and the fixed-sample option concern two treatment groups. Estimation uses a confidence-interval-width target for one population mean or percentage.", for_input = "goal"),
+    conditionalPanel("input.goal != 'precision'",
+    checkboxInput("show_advanced", "Show advanced settings and results", FALSE),
+    selectInput("outcome", "Outcome", c("Continuous (numerical) outcome" = "means", "Binary (yes/no) outcome" = "proportions")),
     p("Two equally sized groups, with one outcome per participant and independent observations. Differences are treatment minus control; positive values mean benefit in these cases."),
     conditionalPanel("input.outcome == 'means'",
       conditionalPanel("input.goal != 'precision'", numericInput("expected_m", "Difference observed in previous data (outcome units)", 4, step = .5)),
@@ -106,8 +108,8 @@ ui <- fluidPage(
     numericInput("B", "Number of simulated studies (B)", 1000, min = 100, max = 10000, step = 100),
     activity_help("More repetitions stabilize the estimated power and coverage but take longer to run. Each simulated study keeps the selected number of participants.", for_input = "B")),
     p(tags$a(href = "../book/Sample_size_open_module.html#glossary", target = "_blank", rel = "noopener", "Key terms and assumptions"), " · ",
-      tags$a(href = "../book/Sample_size_open_module.html#common-mistakes", target = "_blank", rel = "noopener", "Common mistakes and FAQ")))),
-  mainPanel(width = 8, tabsetPanel(id = "stage",
+      tags$a(href = "../book/Sample_size_open_module.html#common-mistakes", target = "_blank", rel = "noopener", "Common mistakes and FAQ"))))),
+  mainPanel(width = 8, conditionalPanel("input.goal != 'precision'", tabsetPanel(id = "stage",
     tabPanel("Overview", value = "Explore assumptions", h3("Your planned design"), uiOutput("overview_metrics"),
       textOutput("overview_text"),
       plotOutput("planning_plot", height = "430px"),
@@ -142,12 +144,14 @@ ui <- fluidPage(
         tags$div(id = "sampling-journey", `aria-describedby` = "journey-description"),
         tags$p(id = "journey-description", class = "sr-only"),
         tags$p(id = "journey-status", role = "status", `aria-live` = "polite", "The patient outcomes and estimated difference will appear here."),
-        conditionalPanel("output.one_ready", activity_details("How to read the animation",
+        tags$details(id="inline-study-explanation", class="inline-study-explanation", tags$summary("Interpret the animation"),
           p("Filled circles show patients with the event; open circles show patients without it. In the chronic pain case, the event is pain relief."),
-          p("The pink dot starts at this trial's estimated difference on the upper axis and falls to the same value on the lower axis. Each accumulated dot represents one complete trial.")),
+          p("The pink dot starts at this trial's estimated difference on the upper axis and falls to the same value on the lower axis. Each accumulated dot represents one complete trial."),
         tags$div(class="activity-question", h4("What stays fixed, and what changes?"),
           tags$label(tags$input(id = "journey-motion", type = "checkbox"), " Reduced motion"),
           activity_details("Model answer", textOutput("one_model_answer"))))),
+      tags$details(id="one-study-records", class="inline-study-explanation", tags$summary("Study results and records"),
+      conditionalPanel("!output.one_ready", p("Results and participant records appear after a single-study simulation.")),
       conditionalPanel("output.one_ready",
         textOutput("one_interpretation"),
         conditionalPanel("output.intervals_visible", plotOutput("one_plot", height = "300px"), app_interval_key(),
@@ -161,7 +165,7 @@ ui <- fluidPage(
             p("Close to the significance threshold, the p value and confidence interval can sometimes give different indications because they use different calculation methods. The ", tags$a(href="../book/appendix.html#tutorial-methods", target="_blank", rel="noopener", "methods record"), " explains these methods.")))),
         activity_details("Participant records and download", tableOutput("one_data"), textOutput("one_missing_data_note"),
           p(class = "caption", "Table 5. Up to six records per group. Binary outcomes use 0 for no event and 1 for the event; missing records appear first when present."),
-          downloadButton("download_one", "Download study and assumptions"))),
+          downloadButton("download_one", "Download study and assumptions")))),
       tags$div(id = "journey-credit", tags$hr(), p("The animated connection between samples, estimates, and sampling distributions was inspired by Douwe Postmus’s ", tags$a(href = "https://postmus.github.io/sampling-simulator/", target = "_blank", rel = "noopener", "Statistical Concepts Lab"), "."))),
     tabPanel("Many studies", h3("Many simulated studies"),
       p("What pattern do you expect across many studies with the same population assumptions?"),
@@ -211,11 +215,12 @@ ui <- fluidPage(
       activity_help("These estimates depend on the eligibility, consent, recruitment-period and loss assumptions. Screening records and possible delays should inform your feasibility judgment."),
       actionButton("use_feasible_cap", "Use expected recruitment as the lab limit"),
       p(tags$a(href = "../book/appendix.html#own-study", target = "_blank", rel = "noopener", "Read the study justification guidance"))),
-    tabPanel("Report", value = "Justify and communicate", uiOutput("plan_transfer"), h3(id = "report-question-heading", "Explain your decision"),
+    tabPanel("Report", value = "Justify and communicate",
+      conditionalPanel("!output.pain_report", h3(id = "report-question-heading", "Explain your decision"),
       activity_text_input("justification", "What study plan would you recommend, and why?",
         "The example updates with the selected case and current calculation inputs.",
         "Your recommendation should give analyzable and recruitment counts, supporting evidence, and the effect of plausible alternative assumptions. It should identify remaining limitations.", rows = 8),
-      p(id = "study-plan-guidance", "A structured ", tags$a(href = "../assumptions_report/", "study plan"), " brings these decisions together using PICO, selected SPIRIT 2025 items and DELTA² guidance."),
+      p(id = "study-plan-guidance", "A structured ", tags$a(href = "../assumptions_report/", "study plan"), " brings these decisions together using PICO, selected SPIRIT 2025 items and DELTA² guidance.")),
       uiOutput("report_preview"), activity_report_downloads("download_plan"),
       activity_details("Save work for later",
       downloadButton("download_plan_json", "Save work for later"),
@@ -223,13 +228,9 @@ ui <- fluidPage(
       p("This file restores your example, settings, and written answers in this app. Simulations should be rerun after reopening. The PDF and Word downloads provide a readable report.")),
       tags$details(tags$summary("Optional reproducible R workflow"),
         p("This script reproduces the current scenario when run from the downloaded source folder containing the shared R functions."), downloadButton("download_code", "Download R script")),
-      app_citation("Sample size reasoning lab", "power_explorer")),
-    tabPanel("Methods and references", value = "Methods",
-      h3("Calculation with your current values"), uiOutput("worked_method"),
-      h4("Analysis assumptions"),
-      p("The analysis compares two independent groups. Testing evaluates evidence against a zero difference; the estimation goal assesses interval width and coverage."),
-      activity_details("Advanced method details", textOutput("method"),
-        p("Normal outcomes use a pooled-variance t test and interval. Binary outcomes use a pooled score test without continuity correction and a Newcombe-Wilson difference interval. Binary analytical power and precision are approximations; simulation assesses their finite-sample performance under the selected assumptions.")),
+      app_citation("Sample size reasoning lab", "power_explorer"),
+    activity_details("Calculation details and references",
+      conditionalPanel("!output.pain_report", h3("Calculation with your current values"), uiOutput("worked_method")),
       p(tags$a(href = "../book/appendix.html#tutorial-methods", target = "_blank", rel = "noopener", "Methods and reproducibility record")),
       h3("References"), tags$ul(
         tags$li(tags$a(href = "https://aaroncaldwell.us/SuperpowerBook/", "Caldwell et al. (2022). Power Analysis with Superpower, chapters 1, 11 and 15: inspiration for the clinical activities.")),
@@ -239,9 +240,11 @@ ui <- fluidPage(
         tags$li(tags$a(href = "https://doi.org/10.1111/test.12403", "Sandoval et al. (2025). Beyond statistical power.")),
         tags$li(tags$a(href = "https://doi.org/10.2196/52679", "Thiesmeier and Orsini (2024). Rolling the DICE.")),
         tags$li(tags$a(href = "https://doi.org/10.1080/26939169.2024.2394536", "Orsini et al. (2024). Teaching interaction effects.")),
-        tags$li(tags$a(href = "https://doi.org/10.1093/aje/kwaa232", "Rudolph et al. (2021). Simulation for teaching epidemiologic methods."))))))))
+        tags$li(tags$a(href = "https://doi.org/10.1093/aje/kwaa232", "Rudolph et al. (2021). Simulation for teaching epidemiologic methods."))))))),
+    conditionalPanel("input.goal == 'precision'", single_population_ui("precision")))))
 
 server <- function(input, output, session) {
+  single_population_server("precision")
   safe <- function(expr) tryCatch(expr, error = function(e) validate(need(FALSE, conditionMessage(e))))
   effect_text <- function(value, outcome, digits = 2) {
     if (outcome == "proportions") paste0(round(100 * value, digits), " percentage points")
@@ -390,7 +393,8 @@ server <- function(input, output, session) {
   observeEvent(input$bridge_error, import_status(input$bridge_error), ignoreInit = FALSE)
   output$plan_import_status <- renderText(import_status())
   output$activity_context <- renderUI({
-    if (!nzchar(current_activity())) return(p("You can calculate sample size or assess power and precision for two independent groups, then simulate studies to examine how results vary. A prepared activity supplies a scenario; your own settings can be used instead."))
+    if (identical(input$goal,"precision")) return(p("Estimate a mean or percentage in one population. The confidence level, variability and desired interval width determine the sample size; simulations show how estimates and intervals vary."))
+    if (!nzchar(current_activity())) return(p("Compare two independent groups or estimate a mean or percentage in one population. Simulations show how results vary with the sample size and assumptions."))
     x <- teaching_case(current_activity())
     tagList(p(x$prompt),
       if (!is.null(routed_case())) p(tags$a(href = paste0("../", x$app, "/?activity=", x$id),
@@ -451,6 +455,7 @@ server <- function(input, output, session) {
     }
   })
   planned <- reactive({
+    req(input$goal != "precision")
     validate(need(is.null(routed_case()), "Open the matching activity for this study design."),
       need(study_details()$study_design == "two_groups", "This design needs another planning method. See My study for the appropriate route."))
     x <- safe(study_spec(outcome = input$outcome, n = if (input$goal == "fixed") input$fixed_n else 60,
@@ -469,6 +474,7 @@ server <- function(input, output, session) {
     safe(do.call(study_spec, x))
   })
   missing_settings <- reactive({
+    if (identical(input$goal,"precision")) return(NULL)
     v <- current_lab_inputs()
     if (v$outcome != "proportions" || v$missing_mode == "off") return(NULL)
     safe(missing_scenario(v$missing_mode, v$missing_n))
@@ -496,11 +502,19 @@ server <- function(input, output, session) {
   }, ignoreInit = TRUE)
   observeEvent(input$alpha, { updateSliderInput(session, "confidence", value = 1-input$alpha) }, ignoreInit = FALSE)
   observeEvent(input$goal, {
+    session$sendCustomMessage("lab-mode", list(estimation=identical(input$goal,"precision")))
     if (input$goal == "precision") hideTab("stage", "Compare assumptions", session=session) else showTab("stage", "Compare assumptions", session=session)
-    session$sendCustomMessage("activity-question-help", list(plan_delta=list(
-      question=if (input$goal == "precision") "Population mean difference used in simulation (outcome units)" else "Target difference used in the calculation (outcome units)",
-      help=if (input$goal == "precision") "This value supplies a known population difference for the simulations. With common SD fixed, changing it does not change the sample required for the interval-width target." else "Power is evaluated at this plausible, clinically worthwhile population difference.")))
   })
+  observeEvent(input$show_advanced, {
+    enabled <- isTRUE(input$show_advanced)
+    session$sendCustomMessage("lab-advanced", list(enabled=enabled))
+    if (!enabled) {
+      updateSelectInput(session,"reality",selected="same")
+      updateSelectInput(session,"missing_mode",selected="off")
+      if (identical(current_activity(),"pain_one_many") && input$stage %in% c("Explore assumptions","Compare assumptions","My study"))
+        updateTabsetPanel(session,"stage",selected="One study")
+    }
+  }, ignoreInit=FALSE)
   observe({
     session$sendCustomMessage("activity-question-help", list(expected_p=list(
       question=if (grepl("^pain_",current_activity())) "Difference observed in the pilot (percentage points)" else "Difference observed in previous data (percentage points)",
@@ -510,14 +524,17 @@ server <- function(input, output, session) {
     "How does a larger sample change the estimates and interval widths?" else
     "What happens to the estimates and power with more patients per group? You can compare 20, 50 and 80 under the same population assumptions.")
   pain_report <- reactive(identical(current_activity(), "pain_one_many") &&
+    !identical(input$goal,"precision") &&
     identical(input$outcome, "proportions") && study_details()$study_design == "two_groups" &&
     is.null(routed_case()) && is.null(missing_settings()))
+  output$pain_report <- reactive(pain_report())
+  outputOptions(output, "pain_report", suspendWhenHidden=FALSE)
   observe({
     core <- pain_report()
     session$sendCustomMessage("lab-report-context", list(core = core,
       question = if (core) "What do these simulations show about sampling variability and sample size?"
         else "What study plan would you recommend, and why?",
-      help = if (core) "Your reflection should connect the observed differences to the assumed population values, then explain the effects of more patients and more simulation repetitions."
+      help = if (core) "The model answers beside the simulations explain how the estimates vary across studies."
         else "Your recommendation should give analyzable and recruitment counts, supporting evidence, and the effect of plausible alternative assumptions. It should identify remaining limitations."))
   })
   model_answers <- reactive({
@@ -850,16 +867,8 @@ server <- function(input, output, session) {
   report_paragraphs <- reactive(unlist(report_sections(), use.names = FALSE))
   report_heading <- reactive(if (pain_report()) "Pain relief: simulation report" else "Sample size reasoning lab report")
   report_intro <- reactive(if (pain_report())
-    "This report summarizes the population assumptions, simulated results, and your reflection on how results vary between studies. The results come from Simulate one study and Simulate many studies; rerunning either replaces its previous results."
+    "This report records the current population assumptions and the latest matching simulations."
     else "This report records the current study plan, matching simulation results, and your written justification.")
-  output$plan_transfer <- renderUI({
-    req(is.null(routed_case()), study_details()$study_design == "two_groups")
-    x <- planned()
-    app_plan_transfer(if (pain_report()) "Pain relief: sampling variability" else "Two-group study calculation", "power_explorer",
-      if (pain_report()) "exploration" else "calculation",
-      list(outcome = if (x$outcome == "means") "continuous" else "binary", study_type = "comparison", goal = input$goal,
-        analyzable = x$n, alpha = x$alpha, target_power = input$target_power, recruitment = adjust_for_dropout(x$n, input$dropout)), report_sections())
-  })
   output$report_preview <- renderUI(app_report_body(report_sections(), heading = report_heading(), intro = report_intro()))
   output$download_plan <- downloadHandler(filename = function() if (pain_report()) "pain-relief-simulation-report.html" else "sample-size-study-plan.html",
     content = function(file) writeLines(app_report_document(report_heading(), "power_explorer", report_sections(),

@@ -31,6 +31,7 @@ if (knitr::is_latex_output()) {
   knitr::opts_chunk$set(echo = FALSE, warning = FALSE)
 }
 source("../R/sample_size_functions.R")
+source("../R/single_population.R")
 source("../R/tutorial_helpers.R")
 source("../R/teaching_cases.R")
 source("../R/question_map.R")
@@ -98,7 +99,7 @@ The extensions below may be relevant to your study question. They should help yo
 - Distinguish [an observed significance boundary from planned power](#critical-observed-difference) and explore [sampling distributions and error regions](#alpha-beta).
 - [Read power curves](#curves) and evaluate what a fixed sample can establish.
 - [Build a simulated clinical trial](#simulation) to examine power, coverage and precision, accounting for [Monte Carlo uncertainty](#monte-carlo-error).
-- Plan a [two-group comparison for useful precision](#plan-for-precision) or a [single-population prevalence estimate](#prevalence), matching the criterion to the research question.
+- Plan a [population mean estimate](#plan-for-precision) or a [prevalence estimate](#prevalence) for a useful confidence interval width.
 - Assess [existing-data reuse](#dataset-reuse), [rare-disease constraints](#rare-diseases), and the information needed for decisions in a [pilot or feasibility study](#pilot-feasibility).
 - Recognize [study designs that need another method](#study-designs), including paired measurements and prediction models.
 - Explain how [multiple comparisons](#multiple-outcomes-comparisons), [interim analyses](#interim-analyses-stopping) and [sample-size re-estimation](#sample-size-re-estimation) affect planning and reporting.
@@ -1056,28 +1057,28 @@ A study can detect a difference from zero while leaving considerable uncertainty
 
 ## Estimation with a precision target {#plan-for-precision .advanced-heading}
 
-The rehabilitation study aims to estimate the difference in mean improvement between two independent groups. You should specify how narrow the confidence interval needs to be to support a useful interpretation. Here, a 95% confidence interval with an anticipated full width of 4 score units is the precision target [@wang2020; @lakens2022].
+A rehabilitation study aims to estimate the mean improvement in one patient population. You should specify how narrow the confidence interval needs to be to support a useful interpretation. Here, a 95% confidence interval with an anticipated full width of 4 score units is the precision target [@wang2020; @lakens2022].
 
-With an assumed common SD of 5 units, the [mean-difference estimation activity](https://katatam.github.io/sample-size-calculation/study/?activity=mean_precision) finds the smallest group size meeting this target. The calculation uses the confidence level, SD and desired width. For the simulation only, the population mean difference is set to 3 units so you can compare each interval with a known value.
+With an assumed SD of 5 units, the [mean estimation activity](https://katatam.github.io/sample-size-calculation/study/?activity=mean_precision) finds the smallest total sample meeting this target. The calculation uses the confidence level, SD and desired width. The population mean used in simulation is 3 units, which supplies a known value for checking the intervals.
 
 ```{r precision-plan}
-# Define the population used in the simulation and the desired precision.
-# The mean difference of 3 supplies a known truth for checking coverage.
-precision_spec <- study_spec(outcome = "means", delta = 3, sd = 5,
-  threshold = 2, width_target = 4, B = 5000, seed = 20260922)
-# Choose the smallest group size meeting the expected interval-width target.
-precision_spec$n <- plan_n(precision_spec, goal = "precision")
-c(per_group = precision_spec$n,
-  anticipated_full_width = anticipated_width(precision_spec))
+# Define one population and the desired precision for its mean.
+# The mean of 3 supplies a known value for checking interval coverage.
+precision_spec <- single_population_spec(outcome = "means", mean = 3,
+  sd = 5, confidence = .95, width = 4, B = 5000, seed = 20260922)
+# Find the smallest total sample meeting the expected interval-width target.
+precision_n <- single_population_n(precision_spec)
+c(analyzable_total = precision_n,
+  anticipated_full_width = single_population_width(precision_spec, precision_n))
 # Repeated samples produce different estimates and interval widths.
-precision_batch <- simulate_trials(precision_spec)
+precision_batch <- single_population_simulate(precision_spec, precision_n, many = TRUE)
 ```
 
 ```{r precision-plan-formatted, echo=FALSE}
-knitr::kable(data.frame(`Analyzable per group`=precision_spec$n, `Anticipated full interval width`=round(anticipated_width(precision_spec),2),check.names=FALSE), caption="Group size required for a 95% confidence interval with anticipated full width of at most 4 score units, assuming SD 5.")
+knitr::kable(data.frame(`Analyzable participants (total)`=precision_n, `Anticipated full interval width`=round(single_population_width(precision_spec, precision_n),2),check.names=FALSE), caption="Total sample required to estimate one population mean with a 95% confidence interval of anticipated full width at most 4 score units, assuming SD 5.")
 ```
 
-For normal data, this calculation uses the expected full width of a t-based interval. Realized interval widths vary with the sample SD. The simulation shows how often intervals contain the known population difference and how often their width meets the chosen target [@sandoval2025].
+For normal data, this calculation uses the expected full width of a t-based interval. Realized interval widths vary with the sample SD. The simulation shows how often intervals contain the known population mean and how often their width meets the chosen target [@sandoval2025].
 
 
 
@@ -1088,12 +1089,12 @@ render_app_preview("mean_precision", "Explore sample size for a chosen confidenc
 ::: {.activity}
 <p class="question-label">Question to consider</p>
 
-In [Activity: Estimate a mean difference with a precision target](https://katatam.github.io/sample-size-calculation/study/?activity=mean_precision), what does a full-width target of 4 units mean? Will every simulated interval meet it?
+In [Activity: Estimate a population mean with a precision target](https://katatam.github.io/sample-size-calculation/study/?activity=mean_precision), what does a full-width target of 4 units mean? Will every simulated interval meet it?
 
 <details class="model-answer" id="model-answer-precision-versus-power">
 <summary>Model answer</summary>
 
-A full width of 4 units corresponds to a margin of approximately 2 units on either side of the estimated difference. With SD 5, the calculation requires `r precision_spec$n` analyzable patients per group. It meets an anticipated-width target. Individual intervals can be wider or narrower because the sample SD varies across studies.
+A full width of 4 units corresponds to a margin of approximately 2 units on either side of the estimated mean. With SD 5, the calculation requires `r precision_n` analyzable patients in total. It meets an anticipated-width target. Individual intervals can be wider or narrower because the sample SD varies across studies.
 
 </details>
 :::
@@ -2253,6 +2254,7 @@ The table distinguishes the planning calculation from the analysis of simulated 
 |:--|:--|:--|
 | Two proportions | Normal approximation using R's `stats::power.prop.test()`, two-sided with `strict = TRUE`; required patients rounded upward per group | The reasoning lab uses a two-sided pooled score test without continuity correction and a Newcombe-Wilson interval for the difference |
 | Two means: calculator and reasoning lab | Pooled two-sample t-test planning using `stats::power.t.test()`, two-sided with `strict = TRUE`; required patients rounded upward per group | Pooled-variance t test and t interval; R analysis uses `t.test(..., var.equal = TRUE)` |
+| One population: lab estimation mode | Smallest total sample meeting the expected one-sample t-interval width for a mean, or Wilson interval width at the assumed percentage | Normal samples with one-sample t intervals, or binomial samples with Wilson intervals; the report records coverage and interval-width attainment |
 | One population percentage | Normal approximation for the requested margin of error; the unknown-percentage option uses 50% for planning | A simulated binomial count is summarized with a Wilson interval |
 | Sampling distributions | Normal probabilities for one sample mean with a known population SD | Rejection boundaries and probabilities follow the selected one- or two-sided rule |
 | Recruitment adjustment | Optional switching multiplier $1/(1-a-b)^2$, followed by division by each group's retained fraction; the larger requirement is rounded upward once and used in both groups | Assumes complete switching and little variance change; equal recruitment with potentially unequal expected retained counts. It calculates requirements without generating patient outcomes |

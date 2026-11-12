@@ -1,6 +1,6 @@
 /* Scoped to live tutorial windows; dedicated app layouts remain unchanged. */
 .tutorial-embedded body {font-size:16px;line-height:1.5;background:#fff;color:#243447;margin:0}
-.tutorial-embedded .container-fluid {padding:10px 12px;max-width:100%;min-height:0}
+.tutorial-embedded .container-fluid {padding:6px;max-width:100%;min-height:0}
 .tutorial-embedded .container-fluid > .row {margin:0}
 .tutorial-embedded .container-fluid > .row > .col-sm-4,.tutorial-embedded .container-fluid > .row > .col-sm-8 {padding:0}
 .tutorial-embedded .row > .col-sm-4,.tutorial-embedded .row > .col-sm-8 {width:100%;float:none;min-width:0}
@@ -25,9 +25,9 @@
 .tutorial-embedded .app-interpretation > h3 {display:none}
 .tutorial-embedded #allocation_plot {height:270px!important}
 .tutorial-embedded #scenario_summary {margin:0 0 8px}
-.tutorial-embedded.pain-focus .well {display:grid;grid-template-columns:2fr 1fr;gap:0 14px;align-items:start}
+.tutorial-embedded.pain-focus:not(.single-population-mode) .well {display:grid;grid-template-columns:2fr 1fr;gap:0 14px;align-items:start}
 .tutorial-embedded.pain-focus #scenario_summary,.tutorial-embedded.pain-focus #lab-settings[open] {grid-column:1/-1}
-.tutorial-embedded.pain-focus .well .shiny-panel-conditional {min-width:0}
+.tutorial-embedded.pain-focus:not(.single-population-mode) .well .shiny-panel-conditional {min-width:0}
 .tutorial-embedded.pain-focus #lab-settings[open] {grid-row:3}
 .tutorial-embedded #fixed_n {max-width:160px}
 .tutorial-embedded #lab-settings {margin:0}
@@ -41,6 +41,7 @@
 .tutorial-embedded details.activity-description,.tutorial-embedded details.app-resume {display:inline-block;vertical-align:top;width:49%;margin:0 0 6px;border:0;padding:0}
 .tutorial-embedded details.activity-description[open],.tutorial-embedded details.app-resume[open] {width:100%}
 .tutorial-embedded .activity-description .app-intro,.tutorial-embedded .activity-description .activity-context {display:block}
-.tutorial-embedded .inline-study-explanation {border-top:1px solid #b9cddd;padding:4px 6px}
+.tutorial-embedded .inline-study-explanation,.tutorial-embedded #combined-many-studies {border:1px solid #b9cddd;border-radius:5px;padding:2px 8px;margin:10px 0;clear:both}
+.tutorial-embedded .inline-study-explanation > summary,.tutorial-embedded #combined-many-studies > summary {display:list-item;min-height:44px;cursor:pointer}
 .tutorial-embedded .simulation-actions > label {display:inline-flex;gap:6px;align-items:center;min-height:44px;margin:0}
-@media(max-width:520px){.tutorial-embedded .well > section.app-input-group,.tutorial-embedded .well:has(> section.app-input-group){grid-template-columns:1fr}.tutorial-embedded .container-fluid{padding:8px}.tutorial-embedded .nav-tabs > li > a{padding:10px 8px}.tutorial-embedded #sampling-journey{min-width:0}.tutorial-embedded.pain-focus .well{grid-template-columns:1fr}.tutorial-embedded details.activity-description,.tutorial-embedded details.app-resume{width:100%}}
+@media(max-width:520px){.tutorial-embedded .well > section.app-input-group,.tutorial-embedded .well:has(> section.app-input-group){grid-template-columns:1fr}.tutorial-embedded .container-fluid{padding:8px}.tutorial-embedded .nav-tabs > li > a{padding:10px 8px}.tutorial-embedded #sampling-journey{min-width:0}.tutorial-embedded.pain-focus:not(.single-population-mode) .well{grid-template-columns:1fr}.tutorial-embedded details.activity-description,.tutorial-embedded details.app-resume{width:100%}}

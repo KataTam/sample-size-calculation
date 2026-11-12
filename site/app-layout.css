@@ -98,6 +98,12 @@ textarea.form-control { min-height:88px; resize:vertical; }
 }
 
 .plan-transfer {margin:1rem 0}.plan-transfer-data[hidden]{display:none!important}.plan-transfer [role=status]:empty{display:none}
+.single-population-mode .row > .col-sm-4,.single-population-mode .row > .col-sm-8 {width:100%;float:none}
+.single-population-inputs {display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px 20px}
+.single-population-inputs > details {grid-column:1/-1}
+.single-population-inputs .shiny-input-container {width:100%}
+.single-population-inputs > .shiny-panel-conditional {min-width:0}
+@media(max-width:600px){.single-population-inputs{grid-template-columns:1fr}}
 
 .activity-description { margin: .7rem 0 1rem; padding: .2rem .8rem; border: 1px solid #b5c8d9; border-radius: 6px; background: #eef4fa; color: #25313b; }
 .activity-description > summary { cursor: pointer; padding: .65rem 0; min-height: 44px; font-weight: 600; }

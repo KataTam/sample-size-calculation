@@ -68,7 +68,7 @@ Purpose: see why sample estimates differ from population values, interpret the u
 3. The 20-trial animation shows different possible trials while the population probabilities remain fixed. Patient outcomes produce each observed difference, which falls into the distribution of repeated-study estimates.
 4. “Many studies and a larger sample” opens further down the same page. “Simulate many studies” generates 5,000 independent trials. The distribution shows sampling variability; the percentage of significant results estimates power for this population scenario.
 5. Before repeating at 50 and 80 patients per group, you can predict how the estimates and power will change, holding the population assumptions and repetition count fixed. Larger trials usually produce less variable estimates and greater power at a nonzero population difference. “Settings” provides the other assumptions. Advanced controls start closed; coverage and Monte Carlo summaries can wait until the advanced chapter.
-6. The expandable “Model answer” sections support reflection. “Report” summarizes the population assumptions, pain-relief counts in one study, and results across many studies, with an explanation of sampling variability. You can add your reflection and download a PDF or editable Word report. After changing the sample size, a new run is needed for those results to appear in the report.
+6. The expandable “Model answer” sections explain the results. “Report” records the population assumptions, pain-relief counts in one study, results across many studies, and reproducibility details. The report can be downloaded as PDF or editable Word. After changing the sample size, a new run is needed for those results to appear in the report.
 
 ## Reviewing short examples
 
@@ -163,7 +163,7 @@ Purpose: extend the core simulation from power to confidence interval coverage, 
 4. A custom treatment probability of 45%, with control still 30%, tests the plan under a 15-point true difference. A no-effect scenario estimates the false-positive probability.
 5. You can vary the repetition count while leaving patients per group fixed. More repetitions reduce Monte Carlo uncertainty while each trial's design stays fixed. A report should retain the generating assumptions, analysis and repetition count.
 
-Within the same activity, *Settings* and *Explore further* contain *Explore missing outcomes*:
+Within the same activity, *Settings* → *Show advanced settings and results* reveals *Explore missing outcomes*:
 
 1. You can select *Complete outcomes* and keep recruitment at 60 per group as a reference.
 2. *Equal losses* removes outcomes independently of relief with 10% probability in each group. One study shows recruited and retained counts and the records excluded from analysis.
@@ -200,17 +200,17 @@ The simulation above uses one final analysis. For a design with interim stopping
 3. “Expected switching is already included” prevents applying that allowance twice. For binary outcomes, the [two-proportion app](../two_proportions/) can recalculate using the revised event percentages in the [worked example](../book/simulation.html#treatment-switching).
 4. The report records the applied adjustments and your explanation. The [recruitment review](../book/simulation.html#recruitment-error-activity) checks their interpretation; the [missing-outcome simulation](../book/simulation.html#explore-missing-outcomes) examines information loss and bias.
 
-## Estimate a mean difference with a precision target — advanced
+## Estimate a population mean with a precision target — advanced
 
 [Open activity](../study/?activity=mean_precision) · [Matching explanation](../book/estimation-planning.html#plan-for-precision)
 
-Purpose: plan a useful confidence-interval width for a mean difference and examine its performance across repeated samples.
+Purpose: plan a useful confidence-interval width for one population mean and examine its performance across repeated samples.
 
-1. The estimation activity uses SD 5, 95% confidence and a target full interval width of 4 units. A population difference of 3 units supplies a known value for evaluating the simulations.
-2. “Overview” shows the sample for the interval-width goal. A narrower target or larger SD increases the required count.
-3. “One study” generates a realized interval. Realized interval widths vary.
-4. “Many studies” estimates the percentage meeting the full-width target. A full width of 4 corresponds to a margin of about 2 for a symmetric interval.
-5. Your justification should explain why this interval width would support a useful interpretation and which evidence supports the assumed SD.
+1. The estimation activity uses SD 5, 95% confidence and a target full interval width of 4 units. A population mean of 3 units supplies a known value for evaluating the simulations.
+2. “Overview” shows the total sample for the interval-width goal. A narrower target or larger SD increases the required count.
+3. In “Simulations,” a single study produces an estimate and confidence interval.
+4. Repeated studies show the percentage of intervals containing the population mean and meeting the width target. A full width of 4 corresponds to a margin of about 2 for a symmetric interval.
+5. “Report” records the current assumptions, total sample size, simulations, and methods. PDF and editable Word downloads are available; “Save work for later” preserves the inputs for reopening.
 
 ## Estimate a population percentage — advanced
 

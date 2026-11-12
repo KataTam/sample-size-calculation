@@ -343,11 +343,13 @@ details.section-disclosure > summary > :is(h2,h3,h4,h5,h6) {
 .app-preview-label { font-size:13px; letter-spacing:.03em; }
 .app-preview-title { font-weight:600; }
 .inline-app-link {margin:10px 0 0;font-size:16px;line-height:1.5}
+.inline-activity.app-preview {padding:5px;margin-left:-8px;margin-right:-8px;border-color:#b7cad9;background:transparent}
+.inline-activity .app-preview-title {margin:6px 5px 10px}
 .inline-app-link a {display:inline-flex;align-items:center;min-height:44px;text-decoration:underline}
-.inline-app-panel {background:white;border:1px solid #94adc3;border-radius:5px;color:#243447}
+.inline-app-panel {background:white;border:0;border-radius:3px;color:#243447}
 .inline-app-panel[hidden],.inline-activity > a[hidden] {display:none!important}
 .inline-app-panel iframe {display:block;width:100%;border:0;background:white;max-width:100%}
-.inline-app-toolbar {display:flex;gap:6px;align-items:center;padding:5px 8px;background:#e6f0fa;color:#243447}
+.inline-app-toolbar {display:flex;gap:4px;align-items:center;padding:2px 4px;background:#e6f0fa;color:#243447}
 .inline-app-status {flex:1;font-size:15px;line-height:1.4}
 .inline-app-toolbar button {min-width:44px;min-height:44px;border:1px solid #58738b;border-radius:4px;background:white;color:#243447;font-size:22px;cursor:pointer}
 .inline-app-toolbar button:focus-visible {outline:3px solid #a45115;outline-offset:2px}

@@ -118,9 +118,7 @@ app_pain_simulation_report <- function(current, one, many, details) {
       " (novel minus standard). These are the population values used to generate the simulated data."),
     paste0("The analysis uses a two-sided test with Type I error probability ", format_percent(x$alpha),
       ".")),
-    "One simulated study" = single, "Many simulated studies" = repeated,
-    "What changes across studies" = app_sampling_explanation(x),
-    "Your reflection" = app_answer(details$justification))
+    "One simulated study" = single, "Many simulated studies" = repeated)
   labels <- c(study_question = "Research question and primary outcome", clinical_relevance = "Clinical relevance",
     participant_burden = "Participant burden and ethics", evidence_sources = "Supporting evidence")
   filled <- names(labels)[vapply(names(labels), function(id) !is.null(details[[id]]) && nzchar(trimws(details[[id]])), logical(1))]
@@ -128,6 +126,7 @@ app_pain_simulation_report <- function(current, one, many, details) {
     "These notes are reproduced as entered and should be reviewed after changing settings.",
     vapply(filled, function(id) paste0(labels[[id]], ": ", details[[id]]), character(1)))
   sections[["Simulation record"]] <- c("Analysis: two-sided pooled score test for independent proportions without continuity correction.",
+    paste0("Software: R ", getRversion(), "; stats ", utils::packageVersion("stats"), ". Binary outcomes are generated with stats::rbinom."),
     paste0("Random seed: ", x$seed, "; requested repetitions: ", x$B,
       ". The optional R workflow supplied with the app reproduces the current settings."))
   sections

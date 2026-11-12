@@ -7,7 +7,7 @@ const base=(process.argv[2]||'http://127.0.0.1:8769').replace(/\/$/,'');
  try {
   for(const [chapter,id,engine,selector] of [
    ['calculations','probiotics_calculation','two_proportions','#pi1'],
-   ['clinical-question','pain_one_many','power_explorer','#fixed_n']]) {
+   ['clinical-question','pain_one_many','power_explorer','#fixed_n']].filter(row=>!process.argv[3] || row[1]===process.argv[3])) {
    const context=await browser.newContext({viewport:{width:1360,height:1100}}),page=await context.newPage(),errors=[];
    console.log(`Starting ${id}`);
    page.on('pageerror',e=>errors.push(e.message));
@@ -40,7 +40,9 @@ const base=(process.argv[2]||'http://127.0.0.1:8769').replace(/\/$/,'');
     await app.waitForFunction(()=>jQuery('#pi1').data('ionRangeSlider')?.result.from===.9 && document.querySelector('#result').textContent.includes('266'));
     await app.locator('#pi1-number').fill('95');await app.locator('#pi1-number').press('Enter');
     await app.waitForFunction(()=>document.querySelector('#interpretation').textContent.includes('95%'));
-    assert(Number((await app.locator('#result .app-value').innerText()))<266);
+    assert(parseFloat(await app.locator('#result .app-value').innerText())<266);
+    assert.match(await app.locator('#result .app-value').innerText(),/per group/);
+    assert.match(await app.locator('#result').innerText(),/standard.*novel.*in total/s);
     await dimensions();
     const before=await iframe.evaluate(el=>el.offsetHeight);
     await app.locator('details.app-input-group').filter({has:app.locator('#alpha')}).locator('summary').click();
@@ -50,6 +52,14 @@ const base=(process.argv[2]||'http://127.0.0.1:8769').replace(/\/$/,'');
     await app.locator('#report_preview').filter({hasText:'95%'}).waitFor();
    } else {
      await app.waitForFunction(()=>Number(document.querySelector('#fixed_n').value)===20 && document.documentElement.classList.contains('pain-focus'));
+    await app.locator('#inline-study-explanation > summary').click();
+    assert((await app.locator('#inline-study-explanation').innerText()).length>150);
+    await dimensions();
+    await app.locator('#inline-study-explanation > summary').click();
+    await app.locator('#one-study-records > summary').click();
+    assert.match(await app.locator('#one-study-records').innerText(),/after a single-study simulation/);
+    await dimensions();
+    await app.locator('#one-study-records > summary').click();
     await app.locator('#fixed_n').fill('40');await app.locator('#fixed_n').press('Tab');
     await app.locator('#run_one').click();
     await app.locator('#sampling-journey svg').waitFor();
@@ -63,9 +73,14 @@ const base=(process.argv[2]||'http://127.0.0.1:8769').replace(/\/$/,'');
     await app.locator('#distribution img').waitFor({timeout:90000});
     await dimensions();
     await app.locator('#combined-many-studies > summary').click();
+    await settle();
     await app.locator('a[data-value="Justify and communicate"]').click();
-    await app.locator('#justification').fill('The estimated differences vary across repeated trials.');
-    await app.locator('#report_preview').filter({hasText:'The estimated differences vary across repeated trials.'}).waitFor();
+    try {await app.locator('#report_preview').filter({hasText:'40 patients per group'}).waitFor();}
+    catch(error){console.log(await app.evaluate(()=>({n:Shiny.shinyapp.$inputValues.fixed_n,stage:Shiny.shinyapp.$inputValues.stage,report:document.querySelector('#report_preview').outerHTML})));throw error;}
+    assert.equal(await app.locator('#justification').isVisible(),false);
+    assert.equal(await app.locator('.plan-transfer').count(),0);
+    assert.equal(await app.locator('a[data-value="Methods"]').count(),0);
+    assert(!/Your reflection/.test(await app.locator('#report_preview').innerText()));
    }
    // Both readable formats work from the nested inline frame.
    for(const format of ['pdf','docx']) {
@@ -91,14 +106,24 @@ const base=(process.argv[2]||'http://127.0.0.1:8769').replace(/\/$/,'');
     assert.equal(await app.locator('#pi1-number').inputValue(),'95');
     await app.locator('a[data-value="Overview"]').click();
    }else{
-    assert.equal(await app.locator('#justification').inputValue(),'The estimated differences vary across repeated trials.');
+    assert.equal(await app.locator('#fixed_n').inputValue(),'40');
     await app.locator('a[data-value="One study"]').click();
+    await app.locator('#lab-settings > summary').click();
+    await app.locator('#show_advanced').check();
+    await app.locator('#reality-selectized').waitFor({state:'visible'});
+    await app.locator('a[data-value="Compare assumptions"]').waitFor({state:'visible'});
+    await app.evaluate(()=>jQuery('#reality')[0].selectize.setValue('null'));
+    await app.locator('#show_advanced').uncheck();
+    await app.waitForFunction(()=>Shiny.shinyapp.$inputValues.reality==='same');
+    assert.equal(await app.locator('#reality-selectized').isVisible(),false);
+    await app.locator('a[data-value="Compare assumptions"]').waitFor({state:'hidden'});
+    await app.locator('#lab-settings > summary').click();
    }
    await dimensions();
    const dedicated=card.locator('[data-inline-dedicated]');
    assert.equal(await dedicated.getAttribute('href'),`${base}/${engine}/?activity=${id}`);
    assert.equal(await dedicated.getAttribute('target'),'_blank');
-   assert(await dedicated.evaluate(el=>el.getBoundingClientRect().top>el.closest('.inline-activity').querySelector('iframe').getBoundingClientRect().bottom));
+   assert(await dedicated.evaluate(el=>el.getBoundingClientRect().top>=el.closest('.inline-activity').querySelector('iframe').getBoundingClientRect().bottom));
    await page.setViewportSize({width:1360,height:1700});await dimensions();
    await card.evaluate(el=>el.scrollIntoView({block:'start'}));await page.waitForTimeout(500);
    await page.screenshot({path:`build/inline-apps/${id}-desktop.png`});

@@ -26,7 +26,7 @@ The core [calculation activity](book/calculations.html#calculate-sample-size) us
 
 - [Advanced study plan](assumptions_report/?level=advanced): appraise evidence, justify ranges and compare sensitivity scenarios in the same report.
 
-- [Mean-difference estimation](power_explorer/?activity=mean_precision): calculate a sample size for a useful confidence-interval width and examine intervals across simulated studies. [Tutorial explanation](book/estimation-planning.html#plan-for-precision).
+- [Mean estimation](power_explorer/?activity=mean_precision): calculate a sample size for a useful confidence-interval width and examine intervals across simulated studies. [Tutorial explanation](book/estimation-planning.html#plan-for-precision).
 
 - [Sample size reasoning lab](power_explorer/?activity=pain_simulation): simulate how treatment estimates, confidence intervals, and detection probabilities change under different assumptions and missing-outcome scenarios. [Activity: Simulate repeated chronic-pain trials](study/?activity=pain_simulation).
 
