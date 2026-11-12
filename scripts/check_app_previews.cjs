@@ -59,6 +59,15 @@ const base=(process.argv[2]||'http://127.0.0.1:8769').replace(/\/$/,'');
   assert.equal(await appFrame.evaluate(()=>window.previewSentinel),'same app instance');
   assert.equal(context.pages().length,1);
   assert.equal(await page.locator('#lesson-frame').getAttribute('src').then(x=>x.includes('/study/')),false);
+  // The complete HTML is assembled from chapter DOMs. Copied initialization
+  // flags must not suppress the event bindings on this new document.
+  await page.goto(base+'/book/Sample_size_open_module.html');
+  assert.equal(await page.locator('.inline-activity').count(),2);
+  const complete=page.locator('[data-activity="pain_one_many"]');
+  await complete.locator('[data-inline-start]').click();
+  await complete.locator('iframe[src*="power_explorer"]').waitFor();
+  assert.match(page.url(),/book\/Sample_size_open_module\.html$/);
+  assert.equal(await complete.locator('[aria-label="Close app window"]').innerText(),'\u00d7');
   assert.deepEqual(errors,[]);
   console.log('App previews passed: responsive themes, inline startup, dedicated links, existing side panel and preserved report answers.');
  }finally{await browser.close();}

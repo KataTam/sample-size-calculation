@@ -1,7 +1,12 @@
 /* On-demand tutorial apps. Original software: MIT. */
 (() => {
+  if (window.SampleSizeInlineAppsInstalled) return;
+  window.SampleSizeInlineAppsInstalled = true;
   const allowed = {pain_one_many: 'power_explorer', probiotics_calculation: 'two_proportions'};
   const windows = new Map();
+  // Event bindings cannot be serialized with the complete HTML export.
+  // Track them in this page's runtime rather than in a copied DOM attribute.
+  const bound = new WeakSet();
   function appURL(card) {
     // Book chapters and the complete online HTML live in /book/. The RStudio
     // standalone preview and a downloaded file use the published app instead.
@@ -20,8 +25,8 @@
   }
   function setup() {
     document.querySelectorAll('.inline-activity').forEach(card => {
-      if (card.dataset.inlineBound || allowed[card.dataset.activity] !== card.dataset.inlineApp) return;
-      card.dataset.inlineBound = 'true';
+      if (bound.has(card) || allowed[card.dataset.activity] !== card.dataset.inlineApp) return;
+      bound.add(card);
       const start = card.querySelector('[data-inline-start]'), dedicated = card.querySelector('[data-inline-dedicated]');
       const url = appURL(card); start.href = dedicated.href = url.href;
       start.addEventListener('click', event => {
