@@ -35,8 +35,8 @@ activity_guidance_script <- function() {
     asset_setup <- "window.SampleSizeReportAssets=new URL('/report-assets/',location.href).href;"
   }
   paste0(asset_setup, "(function(){const style=document.createElement('style');style.textContent=",
-    jsonlite::toJSON(paste(read_asset("app-layout.css"), read_asset("input-guidance.css")), auto_unbox = TRUE),
-    ";document.head.append(style);})();\n", read_asset("input-guidance.js"), "\n", read_asset("app-layout.js"), "\n", read_asset("plan-transfer.js"), "\n", read_asset("report-exports.js"))
+    jsonlite::toJSON(paste(read_asset("app-layout.css"), read_asset("input-guidance.css"), read_asset("inline-app.css")), auto_unbox = TRUE),
+    ";document.head.append(style);})();\n", read_asset("inline-app-client.js"), "\n", read_asset("input-guidance.js"), "\n", read_asset("app-layout.js"), "\n", read_asset("plan-transfer.js"), "\n", read_asset("report-exports.js"))
 }
 activity_details <- function(title, ...) shiny::tags$details(class = "activity-details", shiny::tags$summary(title), ...)
 activity_description <- function(...) shiny::tags$details(class = "activity-description activity-details",

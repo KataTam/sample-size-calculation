@@ -100,3 +100,9 @@ The structured review compares the latest primary calculation with recruitment a
 Report edits synchronize between tabs that have resumed or started a plan on the same origin. An unopened saved plan remains behind the resumption choice. Shiny apps store editable inputs separately by app and activity and offer explicit restoration on reopening; simulated results must be rerun. Browser storage is specific to the browser and site address. The downloadable work files provide portable backups.
 
 Standalone and embedded quizzes preserve attempts and answer order in browser storage. New attempts shuffle options while keeping stable option identities for scoring. Updated question content invalidates old attempts. Each option has a maintained explanation in the shared question bank, including printable answer keys.
+
+## Apps embedded in tutorial chapters
+
+The `pain_one_many` and `probiotics_calculation` previews start their live apps in place when selected. `R/tutorial_helpers.R` supplies the fallback screenshots and dedicated-page links; `module/inline-apps.js` manages startup, closing and expansion. The same iframe stays mounted when closed or expanded, preserving its session. The child uses `site/inline-app-client.js` to report its content height to the owning same-origin tutorial frame, and `site/inline-app.css` supplies the compact layout. Other previews retain the side-panel workflow. The PDF and downloaded HTML retain screenshots and links; inline startup requires the tutorial and apps to be served together over HTTP(S).
+
+After exporting and assembling the site, `node scripts/check_inline_apps.cjs` checks both real WebR apps, changed results, PDF/Word reports, responsive sizing and session preservation. It also checks the dedicated-page links below the windows. Existing screenshot and side-panel checks remain in `scripts/check_app_previews.cjs`.

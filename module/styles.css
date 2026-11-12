@@ -342,6 +342,18 @@ details.section-disclosure > summary > :is(h2,h3,h4,h5,h6) {
 .app-preview-content p { margin:0 0 10px; }
 .app-preview-label { font-size:13px; letter-spacing:.03em; }
 .app-preview-title { font-weight:600; }
+.inline-app-link {margin:10px 0 0;font-size:16px;line-height:1.5}
+.inline-app-link a {display:inline-flex;align-items:center;min-height:44px;text-decoration:underline}
+.inline-app-panel {background:white;border:1px solid #94adc3;border-radius:5px;color:#243447}
+.inline-app-panel[hidden],.inline-activity > a[hidden] {display:none!important}
+.inline-app-panel iframe {display:block;width:100%;border:0;background:white;max-width:100%}
+.inline-app-toolbar {display:flex;gap:6px;align-items:center;padding:5px 8px;background:#e6f0fa;color:#243447}
+.inline-app-status {flex:1;font-size:15px;line-height:1.4}
+.inline-app-toolbar button {min-width:44px;min-height:44px;border:1px solid #58738b;border-radius:4px;background:white;color:#243447;font-size:22px;cursor:pointer}
+.inline-app-toolbar button:focus-visible {outline:3px solid #a45115;outline-offset:2px}
+.inline-app-expanded {position:fixed;inset:12px;z-index:2000;overflow:auto;box-shadow:0 0 0 100vmax #142737a6}
+.inline-app-expanded .inline-app-toolbar {position:sticky;top:0;z-index:2}
+@media print {.inline-app-panel{display:none!important}.inline-activity > a[hidden]{display:block!important}.inline-app-link{font-size:10pt}}
 .app-preview-action:last-child { margin-bottom:0; }
 .app-preview-action a { display:inline-block; padding:9px 12px; min-height:44px; box-sizing:border-box; background:#20597b!important; color:white!important; border-radius:5px; text-decoration:underline; }
 .app-preview-action a:focus-visible { outline:3px solid #a45115; outline-offset:3px; }

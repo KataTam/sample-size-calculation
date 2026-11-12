@@ -13,6 +13,7 @@
   }
   function draw(progress) {
     const host = el('sampling-journey'); if (!host || !data) return;
+    if(document.documentElement.classList.contains('tutorial-embedded')) { drawInline(host, progress); return; }
     host.replaceChildren();
     const rows = Math.ceil(Math.min(data.n,80)/16);
     const endPatients = 110 + (rows-1)*16, heading2 = endPatients+40, axis1 = heading2+80;
@@ -63,6 +64,65 @@
     const moving = reduced ? (progress<.85?0:1) : phase*phase*(3-2*phase);
     node(svg,'circle',{cx:point(t.estimate),'data-moving-estimate':'true',cy:axis1+(positions[index].y-axis1)*moving,r:5,fill:'#b53c69',stroke:'#fff','stroke-width':1});
   }
+  const measureText = document.createElement('canvas').getContext('2d');
+  function drawInline(host, progress) {
+    // Native-size lettering and wrapped labels keep the chart readable in a
+    // narrow chapter column. Both estimate axes always use the same scale.
+    host.replaceChildren();
+    const width=Math.max(250,Math.floor(host.clientWidth)), t=data.trials[index];
+    const labels=data.labels || ['Standard','Novel'], at=x=>38+(x+1)*(width-76)/2;
+    const svg=node(host,'svg',{viewBox:`0 0 ${width} 500`,role:'img','aria-label':'Patient outcomes, estimated difference and accumulated trial estimates'});
+    function text(text,x,y,available=width-24) {
+      measureText.font='14px system-ui'; let line='';
+      for(const word of text.split(' ')) {
+        const next=line?line+' '+word:word;
+        if(line && measureText.measureText(next).width>available) {
+          node(svg,'text',{x,y,style:'font-size:14px'},line); y+=18; line=word;
+        } else line=next;
+      }
+      node(svg,'text',{x,y,style:'font-size:14px'},line); return y;
+    }
+    let y=text(`Population: ${labels[0]} ${pct(data.p0)}; ${labels[1]} ${pct(data.p1)}`,12,22);
+    y=text(`1. Patient outcomes · trial ${index+1} of ${data.trials.length}`,12,y+26);
+    const cols=Math.max(7,Math.min(16,Math.floor((width/2-30)/13))), rows=Math.ceil(Math.min(data.n,80)/cols);
+    const top=y+24;
+    [t.control,t.treatment].forEach((values,g)=>{
+      const x=14+g*width/2,color=g?'#984b87':'#19738c';
+      text(labels[g],x,top,width/2-22);
+      text(`${t.counts[g]}/${data.n} (${pct(t.counts[g]/data.n)})`,x,top+20,width/2-22);
+      values.slice(0,80).forEach((v,i)=>node(svg,'circle',{cx:x+5+(i%cols)*13,cy:top+38+Math.floor(i/cols)*15,r:4.5,fill:v?color:'white',stroke:color,'stroke-width':1.5}));
+    });
+    y=text(`${data.n} patients per group`,12,top+38+rows*15+5);
+    if(data.n>80)y=text('First 80 shown per group; counts include everyone.',12,y+20);
+    node(svg,'path',{d:`M${width/2} ${y+8} v18 m-5 -6 l5 6 l5 -6`,fill:'none',stroke:'#64748b','stroke-width':2});
+    y=text('2. Estimated difference in this trial',12,y+48);
+    y=text(`${pct(t.counts[1]/data.n)} − ${pct(t.counts[0]/data.n)} = ${Math.round(t.estimate*1000)/10} percentage points`,12,y+22);
+    const axis1=y+42;
+    y=text('3. The same estimate joins earlier trials',12,axis1+50);
+    y=text('Each dot is one trial. Both axes show percentage points.',12,y+22);
+    const axis2=y+100, bins={},positions=[];
+    for(let i=0;i<=index;i++){
+      const v=data.trials[i].estimate,key=Math.round(v*1000000),level=bins[key]||0;
+      bins[key]=level+1;positions.push({x:at(v),y:axis2-10-level*4});
+    }
+    [axis1,axis2].forEach(yy=>{
+      node(svg,'line',{x1:38,x2:width-38,y1:yy,y2:yy,stroke:'#64748b'});
+      [-1,-.5,0,.5,1].forEach(v=>node(svg,'text',{x:at(v),y:yy+20,'text-anchor':'middle',style:'font-size:14px'},v*100));
+      node(svg,'line',{x1:at(data.p1-data.p0),x2:at(data.p1-data.p0),y1:yy-32,y2:yy,stroke:'#17734c','stroke-dasharray':'4 3'});
+    });
+    for(let i=0;i<index;i++)node(svg,'circle',{cx:positions[i].x,cy:positions[i].y,r:3,fill:'#546378'});
+    const x=at(t.estimate),destination=positions[index].y;
+    node(svg,'line',{x1:x,x2:x,y1:axis1,y2:destination,stroke:'#b53c69','stroke-width':2,'stroke-dasharray':'3 5',opacity:.45});
+    node(svg,'path',{d:`M${x-5} ${destination-10} L${x} ${destination-3} L${x+5} ${destination-10}`,fill:'none',stroke:'#b53c69','stroke-width':2});
+    [axis1,destination].forEach(yy=>node(svg,'circle',{cx:x,cy:yy,r:6,fill:'white',stroke:'#b53c69','stroke-width':2}));
+    node(svg,'text',{x:Math.max(48,Math.min(width-48,x)),y:axis1-12,'text-anchor':'middle',style:'font-size:14px'},`${Math.round(t.estimate*1000)/10} points`);
+    const phase=Math.max(0,Math.min(1,(progress-.35)/.5));
+    const moving=el('journey-motion').checked?(progress<.85?0:1):phase*phase*(3-2*phase);
+    node(svg,'circle',{cx:x,'data-moving-estimate':'true',cy:axis1+(destination-axis1)*moving,r:5,fill:'#b53c69',stroke:'white','stroke-width':1});
+    y=text(`Dashed line: assumed population difference ${Math.round((data.p1-data.p0)*1000)/10} points`,12,axis2+48);
+    y=text('Pink dot: the current trial’s estimated difference',12,y+22);
+    svg.setAttribute('viewBox',`0 0 ${width} ${y+14}`);
+  }
   function status() {
     const t = data.trials[index];
     const labels = data.labels || ['Standard treatment', 'Novel treatment'];
@@ -79,6 +139,7 @@
     draw(elapsed/3800);raf=requestAnimationFrame(tick);
   }
   function play(){cancelAnimationFrame(raf);last=0;paused=false;el('journey-pause').textContent='Pause';el('journey-pause').disabled=false;status();raf=requestAnimationFrame(tick);}
+  window.addEventListener('resize',()=>{if(data)draw(Math.min(1,elapsed/3800));});
   function setup() {
     if(!window.Shiny || !el('journey-pause')) return setTimeout(setup,100);
     el('journey-motion').checked=matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -138,6 +199,23 @@
       oneLink.textContent=payload.combine?'One study and many studies':'One study';
       manyLink.parentElement.hidden=payload.combine;
       manyLink.parentElement.style.display=payload.combine?'none':'';
+      if (payload.combine && document.documentElement.classList.contains('tutorial-embedded') && !el('inline-study-explanation')) {
+        // Keep the experiment visible; interpretation and records remain one
+        // disclosure away in the compact tutorial presentation.
+        el('lab-settings').append(more);
+        const motion=el('journey-motion').closest('label');
+        onePanel.querySelector('.simulation-actions').append(motion);
+        const explanation=document.createElement('details'); explanation.id='inline-study-explanation';
+        explanation.className='inline-study-explanation';
+        const summary=document.createElement('summary'); summary.textContent='Interpret the animation';
+        explanation.append(summary);
+        const question=onePanel.querySelector('.activity-question').closest('.shiny-panel-conditional');
+        const results=el('one_interpretation').closest('.shiny-panel-conditional');
+        el('journey-status').after(explanation); explanation.append(question);
+        const records=document.createElement('details'); records.className='inline-study-explanation';
+        const recordsTitle=document.createElement('summary'); recordsTitle.textContent='Study results and records';
+        results.before(records); records.append(recordsTitle,results);
+      }
     });
     Shiny.addCustomMessageHandler('sampling-journey',payload=>{
       cancelAnimationFrame(raf);

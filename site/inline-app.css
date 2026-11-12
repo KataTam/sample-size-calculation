@@ -1,0 +1,46 @@
+/* Scoped to live tutorial windows; dedicated app layouts remain unchanged. */
+.tutorial-embedded body {font-size:16px;line-height:1.5;background:#fff;color:#243447;margin:0}
+.tutorial-embedded .container-fluid {padding:10px 12px;max-width:100%;min-height:0}
+.tutorial-embedded .container-fluid > .row {margin:0}
+.tutorial-embedded .container-fluid > .row > .col-sm-4,.tutorial-embedded .container-fluid > .row > .col-sm-8 {padding:0}
+.tutorial-embedded .row > .col-sm-4,.tutorial-embedded .row > .col-sm-8 {width:100%;float:none;min-width:0}
+.tutorial-embedded .well {padding:10px 12px;margin-bottom:12px;background:#edf4fa;border:1px solid #b9cddd;box-shadow:none}
+.tutorial-embedded .well > section.app-input-group {display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px 20px;margin:0}
+.tutorial-embedded .well:has(> section.app-input-group) {display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 16px}
+.tutorial-embedded .well > section.app-input-group,.tutorial-embedded .well > details.app-input-group[open] {grid-column:1/-1}
+.tutorial-embedded .well > section.app-input-group > h3 {grid-column:1/-1;margin:0;font-size:1rem}
+.tutorial-embedded .shiny-input-container {max-width:100%;width:100%}
+.tutorial-embedded .well > details.app-input-group {margin:4px 0 0;padding:0}
+.tutorial-embedded .well > details.app-input-group[open] {display:block}
+.tutorial-embedded .well details .percentage-slider {max-width:380px}
+.tutorial-embedded .nav-tabs {display:flex;flex-wrap:wrap;gap:2px;margin-bottom:10px}
+.tutorial-embedded .nav-tabs > li {float:none}
+.tutorial-embedded .nav-tabs > li > a {padding:10px 12px;min-height:44px;font-size:1rem}
+.tutorial-embedded .app-primary-result {position:static;margin:8px 0;padding:12px}
+.tutorial-embedded .tab-pane.active > .shiny-html-output:has(> .app-primary-result) {position:static}
+.tutorial-embedded .app-result-number {font-size:2rem}
+.tutorial-embedded .app-overview {display:block}
+.tutorial-embedded .app-overview > * {min-width:0}
+.tutorial-embedded .app-interpretation {padding:10px 12px}
+.tutorial-embedded .app-interpretation > h3 {display:none}
+.tutorial-embedded #allocation_plot {height:270px!important}
+.tutorial-embedded #scenario_summary {margin:0 0 8px}
+.tutorial-embedded.pain-focus .well {display:grid;grid-template-columns:2fr 1fr;gap:0 14px;align-items:start}
+.tutorial-embedded.pain-focus #scenario_summary,.tutorial-embedded.pain-focus #lab-settings[open] {grid-column:1/-1}
+.tutorial-embedded.pain-focus .well .shiny-panel-conditional {min-width:0}
+.tutorial-embedded.pain-focus #lab-settings[open] {grid-row:3}
+.tutorial-embedded #fixed_n {max-width:160px}
+.tutorial-embedded #lab-settings {margin:0}
+.tutorial-embedded #sampling-journey {width:100%;max-width:520px;margin:8px auto}
+.tutorial-embedded #journey-status {font-size:.95rem}
+.tutorial-embedded .activity-question {padding:8px 0}
+.tutorial-embedded .caption {font-size:.95rem}
+.tutorial-embedded #lab-more-views {float:none;font-size:1rem}
+.tutorial-embedded .shiny-plot-output {max-width:100%}
+.tutorial-embedded .app-title,.tutorial-embedded .activity-picker {display:none}
+.tutorial-embedded details.activity-description,.tutorial-embedded details.app-resume {display:inline-block;vertical-align:top;width:49%;margin:0 0 6px;border:0;padding:0}
+.tutorial-embedded details.activity-description[open],.tutorial-embedded details.app-resume[open] {width:100%}
+.tutorial-embedded .activity-description .app-intro,.tutorial-embedded .activity-description .activity-context {display:block}
+.tutorial-embedded .inline-study-explanation {border-top:1px solid #b9cddd;padding:4px 6px}
+.tutorial-embedded .simulation-actions > label {display:inline-flex;gap:6px;align-items:center;min-height:44px;margin:0}
+@media(max-width:520px){.tutorial-embedded .well > section.app-input-group,.tutorial-embedded .well:has(> section.app-input-group){grid-template-columns:1fr}.tutorial-embedded .container-fluid{padding:8px}.tutorial-embedded .nav-tabs > li > a{padding:10px 8px}.tutorial-embedded #sampling-journey{min-width:0}.tutorial-embedded.pain-focus .well{grid-template-columns:1fr}.tutorial-embedded details.activity-description,.tutorial-embedded details.app-resume{width:100%}}

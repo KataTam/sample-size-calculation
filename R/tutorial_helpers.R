@@ -1,9 +1,27 @@
 # Presentation helpers; statistical methods live in sample_size_functions.R.
 render_app_preview <- function(ids, description, image = NULL) {
-  # Screenshots show the actual app controls and results without starting WebR
-  # in every chapter. Clicking the image opens the persistent side panel.
+  # These two pilot apps start in place on demand. Other screenshots retain
+  # the side-panel workflow; print and offline readers keep a working link.
   cases <- lapply(ids, teaching_case)
-  previews <- lapply(cases, function(case) htmltools::tags$aside(
+  previews <- lapply(cases, function(case) {
+    engine <- list(pain_one_many = "power_explorer", probiotics_calculation = "two_proportions")[[case$id]]
+    if (!is.null(engine)) {
+      url <- paste0("https://katatam.github.io/sample-size-calculation/", engine, "/?activity=", case$id)
+      return(htmltools::tags$aside(class = "app-preview inline-activity", `data-inline-app` = engine,
+        `data-activity` = case$id, `aria-label` = case$title,
+        htmltools::tags$p(class = "app-preview-title", paste0("Activity: ", case$title)),
+        htmltools::tags$a(href = url, `data-inline-start` = "", `data-link-navigation` = "same-tab",
+          `aria-label` = paste0("Start ", case$title, " here"),
+          htmltools::tags$img(class = "app-preview-image",
+            src = paste0("../figures/app-previews/", case$id, ".png"),
+            alt = paste0("App preview: ", case$title, ". Select to use it here."),
+            loading = "lazy", width = 1120, height = 760)),
+        htmltools::tags$p(class = "inline-app-link", htmltools::tags$a(href = url,
+          `data-inline-dedicated` = "", target = "_blank", rel = "noopener",
+          `aria-label` = paste0("Open ", case$title, " on its own page"),
+          "Open the app on its own page"))))
+    }
+    htmltools::tags$aside(
     class = "app-preview", `aria-label` = "App preview",
     htmltools::tags$p(class = "app-preview-title", paste0("Activity: ", case$title)),
     htmltools::tags$a(href = paste0("https://katatam.github.io/sample-size-calculation/study/?activity=", case$id),
@@ -12,7 +30,8 @@ render_app_preview <- function(ids, description, image = NULL) {
       htmltools::tags$img(class = "app-preview-image",
         src = paste0("../figures/app-previews/", case$id, ".png"),
         alt = paste0("Screenshot of ", case$title, ": inputs and current app view"),
-        loading = "lazy", width = 1120, height = 760))))
+        loading = "lazy", width = 1120, height = 760)))
+  })
   markup <- as.character(htmltools::tagList(previews))
   # Pandoc interprets four-space HTML indentation as a code block in R Markdown.
   cat(gsub("\n[ \t]+", "\n", markup), "\n")

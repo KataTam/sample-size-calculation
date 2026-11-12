@@ -24,6 +24,7 @@ render_resource <- function(include_pdf = TRUE) {
   menu_json <- paste(readLines("module/activity-contents.json", encoding = "UTF-8"), collapse = "\n")
   moved_json <- paste(readLines("module/moved-sections.json", encoding = "UTF-8"), collapse = "\n")
   reading_js <- paste(readLines("module/reading-support.js", encoding = "UTF-8"), collapse = "\n")
+  reading_js <- paste(reading_js, paste(readLines("module/inline-apps.js", encoding = "UTF-8"), collapse = "\n"), sep = "\n")
   cat(paste0('<script type="application/json" id="moved-section-data">', moved_json,
     '</script>\n<script type="application/json" id="activity-menu-data">', menu_json,
     '</script>\n<script>', reading_js, '</script>'), file = "module/glossary-support.html", append = TRUE)
