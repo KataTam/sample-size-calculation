@@ -47,3 +47,40 @@
 @media(max-width:520px){.tutorial-embedded .well > section.app-input-group,.tutorial-embedded .well:has(> section.app-input-group){grid-template-columns:1fr}.tutorial-embedded .container-fluid{padding:8px}.tutorial-embedded .nav-tabs > li > a{padding:10px 8px}.tutorial-embedded #sampling-journey{min-width:0}.tutorial-embedded.pain-focus:not(.single-population-mode) .well{grid-template-columns:1fr}.tutorial-embedded details.activity-description,.tutorial-embedded details.app-resume{width:100%}}
 
 .tutorial-embedded #simulation_target {margin:8px 0 12px}.tutorial-embedded #simulation_target p{margin:0 0 8px}.tutorial-embedded.pain-focus #fixed_n{max-width:220px}
+
+/* The primary controls form a short strip above the results and figures. */
+.tutorial-embedded .well {gap:8px 18px}
+.tutorial-embedded .well .form-group {margin-bottom:6px}
+.tutorial-embedded .well label {font-size:1rem;line-height:1.35;margin-bottom:5px}
+.tutorial-embedded .well .irs {margin-top:0}
+.tutorial-embedded .well .app-input-group {margin-top:0}
+.tutorial-embedded .inline-secondary {grid-column:1/-1;margin:2px 0;padding:0}
+.tutorial-embedded .inline-secondary > summary {min-height:44px;padding:10px 0;cursor:pointer}
+.tutorial-embedded .inline-secondary[open] {display:block}
+.tutorial-embedded .inline-secondary .shiny-input-container {max-width:380px}
+.tutorial-embedded .inline-result-text {margin:10px 0;line-height:1.5}
+.tutorial-embedded .app-interpretation {border:0;background:transparent;padding:0}
+.tutorial-embedded #case_title {display:none}
+.tutorial-embedded[data-inline-engine="dropout_adjustment"] .well {display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}
+.tutorial-embedded[data-inline-engine="dropout_adjustment"] .well > details {grid-column:1/-1}
+.tutorial-embedded[data-inline-engine="dropout_adjustment"] .inline-recruitment-figure {margin:10px 0}
+.tutorial-embedded[data-inline-engine="prevalence_precision"] .well:has(> section.app-input-group) {grid-template-columns:repeat(3,minmax(0,1fr))}
+.tutorial-embedded[data-inline-engine="prevalence_precision"] .well > section.app-input-group {display:contents}
+.tutorial-embedded[data-inline-engine="prevalence_precision"] .well > section.app-input-group > h3 {display:none}
+.tutorial-embedded[data-inline-engine="prevalence_precision"] .well > details {grid-column:1/-1}
+.tutorial-embedded[data-inline-engine="sampling_distributions"] .well > section.app-input-group {grid-template-columns:repeat(2,minmax(0,1fr))}
+.tutorial-embedded .single-population-inputs {display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}
+.tutorial-embedded .single-population-inputs > .shiny-input-container {order:0}
+.tutorial-embedded .single-population-inputs > .shiny-panel-conditional {order:1;grid-column:1/-1;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px 18px}
+.tutorial-embedded .single-population-inputs > details {order:2;grid-column:1/-1;margin:0}
+.tutorial-embedded #planning_plot,.tutorial-embedded #sample_plot,.tutorial-embedded #dropout_plot {height:310px!important}
+.tutorial-embedded #distributions {height:500px!important}
+.tutorial-embedded .app-steps {margin:8px 0;gap:8px}
+@media(max-width:600px){
+ .tutorial-embedded .well,.tutorial-embedded .well > section.app-input-group,
+ .tutorial-embedded[data-inline-engine="prevalence_precision"] .well:has(> section.app-input-group),
+ .tutorial-embedded[data-inline-engine="dropout_adjustment"] .well,
+ .tutorial-embedded[data-inline-engine="sampling_distributions"] .well > section.app-input-group,
+ .tutorial-embedded .single-population-inputs,.tutorial-embedded .single-population-inputs > .shiny-panel-conditional {grid-template-columns:1fr}
+ .tutorial-embedded .well {gap:6px}
+}

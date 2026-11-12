@@ -152,7 +152,7 @@ server <- function(input, output, session) {
     reject <- switch(x$sidedness,
       greater = paste("above", round(x$upper, 3)), less = paste("below", round(x$lower, 3)),
       two.sided = paste("below", round(x$lower, 3), "or above", round(x$upper, 3)))
-    paste0("The test rejects when the sample mean is ", reject, ". At the specified population mean of ",
+    paste0("With ", x$n, " observations, the test rejects when the sample mean is ", reject, ". At the specified population mean of ",
       x$mu1, ", ", format_percent(x$power, 1), " of repeated samples would reject. ",
       if (x$mu0 == x$mu1) "The null is true here, so these rejections are false positives."
       else "This power belongs to that assumed alternative.")

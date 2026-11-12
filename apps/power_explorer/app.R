@@ -567,9 +567,11 @@ server <- function(input, output, session) {
   })
   output$overview_text <- renderText({
     x <- planned()
-    if (!intervals_visible()) return("One study and Many studies show how estimates and testing decisions vary under the chosen population assumptions.")
-    paste0("At ", x$n, " analyzable participants per group, the anticipated full interval width is ", effect_text(anticipated_width(x), x$outcome),
-      ". One study and Many studies show how estimates and intervals vary under the chosen population assumptions.")
+    paste0("With ", x$n, " analyzable participants per group and a target difference of ",
+      effect_text(true_difference(x),x$outcome), ", power is ", format_percent(spec_power(x),1),
+      " at a ", format_percent(x$alpha), " Type I error probability.",
+      if(intervals_visible()) paste0(" The anticipated full interval width is ",
+        effect_text(anticipated_width(x),x$outcome), ".") else "")
   })
   output$worked_method <- renderUI({
     x <- planned()

@@ -152,11 +152,15 @@ server <- function(input, output, session) {
         adjust_for_dropout(n, x$dropout), paste0(round(100*anticipated_width, 1), " percentage points")))
   })
   output$precision_text <- renderText({
-    p <- plan(); x <- snapshot()
-    paste0("This is one sample, so n is a total count. The requested full width is ",
-      100*p$full_width, " percentage points (margin ±", 100*p$half_width, "). ",
-      if (x$goal == "fixed") "The available sample is fixed. Its approximate width is shown in the summary for comparison with the target."
-      else "Halving the margin multiplies the unrounded normal-approximation requirement by four.")
+    p <- plan(); x <- snapshot(); n <- analysable_n()
+    if (x$goal == "fixed") paste0("With ", n, " participants and an anticipated percentage of ",
+      format_percent(p$planning_p), ", the approximate full ", format_percent(x$confidence),
+      " interval width is ", round(200*qnorm((1+x$confidence)/2)*sqrt(p$planning_p*(1-p$planning_p)/n),1),
+      " percentage points. The selected target is ", round(100*x$full_width,1), " points.")
+    else paste0("At ", format_percent(x$confidence), " confidence, estimating ", format_percent(p$planning_p),
+      " within about ", round(100*p$half_width,1), " percentage points requires ", n,
+      " completed assessments in total.", if(x$dropout > 0) paste0(" Allowing for ", format_percent(x$dropout),
+        " loss gives ", adjust_for_dropout(n,x$dropout), " participants to recruit.") else "")
   })
   output$approximation_note <- renderText({
     p <- plan(); n <- analysable_n()

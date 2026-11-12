@@ -95,7 +95,8 @@ basic_calculator_server <- function(outcome) function(input, output, session) {
     x <- result()
     paste0("Power is evaluated at ", if (means) paste0("a target difference of ", x$delta, " units with common SD ", x$sd)
       else paste0("a target difference of ", round(100*x$difference, 2), " percentage points (", format_percent(x$pi1), " versus ", format_percent(x$pi2), ")"),
-      ". Smaller target differences generally require more participants.")
+      ". At ", format_percent(x$power), " power, the calculation requires ", x$n_per_group, " analyzable participants per group (", x$total_n, " in total).",
+      if (x$dropout_rate > 0) paste0(" Allowing for ", format_percent(x$dropout_rate), " loss gives ", x$total_with_dropout/2, " recruits per group (", x$total_with_dropout, " in total).") else "")
   })
   output$assumptions <- renderTable(assumptions(), striped = TRUE)
   draw_curve <- function() {

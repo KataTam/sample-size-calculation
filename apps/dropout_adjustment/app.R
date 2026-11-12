@@ -49,8 +49,7 @@ ui <- fluidPage(
         p(tags$a(href = "../book/simulation.html#treatment-switching", "Explanation and assumptions"))))
     ),
     mainPanel(tabsetPanel(id = "recruitment_view",
-      tabPanel("Overview", h3("Recruitment target"), p("Recruitment per group is the analyzable requirement divided by the expected retained fraction, rounded upward. With 10% expected loss, the retained fraction is 0.90."), uiOutput("result"), uiOutput("recruitment_steps"),
-        p("The result gives equal recruitment per group and the total. The study plan should also describe follow-up and how missing outcomes will be analyzed."),
+      tabPanel("Overview", uiOutput("result"), uiOutput("recruitment_steps"), textOutput("recruitment_interpretation"),
         activity_details("Calculation steps and group counts", uiOutput("stages"), uiOutput("group_counts"))),
       tabPanel("Explore assumptions", plotOutput("dropout_plot", height = "340px"),
         textOutput("plot_caption", container = function(...) p(class = "caption", ...)),
@@ -128,6 +127,14 @@ server <- function(input, output, session) {
       if (switching_applied()) p(paste0("Approximate switching multiplier: ", round(x$multiplier, 3), ". The result depends on the simplified switching assumptions.")),
       if (isTRUE(input$switching) && identical(input$starting_assumption, "included"))
         p("The starting sample already accounts for switching. No additional switching multiplier is applied."))
+  })
+  output$recruitment_interpretation <- renderText({
+    x <- plan()
+    paste0("Starting with ", x$starting, " analyzable participants per group, ",
+      if(switching_applied()) paste0("the switching allowance gives ", round(x$after_switching,2), " before losses. With ") else "with ",
+      if(isTRUE(input$different_losses)) paste0(format_percent(x$losses[1]), " expected loss in the novel group and ",
+        format_percent(x$losses[2]), " in the standard group") else paste0(format_percent(input$dropout), " expected loss in each group"),
+      ", the equal-allocation recruitment target is ", x$per_group, " per group (", x$total, " in total), rounded upward.")
   })
   output$stages <- renderUI({
     x <- plan()

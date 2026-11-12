@@ -18,7 +18,8 @@ const ids=(process.argv[3]||'pain_one_many,probiotics_calculation,rehabilitation
    const page=await context.newPage();page.setDefaultTimeout(120000);
    let clip;
    if(!['assumptions_report','design_questionnaire'].includes(record.app))await page.setViewportSize({width:1120,height:id==='mean_precision'?1500:1200});
-   await page.goto(`${base}/${record.app}/?activity=${id}`,{waitUntil:'domcontentloaded'});
+   const embedded=!['assumptions_report','design_questionnaire'].includes(record.app);
+   await page.goto(`${base}/${record.app}/?activity=${id}${embedded?'&embedded=1':''}`,{waitUntil:'domcontentloaded'});
    if(!['assumptions_report','design_questionnaire'].includes(record.app)){
     let app;
     for(let i=0;i<180&&!app;i++){
@@ -27,6 +28,9 @@ const ids=(process.argv[3]||'pain_one_many,probiotics_calculation,rehabilitation
     }
     assert(app,id+' Shiny session ready');
     // Case initialization follows the activity query parameter through the app bridge.
+    if(id==='rehabilitation_calculation')await app.waitForFunction(()=>document.querySelector('#delta').value==='3');
+    if(['prevalence_precision','sampling_distributions'].includes(record.app))await app.waitForFunction(()=>/Loaded shared case:/.test(document.querySelector('#bridge_status')?.textContent||''));
+    if(['pain_one_many','pain_curves','pain_simulation'].includes(id))await app.waitForFunction(n=>document.querySelector('#fixed_n').value===String(n),record.inputs.fixed_n);
     await app.waitForFunction(()=>!document.querySelector('.shiny-busy'));
     if(id==='pain_one_many') {
      await app.locator('#run_one').click();
@@ -46,7 +50,16 @@ const ids=(process.argv[3]||'pain_one_many,probiotics_calculation,rehabilitation
     assert.deepEqual(errors,[],id+' rendered without an app error');
     await app.waitForFunction(()=>[...document.querySelectorAll('.shiny-plot-output img')].filter(i=>i.checkVisibility()).every(i=>i.complete&&i.naturalWidth>0));
     const sidebar=await app.locator(id==='mean_precision'?'.single-population-inputs':'.well').first().boundingBox();
-    if(sidebar)clip={x:0,y:Math.floor(sidebar.y),width:1120,height:Math.min(id==='mean_precision'?1000:900,(id==='mean_precision'?1500:1200)-Math.floor(sidebar.y))};
+    if(sidebar){
+     const endSelector={two_means:'#interpretation',two_proportions:'#interpretation',prevalence_precision:'#precision_text',
+      dropout_adjustment:'#recruitment_interpretation',sampling_distributions:'#explanation'}[record.app] ||
+      (id==='mean_precision'?'#precision-interpretation':id==='pain_curves'?'#overview_text':id==='pain_simulation'?'#many_text':'#journey-reading');
+     const bottom=await app.evaluate(selector=>Math.max(...[...document.querySelectorAll('.shiny-plot-output,'+selector+',#sampling-journey')]
+      .filter(el=>el.checkVisibility()).map(el=>el.getBoundingClientRect().bottom+scrollY+60)),endSelector);
+     clip={x:0,y:Math.floor(sidebar.y),width:1120,height:Math.ceil(Math.max(700,bottom-sidebar.y))};
+     await page.setViewportSize({width:1120,height:Math.ceil(clip.y+clip.height+30)});
+     await page.waitForTimeout(400);
+    }
    } else {
     await page.locator('main').waitFor();
    }

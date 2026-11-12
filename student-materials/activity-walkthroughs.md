@@ -10,7 +10,7 @@ In the reasoning lab, planning tables and curves update when inputs change. Simu
 
 The difference observed in previous data records a sample result that can inform planning, with uncertainty. It can equal the target difference or clinical threshold; the three roles have no fixed numerical order and each needs justification. With “Same as planning assumptions” selected, the simulations use the target difference and planning event probabilities. A custom population scenario lets you examine another true difference without changing the original plan. All treatment differences here are between-group differences.
 
-The chronic pain case compares fictional Neravixa with duloxetine for painful diabetic peripheral neuropathy. Each patient contributes one four-week outcome: achieved pain relief or did not achieve pain relief. The pilot remains 7 of 10 versus 3 of 10; the calculation uses population assumptions of 60% versus 30%. Compact app previews in the tutorial open the existing tutorial-and-app view.
+The chronic pain case compares fictional Neravixa with duloxetine for painful diabetic peripheral neuropathy. Each patient contributes one four-week outcome: achieved pain relief or did not achieve pain relief. The pilot remains 7 of 10 versus 3 of 10; the calculation uses population assumptions of 60% versus 30%. Selecting a calculator or simulation preview opens the app within the chapter. Its main controls sit above the figure, and the result text updates with the calculation. A link underneath opens the app on its own page. Closing and reopening an embedded app preserves its inputs during that page visit.
 
 ## The four-activity core route
 

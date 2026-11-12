@@ -2,6 +2,8 @@
 
 Apps are interactive software. Activities provide questions and exercises to help you use them. The [four core activities](book/#core-route) use the apps below. The continuing report brings their results together; advanced options support further exploration.
 
+Calculators and simulations also open within the tutorial when you select their previews. Main controls appear above the figures, and calculated results update with the inputs. Simulations run when you select the corresponding button. Each embedded app has a link underneath to open it on its own page.
+
 <span id="core-calculations-simulation-and-justification"></span>
 
 ## Core apps

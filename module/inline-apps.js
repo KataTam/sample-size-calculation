@@ -2,7 +2,14 @@
 (() => {
   if (window.SampleSizeInlineAppsInstalled) return;
   window.SampleSizeInlineAppsInstalled = true;
-  const allowed = {pain_one_many: 'power_explorer', probiotics_calculation: 'two_proportions'};
+  const allowed = {
+    pain_one_many:'power_explorer', probiotics_calculation:'two_proportions',
+    rehabilitation_calculation:'two_means', recruitment:'dropout_adjustment',
+    recruitment_advanced:'dropout_adjustment', prevalence:'prevalence_precision',
+    pilot_feasibility:'prevalence_precision', mean_precision:'power_explorer',
+    pain_curves:'power_explorer', pain_simulation:'power_explorer',
+    alpha_beta:'sampling_distributions'
+  };
   const windows = new Map();
   // Event bindings cannot be serialized with the complete HTML export.
   // Track them in this page's runtime rather than in a copied DOM attribute.

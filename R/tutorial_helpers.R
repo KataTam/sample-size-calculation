@@ -1,10 +1,11 @@
 # Presentation helpers; statistical methods live in sample_size_functions.R.
 render_app_preview <- function(ids, description, image = NULL) {
-  # These two pilot apps start in place on demand. Other screenshots retain
-  # the side-panel workflow; print and offline readers keep a working link.
+  # Calculation and simulation apps start in place on demand. Written planning
+  # keeps the study workspace; print and offline readers keep working links.
   cases <- lapply(ids, teaching_case)
   previews <- lapply(cases, function(case) {
-    engine <- list(pain_one_many = "power_explorer", probiotics_calculation = "two_proportions")[[case$id]]
+    engine <- if (case$app %in% c("two_proportions", "two_means", "power_explorer",
+      "dropout_adjustment", "prevalence_precision", "sampling_distributions")) case$app else NULL
     if (!is.null(engine)) {
       url <- paste0("https://katatam.github.io/sample-size-calculation/", engine, "/?activity=", case$id)
       return(htmltools::tags$aside(class = "app-preview inline-activity", `data-inline-app` = engine,

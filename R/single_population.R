@@ -86,7 +86,7 @@ single_population_ui <- function(id) {
         numericInput(ns("B"), "Number of simulated studies", 1000, min=100, max=10000, step=100),
         tags$details(tags$summary("Reproducibility settings"),numericInput(ns("seed"), "Random seed", 20260922, min=0, max=.Machine$integer.max - 1)))),
     tabsetPanel(id=ns("view"),
-      tabPanel("Overview", uiOutput(ns("result")), plotOutput(ns("curve"),height="280px"),
+      tabPanel("Overview", uiOutput(ns("result")), plotOutput(ns("curve"),height="280px"), textOutput(ns("interpretation")),
         p(class="caption", "Figure. Anticipated full confidence interval width versus the total number of analyzable participants in one sample. The point marks the current plan.")),
       tabPanel("Simulations",
         actionButton(ns("run_one"), "Simulate one study",class="btn-primary"),
@@ -115,6 +115,14 @@ single_population_server <- function(id) shiny::moduleServer(id, function(input,
   observeEvent(input$run_many,many(single_population_simulate(spec(),n(),TRUE)),ignoreInit=TRUE)
   output$result <- renderUI(app_primary_result(n(), "analyzable participants in total",
     paste0("One population sample · ", adjust_for_dropout(n(),input$dropout), " to recruit allowing for ",format_percent(input$dropout), " expected loss.")))
+  output$interpretation <- renderText({
+    s <- spec()
+    paste0("For ", if(s$outcome=="means") paste0("a population SD of ", s$sd, " units") else
+      paste0("an assumed percentage of ", format_percent(s$probability)), ", a full ",
+      format_percent(s$confidence), " interval width of ", width(s$width), " requires ",
+      n(), " analyzable participants in total. The anticipated width at this count is ",
+      width(single_population_width(s,n())), ".")
+  })
   output$curve <- renderPlot({
     s<-spec(); ns<-unique(round(seq(max(2,n()/2),n()*2,length.out=100)))
     scale<-if(s$outcome=="means")1 else 100
