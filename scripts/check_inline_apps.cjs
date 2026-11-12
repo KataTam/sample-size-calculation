@@ -128,9 +128,9 @@ const base=(process.argv[2]||'http://127.0.0.1:8769').replace(/\/$/,'');
     assert.equal(await app.locator('#reality-selectized').isVisible(),false);
     await app.locator('a[data-value="Compare assumptions"]').waitFor({state:'hidden'});
     await app.locator('#lab-settings > summary').click();
-    await app.evaluate(()=>jQuery('#goal')[0].selectize.setValue('precision'));
+    await app.evaluate(()=>Shiny.setInputValue('activity_request',{activity:'pain_one_many',reset:true,nonce:Date.now()},{priority:'event'}));
     await app.waitForFunction(()=>!document.querySelector('#sampling-journey svg') && !/^Trial \d/.test(document.querySelector('#journey-reading').textContent));
-    await app.evaluate(()=>jQuery('#goal')[0].selectize.setValue('fixed'));
+    await app.waitForFunction(()=>document.querySelector('#fixed_n').value==='20');
     await app.locator('#run_one').click();
     await app.locator('#sampling-journey svg').waitFor();
    }
