@@ -27,6 +27,7 @@ const base=(process.argv[2]||'http://127.0.0.1:8769').replace(/\/$/,'');
    console.log(`${id}: R app loaded`);
    await app.waitForFunction(()=>window.Shiny?.shinyapp?.$socket?.readyState===1);
    await app.evaluate(()=>window.inlineSessionSentinel='same session');
+   await app.evaluate(()=>{window.inlineClicks=[];document.addEventListener('click',e=>window.inlineClicks.push({text:e.target.textContent.slice(0,60),tab:e.target.closest('a')?.dataset.value}),true);});
    const settle=async()=>{await page.waitForTimeout(500);await app.waitForFunction(()=>!document.documentElement.classList.contains('shiny-busy'));await page.waitForTimeout(350);};
    const dimensions=async()=>{
     await settle();
@@ -73,10 +74,13 @@ const base=(process.argv[2]||'http://127.0.0.1:8769').replace(/\/$/,'');
     await app.locator('#distribution img').waitFor({timeout:90000});
     await dimensions();
     await app.locator('#combined-many-studies > summary').click();
-    await settle();
+    // Bring the app's tabs back below the book's sticky toolbar after the
+    // long many-study panel collapses; then let both frame layouts settle.
+    await card.evaluate(el=>el.scrollIntoView({block:'start'}));
+    await dimensions();
     await app.locator('a[data-value="Justify and communicate"]').click();
     try {await app.locator('#report_preview').filter({hasText:'40 patients per group'}).waitFor();}
-    catch(error){console.log(await app.evaluate(()=>({n:Shiny.shinyapp.$inputValues.fixed_n,stage:Shiny.shinyapp.$inputValues.stage,report:document.querySelector('#report_preview').outerHTML})));throw error;}
+    catch(error){console.log(await app.evaluate(()=>({n:document.querySelector('#fixed_n').value,stage:Shiny.shinyapp.$inputValues.stage,report:document.querySelector('#report_preview').outerHTML,clicks:window.inlineClicks})));throw error;}
     assert.equal(await app.locator('#justification').isVisible(),false);
     assert.equal(await app.locator('.plan-transfer').count(),0);
     assert.equal(await app.locator('a[data-value="Methods"]').count(),0);
