@@ -345,6 +345,9 @@ details.section-disclosure > summary > :is(h2,h3,h4,h5,h6) {
 .inline-app-link {margin:10px 0 0;font-size:16px;line-height:1.5}
 .inline-activity.app-preview {padding:5px;margin-left:-8px;margin-right:-8px;border-color:#b7cad9;background:transparent}
 .inline-activity .app-preview-title {margin:6px 5px 10px}
+@media screen and (max-width:600px) {
+  .activity:has(.inline-activity) {padding-left:8px;padding-right:8px}
+}
 .inline-app-link a {display:inline-flex;align-items:center;min-height:44px;text-decoration:underline}
 .inline-app-panel {background:white;border:0;border-radius:3px;color:#243447}
 .inline-app-panel[hidden],.inline-activity > a[hidden] {display:none!important}
