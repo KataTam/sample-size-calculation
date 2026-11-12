@@ -12,6 +12,11 @@
     svg.append(n); return n;
   }
   function draw(progress) {
+    if(data && el('journey-reading')) {
+      const t=data.trials[index],labels=data.labels||['Standard','Novel'];
+      el('journey-reading').textContent=`Trial ${index+1}: ${t.counts[0]} of ${data.n} patients ${data.event || "had the event"} with ${labels[0]} (${pct(t.counts[0]/data.n)}), compared with ${t.counts[1]} of ${data.n} with ${labels[1]} (${pct(t.counts[1]/data.n)}). The observed difference is ${Math.round(t.estimate*1000)/10} percentage points. The pink dot carries that estimate to the lower graph. The accumulated dots show trial-to-trial variation around the assumed population difference of ${Math.round((data.p1-data.p0)*1000)/10} points.`;
+    }
+
     const host = el('sampling-journey'); if (!host || !data) return;
     if(document.documentElement.classList.contains('tutorial-embedded')) { drawInline(host, progress); return; }
     host.replaceChildren();
@@ -211,7 +216,7 @@
     });
     Shiny.addCustomMessageHandler('sampling-journey',payload=>{
       cancelAnimationFrame(raf);
-      if(payload.clear){data=null;el('sampling-journey').replaceChildren();el('journey-description').textContent='';el('journey-pause').disabled=true;el('journey-replay').disabled=true;el('journey-status').textContent='A single study or 20-trial sequence will appear here after simulation.';return;}
+      if(payload.clear){data=null;el('sampling-journey').replaceChildren();el('journey-description').textContent='';el('journey-reading').textContent='Each pair of patient groups produces one estimated treatment difference. Repeated trials show how that estimate varies around the same population difference.';el('journey-pause').disabled=true;el('journey-replay').disabled=true;el('journey-status').textContent='A single study or 20-trial sequence will appear here after simulation.';return;}
       data=payload;index=0;elapsed=0;stale=false;el('journey-replay').disabled=false;play();
     });
     $(document).on('shiny:inputchanged', event => {

@@ -25,10 +25,10 @@
 .tutorial-embedded .app-interpretation > h3 {display:none}
 .tutorial-embedded #allocation_plot {height:270px!important}
 .tutorial-embedded #scenario_summary {margin:0 0 8px}
-.tutorial-embedded.pain-focus:not(.single-population-mode) .well {display:grid;grid-template-columns:2fr 1fr;gap:0 14px;align-items:start}
+.tutorial-embedded.pain-focus:not(.single-population-mode) .well {display:grid;grid-template-columns:1fr;gap:0 14px;align-items:start}
 .tutorial-embedded.pain-focus #scenario_summary,.tutorial-embedded.pain-focus #lab-settings[open] {grid-column:1/-1}
 .tutorial-embedded.pain-focus:not(.single-population-mode) .well .shiny-panel-conditional {min-width:0}
-.tutorial-embedded.pain-focus #lab-settings[open] {grid-row:3}
+.tutorial-embedded.pain-focus #lab-settings[open] {grid-row:auto}
 .tutorial-embedded #fixed_n {max-width:160px}
 .tutorial-embedded #lab-settings {margin:0}
 .tutorial-embedded #sampling-journey {width:100%;max-width:520px;margin:8px auto}
@@ -45,3 +45,5 @@
 .tutorial-embedded .inline-study-explanation > summary,.tutorial-embedded #combined-many-studies > summary {display:list-item;min-height:44px;cursor:pointer}
 .tutorial-embedded .simulation-actions > label {display:inline-flex;gap:6px;align-items:center;min-height:44px;margin:0}
 @media(max-width:520px){.tutorial-embedded .well > section.app-input-group,.tutorial-embedded .well:has(> section.app-input-group){grid-template-columns:1fr}.tutorial-embedded .container-fluid{padding:8px}.tutorial-embedded .nav-tabs > li > a{padding:10px 8px}.tutorial-embedded #sampling-journey{min-width:0}.tutorial-embedded.pain-focus:not(.single-population-mode) .well{grid-template-columns:1fr}.tutorial-embedded details.activity-description,.tutorial-embedded details.app-resume{width:100%}}
+
+.tutorial-embedded #simulation_target {margin:8px 0 12px}.tutorial-embedded #simulation_target p{margin:0 0 8px}.tutorial-embedded.pain-focus #fixed_n{max-width:220px}

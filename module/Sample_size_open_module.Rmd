@@ -371,6 +371,8 @@ Figure \@ref(fig:sample-differences) shows [sampling variability](#sampling-vari
 
 Within each batch, the population probabilities, sample size, allocation and testing procedure stay fixed. The sampled outcomes, relief percentages, estimated difference and testing decision vary. Increasing the sample size changes the information in each trial. Increasing the number of simulation repetitions makes the estimated percentage of significant results more stable; each trial still has the same sample size and power.
 
+The app below generates further trials from these same 30% and 60% populations. It starts with 20 patients per group, matching the first illustrated trials. It also displays the calculated requirement of 56 per group for 90% power, explained in [Two proportions](#two-proportions); that count can be used directly in the simulation. Comparing the resulting dots and repeated-study graph shows what the extra patients change.
+
 ```{r pain-app-preview, echo=FALSE, results='asis'}
 render_app_preview("pain_one_many", "Simulate further trials and compare different sample sizes.",
   image = "../figures/pain-trials-preview.png")
@@ -439,6 +441,8 @@ For a two-sided Type I error probability of 5% and target power of 90%:
 - The target power of 90% gives $z_{0.90}\approx1.28$.
 - The multiplier is therefore approximately $(1.96+1.28)^2\approx10.51$, using the unrounded $z$-values.
 
+Figure \@ref(fig:normal-multiplier) shows what these distances mean for a treatment comparison. The upper curve applies when the population difference is zero; the lower applies when it equals the target difference. The same rejection boundaries apply in both cases. Separating the centers by about 1.96 + 1.28 standard errors puts about 90% of the lower curve beyond the upper boundary.
+
 This multiplier combines the chosen error probabilities and power. The sample size calculation also uses the target difference and variability. You can use the table below without calculating the $z$-values yourself. The appropriate calculation still depends on your study design and planned analysis [@kirkwood2003; @wang2020].
 
 ```{r multiplier}
@@ -451,7 +455,7 @@ M <- (qnorm(1 - alpha / 2) + qnorm(target_power))^2
 M
 ```
 
-```{r normal-multiplier, echo=FALSE, fig.width=7, fig.height=6, fig.cap="Standard normal cutoffs used in the sample size multiplier. The shaded areas identify the quantiles for a two-sided Type I error probability of 5% and target power of 90%. The lower panel locates the 90th percentile; a trial's power also depends on its sample size, target difference, and variability.", fig.alt="Two standard normal curves on the same z scale. The upper curve shades 2.5% below minus 1.96 and 2.5% above 1.96. The lower curve shades 90% below 1.28. These cutoffs give multiplier M of 10.51."}
+```{r normal-multiplier, echo=FALSE, fig.width=7, fig.height=6, fig.cap="The two curves represent different population scenarios. Above: no treatment difference (H0 true), with 5% in the two rejection tails. Below: the target difference (H0 false), with approximately 90% beyond the upper rejection boundary. On the standard-error scale, 1.96 plus 1.28 separates the two centers; squaring this distance gives M = 10.51.", fig.alt="Two sampling distributions on the same standard-error scale. The upper distribution is centered at zero under H0; the lower is centered at the target difference, 3.24 standard errors above zero. The same rejection boundaries are used for both. Shading shows false positives under H0 and power at the target difference."}
 draw_normal_multiplier()
 ```
 
@@ -972,21 +976,121 @@ After this chapter, you should be able to:
 - Justify estimation using a new sample, existing data or a pilot, and report its assumptions.
 :::
 
-Estimation asks how large a population quantity is: a percentage, a mean, or a difference between groups. A confidence interval describes uncertainty around the estimate. Precision concerns the interval's width at a specified confidence level. Here, the sample size is chosen for a desired interval width.
+Suppose you are planning a neuropathy care service for adults with type 2 diabetes attending a diabetes clinic. How many of these patients have peripheral neuropathy? An estimate of that percentage would help the clinic anticipate its follow-up workload. Each sampled patient is assessed once, at enrollment.
+
+A recent clinic study planned its neuropathy prevalence estimate using a 95% confidence level, an anticipated prevalence of 22%, and a five-percentage-point margin of error [@negussie2024]. The worked service plan below follows this approach using a planning assumption of 20%: about one patient in five. The aim is a 95% confidence interval roughly five percentage points either side of the estimate. Later sections consider a population mean, treatment differences, existing data and pilot retention.
 
 ## Estimates, confidence intervals and precision {#estimation-foundations .advanced-heading}
 
-A sample estimate changes when different participants are sampled. A [confidence interval](#confidence-interval){.no-glossary-tooltip} uses the data and analysis assumptions to give a range describing uncertainty about the population quantity. A narrower interval indicates greater [precision](#precision){.no-glossary-tooltip}. A 95% confidence-interval procedure contains the true population value in about 95% of repeated studies when its assumptions hold.
+A sample estimate changes when different participants are sampled. A [confidence interval](#confidence-interval){.no-glossary-tooltip} uses the data and analysis assumptions to give a range describing uncertainty about the population quantity. A narrower interval indicates greater [precision](#precision){.no-glossary-tooltip}. Across repeated studies, about 95% of intervals calculated by a 95% confidence-interval method contain the true population value under its assumptions.
+
+Figure \@ref(fig:twenty-prevalence-intervals) shows one illustrative batch of 20 surveys. The population prevalence is fixed at 20%; the sample estimates and their intervals change between surveys. The green intervals contain 20%, while the red interval misses it.
+
+```{r twenty-prevalence-intervals, echo=FALSE, fig.width=8, fig.height=6.4, fig.cap="Twenty illustrative surveys of 246 adults, with population neuropathy prevalence fixed at 20%. Nineteen green intervals contain 20%; one red interval misses it. Circles and a cross distinguish the two outcomes as well as color. This batch illustrates the repeated-study meaning of 95% confidence.", fig.alt="Twenty horizontal confidence intervals around survey estimates. A vertical line marks population neuropathy prevalence of 20%. Nineteen green intervals cross the line; one red interval, marked by a cross, lies entirely below it."}
+draw_prevalence_coverage()
+```
 
 For example, a population percentage estimated as 20% with an interval from 15% to 25% has a full width of 10 percentage points and a margin of 5 points on either side. The [full width](#full-width) and confidence level should be chosen for the decision the estimate will inform. Under the same planning model, higher confidence or a narrower target width increases the unrounded sample size requirement.
 
-The following example estimates the difference between the chronic pain treatments. Its sample size could have been chosen using power; the interval still helps describe the magnitude and uncertainty of the resulting comparison. CONSORT recommends reporting treatment-effect estimates with their precision [@consortee2025].
+<details class="misconception" id="misconception-confidence-probability">
+<summary>Common misconception: this interval has a 95% probability of containing the population percentage</summary>
+
+The true population percentage is fixed, while the interval changes from sample to sample. The 95% describes how often the method produces an interval containing that percentage across repeated studies.
+
+</details>
+
+The clinic survey starts with a desired margin of error. The next section turns that precision target into a total sample size.
+
+## Estimate one proportion: a prevalence survey {#prevalence .advanced-heading}
+
+A prevalence survey estimates one population proportion at a defined time. Each participant contributes a binary outcome to one sample; you choose its size for a useful [margin of error](#margin-of-error).
+
+Such estimates can inform service planning or recruitment and retention assumptions for a future trial. The planning question is how precisely the study should estimate the population percentage [@pourhoseingholi2013; @ying2025].
+
+For the neuropathy service plan, the desired margin of error is 5 [percentage points](#percentage-points): half-width $d=0.05$, or a full width of 10 points, at 95% confidence. Here, n is the total number of independently sampled patients from the clinic register.
+
+For an anticipated population proportion $p_0$, the normal approximation gives:
+
+\begin{equation}
+n\approx\frac{z_{1-\alpha/2}^{2}p_0(1-p_0)}{d^2}.
+(\#eq:single-proportion)
+\end{equation}
+
+Here $p_0$ is the anticipated population proportion used to plan the study. If comparable evidence suggests a prevalence of 20% ($p_0=0.20$), the approximate requirement is 246 completed observations. If there is no useful prior estimate, 50% ($p_0=0.50$) gives the largest value of $p_0(1-p_0)$ and an approximate requirement of 385.
+
+```{r single-proportion-precision}
+# Plan for a full width of 10 percentage points at 95% confidence.
+prevalence_known <- proportion_precision_plan(p = .20,
+  full_width = .10, confidence = .95)
+# unknown_p = TRUE uses 50%, the conservative value for this approximation.
+prevalence_unknown <- proportion_precision_plan(p = .20,
+  full_width = .10, confidence = .95, unknown_p = TRUE)
+knitr::kable(data.frame(
+  Scenario = c("Prior estimate 20%", "Unknown: use 50% for planning"),
+  `Assumed population percentage` = percent(c(prevalence_known$planning_p,
+    prevalence_unknown$planning_p)),
+  `Completed observations` = c(prevalence_known$n, prevalence_unknown$n),
+  check.names = FALSE),
+  caption = "Approximate prevalence sample sizes for a 95% interval with a 5-percentage-point margin of error.")
+```
+
+The conservative 50% choice concerns absolute precision for one proportion under this approximation. For a rare outcome, an absolute margin of five percentage points might be unhelpfully wide; event counts and the chosen interval method also matter.
+
+Reducing the margin of error from 5 to 2.5 percentage points requires about four times as many completed assessments under this formula. The app below applies these choices to the neuropathy survey and shows an interval from a simulated sample.
+
+```{r prevalence-app-preview, echo=FALSE, results='asis'}
+render_app_preview("prevalence", "Compare sample sizes and confidence interval widths for one population percentage.")
+```
+
+The same precision-based approach can be used for a population mean, with the SD describing variability between patients.
+
+## Estimation with a precision target {#plan-for-precision .advanced-heading}
+
+A rehabilitation study aims to estimate the mean improvement in one patient population. You should specify how narrow the confidence interval needs to be to support a useful interpretation. Here, a 95% confidence interval with an anticipated full width of 4 score units is the precision target [@wang2020; @lakens2022].
+
+With an assumed SD of 5 units, the [mean estimation activity](https://katatam.github.io/sample-size-calculation/study/?activity=mean_precision) finds the smallest total sample meeting this target. The calculation uses the confidence level, SD and desired width. The population mean used in simulation is 3 units, which supplies a known value for checking the intervals.
+
+```{r precision-plan}
+# Define one population and the desired precision for its mean.
+# The mean of 3 supplies a known value for checking interval coverage.
+precision_spec <- single_population_spec(outcome = "means", mean = 3,
+  sd = 5, confidence = .95, width = 4, B = 5000, seed = 20260922)
+# Find the smallest total sample meeting the expected interval-width target.
+precision_n <- single_population_n(precision_spec)
+c(analyzable_total = precision_n,
+  anticipated_full_width = single_population_width(precision_spec, precision_n))
+# Repeated samples produce different estimates and interval widths.
+precision_batch <- single_population_simulate(precision_spec, precision_n, many = TRUE)
+```
+
+```{r precision-plan-formatted, echo=FALSE}
+knitr::kable(data.frame(`Analyzable participants (total)`=precision_n, `Anticipated full interval width`=round(single_population_width(precision_spec, precision_n),2),check.names=FALSE), caption="Total sample required to estimate one population mean with a 95% confidence interval of anticipated full width at most 4 score units, assuming SD 5.")
+```
+
+For normal data, this calculation uses the expected full width of a t-based interval. Realized interval widths vary with the sample SD. The simulation shows how often intervals contain the known population mean and how often their width meets the chosen target [@sandoval2025].
+
+```{r precision-app-preview, echo=FALSE, results='asis'}
+render_app_preview("mean_precision", "Explore sample size for a chosen confidence interval width.")
+```
+
+::: {.activity}
+<p class="question-label">Question to consider</p>
+
+In [Activity: Estimate a population mean with a precision target](https://katatam.github.io/sample-size-calculation/study/?activity=mean_precision), what does a full-width target of 4 units mean? Will every simulated interval meet it?
+
+<details class="model-answer" id="model-answer-precision-versus-power">
+<summary>Model answer</summary>
+
+A full width of 4 units corresponds to a margin of approximately 2 units on either side of the estimated mean. With SD 5, the calculation requires `r precision_n` analyzable patients in total. It meets an anticipated-width target. Individual intervals can be wider or narrower because the sample SD varies across studies.
+
+</details>
+:::
 
 ## Clinical interpretation of a confidence interval {#interpret-a-confidence-interval-clinically .advanced-heading}
 
 To interpret one trial, you can compare its confidence interval with both zero and the 20-percentage-point clinical threshold introduced for the chronic pain trial. Zero represents no population difference; the clinical threshold represents the between-group benefit judged worthwhile in this example.
 
-The estimated difference summarizes the treatment comparison. The confidence interval for this between-group difference shows uncertainty around the estimate under the analysis assumptions. At the same confidence level, a narrower interval gives a more precise estimate. Three hypothetical 95% intervals illustrate the possible clinical conclusions:
+The chronic pain trial supplies an example of estimating a between-group difference. Its sample size was chosen for power; the interval describes the resulting estimate's magnitude and uncertainty. The estimated difference summarizes the treatment comparison. The confidence interval for this between-group difference shows uncertainty around the estimate under the analysis assumptions. At the same confidence level, a narrower interval gives a more precise estimate. Three hypothetical 95% intervals illustrate the possible clinical conclusions:
 
 ```{r clinical-intervals, echo=FALSE}
 clinical_intervals <- data.frame(
@@ -1006,7 +1110,7 @@ knitr::kable(data.frame(
   caption = "Hypothetical 95% intervals for novel minus standard treatment, compared with zero and a 20-percentage-point clinical threshold.")
 ```
 
-Figure \@ref(fig:clinical-interval-plot) places the intervals in Table \@ref(tab:clinical-intervals) on the same scale. Positive differences favor the novel treatment. You can see whether each interval crosses zero, crosses the clinical threshold, or lies entirely above it.
+Figure \@ref(fig:clinical-interval-plot) places the intervals in Table \@ref(tab:clinical-intervals) on the same scale. Positive differences favor the novel treatment. You can see whether each interval crosses zero, crosses the clinical threshold, or lies entirely below it.
 
 ```{r clinical-interval-plot, echo=FALSE, fig.width=8, fig.height=4.6, fig.cap="Three hypothetical 95% confidence intervals on a common scale. The solid vertical line marks no between-group difference; the dashed line marks the 20-percentage-point clinical threshold. Each horizontal bar spans the stated interval limits.", fig.alt="Three horizontal confidence intervals for novel minus standard treatment. The interval from 2 to 28 percentage points excludes zero but crosses the clinical threshold of 20. The interval from minus 8 to 32 crosses both zero and 20. The interval from 22 to 42 lies entirely above 20."}
 par(mar = c(5, 9.1, 4.3, 1), las = 1, bg = "white",
@@ -1039,14 +1143,7 @@ For a 95% confidence interval and its corresponding two-sided test, an interval 
 
 These intervals concern the population-level difference between groups; see [Between-group differences and individual benefit](#between-group-differences) for the implications for individual patients.
 
-Across repeated studies, about 95% of intervals calculated with a 95% confidence-interval method would contain the true population difference, if the assumptions hold. The estimation activities explore how intervals vary across repeated samples. Clinical interpretation also considers harms, burden, and the credibility of the study [@sandoval2025].
-
-<details class="misconception" id="misconception-confidence-probability">
-<summary>Common misconception: this interval has a 95% probability of containing the true difference</summary>
-
-The true population difference is fixed, while the interval changes from sample to sample. The 95% describes how often the method produces an interval containing that difference across repeated studies.
-
-</details>
+Clinical interpretation also considers harms, burden, and the credibility of the study [@sandoval2025].
 
 <details class="misconception" id="misconception-power-precision">
 <summary>Common misconception: high power guarantees clinically useful precision</summary>
@@ -1054,103 +1151,6 @@ The true population difference is fixed, while the interval changes from sample 
 A study can detect a difference from zero while leaving considerable uncertainty about whether the benefit is clinically worthwhile. Power concerns the testing decision; precision concerns the interval's width. You can consider both when deciding whether the study can answer the clinical question.
 
 </details>
-
-## Estimation with a precision target {#plan-for-precision .advanced-heading}
-
-A rehabilitation study aims to estimate the mean improvement in one patient population. You should specify how narrow the confidence interval needs to be to support a useful interpretation. Here, a 95% confidence interval with an anticipated full width of 4 score units is the precision target [@wang2020; @lakens2022].
-
-With an assumed SD of 5 units, the [mean estimation activity](https://katatam.github.io/sample-size-calculation/study/?activity=mean_precision) finds the smallest total sample meeting this target. The calculation uses the confidence level, SD and desired width. The population mean used in simulation is 3 units, which supplies a known value for checking the intervals.
-
-```{r precision-plan}
-# Define one population and the desired precision for its mean.
-# The mean of 3 supplies a known value for checking interval coverage.
-precision_spec <- single_population_spec(outcome = "means", mean = 3,
-  sd = 5, confidence = .95, width = 4, B = 5000, seed = 20260922)
-# Find the smallest total sample meeting the expected interval-width target.
-precision_n <- single_population_n(precision_spec)
-c(analyzable_total = precision_n,
-  anticipated_full_width = single_population_width(precision_spec, precision_n))
-# Repeated samples produce different estimates and interval widths.
-precision_batch <- single_population_simulate(precision_spec, precision_n, many = TRUE)
-```
-
-```{r precision-plan-formatted, echo=FALSE}
-knitr::kable(data.frame(`Analyzable participants (total)`=precision_n, `Anticipated full interval width`=round(single_population_width(precision_spec, precision_n),2),check.names=FALSE), caption="Total sample required to estimate one population mean with a 95% confidence interval of anticipated full width at most 4 score units, assuming SD 5.")
-```
-
-For normal data, this calculation uses the expected full width of a t-based interval. Realized interval widths vary with the sample SD. The simulation shows how often intervals contain the known population mean and how often their width meets the chosen target [@sandoval2025].
-
-
-
-```{r precision-app-preview, echo=FALSE, results='asis'}
-render_app_preview("mean_precision", "Explore sample size for a chosen confidence interval width.")
-```
-
-::: {.activity}
-<p class="question-label">Question to consider</p>
-
-In [Activity: Estimate a population mean with a precision target](https://katatam.github.io/sample-size-calculation/study/?activity=mean_precision), what does a full-width target of 4 units mean? Will every simulated interval meet it?
-
-<details class="model-answer" id="model-answer-precision-versus-power">
-<summary>Model answer</summary>
-
-A full width of 4 units corresponds to a margin of approximately 2 units on either side of the estimated mean. With SD 5, the calculation requires `r precision_n` analyzable patients in total. It meets an anticipated-width target. Individual intervals can be wider or narrower because the sample SD varies across studies.
-
-</details>
-:::
-
-## Estimate one proportion: a prevalence survey {#prevalence .advanced-heading}
-
-
-
-
-
-
-A prevalence survey estimates one population proportion at a defined time. Each participant contributes a binary outcome to one sample; you choose its size for a useful [margin of error](#margin-of-error).
-
-Such estimates can inform service planning or recruitment and retention assumptions for a future trial. The planning question is how precisely the study should estimate the population percentage [@pourhoseingholi2013; @ying2025].
-
-Suppose a service wants to estimate the percentage of eligible patients reporting a symptom. It wants a 95% confidence interval with an approximate margin of error of 5 [percentage points](#percentage-points): half-width $d=0.05$, or a full width of 10 percentage points. This is a simple independent-sample prevalence example. Here, n is the total number of participants in a single sample.
-
-For an anticipated population proportion $p_0$, the normal approximation gives:
-
-\begin{equation}
-n\approx\frac{z_{1-\alpha/2}^{2}p_0(1-p_0)}{d^2}.
-(\#eq:single-proportion)
-\end{equation}
-
-Here $p_0$ is the anticipated population proportion used to plan the study. If comparable evidence suggests a prevalence of 20% ($p_0=0.20$), the approximate requirement is 246 completed observations. If there is no useful prior estimate, 50% ($p_0=0.50$) gives the largest value of $p_0(1-p_0)$ and an approximate requirement of 385.
-
-```{r single-proportion-precision}
-# Plan for a full width of 10 percentage points at 95% confidence.
-prevalence_known <- proportion_precision_plan(p = .20,
-  full_width = .10, confidence = .95)
-# unknown_p = TRUE uses 50%, the conservative value for this approximation.
-prevalence_unknown <- proportion_precision_plan(p = .20,
-  full_width = .10, confidence = .95, unknown_p = TRUE)
-knitr::kable(data.frame(
-  Scenario = c("Prior estimate 20%", "Unknown: use 50% for planning"),
-  `Assumed population percentage` = percent(c(prevalence_known$planning_p,
-    prevalence_unknown$planning_p)),
-  `Completed observations` = c(prevalence_known$n, prevalence_unknown$n),
-  check.names = FALSE),
-  caption = "Approximate prevalence sample sizes for a 95% interval with a 5-percentage-point margin of error.")
-```
-
-The conservative 50% choice concerns absolute precision for one proportion under this approximation. It is not a general substitute for unknown control and treatment percentages in a power calculation. For a rare outcome, an absolute margin of five percentage points might be unhelpfully wide; event counts and the chosen interval method also matter.
-
-[Activity: Estimate a percentage with useful precision](https://katatam.github.io/sample-size-calculation/study/?activity=prevalence). You can compare margins of error of 5 and 2.5 percentage points. The latter requires about four times as many completed observations under the formula. The app shows a Wilson interval for an illustrative realized sample; its width can differ from the planning approximation. Representative recruitment matters as well: a larger convenience sample does not automatically remove selection bias [@whitley2002; @wang2020].
-
-```{r prevalence-app-preview, echo=FALSE, results='asis'}
-render_app_preview("prevalence", "Compare sample sizes and confidence interval widths for one population percentage.")
-```
-
-
-
-
-
-
-The worked survey illustrates one planning method. The table below places it alongside treatment comparisons and other research objectives.
 
 ## Reuse an existing dataset for a different question {#dataset-reuse .advanced-heading}
 
@@ -1205,7 +1205,7 @@ Suppose a team wants to test a new rehabilitation pathway and needs evidence abo
 
 You can start with systematic reviews, relevant previous studies, routine service data and clinical expertise. Your report should record the population, outcome, time point and uncertainty of each source. You should agree the main trial's clinically meaningful outcome with patients and clinicians. The pilot can investigate recruitment and retention, measurement procedures, acceptability and variability. Planning the definitive trial should combine these findings with relevant external evidence [@albers2018].
 
-For the pilot, your plan should connect the available resources with the precision needed for these feasibility decisions. The [single-proportion example](#prevalence) explains the corresponding interval-width calculation. Here the hypothetical cap is 40 participants, and expected completion of follow-up is 80%. If 32 of 40 complete follow-up, what would that tell the team about retention?
+For the pilot, your plan should connect the available resources with the precision needed for these feasibility decisions. The [single-proportion example](#prevalence) explains the corresponding interval-width calculation. Here the hypothetical cap is 40 participants, and expected completion of follow-up is 80%. With 32 of 40 completing follow-up, the observed retention and its interval are shown below.
 
 ```{r pilot-retention}
 # Estimate retention and its interval from 32 completions among 40 participants.
@@ -1220,19 +1220,25 @@ knitr::kable(data.frame(`Completed follow-up`="32/40 (80%)", `95% Wilson confide
 
 The observed 80% retention still has a wide interval. You can compare it with a prospectively agreed progression criterion and consider reasons for missing outcomes. A point estimate of 80% alone cannot establish that the main trial will retain at least 80%.
 
-Your pilot size should reflect the decision it must support. Ying and colleagues distinguish estimating feasibility with useful precision, assessing progression criteria, detecting practical problems and informing variability for the main trial [@ying2025]. You should specify each outcome's denominator: retention concerns participants enrolled, while a recruitment percentage may concern eligible people approached. Forty enrolled patients do not supply forty observations for every feasibility outcome.
+Your pilot size should reflect the decision it must support. Ying and colleagues distinguish estimating feasibility with useful precision, assessing progression criteria, detecting practical problems and informing variability for the main trial [@ying2025]. You should specify each outcome's denominator: retention concerns participants enrolled, while a recruitment percentage may concern eligible people approached.
+
+The app below starts with 40 participants and an 80% retention probability. Comparing samples of 40 and 100 shows how more observations affect the uncertainty in the retention estimate. Both retained and non-retained participants contribute when their status is known.
+
+```{r pilot-app-preview, echo=FALSE, results='asis'}
+render_app_preview("pilot_feasibility", "Explore the information a pilot with a fixed number of participants can provide.")
+```
 
 ::: {.activity}
 <p class="question-label">Question to consider</p>
 
-Before seeing retention results, your feasibility plan should specify an unacceptable level, a desirable level and what would lead to proceeding, amending or stopping. You can compare the intervals for 40 and 80 participants. Your explanation should address whether either sample supplies useful information for those decisions, alongside acceptability and reasons for missing follow-up. The progression criteria should have a clinical and operational justification.
+A pilot's prespecified progression rule requires at least 80% observed retention, a lower 95% confidence limit above 70%, and acceptable delivery. Which of these results meets the numerical criteria: 32 of 40 retained participants, or 80 of 100? Why?
 
 <details class="model-answer" id="model-answer-pilot-progression">
 <summary>Model answer</summary>
 
-One possible set of prospectively specified criteria would treat retention below 70% as unacceptable and 80% as desirable. A team could proceed if the estimate is at least 80%, the lower 95% confidence limit exceeds 70%, and delivery and acceptability are satisfactory; amend the pathway if the interval still includes unacceptable retention; and stop or substantially redesign it if the interval lies below 70%. These illustrative thresholds and rules need clinical and operational justification before the results are seen.
+Both samples have 80% observed retention. With 32/40 retained participants, the 95% Wilson interval is `r percent(wilson_interval(.80, 40)[1, 1])` to `r percent(wilson_interval(.80, 40)[1, 2])`. Its lower limit is below 70%, so it does not meet the numerical progression rule.
 
-For 32/40 retained participants, the 95% Wilson interval is `r percent(wilson_interval(.80, 40)[1, 1])` to `r percent(wilson_interval(.80, 40)[1, 2])`; for 64/80 it is `r percent(wilson_interval(.80, 80)[1, 1])` to `r percent(wilson_interval(.80, 80)[1, 2])`. The 40-person result would lead to amendment or further investigation under these illustrative rules. The 80-person result just meets the numerical progression rule using the unrounded lower limit, but the reasons for missing follow-up and acceptability would still matter. Neither result establishes that true retention is at least 80%. Recruiting 80 would also need its own feasible time and resource plan.
+With 80/100 retained participants, the interval is `r percent(wilson_interval(.80, 100)[1, 1])` to `r percent(wilson_interval(.80, 100)[1, 2])`. Its lower limit exceeds 70%, so it meets the numerical criteria. Progression would also require acceptable delivery. The larger sample gives a narrower interval around the same retention estimate.
 
 </details>
 
@@ -1247,21 +1253,27 @@ A pilot may primarily investigate recruitment, retention or whether procedures a
 
 </details>
 
-[Activity: Pilot study: estimate retention](https://katatam.github.io/sample-size-calculation/study/?activity=pilot_feasibility). It starts with a fixed total of 40 and anticipated retention of 80%. You can compare illustrative intervals at 40 and 80 observations; make clear whether another recruitment period or collaboration could obtain the larger sample.
-
-```{r pilot-app-preview, echo=FALSE, results='asis'}
-render_app_preview("pilot_feasibility", "Explore the information a pilot with a fixed number of participants can provide.")
-```
-
-
-
-The app can generate one hypothetical retention count from the assumed 80% probability. It will not necessarily produce exactly 32 of 40. Both retained and non-retained participants contribute to the retention estimate when their status is known.
-
 Before writing the protocol, you should check relevant guidance and the current funder's requirements. For examples, [NIHR HTA guidance on feasibility and pilot studies](https://njl-admin.nihr.ac.uk/document/download/2023130) distinguishes feasibility questions from definitive efficacy questions; this is an archived guidance example. The [CONSORT extension for randomized pilot and feasibility trials](https://www.bmj.com/content/355/bmj.i5239) asks for a rationale for pilot numbers and criteria for progression [@nihrfeasibility; @eldridge2016]. Reporting guidance helps you document the design. The sample size method should match the study question and planned analysis.
 
 ## Reporting an estimation-based sample size {#estimation-report .advanced-heading}
 
 An estimation plan identifies the population quantity, outcome and assessment time, confidence level, desired full interval width, anticipated percentages or SD, interval method, software and participant counts. Its justification explains why the chosen width would be useful. For existing data, it describes the available count and anticipated precision. The [study-plan activity](https://katatam.github.io/sample-size-calculation/assumptions_report/?stage=calculation) displays these fields when an estimation goal is selected; [Chapter 3](#reporting) explains the common report structure.
+
+The report below follows the study-size and statistical-method reporting items in STROBE and the precision-based approach in the published neuropathy study [@strobe2007; @negussie2024]. The selected margin corresponds to uncertainty of about five affected patients per 100 clinic patients, which is the tolerance used for the service's initial workload plan.
+
+<div class="annotated-report" id="estimation-report-example" role="group" aria-labelledby="estimation-report-caption">
+
+<p class="caption" id="estimation-report-caption">Example 4.1. Sample size calculation report for the neuropathy prevalence survey.</p>
+
+Peripheral neuropathy prevalence will be estimated among adults with type 2 diabetes attending the clinic, using one assessment per patient at enrollment. Patients will be selected by simple random sampling from the clinic register. With anticipated prevalence of 20%, 95% confidence and a margin of error of five percentage points, the single-proportion normal approximation gives $1.96^2\times0.20\times0.80/0.05^2=245.86$, rounded upward to 246 completed assessments. The margin was chosen to support workload planning to within approximately five affected patients per 100 clinic patients. Allowing for 5% nonresponse gives $\lceil246/0.95\rceil=259$ patients to approach. The observed prevalence will be reported with a 95% Wilson confidence interval. The calculation uses R `r getRversion()`, `stats::qnorm(0.975)` and the formula shown; the interval uses the Wilson score method without continuity correction. The inputs and commented code are retained with the calculation record.
+
+</div>
+
+The following draft concerns the same survey. Its highlighted passages can be selected to inspect the calculation and reporting problems.
+
+```{r estimation-report-error, echo=FALSE, results='asis'}
+render_error_activity("estimation_report")
+```
 
 <div class="chapter-recap">
 
@@ -1449,6 +1461,12 @@ knitr::kable(data.frame(
       sig.level = .05, alternative = "two.sided", strict = TRUE)$power,
     numeric(1))), check.names = FALSE),
   caption = paste("Chronic-pain sensitivity: alternative required counts and approximate power with the original", pain_target_n, "patients per group held fixed."))
+```
+
+Figure \@ref(fig:pain-target-sensitivity-plot) displays both columns of Table \@ref(tab:pain-target-sensitivity): the count needed for each alternative and the power obtained when the original 56 per group is retained.
+
+```{r pain-target-sensitivity-plot, echo=FALSE, fig.width=8, fig.height=6, fig.cap="Sensitivity to the true relief difference. The upper panel shows required analyzable patients per group for 90% power. The lower panel shows power with 56 per group held fixed. Both use 30% standard-treatment relief and 5% two-sided Type I error probability.", fig.alt="Two panels share the treatment-difference axis at 20, 30 and 40 percentage points. The required sample decreases as the difference increases, while power at 56 per group increases. Dashed lines mark 56 patients and 90% power."}
+draw_pain_sensitivity(pain_alternatives, pain_target_n)
 ```
 
 This comparison keeps standard-treatment relief at 30%, the Type I error probability at 5%, and the analysis unchanged. Your report should record why the alternatives are plausible and which uncertainty matters most for the decision. You can also vary the standard-treatment probability where relevant: the same difference at different event probabilities need not require the same sample. The continuous-outcome example below illustrates the corresponding role of variability.

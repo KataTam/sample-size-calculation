@@ -1,7 +1,7 @@
 // The same review content must work with pointer, keyboard, print and no script.
 const {chromium}=require('playwright'),assert=require('node:assert/strict'),fs=require('node:fs');
 const base=(process.argv[2]||'http://127.0.0.1:8769').replace(/\/$/,'');
-const cases={discharge:'exercises',recruitment:'simulation',report:'reporting',software:'appendix'};
+const cases={discharge:'exercises',recruitment:'simulation',report:'reporting',software:'appendix',estimation_report:'estimation-planning'};
 const bank=JSON.parse(fs.readFileSync('data/error-activities.json','utf8'));
 (async()=>{
  const browser=await chromium.launch({headless:true,...(process.platform==='win32'?{channel:'msedge'}:{})});
@@ -53,7 +53,7 @@ const bank=JSON.parse(fs.readFileSync('data/error-activities.json','utf8'));
    await page.keyboard.press('Escape');
   }
   await page.goto(base+'/book/Sample_size_open_module.html',{waitUntil:'networkidle'});
-  assert.equal(await page.locator('.spot-activity[data-spot-ready]').count(),4,'Complete HTML rebinds all reviews');
+  assert.equal(await page.locator('.spot-activity[data-spot-ready]').count(),Object.keys(bank).length,'Complete HTML rebinds all reviews');
   await page.locator('#report-error-activity .spot-choice[data-error="true"]').first().click();
   assert(await page.locator('#report-error-activity .spot-popover').isVisible());
   await page.evaluate(()=>window.dispatchEvent(new Event('beforeprint')));

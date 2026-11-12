@@ -14,7 +14,7 @@ const cards=JSON.parse(fs.readFileSync('data/flashcards.json','utf8')).cards;
  await page.setViewportSize({width:390,height:844});await page.locator('#aim-selection').waitFor();assert.match(await page.locator('#aim-selection').innerText(),/Compare the effects/);await help('structure');await audit('questionnaire-mobile');
  await page.getByRole('button',{name:'Start again'}).click();assert.equal(await page.locator('#result-panel').isVisible(),false);assert.equal(await page.locator('#question-progress-bar').getAttribute('value'),'0');
  await page.setViewportSize({width:1400,height:1000});await page.goto(base+'/quiz/?chapter=clinical-question');await page.locator('#start:enabled').waitFor();await help('route');await audit('quiz-setup');await page.locator('#start').click();
- const questions=JSON.parse(fs.readFileSync('site/quiz/questions.json','utf8')).questions.filter(q=>q.chapter==='clinical-question'&&q.level==='core');
+ const questions=JSON.parse(fs.readFileSync('site/quiz/questions.json','utf8')).questions.filter(q=>q.chapter==='clinical-question'&&q.level==='core'&&q.chapter_check!==false);
  for(const [i,q] of questions.entries())await page.locator(`input[name="${q.id}"][value="${i? q.answer:(q.answer+1)%4}"]`).check();
  assert.equal(Number(await page.locator('#quiz-progress-bar').getAttribute('value')),questions.length);await page.locator('button[type=submit]').click();
  assert.equal(await page.locator('#review > details[open]').count(),1);assert.equal(await page.locator('#review > details').count(),questions.length);await audit('quiz-results');

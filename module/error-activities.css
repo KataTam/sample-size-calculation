@@ -4,6 +4,7 @@
 .spot-activity .spot-text { line-height:1.9; }
 .spot-choice { border-radius:3px; padding:2px 0; box-decoration-break:clone; -webkit-box-decoration-break:clone; }
 [data-spot-ready] .spot-choice { cursor:pointer; }
+@media screen { [data-spot-ready] .spot-choice { padding:4px 0; } }
 [data-spot-ready] .spot-choice:hover { text-decoration:underline dotted; text-underline-offset:4px; }
 .spot-choice:focus-visible { outline:3px solid #8a429c; outline-offset:3px; }
 .spot-choice.spot-found { background:var(--spot-mark); text-decoration:underline; text-decoration-thickness:2px; text-underline-offset:3px; }

@@ -1,7 +1,7 @@
 # One question bank supplies the embedded HTML checks and printable answer keys.
 render_chapter_quiz <- function(chapter = "all") {
   bank <- jsonlite::fromJSON("../site/quiz/questions.json", simplifyVector = FALSE)
-  questions <- Filter(function(q) chapter == "all" || (q$chapter == chapter && !identical(q$chapter_check, FALSE)), bank$questions)
+  questions <- Filter(function(q) (chapter == "all" && identical(q$chapter_check, FALSE)) || (chapter != "all" && q$chapter == chapter && !identical(q$chapter_check, FALSE)), bank$questions)
   esc <- function(x) {
     escaped <- as.character(htmltools::htmlEscape(as.character(x), attribute = TRUE))
     # ASCII HTML entities survive Windows rendering locales without losing punctuation.

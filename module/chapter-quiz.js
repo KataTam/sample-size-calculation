@@ -27,7 +27,8 @@
         const bar=root.querySelector('.quiz-progress-bar');bar.max=active.length;bar.value=answered;
       }
       function begin(subset,saved=null) {
-        active = subset;submitted=false;
+        active = root.id === 'quiz-all' && !saved ? shuffle([...subset]) : [...subset];submitted=false;
+        if(root.id === 'quiz-all')active.forEach(q=>form.querySelector('.quiz-questions').append(q));
         form.reset(); form.hidden = false; results.hidden = true; key.hidden = true; key.open = false;
         questions.forEach(q => {
           const options=[...q.querySelectorAll('label.quiz-option')];
@@ -55,7 +56,7 @@
           const chosen = q.querySelector('input:checked'), correct = chosen.value === q.dataset.answer;
           if (!correct) missed.push(q);
           const answer = answers.find(a => a.dataset.question === q.dataset.question);
-          answer.hidden = false; answer.open=!correct;answer.classList.toggle('quiz-incorrect', !correct);
+          answer.parentElement.append(answer); answer.hidden = false; answer.open=!correct;answer.classList.toggle('quiz-incorrect', !correct);
           answer.querySelector('.quiz-answer-status').textContent=correct?'Correct':'Needs review';
           answer.querySelector('.quiz-number').textContent = i + 1;
           answer.querySelector('.quiz-choice').textContent = `${correct ? 'Correct' : 'Incorrect'}. Your answer: ${chosen.nextElementSibling.textContent}`;
@@ -85,7 +86,7 @@
         const saved=JSON.parse(localStorage.getItem(storageKey)||'null');
         if(typeof saved?.signature==='string' && sameContent(saved.signature)===sameContent(signature) && saved.active.every(id=>questions.some(q=>q.dataset.question===id))){
           restoring=true;if(route&&saved.route)route.value=saved.route;
-          begin(questions.filter(q=>saved.active.includes(q.dataset.question)),saved);
+          begin(saved.active.map(id=>questions.find(q=>q.dataset.question===id)),saved);
           if(saved.submitted)form.dispatchEvent(new Event('submit',{cancelable:true}));restoring=false;
         }else reset();
       }catch(_){restoring=false;reset();}

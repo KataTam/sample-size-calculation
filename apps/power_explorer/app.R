@@ -29,7 +29,7 @@ ui <- fluidPage(
   textOutput("plan_import_status"),
   textOutput("missing_note"),
   sidebarLayout(sidebarPanel(width = 4,
-    conditionalPanel("input.goal != 'precision'", textOutput("scenario_summary")),
+    conditionalPanel("input.goal != 'precision'", textOutput("scenario_summary"), uiOutput("simulation_target")),
     conditionalPanel("input.goal == 'fixed'", numericInput("fixed_n", "Participants per group in each study", 60, min = 2, max = 100000, step = 1),
       activity_help("This is the chosen analyzable sample size. The introductory activity starts with 20 per group to make sampling variability visible; larger samples can then be compared. Recruitment limits are assessed separately.", for_input = "fixed_n")),
     tags$details(id="lab-settings", class="activity-details", tags$summary("Settings"),
@@ -56,7 +56,6 @@ ui <- fluidPage(
       percent_slider("expected_p", "Difference observed in previous data (percentage points)", value = .4, min = -1, max = 1, step = .01, suffix = " percentage points"),
       percent_slider("plan_p0", "Standard treatment: event probability used for planning (%)", .01, .99, .3, step = .01),
       percent_slider("plan_p1", "Novel treatment: event probability used for planning (%)", .01, .99, .6, step = .01),
-      textOutput("probability_inputs"),
       activity_help("Record a treatment-minus-control difference observed in earlier data, in percentage points. In the chronic pain pilot this was 40 points. Its relevance and uncertainty inform the target chosen below.", for_input = "expected_p"),
       activity_help("Use evidence for the same favorable event, population, and follow-up time. This percentage sets the baseline for the comparison.", for_input = "plan_p0"),
       activity_help("Its difference from the standard-treatment percentage sets the target difference. Both groups should use the same favorable-event definition and follow-up time.", for_input = "plan_p1"),
@@ -71,13 +70,11 @@ ui <- fluidPage(
     activity_help("A 5% setting allows a 5% false-positive probability when population outcomes are equal. The app uses a two-sided test.", for_input = "alpha"),
     percent_slider("target_power", tags$span("Target ", tags$a(href = "../book/Sample_size_open_module.html#statistical-power", target = "_blank", rel = "noopener", "power"),
       " (%)"), .5, .99, .8, step = .01),
-    textOutput("error_target_inputs"),
     activity_help("A 90% target aims to detect the specified true difference in 90% of repeated studies, leaving a 10% false-negative probability. Higher targets require more participants.", for_input = "target_power")),
     conditionalPanel("input.goal == 'precision'", percent_slider("confidence", "Confidence level (%)", .90, .999, .95, step = .001),
       activity_help("For 95% confidence, about 95% of intervals across repeated studies contain the population value under the model assumptions.", for_input = "confidence")),
     percent_slider("dropout", "Expected loss to follow-up in each group (%)", 0, .5, .1, step = .01),
     activity_help("This percentage adjusts recruitment and the recruitment-limit curve. Simulating incomplete outcomes requires the separate missing-outcome scenarios in the advanced settings.", for_input = "dropout"),
-    textOutput("dropout_input"),
     tags$div(class = "lab-recruitment", numericInput("recruit_cap", "Maximum recruitment, across both groups", 200, min = 4, max = 200000, step = 2),
     activity_help("Use the total your sites and recruitment period could support. The graph converts this to an expected analyzable limit after losses; actual retention varies.", for_input = "recruit_cap")),
     conditionalPanel("input.show_advanced",
@@ -89,8 +86,7 @@ ui <- fluidPage(
       numericInput("true_sd", "Standard deviation assumed for simulation (outcome units)", 7, min = .1)),
     conditionalPanel("input.reality == 'custom' && input.outcome == 'proportions'",
       percent_slider("true_p0", "Control event probability assumed for simulation (%)", .01, .99, .3, step = .01),
-      percent_slider("true_p1", "Treatment event probability assumed for simulation (%)", .01, .99, .4, step = .01),
-      textOutput("generating_inputs")),
+      percent_slider("true_p1", "Treatment event probability assumed for simulation (%)", .01, .99, .4, step = .01)),
     conditionalPanel("input.outcome == 'proportions'",
       tags$details(id = "missing-controls", tags$summary("Explore missing outcomes"),
         p("These scenarios start with recruited participants and analyze observed outcomes. Results show detection, bias, and confidence interval coverage together."),
@@ -132,7 +128,6 @@ ui <- fluidPage(
       p(class = "caption", "Table 3. Power and anticipated full interval width under the plan, the reality assumed for simulation and a null effect at unchanged sample size."),
       p("The table keeps the planned sample size fixed. Missing-outcome scenarios start with recruited participants; their results appear in One study and Many studies.")),
     tabPanel("One study", h3("One simulated study"),
-      p("Which quantities do you expect to change when you repeat the same study?"),
       tags$div(class = "simulation-actions",
         actionButton("run_one", "Simulate one study", class = "btn-primary"),
         conditionalPanel("input.outcome == 'proportions' && !output.one_has_missing",
@@ -145,30 +140,14 @@ ui <- fluidPage(
         tags$p(id = "journey-description", class = "sr-only"),
         tags$p(id = "journey-status", role = "status", `aria-live` = "polite", "The patient outcomes and estimated difference will appear here."),
         tags$details(id="inline-study-explanation", class="inline-study-explanation", tags$summary("Interpret the animation"),
-          p("Filled circles show patients with the event; open circles show patients without it. In the chronic pain case, the event is pain relief."),
-          p("The pink dot starts at this trial's estimated difference on the upper axis and falls to the same value on the lower axis. Each accumulated dot represents one complete trial."),
-        tags$div(class="activity-question", h4("What stays fixed, and what changes?"),
-          tags$label(tags$input(id = "journey-motion", type = "checkbox"), " Reduced motion"),
-          activity_details("Model answer", textOutput("one_model_answer"))))),
-      tags$details(id="one-study-records", class="inline-study-explanation", tags$summary("Study results and records"),
-      conditionalPanel("!output.one_ready", p("Results and participant records appear after a single-study simulation.")),
-      conditionalPanel("output.one_ready",
-        textOutput("one_interpretation"),
-        conditionalPanel("output.intervals_visible", plotOutput("one_plot", height = "300px"), app_interval_key(),
-        p(class = "caption", "Figure 4. The saved study's estimate and interval compared with zero, the clinical threshold and the true effect assumed for simulation.")),
-        activity_details("Numerical results",
-          tableOutput("one_retention"),
-          conditionalPanel("output.one_has_missing", p(class="caption", "Recruited, retained, and missing participants in the saved single study.")),
-          tableOutput("one_result"),
-          p(class = "caption", "Table 4. Results from the saved single study for the selected planning goal."),
-          conditionalPanel("input.outcome == 'proportions' && output.intervals_visible && input.goal != 'precision'", tags$details(id="interval-method-help", tags$summary("About the p value and confidence interval"),
-            p("Close to the significance threshold, the p value and confidence interval can sometimes give different indications because they use different calculation methods. The ", tags$a(href="../book/appendix.html#tutorial-methods", target="_blank", rel="noopener", "methods record"), " explains these methods.")))),
-        activity_details("Participant records and download", tableOutput("one_data"), textOutput("one_missing_data_note"),
-          p(class = "caption", "Table 5. Up to six records per group. Binary outcomes use 0 for no event and 1 for the event; missing records appear first when present."),
-          downloadButton("download_one", "Download study and assumptions")))),
+          p(id="journey-reading", "Each pair of patient groups produces one estimated treatment difference. Repeated trials show how that estimate varies around the same population difference."),
+          tags$label(tags$input(id = "journey-motion", type = "checkbox"), " Reduced motion"))),
+      conditionalPanel("output.one_ready && (input.outcome == 'means' || output.one_has_missing)", textOutput("one_interpretation")),
+      conditionalPanel("output.one_ready && output.intervals_visible",
+        activity_details("Interval for this study", plotOutput("one_plot", height="300px"), app_interval_key(),
+          p(class="caption", "Figure. The saved estimate and confidence interval, with the population difference and clinical threshold marked."))),
       tags$div(id = "journey-credit", tags$hr(), p("The animated connection between samples, estimates, and sampling distributions was inspired by Douwe Postmus’s ", tags$a(href = "https://postmus.github.io/sampling-simulator/", target = "_blank", rel = "noopener", "Statistical Concepts Lab"), "."))),
     tabPanel("Many studies", h3("Many simulated studies"),
-      p("What pattern do you expect across many studies with the same population assumptions?"),
       actionButton("run_many", "Simulate many studies", class = "btn-primary"),
       textOutput("many_status"),
       conditionalPanel("output.many_ready", tableOutput("many_summary"),
@@ -181,10 +160,7 @@ ui <- fluidPage(
           p(class = "caption", "Figure 7. Saved p-values across studies; the dashed line marks Type I error probability."))),
         conditionalPanel("input.show_advanced", activity_details("Simulation uncertainty and interpretation",
           p("Monte Carlo uncertainty comes from simulating a limited number of studies. Coverage is the percentage of intervals containing the assumed true effect. With selective missingness, bias and coverage are essential to interpreting the significance percentage."))),
-        activity_details("Download results", downloadButton("download_many", "Download replications and assumptions"))),
-      tags$div(class="activity-question", h4("A larger sample"),
-        textOutput("larger_sample_question"),
-        activity_details("Model answer", textOutput("many_model_answer")))),
+        activity_details("Download results", downloadButton("download_many", "Download replications and assumptions")))),
     tabPanel("My study", h3("Apply this to your question"),
       activity_text_input("study_question", "What is your research question and primary outcome?",
         "The example updates with the selected case and current calculation inputs.",
@@ -222,6 +198,10 @@ ui <- fluidPage(
         "Your recommendation should give analyzable and recruitment counts, supporting evidence, and the effect of plausible alternative assumptions. It should identify remaining limitations.", rows = 8),
       p(id = "study-plan-guidance", "A structured ", tags$a(href = "../assumptions_report/", "study plan"), " brings these decisions together using PICO, selected SPIRIT 2025 items and DELTA² guidance.")),
       uiOutput("report_preview"), activity_report_downloads("download_plan"),
+      conditionalPanel("output.one_ready", activity_details("Participant records for the saved study",
+        tableOutput("one_data"), textOutput("one_missing_data_note"),
+        p(class="caption", "Up to six records per group. Binary outcomes use 1 for pain relief and 0 for no relief."),
+        downloadButton("download_one", "Download study and assumptions"))),
       activity_details("Save work for later",
       downloadButton("download_plan_json", "Save work for later"),
       fileInput("upload_plan", "Reopen saved work", accept = c(".json", "application/json")),
@@ -260,6 +240,7 @@ server <- function(input, output, session) {
     list(n = x$spec$n, p0 = x$spec$p_control, p1 = x$spec$p_treatment,
       labels = if (current_activity() %in% c("pain_one_many", "pain_curves", "pain_simulation"))
         c("Duloxetine", "Neravixa") else c("Standard", "Novel"),
+      event = if (current_activity() %in% c("pain_one_many", "pain_curves", "pain_simulation")) "achieved pain relief" else "had the event",
       seed = x$spec$seed, trials = lapply(trials, function(t) list(
         control = as.list(head(t$data$outcome[t$data$group == "Control"], 80)),
         treatment = as.list(head(t$data$outcome[t$data$group == "Treatment"], 80)),
@@ -304,25 +285,6 @@ server <- function(input, output, session) {
   expected_effect <- reactive({
     values <- current_lab_inputs()
     if (values$outcome == "means") values$expected_m else values$expected_p
-  })
-  output$probability_inputs <- renderText({
-    values <- current_lab_inputs()
-    paste0("Difference observed in previous data: ", effect_text(values$expected_p, "proportions"),
-      "; event probabilities used for planning: control ", format_percent(values$plan_p0, 1),
-      ", treatment ", format_percent(values$plan_p1, 1),
-      "; target difference: ", effect_text(values$plan_p1 - values$plan_p0, "proportions"),
-      "; clinical threshold: ", effect_text(values$threshold_p, "proportions"), ".")
-  })
-  output$error_target_inputs <- renderText({
-    values <- current_lab_inputs()
-    paste0("Type I error probability: ", format_percent(values$alpha, 1), "; target power: ",
-      format_percent(values$target_power, 1), ".")
-  })
-  output$dropout_input <- renderText(paste0("Expected dropout: ", format_percent(current_lab_inputs()$dropout, 1), "."))
-  output$generating_inputs <- renderText({
-    values <- current_lab_inputs()
-    paste0("Event probabilities assumed for simulation: control ", format_percent(values$true_p0, 1),
-      ", treatment ", format_percent(values$true_p1, 1), ".")
   })
   study_details <- reactive({
     defaults <- study_input_defaults()
@@ -464,6 +426,16 @@ server <- function(input, output, session) {
       width_target = if (input$outcome == "means") input$width_m else input$width_p, seed = input$seed, B = input$B))
     x$n <- safe(plan_n(x, input$goal, input$target_power)); x
   })
+  calculated_n <- reactive({
+    req(input$goal != "precision")
+    safe(plan_n(planned(), "testing", input$target_power))
+  })
+  output$simulation_target <- renderUI({
+    n <- calculated_n()
+    tagList(p(class="simulation-target", paste0("Calculated requirement: ",n," analyzable patients per group (",2*n," total) for ",format_percent(input$target_power)," power.")),
+      if(input$goal=="fixed") actionButton("use_calculated_n",paste0("Use ",n," per group in the simulation"),class="btn-default"))
+  })
+  observeEvent(input$use_calculated_n, updateNumericInput(session,"fixed_n",value=calculated_n()),ignoreInit=TRUE)
   generating <- reactive({
     x <- planned()
     if (input$reality == "null") { x$delta <- 0; x$p_treatment <- x$p_control }
@@ -564,7 +536,7 @@ server <- function(input, output, session) {
       if (input$goal == "precision") "Larger samples usually reduce sampling variability and produce narrower intervals. "
       else if (missing) "More patients can improve precision, while outcome-related losses can still bias estimates. Rejection percentages need assessment alongside bias and coverage. "
       else if (true_difference(x) == 0) "Larger samples improve precision; with no true difference, rejections are false positives and their nominal probability stays at the Type I error setting. "
-      else "Larger samples usually improve precision and increase power at this nonzero difference. ",
+      else "Larger samples improve precision and increase power at this nonzero difference. ",
       "More repetitions stabilize simulation summaries while leaving each trial's sample size fixed. ",
       if (!is.null(saved)) paste0("The displayed batch contains ", x$B, " studies. ",
         if (!identical(saved$meta, snapshot())) "It uses earlier inputs." else "") else "")

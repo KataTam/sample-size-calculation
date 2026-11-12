@@ -13,6 +13,7 @@ const ids=(process.argv[3]||'pain_one_many,probiotics_calculation,rehabilitation
   const cases=await (await context.request.get(base+'/teaching-cases.json')).json();
   fs.mkdirSync('figures/app-previews',{recursive:true});
   for(const id of ids){
+   console.log('Loading preview for '+id);
    const record=Array.isArray(cases)?cases.find(c=>c.id===id):cases[id]; assert(record,id);
    const page=await context.newPage();page.setDefaultTimeout(120000);
    let clip;

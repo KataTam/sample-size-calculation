@@ -201,5 +201,58 @@
         "text": "."
       }
     ]
+  },
+  "estimation_report": {
+    "id": "estimation-report-error-activity",
+    "title": "Activity: Review an estimation sample size calculation report",
+    "segments": [
+      {
+        "text": "The survey will estimate peripheral neuropathy prevalence among adults with type 2 diabetes attending the clinic, assessed once at enrollment.",
+        "error": false,
+        "explanation": "The population, quantity and assessment time are specified.",
+        "link": "estimation-planning.html#estimation-foundations",
+        "section": "The survey question"
+      },
+      {
+        "text": " "
+      },
+      {
+        "text": "With 90% power, 20% anticipated prevalence and a 5% margin of error, the sample size is 246.",
+        "error": true,
+        "explanation": "This estimation goal needs a confidence level and a margin expressed in percentage points. The stated calculation uses 95% confidence and a five-percentage-point margin; power concerns a specified hypothesis test.",
+        "link": "estimation-planning.html#prevalence",
+        "section": "Prevalence sample size"
+      },
+      {
+        "text": " "
+      },
+      {
+        "text": "The requirement is 246 patients per group.",
+        "error": true,
+        "explanation": "There is one population sample. The requirement is 246 completed assessments in total.",
+        "link": "estimation-planning.html#prevalence",
+        "section": "Total sample size"
+      },
+      {
+        "text": " "
+      },
+      {
+        "text": "The recruitment target is 246, allowing for 5% nonresponse.",
+        "error": true,
+        "explanation": "To obtain 246 completed assessments with 5% anticipated nonresponse, 246/0.95 is rounded upward to 259 patients to approach.",
+        "link": "estimation-planning.html#estimation-report",
+        "section": "The completed report"
+      },
+      {
+        "text": " "
+      },
+      {
+        "text": "The calculation was performed with an online calculator.",
+        "error": true,
+        "explanation": "The calculator, version or access date, exact inputs, formula and interval method should be identifiable. The completed example records R, its version, the planning formula and the Wilson method.",
+        "link": "estimation-planning.html#estimation-report",
+        "section": "Reproducible reporting"
+      }
+    ]
   }
 }

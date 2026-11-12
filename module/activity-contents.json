@@ -53,6 +53,12 @@
     "route": "Advanced",
     "activities": [
       {
+        "label": "Estimate a percentage with useful precision",
+        "path": "study/?activity=prevalence",
+        "route": "Advanced",
+        "section": "prevalence"
+      },
+      {
         "label": "Estimate a population mean with a precision target",
         "path": "study/?activity=mean_precision",
         "route": "Advanced",
@@ -65,10 +71,10 @@
         "section": "pilot-feasibility"
       },
       {
-        "label": "Estimate a percentage with useful precision",
-        "path": "study/?activity=prevalence",
+        "label": "Review an estimation sample size calculation report",
+        "path": "book/estimation-planning.html#estimation-report-error-activity",
         "route": "Advanced",
-        "section": "prevalence"
+        "section": "estimation-report"
       }
     ],
     "title": "Sample size for estimation"

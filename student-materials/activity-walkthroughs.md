@@ -67,12 +67,12 @@ Purpose: see why sample estimates differ from population values, interpret the u
 2. In “One study and many studies,” “Simulate one study” generates patient outcomes. The animation follows the patient outcomes into the estimated difference and then the sampling distribution, with the population difference marked on both axes. “Animate 20 trials” builds a short sequence; pause, replay and reduced motion support closer inspection. Each accumulated dot represents one complete trial. “Additional calculations and simulations” opens the other calculation and study-planning views when needed.
 3. The 20-trial animation shows different possible trials while the population probabilities remain fixed. Patient outcomes produce each observed difference, which falls into the distribution of repeated-study estimates.
 4. “Many studies and a larger sample” opens further down the same page. “Simulate many studies” generates 5,000 independent trials. The distribution shows sampling variability; the percentage of significant results estimates power for this population scenario.
-5. Before repeating at 50 and 80 patients per group, you can predict how the estimates and power will change, holding the population assumptions and repetition count fixed. Larger trials usually produce less variable estimates and greater power at a nonzero population difference. “Settings” provides the other assumptions. Advanced controls start closed; coverage and Monte Carlo summaries can wait until the advanced chapter.
-6. The expandable “Model answer” sections explain the results. “Report” records the population assumptions, pain-relief counts in one study, results across many studies, and reproducibility details. The report can be downloaded as PDF or editable Word. After changing the sample size, a new run is needed for those results to appear in the report.
+5. The calculated requirement appears alongside the starting count: 56 analyzable patients per group for 90% power with the default assumptions. “Use 56 per group in the simulation” applies that count to subsequent runs. Larger samples improve precision and increase power at a nonzero population difference. “Settings” provides the other assumptions. Advanced controls start closed; coverage and Monte Carlo summaries appear when selected.
+6. “Interpret the animation” describes the counts and difference currently displayed. “Report” records the population assumptions, pain-relief counts in one study, results across many studies, and reproducibility details. Participant records are available there after a single study has been simulated. The report can be downloaded as PDF or editable Word. After changing the sample size, a new run is needed for those results to appear in the report.
 
 ## Reviewing short examples
 
-The tutorial includes selectable passages in four review activities: [discharge calculations](../book/exercises.html#discharge-error-activity), [recruitment planning](../book/simulation.html#recruitment-error-activity), [a sample size calculation report](../book/reporting.html#report-error-activity) and [advanced software choices](../book/appendix.html#software-error-activity).
+The tutorial includes selectable passages in five review activities: [discharge calculations](../book/exercises.html#discharge-error-activity), [recruitment planning](../book/simulation.html#recruitment-error-activity), [a sample size calculation report](../book/reporting.html#report-error-activity), [an estimation sample size calculation report](../book/estimation-planning.html#estimation-report-error-activity) and [advanced software choices](../book/appendix.html#software-error-activity).
 
 1. You can read the proposed statement and choose a passage that may need correction. Some passages are appropriate.
 2. Clicking or tapping a passage opens an explanation and a link to the relevant teaching material. With a keyboard, Tab reaches each passage and Enter or Space opens its explanation; Escape closes it.
@@ -219,7 +219,7 @@ Purpose: plan a useful confidence-interval width for one population mean and exa
 Purpose: connect the precision needed for a descriptive decision with survey size and a possible realized estimate.
 
 1. The example anticipates 20% prevalence and a 95% interval with full width 10 percentage points, equivalent to a margin of 5 points.
-2. The formula gives 246 completed observations. Reducing full width to 5 points, a margin of 2.5, requires about four times as many.
+2. The formula gives 246 completed neuropathy assessments. Allowing for 5% nonresponse gives 259 patients to approach. Reducing full width to 5 points, a margin of 2.5, requires about four times as many completed assessments.
 3. The 50% conservative-planning option changes the probability used for sample size planning. The anticipated percentage remains the generating probability for the illustrative simulation.
 4. In “Explore assumptions,” “Draw one illustrative sample” generates a binomial count and a Wilson interval. The realized interval width varies with the observed count.
 5. Your explanation should distinguish interval precision from representativeness. Here, n is the total number of participants in the sample.
@@ -233,7 +233,7 @@ Purpose: assess whether a limited pilot provides useful information for a feasib
 
 1. The starting goal is to assess a fixed sample of 40 participants with anticipated retention of 80%.
 2. In “Explore assumptions,” “Draw one illustrative sample” generates a possible retained count and its Wilson interval. The simulated retention count varies around its expected value of 32.
-3. You can compare the illustrative result with a fixed sample of 80. More participants generally provide more information about retention, but obtaining them requires a feasible plan.
+3. Comparing 40 with 100 participants connects the app to the chapter's progression-rule example. At 80% observed retention, the lower 95% Wilson limit is about 65% with 40 participants and 71% with 100; only the larger sample meets the example's requirement for a lower limit above 70%.
 4. Retained and non-retained participants both belong in the denominator when their status is known. Loss adjustment is appropriate only for participants whose outcome status itself cannot be established.
 5. In “Report,” your explanation should relate the interval and its uncertainty to the prespecified feasibility decision. After changing the sample size or confidence level, a new illustrative sample is needed before the report can include its interval.
 

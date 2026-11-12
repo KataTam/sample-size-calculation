@@ -7,7 +7,7 @@
   function save(){if(restoring||!bank||!current.length)return;try{localStorage.setItem(storageKey,JSON.stringify({version:JSON.stringify(bank),chapter:chapter.value,route:route.value,ids:current.map(q=>q.id),orders,answers:Object.fromEntries(new FormData($('quiz'))),submitted}));}catch(_) {}}
 
   const chapter = $('chapter'), route = $('route');
-  const selected = () => bank.questions.filter(q => (chapter.value === 'all' || (q.chapter === chapter.value && q.chapter_check !== false)) && (route.value === 'all' || q.level === 'core'));
+  const selected = () => bank.questions.filter(q => ((chapter.value === 'all' && q.chapter_check === false) || (chapter.value !== 'all' && q.chapter === chapter.value && q.chapter_check !== false)) && (route.value === 'all' || q.level === 'core'));
   function describe() {
     const questions = selected();
     $('start').disabled = questions.length === 0;
@@ -24,12 +24,12 @@
     return node;
   }
   function start(questions, retry = false, saved = null) {
-    current = questions; missed = []; submitted=false;orders=saved?.orders||{};
+    current = !saved && !retry && chapter.value === 'all' ? shuffle([...questions]) : [...questions]; missed = []; submitted=false;orders=saved?.orders||{};
     $('setup').hidden = true; $('results').hidden = true; $('quiz').hidden = false;
     $('status').textContent = '';
     $('quiz-title').textContent = retry ? 'Retry missed questions' : chapter.value === 'all' ? 'Cumulative quiz' : bank.chapters[chapter.value];
     $('questions').replaceChildren();
-    questions.forEach((q, index) => {
+    current.forEach((q, index) => {
       const box = element('fieldset',undefined,'quiz-question'); box.dataset.question = q.id;
       box.append(element('legend', `${index + 1}. ${q.question}`));
       if (chapter.value === 'all') box.append(element('p', bank.chapters[q.chapter], 'quiz-level'));

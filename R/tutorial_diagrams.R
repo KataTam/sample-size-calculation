@@ -1,39 +1,70 @@
 # Original teaching illustrations, drawn by R when the tutorial is rendered.
 # These functions draw on the active graphics device and leave its settings intact.
 draw_normal_multiplier <- function() {
-  old <- par(no.readonly = TRUE)
-  on.exit(par(old))
-  par(mfrow = c(2, 1), mar = c(3.5, 2, 2.2, 1), oma = c(1.8, 0, 0, 0),
-      family = "sans", fg = "#26343d", bg = "white")
-  z <- seq(-3.7, 3.7, length.out = 1000)
-  shade <- function(lo, hi, color) {
-    xx <- seq(lo, hi, length.out = 250)
-    polygon(c(lo, xx, hi), c(0, dnorm(xx), 0), col = color, border = NA)
+  old <- par(no.readonly=TRUE); on.exit(par(old))
+  par(mfrow=c(2,1),mar=c(3.6,3,2.8,1),oma=c(1.8,0,0,0),family="sans",fg="#26343d",bg="white")
+  critical <- qnorm(.975); distance <- critical+qnorm(.90)
+  x <- seq(-3.7,7,length.out=1400)
+  for(i in 1:2){
+    center <- if(i==1)0 else distance
+    plot(x,dnorm(x,center),type="n",axes=FALSE,xlab="",ylab="",ylim=c(0,.53),
+      main=if(i==1)"H0 true: no population difference" else "H0 false: population difference equals the target",cex.main=.95)
+    axis(1,at=c(-2,0,2,4,6));mtext("Estimated difference / standard error",side=1,line=2.3,cex=.85)
+    for(limits in list(c(-3.7,-critical),c(critical,7))){
+      xx<-seq(limits[1],limits[2],length.out=200)
+      polygon(c(xx[1],xx,tail(xx,1)),c(0,dnorm(xx,center),0),
+        col=if(i==1)"#e8b4b0" else "#b9d7ec",border=NA)
+    }
+    lines(x,dnorm(x,center),lwd=2.2,col=if(i==1)"#245e90" else "#72428b")
+    abline(v=c(-critical,critical),lty=2,col="#596773")
+    segments(center,0,center,.41,col=if(i==1)"#245e90" else "#72428b",lty=3)
+    if(i==1){
+      text(c(-2.6,2.65),.12,"2.5%",cex=.9)
+      text(0,.46,"No difference: 0",cex=.9)
+    }else{
+      text(4.1,.18,"Power: about 90%",cex=.9)
+      text(.1,.16,"Type II error:\nabout 10%",cex=.85)
+      text(distance,.46,"Target difference",cex=.9)
+      arrows(0,.51,critical,.51,code=3,length=.06,col="#596773")
+      arrows(critical,.51,distance,.51,code=3,length=.06,col="#596773")
+      text(c(critical/2,(critical+distance)/2),.51,c("1.96","1.28"),pos=3,cex=.8,xpd=NA)
+    }
   }
-  curve_panel <- function(title) {
-    plot(z, dnorm(z), type = "n", axes = FALSE, xlab = "", ylab = "",
-         ylim = c(0, .48), main = title, cex.main = 1)
-    axis(1, at = -3:3)
-    mtext("z-value (standard deviations from the center)", side = 1, line = 2.2, cex = .8)
-  }
-  critical <- qnorm(.975)
-  curve_panel("1. Type I error probability: 5% split between two tails")
-  shade(-3.7, -critical, "#e8b4b0"); shade(critical, 3.7, "#e8b4b0")
-  lines(z, dnorm(z), lwd = 2, col = "#245e90")
-  segments(c(-critical, critical), 0, c(-critical, critical), dnorm(critical), lty = 2)
-  text(c(-2.65, 2.65), .13, "2.5%", cex = .9)
-  text(c(-critical, critical), .22, c("-1.96", "+1.96"), cex = .9)
-  text(0, .43, "95% between the cutoffs", cex = .9)
-  cut <- qnorm(.90)
-  curve_panel("2. Target power: the 90th percentile")
-  shade(-3.7, cut, "#b9d7ec"); shade(cut, 3.7, "#e6e9ec")
-  lines(z, dnorm(z), lwd = 2, col = "#245e90")
-  segments(cut, 0, cut, dnorm(cut), lty = 2)
-  text(-.5, .20, "90% to the left", cex = .9)
-  text(2.35, .13, "10%", cex = .9)
-  text(cut, .31, "+1.28", cex = .9)
-  mtext("Multiplier M = (1.96 + 1.28)^2 = 10.51, using unrounded cutoffs", side = 1,
-        outer = TRUE, line = .3, cex = .85)
+  mtext("M = (1.96 + 1.28)^2 = 10.51, using unrounded cutoffs",side=1,outer=TRUE,line=.3,cex=.85)
+}
+
+draw_prevalence_coverage <- function(){
+  old<-par(no.readonly=TRUE);on.exit(par(old))
+  # This reproducible illustrative batch has 19 intervals containing 20%.
+  counts<-with_study_seed(2,rbinom(20,246,.2))
+  ci<-wilson_interval(counts/246,246);covered<-ci[,1]<=.2 & ci[,2]>=.2
+  stopifnot(sum(covered)==19)
+  y<-20:1;cols<-ifelse(covered,"#18713d","#b62d32")
+  par(mar=c(4.8,4.5,2.2,1),family="sans",bg="white",fg="#26343d")
+  plot(NA,xlim=c(8,34),ylim=c(.5,22),axes=FALSE,xlab="Neuropathy prevalence (%)",ylab="Survey")
+  abline(h=y,col="#edf0f2");segments(20,.5,20,20.7,lty=2,lwd=2,col="#26343d")
+  segments(100*ci[,1],y,100*ci[,2],y,col=cols,lwd=2.5)
+  points(100*counts/246,y,pch=ifelse(covered,16,4),col=cols,cex=1.1,lwd=2)
+  axis(1,at=seq(10,30,5));axis(2,at=y,labels=1:20,las=1,cex.axis=.8)
+  mtext("Population prevalence = 20%",side=3,line=.4,cex=.95)
+  legend("top",horiz=TRUE,bty="n",cex=.85,
+    legend=c("Contains 20% (19 surveys)","Misses 20% (1 survey)"),pch=c(16,4),col=c("#18713d","#b62d32"))
+}
+
+draw_pain_sensitivity <- function(probabilities,n){
+  old<-par(no.readonly=TRUE);on.exit(par(old))
+  diff<-100*(probabilities-.3)
+  required<-vapply(probabilities,function(p)ceiling(power.prop.test(p1=p,p2=.3,sig.level=.05,power=.9,strict=TRUE)$n),numeric(1))
+  achieved<-vapply(probabilities,function(p)100*power.prop.test(n=n,p1=p,p2=.3,sig.level=.05,strict=TRUE)$power,numeric(1))
+  par(mfrow=c(2,1),mar=c(1.3,4.8,2.4,1),oma=c(3.6,0,0,0),family="sans",fg="#26343d",bg="white")
+  plot(diff,required,type="b",pch=19,col="#245e90",lwd=2,xaxt="n",xlim=c(16,44),ylim=c(0,max(required)*1.25),xlab="",ylab="Patients per group",main="Sample required for 90% power",cex.main=1)
+  abline(h=n,lty=2,col="#72428b");text(diff,required,required,pos=3,cex=.9)
+  mtext(paste(n,"per group"),side=4,at=n,line=-3.5,cex=.75,col="#72428b")
+  par(mar=c(2.4,4.8,2.4,1))
+  plot(diff,achieved,type="b",pch=19,col="#245e90",lwd=2,xlim=c(16,44),ylim=c(0,115),xlab="",ylab="Power (%)",main=paste("Power with",n,"per group held fixed"),cex.main=1,xaxt="n",yaxt="n")
+  axis(1,at=diff);axis(2,at=seq(0,100,20));abline(h=90,lty=2,col="#72428b")
+  text(diff,achieved,paste0(round(achieved),"%"),pos=3,cex=.9)
+  mtext("True relief difference: novel minus standard (percentage points)",side=1,outer=TRUE,line=1.2,cex=.9)
 }
 
 diagram_canvas <- function() {

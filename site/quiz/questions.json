@@ -1162,6 +1162,397 @@
       ],
       "answer": 1,
       "explanation": "The assumed percentages already describe the expected treatment experience. Another adjustment for the same events would count their effect twice. Unavailable outcomes are considered separately."
+    },
+    {
+      "id": "c02",
+      "chapter": "clinical-question",
+      "level": "core",
+      "chapter_check": false,
+      "section": "Chapter 1: Research question and power",
+      "link": "clinical-question.html#clinical-question",
+      "question": "A test has 85% power at the selected difference. In 1,000 repetitions at that difference, approximately how many false negatives are expected?",
+      "options": [
+        "850",
+        "1,000",
+        "150",
+        "50"
+      ],
+      "answer": 2,
+      "explanation": "The Type II error probability is 1 minus power: 15%, or about 150 of 1,000 repetitions."
+    },
+    {
+      "id": "c15",
+      "chapter": "curves",
+      "level": "advanced",
+      "chapter_check": false,
+      "section": "Chapter 5: Exploring power and uncertain assumptions",
+      "link": "curves.html#st01-expectations",
+      "question": "A promising pilot used healthier patients and shorter follow-up than the intended trial. Which planning approach addresses this uncertainty?",
+      "options": [
+        "Raise the clinical threshold to match the pilot estimate.",
+        "Assess how the population and follow-up differences could change the assumed outcomes, and examine plausible ranges.",
+        "Use the pilot estimate as the known future effect.",
+        "Run more simulations at the pilot estimate until the evidence transfers."
+      ],
+      "answer": 1,
+      "explanation": "The relevance and uncertainty of earlier evidence should inform assumptions; simulation repetition alone supplies no new clinical evidence."
+    },
+    {
+      "id": "c05",
+      "chapter": "calculations",
+      "level": "core",
+      "chapter_check": false,
+      "section": "Chapter 2: Calculating sample size and recruitment",
+      "link": "calculations.html#account-for-expected-losses",
+      "question": "A calculation gives 55.2 analyzable patients per group. After rounding upward and allowing for 5% loss, what is the total recruitment target for two equal groups?",
+      "options": [
+        "112",
+        "116",
+        "59",
+        "118"
+      ],
+      "answer": 3,
+      "explanation": "The analyzable target is 56 per group. Ceiling(56/0.95) is 59 recruits per group, or 118 in total."
+    },
+    {
+      "id": "c16",
+      "chapter": "simulation",
+      "level": "advanced",
+      "chapter_check": false,
+      "section": "Chapter 6: Building and evaluating simulations",
+      "link": "simulation.html#precision-of-a-simulation",
+      "question": "The estimated power stays near 80% when simulation repetitions rise from 1,000 to 4,000. What happens approximately to its Monte Carlo standard error?",
+      "options": [
+        "It halves.",
+        "It doubles.",
+        "It becomes zero.",
+        "The power of each trial quadruples."
+      ],
+      "answer": 0,
+      "explanation": "Monte Carlo standard error is proportional to 1/sqrt(B); quadrupling repetitions halves it."
+    },
+    {
+      "id": "c01",
+      "chapter": "clinical-question",
+      "level": "core",
+      "chapter_check": false,
+      "section": "Chapter 1: Research question and power",
+      "link": "clinical-question.html#clinical-question",
+      "question": "A pilot suggests a 25-point treatment difference. Clinicians judge 15 points worthwhile, and the team selects 15 points for the calculation. Which statement fits this plan?",
+      "options": [
+        "All three values must be different.",
+        "The target must exceed the clinical threshold.",
+        "The pilot estimate must replace both other values.",
+        "The target difference and clinical threshold coincide; the pilot estimate can differ."
+      ],
+      "answer": 3,
+      "explanation": "The three roles are distinct, but their numerical values may coincide and have no fixed order."
+    },
+    {
+      "id": "c21",
+      "chapter": "study-designs",
+      "level": "advanced",
+      "chapter_check": false,
+      "section": "Chapter 7: Study designs and testing strategies",
+      "link": "study-designs.html#study-designs",
+      "question": "Two lesions in each patient receive different randomized local treatments. What is the key analysis feature for sample-size planning?",
+      "options": [
+        "Treating all lesions as independent patients",
+        "Counting each patient as two independent treatment groups",
+        "Using the number of lesions as the number of randomized hospitals",
+        "The within-patient comparison and correlation between lesion outcomes"
+      ],
+      "answer": 3,
+      "explanation": "Outcomes are paired within patients. The variance of the within-patient contrast determines precision for this allocation structure."
+    },
+    {
+      "id": "c11",
+      "chapter": "estimation-planning",
+      "level": "advanced",
+      "chapter_check": false,
+      "section": "Chapter 4: Sample size for estimation",
+      "link": "estimation-planning.html#prevalence",
+      "question": "For an anticipated prevalence of 20%, a five-percentage-point margin corresponds approximately to which interval around an estimate of 20%?",
+      "options": [
+        "20% to 95%",
+        "15% to 25%",
+        "19% to 21%",
+        "5% to 35%"
+      ],
+      "answer": 1,
+      "explanation": "Five percentage points is an absolute margin. The corresponding full width is ten percentage points."
+    },
+    {
+      "id": "c12",
+      "chapter": "estimation-planning",
+      "level": "advanced",
+      "chapter_check": false,
+      "section": "Chapter 4: Sample size for estimation",
+      "link": "estimation-planning.html#estimation-foundations",
+      "question": "In one simulated batch, 18 of 20 nominal 95% intervals contain the population value. How should this result be interpreted?",
+      "options": [
+        "The number containing the value varies between batches; 95% describes long-run coverage.",
+        "The interval method must have 90% coverage.",
+        "Exactly 19 must contain the value in every batch.",
+        "The population value changes between these studies."
+      ],
+      "answer": 0,
+      "explanation": "Coverage is a repeated-study property. A short batch has sampling variation in its coverage count."
+    },
+    {
+      "id": "c10",
+      "chapter": "reporting",
+      "level": "core",
+      "chapter_check": false,
+      "section": "Chapter 3: The sample size calculation report",
+      "link": "reporting.html#reporting",
+      "question": "A calculation is reproducible, but its report gives no reason for the chosen target difference. What remains incomplete?",
+      "options": [
+        "The random-number generator setting for a deterministic calculation",
+        "The choice of font for the report",
+        "The scientific and clinical justification of a numerical assumption",
+        "The addition of the two group counts"
+      ],
+      "answer": 2,
+      "explanation": "A complete report combines the calculation record with reasoning about its assumptions."
+    },
+    {
+      "id": "c18",
+      "chapter": "simulation",
+      "level": "advanced",
+      "chapter_check": false,
+      "section": "Chapter 6: Building and evaluating simulations",
+      "link": "simulation.html#simulation",
+      "question": "With equal population event probabilities, 124 of 2,500 simulated trials reject the null. Which quantity is this estimating?",
+      "options": [
+        "The population event probability",
+        "Confidence interval width",
+        "The Type I error probability, about 5%",
+        "Power at the 30-point target difference"
+      ],
+      "answer": 2,
+      "explanation": "When the null hypothesis is true, rejections are false positives: 124/2500 is 4.96%."
+    },
+    {
+      "id": "c09",
+      "chapter": "reporting",
+      "level": "core",
+      "chapter_check": false,
+      "section": "Chapter 3: The sample size calculation report",
+      "link": "reporting.html#reporting",
+      "question": "A report gives 60 per group, while a saved calculation file gives 59 under a normal approximation. The planned analysis is a pooled t test. What should the author check first?",
+      "options": [
+        "Whether 59 looks more feasible",
+        "Whether the seed was even or odd",
+        "Whether the report can omit the procedure name",
+        "Whether the report and saved calculation use the same procedure and assumptions"
+      ],
+      "answer": 3,
+      "explanation": "The procedure can change the sample-size result. Inputs, method and software should identify the calculation supporting the final count."
+    },
+    {
+      "id": "c22",
+      "chapter": "study-designs",
+      "level": "advanced",
+      "chapter_check": false,
+      "section": "Chapter 7: Study designs and testing strategies",
+      "link": "study-designs.html#study-designs",
+      "question": "A superiority comparison is non-significant. The team wants to claim non-inferiority. Which additional planning and analysis framework is needed?",
+      "options": [
+        "A conclusion that both treatments are identical",
+        "A margin chosen after examining the estimate",
+        "A justified non-inferiority margin, suitable hypothesis and confidence-interval assessment",
+        "A larger p value alone"
+      ],
+      "answer": 2,
+      "explanation": "Non-inferiority evaluates a prespecified unacceptable disadvantage, with its own margin and assumptions."
+    },
+    {
+      "id": "c20",
+      "chapter": "study-designs",
+      "level": "advanced",
+      "chapter_check": false,
+      "section": "Chapter 7: Study designs and testing strategies",
+      "link": "study-designs.html#study-designs",
+      "question": "A plan tests outcome B only if outcome A succeeds, and stops testing for claims at the first failure. Which feature should the sample-size simulation reproduce?",
+      "options": [
+        "The prespecified order and stopping rule for testing",
+        "Independent success on B regardless of A",
+        "Only whichever outcome looks most favorable",
+        "A fresh 5% claim after every failed test"
+      ],
+      "answer": 0,
+      "explanation": "A hierarchical testing strategy defines which claims are available. Simulations should apply the same sequence and decision rules."
+    },
+    {
+      "id": "c03",
+      "chapter": "clinical-question",
+      "level": "core",
+      "chapter_check": false,
+      "section": "Chapter 1: Research question and power",
+      "link": "clinical-question.html#clinical-question",
+      "question": "Two settings use the same population assumptions: 30 patients per group and 20,000 repetitions, or 60 per group and 5,000 repetitions. Which gives more precise estimates within each trial?",
+      "options": [
+        "The setting with the larger number of repetitions always gives more precise trial estimates.",
+        "60 patients per group and 5,000 repetitions",
+        "30 patients per group and 20,000 repetitions",
+        "Both give the same trial precision because the populations match."
+      ],
+      "answer": 1,
+      "explanation": "More patients reduce the sampling variability of each trial estimate. Repetitions determine how precisely the simulation summarizes repeated performance."
+    },
+    {
+      "id": "c06",
+      "chapter": "calculations",
+      "level": "core",
+      "chapter_check": false,
+      "section": "Chapter 2: Calculating sample size and recruitment",
+      "link": "calculations.html#two-proportions",
+      "question": "A calculator displays “80 analyzable patients per group.” The trial has two equal groups and no planned losses. Which protocol count matches it?",
+      "options": [
+        "40 participants per group",
+        "The count is 80 only after adding both groups.",
+        "160 participants in total",
+        "80 participants in total"
+      ],
+      "answer": 2,
+      "explanation": "Per-group counts apply separately to each group: 80 + 80 = 160."
+    },
+    {
+      "id": "c14",
+      "chapter": "curves",
+      "level": "advanced",
+      "chapter_check": false,
+      "section": "Chapter 5: Exploring power and uncertain assumptions",
+      "link": "curves.html#compare-planning-assumptions",
+      "question": "A design planned at a 30-point difference has only moderate power at a plausible 20-point difference. Which sensitivity result is most useful alongside the original calculation?",
+      "options": [
+        "Only the most favorable treatment percentage",
+        "The number of simulations as a replacement for the patient count",
+        "Power at the fixed planned sample and the sample required to reach the target power at 20 points",
+        "Only the pilot p value"
+      ],
+      "answer": 2,
+      "explanation": "These two views distinguish the performance of the chosen design from the requirement under a different planning assumption."
+    },
+    {
+      "id": "c19",
+      "chapter": "study-designs",
+      "level": "advanced",
+      "chapter_check": false,
+      "section": "Chapter 7: Study designs and testing strategies",
+      "link": "study-designs.html#study-designs",
+      "question": "A trial has two independent co-primary tests with powers of 80% and 90%; both must succeed. What is the probability of success on both?",
+      "options": [
+        "170%",
+        "72%",
+        "90%",
+        "80%"
+      ],
+      "answer": 1,
+      "explanation": "Under the stated independence assumption, joint success is 0.80 × 0.90 = 0.72."
+    },
+    {
+      "id": "c04",
+      "chapter": "calculations",
+      "level": "core",
+      "chapter_check": false,
+      "section": "Chapter 2: Calculating sample size and recruitment",
+      "link": "calculations.html#calculations",
+      "question": "Under the two-means normal approximation, the SD rises from 4 to 6 while the target difference, power and Type I error probability stay fixed. What is the approximate sample-size multiplier?",
+      "options": [
+        "2.25",
+        "1.5",
+        "0.67",
+        "4"
+      ],
+      "answer": 0,
+      "explanation": "Sample size is proportional to SD squared: (6/4)^2 = 2.25."
+    },
+    {
+      "id": "c08",
+      "chapter": "reporting",
+      "level": "core",
+      "chapter_check": false,
+      "section": "Chapter 3: The sample size calculation report",
+      "link": "reporting.html#reporting",
+      "question": "A protocol measures relief at four weeks, but the percentages used for planning came from a two-day assessment. What belongs in the supporting study plan?",
+      "options": [
+        "A justification of their relevance to four-week outcomes and a range of plausible alternatives",
+        "Only the name of the calculator",
+        "A statement that both outcomes concern pain",
+        "The smaller of the two percentages, without explanation"
+      ],
+      "answer": 0,
+      "explanation": "Outcome timing can change event percentages. The supporting plan should assess the evidence and its relevance to the defined outcome."
+    },
+    {
+      "id": "c13",
+      "chapter": "estimation-planning",
+      "level": "advanced",
+      "chapter_check": false,
+      "section": "Chapter 4: Sample size for estimation",
+      "link": "estimation-planning.html#pilot-feasibility",
+      "question": "A pilot retains 82 of 100 participants, with a 95% interval of approximately 73%–88%. The rule requires at least 80% retention, a lower limit above 70%, and acceptable delivery. Delivery was unacceptable. What follows?",
+      "options": [
+        "All progression criteria have been met.",
+        "The pilot proves future retention exceeds 80%.",
+        "The sample-size formula should be changed until delivery is acceptable.",
+        "The retention criteria are met, but delivery needs improvement before progression."
+      ],
+      "answer": 3,
+      "explanation": "Progression depends on all prespecified criteria, including delivery; the retention results meet the two numerical conditions."
+    },
+    {
+      "id": "c23",
+      "chapter": "appendix",
+      "level": "advanced",
+      "chapter_check": false,
+      "section": "Chapter 8: Reproducibility and open science",
+      "link": "appendix.html#tutorial-methods",
+      "question": "A collaborator has the seed and final simulation table but cannot recreate the results. Which package of records would most help?",
+      "options": [
+        "Only a screenshot of the table",
+        "The data-generating assumptions, analysis code, software versions, repetitions and saved inputs",
+        "Only a different seed",
+        "Only the final p values"
+      ],
+      "answer": 1,
+      "explanation": "Reproducibility depends on the full procedure and computational environment as well as the seed."
+    },
+    {
+      "id": "c17",
+      "chapter": "simulation",
+      "level": "advanced",
+      "chapter_check": false,
+      "section": "Chapter 6: Building and evaluating simulations",
+      "link": "simulation.html#explore-missing-outcomes",
+      "question": "In a simulation, patients without relief are more likely to have missing outcomes. Increasing the simulation repetitions makes the estimated bias more stable. What does this show?",
+      "options": [
+        "The missingness bias has been removed.",
+        "The simulated trials have gained patients.",
+        "The assumed missingness mechanism has been verified as true.",
+        "The simulation is estimating the bias more precisely under that missingness mechanism."
+      ],
+      "answer": 3,
+      "explanation": "Repetition improves numerical precision for the specified mechanism. The mechanism itself is a separate assumption."
+    },
+    {
+      "id": "c07",
+      "chapter": "calculations",
+      "level": "core",
+      "chapter_check": false,
+      "section": "Chapter 2: Calculating sample size and recruitment",
+      "link": "calculations.html#calculations",
+      "question": "A fixed sample was planned for a two-sided 5% test. If the test instead uses 1%, with the population assumptions unchanged, what happens to power?",
+      "options": [
+        "It becomes 99%.",
+        "It decreases.",
+        "It increases.",
+        "It remains exactly the same."
+      ],
+      "answer": 1,
+      "explanation": "The stricter rejection threshold is harder to cross with the same sample and true difference."
     }
   ],
   "chapter_checks": [
