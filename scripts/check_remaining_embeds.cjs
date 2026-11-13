@@ -54,7 +54,21 @@ for(const [chapter,id,engine,input,value,result,figure,expected] of routes){
   await app.locator('#alpha-number').fill('2.5');await app.locator('#alpha-number').press('Enter');
   await app.waitForFunction(()=>/Type I error probability 2.5%/.test(document.querySelector('#operating_summary')?.textContent||document.body.textContent));
  }
- if(id==='recruitment_advanced')await app.locator('#different_losses').check();
+ if(id==='recruitment_advanced'){
+  await app.waitForFunction(()=>Shiny.shinyapp.$inputValues.activity_request?.activity==='recruitment_advanced' && document.querySelector('#recruitment-advanced').open);
+  await app.waitForFunction(()=>{const img=document.querySelector('#dropout_plot img');return img?.complete&&img.naturalWidth>0&&!document.documentElement.classList.contains('shiny-busy');});
+  await app.locator('#different_losses').scrollIntoViewIfNeeded();
+  // The first plot and expanded controls resize the outer iframe. Its movement
+  // is outside the checkbox's own frame, so wait for that layout to settle too.
+  await page.waitForFunction(activity=>{
+   const frame=document.querySelector(`[data-activity="${activity}"] iframe`),r=frame.getBoundingClientRect();
+   const value=[r.x,r.y,r.width,r.height].map(v=>Math.round(v)).join(',');
+   const old=window.recruitmentFrameStable;
+   if(!old||old.value!==value){window.recruitmentFrameStable={value,since:performance.now()};return false;}
+   return performance.now()-old.since>=500;
+  },id);
+  await app.locator('#different_losses').check();
+ }
  await app.locator(input).fill(value);await app.locator(input).press(input.endsWith('-number')?'Enter':'Tab');
  if(id==='pain_simulation'){
   await app.waitForFunction(()=>Object.entries(Shiny.shinyapp.$inputValues).some(([key,value])=>key.split(':')[0]==='fixed_n' && Number(value)===80));

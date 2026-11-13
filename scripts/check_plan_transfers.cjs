@@ -12,6 +12,11 @@ const base=(process.argv[2]||'http://127.0.0.1:8769').replace(/\/$/,'');
    const f=await app('/'+slug+'/'+(slug==='power_explorer'?'?activity=pain_one_many':''),field);
    if(slug==='power_explorer')await f.waitForFunction(()=>document.querySelector('#fixed_n').value==='20'&&document.querySelector('#combined-many-studies')&&!document.documentElement.classList.contains('shiny-busy'));
    await f.getByRole('tab',{name:'Report',exact:true}).click();
+   if(slug==='power_explorer'){
+    assert.equal(await f.locator('.plan-transfer-button').count(),0,'The simulation report has no calculation-transfer action');
+    await freshBrowser();
+    continue;
+   }
    await f.locator('.plan-transfer-button').waitFor({timeout:60000});
    const record=JSON.parse(await f.locator('.plan-transfer-data').textContent());
    assert(record.lines.length>1);assert(record.lines.some(x=>x.includes('source version:')));assert(record.facts);
