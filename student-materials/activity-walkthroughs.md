@@ -145,11 +145,11 @@ The [advanced rehabilitation simulation](../study/?activity=rehabilitation) uses
 
 Purpose: assess whether the feasible study can answer the intended question under less favorable assumptions.
 
-1. The activity fixes the analyzable sample at 90 per group: 200 recruited with 10% expected loss gives 180 expected analyzable participants.
-2. “Explore assumptions” shows analytical curves for the 30-point target difference and smaller 20- and 15-point differences. You can compare their power with the 90% target.
-3. With Settings open and advanced controls visible, a custom simulation scenario of control 30% and treatment 50% or 45% keeps the original sample fixed while changing the true difference.
+1. The activity starts with 100 analyzable patients per group. The available count is shown directly; recruitment after expected losses is calculated separately.
+2. “Explore assumptions” shows calculated curves for 15-, 20- and 30-point differences. The vertical line marks 100 per group and the horizontal line marks 90% power. The table gives approximately 59%, 83% and 99% power, and required counts of 217, 124 and 56 per group.
+3. Changing the analyzable count updates the vertical reference line, table and report. Under Settings, “Assumptions for the simulated studies” → “Custom effect or variability” changes the simulated population while retaining that count.
 4. “Many studies” estimates power from generated patient data for the selected scenario.
-5. Your recommendation should address what the recruitment ceiling could establish and the uncertainty in the assumptions. Power for a test of zero difference depends on the true difference, sample size, and analysis.
+5. The chapter question asks which of the three differences reaches 90% power at the available count. The supporting study plan can record the evidence and uncertainty behind a recruitment or design decision.
 
 ## Repeated chronic-pain trials — advanced
 

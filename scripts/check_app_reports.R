@@ -14,6 +14,25 @@ check_app_reports <- function() {
   shiny::testServer(app_server("power_explorer"), {
     do.call(session$setInputs, lab_input_defaults())
     do.call(session$setInputs, study_input_defaults())
+    do.call(session$setInputs, teaching_case("pain_curves")$inputs)
+    current_activity("pain_curves")
+    session$setInputs(show_advanced = TRUE)
+    stopifnot(planned()$n == 100, comparison()$cap_n == 100,
+      identical(as.numeric(comparison_results()[[3]]), c(217, 124, 56)),
+      identical(comparison_results()[[2]], c("59.2%", "82.8%", "99.2%")),
+      !intervals_visible())
+    has(report_sections()[["Sensitivity at the available sample"]], "100 per group")
+    has(model_answers()$justification, "100 analyzable")
+    session$setInputs(fixed_n = 60, recruit_cap = 500)
+    stopifnot(comparison()$cap_n == 60)
+    has(output$comparison_text, "60 analyzable")
+    has(report_sections()[["Sensitivity at the available sample"]], "60 per group")
+    has(model_answers()$justification, "60 analyzable")
+    lacks(report_sections()[["Sensitivity at the available sample"]], "100 per group")
+  })
+  shiny::testServer(app_server("power_explorer"), {
+    do.call(session$setInputs, lab_input_defaults())
+    do.call(session$setInputs, study_input_defaults())
     session$setInputs(study_question = "My research question <kept exactly>", clinical_relevance = "My clinical rationale",
       participant_burden = "My burden assessment", evidence_sources = "My evidence", justification = "My conclusion",
       goal = "fixed", fixed_n = 17, dropout = .2, B = 100)

@@ -606,5 +606,25 @@
       "event probabilities"
     ],
     "definition": "How likely an outcome is by the specified follow-up time. A probability of 0.60 means 60%; the observed percentage in a sample can differ."
+  },
+  {
+    "id": "standardized-treatment-effect",
+    "label": "Standardized treatment effect",
+    "aliases": [
+      "standardized treatment effect",
+      "standardized target effect",
+      "standardized effect"
+    ],
+    "definition": "A treatment effect expressed without the original measurement units. For means, Cohen's d divides the between-group difference by a common within-group SD."
+  },
+  {
+    "id": "crossover-trial",
+    "label": "Crossover trial",
+    "aliases": [
+      "crossover trial",
+      "crossover design",
+      "crossover trials"
+    ],
+    "definition": "Participants receive treatments in a randomized sequence across successive periods. The comparison uses outcomes from the same participant."
   }
 ]

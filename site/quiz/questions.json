@@ -437,7 +437,7 @@
       "id": "q27",
       "chapter": "curves",
       "level": "advanced",
-      "section": "Sensitivity and justification",
+      "section": "Choosing plausible assumptions",
       "link": "curves.html#planning-uncertainty",
       "question": "Two plausible sets of assumptions produce substantially different sample sizes. What should the justification do?",
       "options": [
@@ -459,22 +459,22 @@
       "id": "q13",
       "chapter": "curves",
       "level": "advanced",
-      "section": "Power at a fixed sample size",
-      "link": "curves.html#hold-sample-size-fixed-and-vary-the-effect",
-      "question": "A power curve holds the planned sample fixed and varies the true difference. What does it investigate?",
+      "section": "Reading power curves",
+      "link": "curves.html#activity-2-can-the-feasible-study-answer-the-question",
+      "question": "At 100 analyzable patients per group, the curve gives 59% power for a true 15-point difference. What does 59% describe?",
       "options": [
-        "How the original design performs under alternative population differences",
-        "Which effect actually exists in the population",
-        "How to change the target difference after seeing the data",
-        "The probability that the null hypothesis is true"
+        "The percentage of patients expected to achieve pain relief",
+        "The probability that the null hypothesis is true",
+        "The percentage of repeated trials expected to reject the null under these assumptions",
+        "The percentage of the target sample recruited"
       ],
-      "answer": 0,
-      "explanation": "This sensitivity analysis evaluates a fixed design across plausible effects.",
+      "answer": 2,
+      "explanation": "About 59% of repeated trials using this sample, analysis and true difference would reject the null.",
       "feedback": [
-        "This sensitivity analysis evaluates a fixed design across plausible effects.",
-        "A sensitivity analysis explores specified possibilities; it supplies no new observations about which effect is true.",
-        "The curve evaluates the prespecified design under alternative assumptions.",
-        "Frequentist power conditions on a specified population effect."
+        "Patient relief percentages are separate population assumptions.",
+        "Power is conditional on a specified true difference.",
+        "About 59% of repeated trials using this sample, analysis and true difference would reject the null.",
+        "The count is already fixed at 100 analyzable patients per group."
       ]
     },
     {
@@ -503,88 +503,88 @@
       "id": "q15",
       "chapter": "curves",
       "level": "advanced",
-      "section": "Power and clinical thresholds",
-      "link": "curves.html#activity-2-can-the-feasible-study-answer-the-question",
-      "question": "A design has 90% power at a 30-point benefit. What can you conclude about power at a clinically important 20-point benefit?",
+      "section": "Event probabilities and power",
+      "link": "curves.html#stress-test-the-study-plan",
+      "question": "Two binary-outcome scenarios have the same absolute difference but different control event probabilities. What should be checked?",
       "options": [
-        "It is zero because 20 is below the target difference",
-        "It is irrelevant because the target defines the alternative hypothesis",
-        "It should be evaluated separately and will generally be lower",
-        "It must also be exactly 90%"
+        "Only the absolute difference; it determines all variability",
+        "Power using both group event probabilities",
+        "Whether the clinical threshold can be lowered",
+        "Whether the observed pilot result was significant"
       ],
-      "answer": 2,
-      "explanation": "Power depends on the true effect. A clinical threshold below the target difference may have lower power and should be included in sensitivity analysis.",
+      "answer": 1,
+      "explanation": "Both event probabilities enter the power calculation, even when their absolute difference is unchanged.",
       "feedback": [
-        "Smaller effects can still be detected, although with lower probability.",
-        "The target difference is used to evaluate power; the usual superiority alternative includes other nonzero differences.",
-        "Power depends on the true effect. A clinical threshold below the target difference may have lower power and should be included in sensitivity analysis.",
-        "The 90% value applies at the specified 30-point difference."
+        "Binary-outcome variability depends on each group's event probability.",
+        "Both event probabilities enter the power calculation, even when their absolute difference is unchanged.",
+        "The clinical threshold is a judgment about worthwhile benefit.",
+        "The proposed population assumptions determine the planning calculation."
       ]
     },
     {
       "id": "q16",
       "chapter": "curves",
       "level": "advanced",
-      "section": "Recruitment limits",
-      "link": "curves.html#activity-2-can-the-feasible-study-answer-the-question",
-      "question": "A recruitment cap leaves fewer analyzable patients than planned. What is the most defensible next step?",
+      "section": "Feasible design changes",
+      "link": "curves.html#available-sample",
+      "question": "The available sample gives insufficient power across credible effect assumptions. What is the most defensible next step?",
       "options": [
-        "Claim the original target power still applies",
-        "Evaluate attainable information and consider justified design or recruitment changes",
+        "Keep reporting the original target power",
+        "Assess additional recruitment or a justified design change and recalculate",
         "Increase the assumed effect until the required sample fits",
-        "Ignore expected losses"
+        "Choose the rejection rule after seeing the trial results"
       ],
       "answer": 1,
-      "explanation": "The original assumptions should remain explicit while the attainable power, precision, feasibility, and alternative plans are assessed.",
+      "explanation": "The decision should reflect the available sample, credible inputs and a feasible design or objective.",
       "feedback": [
-        "A smaller analyzable sample changes the original power calculation.",
-        "The original assumptions should remain explicit while the attainable power, precision, feasibility, and alternative plans are assessed.",
-        "An unsupported larger effect does not improve the attainable information.",
-        "Expected losses reduce the available analyzable count."
+        "The available count requires its own power calculation.",
+        "The decision should reflect the available sample, credible inputs and a feasible design or objective.",
+        "Changing an assumption solely to fit resources removes its scientific justification.",
+        "The hypothesis and error probability need justification before data collection."
       ]
     },
     {
       "id": "q41",
       "chapter": "curves",
       "level": "advanced",
-      "section": "What can the available sample establish?",
-      "link": "curves.html#available-sample",
-      "question": "A study can recruit at most 120 participants and expects 10% loss. What should guide the assessment of whether this cap is adequate?",
+      "section": "Underpowered studies",
+      "link": "curves.html#underpowered-studies",
+      "question": "Why can focusing on statistically significant results from underpowered studies exaggerate a treatment benefit?",
       "options": [
-        "Whether 120 exceeds a universal minimum for clinical research",
-        "The power and precision attainable with about 108 analyzable participants, under justified assumptions",
-        "Whether the assumed benefit can be increased until the calculation fits",
-        "The power calculated from the effect observed after the study"
+        "Every small study has biased measurements",
+        "Significant results favoring treatment tend to have unusually large estimated benefits",
+        "Low power changes the true population difference",
+        "The clinical threshold increases when a result is significant"
       ],
       "answer": 1,
-      "explanation": "The recruitment cap must first be translated into an expected analyzable count. Its usefulness depends on the research objective, planned analysis, and plausible population assumptions.",
+      "explanation": "Selecting only significant results favors unusually large estimates among these noisy studies.",
       "feedback": [
-        "There is no universal adequate sample size across objectives and designs.",
-        "The recruitment cap must first be translated into an expected analyzable count. Its usefulness depends on the research objective, planned analysis, and plausible population assumptions.",
-        "Increasing an assumption to fit resources supplies no supporting evidence for that assumption.",
-        "Observed power calculated after the study does not establish whether the original plan was adequate."
+        "Small samples increase sampling variability; measurement bias is a separate issue.",
+        "Selecting only significant results favors unusually large estimates among these noisy studies.",
+        "Power describes the study's performance under a specified population difference.",
+        "Clinical importance is judged from the outcome and patient context."
       ]
     },
     {
       "id": "q28",
       "chapter": "curves",
       "level": "advanced",
-      "section": "A fixed total of 70 patients",
-      "link": "curves.html#a-fixed-total-of-70-patients",
-      "question": "A fixed-resource study produces an interval from a 2-point disadvantage to a 15-point benefit. The clinical threshold is a 10-point benefit. Which conclusion is justified?",
+      "section": "Outcome variability",
+      "link": "curves.html#stress-test-the-study-plan",
+      "question": "A fixed sample of 100 per group is evaluated at a mean difference of 3 units. If the common SD increases from 5 to 7, what happens to power?",
       "options": [
-        "The treatment is equivalent to control",
-        "The interval still includes both disadvantage and clinically important benefit",
-        "The clinical threshold has been exceeded with confidence",
-        "The study rules out any worthwhile benefit"
+        "It increases because the observations span a wider range",
+        "It stays fixed because the mean difference is unchanged",
+        "It becomes the Type I error probability",
+        "It decreases because the difference is smaller relative to variability"
       ],
-      "answer": 1,
-      "explanation": "The interval spans zero and the clinical threshold. Its full range should inform interpretation. Equivalence requires prespecified margins and an appropriate analysis.",
+      "answer": 3,
+      "explanation": "The same 3-unit difference is harder to distinguish with a larger SD at the same sample size.",
       "feedback": [
-        "Equivalence needs prespecified margins and a suitable analysis.",
-        "The interval spans zero and the clinical threshold. Its full range should inform interpretation. Equivalence requires prespecified margins and an appropriate analysis.",
-        "The interval includes effects below the 10-point threshold.",
-        "Benefits as large as 15 points remain within the interval."
+        "Greater unexplained variability makes a fixed mean difference harder to detect.",
+        "Power depends on variability as well as the difference and sample size.",
+        "A nonzero difference still defines the alternative being evaluated.",
+        "The same 3-unit difference is harder to distinguish with a larger SD at the same sample size."
       ]
     },
     {
@@ -855,22 +855,22 @@
       "id": "q31",
       "chapter": "study-designs",
       "level": "advanced",
-      "section": "Guidance and planning methods",
-      "link": "study-designs.html#use-guidance-for-its-stated-purpose",
-      "question": "What does a reporting guideline such as CONSORT primarily provide?",
+      "section": "Multicenter planning",
+      "link": "study-designs.html#multicenter-trials",
+      "question": "Patients are randomized individually within several hospitals. How should centers enter sample size planning?",
       "options": [
-        "A guarantee that the analysis is unbiased",
-        "An automatic choice of target difference",
-        "Guidance on documenting and reporting the study",
-        "One universal sample-size formula"
+        "Automatically apply the cluster-randomized inflation formula",
+        "Ignore centers because patients are randomized",
+        "Use a calculation reflecting center sizes, within-center allocation and the planned analysis",
+        "Multiply the single-center sample by the number of hospitals"
       ],
       "answer": 2,
-      "explanation": "Reporting guidance helps make decisions transparent. The sample-size method must still match the question, design and planned analysis.",
+      "explanation": "The method should match individual randomization within centers and the proposed model.",
       "feedback": [
-        "Transparent reporting helps appraisal but cannot guarantee freedom from bias.",
-        "Clinical input and relevant evidence are needed to justify the target difference.",
-        "Reporting guidance helps make decisions transparent. The sample-size method must still match the question, design and planned analysis.",
-        "Different designs and analyses require different sample-size methods."
+        "Whole-center randomization has a different allocation structure.",
+        "Center differences and treatment balance can affect the analysis and power.",
+        "The method should match individual randomization within centers and the proposed model.",
+        "The number of centers matters through the design and analysis, rather than this multiplication rule."
       ]
     },
     {
@@ -1553,6 +1553,23 @@
       ],
       "answer": 1,
       "explanation": "The stricter rejection threshold is harder to cross with the same sample and true difference."
+    },
+    {
+      "id": "c_multicenter",
+      "chapter": "study-designs",
+      "level": "advanced",
+      "chapter_check": false,
+      "section": "Multicenter planning",
+      "link": "study-designs.html#multicenter-trials",
+      "question": "A trial adds several small recruiting centers, each assigning both treatments. Which additional information is most useful for revising its calculation?",
+      "options": [
+        "Only the total number of hospitals",
+        "Expected recruitment and treatment balance within centers, center differences, and the planned analysis",
+        "The number of investigators named on the protocol",
+        "A fixed percentage increase for every extra center"
+      ],
+      "answer": 1,
+      "explanation": "Center sizes, within-center balance, outcome differences and the analysis determine the consequences for power."
     }
   ],
   "chapter_checks": [

@@ -95,7 +95,7 @@ check_lab_server <- function() {
     stopifnot(grepl("Inputs changed", output$many_status))
     session$setInputs(run_many = 2); stopifnot(many()$spec$delta == 0)
     session$setInputs(goal = "fixed", fixed_n = 80, reality = "custom")
-    stopifnot(planned()$n == 80, generating()$sd == 7)
+    stopifnot(planned()$n == 80, generating()$sd == 7, comparison()$cap_n == 80)
     session$setInputs(outcome = "proportions", goal = "testing", reality = "same")
     stopifnot(spec_power(planned()) >= .8)
     stopifnot(max(abs(comparison()$effects - c(.15,.20,.30))) < 1e-12,

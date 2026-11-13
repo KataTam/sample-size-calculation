@@ -113,6 +113,24 @@ lab_model_answers <- function(v, details, case_id, x = NULL, capacity = NULL, sa
     else if (feasible) "I would check plausible alternative assumptions before adopting this plan."
     else "I would resolve the recruitment shortfall before adopting this plan.",
     " [Source] supports the selected assumptions; [plausible alternatives] give [sensitivity results]. [Remaining limitations] affect the recommendation.")
+  if (case_id == "pain_curves" && v$goal == "fixed") {
+    effects <- true_difference(x) * c(.5, 2/3, 1)
+    alternatives <- lapply(effects, function(difference) {
+      z <- x
+      if (z$outcome == "means") z$delta <- difference else z$p_treatment <- z$p_control + difference
+      z
+    })
+    powers <- vapply(alternatives, spec_power, numeric(1))
+    counts <- vapply(alternatives, function(z) {
+      if (abs(true_difference(z)) < 1e-12) return(NA_real_)
+      plan_n(z, target_power = v$target_power)
+    }, numeric(1))
+    justification <- paste0("With ", x$n, " analyzable patients per group, power is ",
+      paste(paste0(format_percent(powers, 1), " at ", effect(effects)), collapse = "; "),
+      ". For ", format_percent(v$target_power), " power, the corresponding requirements are ",
+      paste(ifelse(is.na(counts), "undefined for a zero difference", counts), collapse = ", "),
+      " per group. [Evidence] should justify the plausible differences used for the recruitment or design decision.")
+  }
   if (!is.null(saved)) {
     valid <- is.finite(saved$results$estimate)
     rate <- if (any(valid)) format_percent(mean(if (v$goal == "precision") saved$results$cover[valid] else saved$results$reject[valid]), 1) else "unavailable"

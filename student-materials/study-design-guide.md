@@ -6,6 +6,7 @@ After this chapter, you should be able to:
 - Match a research question to a design, planning goal and suitable methodological resource.
 - Identify design-specific requirements for dependence, restricted recruitment and testing strategies.
 - Explain how paired and clustered observations affect sample size and analysis.
+- Distinguish individual randomization within centers from randomization of whole centers and identify their planning requirements.
 - Distinguish treatment changes from unavailable outcomes and avoid counting the same event twice.
 - Distinguish success on any primary outcome, success on all [co-primary outcomes](#co-primary-outcomes) and hierarchical testing.
 - Recognize when interim analyses, stopping guidelines or sample-size re-estimation require additional planning.
@@ -83,6 +84,20 @@ Correlation has different consequences depending on where treatments are assigne
 
 The sample size calculation should therefore match the allocation structure and the planned analysis. Your [reproducibility record](#reproducibility-record) should specify what is randomized, what is measured, how many independent units are available, and how dependence among measurements will be handled.
 
+## Multicenter trials and sample size {#multicenter-trials .advanced-heading}
+
+Recruitment across several centers can make a trial feasible. The sample size calculation should reflect how treatment is assigned and how the analysis accounts for centers. Figure \@ref(fig:multicenter-allocation) distinguishes patients randomized within centers from whole centers assigned to a treatment.
+
+```{r multicenter-allocation, echo=FALSE, fig.width=8, fig.height=4.5, fig.cap="Two allocation structures across hospitals. Left: patients are randomized within each hospital, which contributes both treatment groups. Right: whole hospitals are randomized, so treatment comparisons rely on independent hospitals. The A and B labels identify treatment assignment.", fig.alt="Two hospitals on the left each contain patients assigned to A and B. On the right one hospital contains only A patients and another only B patients. Randomization within hospitals and randomization of hospitals require different planning methods."}
+draw_multicenter_allocation()
+```
+
+With individual randomization within centers, the calculation should specify the number of centers, their expected recruitment, treatment balance within each center, between-center differences and the planned analysis. Under suitable balanced continuous-outcome designs, adjusting for center can improve efficiency. Unequal center sizes and imbalance within centers can alter the required sample [@vierron2009design; @harden2018multicenter].
+
+When whole centers are randomized, the [cluster-randomized calculation](#units-of-analysis) accounts for dependence within centers and the number and sizes of independent clusters. The cluster design-effect formula applies to that allocation structure. Individual randomization within centers needs a calculation for its own design and model [@vierron2009design].
+
+For continuous outcomes, @harden2018multicenter describe a calculation with random center effects and unequal center sizes. The [PASS multicenter two-means procedure](https://www.ncss.com/wp-content/themes/ncss/pdf/Procedures/PASS/Tests_for_Two_Means_in_a_Multicenter_Randomized_Design.pdf) provides a worked calculation under its stated assumptions [@pass2022]. For binary outcomes such as pain relief, few events within each center can affect the analysis [@kahan2015centers]. A calculation or simulation should reproduce the proposed center-adjusted analysis, including plausible center-specific event probabilities and recruitment. This is a useful point to consult a statistician.
+
 ## What if the disease is rare? {#rare-diseases .advanced-heading}
 
 For a rare disease, the number of eligible patients may limit recruitment. Your plan should document how many patients could realistically participate, over what period and across which centers, and what that sample could establish.
@@ -92,7 +107,7 @@ This is the same feasibility problem as the plan for the chronic pain trial, wit
 1. You should establish the recruitment ceiling. You can work with specialist centers, registries and patient organizations. You can consider collaboration across countries, eligibility criteria and ways to reduce travel and follow-up burden. Your explanation should distinguish the number of people with the disease from the number eligible and willing to participate [@fdarare2023].
 2. You can use knowledge of the disease's natural course. Previous studies and registries can inform progression, variability, suitable assessment times and meaningful outcomes. You should check whether these data describe the population you intend to study. If this knowledge is insufficient, a natural-history study may be a useful research objective in its own right [@fdanaturalhistory2019].
 3. You can obtain useful information from each participant. You can use reliable, clinically meaningful measurements and minimize missing outcomes. Where clinically appropriate, retaining the continuous outcome can preserve information. Adjustment for informative baseline measurements should be prespecified. These choices require a matching analysis and sample size method [@emasmall2006].
-4. You can consider another design when appropriate. Crossover or n-of-1 designs may suit stable conditions with reversible treatment effects and manageable carryover. They generally do not suit irreversible treatments or rapidly progressing disease. Prespecified adaptive or Bayesian approaches may also help, but require specialist planning; they do not guarantee that fewer patients will suffice [@emasmall2006; @fdarare2023].
+4. You can consider another design when appropriate. [Crossover](#crossover-trial) or n-of-1 designs may suit stable conditions with reversible treatment effects and manageable carryover. They generally do not suit irreversible treatments or rapidly progressing disease. Prespecified adaptive or Bayesian approaches may also help, but require specialist planning; they do not guarantee that fewer patients will suffice [@emasmall2006; @fdarare2023].
 5. Your plan should preserve a credible comparison. Randomization remains valuable. Registry or historical controls can sometimes help, but differences in patient severity, treatment era and outcome measurement can bias the comparison. They are not an automatic replacement for a concurrent control group [@fdaexternal2023].
 6. Your explanation should address the remaining uncertainty. Evaluate attainable power across plausible effects and the anticipated confidence interval width. A small randomized study may still be informative, although inconclusive results remain possible. Your explanation should address what it could establish and what would require further evidence [@emasmall2006].
 
@@ -252,6 +267,7 @@ The advanced [recruitment extension](#recruitment-extensions) examines unequal l
 - The research goal, allocation structure and planned analysis determine which sample size method applies.
 - Restricted recruitment in rare diseases calls for a justified objective, efficient design and appropriate specialist guidance.
 - Paired and clustered observations require assumptions about dependence and the independent units available.
+- Multicenter planning depends on whether patients or whole centers are randomized, recruitment within centers and the proposed analysis.
 - With several outcomes or comparisons, the success rule determines the relevant power and error control.
 - Interim analyses and sample-size adaptations require prespecified decisions and design-specific evaluation.
 - Treatment changes should enter the defined comparison and its planning assumptions; missing assessments also require follow-up and analysis decisions.

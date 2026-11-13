@@ -65,8 +65,9 @@ for target in (SITE / "book").glob("*.html"):
     # Pandoc closes the final level-three wrapper after this raw details tag.
     # Close it inside the disclosure so the browser preserves the chapter container.
     if target.name == 'curves.html':
-        text = text.replace('</details>\n</div>\n</div>\n<div id="alpha-beta"',
-                            '</div>\n</details>\n</div>\n<div id="alpha-beta"')
+        for next_section in ('alpha-beta', 'st01-expectations'):
+            text = text.replace('</details>\n</div>\n</div>\n<div id="' + next_section + '"',
+                                '</div>\n</details>\n</div>\n<div id="' + next_section + '"')
     for chapter in activity_contents:
         sections = {}
         for activity in chapter["activities"]:

@@ -90,10 +90,14 @@ power_curve_data <- function(spec, effects, ns) {
   }))
 }
 
-plot_power_curves <- function(data, target = .90, cap = 90) {
+plot_power_curves <- function(data, target = .90, cap = 100,
+                             outcome = "proportions", show_legend = TRUE) {
+  old <- par(no.readonly = TRUE)
+  on.exit(par(old))
+  par(mar = c(4.3, 4.4, 2.8, 1))
   effects <- unique(data$effect)
   colors <- c("#176675", "#a04a24", "#635493")
-  plot(range(data$n), c(0, 1), type = "n", xlab = "Participants for analysis, per group",
+  plot(range(data$n), c(0, 1), type = "n", xlab = "Analyzable patients per group",
     ylab = "Power (%)", yaxt = "n")
   axis(2, at = seq(0, 1, .2), labels = paste0(seq(0, 100, 20), "%"))
   for (i in seq_along(effects)) {
@@ -102,7 +106,46 @@ plot_power_curves <- function(data, target = .90, cap = 90) {
   }
   abline(h = target, lty = 2, col = "#555555")
   abline(v = cap, lty = 3, col = "#555555")
-  legend("bottomright", legend = paste(100 * effects, "percentage points"),
+  text(max(data$n), target - .04, paste0("Target power: ", 100 * target, "%"),
+    adj = c(1, 1), cex = .86, col = "#26343d")
+  if (cap <= max(data$n)) text(cap, 1.055,
+    paste0("Available: ", cap, " per group"), xpd = NA, cex = .86, col = "#26343d")
+  for (i in seq_along(effects)) {
+    rows <- data[data$effect == effects[i], ]
+    if (cap <= max(rows$n)) points(cap, approx(rows$n, rows$power, cap)$y,
+      pch = 16, col = colors[i])
+    crossing <- which(rows$power >= target)[1]
+    if (!is.na(crossing)) points(rows$n[crossing], target, pch = 1, col = colors[i])
+  }
+  labels <- if (outcome == "proportions") paste(100 * effects, "percentage points") else
+    paste(signif(effects, 3), "outcome units")
+  if (show_legend) legend("bottomright", legend = labels,
     col = colors[seq_along(effects)], lty = seq_along(effects), lwd = 2,
     bty = "n", cex = .9)
+}
+
+draw_assumption_sensitivity <- function(binary, continuous, target = .9) {
+  old <- par(no.readonly = TRUE)
+  on.exit(par(old))
+  par(mfrow = c(1, 2), mar = c(4.3, 4.2, 2.6, .8))
+  baseline <- seq(.1, .6, .01)
+  difference <- true_difference(binary)
+  powers <- vapply(baseline, function(p) {
+    x <- binary; x$p_control <- p; x$p_treatment <- p + difference
+    spec_power(x)
+  }, numeric(1))
+  plot(100 * baseline, 100 * powers, type = "l", lwd = 2, col = "#176675",
+    ylim = c(0, 100), xlab = "Standard-treatment relief (%)", ylab = "Power (%)",
+    main = paste("Fixed difference:", 100 * difference, "points"), cex.main = .95)
+  abline(h = 100 * target, lty = 2, col = "#555555")
+  points(100 * binary$p_control, 100 * spec_power(binary), pch = 16)
+  sds <- seq(4, 9, .1)
+  powers <- vapply(sds, function(sd) {
+    x <- continuous; x$sd <- sd; spec_power(x)
+  }, numeric(1))
+  plot(sds, 100 * powers, type = "l", lwd = 2, col = "#635493",
+    ylim = c(0, 100), xlab = "Common standard deviation (units)", ylab = "Power (%)",
+    main = "Fixed mean difference: 3 units", cex.main = .95)
+  abline(h = 100 * target, lty = 2, col = "#555555")
+  points(continuous$sd, 100 * spec_power(continuous), pch = 16)
 }

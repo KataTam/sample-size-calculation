@@ -64,11 +64,15 @@ A threshold for meaningful improvement within an individual patient is therefore
 <span id="mean-difference">Mean difference</span>
 : A mean difference is in the outcome's own units, such as mmHg or score units. The [lab](https://katatam.github.io/sample-size-calculation/study/?activity=own_study) uses treatment minus control. Positive is beneficial in the prepared improvement/relief cases; an outcome such as pain severity or mortality needs an explicit decision about beneficial direction.
 
-Standardized mean difference (Cohen's d)
+<span id="standardized-mean-difference">Standardized mean difference (Cohen's d)</span>
 : A difference between group means expressed in within-group standard-deviation units. In the two-independent-group example, SD describes the spread of individual outcomes within each population, assumed equal across groups. A pooled within-group sample SD estimates that common SD from observed data. A difference of 3 score units with SD 5 gives d = 3/5 = 0.60. The [two-means calculation](#two-means) uses these quantities. Clinical relevance depends on the outcome and study context.
 
 ![Two hypothetical distributions of individual improvement scores with means 0 and 3 and a common within-group SD of 5. The 3-unit distance between means is 0.60 SD. Greater improvement is favorable.](../figures/standardized-difference.png)
 
+
+### Standardized treatment effect {#standardized-treatment-effect .core-heading .unnumbered}
+
+A treatment effect expressed on a scale without the original measurement units. For a difference between means, a common measure is [Cohen's d](#standardized-mean-difference), defined above. The appropriate standardization depends on the outcome and method; clinical importance is judged in the study's outcome and clinical context [@rothwell2018targets].
 
 ### Effect size {#effect-size .core-heading .unnumbered}
 
@@ -224,10 +228,16 @@ The [advanced explanation of units and dependence](#units-of-analysis) compares 
 : The percentage or proportion of enrolled participants who contribute the required outcome at the specified time. If 20 of 200 enrolled participants lack that outcome, 180/200 = 90% are retained and 10% are lost. The [recruitment calculation](#account-for-expected-losses) uses anticipated retention, with uncertainty and potentially different percentages across arms.
 
 <span id="treatment-crossover">Treatment crossover (switching)</span>
-: Receipt of the other treatment after randomization. In an analysis of treatment assignment, participants remain in their randomized groups. Switching may reduce the between-group difference. A planned crossover trial assigns treatment sequences by design and needs its own calculation. See [Allowing for treatment switching](#treatment-switching).
+: Receipt of the other treatment after randomization. In an analysis of treatment assignment, participants remain in their randomized groups. Switching may reduce the between-group difference. A [crossover trial](#crossover-trial) assigns treatment sequences by design. See [Allowing for treatment switching](#treatment-switching).
 
 <span id="treatment-contamination">Treatment contamination</span>
 : Receipt of some or all of the intervention by participants assigned to the comparator. This can make the randomized groups' outcomes more similar and affect power. Planning should reflect the expected extent and consequences of contamination. See [Treatment changes](#treatment-changes).
+
+### Crossover trial {#crossover-trial .advanced-heading .unnumbered}
+
+A trial in which participants receive treatments in successive periods, with the treatment sequence randomized. For example, one sequence receives A then B, and another B then A. The analysis compares outcomes within the same participant and accounts for their dependence. Sample size planning uses the variability of those within-person comparisons [@dwan2019crossover].
+
+A carryover effect occurs when an earlier treatment affects outcomes in a later period. Suitable crossover trials require a sufficiently stable condition, reversible treatment effects and control of carryover, sometimes through a washout period. [Treatment switching](#treatment-crossover) describes a change in treatment after assignment within another design.
 
 ## Advanced testing and adaptation terms {.advanced-heading .unnumbered}
 

@@ -41,6 +41,9 @@ const ids=(process.argv[3]||'pain_one_many,probiotics_calculation,rehabilitation
      await app.waitForFunction(()=>Shiny.shinyapp.$inputValues.goal==='precision' && document.documentElement.classList.contains('single-population-mode'));
      await app.locator('#precision-view a[data-value="Overview"]').click();
      await app.locator('#precision-result').filter({hasText:'analyzable participants in total'}).waitFor();
+    }else if(id==='pain_curves'){
+     await app.locator('a[data-value="Compare assumptions"]').click();
+     await app.locator('#comparison_text').filter({hasText:'100 analyzable'}).waitFor();
     }else if(!['pain_simulation','alpha_beta'].includes(id)){
      const overview=app.getByRole('tab',{name:'Overview',exact:true});
      if(await overview.count())await overview.click();
@@ -53,7 +56,7 @@ const ids=(process.argv[3]||'pain_one_many,probiotics_calculation,rehabilitation
     if(sidebar){
      const endSelector={two_means:'#interpretation',two_proportions:'#interpretation',prevalence_precision:'#precision_text',
       dropout_adjustment:'#recruitment_interpretation',sampling_distributions:'#explanation'}[record.app] ||
-      (id==='mean_precision'?'#precision-interpretation':id==='pain_curves'?'#overview_text':id==='pain_simulation'?'#many_text':'#journey-reading');
+      (id==='mean_precision'?'#precision-interpretation':id==='pain_curves'?'#comparison_text':id==='pain_simulation'?'#many_text':'#journey-reading');
      const bottom=await app.evaluate(selector=>Math.max(...[...document.querySelectorAll('.shiny-plot-output,'+selector+',#sampling-journey')]
       .filter(el=>el.checkVisibility()).map(el=>el.getBoundingClientRect().bottom+scrollY+60)),endSelector);
      clip={x:0,y:Math.floor(sidebar.y),width:1120,height:Math.ceil(Math.max(700,bottom-sidebar.y))};

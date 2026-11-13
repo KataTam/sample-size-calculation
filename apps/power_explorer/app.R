@@ -29,9 +29,10 @@ ui <- fluidPage(
   textOutput("plan_import_status"),
   textOutput("missing_note"),
   sidebarLayout(sidebarPanel(width = 4,
-    conditionalPanel("input.goal != 'precision'", textOutput("scenario_summary"), uiOutput("simulation_target")),
-    conditionalPanel("input.goal == 'fixed'", numericInput("fixed_n", "Participants per group in each study", 60, min = 2, max = 100000, step = 1),
-      activity_help("This is the chosen analyzable sample size. The introductory activity starts with 20 per group to make sampling variability visible; larger samples can then be compared. Recruitment limits are assessed separately.", for_input = "fixed_n")),
+    conditionalPanel("input.goal != 'precision'", textOutput("scenario_summary"),
+      conditionalPanel("input.activity_choice != 'pain_curves'", uiOutput("simulation_target"))),
+    conditionalPanel("input.goal == 'fixed'", numericInput("fixed_n", "Analyzable participants per group", 60, min = 2, max = 100000, step = 1),
+      activity_help("Enter the number with analyzable outcomes in each group. The power curves and simulation use this count; expected losses are applied separately when calculating recruitment.", for_input = "fixed_n")),
     tags$details(id="lab-settings", class="activity-details", tags$summary("Settings"),
     selectInput("goal", "Planning goal", c("Test a difference from zero" = "testing", "Estimation with a target interval width" = "precision", "Assess a fixed number of available participants" = "fixed")),
     activity_help("Testing and the fixed-sample option concern two treatment groups. Estimation uses a confidence-interval-width target for one population mean or percentage.", for_input = "goal"),
@@ -49,7 +50,7 @@ ui <- fluidPage(
       tagList(
       numericInput("threshold_m", "Clinically important difference (outcome units)", 2, min = .1),
       activity_help("Patient and clinical input should support this minimum worthwhile benefit. It applies to the difference between group means and informs the target chosen for the power calculation.", for_input = "threshold_m")),
-      conditionalPanel("input.show_advanced || input.goal == 'precision'",
+      conditionalPanel("(input.show_advanced && input.activity_choice != 'pain_curves') || input.goal == 'precision'",
       numericInput("width_m", "Target full confidence interval width (outcome units)", 4, min = .1),
       activity_help("Use the distance from the lower to upper confidence limit. A width of 4 means a margin of about 2 units on each side; narrower targets need more participants.", for_input = "width_m"))),
     conditionalPanel("input.outcome == 'proportions'",
@@ -62,7 +63,7 @@ ui <- fluidPage(
       tagList(
       percent_slider("threshold_p", "Clinically important difference (percentage points)", value = .2, min = .001, max = 1, step = .01, suffix = " percentage points"),
       activity_help("Patient and clinical input should support this minimum worthwhile increase in the favorable-event percentage. It informs the target chosen for the power calculation.", for_input = "threshold_p")),
-      conditionalPanel("input.show_advanced || input.goal == 'precision'",
+      conditionalPanel("(input.show_advanced && input.activity_choice != 'pain_curves') || input.goal == 'precision'",
       percent_slider("width_p", "Target full confidence interval width (percentage points)", value = .2, min = .001, max = 2, step = .01, suffix = " percentage points"),
       activity_help("Use the distance between confidence limits, in percentage points. A full width of 20 points corresponds to a margin of about 10 points on each side.", for_input = "width_p"))),
     conditionalPanel("input.goal != 'precision'", percent_slider("alpha", tags$span(tags$a(href = "../book/Sample_size_open_module.html#alpha", target = "_blank", rel = "noopener", "Type I error probability"),
@@ -74,9 +75,9 @@ ui <- fluidPage(
     conditionalPanel("input.goal == 'precision'", percent_slider("confidence", "Confidence level (%)", .90, .999, .95, step = .001),
       activity_help("For 95% confidence, about 95% of intervals across repeated studies contain the population value under the model assumptions.", for_input = "confidence")),
     percent_slider("dropout", "Expected loss to follow-up in each group (%)", 0, .5, .1, step = .01),
-    activity_help("This percentage adjusts recruitment and the recruitment-limit curve. Simulating incomplete outcomes requires the separate missing-outcome scenarios in the advanced settings.", for_input = "dropout"),
+    activity_help("This percentage adjusts recruitment. For a fixed analyzable sample, the curve keeps the selected count. The advanced missing-outcome settings simulate incomplete outcomes.", for_input = "dropout"),
     tags$div(class = "lab-recruitment", numericInput("recruit_cap", "Maximum recruitment, across both groups", 200, min = 4, max = 200000, step = 2),
-    activity_help("Use the total your sites and recruitment period could support. The graph converts this to an expected analyzable limit after losses; actual retention varies.", for_input = "recruit_cap")),
+    activity_help("Enter total recruitment across both groups. In sample-size planning, this sets the graph's available count after expected losses. In fixed-sample mode, the graph uses the analyzable count entered above.", for_input = "recruit_cap")),
     conditionalPanel("input.show_advanced",
     h4("Advanced: what if the assumptions differ?"),
     selectInput("reality", "Assumptions for the simulated studies", c("Same as planning assumptions" = "same", "No true treatment effect" = "null", "Custom effect or variability" = "custom")),
@@ -114,18 +115,19 @@ ui <- fluidPage(
         p(class = "caption", "Table 1. Current assumptions and sample requirements."),
         textOutput("planning_text"), textOutput("axis_note"), actionButton("fit_axis", "Fit axis to results"))),
     tabPanel("Explore assumptions", value = "Compare assumptions",
-      h3("Compare smaller effects"),
-      p("The point where each curve crosses the power target gives the required sample size for that difference."),
+      h3("Power at the available sample"),
       plotOutput("comparison_plot", height = "340px"), uiOutput("comparison_key"),
-      p(class = "caption", "Figure 2. Power curves at half, two-thirds and the full target difference, with the power target and expected analyzable recruitment limit."),
+      p(class = "caption", "Figure 2. Power across sample sizes for the three treatment differences. Reference lines mark target power and the available analyzable count."),
       tableOutput("comparison_table"),
-      p(class = "caption", "Table 2. Power at the expected analyzable recruitment limit for each assumed benefit."),
+      p(class = "caption", "Table 2. Power at the vertical reference line and sample size required at the horizontal target-power line."),
+      textOutput("comparison_text"),
+      activity_details("Power across a wider range of differences",
       h4("Power across effects at the planned sample size"),
       plotOutput("effect_plot", height = "320px"),
       p(class = "caption", "Figure 3. Two-sided power across hypothetical true effects, holding the current planned sample size fixed."),
-      p("Each point on the curve describes the probability of detecting a specified true difference. Smaller differences can produce significant results and larger differences can go undetected. This sensitivity analysis evaluates the fixed design across plausible population differences."),
+      p("Each point gives the probability of detecting the specified true difference at the selected analyzable count.")),
       h4("Sensitivity analysis: what if the assumptions differ?"), tableOutput("sensitivity"),
-      p(class = "caption", "Table 3. Power and anticipated full interval width under the plan, the reality assumed for simulation and a null effect at unchanged sample size."),
+      textOutput("sensitivity_caption", container = function(...) tags$p(class = "caption", ...)),
       p("The table keeps the planned sample size fixed. Missing-outcome scenarios start with recruited participants; their results appear in One study and Many studies.")),
     tabPanel("One study", h3("One simulated study"),
       tags$div(class = "simulation-actions",
@@ -465,7 +467,8 @@ server <- function(input, output, session) {
       target_power = input$target_power, dropout = input$dropout,
       recruitment_cap = input$recruit_cap, expected_effect = expected_effect())
   })
-  intervals_visible <- reactive(identical(input$goal, "precision") || isTRUE(input$show_advanced))
+  intervals_visible <- reactive(identical(input$goal, "precision") ||
+    (isTRUE(input$show_advanced) && !identical(current_activity(), "pain_curves")))
   output$intervals_visible <- reactive(intervals_visible())
   outputOptions(output, "intervals_visible", suspendWhenHidden = FALSE)
   observeEvent(input$confidence, {
@@ -604,7 +607,7 @@ server <- function(input, output, session) {
   # Initialize the sticky axis before outputs render. Changing reactive state
   # inside plot_limit() can invalidate an output while it is still rendering.
   observe({
-    if (is.null(axis_limit())) axis_limit(min(100000, max(200, 2*planned()$n)))
+    if (is.null(axis_limit())) axis_limit(min(100000, max(250, 2*planned()$n)))
   }, priority = 100)
   plot_limit <- reactive({ req(axis_limit()); axis_limit() })
   observeEvent(input$fit_axis, { axis_limit(min(100000, max(200, 2*planned()$n, input$recruit_cap))) })
@@ -634,7 +637,7 @@ server <- function(input, output, session) {
     cap <- input$recruit_cap
     if (is.null(cap)) cap <- 200
     safe(check_integer(cap, "Total recruitment limit", 4, 200000))
-    cap_n <- floor(floor(cap / 2) * (1 - input$dropout))
+    cap_n <- if (input$goal == "fixed") x$n else floor(floor(cap / 2) * (1 - input$dropout))
     validate(need(cap_n >= 2, "The expected analyzable limit must be at least two per group."))
     effects <- true_difference(x) * c(.5, 2/3, 1)
     scenarios <- lapply(effects, function(effect) {
@@ -647,27 +650,40 @@ server <- function(input, output, session) {
   })
   output$comparison_plot <- renderPlot({
     z <- comparison(); x <- z$spec
-    ns <- unique(round(seq(2, plot_limit(), length.out = 100)))
-    colors <- c("#176675", "#a04a24", "#635493")
+    ns <- unique(round(seq(2, max(250, plot_limit()), length.out = 250)))
     app_plot_style()
-    plot(range(ns), c(0, 100), type = "n", xlab = "Analyzable participants per group", ylab = "Power (%)")
-    app_plot_grid()
-    for (i in seq_along(z$scenarios)) lines(ns,
-      100 * vapply(ns, function(n) spec_power(z$scenarios[[i]], n), numeric(1)),
-      lwd = 2, col = colors[i], lty = i)
-    abline(h = 100 * input$target_power, lty = 2, col = "#555555")
-    abline(v = z$cap_n, lty = 3, col = "#555555")
-  }, res = 96, alt = "Power curves compare half, two-thirds and the full target difference. The table gives power at the expected analyzable recruitment limit.")
+    plot_power_curves(power_curve_data(x, z$effects, ns), input$target_power,
+      z$cap_n, outcome = x$outcome, show_legend = FALSE)
+  }, res = 96, alt = "Power versus analyzable participants per group, with labeled target-power and available-count reference lines. The table gives power at the available count and the required count for each difference.")
   output$comparison_key <- renderUI({
     z <- comparison()
     tags$div(class="app-plot-key", lapply(1:3, function(i) tags$span(class=c("solid","dashed","dotted")[i],
       style=paste0("--key-color:",c("#176675", "#a04a24", "#635493")[i]), effect_text(z$effects[i],z$spec$outcome,1))))
   })
-  output$comparison_table <- renderTable({
+  output$sensitivity_caption <- renderText(paste0("Table 3. Power",
+    if (intervals_visible()) " and anticipated interval width" else "",
+    " under the planning assumptions, simulated population and null hypothesis at the selected sample size."))
+  comparison_results <- reactive({
     z <- comparison()
-    data.frame(Difference = effect_text(z$effects, z$spec$outcome), `Participants for analysis per group` = as.integer(z$cap_n),
-      `Power at this sample` = format_percent(vapply(z$scenarios, function(x) spec_power(x, z$cap_n), numeric(1)), 1), check.names = FALSE)
-  }, digits = 0)
+    result <- data.frame(Difference = format(signif(z$effects * if (z$spec$outcome == "proportions") 100 else 1, 3), trim = TRUE),
+      Power = format_percent(vapply(z$scenarios, function(x) spec_power(x, z$cap_n), numeric(1)), 1),
+      Required = vapply(z$scenarios, function(x) {
+        if (abs(true_difference(x)) < 1e-12) return(NA_real_)
+        plan_n(x, target_power = input$target_power)
+      }, numeric(1)), check.names = FALSE)
+    names(result) <- c(if (z$spec$outcome == "proportions") "Difference (percentage points)" else "Difference (outcome units)",
+      paste0("Power with ", z$cap_n, " per group"),
+      paste0("Per group for ", format_percent(input$target_power), " power"))
+    result
+  })
+  output$comparison_table <- renderTable(comparison_results(), digits = 0, na = "—")
+  output$comparison_text <- renderText({
+    z <- comparison()
+    powers <- vapply(z$scenarios, function(x) spec_power(x, z$cap_n), numeric(1))
+    paste0("With ", z$cap_n, " analyzable participants per group, power is ",
+      paste(paste0(format_percent(powers, 1), " at ", effect_text(z$effects, z$spec$outcome, 1)), collapse = "; "),
+      ". The table's last column gives the analyzable count required for ", format_percent(input$target_power), " power.")
+  })
   output$effect_plot <- renderPlot({
     x <- planned(); d <- true_difference(x)
     if (x$outcome == "means") effects <- seq(-max(abs(d)*1.5, x$sd), max(abs(d)*1.5, x$sd), length.out = 101)
@@ -821,6 +837,14 @@ server <- function(input, output, session) {
           " participants available for analysis. Selected recruitment limit: ", input$recruit_cap, " in total. Required recruitment ",
           if (2*recruit > capacity$balanced) "exceeds" else "fits within", " the expected recruitment capacity and ",
           if (2*recruit > input$recruit_cap) "exceeds" else "fits within", " the selected limit.")))
+    if (compatible && current_activity() == "pain_curves" && input$goal != "precision") {
+      z <- comparison(); results <- comparison_results()
+      sections[["Sensitivity at the available sample"]] <- c(
+        paste0("Available analyzable count: ", z$cap_n, " per group. Target power: ", format_percent(input$target_power), "."),
+        vapply(seq_len(nrow(results)), function(i) paste0("True difference ", effect_text(z$effects[i], z$spec$outcome),
+          ": power ", results[i, 2], "; required for target power: ",
+          if (is.na(results[i, 3])) "undefined for a zero difference" else paste(results[i, 3], "per group"), "."), character(1)))
+    }
     if (compatible) {
       meta <- snapshot(); g <- meta$generating
       sections[["Simulation assumptions"]] <- c(

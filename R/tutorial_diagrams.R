@@ -216,6 +216,27 @@ draw_discharge_grids <- function() {
   text(50, 6, "Each square represents one of 100 hypothetical patients.", cex = .94)
 }
 
+draw_multicenter_allocation <- function() {
+  old <- par(no.readonly = TRUE)
+  on.exit(par(old))
+  diagram_canvas()
+  for (panel in 1:2) {
+    center <- c(25, 75)[panel]
+    text(center, 95, c("Patients randomized within hospitals", "Whole hospitals randomized")[panel],
+      cex = .92, font = 2)
+    for (hospital in 1:2) {
+      y <- c(69, 31)[hospital]
+      rect(center-21, y-14, center+21, y+17, border = "#617584", col = "#f1f5f8", lwd = 1.5)
+      text(center, y+10, paste("Hospital", hospital), cex = .9)
+      groups <- if (panel == 1) c("A", "B", "A", "B") else rep(c("A", "B")[hospital], 4)
+      x <- center + c(-14, -5, 5, 14)
+      colors <- ifelse(groups == "A", "#17658a", "#72428b")
+      points(x, rep(y-4, 4), pch = 21, bg = colors, col = colors, cex = 4.3)
+      text(x, rep(y-4, 4), groups, col = "white", cex = 1.05)
+    }
+  }
+}
+
 draw_recruitment_funnel <- function() {
   old <- par(no.readonly = TRUE)
   on.exit(par(old))
@@ -237,7 +258,6 @@ draw_recruitment_funnel <- function() {
     text(54, top-8, labels[i], adj = 0, cex = 1)
     if (i < 4) diagram_arrow(27, top-17.5, 27, top-20)
   }
-  text(50, 2, "Half of the 30 available patients enroll: 15 per month.", cex = .95)
 }
 
 draw_treatment_followup <- function() {

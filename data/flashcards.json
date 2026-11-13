@@ -679,15 +679,15 @@
     {
       "id": "C075",
       "level": "advanced",
-      "front": "What does it mean for a study to be underpowered at a specified difference?",
-      "back": "It has a low probability of detecting that true difference with the planned test, relative to the intended power target.",
+      "front": "What does underpowered mean at a specified difference?",
+      "back": "The study has a low probability of obtaining a statistically significant result when that difference is present in the population.",
       "source": "https://katatam.github.io/sample-size-calculation/book/curves.html#what-if-the-study-is-too-small-for-its-purpose"
     },
     {
       "id": "C076",
       "level": "advanced",
-      "front": "Why can significant results from low-powered studies exaggerate a benefit?",
-      "back": "Among studies with low power, significance often occurs when sampling variability produces an unusually large observed difference.",
+      "front": "Why can significant results from underpowered studies exaggerate a benefit?",
+      "back": "Significant results favoring treatment tend to have unusually large estimated benefits. Selecting those results can exaggerate the apparent treatment benefit.",
       "source": "https://katatam.github.io/sample-size-calculation/book/curves.html#what-if-the-study-is-too-small-for-its-purpose"
     },
     {
@@ -784,15 +784,15 @@
     {
       "id": "A024",
       "level": "advanced",
-      "front": "Does the effect at the target-power crossing form a guaranteed detection boundary?",
-      "back": "No. Smaller effects can produce significant results and larger effects can go undetected. Each point describes a probability across repeated studies.",
+      "front": "Can a true difference with less than 90% power still be detected?",
+      "back": "Yes. It can produce a statistically significant result, with the probability shown by the power curve.",
       "source": "https://katatam.github.io/sample-size-calculation/book/curves.html"
     },
     {
       "id": "A025",
       "level": "advanced",
-      "front": "With 200 total recruits, equal allocation, and 10% expected loss, what is the expected analyzable count?",
-      "back": "180 total, or 90 per group. Actual retention can differ.",
+      "front": "With 100 analyzable patients required per group and 10% expected loss, how many should be recruited?",
+      "back": "100 / 0.90 = 111.1, rounded up to 112 per group: 224 in total.",
       "source": "https://katatam.github.io/sample-size-calculation/book/curves.html"
     },
     {

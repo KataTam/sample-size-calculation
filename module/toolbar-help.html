@@ -231,9 +231,13 @@ contents rather than this book toolbar. Use your browser’s
         var block = link.closest('p');
         for (var direction of ['previousElementSibling', 'nextElementSibling']) {
           var next = block && block[direction];
-          for (var nearby = 0; target && next && nearby < 3; nearby++, next = next[direction]) {
-            if (next.matches('h1,h2,h3,h4,details,.section')) break;
+          for (var nearby = 0, scanned = 0; target && next && nearby < 4 && scanned < 16; scanned++, next = next[direction]) {
             if (next === target || next.contains(target)) return;
+            // Folded R code and compatibility anchors do not separate the prose
+            // from its figure. Count visible explanatory blocks instead.
+            if (next.matches('details.r-code-output, span[id]')) continue;
+            if (next.matches('h1,h2,h3,h4,details,.section')) break;
+            nearby++;
           }
         }
       }

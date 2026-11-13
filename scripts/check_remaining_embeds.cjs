@@ -35,7 +35,14 @@ for(const [chapter,id,engine,input,value,result,figure,expected] of routes){
  if(['prevalence_precision','sampling_distributions'].includes(engine))await app.waitForFunction(()=>/Loaded shared case:/.test(document.querySelector('#bridge_status')?.textContent||''));
  if(id==='pilot_feasibility')await app.waitForFunction(()=>document.querySelector('#fixed_n').value==='40');
  if(id==='mean_precision')await app.waitForFunction(()=>document.documentElement.classList.contains('single-population-mode'));
- if(id==='pain_curves')await app.waitForFunction(()=>document.querySelector('#fixed_n').value==='90');
+ if(id==='pain_curves'){
+  await app.waitForFunction(()=>document.querySelector('#fixed_n').value==='100');
+  await app.locator('a[data-value="Compare assumptions"]').click();
+  await app.waitForFunction(()=>/100 analyzable/.test(document.querySelector('#comparison_text').textContent));
+  const comparison=await app.locator('#comparison_table').innerText();
+  for(const value of ['59.2%','82.8%','99.2%','217','124','56'])assert(comparison.includes(value),value);
+  await app.locator('a[data-value="Explore assumptions"]').click();
+ }
  if(id==='pain_simulation'){
   await app.waitForFunction(()=>document.querySelector('#activity_choice').value==='pain_simulation' && Shiny.shinyapp.$inputValues.goal==='fixed');
   await app.waitForFunction(()=>document.querySelector('#fixed_n').value==='60');

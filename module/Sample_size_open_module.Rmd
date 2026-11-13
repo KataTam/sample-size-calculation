@@ -860,7 +860,7 @@ For each numerical assumption, your supporting plan should record its source, wh
 
 A concise report can retain this reasoning: why the control percentage is relevant, how uncertainty informed the target difference, and which treatment burdens justify the clinical threshold. @wang2024bep illustrate how sources support inputs, using local data for the control percentage and a systematic review for the target risk ratio. The chronic pain report in [Example 3.1](#sample-size-calculation-report) shows how the decisions developed here fit into a complete sample size calculation report.
 
-Clear reporting also makes measurement choices open to scrutiny. In a review of 185 studies using the BREAST-Q Reconstruction Module, a patient-reported questionnaire for breast reconstruction, only 17 reported a sample-size calculation and 71 reported the primary outcome's assessment time; 36 had questionnaire-administration errors [@gallo2022]. These findings underline why your plan should specify how and when the outcome is measured alongside the calculation. Missing calculation details leave the sample-size justification unassessable.
+Clear reporting also makes measurement choices open to scrutiny. In a review of 185 studies using the BREAST-Q Reconstruction Module, a patient-reported questionnaire for breast reconstruction, only 17 reported a sample-size calculation and 71 reported the primary outcome's assessment time; 36 had questionnaire-administration errors [@gallo2022]. These findings underline why your plan should specify how and when the outcome is measured alongside the calculation. Missing calculation details leave the sample-size justification unassessable. A review of 385 phase III oncology trials found that 41 (10.6%) cited previous clinical data to support the assumed hazard ratio. This concerns the evidence behind the numerical assumption, reinforcing the need to report both the calculation and the sources supporting its inputs [@noticewala2025effects].
 
 As your plan develops, brief notes about revised assumptions and their reasons will help you explain the final recommendation. The advanced [evidence and uncertainty discussion](#planning-uncertainty) shows how to examine assumptions that remain uncertain.
 
@@ -1294,301 +1294,95 @@ render_chapter_quiz("estimation-planning")
 
 # Exploring power and uncertain assumptions {#curves .advanced-heading}
 
-
-
 ::: {.learning-goals .advanced-outcomes}
 After this chapter, you should be able to:
 
-- Read power curves under specified population assumptions.
-- Compare required sample sizes with performance at a fixed sample size.
-- Assess recruitment limits and smaller plausible treatment differences.
-- Compare options for improving power and explain their assumptions and tradeoffs.
-- Assess the evidence and uncertainty behind expectations, clinical judgments and the calculation target.
-- Explain how observed significance boundaries and sampling distributions relate to power.
+- Interpret power curves and distinguish power at an available sample size from the sample required for a power target.
+- Justify plausible assumptions using relevant evidence and its uncertainty.
+- Assess how event probabilities, outcome variability and available sample size affect power.
+- Evaluate feasible design changes when the available sample provides insufficient power.
 
 :::
 
-The chronic pain calculation uses one set of assumptions. What if the true benefit is smaller, or recruitment limits the number of patients? Power curves show how the answer changes.
+The calculation in Chapter 2 used a target difference of 30 percentage points. Here, you will examine how power changes if the true difference is smaller or recruitment limits the available sample. Suppose the chronic pain trial can provide 100 analyzable patients per group. The question is what that sample could detect, and which assumptions most affect the answer.
 
-## Activity: Chronic pain: explore power and recruitment {#activity-2-can-the-feasible-study-answer-the-question .advanced-heading}
+## Reading power curves {#activity-2-can-the-feasible-study-answer-the-question .advanced-heading}
 
-The curves compare the expected performance of studies with different sample sizes. At any chosen sample size, each curve gives power for a different assumed true treatment difference. Chapter 11 of @superpowerbook2022 motivates examining power across a range of sample sizes and effects. These curves keep the planned sample size fixed and compare standard-treatment relief of 30% with novel-treatment relief of 45%, 50% or 60%. These curves explore performance if reality differs from the planning assumption.
+Figure \@ref(fig:power-curves) compares power across sample sizes for three possible population differences. Standard-treatment relief stays at 30%; novel-treatment relief is 45%, 50% or 60%, giving differences of 15, 20 or 30 percentage points. Each curve describes repeated trials under one set of population assumptions [@superpowerbook2022].
 
-Suppose the clinic can recruit 200 patients in total, with 10% expected loss in each arm. This corresponds to 100 recruited and an expected 90 analyzable patients per group. Actual retention varies.
+The vertical line marks the available 100 analyzable patients per group. The horizontal line marks 90% target power. Recruitment should allow for expected losses separately, using the [recruitment calculation](#account-for-expected-losses).
 
 ```{r curve-settings}
-# Define the population assumptions and the fixed 90-patient analysis count.
-curve_spec <- study_spec(outcome = "proportions", n = 90,
+# Specify the population assumptions and the available analysis count.
+analyzable_cap <- 100
+curve_spec <- study_spec(outcome = "proportions", n = analyzable_cap,
   p_control = .30, p_treatment = .60, threshold = .20,
   width_target = .20)
-# Compare three true differences: 15, 20 and 30 percentage points.
+# Compare three true between-group differences, expressed as probabilities.
 effect_sizes <- c(.15, .20, .30)
 target_power <- .90
-recruitment_cap <- 200
-expected_loss <- .10
-# Split total recruitment equally, allow for losses, and round down.
-analyzable_cap <- floor(recruitment_cap / 2 * (1 - expected_loss))
 ```
 
-```{r power-curves, fig.cap="Power for treatment differences of 15, 20 and 30 percentage points. Dashed lines show 90% target power and the recruitment limit of 90 analyzable patients per group.", fig.alt="Three curves show that smaller treatment benefits need more patients. A horizontal line marks 90 percent power and a vertical line marks 90 analyzable patients per group."}
-# seq(5, 200, 5) generates counts from 5 to 200 in steps of 5.
-# Calculate power at each count for each of the three differences.
-curve_table <- power_curve_data(curve_spec, effect_sizes, seq(5, 200, 5))
-# Draw the curves and reference lines for target power and the recruitment cap.
+```{r power-curves, fig.width=8, fig.height=5.8, fig.cap="Power for true treatment differences of 15, 20 and 30 percentage points, with standard-treatment relief of 30% and two-sided Type I error probability of 5%. Reference lines mark 90% target power and 100 analyzable patients per group.", fig.alt="Power rises with patients per group. At the vertical line of 100, power is about 59%, 83% and 99% for the three differences. The curves reach the horizontal 90% target at 217, 124 and 56 patients per group, respectively."}
+# Include all three crossings of the power target in the horizontal range.
+curve_table <- power_curve_data(curve_spec, effect_sizes, seq(5, 250, 1))
 plot_power_curves(curve_table, target_power, analyzable_cap)
 ```
+
+<span id="hold-sample-size-fixed-and-vary-the-effect"></span>
+<span id="fig:effect-curve"></span>
 
 ```{r cap-table, echo=FALSE, results='asis'}
 cap_results <- do.call(rbind, lapply(effect_sizes, function(effect) {
   x <- curve_spec; x$p_treatment <- x$p_control + effect
-  data.frame(absolute_benefit = effect,
-    analyzable_per_group = analyzable_cap,
-    approximate_power_at_cap = spec_power(x, analyzable_cap),
-    per_group_for_target = plan_n(x, target_power = target_power))
+  data.frame(difference = 100 * effect,
+    power = percent(spec_power(x, analyzable_cap)),
+    required = plan_n(x, target_power = target_power))
 }))
-knitr::kable(display_probabilities(cap_results, "approximate_power_at_cap",
-  points = "absolute_benefit"),
+knitr::kable(cap_results,
   format = if (knitr::is_html_output()) "html" else "latex",
-  col.names = c("True difference (percentage points)", "Analyzable patients per group",
-    "Power with 90 per group", "Patients per group for 90% power"),
-  caption = "Power with 90 patients per group and sample size needed for 90% power.")
+  col.names = c("True difference (percentage points)",
+    "Power with 100 per group", "Patients per group for 90% power"),
+  caption = "Power with 100 analyzable patients per group and sample size required for 90% power.")
 ```
 
-## Hold sample size fixed and vary the effect {.advanced-heading}
-
-Figure \@ref(fig:effect-curve) answers a different question: with 90 analyzable patients per group, how does power change across possible treatment benefits? The target-power crossing describes a detectable effect at that target.
-
-```{r effect-curve, fig.cap="Approximate power across true treatment benefits with 90 analyzable patients per group and 30% control relief. The horizontal reference marks 90% power.", fig.alt="Power rises with the assumed positive treatment benefit; the horizontal reference is 90 percent power."}
-# Vary the true difference from 0 to 40 points in half-point steps.
-effect_grid <- seq(0, .40, .005)
-# Copy the scenario, change treatment probability, and calculate power.
-# vapply() returns one number for each difference; numeric(1) specifies this.
-effect_power <- vapply(effect_grid, function(effect) {
-  x <- curve_spec; x$p_treatment <- x$p_control + effect
-  spec_power(x)
-}, numeric(1))
-# Plot the difference in percentage points, with power labeled as a percentage.
-plot(effect_grid * 100, effect_power, type = "l", lwd = 2,
-  col = "#176675", ylim = c(0, 1), yaxt = "n",
-  xlab = "Absolute treatment benefit (percentage points)", ylab = "Power (%)")
-axis(2, at = seq(0, 1, .2), labels = paste0(seq(0, 100, 20), "%"))
-# Add a dashed horizontal line at the target power.
-abline(h = target_power, lty = 2)
-```
+The middle column of Table \@ref(tab:cap-table) corresponds to the intersections with the vertical line at 100 patients per group in Figure \@ref(fig:power-curves). The last column corresponds to the intersections with the horizontal line at 90% power.
 
 <details class="misconception" id="misconception-detection-boundary">
-<summary>Common misconception: the target-power crossing is a detection boundary</summary>
+<summary>Common misconception: smaller differences cannot be detected</summary>
 
-An effect below the target-power crossing can still produce a significant result; an effect above it can still go undetected. Each point on the curve gives the probability of detecting the specified difference across repeated studies. The [clinical threshold](#clinical-threshold) is a separate judgment.
+Power changes gradually with the true difference. A difference below the point where a curve reaches 90% power can still produce a statistically significant result; this happens less often across repeated studies. With 100 patients per group, power is approximately 83% for a 20-point difference and 59% for a 15-point difference.
 
 </details>
+
+The [Sample size reasoning lab](https://katatam.github.io/sample-size-calculation/study/?activity=pain_curves) connects these curves to the available sample and lets you change the assumptions.
+
+```{r power-app-preview, echo=FALSE, results='asis'}
+render_app_preview("pain_curves", "Compare power for plausible treatment differences with 100 analyzable patients per group.")
+```
 
 ::: {.activity}
 <p class="question-label">Question to consider</p>
 
-Predict. Which effect assumption is most demanding at the same power target?
+With 100 analyzable patients per group, which of the three differences would the trial detect with at least 90% power?
 
 <details class="model-answer" id="model-answer-curves-predict">
 <summary>Model answer</summary>
 
-The 15-percentage-point difference requires the largest sample for the same power target, followed by 20 points and then 30 points. With control relief fixed at 30% and the analysis and error targets unchanged, smaller differences are harder to distinguish from [sampling variability](#sampling-variability). This comparison concerns true treatment differences.
-
-</details>
-
-
-
-```{r power-app-preview, echo=FALSE, results='asis'}
-render_app_preview("pain_curves", "Compare power across plausible treatment differences at a fixed recruitment limit.")
-```
-
-
-
-The curves in *Explore assumptions* are calculated from the planning formulas. They help you choose scenarios worth investigating. With advanced controls visible, *Custom effect or variability* lets you specify control relief of 30% and treatment relief of 50% or 45% while retaining 90 patients per group. The sensitivity table updates immediately; *Simulate many studies* then estimates performance from generated patient outcomes for the selected scenario.
-
-Explain. Which assumptions make the target feasible?
-
-How do you distinguish 200 recruited patients from 180 expected analyzable patients?
-
-<details class="model-answer" id="model-answer-curve-assumptions">
-<summary>Model answer</summary>
-
-The displayed plan reaches 90% power at the 30-point target difference with 90 analyzable patients per group, given 30% standard-treatment relief, the chosen test and a 5% [Type I error probability](#alpha). It does not reach that power target for the smaller 20-point clinical threshold or the 15-point alternative. The recruitment limit is 200 people; applying 10% expected loss gives 180 expected analyzable outcomes, or 90 per group. Feasibility therefore depends on the treatment difference and event probabilities being credible, the analysis being appropriate and retention being close to its assumption.
-
-</details>
-
-
-Justify. Write three sentences describing what the clinic's recruitment limit could establish. Do not increase the assumed benefit merely to make the design affordable.
-
-<details class="model-answer" id="model-answer-curves-justify">
-<summary>Model answer</summary>
-
-Recruiting 200 patients with 10% expected loss gives 180 expected analyzable patients, or 90 per group. At that count, approximate power is `r percent(cap_results$approximate_power_at_cap[3])` for a true 30-point difference and `r percent(cap_results$approximate_power_at_cap[2])` for a true 20-point difference, so the plan meets the 90% target at 30 points but not at the smaller clinical threshold. If high power at 20 percentage points is essential, the recommendation should consider more recruitment or a revised objective, acknowledging uncertainty in retention.
+The trial exceeds 90% power for a 30-point difference. Power is approximately 83% for 20 points and 59% for 15 points. Reaching 90% power for these smaller differences would require 124 and 217 patients per group, respectively.
 
 </details>
 :::
 
-## Sensitivity to planning assumptions {#stress-test-the-study-plan .advanced-heading}
+<span id="model-answer-curve-assumptions"></span>
+<span id="model-answer-curves-justify"></span>
 
-A [sensitivity analysis](#sensitivity-analysis){.no-glossary-tooltip} examines what happens when a planning assumption changes within a plausible range. For the chronic pain trial, suppose standard-treatment relief remains 30%, but the novel-treatment probability is 50% rather than the planned 60%. The difference is then 20 percentage points rather than 30. Detecting the smaller difference with the same 90% power requires more patients.
+<details class="advanced-explanation" id="testing-mechanics">
+<summary>How hypothesis tests produce power</summary>
 
-The smaller difference should have a scientific justification. These comparisons belong in the planning record and can be reported in the protocol or a supplement. For example, @wang2024bep state their principal calculation in the protocol and present detectable risk ratios under alternative assumptions about outcome frequency and power in an additional file. DELTA² and CONSORT recommend documenting sensitivity to calculation inputs [@cook2018delta2; @consortee2025]. The concise [report example](#sample-size-calculation-report) states the selected calculation; this section retains the supporting alternatives. This chapter also evaluates how the original fixed sample would perform if reality differed from the plan.
+The following examples connect an individual test result to the repeated-study probabilities represented by power curves.
 
-<span id="compare-planning-assumptions"></span>
-
-These comparisons can answer two questions:
-
-- Before choosing your sample size: how many patients would be needed under different plausible assumptions? Here, sample size changes.
-- After choosing a sample size: how would this same study perform if the true difference were smaller or variability were greater? Here, sample size stays fixed.
-
-The next table shows both answers. Its required-count column recalculates the sample size at the clinical threshold, target difference and difference observed in previous data. Its power column keeps the original planned sample fixed. The 20-, 30- and 40-point values belong to this example; the three roles can share a value and have no fixed order. In the [sample size reasoning app](https://katatam.github.io/sample-size-calculation/study/?activity=pain_curves), *Reality may differ from the plan* lets you explore this second question [@cook2018delta2; @lakens2022].
-
-<span id="tab:pain-core-sensitivity"></span>
-
-```{r pain-target-sensitivity, echo=FALSE}
-pain_target_n <- ceiling(power.prop.test(p1 = .60, p2 = .30,
-  sig.level = .05, power = .90, alternative = "two.sided",
-  strict = TRUE)$n)
-pain_alternatives <- c(.50, .60, .70)
-knitr::kable(data.frame(
-  `True novel-treatment relief` = percent(pain_alternatives),
-  `Difference from 30% standard-treatment relief` = paste(c(20, 30, 40), "percentage points"),
-  `Required per group for 90% power` = vapply(pain_alternatives,
-    function(p) ceiling(power.prop.test(p1 = p, p2 = .30,
-      sig.level = .05, power = .90, alternative = "two.sided",
-      strict = TRUE)$n), numeric(1)),
-  `Power at the original sample size` = percent(vapply(pain_alternatives,
-    function(p) power.prop.test(n = pain_target_n, p1 = p, p2 = .30,
-      sig.level = .05, alternative = "two.sided", strict = TRUE)$power,
-    numeric(1))), check.names = FALSE),
-  caption = paste("Chronic-pain sensitivity: alternative required counts and approximate power with the original", pain_target_n, "patients per group held fixed."))
-```
-
-Figure \@ref(fig:pain-target-sensitivity-plot) displays both columns of Table \@ref(tab:pain-target-sensitivity): the count needed for each alternative and the power obtained when the original 56 per group is retained.
-
-```{r pain-target-sensitivity-plot, echo=FALSE, fig.width=8, fig.height=6, fig.cap="Sensitivity to the true relief difference. The upper panel shows required analyzable patients per group for 90% power. The lower panel shows power with 56 per group held fixed. Both use 30% standard-treatment relief and 5% two-sided Type I error probability.", fig.alt="Two panels share the treatment-difference axis at 20, 30 and 40 percentage points. The required sample decreases as the difference increases, while power at 56 per group increases. Dashed lines mark 56 patients and 90% power."}
-draw_pain_sensitivity(pain_alternatives, pain_target_n)
-```
-
-This comparison keeps standard-treatment relief at 30%, the Type I error probability at 5%, and the analysis unchanged. Your report should record why the alternatives are plausible and which uncertainty matters most for the decision. You can also vary the standard-treatment probability where relevant: the same difference at different event probabilities need not require the same sample. The continuous-outcome example below illustrates the corresponding role of variability.
-
-```{r fixed-plan-sensitivity}
-# Keep the selected sample size; vary the true difference or SD.
-plan <- study_spec(outcome = "means", n = ceiling(t_plan$n), delta = 3, sd = 5)
-smaller <- plan; smaller$delta <- 1
-more_variable <- plan; more_variable$sd <- 7
-scenarios <- list(plan, smaller, more_variable)
-# Compare power and anticipated interval width under each scenario.
-# vapply() extracts or calculates one numeric result per scenario.
-knitr::kable(data.frame(
-  Scenario = c("Target difference", "Smaller true difference", "Larger standard deviation"),
-  `Analyzable patients per group` = vapply(scenarios, function(x) x$n, numeric(1)),
-  Power = percent(vapply(scenarios, spec_power, numeric(1))),
-  `Expected full interval width (score units)` = vapply(scenarios, anticipated_width, numeric(1)),
-  check.names = FALSE),
-  digits = 3, caption = "Continuous-outcome sensitivity with the sample selected for 90% target power held fixed.")
-```
-
-## Evidence, expectations and uncertainty {#st01-expectations .advanced-heading}
-
-Your assumptions should explain why previous findings apply to the planned study. Four questions help connect that evidence to the calculation [@cook2018delta2; @cook2019delta2]:
-
-- What would happen with the comparator? Disease severity, background care and follow-up can change the control event percentage or outcome variability. Where data are sparse, expert judgment should be identified and its uncertainty examined.
-- What could explain an apparent treatment advantage? In observational comparisons, differences in patients, care or diagnosis can contribute to the observed difference. Earlier diagnosis can lengthen measured survival without postponing death; more detailed staging can change which patients are compared within a disease stage.
-- What additional benefit would justify the intervention? Patients and clinicians should consider adverse effects, treatment burden and alternatives when judging a clinically worthwhile difference. More demanding treatment may require a larger benefit to justify its use.
-- How sensitive is the decision to uncertainty? Plausible ranges should reflect differences between studies and limitations in the evidence. A [sensitivity analysis](#compare-planning-assumptions) shows their implications for required sample size or performance at a fixed count.
-
-The ST01 gastric-cancer surgery trial illustrates these judgments. Its design team used a consensus estimate of 20% five-year survival with conventional (D1) surgery. Apparent advantages of more extensive (D2) surgery in Japanese observational studies could partly reflect earlier diagnosis, more detailed staging, or differences in patients' age and fitness. D2 also carried additional postoperative risks, so the anticipated survival gain needed to justify these harms [@fayers2000beliefs]. The table distinguishes the calculation target from expectations and clinical judgments elicited from 26 surgeons before recruitment.
-
-| Planning role | Reported value and basis |
-|:--|:--|
-| Anticipated difference | The wider survey anticipated a 9.4-percentage-point survival advantage; the three design-committee surgeons anticipated 13.1 points. |
-| Target difference | The detailed calculation used 13.5 points, from 20% to 33.5% survival, giving 400 patients at 90% power. It reflected the design committee's expectations. |
-| Clinical importance | The wider survey's average interval of clinical indecision was 4.6–10.8 points. Its upper boundary represented sufficient benefit to favor D2, given the operation's additional risks. Individual judgments varied. |
-
-Table: (\#tab:st01-planning-roles) ST01 planning roles: absolute between-group differences in five-year survival, expressed in percentage points [@fayers2000beliefs].
-
-The survey left the original design unchanged; its clinical boundaries summarize individual surgeons' judgments. Reproducing ST01 requires its survival-analysis method. More generally, differences in patients or care may change the assumed outcomes, while treatment harms inform what benefit is worthwhile. The sample-size consequences depend on those resulting inputs and the chosen analysis.
-
-<span id="planning-uncertainty"></span>
-
-In a prospective survey, investigators' average forecast for reaching recruitment targets was 78.8%, compared with 42.7% actually succeeding among 281 evaluated trials. For completing primary data collection on time, the corresponding figures were 72.2% and 13.4% among 536 trials [@benjamin2022forecasts]. These findings support considering a slower recruitment scenario alongside the [screening and enrollment funnel](#recruitment-feasibility).
-
-Uncertainty remains even when assumptions are carefully justified. In a review of 107 randomized trials, the median standardized target effect was 0.30, compared with a median observed effect of 0.11 [@rothwell2018targets]. Differences between targets and results can reflect uncertain treatment effects and sampling variability. Assessing investigator optimism also requires evidence about beliefs and their uncertainty before results are known [@liu2024uncertainty].
-
-@benjamin2022forecasts collected forecasts from 740 principal investigators. Among the 104 trials with primary outcome results available, the mean predicted probability of a statistically significant result favoring the intervention was 59.6%; 43.3% produced one. The 16.7% survey response rate and incomplete follow-up limit generalization. These forecasts concern overall trial success; statistical power is conditional on specified assumptions. A separate review of 385 phase III oncology trials found clinical-data justification for effect assumptions in only 41 (10.6%), reinforcing the importance of documenting the evidence [@noticewala2025effects].
-
-For your study, earlier observations and elicited expectations can inform a plausible range of population differences. Their values, the target difference and the clinical threshold can coincide or follow a different order. The chosen target needs evidence of plausibility and clinical importance. When a target exceeds the benefit supported by the evidence, your justification should examine power at smaller plausible differences. A [sensitivity analysis](#compare-planning-assumptions) makes these implications visible [@cook2018delta2].
-
-## Options when the study provides insufficient information {#what-if-the-study-is-too-small-for-its-purpose .advanced-heading}
-
-### Underpowered studies {#underpowered-studies .advanced-heading}
-
-
-
-A study with low power often misses the specified true difference. A small study also produces more variable estimates. When its power is low, the studies that achieve statistical significance are often those in which sampling variability makes the observed difference unusually large. If you look only at significant findings, you can therefore get an exaggerated impression of the treatment benefit.
-
-Larger samples reduce [sampling variability](#sampling-variability). Addressing bias requires attention to the design, measurement and analysis.
-
-For the chronic pain trial, 90% power at a 30-percentage-point difference means that, if relief were truly 60% versus 30%, about 90% of repetitions would reject the hypothesis of no between-group difference. With the same sample size, a smaller true difference of 20 points would be detected less often: approximate power would be `r round(100 * report_example$facts$sensitivity_power)`%.
-
-The eventual result also needs clinical interpretation. The [estimation chapter](#interpret-a-confidence-interval-clinically) explains how an estimated difference and its uncertainty inform that assessment.
-
-### Ways to increase power {#increase-power .advanced-heading}
-
-
-
-Before collecting data, you can consider whether the design could provide more information about the treatment effect. Table \@ref(tab:increase-power) separates changes to the study from changes to its error targets.
-
-For continuous outcomes, allocation, baseline information and within-person comparisons can affect efficiency [@candel2023]. These formulas concern continuous outcomes; binary outcomes require methods suited to event probabilities. Your protocol should prespecify useful baseline adjustment and recalculate for the intended model. A crossover design is only appropriate when treatment reversibility, disease stability and carryover permit it.
-
-| Option | Why it can help | What to consider |
-|:--|:--|:--|
-| Increase the analyzable sample | More independent patients reduce sampling uncertainty at the same true effect. | For the chronic pain trial, another recruiting clinic or a longer recruitment period could supply more patients. Your plan should allow for expected losses and assess feasibility. |
-| Improve follow-up and outcome completeness | Retaining more outcomes protects the analyzable sample. | For the chronic pain trial, accessible follow-up appointments and reminders may improve outcome collection. Reasons for missing outcomes still inform the analysis. |
-| Improve measurement | More reliable measurement can reduce unexplained variability in a continuous outcome and improve precision. | For pain relief, a clear, consistent definition and assessment time are important. A different outcome needs its own assumptions and calculation. |
-| Use an appropriate, efficient design and analysis | Prespecified adjustment for informative baseline measures, or a suitable paired or repeated-measures design, can improve precision. | For a continuous pain score, prespecified adjustment for baseline pain may improve precision. A paired design requires a suitable clinical setting. Planning must match the adjusted model or dependent observations. |
-| Keep allocation balanced when appropriate | For comparisons assuming equal variances, equal group sizes make efficient use of a fixed total sample size. | The chronic pain trial assigns equal numbers to novel and standard treatment. Unequal variances or other design requirements may justify another allocation and calculation. |
-| Accept a higher Type I error probability | A less stringent rejection rule increases power at the specified alternative. | It also increases the probability of rejecting a true null. The error probability should be justified prospectively; changing it to make a result significant is not sound planning. |
-| Use a one-sided test when the scientific question warrants it | Directing the rejection region to a prespecified direction can increase power for effects in that direction. | It does not test both directions in the same way. Your protocol should specify and justify it before you see the data; a smaller required sample is not sufficient justification [@moye2002]. |
-
-Table: (\#tab:increase-power) Options for increasing power and the assumptions or tradeoffs they require.
-
-Power calculations describe performance under assumed treatment benefits. Those assumptions should be grounded in relevant evidence. Running more simulations improves the precision of the estimated power.
-
-<span id="model-answer-larger-study-resources"></span>
-The [simulation in Chapter 1](#activity-1-one-study-then-many) illustrates why increasing the sample can improve power when the population assumptions stay fixed. Detailed comparisons of several scenarios are available in the advanced [power-curve activity](https://katatam.github.io/sample-size-calculation/study/?activity=pain_curves).
-
-## What can the available sample establish? {#available-sample .advanced-heading}
-
-After accounting for expected losses, your recruitment period, funding, or available records may impose a fixed analyzable sample. You can use that count to assess power across independently justified treatment differences and the precision anticipated under the planned analysis. The [clinical interpretation of an interval](#interpret-a-confidence-interval-clinically) helps you judge whether the remaining uncertainty would matter for the intended decision.
-
-For the chronic pain trial, a cap of 200 recruits with 10% expected loss gives an expected 180 analyzable patients, or 90 per group under equal recruitment and retention. The [power-curve activity](https://katatam.github.io/sample-size-calculation/study/?activity=pain_curves) evaluates this fixed count at the target difference and smaller plausible benefits. A recruitment cap limits what is available; the research objective determines whether that information would be useful.
-
-If you need to estimate a quantity, you can assess the attainable interval width at that fixed count, using the [precision-planning principles](#plan-for-precision). The available data may support a broad description while leaving a more demanding decision unresolved. Your justification should state the resource limit and the conclusions the study could reasonably support.
-
-## A fixed total of 70 patients {#a-fixed-total-of-70-patients .advanced-heading}
-
-Suppose only 70 patients can be recruited in total. What power and [precision](#precision) could the study achieve after expected losses, and what conclusions could it reasonably support? Your answer should specify the research question, assumed outcomes, losses and analysis before assessing the available sample. You can then justify the proposed study or explain how a revised design or narrower objective would make the available information useful.
-
-## Sensitivity analysis for a fixed sample size {#sensitivity-is-not-observed-post-hoc-power .advanced-heading}
-
-These curves specify hypothetical effects before interpreting a realized study.
-
-<details class="misconception" id="misconception-observed-power">
-<summary>Common misconception: power calculated from the observed effect explains the completed study</summary>
-
-Substituting the study's observed effect into a power calculation adds no useful evidence about that same result. You should interpret the estimate, [confidence interval](#confidence-interval), study design and limitations instead. At a fixed sample size, power across independently justified hypothetical differences can still help describe the design's capabilities [@consortee2025; @lakens2022].
-
-</details>
-
-For example, suppose a completed study estimates a 1-unit improvement with a 95% confidence interval from -1 to 3, while a 2-unit benefit would matter clinically. The interval includes some harm, zero, a small benefit and a clinically important benefit. The study leaves those possibilities unresolved.
-
-With an existing records dataset, explain why that sample is available, assess data quality and missingness, and report what its estimate and interval support. A [sensitivity analysis](#sensitivity-analysis) at independently justified effects can still describe a fixed design's performance. It should not use the observed effect to create additional evidence for the same study. This distinction follows the sample size justification approach in @lakens2022; [the FAQ](#common-mistakes) gives a short retrospective-study example.
-
-
-Power curves describe the planned study across repeated samples. The next examples examine how an individual result becomes statistically significant and how the rejection rule produces the error probabilities used in planning.
-
-## Does the pilot already answer the clinical question? {#critical-observed-difference .advanced-heading}
+### Does the pilot already answer the clinical question? {#critical-observed-difference .advanced-heading}
 
 For this two-sided comparison, the p-value answers: if the treatments truly had equal population relief probabilities, how likely would the chosen test be to produce a result at least as far from equality as the one observed, in either direction? This calculation also assumes that the statistical model is appropriate. A small p-value provides evidence against equal population relief probabilities under the statistical model.
 
@@ -1631,9 +1425,9 @@ A non-significant result can remain compatible with both no effect and a worthwh
 
 </details>
 
-*The calculation above uses an approximate test without continuity correction, matching the [reasoning lab](https://katatam.github.io/sample-size-calculation/study/?activity=pain_one_many). With such small groups, an exact test may give a different result.*
+*The calculation above uses an approximate test without continuity correction, matching the [Sample size reasoning lab](https://katatam.github.io/sample-size-calculation/study/?activity=pain_one_many). With such small groups, an exact test may give a different result.*
 
-### What happens if you recruit more patients? {.advanced-heading}
+#### What happens if you recruit more patients? {.advanced-heading}
 
 You can repeat this calculation for larger studies. At each sample size, the observed percentage reporting relief with standard treatment stays at 30%. The calculation identifies the smallest number reporting relief with the novel treatment that gives $p<0.05$.
 
@@ -1670,7 +1464,7 @@ With 20 patients per group, an observed difference of 35 percentage points is su
 
 Figure \@ref(fig:pain-critical-effect) shows how the observed significance boundary changes. The dashed line shows the clinically meaningful difference chosen for this example. With a larger sample, a result can be statistically significant even when the observed difference is smaller than this clinical threshold. You therefore need to consider the size of the difference and its confidence interval when interpreting the result.
 
-### How does this relate to power? {.advanced-heading}
+#### How does this relate to power? {.advanced-heading}
 
 The significance boundary concerns an observed result. [Power](#statistical-power) concerns the performance of the planned study: *If the true treatment difference is 30 percentage points, how likely is your study to produce a statistically significant result?*
 
@@ -1678,7 +1472,7 @@ Different samples will give different observed differences, even when the true t
 
 The observed significance boundary and the true difference used to evaluate power answer different questions [@lakens2022; @superpowerbook2022]. The [clinical interpretation of the interval](#interpret-a-confidence-interval-clinically) considers whether benefits below the clinical threshold remain compatible with the data.
 
-## Type I and Type II error probabilities as areas {#alpha-beta .advanced-heading}
+### Type I and Type II error probabilities as areas {#alpha-beta .advanced-heading}
 
 This separate example uses one group to make the error probabilities easier to draw. Imagine repeatedly sampling 25 patients and calculating their mean systolic blood pressure. The curves show the distribution of sample means across repeated studies. One curve assumes a population mean of 120 mmHg; the other assumes 125 mmHg. These are sampling distributions of the mean.
 
@@ -1731,14 +1525,144 @@ render_app_preview("alpha_beta", "Move a rejection boundary and explore false po
 These areas are calculated directly from a one-sample normal model with a known population SD.
 
 
+
+</details>
+
+## Choosing plausible assumptions {#st01-expectations .advanced-heading}
+
+Your assumptions should explain why previous findings apply to the planned study. Four questions help connect that evidence to the calculation [@cook2018delta2; @cook2019delta2]:
+
+- What would happen with the comparator? Disease severity, background care and follow-up can change the control event percentage or outcome variability. Where data are sparse, expert judgment should be identified and its uncertainty examined.
+- What could explain an apparent treatment advantage? In observational comparisons, differences in patients, care or diagnosis can contribute to the observed difference. Earlier diagnosis can lengthen measured survival without postponing death; more detailed staging can change which patients are compared within a disease stage.
+- What additional benefit would justify the intervention? Patients and clinicians should consider adverse effects, treatment burden and alternatives when judging a clinically worthwhile difference. More demanding treatment may require a larger benefit to justify its use.
+- How sensitive is the decision to uncertainty? Plausible ranges should reflect differences between studies and limitations in the evidence. A [sensitivity analysis](#compare-planning-assumptions) shows their implications for required sample size or performance at a fixed count.
+
+The ST01 gastric-cancer surgery trial illustrates these judgments. Its design team used a consensus estimate of 20% five-year survival with conventional (D1) surgery. Apparent advantages of more extensive (D2) surgery in Japanese observational studies could partly reflect earlier diagnosis, more detailed staging, or differences in patients' age and fitness. D2 also carried additional postoperative risks, so the anticipated survival gain needed to justify these harms [@fayers2000beliefs]. The table distinguishes the calculation target from expectations and clinical judgments elicited from 26 surgeons before recruitment.
+
+| Planning role | Reported value and basis |
+|:--|:--|
+| Anticipated difference | The wider survey anticipated a 9.4-percentage-point survival advantage; the three design-committee surgeons anticipated 13.1 points. |
+| Target difference | The detailed calculation used 13.5 points, from 20% to 33.5% survival, giving 400 patients at 90% power. It reflected the design committee's expectations. |
+| Clinical importance | The wider survey's average interval of clinical indecision was 4.6–10.8 points. Its upper boundary represented sufficient benefit to favor D2, given the operation's additional risks. Individual judgments varied. |
+
+Table: (\#tab:st01-planning-roles) ST01 planning roles: absolute between-group differences in five-year survival, expressed in percentage points [@fayers2000beliefs].
+
+The survey left the original design unchanged; its clinical boundaries summarize individual surgeons' judgments. Reproducing ST01 requires its survival-analysis method. More generally, differences in patients or care may change the assumed outcomes, while treatment harms inform what benefit is worthwhile. The sample-size consequences depend on those resulting inputs and the chosen analysis.
+
+<span id="planning-uncertainty"></span>
+
+Investigators can overestimate how readily a trial will meet its operational targets. In a prospective survey, investigators assigned an average probability of 78.8% to meeting their recruitment target. Among the 281 trials with evaluable recruitment outcomes, 42.7% met that target. For completing primary data collection on time, the average predicted probability was 72.2%, whereas 13.4% of 536 evaluated trials finished on time. The denominators differ because outcome information was available for different sets of trials. These findings support examining a slower recruitment scenario when using the [screening and enrollment funnel](#recruitment-feasibility) [@benjamin2022forecasts].
+
+<details class="reading-note">
+<summary>About the forecast survey</summary>
+
+The survey received responses from 740 principal investigators, a response percentage of 16.7%. Outcome follow-up was incomplete. These features limit how widely its findings can be generalized [@benjamin2022forecasts].
+
+</details>
+
+Uncertainty remains even when assumptions are carefully justified. In a review of 107 randomized trials, the median [standardized treatment effect](#standardized-treatment-effect) used as the calculation target was 0.30, compared with a median observed effect of 0.11 [@rothwell2018targets]. Differences between targets and results can reflect uncertain treatment effects and sampling variability. Assessing investigator optimism also requires evidence about beliefs and their uncertainty before results are known [@liu2024uncertainty].
+
+For your study, earlier observations and elicited expectations can inform a plausible range of population differences. Their values, the target difference and the clinical threshold can coincide or follow a different order. The chosen target needs evidence of plausibility and clinical importance. When a target exceeds the benefit supported by the evidence, your justification should examine power at smaller plausible differences. A [sensitivity analysis](#compare-planning-assumptions) makes these implications visible [@cook2018delta2].
+
+## Sensitivity to other assumptions {#stress-test-the-study-plan .advanced-heading}
+
+<span id="compare-planning-assumptions"></span>
+<span id="tab:pain-core-sensitivity"></span>
+
+A [sensitivity analysis](#sensitivity-analysis){.no-glossary-tooltip} examines what happens when a planning assumption changes within a plausible range. The earlier curves varied the true treatment difference. Figure \@ref(fig:assumption-sensitivity) now keeps that difference fixed and examines two other inputs.
+
+For the chronic pain trial, standard-treatment relief might differ from 30%. The left panel examines the 20-point difference from the earlier curves, keeping it fixed while changing the two relief probabilities together. For a continuous outcome, the variability of individual scores might be greater than anticipated. The right panel keeps the mean difference at 3 units and varies the common standard deviation. Both panels use 100 analyzable patients per group, so changes in power reflect the changed population assumptions.
+
+```{r assumption-sensitivity, fig.width=8, fig.height=4.2, fig.cap="Sensitivity at 100 analyzable patients per group and a two-sided Type I error probability of 5%. Left: the between-group relief difference stays at 20 percentage points while standard-treatment relief varies. Right: the mean difference stays at 3 units while the common standard deviation varies. Dots mark standard-treatment relief of 30% and SD 5; dashed lines mark 90% target power.", fig.alt="Two panels use power from 0 to 100 percent vertically. The left varies standard-treatment relief from 10 to 60 percent, adding 20 points for novel treatment; power changes with the event probabilities. The right varies the common SD from 4 to 9 at a mean difference of 3; power falls as variability increases."}
+# Hold both sample sizes and treatment differences fixed.
+binary_curve_spec <- curve_spec
+binary_curve_spec$p_treatment <- .50
+mean_curve_spec <- study_spec(outcome = "means", n = analyzable_cap,
+  delta = 3, sd = 5)
+draw_assumption_sensitivity(binary_curve_spec, mean_curve_spec, target_power)
+```
+
+<span id="fig:pain-target-sensitivity-plot"></span>
+
+```{r pain-target-sensitivity, echo=FALSE}
+baseline_scenarios <- lapply(c(.10, .30, .50), function(p) {
+  x <- binary_curve_spec; x$p_control <- p; x$p_treatment <- p + .20; x
+})
+sd_scenarios <- lapply(c(5, 7, 9), function(sd) {
+  x <- mean_curve_spec; x$sd <- sd; x
+})
+alternatives <- c(baseline_scenarios, sd_scenarios)
+knitr::kable(data.frame(
+  Assumption = c("Relief: standard 10%, novel 30%", "Relief: standard 30%, novel 50%",
+    "Relief: standard 50%, novel 70%", "Mean difference 3; SD 5",
+    "Mean difference 3; SD 7", "Mean difference 3; SD 9"),
+  `Power with 100 per group` = percent(vapply(alternatives, spec_power, numeric(1))),
+  `Patients per group for 90% power` = vapply(alternatives,
+    function(x) plan_n(x, target_power = target_power), numeric(1)),
+  check.names = FALSE),
+  caption = "Sensitivity to event probabilities and outcome variability. The mean comparison uses a pooled two-sample t-test calculation.")
+```
+
+<span id="tab:fixed-plan-sensitivity"></span>
+
+For binary outcomes, the event probabilities determine variability, so the same absolute difference can give different power. For continuous outcomes, a larger standard deviation makes the specified mean difference harder to detect. Relevant evidence should support the alternatives and their ranges [@cook2018delta2; @candel2023].
+
+The [Sample size reasoning lab](https://katatam.github.io/sample-size-calculation/study/?activity=pain_curves) provides the corresponding controls. Its Description explains how the calculated curves and simulated studies relate. Your supporting study plan should record the alternatives that affect the decision. For example, the BEP protocol presents its principal calculation in the main text and alternative assumptions in an additional file [@wang2024bep]. DELTA² and CONSORT recommend documenting sensitivity to calculation inputs [@cook2018delta2; @consortee2025].
+
+## When the available sample is insufficient {#what-if-the-study-is-too-small-for-its-purpose .advanced-heading}
+
+### Underpowered studies {#underpowered-studies .advanced-heading}
+
+An underpowered study has a low probability of obtaining a statistically significant result when the specified difference is present in the population. For the chronic pain trial with 100 patients per group, power is about 59% if the true difference is 15 percentage points. Across repeated trials under these assumptions, approximately 41% would fail to detect that difference.
+
+In underpowered studies, sampling variability can be large relative to the treatment difference. Studies that obtain statistically significant results favoring treatment tend to have unusually large estimates of its benefit. Focusing on those significant results can therefore exaggerate the apparent benefit [@gelman2014beyond].
+
+Larger samples reduce [sampling variability](#sampling-variability). Addressing bias requires attention to the design, measurement and analysis.
+
+### Ways to increase power {#increase-power .advanced-heading}
+
+Before collecting data, you can consider whether the design could provide more information about the treatment effect. Table \@ref(tab:increase-power) summarizes changes to recruitment, measurement and analysis.
+
+Power can improve through more informative measurements, appropriate use of baseline information, and a design that makes efficient treatment comparisons. Which changes help depends on the outcome, allocation and planned analysis. Covariate adjustment can improve efficiency for binary, ordinal and time-to-event outcomes as well as continuous outcomes [@fda2023covariates]. The continuous-outcome calculations in @candel2023 illustrate the roles of allocation, baseline information and within-person comparisons.
+
+| Option | Why it can help | What to consider |
+|:--|:--|:--|
+| Increase the analyzable sample | More independent patients reduce sampling variability at the same true difference. | Another center or a longer recruitment period could supply more patients. [Multicenter planning](#multicenter-trials) should reflect allocation within centers and the intended analysis. |
+| Improve follow-up and outcome completeness | More recorded outcomes preserve the analyzable sample. | Accessible follow-up and reminders can help. Reasons for missing outcomes inform the missing-data analysis. |
+| Improve measurement | Reliable measurements reduce noise and support more informative comparisons. | A consistent definition and assessment time matter for pain relief. A different outcome needs its own calculation. |
+| Use an efficient design and analysis | Informative baseline measurements or appropriate paired comparisons can improve precision and power. | Adjustment should be prespecified. A [crossover trial](#crossover-trial) requires suitable treatment reversibility, disease stability and control of carryover. |
+| Keep allocation balanced when appropriate | With equal variances, equal group sizes efficiently use a fixed total for a two-means comparison. | Other outcome distributions or design requirements can justify a different allocation and matching calculation. |
+
+Table: (\#tab:increase-power) Design changes that can improve power and their planning implications.
+
+Changing the Type I error probability or using a one-sided test changes the rejection rule. A higher Type I error probability increases both power and false-positive probability. A one-sided test concentrates rejection in a prespecified direction. These choices need scientific justification before data collection [@moye2002].
+
+<span id="model-answer-larger-study-resources"></span>
+
+### Decisions with a fixed sample {#available-sample .advanced-heading}
+
+The chronic pain example provides 100 analyzable patients per group. It exceeds the 90% power target at a 30-point difference, but power at the clinically important 20-point difference is about 83%. If 90% power at 20 points is essential, the calculation requires 124 analyzable patients per group. The [Sample size reasoning lab](https://katatam.github.io/sample-size-calculation/study/?activity=pain_curves) lets you examine how changing the available count affects that conclusion.
+
+Your justification should state the available sample, the plausible assumptions and the power they imply. The next decision is whether additional recruitment or a scientifically appropriate design change is feasible. A revised research objective should be agreed before data collection and supported by its own calculation.
+
+<span id="a-fixed-total-of-70-patients"></span>
+<span id="sensitivity-is-not-observed-post-hoc-power"></span>
+
+<details class="misconception" id="misconception-observed-power">
+<summary>Common misconception: power calculated from the observed effect explains the completed study</summary>
+
+Substituting the study's observed effect into a power calculation adds no independent evidence about that same result. Interpretation of a completed study uses the estimate, confidence interval, design and limitations, as explained in [clinical interpretation](#interpret-a-confidence-interval-clinically). Sensitivity analysis assesses the design using independently justified population assumptions [@consortee2025; @lakens2022].
+
+</details>
+
 <div class="chapter-recap">
 
 ### Take-home points {.unnumbered}
 
-- A power curve describes a specified analysis under explicit assumptions.
-- Evidence and its uncertainty should inform expectations and the calculation target; clinical importance also needs justification.
-- The power at a smaller worthwhile difference may be lower than the target power.
-- A recruitment limit can leave an important benefit difficult to detect.
+- Power at an available sample and sample size required for a power target are two readings of the same curves.
+- Relevant evidence and its uncertainty should support the plausible assumptions examined.
+- Event probabilities and outcome variability affect power even when the treatment difference stays fixed.
+- When power is insufficient, the planning decision concerns feasible recruitment, design changes or a justified revision of the objective.
 
 </div>
 
@@ -2029,7 +1953,7 @@ With control relief still at 30%, the true treatment difference falls from 30 to
 
 </details>
 
-You can explore this in the [sample size reasoning app](https://katatam.github.io/sample-size-calculation/study/?activity=pain_simulation) using *Custom effect or variability*. The planning probabilities stay unchanged; the population probabilities assumed for the simulation become 30% for control and 45% for treatment. The planned sample stays fixed. A further simulation with equal probabilities in both groups lets you examine false positives when there is no true difference.
+You can explore this in the [Sample size reasoning lab](https://katatam.github.io/sample-size-calculation/study/?activity=pain_simulation) using *Custom effect or variability*. The planning probabilities stay unchanged; the population probabilities assumed for the simulation become 30% for control and 45% for treatment. The planned sample stays fixed. A further simulation with equal probabilities in both groups lets you examine false positives when there is no true difference.
 
 Your explanation should report the assumed population probabilities, patients per group, replications, percentage of statistically significant results and its Monte Carlo interval. Your explanation should distinguish uncertainty in the simulation from uncertainty in the clinical assumptions.
 
