@@ -3,7 +3,7 @@
   if (window.SampleSizeInlineAppsInstalled) return;
   window.SampleSizeInlineAppsInstalled = true;
   const allowed = {
-    pain_one_many:'power_explorer', probiotics_calculation:'two_proportions',
+    pain_one_many:'power_explorer', pain_calculation:'two_proportions', probiotics_calculation:'two_proportions',
     rehabilitation_calculation:'two_means', recruitment:'dropout_adjustment',
     recruitment_advanced:'dropout_adjustment', prevalence:'prevalence_precision',
     pilot_feasibility:'prevalence_precision', mean_precision:'power_explorer',

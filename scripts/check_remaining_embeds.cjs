@@ -10,7 +10,7 @@ const routes=[
  ['curves','pain_curves','power_explorer','#fixed_n','60','#overview_text','#planning_plot',/With 60 analyzable participants per group/],
  ['curves','alpha_beta','sampling_distributions','#n-number','100','#explanation','#distributions',/With 100 observations/],
  ['simulation','pain_simulation','power_explorer','#fixed_n','80','#many_status','#distribution',/n = 80 analyzable per group/],
- ['simulation','recruitment_advanced','dropout_adjustment','#dropout-number','20','#recruitment_interpretation','#dropout_plot',/70 per group \(140 in total\)/]
+ ['study-designs','recruitment_advanced','dropout_adjustment','#dropout-number','20','#recruitment_interpretation','#dropout_plot',/70 per group \(140 in total\)/]
 ].filter(r=>!process.argv[3]||process.argv[3].split(',').includes(r[1]));
 (async()=>{const browser=await chromium.launch({headless:true,...(process.platform==='win32'?{channel:'msedge'}:{})});
 try{fs.mkdirSync('build/remaining-embeds',{recursive:true});
@@ -45,7 +45,7 @@ for(const [chapter,id,engine,input,value,result,figure,expected] of routes){
  }
  if(id==='pain_simulation'){
   await app.waitForFunction(()=>document.querySelector('#activity_choice').value==='pain_simulation' && Shiny.shinyapp.$inputValues.goal==='fixed');
-  await app.waitForFunction(()=>document.querySelector('#fixed_n').value==='60');
+  await app.waitForFunction(()=>document.querySelector('#fixed_n').value==='100');
   await app.locator('a[data-value="Many studies"]').click();
  }
  await app.waitForFunction(()=>!document.documentElement.classList.contains('shiny-busy'));

@@ -290,7 +290,7 @@ draw_simulation_loop <- function() {
   diagram_canvas()
   text(50, 95, "Assumed pain-relief probabilities: standard 30%, novel 60%", cex = 1.04)
   diagram_box(10, 52, 46, 80,
-    "1  Generate one trial\n60 patients per group\n120 patients in total", cex = 1.04)
+    "1  Generate one trial\n100 patients per group\n200 patients in total", cex = 1.04)
   diagram_box(56, 52, 91, 80,
     "2  Analyze this trial\nDifference, confidence\ninterval and p-value", cex = 1.04)
   diagram_arrow(46, 66, 56, 66)
@@ -302,7 +302,7 @@ draw_simulation_loop <- function() {
   diagram_box(14, 3, 86, 24,
     "4  Summarize across trials\nPower, confidence interval coverage and width",
     fill = "#f4f0f8", border = "#72428b", cex = 1.04)
-  text(50, 86, "Patients per group: n = 60", cex = .93)
+  text(50, 86, "Patients per group: n = 100", cex = .93)
 }
 
 diagram_person <- function(x, y, treatment) {

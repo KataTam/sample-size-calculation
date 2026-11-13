@@ -17,13 +17,13 @@ The chronic pain case compares fictional Neravixa with duloxetine for painful di
 | Chapter | Core activity | Contribution to the continuing report |
 |---|---|---|
 | 1. Research question and power | [Chronic pain: one study and many studies](../study/?activity=pain_one_many) | Question, assumptions and interpretation of power |
-| 2. Calculating sample size | [Calculate a sample size: probiotics](../book/calculations.html#calculate-sample-size) | Inputs, procedure, software and analyzable counts |
-| 3. Recruitment and feasibility | [Adjust recruitment](../study/?activity=recruitment) using one shared loss percentage | Recruitment per group and in total, with a short justification |
-| 4. The sample size calculation report | [Review and complete a report](../book/reporting.html#check-reporting) | Four-error review followed by a consistency check of the learner's report |
+| 2. Calculating sample size and recruitment | [Calculate a sample size: chronic pain](../book/calculations.html#calculate-sample-size) | Inputs, procedure, software and analyzable counts |
+| 2. Calculating sample size and recruitment | [Adjust recruitment](../study/?activity=recruitment) using one shared loss percentage | Recruitment per group and in total, with a short justification |
+| 3. The sample size calculation report | [Review and complete a report](../book/reporting.html#check-reporting) | Four-error review followed by a consistency check of the learner's report |
 
-One calculation example is sufficient. Your report develops through these four activities in the same [study-plan workspace](../assumptions_report/). The default core view asks for the essentials; “Advanced study plan” adds detailed supporting prompts to the same answers. Additional discharge practice is optional basic practice. The later simulations and independent planning are advanced extensions.
+Your report develops through these four activities in the same [study-plan workspace](../assumptions_report/). The default core view asks for the essentials; “Advanced study plan” adds detailed supporting prompts to the same answers. Additional discharge practice is optional basic practice. The later simulations and independent planning are advanced extensions.
 
-Your report should use one consistent study question, calculation and recruitment plan. If you choose the probiotics or rehabilitation calculation, your report should describe that case. The chronic pain simulation and annotated report provide worked examples for learning the concepts.
+The chronic pain example connects the core simulation, calculation, recruitment adjustment and annotated report. Optional examples apply the method to a different outcome; any report based on one of them should retain that example throughout.
 
 ## Reports and saved work
 
@@ -72,7 +72,7 @@ Purpose: see why sample estimates differ from population values, interpret the u
 
 ## Reviewing short examples
 
-The tutorial includes selectable passages in five review activities: [discharge calculations](../book/exercises.html#discharge-error-activity), [recruitment planning](../book/simulation.html#recruitment-error-activity), [a sample size calculation report](../book/reporting.html#report-error-activity), [an estimation sample size calculation report](../book/estimation-planning.html#estimation-report-error-activity) and [advanced software choices](../book/appendix.html#software-error-activity).
+The tutorial includes selectable passages in five review activities: [discharge calculations](../book/exercises.html#discharge-error-activity), [recruitment planning](../book/study-designs.html#recruitment-error-activity), [a sample size calculation report](../book/reporting.html#report-error-activity), [an estimation sample size calculation report](../book/estimation-planning.html#estimation-report-error-activity) and [advanced software choices](../book/appendix.html#software-error-activity).
 
 1. You can read the proposed statement and choose a passage that may need correction. Some passages are appropriate.
 2. Clicking or tapping a passage opens an explanation and a link to the relevant teaching material. With a keyboard, Tab reaches each passage and Enter or Space opens its explanation; Escape closes it.
@@ -104,13 +104,22 @@ Purpose: reproduce the binary-outcome sample size calculation. The calculator us
 4. The link to the lab transfers this calculated count as a fixed sample. “Many studies” then lets you estimate the performance of the planned test through simulation and compare the estimated power with the planning target.
 5. “Explore assumptions” lets you compare a revised event percentage. “Report” includes both scenarios when they differ, together with their analyzable and recruitment counts and calculation method.
 
-## Calculate a sample size: probiotics
+## Calculate a sample size: chronic pain
+
+[Open activity](../study/?activity=pain_calculation) · [Matching explanation](../book/calculations.html#calculate-sample-size)
+
+1. The starting probabilities are 60% relief with Neravixa and 30% with duloxetine, with 90% power, a two-sided Type I error probability of 5%, and no loss allowance.
+2. The result is 56 analyzable patients per group, or 112 total. The report records the inputs, normal planning approximation, software and counts.
+3. In the recruitment activity, 5% unavailable outcomes gives 59 recruits per group, or 118 total. The annotated report in Chapter 3 brings these decisions together.
+4. An optional comparison at 50% versus 30% shows why detecting a 20-point difference with the same power requires a larger sample.
+
+## Additional practice: probiotics
 
 [Open activity](../study/?activity=probiotics_calculation) · [Matching explanation](../book/calculations.html#adherence)
 
 Purpose: calculate a sample size for a binary outcome and examine its sensitivity to the target difference.
 
-1. The favorable event is remaining free of gestational diabetes: 80% without probiotics and 90% with probiotics. The difference observed in previous data is 12 points, target difference 10 and clinical threshold 5. These are hypothetical assumptions.
+1. The favorable event is remaining free of gestational diabetes: 80% without probiotics and 90% with probiotics. These percentages correspond to 20% and 10% developing gestational diabetes. The calculation should give the same requirement with either event definition.
 2. The calculator uses 90% power and a 5% Type I error probability. Expected loss starts at zero so this step gives the analyzable requirement. The following recruitment activity applies the chosen loss allowance.
 3. Your record should identify both event percentages, the 10-point target difference, error probability, power, method, software and analyzable count per group and in total. The optional comparison with 85% illustrates a smaller target difference.
 4. “Add this calculation to my study plan” attaches the selected result after your review. Its analyzable count is the starting point for the recruitment activity. Comparing several scenarios is an advanced extension.
@@ -135,7 +144,7 @@ Purpose: see how a target difference and between-patient variability determine a
 
 1. The target mean difference is 3 units and the common SD is 5. The two-sided Type I error probability is 5% and target power is 90%.
 2. With expected loss left at zero, the pooled two-sample t-test calculation gives 60 analyzable participants per group, or 120 total.
-3. Your record should identify these inputs, the method and software, and both counts. “Add this calculation to my study plan” attaches the result after your review. The recruitment activity starts with this analyzable requirement.
+3. Changing the SD to 7 while retaining the 3-unit target difference shows how greater variability increases the requirement. Your record should identify the selected inputs, method, software and counts. “Add this calculation to my study plan” attaches the result after your review. The recruitment activity starts with this analyzable requirement.
 
 The [advanced rehabilitation simulation](../study/?activity=rehabilitation) uses a t-test method and generated outcomes. It can examine confidence intervals and repeated-study performance after the core calculation.
 
@@ -157,7 +166,7 @@ Purpose: assess whether the feasible study can answer the intended question unde
 
 Purpose: extend the core simulation from power to confidence interval coverage, interval width and simulation uncertainty.
 
-1. The activity starts in “Many studies,” with 60 analyzable patients per group, relief probabilities 30% and 60%, 5,000 repetitions and target full interval width 30 percentage points.
+1. The activity starts in “Many studies,” with 100 analyzable patients per group, relief probabilities 30% and 60%, 5,000 repetitions and target full interval width 30 percentage points.
 2. You can first visit “One study” to inspect one generated dataset, its estimated difference, interval and test result.
 3. After “Simulate many studies,” you can examine the rejection percentage, coverage of the specified true difference and percentage meeting the width target. These answer different questions.
 4. A custom treatment probability of 45%, with control still 30%, tests the plan under a 15-point true difference. A no-effect scenario estimates the false-positive probability.
@@ -165,7 +174,7 @@ Purpose: extend the core simulation from power to confidence interval coverage, 
 
 Within the same activity, *Settings* → *Show advanced settings and results* reveals *Explore missing outcomes*:
 
-1. You can select *Complete outcomes* and keep recruitment at 60 per group as a reference.
+1. You can select *Complete outcomes* and keep recruitment at 100 per group as a reference.
 2. *Equal losses* removes outcomes independently of relief with 10% probability in each group. One study shows recruited and retained counts and the records excluded from analysis.
 3. *Unequal losses* uses 10% expected loss in the standard group and 20% in the novel group. Recruitment and population probabilities stay fixed.
 4. *Outcome-related losses* keeps those expected percentages but makes missingness three times as likely without relief in the novel group. The standard group retains outcome-independent loss.
@@ -193,12 +202,12 @@ The simulation above uses one final analysis. For a design with interim stopping
 
 ## Unequal losses and treatment switching — advanced
 
-[Open extension](../study/?activity=recruitment_advanced) · [Matching explanation and review](../book/simulation.html#recruitment-extensions)
+[Open extension](../study/?activity=recruitment_advanced) · [Matching explanation and review](../book/study-designs.html#recruitment-extensions)
 
 1. With 56 analyzable patients per group and expected losses of 20% with novel treatment and 10% with standard treatment, equal recruitment uses the larger requirement: 70 per group, or 140 total. Expected retained counts are 56 and 63.
 2. The switching approximation starts with a requirement assuming full adherence. Starting with 100 per group, switching of 10% from novel to standard and 5% in the other direction, followed by 5% missing outcomes, gives approximately 146 recruits per group. Intermediate values remain unrounded.
-3. “Expected switching is already included” prevents applying that allowance twice. For binary outcomes, the [two-proportion app](../two_proportions/) can recalculate using the revised event percentages in the [worked example](../book/simulation.html#treatment-switching).
-4. The report records the applied adjustments and your explanation. The [recruitment review](../book/simulation.html#recruitment-error-activity) checks their interpretation; the [missing-outcome simulation](../book/simulation.html#explore-missing-outcomes) examines information loss and bias.
+3. “Expected switching is already included” prevents applying that allowance twice. For binary outcomes, the [two-proportion app](../two_proportions/) can recalculate using the revised event percentages in the [worked example](../book/study-designs.html#treatment-switching).
+4. The report records the applied adjustments and your explanation. The [recruitment review](../book/study-designs.html#recruitment-error-activity) checks their interpretation; the [missing-outcome simulation](../book/simulation.html#explore-missing-outcomes) examines information loss and bias.
 
 ## Estimate a population mean with a precision target — advanced
 
@@ -278,7 +287,3 @@ Purpose: identify a suitable design family and the decisions that determine its 
 After identifying a design family, a plan with several outcomes or comparisons should also specify its [testing strategy](../book/study-designs.html#multiple-outcomes-comparisons). Planned [interim analyses](../book/study-designs.html#interim-analyses-stopping) or [sample-size re-estimation](../book/study-designs.html#sample-size-re-estimation) need specialist planning and the [additional reporting record](../book/appendix.html#complex-design-record).
 
 Teaching text: [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/). Original software code: [MIT](https://opensource.org/license/mit). Third-party attributions and exceptions remain applicable.
-
-## Rehabilitation calculation — core
-
-[Open activity](../study/?activity=rehabilitation_calculation). A 3-unit target difference, SD 5, 90% power and a 5% Type I error probability give 60 analyzable patients per group with the pooled two-sample t-test calculation. You can compare a 1.5-unit target difference or an SD of 7 while holding the other assumptions fixed. Expected losses change recruitment. The Report view lets you attach the selected calculation to your developing study plan. The [t-test simulation extension](../study/?activity=rehabilitation) is optional advanced exploration.

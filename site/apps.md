@@ -18,13 +18,13 @@ Calculators and simulations also open within the tutorial when you select their 
 
 - [Recruitment adjustment](study/?activity=recruitment): apply one expected loss percentage to the analyzable count from your chosen calculation. [Tutorial explanation](book/calculations.html#account-for-expected-losses).
 
-The core [calculation activity](book/calculations.html#calculate-sample-size) uses the probiotics example. The [rehabilitation calculation](book/calculations.html#rehabilitation) provides optional practice with two means. The fourth core activity is the embedded [report review and completion](book/reporting.html#check-reporting).
+The core [calculation activity](book/calculations.html#calculate-sample-size) uses the chronic pain example. [Probiotics](book/calculations.html#adherence) and the [rehabilitation calculation](book/calculations.html#rehabilitation) provide optional practice applying the calculations to other outcomes. The fourth core activity is the embedded [report review and completion](book/reporting.html#check-reporting).
 
 <span id="explore-further"></span>
 
 ## Advanced apps and explorations
 
-- [Recruitment extensions](study/?activity=recruitment_advanced): examine unequal losses and treatment switching. [Tutorial explanation](book/simulation.html#recruitment-extensions).
+- [Recruitment extensions](study/?activity=recruitment_advanced): examine unequal losses and treatment switching. [Tutorial explanation](book/study-designs.html#recruitment-extensions).
 
 - [Advanced study plan](assumptions_report/?level=advanced): appraise evidence, justify ranges and compare sensitivity scenarios in the same report.
 

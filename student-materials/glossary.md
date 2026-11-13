@@ -1,8 +1,6 @@
 # Glossary {#glossary .unnumbered .reference-heading}
 
-Definitions support both routes. Advanced terms are identified individually; you can return here whenever a term needs clarification.
-
-This glossary provides reminders of terms used in the tutorial and apps. The main tutorial includes formulas and expandable R code blocks.
+These definitions support both routes and link to the explanations and examples in the tutorial. Advanced terms are identified individually.
 
 ## Research question and study plan {.core-heading .unnumbered}
 
@@ -44,17 +42,15 @@ The [chronic pain trial](#clinical-question) distinguishes the pilot estimates f
 : The [target difference](#between-group-differences){.no-glossary-tooltip} is the between-group difference used in the sample size calculation, at which you calculate [power](#statistical-power).
 
 <span id="clinical-threshold">Clinical threshold</span>
-: The [clinical threshold](#between-group-differences){.no-glossary-tooltip} is the smallest between-group benefit judged worthwhile, considering the treatment's burdens, risks, and alternatives. The difference observed in previous data, target difference and clinical threshold can coincide and have no fixed numerical order. The chronic pain trial uses 40, 30, and 20 percentage points, respectively, to illustrate their different roles. The observed result should be traceable to its source; the target and threshold need justification; the [ST01 example](#st01-expectations) illustrates a different relationship.
-
-The target difference should be justified as realistic and important. Planning for a difference larger than the clinical threshold generally gives lower power at some worthwhile differences. See [the target-difference discussion](#what-do-we-expect-what-will-we-plan-for-and-what-matters-clinically) and [DELTA2 guidance (Cook et al., 2018)](https://doi.org/10.1136/bmj.k3750).
+: The smallest between-group benefit judged worthwhile, considering treatment burdens, risks and alternatives. It may coincide with the target difference or difference observed in earlier data; these quantities have no fixed numerical order. The [planning example](#what-do-we-expect-what-will-we-plan-for-and-what-matters-clinically) explains their roles [@cook2018delta2].
 
 ## Between-group differences and individual benefit {#between-group-differences .core-heading .unnumbered}
 
-A between-group difference compares outcomes under two treatments in a specified population. For a binary outcome, it can be expressed as a difference in the percentages experiencing the outcome. For a continuous outcome, it may be a difference in mean scores. The difference observed in previous data, target difference, and clinical threshold in this tutorial all concern these between-group comparisons.
+A between-group difference compares population percentages or means under two treatments. The observed difference, target difference and clinical threshold in this tutorial all concern such comparisons.
 
-If 60% of patients experience pain relief with the novel treatment and 30% with standard treatment, the difference is 30 percentage points: approximately 30 more patients per 100 would experience relief with the novel treatment under these assumptions. This does not mean that each patient experiences 30% more pain relief. Similarly, a 3-point difference between group means does not mean that every patient gains 3 additional points. Individual outcomes also vary: patients receiving the same treatment may report substantial, little or no relief. Baseline severity and other characteristics may help explain this variation. Differences between observed outcomes alone do not establish how the treatment effect varies between individuals; in a parallel-group trial, you cannot observe the same patient's outcome under both treatments.
+Relief probabilities of 60% and 30% imply 30 additional patients achieving relief per 100 treated with the novel treatment. They do not describe 30% more relief for each individual. Likewise, a 3-point difference between group means describes an average contrast. In a parallel-group trial, each patient receives one treatment, so their outcome under the other treatment is unobserved.
 
-A threshold for meaningful improvement within an individual patient is therefore not automatically a suitable clinical threshold for a between-group comparison. An individual improvement threshold might define who counts as experiencing pain relief. A separate judgment is then needed about what difference between groups in the percentage experiencing relief would make the treatment worthwhile. Before adopting a published "minimum clinically important difference," you should check which comparison it describes and whether its population, outcome, and follow-up match your study ([Cook et al., 2019](https://doi.org/10.3310/hta23600)).
+A threshold for improvement within a patient can define who counts as achieving relief. A separate judgment determines what between-group difference in that percentage is worthwhile. A published minimum clinically important difference should be checked for the comparison, population, outcome and follow-up it describes [@cook2019delta2]. The [clinical interpretation examples](#interpret-a-confidence-interval-clinically) apply this distinction.
 
 ## Effect scale and direction {.core-heading .unnumbered}
 
@@ -127,7 +123,7 @@ A sensitivity analysis examines how results or conclusions change under plausibl
 
 ## Hypotheses, Type I error probability, Type II error probability and power {.core-heading .unnumbered}
 
-The [power chapter](#power) connects these terms to repeated hypothetical studies.
+The [hypotheses and power section](#power) connects these terms to repeated hypothetical studies.
 
 <span id="frequentist-methods">Frequentist methods</span>
 : Statistical methods interpreted through their performance across hypothetical repetitions of the same study. For example, power describes how often a test detects a specified true difference, and a confidence level describes how often the interval method captures the population value.
@@ -179,7 +175,7 @@ The [multiplier explanation](#how-error-rates-and-power-affect-sample-size) show
 ## Tests and designs {.core-heading .unnumbered}
 
 <span id="two-sided-test">One-sided and two-sided tests</span>
-: A two-sided test can reject for sufficiently strong differences in either direction. A one-sided test has a directional rejection rule. For treatment minus control, the two-sided alternative includes any nonzero population difference. A one-sided alternative may specify a positive population difference; its null then includes zero and negative differences. Sidedness needs justification before results are examined. The [sampling-distribution illustration](#alpha-beta) assumes a known population SD and illustrates a one-sided test, while the [core lab](https://katatam.github.io/sample-size-calculation/study/?activity=own_study) uses two-sided comparisons.
+: A two-sided test can reject for sufficiently strong differences in either direction. A one-sided test has a directional rejection rule. For treatment minus control, the two-sided alternative includes any nonzero population difference. A one-sided alternative may specify a positive population difference; its null then includes zero and negative differences. Sidedness needs justification before results are examined. The [sampling-distribution illustration](#alpha-beta) assumes a known population SD and illustrates a one-sided test, while the [reasoning lab](https://katatam.github.io/sample-size-calculation/study/?activity=own_study) uses two-sided comparisons.
 
 A normal approximation uses the bell-shaped normal distribution to simplify a calculation. A t-test calculation also accounts for estimating variability from the study's patients. The two-means calculator and [lab](https://katatam.github.io/sample-size-calculation/study/?activity=own_study) both use pooled two-sample t-test power. The normal formula in Chapter 2 explains how the inputs affect sample size. See the [statistical methods](../documentation/statistical-methods.md) for exact implementation details.
 
@@ -269,13 +265,9 @@ Simulation repetitions (B)
 
 ### Monte Carlo error {#monte-carlo-error .advanced-heading .unnumbered}
 
-Monte Carlo error is the random difference between a result estimated from a finite simulation and the value you would obtain from indefinitely many repetitions under the same assumptions. For example, one batch of 1,000 simulated trials might estimate power at 80%, while another gives 79% or 81%, even though the population assumptions, sample size and analysis stay the same. This variation between batches is Monte Carlo uncertainty.
+Monte Carlo error is the random difference between a finite simulation estimate and the value approached with indefinitely many repetitions under the same assumptions. Two batches might estimate power at 79% and 81% even though the trial design and population are unchanged.
 
-The Monte Carlo standard error (MCSE) describes how much the simulation estimate varies between independent batches. For an observed proportion of statistically significant simulated results $\hat p$ from $B$ independent simulated trials, $\mathrm{MCSE}=\sqrt{\hat p(1-\hat p)/B}$. At estimated power of 80% with 1,000 trials, the MCSE is about 1.3 percentage points. A Monte Carlo interval describes uncertainty in an estimated simulation result, such as power.
-
-Increasing the number of simulations reduces Monte Carlo error; quadrupling the repetitions approximately halves the MCSE. Each trial retains its original power under the same design and population assumptions. Analytical-approximation error and the credibility of the population assumptions require separate assessment. You should distinguish simulation uncertainty from sampling uncertainty within a trial and uncertainty about the clinical assumptions. The [simulation-precision section](#precision-of-a-simulation) provides a worked example.
-
-For more detail, return to the [power chapter](#power), [sampling-distribution illustration](#alpha-beta), [precision planning](#plan-for-precision), or [common mistakes](#common-mistakes). Methodological sources include Kirkwood and Sterne (2003), Whitley and Ball (2002), and the R documentation cited in the tutorial.
+The Monte Carlo standard error (MCSE) describes variation between independent batches. For a simulated rejection fraction $\hat p$ from $B$ independent trials, $\mathrm{MCSE}=\sqrt{\hat p(1-\hat p)/B}$. More repetitions reduce this uncertainty while each trial retains its original power. The [simulation-precision section](#precision-of-a-simulation) gives a worked example and distinguishes this uncertainty from sampling variability within a trial.
 
 ## Research ethics review {.unnumbered}
 

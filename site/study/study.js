@@ -155,11 +155,11 @@
     .then(([registry, map]) => {
       cases = registry; anchors = map;
       selector.replaceChildren();
-      const core=new Set(['pain_one_many','probiotics_calculation','recruitment']);
+      const core=new Set(['pain_one_many','pain_calculation','recruitment']);
       const options={};for(const level of ['Core activities','Continuing report','Additional basic practice','Advanced extensions']){const group=document.createElement('optgroup');group.label=level;selector.append(group);options[level]=group;}
       Object.entries(cases).forEach(([id, record]) => {
         if (!allowedApps.has(record.app)) return;
-        const option = document.createElement('option'); option.value = id; option.textContent = record.title; options[id==='assumptions_report'?'Continuing report':core.has(id)?'Core activities':['discharge','rehabilitation_calculation'].includes(id)?'Additional basic practice':'Advanced extensions'].appendChild(option);
+        const option = document.createElement('option'); option.value = id; option.textContent = record.title; options[id==='assumptions_report'?'Continuing report':core.has(id)?'Core activities':['discharge','probiotics_calculation','rehabilitation_calculation'].includes(id)?'Additional basic practice':'Advanced extensions'].appendChild(option);
       });
       const requested = new URL(location.href).searchParams.get('activity');
       openActivity(cases[requested] ? requested : 'pain_one_many');

@@ -32,7 +32,7 @@ const base=(process.argv[2]||'http://127.0.0.1:8769').replace(/\/$/,'');
   }
   const f=await app('/study/?activity=probiotics_calculation','pi1');
   await f.waitForFunction(()=>Math.abs(Shiny.shinyapp.$inputValues.pi1-.9)<1e-8&&Math.abs(Shiny.shinyapp.$inputValues.pi2-.8)<1e-8);
-  assert.equal(await page.locator('#activity optgroup[label="Core activities"] option[value="probiotics_calculation"]').count(),1);
+  assert.equal(await page.locator('#activity optgroup[label="Additional basic practice"] option[value="probiotics_calculation"]').count(),1);
   assert.equal(await page.locator('#activity optgroup[label="Additional basic practice"] option[value="rehabilitation_calculation"]').count(),1);
   assert.equal(await f.evaluate(()=>Shiny.shinyapp.$inputValues.dropout),0,'Core calculation precedes the loss adjustment');
   await page.setViewportSize({width:1200,height:950});

@@ -62,7 +62,7 @@ const base=(process.argv[2]||'http://127.0.0.1:8769').replace(/\/$/,'');
   // The complete HTML is assembled from chapter DOMs. Copied initialization
   // flags must not suppress the event bindings on this new document.
   await page.goto(base+'/book/Sample_size_open_module.html');
-  assert.equal(await page.locator('.inline-activity').count(),11);
+  assert.equal(await page.locator('.inline-activity').count(),12);
   for(const card of await page.locator('.inline-activity').all()){
     assert.equal(await card.locator('[data-inline-dedicated]').count(),1);
     assert.equal(await card.locator('iframe').count(),0,'Apps start on demand');

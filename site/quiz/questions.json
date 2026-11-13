@@ -723,7 +723,7 @@
       "id": "q23",
       "chapter": "estimation-planning",
       "level": "advanced",
-      "section": "Estimation with a precision target",
+      "section": "Estimating a population mean",
       "link": "estimation-planning.html#plan-for-precision",
       "question": "What is specified when planning estimation with a precision target?",
       "options": [
@@ -875,10 +875,10 @@
     },
     {
       "id": "q32",
-      "chapter": "study-designs",
+      "chapter": "curves",
       "level": "advanced",
-      "section": "Further planning approaches",
-      "link": "study-designs.html#further-planning-approaches",
+      "section": "Planning with uncertainty about the true difference",
+      "link": "curves.html#further-planning-approaches",
       "question": "How can assurance differ from power at one fixed effect?",
       "options": [
         "It always produces the same answer as fixed-effect power",
@@ -1073,7 +1073,7 @@
     },
     {
       "id": "q35",
-      "chapter": "study-designs",
+      "chapter": "appendix",
       "level": "advanced",
       "section": "Additional records for complex designs",
       "link": "appendix.html#complex-design-record",
@@ -1219,17 +1219,17 @@
       "chapter": "simulation",
       "level": "advanced",
       "chapter_check": false,
-      "section": "Chapter 6: Building and evaluating simulations",
-      "link": "simulation.html#precision-of-a-simulation",
-      "question": "The estimated power stays near 80% when simulation repetitions rise from 1,000 to 4,000. What happens approximately to its Monte Carlo standard error?",
+      "section": "Comparing simulation with a planning approximation",
+      "link": "simulation.html#compare-simulation-with-a-planning-approximation",
+      "question": "A larger simulation batch gives a narrow Monte Carlo interval that still excludes the analytical power approximation. The sample size and population assumptions match. What should you check next?",
       "options": [
-        "It halves.",
-        "It doubles.",
-        "It becomes zero.",
-        "The power of each trial quadruples."
+        "Whether the approximation and simulated analysis use the same test, corrections and decision rule.",
+        "Whether increasing repetitions changed the true treatment difference.",
+        "Whether replacing the simulation estimate with the target power removes the discrepancy.",
+        "Whether increasing the number of simulated studies counts as recruiting more patients."
       ],
       "answer": 0,
-      "explanation": "Monte Carlo standard error is proportional to 1/sqrt(B); quadrupling repetitions halves it."
+      "explanation": "A persistent discrepancy after reducing Monte Carlo uncertainty calls for checking the methods and the accuracy of the approximation for this setting. More repetitions improve the simulation estimate without changing the trial design."
     },
     {
       "id": "c01",

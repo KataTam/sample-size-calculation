@@ -5,7 +5,7 @@
 const {chromium}=require('playwright');
 const fs=require('node:fs'),path=require('node:path'),assert=require('node:assert/strict');
 const base=(process.argv[2]||'http://127.0.0.1:8769').replace(/\/$/,'');
-const ids=(process.argv[3]||'pain_one_many,probiotics_calculation,rehabilitation_calculation,recruitment,assumptions_report,mean_precision,prevalence,pilot_feasibility,pain_curves,alpha_beta,pain_simulation,recruitment_advanced,design_questionnaire').split(',');
+const ids=(process.argv[3]||'pain_one_many,pain_calculation,probiotics_calculation,rehabilitation_calculation,recruitment,assumptions_report,mean_precision,prevalence,pilot_feasibility,pain_curves,alpha_beta,pain_simulation,recruitment_advanced,design_questionnaire').split(',');
 (async()=>{
  const browser=await chromium.launch({headless:true,...(process.platform==='win32'?{channel:'msedge'}:{})});
  try {
@@ -28,6 +28,7 @@ const ids=(process.argv[3]||'pain_one_many,probiotics_calculation,rehabilitation
     }
     assert(app,id+' Shiny session ready');
     // Case initialization follows the activity query parameter through the app bridge.
+    if(id==='pain_calculation')await app.waitForFunction(()=>jQuery('#pi1').data('ionRangeSlider')?.result.from===.6 && document.querySelector('#result').textContent.includes('56'));
     if(id==='rehabilitation_calculation')await app.waitForFunction(()=>document.querySelector('#delta').value==='3');
     if(['prevalence_precision','sampling_distributions'].includes(record.app))await app.waitForFunction(()=>/Loaded shared case:/.test(document.querySelector('#bridge_status')?.textContent||''));
     if(['pain_one_many','pain_curves','pain_simulation'].includes(id))await app.waitForFunction(n=>document.querySelector('#fixed_n').value===String(n),record.inputs.fixed_n);

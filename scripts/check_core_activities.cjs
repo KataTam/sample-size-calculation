@@ -12,8 +12,8 @@ const base=(process.argv[2]||'http://127.0.0.1:8769').replace(/\/$/,'');
   page.on('pageerror',e=>errors.push(e.message));
   await page.goto(base+'/book/calculations.html#calculate-sample-size');
   const choice=page.locator('#calculate-sample-size');
-  assert.equal(await choice.locator('[data-inline-start][href*="activity=probiotics_calculation"]').count(),1);
-  assert.equal(await choice.locator('[data-inline-dedicated][href*="activity=probiotics_calculation"]').count(),1);
+  assert.equal(await choice.locator('[data-inline-start][href*="activity=pain_calculation"]').count(),1);
+  assert.equal(await choice.locator('[data-inline-dedicated][href*="activity=pain_calculation"]').count(),1);
   assert.equal(await choice.locator('a[href*="activity=rehabilitation_calculation"]').count(),0);
   assert.equal(await page.locator('#rehabilitation > summary').innerText(),'Additional practice: rehabilitation');
   assert.equal(await page.locator('#rehabilitation').getAttribute('open'),null);
@@ -31,7 +31,7 @@ const base=(process.argv[2]||'http://127.0.0.1:8769').replace(/\/$/,'');
   await page.goto(base+'/book/reporting.html#check-reporting');
   assert.equal(await page.locator('.chapter-quiz').count(),0);
   assert.equal(await page.locator('#report-error-activity .spot-choice[data-error=true]').count(),4);
-  for(const [old,target] of [['calculations.html#discharge','exercises.html#discharge'],['feasibility.html#recruitment-error-activity','simulation.html#recruitment-error-activity'],['feasibility.html#treatment-switching','simulation.html#treatment-switching']]){
+  for(const [old,target] of [['calculations.html#discharge','exercises.html#discharge'],['feasibility.html#recruitment-error-activity','study-designs.html#recruitment-error-activity'],['feasibility.html#treatment-switching','study-designs.html#treatment-switching']]){
    await page.goto(base+'/book/'+old);await page.waitForURL('**/book/'+target);await page.waitForLoadState('domcontentloaded');
    assert.equal(await page.locator('[id="'+target.split('#')[1]+'"]').count(),1);
   }

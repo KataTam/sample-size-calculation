@@ -12,21 +12,21 @@ The meaning depends on the starting percentage and whether the change is relativ
 <details class="misconception" id="can-i-put-a-clinically-important-difference-directly-into-the-alternative-hypothesis">
 <summary>Can I put a clinically important difference directly into the alternative hypothesis?</summary>
 
-For the ordinary two-sided superiority test, the alternative is any nonzero difference. Power is evaluated at a particular planned effect. You should interpret the effect estimate and confidence interval in relation to both zero and the clinical threshold.
+For the ordinary two-sided superiority test, the alternative is any nonzero population difference. Power is evaluated at the specified target difference. The [hypotheses section](#power) explains this distinction; the [interval examples](#interpret-a-confidence-interval-clinically) show how to assess clinical importance.
 
 </details>
 
 <details class="misconception" id="does-planning-for-90-power-cover-every-clinically-worthwhile-difference">
 <summary>Does planning for 90% power cover every clinically worthwhile difference?</summary>
 
-No. Power is evaluated at the specified target difference. If that target exceeds the smallest clinically important difference, power will generally be lower at some worthwhile benefits. Your justification should explain why the target is important and realistic, including how the study would perform at the clinical threshold. The difference observed in previous data, target difference and clinical threshold can coincide and have no fixed numerical order. Each role still needs justification.
+Power is evaluated at the specified target difference. With the same baseline probability, sample and test, power is lower at a smaller true difference, even when it matters clinically. The [planning example](#what-do-we-expect-what-will-we-plan-for-and-what-matters-clinically) explains this choice; [power curves](#activity-2-can-the-feasible-study-answer-the-question) show its consequences.
 
 </details>
 
 <details class="misconception" id="does-a-non-significant-result-establish-that-treatments-are-the-same">
 <summary>Does a non-significant result establish that treatments are the same?</summary>
 
-No. An interval might include both negligible and important effects. Your interpretation should consider the whole interval and the design's limitations. Equivalence and non-inferiority ask different questions and require their own margins, hypotheses and planning methods.
+A nonsignificant result can be compatible with both negligible and important differences. The [confidence-interval examples](#interpret-a-confidence-interval-clinically) help interpret that uncertainty. [Equivalence and noninferiority](#noninferiority-equivalence) require their own margins, hypotheses and calculations.
 
 </details>
 
@@ -54,25 +54,21 @@ Your planning assumptions should reflect its uncertainty and the wider evidence.
 <details class="misconception" id="is-50-a-safe-default-when-the-event-probability-is-unknown">
 <summary>Is 50% a safe default when the event probability is unknown?</summary>
 
-Its conservative role here is limited to absolute precision for one proportion under the displayed normal approximation: it maximizes p(1-p). It is not a general fallback for unknown treatment/control probabilities, prediction-model planning, relative precision or rare-event questions. The [single-proportion app](https://katatam.github.io/sample-size-calculation/study/?activity=prevalence) shows how the requirement changes across anticipated percentages.
-
-![Approximate single-proportion sample size at 95% confidence and a fixed margin of error of 5 percentage points. The largest requirement occurs at 50%; the calculation rounds upward to whole participants.](../figures/single-proportion-planning.png)
-
-For a two-group comparison, each event probability should draw on evidence relevant to the population, outcome and follow-up. Comparable studies, routine records or pilot data may help, with particular attention to uncertainty in small pilots. When evidence is limited, your report should describe a plausible range and use [sensitivity analysis](#stress-test-the-study-plan) to show its consequences. The [planning discussion](#what-do-we-expect-what-will-we-plan-for-and-what-matters-clinically) explains how this evidence relates to the target difference.
+For the single-proportion normal approximation at fixed absolute precision, 50% maximizes $p(1-p)$ and gives the largest requirement. The [prevalence example](#prevalence) shows this relationship. For a two-group power calculation, both event percentages need evidence and [sensitivity analysis](#stress-test-the-study-plan).
 
 </details>
 
 <details class="misconception" id="my-study-is-retrospective-should-i-calculate-observed-power-instead-of-sample-size">
 <summary>My study is retrospective: should I calculate observed power instead of sample size?</summary>
 
-If the records already exist, your report should explain why that sample is available and present the estimate, confidence interval and limitations. Using the same data's observed effect in a power calculation adds no evidence about that result. At independently justified effects, sensitivity analysis can describe the fixed design's performance. For example, 200 existing records may be useful for estimating a prevalence even when they do not support a precise adjusted treatment effect. "Retrospective" describes when the data were obtained. The research question, outcome and data structure determine the analysis. See [Althouse (2021)](https://pubmed.ncbi.nlm.nih.gov/32814615/) and [Lakens (2022)](https://doi.org/10.1525/collabra.33267).
+With an existing dataset, your report should explain the available sample, the attainable precision and the limits of the new question. Observed-effect post hoc power adds no evidence about the same result. The [dataset-reuse example](#dataset-reuse) shows an appropriate assessment [@althouse2021; @lakens2022].
 
 </details>
 
 <details class="misconception" id="why-do-the-hand-formula-r-and-another-calculator-give-different-numbers">
 <summary>Why do the hand formula, R and another calculator give different numbers?</summary>
 
-Differences can arise from the outcome, allocation, whether the test is one-sided or two-sided, effect scale, Type I error probability, target power, test assumptions, continuity correction or rounding. These settings should match before you compare calculator results. The two-means calculator and [lab](https://katatam.github.io/sample-size-calculation/study/?activity=own_study) both plan for a pooled two-sample t test. Binary analytical power remains an approximation and can differ from finite-sample simulation.
+The methods, assumptions, sidedness, corrections and rounding should match before results are compared. The [software example](#gpower-assumptions) shows why input definitions matter; the [simulation benchmark](#compare-simulation-with-a-planning-approximation) examines approximation differences.
 
 </details>
 
@@ -86,21 +82,21 @@ Usually not. The appropriate calculation depends on what receives the interventi
 <details class="misconception" id="should-i-add-10-for-expected-10-dropout">
 <summary>Should I add 10% for expected 10% dropout?</summary>
 
-With 10% expected loss, you should divide the required analyzable count by 1 - 0.10, then round upward within each arm. This is about 11.1% extra before rounding. The actual number retained can differ from expectation, and missing outcomes can bias results even after recruitment inflation.
+With 10% expected loss, the recruitment requirement is the analyzable count divided by 0.90, rounded upward within each group: about 11.1% extra before rounding. The [recruitment calculation](#account-for-expected-losses) illustrates the arithmetic.
 
 </details>
 
 <details class="misconception" id="is-more-simulation-the-same-as-a-larger-study">
 <summary>Is more simulation the same as a larger study?</summary>
 
-Increasing B, the number of simulated studies, estimates power, interval coverage and other performance measures more precisely. Increasing n, the patients per study, changes the amount of patient information in each study and therefore changes its power and precision. Your report should distinguish these quantities and include both.
+More simulation repetitions give a more precise estimate of performance. More patients change the information, power and precision of each trial. The [simulation-precision section](#precision-of-a-simulation) distinguishes these two counts.
 
 </details>
 
 <details class="misconception" id="will-a-larger-sample-solve-bias">
 <summary>Will a larger sample solve bias?</summary>
 
-A larger sample reduces sampling variability under the model. Selection bias, confounding, unreliable measurements and missing-data bias require attention to the design and analysis. A defensible design is necessary before a sample size calculation can be useful.
+A larger sample reduces sampling variability. Selection, confounding and missing-data bias require appropriate design and analysis. In the [missing-outcome simulation](#explore-missing-outcomes), extra recruitment leaves bias caused by selective missingness in place.
 
 </details>
 

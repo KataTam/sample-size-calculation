@@ -59,7 +59,11 @@ basic_calculator_server <- function(outcome) function(input, output, session) {
   title <- if (means) "Two means sample size" else "Two proportions sample size"
   observeEvent(input$activity_request, {
     id <- input$activity_request$activity
-    if (identical(id, "probiotics_calculation") && !means) {
+    if (identical(id, "pain_calculation") && !means) {
+      updateSliderInput(session, "pi1", value = .60); updateSliderInput(session, "pi2", value = .30)
+      updateSliderInput(session, "compare_pi1", value = .50); updateSliderInput(session, "dropout", value = 0)
+      updateSliderInput(session, "power", value = .90); updateSliderInput(session, "alpha", value = .05)
+    } else if (identical(id, "probiotics_calculation") && !means) {
       updateSliderInput(session, "pi1", value = .90); updateSliderInput(session, "pi2", value = .80)
       updateSliderInput(session, "compare_pi1", value = .90); updateSliderInput(session, "dropout", value = 0)
       updateSliderInput(session, "power", value = .90); updateSliderInput(session, "alpha", value = .05)

@@ -15,17 +15,7 @@ After this chapter, you should be able to:
 
 The study design and planning method should follow the research question, outcome, sampling structure and intended analysis. "Clinical," "retrospective," "diagnostic" and "within-subject" describe different aspects of a study and can apply together. A diagnostic study can be clinical and retrospective, and a preclinical experiment can have repeated measurements.
 
-This chapter offers optional branches beyond the basic two-independent-group calculation. The [questionnaire](#design-questionnaire) helps identify the study design. The following sections consider dependence between observations, recruitment constraints and design-specific calculations. The [testing strategies](#multiple-outcomes-comparisons) then explain how the definition of study success and decisions during recruitment affect planning. The [resource table](#match-the-question-to-a-method-and-resource) helps you choose further guidance for your own question.
-
-## Activity: Choosing a study design {#design-questionnaire .advanced-heading}
-
-```{r preview-study-design, echo=FALSE, results='asis'}
-render_app_preview("design_questionnaire", "Describe your study aim, outcome and observations to explore suitable designs and the decisions needed for sample size planning.")
-```
-
-Several designs may suit the same question. The questionnaire's suggestions should support discussion of feasibility, ethics and the intended analysis, using the distinctions explained in this chapter.
-
-The [CDC Field Epidemiology Manual](https://www.cdc.gov/field-epi-manual/php/chapters/design-conduct-analyze-field-studies.html) discusses cohort and case-control design considerations [@jackson2024]. The reporting and sample-size sources below support the other routes.
+The dimensions below and the [questionnaire](#design-questionnaire) help describe your design. Subsequent sections examine who receives treatment, how observations are related, and which treatment comparison is intended. The [testing strategies](#multiple-outcomes-comparisons) define study success and decisions during recruitment. Finally, rare-disease constraints and the [resource table](#match-the-question-to-a-method-and-resource) guide planning beyond the basic calculations.
 
 ## Describe these dimensions first {.advanced-heading}
 
@@ -39,6 +29,16 @@ The [CDC Field Epidemiology Manual](https://www.cdc.gov/field-epi-manual/php/cha
 | Outcome/analysis | Continuous, binary, time-to-event, counts; adjusted model or simple comparison | Determines the required distributional and modeling assumptions |
 
 Table: Design dimensions that determine the appropriate planning method.
+
+## Activity: Choosing a study design {#design-questionnaire .advanced-heading}
+
+```{r preview-study-design, echo=FALSE, results='asis'}
+render_app_preview("design_questionnaire", "Describe your study aim, outcome and observations to explore suitable designs and the decisions needed for sample size planning.")
+```
+
+Several designs may suit the same question. The questionnaire's suggestions should support discussion of feasibility, ethics and the intended analysis, using the distinctions explained in this chapter.
+
+The [CDC Field Epidemiology Manual](https://www.cdc.gov/field-epi-manual/php/chapters/design-conduct-analyze-field-studies.html) discusses cohort and case-control design considerations [@jackson2024]. The reporting and sample-size sources below support the other routes.
 
 ## Units of randomization, measurement, and analysis {#units-of-analysis .advanced-heading}
 
@@ -98,27 +98,83 @@ When whole centers are randomized, the [cluster-randomized calculation](#units-o
 
 For continuous outcomes, @harden2018multicenter describe a calculation with random center effects and unequal center sizes. The [PASS multicenter two-means procedure](https://www.ncss.com/wp-content/themes/ncss/pdf/Procedures/PASS/Tests_for_Two_Means_in_a_Multicenter_Randomized_Design.pdf) provides a worked calculation under its stated assumptions [@pass2022]. For binary outcomes such as pain relief, few events within each center can affect the analysis [@kahan2015centers]. A calculation or simulation should reproduce the proposed center-adjusted analysis, including plausible center-specific event probabilities and recruitment. This is a useful point to consult a statistician.
 
-## What if the disease is rare? {#rare-diseases .advanced-heading}
+## Treatment changes and the outcome you want to compare {#treatment-changes .advanced-heading}
 
-For a rare disease, the number of eligible patients may limit recruitment. Your plan should document how many patients could realistically participate, over what period and across which centers, and what that sample could establish.
+Participants may never start their assigned treatment, miss doses, interrupt or change the dose, stop permanently, switch treatments, or receive rescue medication during follow-up. These changes can affect the difference between randomized groups and the sample size needed for the planned power. For example, patients assigned to standard treatment might start the novel treatment, making the groups' outcomes more similar. This is a form of [treatment contamination](#treatment-contamination) [@wittes2002].
 
-This is the same feasibility problem as the plan for the chronic pain trial, with a more restrictive recruitment ceiling. The aim is to obtain useful, valid information within the recruitment limit.
+Treatment discontinuation and loss to follow-up should be recorded separately. When your question concerns the effect of assignment to treatment, participants are analyzed in their randomized groups and follow-up continues wherever possible. This treatment-policy approach follows the [estimand framework](#estimand); the protocol and SAP specify follow-up and missing-data methods [@iche9r1]. Excluding patients because they switched treatments can introduce bias [@dodd2017].
 
-1. You should establish the recruitment ceiling. You can work with specialist centers, registries and patient organizations. You can consider collaboration across countries, eligibility criteria and ways to reduce travel and follow-up burden. Your explanation should distinguish the number of people with the disease from the number eligible and willing to participate [@fdarare2023].
-2. You can use knowledge of the disease's natural course. Previous studies and registries can inform progression, variability, suitable assessment times and meaningful outcomes. You should check whether these data describe the population you intend to study. If this knowledge is insufficient, a natural-history study may be a useful research objective in its own right [@fdanaturalhistory2019].
-3. You can obtain useful information from each participant. You can use reliable, clinically meaningful measurements and minimize missing outcomes. Where clinically appropriate, retaining the continuous outcome can preserve information. Adjustment for informative baseline measurements should be prespecified. These choices require a matching analysis and sample size method [@emasmall2006].
-4. You can consider another design when appropriate. [Crossover](#crossover-trial) or n-of-1 designs may suit stable conditions with reversible treatment effects and manageable carryover. They generally do not suit irreversible treatments or rapidly progressing disease. Prespecified adaptive or Bayesian approaches may also help, but require specialist planning; they do not guarantee that fewer patients will suffice [@emasmall2006; @fdarare2023].
-5. Your plan should preserve a credible comparison. Randomization remains valuable. Registry or historical controls can sometimes help, but differences in patient severity, treatment era and outcome measurement can bias the comparison. They are not an automatic replacement for a concurrent control group [@fdaexternal2023].
-6. Your explanation should address the remaining uncertainty. Evaluate attainable power across plausible effects and the anticipated confidence interval width. A small randomized study may still be informative, although inconclusive results remain possible. Your explanation should address what it could establish and what would require further evidence [@emasmall2006].
+Your sample size assumptions should reflect the treatment changes expected in your study and the treatment effect you intend to estimate. Suppose the assumed 60% relief with Neravixa and 30% with duloxetine describe outcomes among patients assigned to each treatment, including expected missed doses, treatment changes and rescue medication. These assumptions already reflect those events. Applying another adjustment for the same changes would reduce the difference a second time and inflate the required sample again.
 
-These recommendations draw on the EMA guideline on clinical trials in small populations (2006) and FDA rare-disease guidance (final, 2023). The FDA natural-history (2019) and external-control (2023) documents cited here are draft guidance. These sources concern medicinal-product development; use the principles that fit your own study's purpose and discuss alternative designs with a methodological collaborator.
+If the percentages instead describe full adherence, expected treatment changes should be considered when deriving the randomized-group assumptions. The [switching example](#treatment-switching) illustrates this calculation. A separate allowance for unavailable four-week outcomes concerns whether the outcome is measured [@iche9r1]. Table \@ref(tab:anticipated-events) summarizes the implications of common events.
 
-<details class="misconception" id="misconception-rare-disease-threshold">
-<summary>Common misconception: rare diseases require a different significance threshold</summary>
+| Anticipated event | Implication for planning |
+|:--|:--|
+| Missing final assessments, unusable samples, or equipment failure | Allow for the expected percentage of unavailable primary outcomes, considering each group separately. |
+| Treatment switching or contamination | Account for the resulting difference between randomized groups when calculating sample size. |
+| Failure to start treatment, missed doses, temporary interruptions, dose changes, permanent discontinuation, or rescue medication | Consider how the timing and extent of these changes affect outcomes and the treatment effect being estimated. |
+| Death before a planned assessment | Specify how death enters the research question and outcome definition. A pain score after death is undefined; the study design and analysis need an explicit approach. |
 
-In rare-disease studies, the Type I error probability and any alternative design need prospective justification [@emasmall2006].
+Table: (\#tab:anticipated-events) Anticipated events and their implications for sample size planning. Treatment changes and events such as death require an approach matched to the research question [@iche9r1].
+
+The protocol should distinguish events that change treatment exposure or the meaning of the outcome from reasons why an outcome was not recorded. Figure \@ref(fig:treatment-followup) organizes these decisions. Death before the pain assessment requires an explicit outcome strategy because pain relief at that time is undefined [@iche9r1].
+
+```{r treatment-followup, echo=FALSE, fig.width=8, fig.height=5.8, fig.cap="Events and outcome availability after randomization. Treatment changes and death affect how the study question is defined and analyzed. Missing assessments concern whether the required outcome was recorded. The protocol specifies how each relevant event is handled.", fig.alt="After treatment assignment, possible events include failure to start, missed doses, interruptions or dose changes, permanent discontinuation, switching, rescue medication and death. A separate panel lists missed follow-up, withdrawal from follow-up and unusable measurements. The study question determines how events enter the comparison; outcome availability informs follow-up, missing-data methods and recruitment."}
+draw_treatment_followup()
+```
+
+For example, a patient assigned to the novel treatment may switch to standard treatment and still report pain relief at four weeks. That recorded outcome remains in the novel-treatment group when estimating the effect of treatment assignment. The missing-outcome allowance concerns unavailable assessments; the assumed treatment difference should reflect relevant treatment changes.
+
+
+
+
+
+### Recruitment adjustments for these scenarios {#recruitment-extensions .advanced-heading}
+
+```{r recruitment-extension-app-preview, echo=FALSE, results='asis'}
+render_app_preview("recruitment_advanced", "Explore unequal losses and treatment switching.")
+```
+
+
+
+The [recruitment adjustment app](https://katatam.github.io/sample-size-calculation/study/?activity=recruitment_advanced) extends the shared-loss calculation with separate loss percentages and treatment switching. These options use the same starting analyzable requirement; their assumptions need justification.
+
+<details class="advanced-explanation" id="treatment-switching">
+<summary>Allowing for treatment switching</summary>
+
+[Treatment crossover](#treatment-crossover){.no-glossary-tooltip} here means receiving the other treatment after randomization. A planned crossover trial, in which participants receive treatments in a prespecified sequence, requires a calculation suited to that design.
+
+A simplified model describes complete switching between treatments. Let $a$ be the fraction assigned to the novel treatment who receive standard treatment, and $b$ the fraction assigned to standard treatment who receive the novel treatment. If switchers have the same outcome distribution as other recipients of the treatment they receive, the between-group difference becomes $1-a-b$ times the difference under full adherence. Assuming little change in outcome variance, the approximate per-group requirement is [@wittes2002]:
+
+\begin{equation}
+n_{\mathrm{switching}} \approx \frac{n_{\mathrm{full\ adherence}}}{(1-a-b)^2}.
+(\#eq:switching)
+\end{equation}
+
+With 10% switching from novel to standard and 5% in the other direction, the multiplier is $1/(1-0.10-0.05)^2=1.38$: approximately 38% more participants. The squared denominator reflects the inverse-square relationship between the difference and required sample size. This approximation requires $a+b<1$.
+
+Partial adherence, delayed switching, and switching prompted by poor response need more detailed assumptions. Methods that account for changes in variance and differences between adherence groups are available [@shardell2009].
+
+For binary outcomes, you can recalculate sample size using the revised event percentages. As a separate sensitivity scenario for chronic pain, suppose 60% and 30% describe relief under full adherence. With the switching percentages above, the simplified model gives:
+
+\[
+\begin{aligned}
+\text{Assigned novel treatment: }&0.90(60\%)+0.10(30\%)=57\%,\\
+\text{Assigned standard treatment: }&0.95(30\%)+0.05(60\%)=31.5\%.
+\end{aligned}
+\]
+
+The resulting between-group difference is 25.5 percentage points. The [two-proportion app](https://katatam.github.io/sample-size-calculation/two_proportions/) can calculate the sample needed at these revised percentages. The revised event percentages can be entered directly in the calculation.
+
+In the [advanced recruitment extension](https://katatam.github.io/sample-size-calculation/study/?activity=recruitment_advanced), the switching calculation starts with a sample size that assumes full adherence. A separate loss allowance then reflects expected outcome completeness. Intermediate values remain unrounded until the final recruitment count. For example, starting with 100 per group, the switching assumptions above and 5% missing outcomes in both groups gives $\lceil100/(0.85^2\times0.95)\rceil=146$ recruits per group. With unequal losses, equal recruitment uses the larger requirement for both groups.
+
+Your report should document the switching assumptions, their evidence, the method used, and sensitivity to alternative assumptions. The downloadable app report includes these calculation steps and your written justification; the [reproducibility chapter](#tutorial-methods) explains the procedures.
 
 </details>
+
+```{r recruitment-error-review, echo=FALSE, results='asis'}
+render_error_activity("recruitment")
+```
 
 ## Noninferiority and equivalence trials {#noninferiority-equivalence .advanced-heading}
 
@@ -170,24 +226,32 @@ Your plan should specify the reason for re-estimation, its timing, the calculati
 
 Re-estimation is one form of [adaptive design](#adaptive-design){.no-glossary-tooltip}, in which prespecified changes depend on accumulating trial data. Other possibilities include selecting treatment arms or a target population. The [FDA adaptive-design guidance](https://www.fda.gov/regulatory-information/search-fda-guidance-documents/adaptive-design-clinical-trials-drugs-and-biologics-guidance-industry) provides further guidance. The [simulation chapter](#simulating-decision-rules) explains how evaluating such a design extends the generate-analyze-repeat workflow.
 
-## Planning under uncertainty {#further-planning-approaches .advanced-heading}
+## What if the disease is rare? {#rare-diseases .advanced-heading}
 
-The core calculations evaluate power at specified values. Differences observed in previous data, target differences and clinical thresholds can coincide or follow different orders; their evidence and purpose determine the choices. The [ST01 example](#st01-expectations) shows why expectations and clinical judgments should be assessed separately. More specialized approaches account for additional uncertainty or a different research objective:
+For a rare disease, the number of eligible patients may limit recruitment. Your plan should document how many patients could realistically participate, over what period and across which centers, and what that sample could establish.
 
-- Safeguard power uses uncertainty in a previous difference estimate when planning. It can imply a much larger sample when the evidence is weak [@perugini2014].
-- Bayesian and hybrid approaches can average performance over a justified distribution of plausible parameter values. Assurance or expected power answers a different question from power at one fixed difference; the distribution and decision rule need justification [@kunzmann2021review; @pezeshk2003].
-- Mixed-model simulation can represent clustered or repeated observations and the intended analysis, but needs credible dependency assumptions, convergence checks and [sensitivity analysis](#sensitivity-analysis) [@pargent2024].
+1. Specialist centers, registries and patient organizations can help assess recruitment across countries, eligibility and ways to reduce participation burden. The [recruitment funnel](#recruitment-feasibility) should distinguish people with the disease from those eligible and willing to participate [@fdarare2023].
+2. You can use knowledge of the disease's natural course. Previous studies and registries can inform progression, variability, suitable assessment times and meaningful outcomes. You should check whether these data describe the population you intend to study. If this knowledge is insufficient, a natural-history study may be a useful research objective in its own right [@fdanaturalhistory2019].
+3. You can obtain useful information from each participant. You can use reliable, clinically meaningful measurements and minimize missing outcomes. Where clinically appropriate, retaining the continuous outcome can preserve information. Adjustment for informative baseline measurements should be prespecified. These choices require a matching analysis and sample size method [@emasmall2006].
+4. You can consider another design when appropriate. [Crossover](#crossover-trial) or n-of-1 designs may suit stable conditions with reversible treatment effects and manageable carryover. They generally do not suit irreversible treatments or rapidly progressing disease. Prespecified adaptive or Bayesian approaches may also help, but require specialist planning; they do not guarantee that fewer patients will suffice [@emasmall2006; @fdarare2023].
+5. Your plan should preserve a credible comparison. Randomization remains valuable. Registry or historical controls can sometimes help, but differences in patient severity, treatment era and outcome measurement can bias the comparison. They are not an automatic replacement for a concurrent control group [@fdaexternal2023].
+6. The [fixed-sample power assessment](#curves) and anticipated confidence interval width help explain what the available sample could establish and where further evidence would be needed [@emasmall2006].
 
-These extensions require design-specific planning with a methodological collaborator. The [resource table](#match-the-question-to-a-method-and-resource) provides starting points for other analyses.
+These recommendations draw on the EMA guideline on clinical trials in small populations (2006) and FDA rare-disease guidance (final, 2023). The FDA natural-history (2019) and external-control (2023) documents cited here are draft guidance. These sources concern medicinal-product development; use the principles that fit your own study's purpose and discuss alternative designs with a methodological collaborator.
 
-A review of Bayesian randomized trials found that hybrid sample-size methods were common and fully Bayesian methods were rarely used [@marks2026]. A Bayesian trial can use a fixed sample size or prespecified adaptations. Its planning method should reflect the chosen decision rule; the [adaptive-design discussion](#sample-size-re-estimation) explains the additional decisions to document.
+<details class="misconception" id="misconception-rare-disease-threshold">
+<summary>Common misconception: rare diseases require a different significance threshold</summary>
+
+In rare-disease studies, the Type I error probability and any alternative design need prospective justification [@emasmall2006].
+
+</details>
 
 ## Match the question to a method and resource {.advanced-heading}
 
 | Example question | Planning focus | Route |
 |:--|:--|:--|
-| Do two individually allocated rehabilitation programs differ on a continuous improvement score? | Difference, common SD, analysis, Type I error probability/power or interval width | [Rehabilitation case](#rehabilitation); the core equal-independent-group [lab](https://katatam.github.io/sample-size-calculation/study/?activity=rehabilitation) applies under its assumptions |
-| Does probiotic supplementation reduce gestational diabetes in pregnant women with overweight or obesity? | Two event probabilities, allocation or observational exposure, diagnostic criteria, assessment time and effect scale | [Prevention trial](#adherence); the binary [core lab](https://katatam.github.io/sample-size-calculation/study/?activity=adherence) applies to an individually randomized, independent-group comparison under its assumptions |
+| Do two individually allocated rehabilitation programs differ on a continuous improvement score? | Difference, common SD, analysis, Type I error probability/power or interval width | [Rehabilitation case](#rehabilitation); the [two-means calculator](https://katatam.github.io/sample-size-calculation/study/?activity=rehabilitation_calculation) applies under its assumptions |
+| Does probiotic supplementation reduce gestational diabetes in pregnant women with overweight or obesity? | Two event probabilities, allocation or observational exposure, diagnostic criteria, assessment time and effect scale | [Prevention trial](#adherence); the [two-proportions calculator](https://katatam.github.io/sample-size-calculation/study/?activity=probiotics_calculation) applies to an individually randomized, independent-group comparison under its assumptions |
 | What proportion of eligible patients has a symptom? | Representative sample, confidence level and useful absolute margin of error | [Single-proportion precision activity](#prevalence); a simple independent sample |
 | Can a pathway recruit and retain enough patients for a future trial? | Feasibility outcomes, progression criteria and their precision | [Pilot case](#pilot-feasibility); [CONSORT pilot extension](https://www.bmj.com/content/355/bmj.i5239) for randomized pilots |
 | How accurately does a screening test identify disease? | Precision of sensitivity/specificity and enough reference-positive/reference-negative participants | [STARD 2015](https://www.bmj.com/content/351/bmj.h5527) for reporting; obtain diagnostic-accuracy planning methods |
@@ -208,57 +272,21 @@ Table: Planning questions and resources for different study designs.
 
 A sensitivity estimate uses participants with the target condition as its denominator; specificity uses participants without it. Total recruitment also depends on how these groups are obtained. A precision calculation for a single prevalence cannot by itself plan an entire diagnostic comparison.
 
-These diagnostic, prediction and preclinical routes draw on the reporting and planning sources linked above: Bossuyt and colleagues (2015), Riley and colleagues (2020), and Percie du Sert and colleagues (2020).
+The diagnostic, prediction and preclinical guidance linked above covers reporting requirements and analysis-specific planning [@stard2015; @riley2020; @tripodai2024; @arrive2020].
 
 Consider the speech question in the table: patients with Parkinson's disease aged 18 to 75 are interviewed in both OFF and ON medication states. The outcome is prediction of ON/OFF medication state. The study compares the predictive performance of semantic features, such as similarity between consecutive sentences, with that of syntactic features.
 
 Prespecify ON/OFF timing, feature sets, prediction methods and a performance measure. Account for paired recordings and predictions, and keep each patient's recordings together when partitioning development and evaluation data to prevent information leakage. Counting participants alone is insufficient: outcome frequency, predictor parameters, overfitting and useful precision matter. Developing a model and evaluating it in new patients are different planning tasks. A blanket "ten events per variable" rule is not a substitute for a suitable calculation. Riley's general model-development guidance does not by itself solve this paired comparison; obtain methods matched to the intended analysis.
 
-For paired, crossover and cluster designs, the relevant correlation and independent units matter. Candel and van Breukelen (2023) discuss efficient allocation, baseline adjustment and dependency for common continuous-outcome trial designs. These methods use the dependence structure to improve information when appropriate. [Their paper](https://doi.org/10.1016/j.ajcnut.2023.02.013) and the [advanced planning discussion](#further-planning-approaches) provide routes beyond the basic calculators.
-
 Observational research may use the same outcome types as a trial, but an unadjusted two-group calculation does not account for confounding, covariate adjustment or causal identification. In a preclinical study, identify the allocated experimental unit before counting animals, cages, cultures or measurements.
-
-Two further examples illustrate the need for specialized planning. In a sequential multiple assignment randomized trial (SMART), treatment can be randomized again at a later stage according to response; [Dey et al. (2026)](https://doi.org/10.1177/09622802261485814) develops calculations for skewed outcomes in this setting. Sequential treatment assignment does not itself mean that the total sample size adapts during recruitment. For a meta-analysis containing several related effect estimates from each study, [Vembye et al. (2024)](https://doi.org/10.1002/jrsm.1752) provides power guidance and the POMADE R package. Neither task is covered by the basic two-group calculators.
 
 ## Use guidance for its stated purpose {.advanced-heading}
 
-[SPIRIT 2025 and CONSORT 2025](https://www.consort-spirit.org/) address trial protocol and results reporting. STROBE addresses observational reporting; STARD diagnostic-accuracy reporting; ARRIVE animal experiments; TRIPOD+AI prediction-model reporting. These resources help you document assumptions and decisions.
+The reporting guidelines linked in the table identify information to document. The sample-size method should also reflect the intended analysis and decision.
 
 Your plan should follow the current funding program's requirements. [NIHR funding opportunities](https://www.nihr.ac.uk/funding-opportunities) is one starting point. The archived [NIHR HTA feasibility/pilot guidance](https://njl-admin.nihr.ac.uk/document/download/2023130) illustrates why a pilot's sample size can be justified by the precision needed for its feasibility outcomes.
 
-For an unsupported design, take the question, assumptions, desired conclusion and analysis plan to a methodological collaborator before choosing a calculator. The [own-study guide](#own-study) and case template organize that information. The numerical examples use hypothetical assumptions for teaching. An actual study requires evidence appropriate to its population, outcome and design.
-
-## Treatment changes and the outcome you want to compare {#treatment-changes .advanced-heading}
-
-Participants may never start their assigned treatment, miss doses, interrupt or change the dose, stop permanently, switch treatments, or receive rescue medication during follow-up. These changes can affect the difference between randomized groups and the sample size needed for the planned power. For example, patients assigned to standard treatment might start the novel treatment, making the groups' outcomes more similar. This is a form of [treatment contamination](#treatment-contamination) [@wittes2002].
-
-Treatment discontinuation and loss to follow-up should be recorded separately. When your question concerns the effect of assignment to treatment, participants are analyzed in their randomized groups and follow-up continues wherever possible. This treatment-policy approach follows the [estimand framework](#estimand); the protocol and SAP specify follow-up and missing-data methods [@iche9r1]. Excluding patients because they switched treatments can introduce bias [@dodd2017].
-
-Your sample size assumptions should reflect the treatment changes expected in your study and the treatment effect you intend to estimate. Suppose the assumed 60% relief with Neravixa and 30% with duloxetine describe outcomes among patients assigned to each treatment, including expected missed doses, treatment changes and rescue medication. These assumptions already reflect those events. Applying another adjustment for the same changes would reduce the difference a second time and inflate the required sample again.
-
-If the percentages instead describe full adherence, expected treatment changes should be considered when deriving the randomized-group assumptions. The [switching example](#treatment-switching) illustrates this calculation. A separate allowance for unavailable four-week outcomes concerns whether the outcome is measured [@iche9r1]. Table \@ref(tab:anticipated-events) summarizes the implications of common events.
-
-| Anticipated event | Implication for planning |
-|:--|:--|
-| Missing final assessments, unusable samples, or equipment failure | Allow for the expected percentage of unavailable primary outcomes, considering each group separately. |
-| Treatment switching or contamination | Account for the resulting difference between randomized groups when calculating sample size. |
-| Failure to start treatment, missed doses, temporary interruptions, dose changes, permanent discontinuation, or rescue medication | Consider how the timing and extent of these changes affect outcomes and the treatment effect being estimated. |
-| Death before a planned assessment | Specify how death enters the research question and outcome definition. A pain score after death is undefined; the study design and analysis need an explicit approach. |
-
-Table: (\#tab:anticipated-events) Anticipated events and their implications for sample size planning. Treatment changes and events such as death require an approach matched to the research question [@iche9r1].
-
-The protocol should distinguish events that change treatment exposure or the meaning of the outcome from reasons why an outcome was not recorded. Figure \@ref(fig:treatment-followup) organizes these decisions. Death before the pain assessment requires an explicit outcome strategy because pain relief at that time is undefined [@iche9r1].
-
-```{r treatment-followup, echo=FALSE, fig.width=8, fig.height=5.8, fig.cap="Events and outcome availability after randomization. Treatment changes and death affect how the study question is defined and analyzed. Missing assessments concern whether the required outcome was recorded. The protocol specifies how each relevant event is handled.", fig.alt="After treatment assignment, possible events include failure to start, missed doses, interruptions or dose changes, permanent discontinuation, switching, rescue medication and death. A separate panel lists missed follow-up, withdrawal from follow-up and unusable measurements. The study question determines how events enter the comparison; outcome availability informs follow-up, missing-data methods and recruitment."}
-draw_treatment_followup()
-```
-
-For example, a patient assigned to the novel treatment may switch to standard treatment and still report pain relief at four weeks. That recorded outcome remains in the novel-treatment group when estimating the effect of treatment assignment. The missing-outcome allowance concerns unavailable assessments; the assumed treatment difference should reflect relevant treatment changes.
-
-
-
-
-The advanced [recruitment extension](#recruitment-extensions) examines unequal losses and treatment-switching calculations.
+For a design beyond the basic calculations, the [own-study guide](#own-study) helps prepare the question, assumptions and intended analysis for discussion with a methodological collaborator.
 
 <div class="chapter-recap">
 

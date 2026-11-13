@@ -86,7 +86,7 @@ Possible combinations:
 | Binary outcome sample size | [Two-proportions section](../book/calculations.html#two-proportions), [calculator](../two_proportions/), short rubric |
 | Continuous outcome sample size | [Two-means section](../book/calculations.html#two-means), [calculator](../two_means/), short rubric |
 | Feasibility and power | [Power curves](../book/curves.html), [reasoning-lab activity](../study/?activity=pain_curves) |
-| Recruitment adjustment | Recruitment and feasibility; shared or different losses and the optional treatment-switching approximation in `apps/dropout_adjustment` |
+| Recruitment adjustment | Core recruitment adjustment in Chapter 2; advanced unequal losses and treatment switching in Chapter 7 in `apps/dropout_adjustment` |
 | Protocol-writing practice | Build-your-own justification section, case template, assessment rubric |
 
 If you remove a section, also remove or revise related assessment tasks.

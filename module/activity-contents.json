@@ -20,10 +20,10 @@
     "route": "Core",
     "activities": [
       {
-        "label": "Calculate a sample size: probiotics",
+        "label": "Calculate a sample size: chronic pain",
         "path": "book/calculations.html#calculate-sample-size",
         "route": "Core",
-        "section": "adherence"
+        "section": "two-proportions"
       },
       {
         "label": "Adjust recruitment",
@@ -59,6 +59,12 @@
         "section": "prevalence"
       },
       {
+        "label": "Review an estimation sample size calculation report",
+        "path": "book/estimation-planning.html#estimation-report-error-activity",
+        "route": "Advanced",
+        "section": "estimation-report"
+      },
+      {
         "label": "Estimate a population mean with a precision target",
         "path": "study/?activity=mean_precision",
         "route": "Advanced",
@@ -69,12 +75,6 @@
         "path": "study/?activity=pilot_feasibility",
         "route": "Advanced",
         "section": "pilot-feasibility"
-      },
-      {
-        "label": "Review an estimation sample size calculation report",
-        "path": "book/estimation-planning.html#estimation-report-error-activity",
-        "route": "Advanced",
-        "section": "estimation-report"
       }
     ],
     "title": "Sample size for estimation"
@@ -116,18 +116,6 @@
         "path": "study/?activity=discharge",
         "route": "Advanced",
         "section": "discharge-simulation"
-      },
-      {
-        "label": "Unequal losses and treatment switching",
-        "path": "study/?activity=recruitment_advanced",
-        "route": "Advanced",
-        "section": "recruitment-extensions"
-      },
-      {
-        "label": "Review the recruitment plan",
-        "path": "book/simulation.html#recruitment-error-activity",
-        "route": "Advanced",
-        "section": "recruitment-extensions"
       }
     ]
   },
@@ -142,6 +130,18 @@
         "path": "study/?activity=design_questionnaire",
         "route": "Advanced",
         "section": "design-questionnaire"
+      },
+      {
+        "label": "Unequal losses and treatment switching",
+        "path": "study/?activity=recruitment_advanced",
+        "route": "Advanced",
+        "section": "recruitment-extensions"
+      },
+      {
+        "label": "Review the recruitment plan",
+        "path": "book/study-designs.html#recruitment-error-activity",
+        "route": "Advanced",
+        "section": "recruitment-extensions"
       }
     ]
   },

@@ -6,7 +6,7 @@ const base=(process.argv[2]||'http://127.0.0.1:8769').replace(/\/$/,'');
  fs.mkdirSync('build/inline-apps',{recursive:true});
  try {
   for(const [chapter,id,engine,selector] of [
-   ['calculations','probiotics_calculation','two_proportions','#pi1'],
+   ['calculations','pain_calculation','two_proportions','#pi1'],
    ['clinical-question','pain_one_many','power_explorer','#fixed_n']].filter(row=>!process.argv[3] || row[1]===process.argv[3])) {
    const context=await browser.newContext({viewport:{width:1360,height:1100}}),page=await context.newPage(),errors=[];
    console.log(`Starting ${id}`);
@@ -38,10 +38,10 @@ const base=(process.argv[2]||'http://127.0.0.1:8769').replace(/\/$/,'');
     assert(size.scroll<=size.width+1,'No horizontal scrolling: '+JSON.stringify(size));
    };
    if(engine==='two_proportions'){
-    await app.waitForFunction(()=>jQuery('#pi1').data('ionRangeSlider')?.result.from===.9 && document.querySelector('#result').textContent.includes('266'));
-    await app.locator('#pi1-number').fill('95');await app.locator('#pi1-number').press('Enter');
-    await app.waitForFunction(()=>document.querySelector('#interpretation').textContent.includes('95%'));
-    assert(parseFloat(await app.locator('#result .app-value').innerText())<266);
+    await app.waitForFunction(()=>jQuery('#pi1').data('ionRangeSlider')?.result.from===.6 && document.querySelector('#result').textContent.includes('56'));
+    await app.locator('#pi1-number').fill('70');await app.locator('#pi1-number').press('Enter');
+    await app.waitForFunction(()=>document.querySelector('#interpretation').textContent.includes('70%'));
+    assert(parseFloat(await app.locator('#result .app-value').innerText())<56);
     assert.match(await app.locator('#result .app-value').innerText(),/per group/);
     assert.match(await app.locator('#result').innerText(),/standard.*novel.*in total/s);
     await dimensions();
@@ -50,7 +50,7 @@ const base=(process.argv[2]||'http://127.0.0.1:8769').replace(/\/$/,'');
     await dimensions();assert(await iframe.evaluate(el=>el.offsetHeight)>before+70);
     await app.locator('details.app-input-group').filter({has:app.locator('#alpha')}).locator('summary').click();
     await app.locator('a[data-value="Report"]').click();
-    await app.locator('#report_preview').filter({hasText:'95%'}).waitFor();
+    await app.locator('#report_preview').filter({hasText:'70%'}).waitFor();
    } else {
      await app.waitForFunction(()=>Number(document.querySelector('#fixed_n').value)===20 && document.documentElement.classList.contains('pain-focus'));
     await app.locator('#inline-study-explanation > summary').click();
@@ -113,7 +113,7 @@ const base=(process.argv[2]||'http://127.0.0.1:8769').replace(/\/$/,'');
    await card.locator('[data-inline-start]').click();
    assert.equal(await app.evaluate(()=>window.inlineSessionSentinel),'same session');
    if(engine==='two_proportions'){
-    assert.equal(await app.locator('#pi1-number').inputValue(),'95');
+    assert.equal(await app.locator('#pi1-number').inputValue(),'70');
     await app.locator('a[data-value="Overview"]').click();
    }else{
     assert.equal(await app.locator('#fixed_n').inputValue(),'40');

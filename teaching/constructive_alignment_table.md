@@ -6,7 +6,7 @@ Use the same case and assumptions through the module, [lab](https://katatam.gith
 |---|---|---|---|
 | Core: specify the comparison | Use a supplied two-arm case and a power target | PICO question and intended conclusion | 1 |
 | Core: distinguish the roles of differences | Explain the supplied target and clinical judgment | Difference observed in previous data, target difference and clinical threshold, with short justifications | 2 |
-| Core: calculate under explicit methods | Choose the probiotics or rehabilitation calculation | Inputs, method, software and reproducible counts | 4 |
+| Core: calculate under explicit methods | Calculate the chronic pain requirement; optional probiotics or rehabilitation transfer | Inputs, method, software and reproducible counts | 4 |
 | Plan recruitment | Inflate within each arm; discuss missing-data limits | Analyzable and recruitment counts | 5 |
 | Advanced: appraise evidence and explore sensitivity | Justify plausible ranges and compare several scenarios | Sources, relevance, before/after comparison and explanation | 3, 6 |
 | Core: understand power under specified assumptions | Explain one inconclusive result despite high planned power | Conditional probability and limits of non-rejection; simulation optional | 7 |
@@ -26,13 +26,13 @@ For the core route assess criteria 1, 2, 4, 5, 7 and 10. Evidence appraisal and 
 | Book activity | Outcome and assessment evidence | Rubric |
 |---|---|---|
 | One study and many studies (chapter 1) | Explain sampling variability, testing decisions, and patients per study versus simulation repetitions | 7 |
-| One chosen calculation (chapter 2) | Record the inputs, method, software and analyzable counts | 4 |
+| Chronic pain calculation (chapter 2) | Record the inputs, method, software and analyzable counts | 4 |
 | Shared-loss recruitment adjustment (chapter 2) | Apply one loss percentage and round per group; distinguish analysis and recruitment counts | 5 |
 | Report review and completion (chapter 3) | Correct four problem areas and review the same elements in the continuing report | 4, 5, 10 |
 | Power curves (chapter 5) | Interpret plausible effects, recruitment cap and fixed-n sensitivity | 5, 6, 10 |
 | Simulated trial (chapter 6) | State generating process and analysis; report operating characteristics and uncertainty | 4, 7, 8, 9 |
 | Precision planning (chapter 4, advanced) | Choose a useful interval-width criterion; distinguish anticipated and realized width | 1, 8 |
-| Unequal losses and treatment switching (chapter 6, advanced) | Examine additional recruitment assumptions and consequences | 3, 5, 6 |
+| Unequal losses and treatment switching (chapter 7, advanced) | Examine additional recruitment assumptions and consequences | 3, 5, 6 |
 | Pilot retention (chapter 4, advanced) | Connect retention precision with justified progression criteria | 1, 8, 10 |
 | Prevalence estimation (chapter 4) | Identify the population, denominator, confidence level and useful margin of error | 1, 8 |
 
