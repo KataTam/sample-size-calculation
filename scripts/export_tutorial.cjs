@@ -185,11 +185,13 @@ let browser;
     for (const [alias, destination] of Object.entries({
       'feasibility':'account-for-expected-losses',
       'check-feasibility':'check-calculations',
-      'tab:pain-core-sensitivity':'tab:pain-target-sensitivity'
+      'tab:pain-core-sensitivity':'tab:pain-target-sensitivity',
+      'a-fixed-total-of-70-patients':'available-sample',
+      'sensitivity-is-not-observed-post-hoc-power':'misconception-observed-power'
     })) {
       const anchor=document.getElementById(alias), target=document.getElementById(destination);
       if (anchor && target && !anchor.textContent.trim()) {
-        const heading=target.querySelector('h1,h2,h3,h4,h5,h6') || target.parentElement;
+        const heading=target.querySelector('h1,h2,h3,h4,h5,h6,summary') || target.parentElement;
         heading.prepend(anchor);
       }
     }
