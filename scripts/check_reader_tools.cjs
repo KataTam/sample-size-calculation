@@ -24,8 +24,9 @@ let browser;
  await page.waitForURL('**/calculations.html');
  assert(!(await page.locator('.book-summary a[href="calculations.html#adherence"]').isVisible()));
  await page.locator('.book-summary a[href="calculations.html#two-proportions"]').click();
- assert(await page.locator('.book-summary a[href="calculations.html#adherence"]').isVisible());
- await page.locator('.book-summary a[href="calculations.html#adherence"]').click();
+ assert.equal(await page.locator('.book-summary a[href="calculations.html#adherence"]').count(),0,'Optional practice stays outside the chapter contents');
+ assert.equal(await page.locator('#adherence').getAttribute('open'),null,'Optional probiotics practice starts collapsed');
+ assert.equal(await page.locator('#adherence [data-activity="probiotics_calculation"]').count(),1);
  await page.locator('.book-summary .activity-toc a[href="../book/calculations.html#calculate-sample-size"]').waitFor({state:'visible'});
  assert(!(await page.locator('.book-summary a[href="clinical-question.html#record-assumptions"]').isVisible()));
  await page.locator('.book-summary > nav > ul.summary > li.chapter > a[href="clinical-question.html"]').click();
@@ -50,6 +51,13 @@ let browser;
  await page.goto(base+'/book/estimation-planning.html');
  const previousTable=page.locator('.page-inner a[href*="tab:clinical-intervals"]').first();
  assert.equal(await previousTable.getAttribute('data-reference-preview'),null);
+ // Keep cross-chapter preview coverage independent of editorial cross-references.
+ // This fixture is injected only into the test response, never the published page.
+ await page.route('**/book/simulation.html',async route=>{
+  const response=await route.fetch();
+  const body=(await response.text()).replace(/(<div id="simulation"[^>]*>)/,'$1<p><a href="curves.html#fig:power-curves">Power curves preview fixture</a></p>');
+  await route.fulfill({response,body});
+ });
  await page.goto(base+'/book/simulation.html');
  const cross=page.locator('a[data-reference-preview][href*="fig:power-curves"]').first();
  await cross.hover();await page.locator('#reference-preview:not([hidden]) img').waitFor();
@@ -79,6 +87,11 @@ let browser;
   assert.equal(await page.locator('.chapter-downloads, .tutorial-downloads').count(),0);
  }
  const retired=await page.request.get(base+'/book/downloads/calculations.pdf');assert.equal(retired.status(),404);
+ await page.route('**/book/Sample_size_open_module.html',async route=>{
+  const response=await route.fetch();
+  const body=(await response.text()).replace('<main>','<main><p><a href="#fig:power-curves">Distant figure preview fixture</a></p>');
+  await route.fulfill({response,body});
+ });
  await page.goto(base+'/book/Sample_size_open_module.html');
  const chapterCount=require('../module/chapter-order.json').length+5;
  assert.equal(await page.locator('.print-chapter').count(),chapterCount);
