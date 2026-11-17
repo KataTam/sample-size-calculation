@@ -55,7 +55,6 @@
       tip.className = 'input-guidance-popover'; tip.id = field.id + '-guidance-' + (++counter); tip.role = 'tooltip'; tip.hidden = true;
       button.setAttribute('aria-controls', tip.id); button.setAttribute('aria-describedby', tip.id);
       field.addEventListener('focus', close);
-      field.addEventListener('pointerenter', close);
       field.addEventListener('input', close);
       field.setAttribute('aria-describedby', [...new Set([...(field.getAttribute('aria-describedby') || '').split(/\s+/).filter(Boolean), tip.id])].join(' '));
       record = {button, tip, label, field, links: [...label.querySelectorAll('a')].map(a => a.cloneNode(true))};
@@ -64,8 +63,14 @@
         sizes.observe(field);
         field.addEventListener('input', () => fitExample(field));
       }
-      button.addEventListener('pointerenter', event => { if (event.pointerType !== 'touch') show(record); });
-      button.addEventListener('pointerleave', delayedClose);
+      button.addEventListener('pointerenter', event => {
+        // Scrolling a keyboard-focused question can move another label under
+        // a stationary pointer. The focused question keeps its own help.
+        const focused = document.activeElement;
+        if (focused?.classList.contains('input-question') && focused !== button) return;
+        if (event.pointerType !== 'touch') show(record);
+      });
+      button.addEventListener('pointerleave', () => { if (document.activeElement !== button) delayedClose(); });
       button.addEventListener('focus', () => show(record));
       button.addEventListener('blur', event => { if (!tip.contains(event.relatedTarget)) delayedClose(); });
       button.addEventListener('click', event => { event.preventDefault(); show(record); });
@@ -139,7 +144,12 @@
     if (editing) close();
   }, true);
   document.addEventListener('focusin', event => { if (event.target.matches('input,textarea,select,[role="slider"]')) close(); });
-  document.addEventListener('scroll', event => { if (current && !current.tip.contains(event.target)) close(); }, true);
+  document.addEventListener('scroll', event => {
+    if (!current || current.tip.contains(event.target)) return;
+    // Keyboard focus may scroll its label into view. Keep that help available;
+    // ordinary scrolling dismisses help opened only by pointer hover.
+    if (document.activeElement === current.button) position(current); else close();
+  }, true);
   document.addEventListener('toggle', event => {
     if (event.target instanceof HTMLDetailsElement && event.target.open)
       event.target.querySelectorAll('textarea').forEach(fitExample);
