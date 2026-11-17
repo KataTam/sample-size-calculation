@@ -93,7 +93,7 @@ The 95% refers to the method: across repeated studies, about 95% of intervals ca
 : Full width is the upper confidence limit minus the lower. For a symmetric interval its half-width, or margin of error, is half the full width.
 
 <span id="margin-of-error">Margin of error</span>
-: A margin of five percentage points means a full width of ten percentage points. For asymmetric intervals, the two distances from the estimate to the limits need not be equal.
+: For a symmetric confidence interval, the margin of error is the distance from the estimate to either limit, equal to half the full interval width. An estimate of 20% with limits of 15% and 25% has a margin of error of 5 percentage points and a full width of 10 points. For asymmetric intervals, the distances from the estimate to the two limits can differ. The [interval illustration](#estimation-foundations) shows these quantities side by side.
 
 ## Estimation, precision, sampling variability and bias {.core-heading .unnumbered}
 

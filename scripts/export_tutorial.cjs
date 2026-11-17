@@ -271,6 +271,7 @@ let browser;
       if (heading) {
         const copy = heading.cloneNode(true);
         copy.querySelectorAll('.reference-number').forEach(number => number.remove());
+        if (kind === 'equation') copy.querySelectorAll('.MathJax_SVG, .MathJax_SVG_Display, .MJX_Assistive_MathML, script[type^="math/tex"]').forEach(math => math.remove());
         text = copy.textContent;
       } else if (el.textContent.trim()) text = el.textContent;
       else {

@@ -126,7 +126,7 @@
       "margin of error",
       "half-width"
     ],
-    "definition": "For a symmetric confidence interval, the distance from the estimate to either limit: half the full width."
+    "definition": "For a symmetric interval, the distance from the estimate to either limit. An estimate of 20% with limits of 15% and 25% has a margin of error of 5 percentage points."
   },
   {
     "id": "full-width",

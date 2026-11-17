@@ -24,11 +24,19 @@
   }
   function position(record) {
     const rect = record.button.getBoundingClientRect(), tip = record.tip;
-    tip.style.maxHeight = Math.max(120, innerHeight - 24) + 'px';
-    const above = rect.top - tip.offsetHeight - 5;
-    const top = above >= 12 ? above : rect.bottom + 5;
+    // A slider/select widget may hide the original input. Include its visible
+    // container so the help stays outside the whole editable control.
+    const control = record.field.closest('.shiny-input-container') || record.field;
+    const fieldRect = control.getBoundingClientRect();
+    const lowerEdge = Math.max(rect.bottom, fieldRect.bottom);
+    const aboveSpace = Math.max(0, rect.top - 20);
+    const belowSpace = Math.max(0, innerHeight - lowerEdge - 20);
+    tip.style.maxHeight = Math.max(0, innerHeight - 24) + 'px';
+    const above = tip.offsetHeight <= aboveSpace || aboveSpace >= belowSpace;
+    tip.style.maxHeight = (above ? aboveSpace : belowSpace) + 'px';
+    const top = above ? rect.top - tip.offsetHeight - 8 : lowerEdge + 8;
     tip.style.left = Math.max(12, Math.min(rect.left, innerWidth - tip.offsetWidth - 12)) + 'px';
-    tip.style.top = Math.max(12, Math.min(top, innerHeight - tip.offsetHeight - 12)) + 'px';
+    tip.style.top = Math.max(12, top) + 'px';
   }
   function show(record) {
     clearTimeout(closeTimer);
@@ -47,6 +55,7 @@
       tip.className = 'input-guidance-popover'; tip.id = field.id + '-guidance-' + (++counter); tip.role = 'tooltip'; tip.hidden = true;
       button.setAttribute('aria-controls', tip.id); button.setAttribute('aria-describedby', tip.id);
       field.addEventListener('focus', close);
+      field.addEventListener('pointerenter', close);
       field.addEventListener('input', close);
       field.setAttribute('aria-describedby', [...new Set([...(field.getAttribute('aria-describedby') || '').split(/\s+/).filter(Boolean), tip.id])].join(' '));
       record = {button, tip, label, field, links: [...label.querySelectorAll('a')].map(a => a.cloneNode(true))};
@@ -120,12 +129,22 @@
   if (window.Shiny) Shiny.addCustomMessageHandler('activity-question-help', updateHelp);
   document.addEventListener('keydown', event => { if (event.key === 'Escape') close(); });
   document.addEventListener('pointerdown', event => { if (current && !current.button.contains(event.target) && !current.tip.contains(event.target)) close(); });
-  document.addEventListener('scroll', () => { if (current) position(current); }, true);
+  // Help can overlap a neighboring control in a compact layout. Moving toward
+  // that control dismisses the overlay before the first click reaches it.
+  document.addEventListener('pointermove', event => {
+    if (!current || current.button.contains(event.target) || event.target.closest('a')?.closest('.input-guidance-popover')) return;
+    const tip = current.tip;
+    const editing = document.elementsFromPoint(event.clientX, event.clientY).some(el =>
+      !tip.contains(el) && el.matches('input,textarea,select,[role="slider"],.selectize-input,.irs-handle,.irs-bar'));
+    if (editing) close();
+  }, true);
+  document.addEventListener('focusin', event => { if (event.target.matches('input,textarea,select,[role="slider"]')) close(); });
+  document.addEventListener('scroll', event => { if (current && !current.tip.contains(event.target)) close(); }, true);
   document.addEventListener('toggle', event => {
     if (event.target instanceof HTMLDetailsElement && event.target.open)
       event.target.querySelectorAll('textarea').forEach(fitExample);
   }, true);
-  window.addEventListener('resize', () => { if (current) position(current); });
+  window.addEventListener('resize', close);
   window.InputGuidance = {attach, close, init};
   document.addEventListener('DOMContentLoaded', init);
   new MutationObserver(init).observe(document.documentElement, {childList: true, subtree: true});

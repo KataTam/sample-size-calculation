@@ -33,6 +33,31 @@ draw_normal_multiplier <- function() {
   mtext("M = (1.96 + 1.28)^2 = 10.51, using unrounded cutoffs",side=1,outer=TRUE,line=.3,cex=.85)
 }
 
+draw_interval_margin <- function() {
+  old <- par(no.readonly=TRUE); on.exit(par(old))
+  # The same symmetric interval appears in both panels; only the emphasis changes.
+  par(mfrow=c(1,2),mar=c(4.8,1.1,3.6,1.1),family="sans",bg="white",fg="#26343d")
+  for (panel in 1:2) {
+    plot(NA,xlim=c(10,30),ylim=c(0,1),axes=FALSE,xlab="Neuropathy prevalence (%)",ylab="",
+      main=if(panel==1) "Confidence interval" else "Margin of error",cex.main=1.05)
+    mtext(if(panel==1) "The whole range: 15% to 25%" else "Distance to each limit: 5 percentage points",
+      side=3,line=.5,cex=.76)
+    axis(1,at=c(10,15,20,25,30),cex.axis=.85)
+    segments(15,.48,25,.48,col=if(panel==1) "#245e90" else "#8497a3",lwd=4)
+    segments(c(15,25),.42,c(15,25),.54,col="#245e90",lwd=2)
+    points(20,.48,pch=19,cex=1.35,col="#245e90")
+    text(20,.75,"Estimate: 20%",cex=.86)
+    segments(c(15,20,25),.05,c(15,20,25),.39,lty=3,col="#9caab2")
+    if (panel==1) {
+      arrows(15,.2,25,.2,code=3,length=.07,lwd=1.5,col="#245e90")
+      text(20,.31,"Full width: 10 percentage points",cex=.75)
+    } else {
+      arrows(c(15,20),.2,c(20,25),.2,code=3,length=.07,lwd=1.5,col="#72428b")
+      text(c(17.5,22.5),.31,c("5 points","5 points"),cex=.8,col="#72428b")
+    }
+  }
+}
+
 draw_prevalence_coverage <- function(){
   old<-par(no.readonly=TRUE);on.exit(par(old))
   # This reproducible illustrative batch has 19 intervals containing 20%.

@@ -962,7 +962,7 @@ The [advanced planning extension](#extend-study-plan) develops alternative scena
 After this chapter, you should be able to:
 
 - Distinguish an estimate from the population quantity it describes.
-- Explain confidence level, interval width and the repeated-study meaning of a confidence interval.
+- Explain confidence level, margin of error, interval width and the repeated-study meaning of a confidence interval.
 - Plan a sample size for a desired precision and interpret the interval clinically.
 - Write an estimation-based sample size calculation report with a justified precision target.
 - Assess the precision available from an existing dataset or a pilot study.
@@ -970,11 +970,19 @@ After this chapter, you should be able to:
 
 Suppose you are planning a neuropathy care service for adults with type 2 diabetes attending a diabetes clinic. How many of these patients have peripheral neuropathy? An estimate of that percentage would help the clinic anticipate its follow-up workload. Each sampled patient is assessed once, at enrollment.
 
-A recent clinic study planned its neuropathy prevalence estimate using a 95% confidence level, an anticipated prevalence of 22%, and a five-percentage-point margin of error [@negussie2024]. The worked service plan below follows this approach using a planning assumption of 20%: about one patient in five. The aim is a 95% confidence interval roughly five percentage points either side of the estimate. Later sections consider a population mean, treatment differences, existing data and pilot retention.
+A recent clinic study planned its neuropathy prevalence estimate using a 95% confidence level, an anticipated prevalence of 22%, and a five-percentage-point [margin of error](#margin-of-error) [@negussie2024]. The worked service plan below follows this approach using a planning assumption of 20%: about one patient in five. The aim is a 95% confidence interval roughly five percentage points either side of the estimate. Later sections consider a population mean, treatment differences, existing data and pilot retention.
 
 ## Estimates, confidence intervals and precision {#estimation-foundations .advanced-heading}
 
-A sample estimate changes when different participants are sampled. A [confidence interval](#confidence-interval){.no-glossary-tooltip} uses the data and analysis assumptions to give a range describing uncertainty about the population quantity. A narrower interval indicates greater [precision](#precision){.no-glossary-tooltip}. Across repeated studies, about 95% of intervals calculated by a 95% confidence-interval method contain the true population value under its assumptions.
+A sample estimate changes when different participants are sampled. A [confidence interval](#confidence-interval) uses the data and analysis assumptions to give a range describing uncertainty about the population quantity. A narrower interval indicates greater [precision](#precision) at the same confidence level.
+
+Suppose a survey estimates neuropathy prevalence as 20%, with a symmetric 95% confidence interval from 15% to 25%. The confidence interval is the whole range, 15% to 25%. The margin of error is the distance from the estimate to either limit: 5 percentage points. Figure \@ref(fig:interval-margin) shows the two quantities side by side. The [full width](#full-width) is 25 minus 15, or 10 percentage points.
+
+```{r interval-margin, echo=FALSE, fig.width=8, fig.height=3.7, fig.cap="A confidence interval and its margin of error, using a survey estimate of 20% and a symmetric interval from 15% to 25%. The interval spans 10 percentage points; the margin of error is 5 percentage points on either side of the estimate.", fig.alt="Two panels share the same percentage scale. The left panel highlights the whole confidence interval from 15% to 25%, with a dot at the estimate of 20%. The right panel marks each five-percentage-point distance from 20% to the lower and upper limits as the margin of error."}
+draw_interval_margin()
+```
+
+The confidence level describes the method across repeated studies. About 95% of intervals calculated by a 95% confidence-interval method contain the true population value under its assumptions.
 
 Figure \@ref(fig:twenty-prevalence-intervals) shows one illustrative batch of 20 surveys. The population prevalence is fixed at 20%; the sample estimates and their intervals change between surveys. The green intervals contain 20%, while the red interval misses it.
 
@@ -982,16 +990,14 @@ Figure \@ref(fig:twenty-prevalence-intervals) shows one illustrative batch of 20
 draw_prevalence_coverage()
 ```
 
-For example, a population percentage estimated as 20% with an interval from 15% to 25% has a full width of 10 percentage points and a margin of 5 points on either side. The [full width](#full-width) and confidence level should be chosen for the decision the estimate will inform. Under the same planning model, higher confidence or a narrower target width increases the unrounded sample size requirement.
-
 <details class="misconception" id="misconception-confidence-probability">
-<summary>Common misconception: this interval has a 95% probability of containing the population percentage</summary>
+<summary>Common misconception: there is a 95% probability that prevalence lies between 15% and 25%</summary>
 
-The true population percentage is fixed, while the interval changes from sample to sample. The 95% describes how often the method produces an interval containing that percentage across repeated studies.
+For the survey example above, the calculated confidence interval has fixed limits of 15% and 25%, and the population percentage is also fixed. The 95% describes how often the method produces an interval containing that percentage across repeated studies. It does not assign a probability to the population percentage lying inside these particular limits.
 
 </details>
 
-The clinic survey starts with a desired margin of error. The next section turns that precision target into a total sample size.
+The clinic survey starts with a desired margin of error and confidence level, chosen for the service-planning decision. Higher confidence or a narrower target interval requires a larger sample under the same planning model. The next section turns that precision target into a total sample size.
 
 ## Estimate one proportion: a prevalence survey {#prevalence .advanced-heading}
 
@@ -1008,7 +1014,15 @@ n\approx\frac{z_{1-\alpha/2}^{2}p_0(1-p_0)}{d^2}.
 (\#eq:single-proportion)
 \end{equation}
 
-Here $p_0$ is the anticipated population proportion used to plan the study. If comparable evidence suggests a prevalence of 20% ($p_0=0.20$), the approximate requirement is 246 completed observations. If there is no useful prior estimate, 50% ($p_0=0.50$) gives the largest value of $p_0(1-p_0)$ and an approximate requirement of 385.
+Here $p_0$ is the anticipated population proportion and $d$ is the desired margin of error, both entered as decimals. At 95% confidence, the standard-normal cutoff is approximately $z_{1-\alpha/2}=1.96$. Substituting 20% prevalence and a margin of 5 percentage points into Equation \@ref(eq:single-proportion) gives:
+
+\[
+n\approx\frac{1.96^2\times0.20\times(1-0.20)}{0.05^2}
+=\frac{3.8416\times0.20\times0.80}{0.0025}
+=245.86.
+\]
+
+Rounding upward gives 246 completed assessments. The denominator uses the margin of 5 percentage points ($d=0.05$); the full interval width is 10 points. If there is no useful prior estimate, 50% ($p_0=0.50$) gives the largest value of $p_0(1-p_0)$ and an approximate requirement of 385.
 
 ```{r single-proportion-precision}
 # Plan for a full width of 10 percentage points at 95% confidence.

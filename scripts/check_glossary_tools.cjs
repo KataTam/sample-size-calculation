@@ -21,6 +21,15 @@ const base=process.argv[2]||'http://127.0.0.1:8769';
     return duplicates;
   });
   assert.deepEqual(repeated,[], 'Glossary terms should be linked only once per chapter');
+  const chapter=page.locator(path.includes('Sample_size_open_module')?'#tutorial-estimation-planning':'#estimation-planning');
+  for(const id of ['margin-of-error','precision']){
+   const link=chapter.locator('a[data-glossary-term="'+id+'"]');
+   assert.equal(await link.count(),1,id+' has one glossary link in the chapter');
+   assert((await link.getAttribute('href')).endsWith('#'+id));
+   await link.hover();await page.locator('#glossary-tooltip:not([hidden])').waitFor();
+   assert.match(await page.locator('#glossary-tooltip').innerText(),id==='precision'?/narrower confidence interval/:/5 percentage points/);
+   await page.keyboard.press('Escape');
+  }
   const term=page.locator('a[data-glossary-term="full-width"]:not(.no-glossary-tooltip)').first();
   await term.hover();await page.locator('#glossary-tooltip:not([hidden])').waitFor();
   assert((await page.locator('#glossary-tooltip').innerText()).includes('upper'));
