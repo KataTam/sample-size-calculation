@@ -8,12 +8,12 @@ table { border-collapse: collapse; display: block; max-width: 100%; overflow-x: 
 .start-route > span { display: block; color: #364d59; }
 .start-route strong { display: block; margin-top: .4rem; font-size: 1.2rem; }
 .start-route:hover { background: #e6f1f6; border-color: #075b86; }
-.pilot-feedback { margin: 1.5rem 0; }
-.pilot-feedback h2 { font-size: 1.25rem; margin: 0 0 .75rem; }
-.pilot-form-links { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .75rem 1.5rem; }
-.pilot-form-link { display: block; padding: .65rem 0; }
-.pilot-form-link span { display: block; }
-.pilot-form-link .form-detail { color: #415761; font-size: .9rem; text-decoration: none; }
+.pilot-feedback { margin: 1.5rem 0; padding: 1.25rem; border: 1px solid #79a887; border-radius: .4rem; background: #d9eddf; }
+.pilot-feedback h2 { color: #214b36; font-size: 1.25rem; margin: 0 0 1rem; }
+.pilot-form-links { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .75rem; }
+.pilot-form-link { display: block; padding: .75rem 1rem; border: 1px solid #679177; border-radius: .3rem; background: #bfe0c9; color: #173f2b; text-align: center; }
+.pilot-form-link:hover { background: #abd4b7; border-color: #234f37; }
+.pilot-form-link:focus-visible { outline: 3px solid #173f2b; outline-offset: 3px; }
 .landing-footer { border-top: 1px solid #ccd7df; padding-top: 1rem; margin-top: 2rem; font-size: .9rem; color: #415761; }
 .learning-goals { border-left: 4px solid #3263a0; background: #edf3fc; color: #25313b; padding: 12px 20px; margin: 20px 0 26px; }
 .learning-goals p:last-child { margin-bottom: 0; }

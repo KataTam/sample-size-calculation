@@ -74,7 +74,11 @@ Chapter quizzes and the [cumulative quiz](#cumulative-quiz) help you check your 
 
 The three core chapters develop one [sample size calculation report](#reporting), with a supporting study plan. Advanced chapters extend the calculations to estimation, uncertain assumptions, simulation and other study designs.
 
-[Flashcards](https://katatam.github.io/sample-size-calculation/student-materials/flashcards/index.html) are available for Core and Core + Advanced, with a [question-and-answer preview](https://katatam.github.io/sample-size-calculation/student-materials/flashcards/cards.html) and Anki/Quizlet downloads. Questions and suggestions are welcome through [Feedback](https://forms.cloud.microsoft/e/j00AMibqi5).
+[Flashcards](https://katatam.github.io/sample-size-calculation/student-materials/flashcards/index.html) are available for Core and Core + Advanced, with a [question-and-answer preview](https://katatam.github.io/sample-size-calculation/student-materials/flashcards/cards.html) and Anki/Quizlet downloads.
+
+<!-- PILOT_GENERAL_FEEDBACK_HIDDEN: restore this sentence after the pilot.
+Questions and suggestions are welcome through [Feedback](https://forms.cloud.microsoft/e/j00AMibqi5).
+-->
 
 ::: {.learning-goals .core-outcomes}
 ## Core learning outcomes {#core-route .unnumbered .core-heading}

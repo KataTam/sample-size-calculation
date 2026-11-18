@@ -178,7 +178,9 @@
     details.classList.add('section-disclosure');
   });
   const header = document.querySelector('.book-header');
-  if (header && !document.getElementById('feedback-link')) {
+  // PILOT_GENERAL_FEEDBACK_HIDDEN: re-enable with the marked Welcome, help and homepage text.
+  const generalFeedbackEnabled = false;
+  if (generalFeedbackEnabled && header && !document.getElementById('feedback-link')) {
     const feedback = document.createElement('a');
     feedback.id = 'feedback-link'; feedback.textContent = 'Feedback';
     feedback.href = 'https://forms.cloud.microsoft/e/j00AMibqi5';
@@ -255,6 +257,7 @@
   flashcardLink.target = '_blank'; flashcardLink.rel = 'noopener';
   flashcards.append(flashcardLink); dialog.append(flashcards);
   const button = document.createElement('button'); button.id = 'activity-menu-button';
+  if (!generalFeedbackEnabled) button.style.right = '18px';
   button.type='button'; button.textContent='Activities'; button.setAttribute('aria-haspopup','dialog');
   button.addEventListener('click', () => dialog.showModal());
   dialog.addEventListener('click', event => { if (event.target === dialog) { const r=dialog.getBoundingClientRect(); if(event.clientX<r.left || event.clientX>r.right || event.clientY<r.top || event.clientY>r.bottom) dialog.close(); } });
