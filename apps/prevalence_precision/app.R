@@ -151,17 +151,20 @@ server <- function(input, output, session) {
         paste0("±", 100*p$half_width, " percentage points"), p$n, n,
         adjust_for_dropout(n, x$dropout), paste0(round(100*anticipated_width, 1), " percentage points")))
   })
-  output$precision_text <- renderText({
+  precision_interpretation <- reactive({
     p <- plan(); x <- snapshot(); n <- analysable_n()
     if (x$goal == "fixed") paste0("With ", n, " participants and an anticipated percentage of ",
       format_percent(p$planning_p), ", the approximate full ", format_percent(x$confidence),
       " interval width is ", round(200*qnorm((1+x$confidence)/2)*sqrt(p$planning_p*(1-p$planning_p)/n),1),
-      " percentage points. The selected target is ", round(100*x$full_width,1), " points.")
+      " percentage points. This is a margin of about ", round(100*qnorm((1+x$confidence)/2)*sqrt(p$planning_p*(1-p$planning_p)/n),1),
+      " patients per 100. The selected full-width target is ", round(100*x$full_width,1), " points.")
     else paste0("At ", format_percent(x$confidence), " confidence, estimating ", format_percent(p$planning_p),
       " within about ", round(100*p$half_width,1), " percentage points requires ", n,
-      " completed assessments in total.", if(x$dropout > 0) paste0(" Allowing for ", format_percent(x$dropout),
-        " loss gives ", adjust_for_dropout(n,x$dropout), " participants to recruit.") else "")
+      " completed assessments in total. The margin corresponds to about ", round(100*p$half_width,1),
+      if(active_case()=="pilot_feasibility") " retained patients per 100 enrolled." else " affected patients per 100 in the population.", if(x$dropout > 0) paste0(" With about ", round(100*x$dropout,1),
+        " of every 100 approached lacking an assessment, plan to approach ", adjust_for_dropout(n,x$dropout), " patients.") else "")
   })
+  output$precision_text <- renderText(precision_interpretation())
   output$approximation_note <- renderText({
     p <- plan(); n <- analysable_n()
     sparse <- min(n*p$planning_p, n*(1-p$planning_p)) < 10
@@ -257,7 +260,7 @@ server <- function(input, output, session) {
       paste0("Anticipated percentage: ", format_percent(x$anticipated_p), "; percentage used for planning: ", format_percent(plan()$planning_p),
         ". Confidence: ", format_percent(x$confidence), "; target full width: ", 100*x$full_width, " percentage points."),
       method_text(),
-      paste0("Approximate full width at the current sample: ", overview_values()[["Approximate full width"]], ". Realized confidence interval widths vary between samples."),
+      precision_interpretation(),
       if (isTRUE(input$simulate > 0)) {
         y <- study(); r <- y$result
         if (!identical(y$inputs, x) || !identical(y$case_id, active_case()))

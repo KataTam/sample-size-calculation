@@ -5,13 +5,13 @@
   const node = (tag, text) => { const el=document.createElement(tag); el.textContent=text; return el; };
   const records = value => { try {return JSON.parse(value.calculation_records || '[]');} catch (_) {return [];} };
   const selected = value => records(value).filter(r=>r.kind==='calculation').at(-1);
-  const compatible = (value, record) => record && record.facts?.outcome===value.outcome &&
+  const compatible = (value, record) => !AdvancedPlan.complex(value) && record && record.facts?.outcome===value.outcome &&
     record.facts?.study_type===value.study_type && record.facts?.goal===value.goal;
-  const showPrepared = value => prepared && value.plan_basis==='pain' && value.study_type==='comparison' &&
+  const showPrepared = value => !AdvancedPlan.complex(value) && prepared && value.plan_basis==='pain' && value.study_type==='comparison' &&
     value.outcome==='binary' && value.goal==='testing' && !selected(value);
   const pct = x => Number((100*x).toFixed(2)) + '%';
   function answers(value, result, formats) {
-    if(value.plan_basis!=='pain') return result;
+    if(value.plan_basis!=='pain' || AdvancedPlan.complex(value)) return result;
     const attached=selected(value);
     if(!attached) {
       if(showPrepared(value)) result.software='Normal approximation using stats::power.prop.test(), two-sided with strict = TRUE; R '+prepared.r_version+', stats '+prepared.stats_version+'. The prepared calculation record gives the command, inputs, date and source version.';

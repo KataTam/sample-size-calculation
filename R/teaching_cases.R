@@ -52,7 +52,7 @@ teaching_cases <- function() {
       "activity-3-generate-analyze-repeat-summarize", list(outcome = "proportions", goal = "fixed", fixed_n = 100, missing_n = 100,
         plan_p0 = .30, plan_p1 = .60, width_p = .30, seed = 20260921,
         stage = "Many studies")),
-    mean_precision = case("mean_precision", "Mean improvement: estimation with a precision target",
+    mean_precision = case("mean_precision", "Estimate a population mean with a precision target",
       "Estimate the mean improvement in one patient population. Choose a confidence interval width, calculate the total sample size, and simulate studies to see how estimates and intervals vary.",
       "plan-for-precision", list(outcome = "means", goal = "precision", plan_delta = 3,
         plan_sd = 5, threshold_m = 2, width_m = 4, target_power = .80, seed = 20260922)),

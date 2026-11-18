@@ -84,6 +84,7 @@
   function decorate(value, article, lines, active) {
     const statuses=read(value.decision_statuses,{}), records=validateRecords(value.calculation_records||'[]');currentRecords=records;
     const issues=[];let readySections=0;
+    if(AdvancedPlan.complex(value) && value.plan_level!=='advanced') issues.push('Advanced design selections are saved. The Advanced study plan view includes their additional prompts and report entries.');
     groups.forEach(([title,definitions],index)=>{
       const relevant=definitions.filter(field=>active(field,value)&&required(field,value));
       const missing=relevant.filter(([id])=>!value[id].trim());
@@ -102,6 +103,7 @@
     const calc=[...records].reverse().find(r=>r.kind==='calculation'), recruitment=[...records].reverse().find(r=>r.kind==='recruitment');
     if(!calc)issues.push('No calculator result has been attached. An external calculation can be documented in the calculation and software answers.');
     if(calc?.facts?.study_type==='comparison' && calc.facts.analyzable && recruitment?.facts?.starting_n && calc.facts.analyzable!==recruitment.facts.starting_n)issues.push('The recruitment calculation starts with '+recruitment.facts.starting_n+' per group, while the selected calculation requires '+calc.facts.analyzable+'. The recruitment calculation needs review.');
+    if(calc && AdvancedPlan.selected(value).size) issues.push('The saved calculation needs review against the selected design features and their additional assumptions.');
     if(calc?.facts?.outcome && calc.facts.outcome!==value.outcome)issues.push('The attached calculation uses a different outcome type from the current study settings.');
     if(calc?.facts?.study_type && calc.facts.study_type!==value.study_type)issues.push('The attached calculation uses a different study structure from the current study settings.');
     if(calc?.facts?.goal && calc.facts.goal!==value.goal && value.goal!=='both')issues.push('The attached calculation uses a different planning goal from the current study settings.');
@@ -164,7 +166,7 @@
     setStatuses(statuses);
   }
   function onEdit(name){
-    if(['study_type','outcome','goal','plan_basis'].includes(name)){invalidate([0,1,2,3]);return;}
+    if(['study_type','outcome','goal','plan_basis','advanced_features'].includes(name)){invalidate([0,1,2,3]);return;}
     const index=groups.findIndex(([,definitions])=>definitions.some(([id])=>id===name));
     if(index<0)return;
     invalidate([index,...(['question','design','outcome_detail','expected','clinical','planning','variation','analysis','power','precision','counts','sensitivity'].includes(name)?[2,3]:[])]);

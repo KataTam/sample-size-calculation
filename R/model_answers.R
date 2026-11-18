@@ -33,7 +33,8 @@ precision_model_answer <- function(x, p, n, case_id, saved = NULL) {
     if (case_id == "pilot_feasibility") "the agreed progression decision. " else "the service-planning decision. ",
     "At ", format_percent(x$confidence), " confidence, ", n, " participants give an approximate full width of ",
     round(100*width, 1), " points, ", if (width <= x$full_width) "meeting" else "exceeding",
-    " the ", model_number(100*x$full_width), "-point target. ",
+    " the ", model_number(100*x$full_width), "-point target. This is a margin of about ", round(50*width,1),
+    if (case_id == "pilot_feasibility") " retained patients per 100 enrolled. " else " affected patients per 100 in the population. ",
     if (x$goal == "fixed") paste0("The available sample is fixed at ", n, ". ") else "",
     if (x$unknown_p) paste0("Conservative planning uses 50%; simulation assumes ", format_percent(x$anticipated_p), ". ") else "",
     if (x$dropout > 0) paste0("With ", format_percent(x$dropout), if (case_id == "pilot_feasibility") " unknown retention status" else " unavailable outcome status", ", the recruitment target is ", adjust_for_dropout(n, x$dropout), ".") else "")

@@ -4,6 +4,7 @@ Use the same case and assumptions through the module, [lab](https://katatam.gith
 
 | Outcome | Learning activity | Evidence | Rubric criterion |
 |---|---|---|---|
+| Overarching: critically appraise a sample size justification | Review a published calculation or the report-review example | Identify an unsupported assumption, explain its consequences, and justify a revision | 3, 4, 10 |
 | Core: specify the comparison | Use a supplied two-arm case and a power target | PICO question and intended conclusion | 1 |
 | Core: distinguish the roles of differences | Explain the supplied target and clinical judgment | Difference observed in previous data, target difference and clinical threshold, with short justifications | 2 |
 | Core: calculate under explicit methods | Calculate the chronic pain requirement; optional probiotics or rehabilitation transfer | Inputs, method, software and reproducible counts | 4 |
@@ -13,7 +14,7 @@ Use the same case and assumptions through the module, [lab](https://katatam.gith
 | Advanced: evaluate precision | Compare CI width and clinical threshold | Interpretation of three prepared intervals | 8 |
 | Advanced: explain simulation uncertainty | Change B while keeping n fixed; check assumptions and analysis | Monte Carlo interval, seed, generating assumptions and failures | 9 |
 | Advanced: recognize complex testing decisions | Compare success rules and discuss a planned interim look using Chapter 7 | Explanation of required claims, error control, joint power, stopping and re-estimation decisions | Formative chapter check |
-| Advanced: document a complex design | Review a hypothetical protocol against the Chapter 8 advanced checklist | Prespecified rules, final analysis, software and dated protocol/SAP record | 4, 10; 9 if simulation is included |
+| Advanced: document a complex design | Select relevant design features in the report activity and review the record against the Chapter 8 checklist | Design-specific assumptions, prespecified rules, external calculation, software and dated protocol/SAP record | 4, 10; 9 if simulation is included |
 | Core: review and communicate the calculation | Identify four report problems, then check the continuing report | Consistent inputs, power interpretation, counts and loss adjustment | 4, 5, 10 |
 | Contribute an OER case | Adapt and review a case | Reviewed contribution, optional publication consent | Formative feedback |
 

@@ -121,7 +121,9 @@ single_population_server <- function(id) shiny::moduleServer(id, function(input,
       paste0("an assumed percentage of ", format_percent(s$probability)), ", a full ",
       format_percent(s$confidence), " interval width of ", width(s$width), " requires ",
       n(), " analyzable participants in total. The anticipated width at this count is ",
-      width(single_population_width(s,n())), ".")
+      width(single_population_width(s,n())), ". This corresponds to a margin of about ",
+      if(s$outcome=="means") paste0(round(single_population_width(s,n())/2,2), " score units on either side of the estimated mean.") else
+        paste0(round(50*single_population_width(s,n()),1), " patients per 100 in the population."))
   })
   output$curve <- renderPlot({
     s<-spec(); ns<-unique(round(seq(max(2,n()/2),n()*2,length.out=100)))
@@ -161,7 +163,9 @@ single_population_server <- function(id) shiny::moduleServer(id, function(input,
       if(s$outcome=="means")paste0("Assumed SD: ",s$sd," units. Population mean used in simulation: ",value(s$mean),".")
       else paste0("Assumed event probability: ",format_percent(s$probability),".")),
       "Sample size"=paste0(n()," analyzable participants in one sample; ",adjust_for_dropout(n(),input$dropout),
-        " participants to recruit allowing for ",format_percent(input$dropout)," expected loss. Anticipated full interval width: ",width(single_population_width(s,n())),"."),
+        " participants to recruit allowing for ",format_percent(input$dropout)," expected loss. Anticipated full interval width: ",width(single_population_width(s,n())),
+        "; margin of about ",if(s$outcome=="means")paste0(round(single_population_width(s,n())/2,2)," score units on either side of the estimated mean.")else
+          paste0(round(50*single_population_width(s,n()),1)," patients per 100 in the population.")),
       "Simulation results"=simulation_lines(),
       "Simulation record"=c(paste0("Planning: ",if(s$outcome=="means")"expected one-sample t-interval width under normal sampling" else "Wilson interval width at the assumed event probability",
         "; integer search for the smallest sample meeting the width target."),

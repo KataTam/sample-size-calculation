@@ -219,7 +219,7 @@
       {
         "text": "With 90% power, 20% anticipated prevalence and a 5% margin of error, the sample size is 246.",
         "error": true,
-        "explanation": "This estimation goal needs a confidence level and a margin expressed in percentage points. The stated calculation uses 95% confidence and a five-percentage-point margin; power concerns a specified hypothesis test.",
+        "explanation": "The survey estimates prevalence with a chosen precision. This calculation uses 95% confidence. The margin should be five percentage points: around an estimate of 20%, that means approximately 15% to 25%. Corrected wording: With anticipated prevalence of 20%, 95% confidence and a margin of error of five percentage points, 246 completed assessments are required.",
         "link": "estimation-planning.html#prevalence",
         "section": "Prevalence sample size"
       },

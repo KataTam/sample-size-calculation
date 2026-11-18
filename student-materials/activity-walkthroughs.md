@@ -23,6 +23,8 @@ The chronic pain case compares fictional Neravixa with duloxetine for painful di
 
 Your report develops through these four activities in the same [study-plan workspace](../assumptions_report/). The default core view asks for the essentials; “Advanced study plan” adds detailed supporting prompts to the same answers. Additional discharge practice is optional basic practice. The later simulations and independent planning are advanced extensions.
 
+For an advanced project, *Study settings* includes design features that reveal relevant questions about clusters, repeated measurements, survival outcomes, margins, multiple claims, interim decisions or simulation. The calculation and software fields can record results from an external method. These answers appear in the calculation report and supporting study plan and are retained in saved work.
+
 The chronic pain example connects the core simulation, calculation, recruitment adjustment and annotated report. Optional examples apply the method to a different outcome; any report based on one of them should retain that example throughout.
 
 ## Reports and saved work

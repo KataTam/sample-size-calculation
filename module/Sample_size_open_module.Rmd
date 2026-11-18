@@ -49,7 +49,7 @@ report_example <- local({
 
 # Welcome {-}
 
-How many patients would you need to compare a new pain treatment with standard treatment? This tutorial helps you justify a sample size that can answer your research question, using clinical examples, calculations and simulation.
+How many participants does a study need to answer its research question? This tutorial helps students and researchers understand, justify and critically assess sample size calculations through worked examples, interactive activities and simulations.
 
 Although the examples are clinical, the principles of justifying assumptions, choosing a target difference, and examining power and precision also apply in psychology, education, and other quantitative disciplines [@lakens2022]. The tutorial is a suitable starting point for learning these principles and planning comparisons of two independent groups with a continuous or binary outcome, provided the calculation’s assumptions match your study. Later chapters introduce other planning goals and help you recognize when a different method is needed. For factorial experiments and repeated-measures ANOVA, including designs common in psychology, *[Power Analysis with Superpower](https://aaroncaldwell.us/SuperpowerBook/)* provides more directly applicable examples and simulations [@superpowerbook2022]. Studies involving multilevel models, prediction, or time-to-event outcomes need guidance matched to those analyses; the chapter [Study designs and testing strategies](#study-designs) points you toward relevant resources. What counts as a worthwhile difference should also reflect your field and research question.
 
@@ -79,6 +79,8 @@ The three core chapters develop one [sample size calculation report](#reporting)
 <!-- PILOT_GENERAL_FEEDBACK_HIDDEN: restore this sentence after the pilot.
 Questions and suggestions are welcome through [Feedback](https://forms.cloud.microsoft/e/j00AMibqi5).
 -->
+
+The overarching learning outcome is to critically appraise how a medical study justifies its sample size and judge whether its assumptions, methods and results support its conclusions. The outcomes below develop the knowledge and skills needed for that appraisal.
 
 ::: {.learning-goals .core-outcomes}
 ## Core learning outcomes {#core-route .unnumbered .core-heading}
@@ -189,7 +191,7 @@ The pilot findings provide a starting point for planning the larger trial. Three
 
 The [difference observed in the pilot](#expected-difference) is 40 percentage points: 70% achieved pain relief with Neravixa, compared with 30% with duloxetine. This describes the patients in that small study. Another pilot could produce a different result. These findings should therefore be considered alongside other relevant evidence, including differences in pain severity, background treatment and assessment time.
 
-The [target difference](#target-difference) is the population difference at which the sample size calculation evaluates [power](#statistical-power). The trial is planned for a target difference of 30 percentage points: 60% pain relief with Neravixa versus 30% with duloxetine. The sample size will be chosen to give 90% power under these assumptions. Choosing the target requires a judgment about what difference is plausible and important to detect; the uncertain pilot estimate is one source of evidence [@cook2018delta2; @cook2019delta2].
+The [target difference](#target-difference) is the population difference at which the sample size calculation evaluates [power](#statistical-power). The trial is planned for a target difference of 30 percentage points: 60% pain relief with Neravixa versus 30% with duloxetine, equivalent to 30 additional patients achieving relief per 100 treated. The sample size will be chosen to give 90% power under these assumptions. Choosing the target requires a judgment about what difference is plausible and important to detect; the uncertain pilot estimate is one source of evidence [@cook2018delta2; @cook2019delta2].
 
 The [clinical threshold](#clinical-threshold) is the smallest additional benefit judged worthwhile. For this teaching case, suppose Neravixa requires four additional safety-monitoring visits and carries a risk of short-lived dizziness. Patient and clinical advisers judge that at least 20 additional patients achieving pain relief per 100 treated would justify this additional burden and potential harm compared with duloxetine. This gives a clinical threshold of 20 percentage points. The judgment needs to reflect the particular treatments and patients [@cook2018delta2].
 
@@ -492,7 +494,7 @@ knitr::kable(data.frame(`Analyzable per group`=n_per_group, `Analyzable total`=2
   caption = "Analyzable sample size for the chronic pain trial using the normal planning approximation.")
 ```
 
-The unrounded result is `r round(n_raw, 2)` patients per group. Rounding upward gives `r n_per_group` per group, or `r 2 * n_per_group` in total. This is the count used in the recruitment and fixed-sample sensitivity examples below. The `strict = TRUE` setting counts significant results in either direction for the two-sided test.
+The unrounded result is `r round(n_raw, 2)` patients per group. The trial therefore needs outcomes from `r n_per_group` patients in each treatment group, or `r 2 * n_per_group` patients altogether, after rounding upward. This analyzable count is used in the recruitment and fixed-sample sensitivity examples below. The `strict = TRUE` setting counts significant results in either direction for the two-sided test.
 
 The calculation targets 90% power under the stated assumptions. Actual power for the planned test can differ because the calculation is approximate; simulation lets you examine that performance. Your report should identify the method, assumptions and rounding, and account for expected losses separately.
 
@@ -618,7 +620,7 @@ c(unrounded_per_group = normal_n_raw,
   rounded_per_group = ceiling(normal_n_raw))
 ```
 
-The normal approximation gives 58.4 patients per group, which rounds upward to 59. The planned analysis is a pooled two-sample t-test, which accounts for estimating the common SD from the trial data. Its sample size calculation gives 60 patients per group. The app and subsequent examples use this result.
+The normal approximation gives 58.4 patients per group, which rounds upward to 59. The planned analysis is a pooled two-sample t-test, which accounts for estimating the common SD from the trial data. Its sample size calculation gives 60 patients per group. The trial would therefore need outcomes from 60 patients in each group, or 120 altogether, for 90% power at a three-point mean difference with SD five. The app and subsequent examples use this result.
 
 ```{r t-test-planning}
 # Plan the pooled two-sample t test with the same inputs.
@@ -739,6 +741,8 @@ c(analyzable_per_group = analyzable_per_group,
 knitr::kable(data.frame(`Analyzable per group`=analyzable_per_group, `Recruit per group`=recruit_per_group, `Recruit total`=2*recruit_per_group, check.names=FALSE),
   caption = "Chronic-pain recruitment target allowing for 5% expected loss.")
 ```
+
+Allowing for 5% unavailable outcomes, the team would recruit `r recruit_per_group` patients per group (`r 2*recruit_per_group` overall), aiming to obtain the required `r analyzable_per_group` outcomes in each group.
 
 <details class="misconception" id="misconception-dropout-arithmetic">
 <summary>Common misconception: allowing for 10% dropout means adding 10%</summary>
@@ -967,7 +971,7 @@ After this chapter, you should be able to:
 
 - Distinguish an estimate from the population quantity it describes.
 - Explain confidence level, margin of error, interval width and the repeated-study meaning of a confidence interval.
-- Plan a sample size for a desired precision and interpret the interval clinically.
+- Plan a sample size for a desired precision and explain what its result means for patients or service planning.
 - Write an estimation-based sample size calculation report with a justified precision target.
 - Assess the precision available from an existing dataset or a pilot study.
 :::
@@ -980,17 +984,19 @@ A recent clinic study planned its neuropathy prevalence estimate using a 95% con
 
 A sample estimate changes when different participants are sampled. A [confidence interval](#confidence-interval) uses the data and analysis assumptions to give a range describing uncertainty about the population quantity. A narrower interval indicates greater [precision](#precision) at the same confidence level.
 
-Suppose a survey estimates neuropathy prevalence as 20%, with a symmetric 95% confidence interval from 15% to 25%. The confidence interval is the whole range, 15% to 25%. The margin of error is the distance from the estimate to either limit: 5 percentage points. Figure \@ref(fig:interval-margin) shows the two quantities side by side. The [full width](#full-width) is 25 minus 15, or 10 percentage points.
+Suppose a survey estimates neuropathy prevalence as 20%, with a symmetric 95% confidence interval from 15% to 25%. The margin of error is the distance from the estimate to either limit: 5 percentage points. The confidence interval is the whole range, 15% to 25%. Figure \@ref(fig:interval-margin) shows the two quantities side by side. The [full width](#full-width) is 25 minus 15, or 10 percentage points.
 
-```{r interval-margin, echo=FALSE, fig.width=8, fig.height=3.7, fig.cap="A confidence interval and its margin of error, using a survey estimate of 20% and a symmetric interval from 15% to 25%. The interval spans 10 percentage points; the margin of error is 5 percentage points on either side of the estimate.", fig.alt="Two panels share the same percentage scale. The left panel highlights the whole confidence interval from 15% to 25%, with a dot at the estimate of 20%. The right panel marks each five-percentage-point distance from 20% to the lower and upper limits as the margin of error."}
+```{r interval-margin, echo=FALSE, fig.width=8, fig.height=3.7, fig.cap="The margin of error and confidence interval, using a survey estimate of 20% and a symmetric interval from 15% to 25%. The interval spans 10 percentage points; the margin of error is 5 percentage points on either side of the estimate.", fig.alt="Two panels share the same percentage scale. The left panel marks each five-percentage-point distance from the estimate of 20% to the limits as the margin of error. The right panel highlights the whole confidence interval from 15% to 25%."}
 draw_interval_margin()
 ```
 
 The confidence level describes the method across repeated studies. About 95% of intervals calculated by a 95% confidence-interval method contain the true population value under its assumptions.
 
-Figure \@ref(fig:twenty-prevalence-intervals) shows one illustrative batch of 20 surveys. The population prevalence is fixed at 20%; the sample estimates and their intervals change between surveys. The green intervals contain 20%, while the red interval misses it.
+Each row in Figure \@ref(fig:twenty-prevalence-intervals) represents a separate simulated sample of 246 patients from the same clinic population, where 20% have neuropathy. Different samples include different patients, so the observed percentages vary. Each dot shows one sample's percentage; its horizontal line is a 95% confidence interval calculated from those patients to describe uncertainty about the population percentage.
 
-```{r twenty-prevalence-intervals, echo=FALSE, fig.width=8, fig.height=6.4, fig.cap="Twenty illustrative surveys of 246 adults, with population neuropathy prevalence fixed at 20%. Nineteen green intervals contain 20%; one red interval misses it. Circles and a cross distinguish the two outcomes as well as color. This batch illustrates the repeated-study meaning of 95% confidence.", fig.alt="Twenty horizontal confidence intervals around survey estimates. A vertical line marks population neuropathy prevalence of 20%. Nineteen green intervals cross the line; one red interval, marked by a cross, lies entirely below it."}
+The vertical line marks the known population value of 20%. In this illustrated batch, 19 green intervals contain it and one red interval misses it. The number containing it varies between batches. Across many repetitions, the method aims to include the population value about 95% of the time.
+
+```{r twenty-prevalence-intervals, echo=FALSE, fig.width=8, fig.height=6.4, fig.cap="Twenty simulated clinic samples of 246 adults, with population neuropathy prevalence fixed at 20%. Nineteen green intervals contain 20%; one red interval misses it. Circles and a cross distinguish the two outcomes as well as color. This batch illustrates the repeated-study meaning of 95% confidence.", fig.alt="Twenty horizontal confidence intervals around estimates from simulated clinic samples. A vertical line marks population neuropathy prevalence of 20%. Nineteen green intervals cross the line; one red interval, marked by a cross, lies entirely below it."}
 draw_prevalence_coverage()
 ```
 
@@ -1009,7 +1015,7 @@ A prevalence survey estimates one population proportion at a defined time. Each 
 
 Such estimates can inform service planning or recruitment and retention assumptions for a future trial. The planning question is how precisely the study should estimate the population percentage [@pourhoseingholi2013; @ying2025].
 
-For the neuropathy service plan, the desired margin of error is 5 [percentage points](#percentage-points): half-width $d=0.05$, or a full width of 10 points, at 95% confidence. Here, n is the total number of independently sampled patients from the clinic register.
+The clinic needs an estimate with a margin of error of five [percentage points](#percentage-points). Around an estimate of 20 patients per 100, this would give an interval extending approximately from 15 to 25 patients per 100. The chosen confidence level is 95%. Here, $n$ is the total number of independently sampled patients from the clinic register.
 
 For an anticipated population proportion $p_0$, the normal approximation gives:
 
@@ -1026,7 +1032,9 @@ n\approx\frac{1.96^2\times0.20\times(1-0.20)}{0.05^2}
 =245.86.
 \]
 
-Rounding upward gives 246 completed assessments. The denominator uses the margin of 5 percentage points ($d=0.05$); the full interval width is 10 points. If there is no useful prior estimate, 50% ($p_0=0.50$) gives the largest value of $p_0(1-p_0)$ and an approximate requirement of 385.
+Rounding upward gives 246 completed assessments. The clinic would select patients from its register and aim to obtain this many completed neuropathy assessments. The planned precision would help estimate follow-up workload to within about five affected patients per 100 clinic patients.
+
+If there is no useful prior estimate, 50% ($p_0=0.50$) gives the largest value of $p_0(1-p_0)$ and an approximate requirement of 385.
 
 ```{r single-proportion-precision}
 # Plan for a full width of 10 percentage points at 95% confidence.
@@ -1058,15 +1066,17 @@ These survey decisions can now be brought together in a sample size calculation 
 
 An estimation plan identifies the population quantity, outcome and assessment time, confidence level, desired full interval width, anticipated percentages or SD, interval method, software and participant counts. Its justification explains why the chosen width would be useful. For existing data, it describes the available count and anticipated precision. The [study-plan activity](https://katatam.github.io/sample-size-calculation/assumptions_report/?stage=calculation) displays these fields when an estimation goal is selected; [Chapter 3](#reporting) explains the common report structure.
 
-The report below follows the study-size and statistical-method reporting items in STROBE and the precision-based approach in the published neuropathy study [@strobe2007; @negussie2024]. The selected margin corresponds to uncertainty of about five affected patients per 100 clinic patients, which is the tolerance used for the service's initial workload plan.
+The report below follows the study-size and statistical-method reporting items in STROBE and the precision-based approach in the published neuropathy study [@strobe2007; @negussie2024].
 
 <div class="annotated-report" id="estimation-report-example" role="group" aria-labelledby="estimation-report-caption">
 
 <p class="caption" id="estimation-report-caption">Example 4.1. Sample size calculation report for the neuropathy prevalence survey.</p>
 
-Peripheral neuropathy prevalence will be estimated among adults with type 2 diabetes attending the clinic, using one assessment per patient at enrollment. Patients will be selected by simple random sampling from the clinic register. With anticipated prevalence of 20%, 95% confidence and a margin of error of five percentage points, the single-proportion normal approximation gives $1.96^2\times0.20\times0.80/0.05^2=245.86$, rounded upward to 246 completed assessments. The margin was chosen to support workload planning to within approximately five affected patients per 100 clinic patients. Allowing for 5% nonresponse gives $\lceil246/0.95\rceil=259$ patients to approach. The observed prevalence will be reported with a 95% Wilson confidence interval. The calculation uses R `r getRversion()`, `stats::qnorm(0.975)` and the formula shown; the interval uses the Wilson score method without continuity correction. The inputs and commented code are retained with the calculation record.
+Peripheral neuropathy prevalence will be estimated among adults with type 2 diabetes attending the clinic, using one assessment per patient at enrollment. Patients will be selected by simple random sampling from the clinic register. With anticipated prevalence of 20%, 95% confidence and a margin of error of five percentage points, the single-proportion normal approximation gives $1.96^2\times0.20\times0.80/0.05^2=245.86$, rounded upward to 246 completed assessments. The margin was chosen to support workload planning to within approximately five affected patients per 100 clinic patients. If about five of every 100 invited patients do not participate, $\lceil246/0.95\rceil=259$ eligible patients will be approached to obtain approximately 246 completed assessments. The observed prevalence will be reported with a 95% Wilson confidence interval. The calculation uses R `r getRversion()`, `stats::qnorm(0.975)` and the formula shown; the interval uses the Wilson score method without continuity correction. The inputs and commented code are retained with the calculation record.
 
 </div>
+
+To interpret a result for workload planning, an estimated prevalence of 20% would correspond to about 200 affected patients in a comparable clinic population of 1,000. An interval from 15% to 25% would correspond to approximately 150–250 affected patients.
 
 The following draft concerns the same survey. Its highlighted passages can be selected to inspect the calculation and reporting problems.
 
@@ -1080,7 +1090,7 @@ The same precision-based approach can be used for a population mean, with the SD
 
 A rehabilitation study aims to estimate the mean improvement in one patient population. You should specify how narrow the confidence interval needs to be to support a useful interpretation. Here, a 95% confidence interval with an anticipated full width of 4 score units is the precision target [@wang2020; @lakens2022].
 
-With an assumed SD of 5 units, the [mean estimation activity](https://katatam.github.io/sample-size-calculation/study/?activity=mean_precision) finds the smallest total sample meeting this target. The calculation uses the confidence level, SD and desired width. The population mean used in simulation is 3 units, which supplies a known value for checking the intervals.
+With an assumed SD of 5 units, [Activity: Estimate a population mean with a precision target](https://katatam.github.io/sample-size-calculation/study/?activity=mean_precision) finds the smallest total sample meeting this target. The calculation uses the confidence level, SD and desired width. The population mean used in simulation is 3 units, which supplies a known value for checking the intervals.
 
 ```{r precision-plan}
 # Define one population and the desired precision for its mean.
@@ -1099,7 +1109,7 @@ precision_batch <- single_population_simulate(precision_spec, precision_n, many 
 knitr::kable(data.frame(`Analyzable participants (total)`=precision_n, `Anticipated full interval width`=round(single_population_width(precision_spec, precision_n),2),check.names=FALSE), caption="Total sample required to estimate one population mean with a 95% confidence interval of anticipated full width at most 4 score units, assuming SD 5.")
 ```
 
-For normal data, this calculation uses the expected full width of a t-based interval. Realized interval widths vary with the sample SD. The simulation shows how often intervals contain the known population mean and how often their width meets the chosen target [@sandoval2025].
+The calculation requires `r precision_n` completed observations in total. A full width of four score units corresponds to roughly two units on either side of the estimated mean. For normal data, the calculation uses the expected full width of a t-based interval; realized widths vary with the sample SD. The simulation shows how often intervals contain the known population mean and how often their width meets the chosen target [@sandoval2025].
 
 ```{r precision-app-preview, echo=FALSE, results='asis'}
 render_app_preview("mean_precision", "Explore sample size for a chosen confidence interval width.")
@@ -1207,7 +1217,7 @@ knitr::kable(data.frame(
   caption = "A new descriptive question answered using an existing chronic pain trial dataset.")
 ```
 
-The interval describes sampling uncertainty under the model. Possible differences between the 20 patients with missing information and those who answered require separate assessment. The trial's eligibility criteria also restrict whom these results describe: its participants may not represent all patients with chronic pain. Random allocation supports the original treatment comparison.
+The estimate corresponds to 40 patients reporting sleep difficulty per 100, with an interval from about `r round(100*sleep_limits[1, 1])` to `r round(100*sleep_limits[1, 2])` per 100 under the model. This supports a broad description; a decision needing a margin of two patients per 100 would require greater precision. Possible differences between the 20 patients with missing information and those who answered require separate assessment. The trial's eligibility criteria also restrict whom these results describe: its participants may not represent all patients with chronic pain. Random allocation supports the original treatment comparison.
 
 Before analyzing the reused data, you should check that the required variables and time points are available, reuse is permitted, and the analysis fits the new objective. Your report should state the precision needed for the decision and identify analyses developed after inspecting the data as exploratory [@lakens2022; @consortee2025].
 
@@ -1362,7 +1372,7 @@ The middle column of Table \@ref(tab:cap-table) corresponds to the intersections
 <details class="misconception" id="misconception-detection-boundary">
 <summary>Common misconception: smaller differences cannot be detected</summary>
 
-Power changes gradually with the true difference. A difference below the point where a curve reaches 90% power can still produce a statistically significant result; this happens less often across repeated studies. With 100 patients per group, power is approximately 83% for a 20-point difference and 59% for a 15-point difference.
+Power changes gradually with the true difference. A difference below the point where a curve reaches 90% power can still produce a statistically significant result; this happens less often across repeated studies. With 100 patients per group, a true 20-point difference would be detected in about 83 of 100 repeated trials; a true 15-point difference would be detected in about 59 of 100, under the stated assumptions.
 
 </details>
 
@@ -1858,7 +1868,7 @@ Here, $n$ denotes patients per group and $B$ denotes the number of simulated stu
 (\#eq:mcse)
 \end{equation}
 
-With statistically significant results in 80% of simulated studies and $B=5000$, MCSE is about `r round(100 * sqrt(.8 * .2 / 5000), 2)` percentage points. The tables use Wilson intervals for Monte Carlo uncertainty. These intervals remain informative even when a simulation observes no rejections or all rejections. Increasing $B$ does not resolve uncertainty about the real treatment effect.
+If 4,000 of 5,000 simulated studies give statistically significant results, estimated power is 80%. Its MCSE is about `r round(100 * sqrt(.8 * .2 / 5000), 2)` percentage points. The tables use Wilson intervals for Monte Carlo uncertainty. These intervals remain informative even when a simulation observes no rejections or all rejections. Increasing $B$ does not resolve uncertainty about the real treatment effect.
 
 ## Compare simulation with a planning approximation {.advanced-heading}
 
@@ -2217,7 +2227,7 @@ Adaptations should keep the editable R Markdown, shared case settings, app code 
 
 <span id="extend-study-plan"></span>
 
-In [your continuing report](https://katatam.github.io/sample-size-calculation/assumptions_report/?level=advanced&stage=question), the advanced prompts expand the same answers into a fuller study plan. You can appraise evidence for each input, justify plausible ranges, compare several sensitivity scenarios, and document feasibility and unresolved decisions. Switching views preserves your writing and attached calculations. The [teaching guide](https://katatam.github.io/sample-size-calculation/teaching/TEACHING_GUIDE.html#extended-sample-size-justification) provides an extended assignment and peer-review questions.
+In [your continuing report](https://katatam.github.io/sample-size-calculation/assumptions_report/?level=advanced&stage=question), the advanced prompts expand the same answers into a fuller study plan. Under *Study settings*, selecting relevant design features adds prompts for clustering, repeated measurements, survival outcomes, noninferiority or equivalence, multiple claims, interim decisions, or simulation. An external calculation can be documented with its inputs, method, result and software version. You can appraise evidence for each input, justify plausible ranges, compare several sensitivity scenarios, and document feasibility and unresolved decisions. Switching views preserves your writing and attached calculations. The [teaching guide](https://katatam.github.io/sample-size-calculation/teaching/TEACHING_GUIDE.html#extended-sample-size-justification) provides an extended assignment and peer-review questions.
 
 Your study report can include a simulation result with its generating assumptions, analysis, repetition count and Monte Carlo interval. Your explanation should address what it adds to the analytical calculation. You can also write a short hypothetical study abstract that distinguishes the planned design, realized results and interpretation, following the broader learning sequence used in DICE [@thiesmeier2024].
 
@@ -2343,6 +2353,8 @@ Our account of developing the epidemiology and medical statistics e-learning env
 Except where otherwise noted, original teaching materials are shared under [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/) and original code under the [MIT License](https://opensource.org/license/mit). The [reuse and citation guidance](https://katatam.github.io/sample-size-calculation/documentation/reuse-and-citation.html) explains attribution and third-party exceptions. Shared adaptations of the teaching materials must use the same or a compatible license. Publishing student work, identifiable feedback, or named student acknowledgments requires consent.
 
 ## Further reading {-}
+
+For communicating numerical findings, Gigerenzer and colleagues discuss transparent health statistics, and NICE recommends absolute risks with explicit denominators and time periods [@gigerenzer2007health; @nice2021shared]. Frequency formats and frequency trees support Bayesian diagnostic reasoning [@gigerenzer1995frequencies; @binder2021frequencies]. The [teaching guide](https://katatam.github.io/sample-size-calculation/teaching/TEACHING_GUIDE.html#interpreting-numerical-results) explains how these ideas inform the examples and critical-appraisal outcome, using revised Bloom's taxonomy [@krathwohl2002taxonomy].
 
 Your choice of reading can follow the decision you need to make; the [reading guide](https://katatam.github.io/sample-size-calculation/documentation/reading-guide.html) connects these sources to the activities.
 

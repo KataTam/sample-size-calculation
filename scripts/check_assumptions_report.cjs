@@ -183,7 +183,7 @@ const {saveReportPair} = require('./report_test_helpers.cjs');
     assert.equal(await page.locator('#question').inputValue(), legacy.entries.question);
     assert.equal(await page.locator('#intervention').inputValue(), '');
     const large = {...document, entries: {...document.entries}};
-    for (const name of Object.keys(large.entries)) if (!['study_type', 'outcome', 'goal','plan_title','plan_basis','plan_level','decision_statuses','calculation_records'].includes(name)) large.entries[name] = '漢'.repeat(5000);
+    for (const name of Object.keys(large.entries)) if (!['study_type', 'outcome', 'goal','advanced_features','plan_title','plan_basis','plan_level','decision_statuses','calculation_records'].includes(name)) large.entries[name] = '漢'.repeat(5000);
     assert.ok(Buffer.byteLength(JSON.stringify(large)) > 100000);
     await page.locator('#restore').setInputFiles({name: 'large.json', mimeType: 'application/json', buffer: Buffer.from(JSON.stringify(large))});
     await page.waitForFunction(() => document.querySelector('#question').value.length === 5000);

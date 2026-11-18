@@ -79,3 +79,5 @@ body :where(h1,h2,h3,h4,h5,h6,summary,legend) :where(a,span,strong,b,code) { fon
 #calculation-summary > h3 {margin-top:0;}
 #supporting-study-plan {margin-top:1.5rem;border-top:2px solid #8298a6;padding-top:.5rem;}
 #supporting-study-plan h4 {margin-top:1.4rem;}
+
+#advanced-features{margin:.8rem 0;border:1px solid #9c82b0;border-radius:6px;padding:.8rem}#advanced-features[hidden]{display:none}#advanced-features label{display:flex;gap:.6rem;align-items:center;margin:.6rem 0}#advanced-features input{width:auto;min-width:20px;min-height:20px}

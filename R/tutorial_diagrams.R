@@ -37,7 +37,7 @@ draw_interval_margin <- function() {
   old <- par(no.readonly=TRUE); on.exit(par(old))
   # The same symmetric interval appears in both panels; only the emphasis changes.
   par(mfrow=c(1,2),mar=c(4.8,1.1,3.6,1.1),family="sans",bg="white",fg="#26343d")
-  for (panel in 1:2) {
+  for (panel in 2:1) {
     plot(NA,xlim=c(10,30),ylim=c(0,1),axes=FALSE,xlab="Neuropathy prevalence (%)",ylab="",
       main=if(panel==1) "Confidence interval" else "Margin of error",cex.main=1.05)
     mtext(if(panel==1) "The whole range: 15% to 25%" else "Distance to each limit: 5 percentage points",
@@ -66,14 +66,14 @@ draw_prevalence_coverage <- function(){
   stopifnot(sum(covered)==19)
   y<-20:1;cols<-ifelse(covered,"#18713d","#b62d32")
   par(mar=c(4.8,4.5,2.2,1),family="sans",bg="white",fg="#26343d")
-  plot(NA,xlim=c(8,34),ylim=c(.5,22),axes=FALSE,xlab="Neuropathy prevalence (%)",ylab="Survey")
+  plot(NA,xlim=c(8,34),ylim=c(.5,22),axes=FALSE,xlab="Neuropathy prevalence (%)",ylab="Simulated clinic sample")
   abline(h=y,col="#edf0f2");segments(20,.5,20,20.7,lty=2,lwd=2,col="#26343d")
   segments(100*ci[,1],y,100*ci[,2],y,col=cols,lwd=2.5)
   points(100*counts/246,y,pch=ifelse(covered,16,4),col=cols,cex=1.1,lwd=2)
   axis(1,at=seq(10,30,5));axis(2,at=y,labels=1:20,las=1,cex.axis=.8)
   mtext("Population prevalence = 20%",side=3,line=.4,cex=.95)
   legend("top",horiz=TRUE,bty="n",cex=.85,
-    legend=c("Contains 20% (19 surveys)","Misses 20% (1 survey)"),pch=c(16,4),col=c("#18713d","#b62d32"))
+    legend=c("Contains 20% (19 samples)","Misses 20% (1 sample)"),pch=c(16,4),col=c("#18713d","#b62d32"))
 }
 
 draw_pain_sensitivity <- function(probabilities,n){

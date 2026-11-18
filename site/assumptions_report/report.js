@@ -38,6 +38,7 @@
     ]]
   ];
   groups[2][1].push(groups[3][1].shift());
+  groups[1][1].push(...AdvancedPlan.fields);
   const fields = groups.flatMap(group => group[1]);
   let reportLines = [];
   let pendingSaved = null, planActive = false;
@@ -52,6 +53,7 @@
     document.querySelectorAll('#save,#save-word,#download,#download-word,#download-text,#save-work').forEach(el => el.disabled = !!saved);
   }
   const questions = {
+    ...AdvancedPlan.questions,
     question: 'What question should your study answer?',
     population: 'Who is the study about? (Population)',
     intervention: 'What intervention or exposure will you study? (Intervention)',
@@ -102,7 +104,8 @@
   function answerFormats(value) {
     const single = value.study_type === 'single', binary = value.outcome === 'binary', pilot = value.goal === 'feasibility';
     const units = binary ? 'percentage points' : '[outcome units]';
-    return {
+    const result = {
+      ...AdvancedPlan.formats,
       question: pilot ? 'Can [study procedures] meet [feasibility criteria] within [time and resources]?'
         : value.study_type === 'other' ? '[Research question] about [primary outcome] in [population] at [assessment time].'
         : single ? 'What is the ' + (binary ? 'percentage with [condition]' : 'mean [outcome]') + ' in [population] at [time]?'
@@ -141,9 +144,24 @@
       conclusion: pilot ? '[Feasibility results] would support [proceed, amend, or stop] under [agreed criteria].'
         : 'The study could establish [finding] with [power or precision]. [Uncertain assumptions or design limitations] restrict the conclusion.'
     };
+    if (AdvancedPlan.complex(value)) Object.assign(result, {
+      question: '[Research question] about [population and outcome] at [time].',
+      scale: '[Outcome or effect measure], in [units], with [direction of interpretation].',
+      expected: '[Prior estimates] from [sources], with [uncertainty and relevance].',
+      clinical: '[Clinically important result], justified by [clinical or patient evidence].',
+      planning: '[Effect assumed for power] on [scale], supported by [evidence].',
+      variation: '[Distribution, variability or event assumptions] from [sources].',
+      power: '[Type I error probability and sidedness]; [power criterion] at [stated effect or scenario].',
+      counts: '[Independent units, participants or events required] from [method and inputs], rounded as [rule].',
+      analysis: '[Analysis and decision rule], accounting for [design features].',
+      software: '[Software and version], [procedure or code version], [saved inputs and output], calculated on [date].',
+      precision: '[Interval measure, units and confidence level], with [desired precision].',
+      recruitment: '[Recruitment count and schedule], allowing for [missing outcomes, censoring or other relevant losses].'
+    });
+    return result;
   }
   function examples(value) {
-    if (value.plan_basis !== 'pain' || value.study_type === 'other') return answerFormats(value);
+    if (value.plan_basis !== 'pain' || AdvancedPlan.complex(value)) return answerFormats(value);
     const result = {...modelAnswers};
     if (value.outcome === 'continuous') Object.assign(result, {
       question: 'Does Neravixa improve the mean pain-improvement score at four weeks compared with duloxetine in adults with painful diabetic peripheral neuropathy?',
@@ -215,8 +233,8 @@
     }
     return result;
   }
-  const names = [...PlanWorkflow.metaNames, 'study_type', 'outcome', 'goal', ...fields.map(field => field[0])];
-  const choices = {plan_level: ['core', 'advanced'], plan_basis: ['own', 'pain'], study_type: ['comparison', 'single', 'other'], outcome: ['binary', 'continuous'], goal: ['testing', 'precision', 'fixed', 'both', 'feasibility']};
+  const names = [...PlanWorkflow.metaNames, 'study_type', 'outcome', 'goal', 'advanced_features', ...fields.map(field => field[0])];
+  const choices = {plan_level: ['core', 'advanced'], plan_basis: ['own', 'pain'], study_type: ['comparison', 'single', 'other'], outcome: ['binary', 'continuous', 'survival', 'other'], goal: ['testing', 'precision', 'fixed', 'both', 'feasibility']};
   const goalText = {testing: 'planning sample size to achieve specified power', precision: 'estimation with a precision target', fixed: 'assessing what fixed resources or existing data could establish', both: 'meeting both power and precision requirements', feasibility: 'supporting a pilot or feasibility decision'};
   function validate(value) {
     if (!value || typeof value !== 'object' || Array.isArray(value) || Object.keys(value).some(key => !names.includes(key))) throw Error('Choose a supported assumptions-report file.');
@@ -227,6 +245,7 @@
       clean[name] = text;
     }
     PlanWorkflow.validateMetadata(clean);
+    AdvancedPlan.validate(clean);
     return clean;
   }
   for (const [index, [title, definitions]] of groups.entries()) {
@@ -269,7 +288,7 @@
   });
   for (const [id, help] of Object.entries({
     study_type: 'One-population estimation uses a single percentage or mean. Paired, clustered, and other designs need methods that account for their observation structure.',
-    outcome: 'A binary outcome records two possibilities, such as relief or no relief. A continuous outcome records a numerical measurement, such as a pain score.',
+    outcome: 'A binary outcome records two possibilities, such as relief or no relief. A continuous outcome records a numerical measurement, such as a pain score. A time-to-event outcome records time until an event, with censoring when follow-up ends first. Other outcomes need their own measure and procedure.',
     goal: 'Power planning starts with a difference to detect; precision planning starts with an interval width. A fixed sample uses the number already available; feasibility planning uses pilot objectives.'
   })) {
     const label = document.querySelector('label[for="' + id + '"]'), input = form.elements[id];
@@ -277,8 +296,10 @@
     InputGuidance.attach(label, help, input);
   }
   PlanWorkflow.init(form, fields, groups);
+  AdvancedPlan.init(form);
   const snapshot = () => Object.fromEntries(names.map(name => [name, form.elements[name].value]));
   function active(field, value) {
+    if (field[4]?.startsWith('feature:')) return value.plan_level === 'advanced' && AdvancedPlan.selected(value).has(field[4].slice(8));
     if (field[0] === 'clinical' && value.goal === 'feasibility') return false;
     if (field[4] === 'comparison') return value.study_type !== 'single';
     if (field[4] === 'power') return !['precision', 'feasibility'].includes(value.goal) && !(value.study_type === 'single' && value.goal === 'fixed');
@@ -293,7 +314,7 @@
     const sections = [
       ['question', 'outcome_detail', 'design'],
       ['scale', 'expected', 'clinical', 'planning', 'variation'],
-      ['analysis', 'power', 'precision', 'progression', 'counts', 'software'],
+      ['analysis', ...AdvancedPlan.fields.map(field=>field[0]), 'power', 'precision', 'progression', 'counts', 'software'],
       ['recruitment']
     ];
     const labels = {question:'', outcome_detail:'Primary outcome', design:'Design and allocation',
@@ -306,17 +327,18 @@
       const field=fields.find(item=>item[0]===id);
       if (!active(field,value) || !value[id].trim()) return '';
       const answer=value[id].trim().replace(/\s+/g,' ');
-      const label=wording[id]?.[0] || labels[id];
+      const label=wording[id]?.[0] ?? labels[id] ?? field[1];
       return (label?label+': ':'')+answer+(/[.!?]["'\u201d\u2019)]?$/.test(answer)?'':'.');
     }).filter(Boolean).join(' ')).filter(Boolean);
   }
   function render(persist = true) {
     const value = snapshot(), article = document.getElementById('report'); article.replaceChildren();
     document.getElementById('advanced-plan').open=value.plan_level==='advanced';
+    AdvancedPlan.sync(value);
     const single = value.study_type === 'single';
     for (const option of form.elements.goal.options) option.disabled = single && ['testing', 'both'].includes(option.value);
     if (single && ['testing', 'both'].includes(value.goal)) { value.goal = 'precision'; form.elements.goal.value = 'precision'; }
-    const wording = single ? {
+    const wording = single && !AdvancedPlan.complex(value) ? {
       scale: ['Outcome scale and interpretation', 'An event estimate needs an explicit denominator and assessment time. A mean needs a measurement scale and units.', 'The outcome scale and interpretation are', 'What population value will you estimate, and in which units?'],
       expected: ['Anticipated percentage or mean', 'Comparable studies can support this planning value. If you have already analyzed existing data, you should label that estimate as an observed result.', 'The anticipated value and supporting evidence are', 'What population percentage or mean do you anticipate?']
     } : {};
@@ -324,7 +346,8 @@
       scale: ['Feasibility outcome scale', 'Retention needs a denominator, such as all enrolled participants. Assessment time needs units, such as minutes per visit.', 'The feasibility outcome scale is', 'How will you express the feasibility outcome?'],
       expected: ['Anticipated feasibility outcome', 'Comparable recruitment or follow-up procedures can support the planning value. Your answer should identify the source and plausible uncertainty.', 'The anticipated feasibility outcome is', 'What feasibility result do you anticipate?']
     });
-    const answers = PlanCalculationRecord.answers(value, examples(value), answerFormats(value));
+    Object.assign(wording, AdvancedPlan.wording(value));
+    const answers = {...AdvancedPlan.formats, ...PlanCalculationRecord.answers(value, examples(value), answerFormats(value))};
     for (const field of fields) {
       const [id, title, help] = field, copy = wording[id];
       const coreHelp = value.plan_level==='core' && value.study_type==='comparison' && value.goal==='testing' ? {
@@ -334,11 +357,11 @@
       } : {};
       const label = document.querySelector('label[for="' + id + '"]');
       label.textContent = copy ? copy[3] : questions[id] || title;
-      InputGuidance.attach(label, copy ? copy[1] : coreHelp[id] || help, form.elements[id], answers[id], value.plan_basis === 'pain' && value.study_type !== 'other' ? 'Example answer' : 'Suggested structure');
+      InputGuidance.attach(label, copy ? copy[1] : coreHelp[id] || help, form.elements[id], answers[id], value.plan_basis === 'pain' && !AdvancedPlan.complex(value) ? 'Example answer' : 'Suggested structure');
     }
     const intro = document.createElement('p');
-    const structure = {comparison: 'a two-group comparison', single: 'an estimate of one population percentage or mean', other: 'another design requiring a specified planning method'};
-    intro.textContent = 'This study concerns ' + structure[value.study_type] + ' with a ' + value.outcome + ' outcome. Its planning goal is ' + goalText[value.goal] + '.';
+    const structure = {comparison: 'a two-group comparison', single: ['binary','continuous'].includes(value.outcome) ? 'an estimate of one population percentage or mean' : 'an estimate for one population', other: 'another design requiring a specified planning method'};
+    intro.textContent = 'This study concerns ' + structure[value.study_type] + ' with ' + ({binary:'a binary outcome',continuous:'a continuous outcome',survival:'a time-to-event outcome',other:'the specified outcome measure'})[value.outcome] + '. Its planning goal is ' + goalText[value.goal] + '.';
     const studyTitle=value.plan_title.trim();
     if (studyTitle) {const title=document.createElement('h3');title.textContent=studyTitle;article.append(title);}
     const concise=document.createElement('section');concise.id='calculation-summary';
@@ -412,7 +435,10 @@
       status.textContent = 'Saved plan resumed. Your answers and calculations have been retained.';
     } else { PlanWorkflow.onEdit(name); render(); }
   });
-  form.addEventListener('input', event => {PlanWorkflow.onEdit(event.target.name);render();});
+  form.addEventListener('input', event => {
+    if ((event.target.name==='study_type' && event.target.value==='other') || (event.target.name==='outcome' && ['survival','other'].includes(event.target.value))) form.elements.plan_level.value='advanced';
+    PlanWorkflow.onEdit(event.target.name);render();
+  });
   form.addEventListener('submit', event => event.preventDefault());
   document.getElementById('clear').addEventListener('click', () => { if (!confirm('Clear this study plan? Save work for later first if you want to keep it.')) return; apply({}); status.textContent = 'Entries cleared. You can start a new plan.'; });
   const escapeHTML = text => String(text).replace(/[&<>"']/g, c => ({'&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;'}[c]));
