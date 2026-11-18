@@ -6,7 +6,7 @@ Compare two individually allocated rehabilitation programs using improvement at 
 
 Use a two-sided pooled t test, Type I error probability 5%, target power 90%, equal groups and 10% expected loss per arm. The total recruitment cap is 200. The shared case definition is `rehabilitation` in `R/teaching_cases.R`.
 
-[Open the tutorial and app](https://katatam.github.io/sample-size-calculation/study/?activity=rehabilitation).
+[Open the tutorial and app](https://katatam.github.io/sample-size-calculation/power_explorer/?activity=rehabilitation).
 
 1. Predict what doubling the common SD would do to the required sample size.
 2. Compare analyzable counts, recruitment after losses and the recruitment cap.

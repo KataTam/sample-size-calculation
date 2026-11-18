@@ -6,7 +6,7 @@ Compare two individually allocated care pathways using discharge by a specified 
 
 The starting app scenario plans using 80% versus 96%, Type I error probability 5%, target power 80%, equal groups and no assumed dropout. The difference observed in previous data of 18 percentage points and 8-point clinical threshold are recorded separately from the planning calculation. The shared definition is `discharge` in `R/teaching_cases.R`.
 
-[Open the tutorial and app](https://katatam.github.io/sample-size-calculation/study/?activity=discharge).
+[Open the tutorial and app](https://katatam.github.io/sample-size-calculation/power_explorer/?activity=discharge).
 
 1. Predict which comparison requires more participants: 80% versus 96%, or 80% versus 90%.
 2. Compare the introductory formula with score-test planning and simulated performance.

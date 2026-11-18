@@ -3,37 +3,16 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Tutorial and activity together | Sample size calculation</title>
-  <link rel="stylesheet" href="study.css">
+  <title>Open a tutorial activity | Sample size calculation</title>
+  <link rel="stylesheet" href="../styles.css">
   <script src="study.js" defer></script>
 </head>
-<body data-view="both">
-  <header class="study-header">
-    <div class="heading"><a href="../">Sample size calculation</a><h1>Tutorial and activity together</h1></div>
-    <div class="controls">
-      <label for="activity">Activity <select id="activity"><option>Loading activities...</option></select></label>
-      <div class="view-controls" aria-label="Visible panels">
-        <button type="button" data-view="lesson" aria-pressed="false">Tutorial</button>
-        <button type="button" data-view="app" aria-pressed="false">Activity</button>
-        <button type="button" data-view="both" aria-pressed="true">Tutorial + activity</button>
-      </div>
-      <a href="../assumptions_report/" target="_blank" rel="noopener">My study plan</a>
-      <button id="reset" type="button">Reset this activity</button>
-    </div>
-    <p id="app-status" role="status" aria-live="polite">Loading the app. You can read the lesson while it starts.</p>
-  </header>
-  <main class="panels">
-    <section id="lesson-pane" class="pane lesson-pane" aria-label="Tutorial panel">
-      <div class="pane-bar"><h2>Tutorial</h2><a id="lesson-separate" href="../book/" target="_blank" rel="noopener">Open tutorial separately</a></div>
-      <iframe id="lesson-frame" title="Sample size tutorial" src="../book/"></iframe>
-    </section>
-    <div id="panel-separator" role="separator" tabindex="0" aria-label="Adjust lesson and app widths" aria-orientation="vertical" aria-controls="lesson-pane app-pane" aria-valuemin="20" aria-valuemax="80" aria-valuenow="50" aria-valuetext="Lesson 50%, app 50%" title="Drag to resize. Use Left and Right arrow keys to adjust the lesson width."><span aria-hidden="true"></span></div>
-    <section id="app-pane" class="pane app-pane" aria-labelledby="app-panel-title">
-      <div class="pane-bar"><h2 id="app-panel-title">Loading activity…</h2><div class="pane-actions"><a id="app-separate" href="../power_explorer/" target="_blank" rel="noopener">Open app separately</a><button id="close-app-panel" type="button" aria-controls="app-pane"><span aria-hidden="true">&times;</span> Close app panel</button></div></div>
-      <details class="activity-description"><summary>Description</summary><p id="activity-prompt">Loading the activity…</p></details>
-      <iframe id="app-frame" title="Interactive sample size app" src="about:blank"></iframe>
-    </section>
+<body>
+  <main>
+    <h1>Activities within the tutorial</h1>
+    <p id="status" role="status">Opening the activity in its current location.</p>
+    <p><a id="continue" href="../book/" data-link-navigation="same-tab">Continue to the tutorial</a></p>
+    <noscript><p>Select an activity preview in the tutorial to open its app.</p></noscript>
   </main>
-  <noscript><p>Open the <a href="../book/">tutorial</a> and <a href="../power_explorer/">reasoning lab</a> separately. This view needs JavaScript.</p></noscript>
 </body>
 </html>

@@ -4,7 +4,7 @@
   try {
     while (shell) {
       const url = new URL(shell.location.href);
-      const match = url.pathname.match(/\/(two_proportions|two_means|power_explorer|dropout_adjustment|prevalence_precision|sampling_distributions)\/(?:index\.html)?$/);
+      const match = url.pathname.match(/\/(two_proportions|two_means|power_explorer|dropout_adjustment|prevalence_precision|sampling_distributions|assumptions_report|design_questionnaire)\/(?:index\.html)?$/);
       if (url.searchParams.get('embedded') === '1' && match) {
         engine = match[1];
         embedded = true; origin = url.origin;
@@ -19,21 +19,25 @@
   document.documentElement.classList.add('tutorial-embedded');
   document.documentElement.dataset.inlineEngine = engine;
   const send = payload => { if (host) host.postMessage({type: 'sample-size:inline', ...payload}, origin); };
-  let pending, previous = 0, ready = false;
+  const nativePage = ['assumptions_report', 'design_questionnaire'].includes(engine);
+  const contentElement = () => document.querySelector(nativePage ? 'body' : 'body > .container-fluid');
+  let pending, previous = 0, ready = nativePage;
   function measure() {
     clearTimeout(pending); pending = setTimeout(() => {
-      const content = document.querySelector('body > .container-fluid');
+      const content = contentElement();
       if (!content) return;
       // Measure actual content rather than the viewport-sized body: this also
       // lets the outer window shrink after a disclosure or tab is closed.
       const box = content.getBoundingClientRect();
-      const height = Math.ceil(box.bottom + scrollY + 16);
+      const bottom = nativePage ? Math.max(...[...content.children].filter(el => el.getClientRects().length).map(el => el.getBoundingClientRect().bottom)) : box.bottom;
+      const height = Math.ceil(bottom + scrollY + 16);
       if (Math.abs(height - previous) > 1) { previous = height; send({height, ready}); }
     }, 100);
   }
   function init() {
     compactControls();
-    const content = document.querySelector('body > .container-fluid');
+    if (nativePage) send({ready: true});
+    const content = contentElement();
     if (content) new ResizeObserver(measure).observe(content);
     measure();
   }
@@ -84,7 +88,7 @@
       if (result && !result.matches('input,textarea')) result.classList.add('inline-result-text');
     }
   }
-  document.addEventListener('DOMContentLoaded', init);
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init); else init();
   document.addEventListener('toggle', measure, true);
   document.addEventListener('keydown', event => {
     if (event.key === 'Escape') send({escape: true});

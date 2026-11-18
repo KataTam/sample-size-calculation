@@ -12,13 +12,13 @@ Calculators and simulations also open within the tutorial when you select their 
 
 - [Study plan](assumptions_report/): develop a PICO question and justify the calculation and recruitment plan. The short core view and expanded detailed view use one set of answers, producing a concise sample size calculation report followed by the supporting study plan.
 
-- [Sample size reasoning lab](power_explorer/?activity=pain_one_many): simulate patient outcomes and compare results across studies. [Activity: Chronic pain: one study and many studies](study/?activity=pain_one_many).
+- [Sample size reasoning lab](power_explorer/?activity=pain_one_many): simulate patient outcomes and compare results across studies. [Activity: Chronic pain: one study and many studies](book/clinical-question.html#activity-pain_one_many).
 
 - [Two-proportion calculator](two_proportions/): calculate sample size for a difference between two event percentages. [Tutorial explanation](book/calculations.html#two-proportions).
 
 - [Two-mean calculator](two_means/): calculate sample size for a difference between two group means. [Tutorial explanation](book/calculations.html#two-means).
 
-- [Recruitment adjustment](study/?activity=recruitment): apply one expected loss percentage to the analyzable count from your chosen calculation. [Tutorial explanation](book/calculations.html#account-for-expected-losses).
+- [Recruitment adjustment](book/calculations.html#activity-recruitment): apply one expected loss percentage to the analyzable count from your chosen calculation. [Tutorial explanation](book/calculations.html#account-for-expected-losses).
 
 The core [calculation activity](book/calculations.html#calculate-sample-size) uses the chronic pain example. [Probiotics](book/calculations.html#adherence) and the [rehabilitation calculation](book/calculations.html#rehabilitation) provide optional practice applying the calculations to other outcomes. The fourth core activity is the embedded [report review and completion](book/reporting.html#check-reporting).
 
@@ -28,19 +28,19 @@ The core [calculation activity](book/calculations.html#calculate-sample-size) us
 
 ## Apps for Extensions
 
-- [Recruitment extensions](study/?activity=recruitment_advanced): examine unequal losses and treatment switching. [Tutorial explanation](book/study-designs.html#recruitment-extensions).
+- [Recruitment extensions](book/study-designs.html#activity-recruitment_advanced): examine unequal losses and treatment switching. [Tutorial explanation](book/study-designs.html#recruitment-extensions).
 
 - [Detailed study plan](assumptions_report/?level=advanced): appraise evidence, justify ranges and compare sensitivity scenarios in the same report.
 
 - [Mean estimation](power_explorer/?activity=mean_precision): calculate a sample size for a useful confidence-interval width and examine intervals across simulated studies. [Tutorial explanation](book/estimation-planning.html#plan-for-precision).
 
-- [Sample size reasoning lab](power_explorer/?activity=pain_simulation): simulate how treatment estimates, confidence intervals, and detection probabilities change under different assumptions and missing-outcome scenarios. [Activity: Simulate repeated chronic-pain trials](study/?activity=pain_simulation).
+- [Sample size reasoning lab](power_explorer/?activity=pain_simulation): simulate how treatment estimates, confidence intervals, and detection probabilities change under different assumptions and missing-outcome scenarios. [Activity: Simulate repeated chronic-pain trials](book/simulation.html#activity-pain_simulation).
 
-- [Estimate a population percentage](prevalence_precision/): calculate sample size for a chosen confidence interval width, or assess the anticipated width for an available sample. [Activity: Estimate a percentage with useful precision](study/?activity=prevalence).
+- [Estimate a population percentage](prevalence_precision/): calculate sample size for a chosen confidence interval width, or assess the anticipated width for an available sample. [Activity: Estimate a percentage with useful precision](book/estimation-planning.html#activity-prevalence).
 
-- [Type I and Type II error probabilities and power](sampling_distributions/): see false-positive and false-negative probabilities and power for a test of one population mean. [Activity: Explore error probabilities and power](study/?activity=alpha_beta).
+- [Type I and Type II error probabilities and power](sampling_distributions/): see false-positive and false-negative probabilities and power for a test of one population mean. [Activity: Explore error probabilities and power](book/curves.html#activity-alpha_beta).
 
-- [Study-design questionnaire](design_questionnaire/): consider designs suited to your research question. [Activity: Choosing a study design](study/?activity=design_questionnaire).
+- [Study-design questionnaire](design_questionnaire/): consider designs suited to your research question. [Activity: Choosing a study design](book/study-designs.html#activity-design_questionnaire).
 
 Your [study plan](assumptions_report/?stage=question) develops through the core chapters. The Report view in each app offers “Add this calculation to my study plan.” A preview lets you attach the selected result and its inputs; your written answers remain in place. “Review before downloading” identifies unresolved decisions and checks attached calculation and recruitment counts.
 
@@ -55,8 +55,8 @@ The reasoning lab supports Core material and Extensions. Core activities start w
 - [Quizzes](quiz/): chapter checks and a cumulative quiz. Results link to the relevant explanations; missed questions can be retried. Chapters 1–2 and the chapters in Extensions have embedded quizzes. Chapter 3 uses the [four-error report review](book/reporting.html#check-reporting). The [discharge exercise](book/exercises.html#discharge) offers additional basic calculation practice.
 - [Flashcard preview](student-materials/flashcards/cards.md): a question-and-answer table with filtering by tutorial part, search and optional hidden answers for self-testing. [Anki and Quizlet downloads](student-materials/flashcards/index.md) are available for review outside the tutorial.
 
-## Tutorial beside the app
+## Activities within the tutorial
 
-Activity links open the tutorial and app together. You can drag the divider to adjust their widths, or use its Left and Right arrow keys. “Close app panel” returns to the tutorial at full width. “Tutorial + activity” reopens the app with your current entries and results retained while the page stays open. On narrow screens, “Tutorial” and “Activity” switch between full-width panels.
+Activity links take you to the matching app within the lesson. Selecting a preview starts that app in place. Expand the app for more room, or close it to continue reading. Closing and reopening an app on the same page preserves its current entries and results. Each preview also has a link to the app's own page. Save work before leaving or reloading the tutorial page.
 
 [Back to the start page](./)

@@ -1,6 +1,6 @@
 # Constructive alignment
 
-Use the same case and assumptions through the module, [lab](https://katatam.github.io/sample-size-calculation/study/?activity=own_study) and assessment. If a component is omitted, remove its associated assessment requirement.
+Use the same case and assumptions through the module, [lab](https://katatam.github.io/sample-size-calculation/power_explorer/?activity=own_study) and assessment. If a component is omitted, remove its associated assessment requirement.
 
 | Outcome | Learning activity | Evidence | Rubric criterion |
 |---|---|---|---|

@@ -58,7 +58,7 @@ Use this checklist when editing, adapting, or sharing the module.
 - The Shiny apps include text output alongside plots.
 - The app plots use high-contrast lines and point markers rather than color-only interpretation.
 
-## New [lab](https://katatam.github.io/sample-size-calculation/study/?activity=own_study) and static route
+## New [lab](https://katatam.github.io/sample-size-calculation/power_explorer/?activity=own_study) and static route
 
 - [ ] All controls are keyboard reachable and have meaningful labels.
 - [ ] Run status and stale-output messages are readable.
@@ -84,7 +84,7 @@ Target: WCAG 2.2 AA. This is a scoped accessibility review, not a conformance ce
 
 ### Scope and changes
 
-- Automated axe-core checks cover Introduction, Power, and Calculations, including expanded quizzes and code, in day, sepia, and night themes, plus the two-panel study shell.
+- Automated axe-core checks cover Introduction, Power, and Calculations, including expanded quizzes and code, in day, sepia, and night themes. Inline app checks cover keyboard expansion, closure and focus restoration.
 - A separate audit exercised the loaded power-explorer app, its animation, controls, and results.
 - Shared fixes improve text/link/syntax/slider contrast, underline prose links, remove empty generated code links, identify the app language, label table headers, and provide a keyboard skip link.
 - Core material/Extensions text accompanies chapter colors. New-tab links receive accessible descriptions. Existing native disclosure controls and keyboard-enabled panel resizing remain available.

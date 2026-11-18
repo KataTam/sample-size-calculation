@@ -10,7 +10,7 @@ The tutorial, browser apps and prepared examples require no R installation. The 
 
 ## Start here
 
-- Students: [open the lesson and matching app together](https://katatam.github.io/sample-size-calculation/study/), or [read the tutorial](https://katatam.github.io/sample-size-calculation/book/) and explore the [sample size reasoning lab](https://katatam.github.io/sample-size-calculation/power_explorer/).
+- Students: [read the tutorial and use its inline activities](https://katatam.github.io/sample-size-calculation/book/), or explore the [sample size reasoning lab](https://katatam.github.io/sample-size-calculation/power_explorer/) on its own page.
 - Teachers: start with the [teaching guide](teaching/TEACHING_GUIDE.md), [prepared activity](teaching/static_activity.md) and [case studies](case-studies/README.md).
 - Student reviewers: use the [review guide](student-materials/README.md) and [open-ended review template](student-materials/material-review-template.md).
 - Adapters: start with [Source and reuse](documentation/reuse-and-citation.md), the [adaptation guide](teaching/adaptation_guide.md) and [build instructions](documentation/development/build-and-publish.md).

@@ -137,7 +137,7 @@ render_app_preview("recruitment_advanced", "Explore unequal losses and treatment
 
 
 
-The [recruitment adjustment app](https://katatam.github.io/sample-size-calculation/study/?activity=recruitment_advanced) extends the shared-loss calculation with separate loss percentages and treatment switching. These options use the same starting analyzable requirement; their assumptions need justification.
+The [recruitment adjustment app](https://katatam.github.io/sample-size-calculation/book/study-designs.html#activity-recruitment_advanced) extends the shared-loss calculation with separate loss percentages and treatment switching. These options use the same starting analyzable requirement; their assumptions need justification.
 
 <details class="advanced-explanation" id="treatment-switching">
 <summary>Allowing for treatment switching</summary>
@@ -166,7 +166,7 @@ For binary outcomes, you can recalculate sample size using the revised event per
 
 The resulting between-group difference is 25.5 percentage points. The [two-proportion app](https://katatam.github.io/sample-size-calculation/two_proportions/) can calculate the sample needed at these revised percentages. The revised event percentages can be entered directly in the calculation.
 
-In the [recruitment extension](https://katatam.github.io/sample-size-calculation/study/?activity=recruitment_advanced), the switching calculation starts with a sample size that assumes full adherence. A separate loss allowance then reflects expected outcome completeness. Intermediate values remain unrounded until the final recruitment count. For example, starting with 100 per group, the switching assumptions above and 5% missing outcomes in both groups gives $\lceil100/(0.85^2\times0.95)\rceil=146$ recruits per group. With unequal losses, equal recruitment uses the larger requirement for both groups.
+In the [recruitment extension](https://katatam.github.io/sample-size-calculation/book/study-designs.html#activity-recruitment_advanced), the switching calculation starts with a sample size that assumes full adherence. A separate loss allowance then reflects expected outcome completeness. Intermediate values remain unrounded until the final recruitment count. For example, starting with 100 per group, the switching assumptions above and 5% missing outcomes in both groups gives $\lceil100/(0.85^2\times0.95)\rceil=146$ recruits per group. With unequal losses, equal recruitment uses the larger requirement for both groups.
 
 Your report should document the switching assumptions, their evidence, the method used, and sensitivity to alternative assumptions. The downloadable app report includes these calculation steps and your written justification; the [reproducibility chapter](#tutorial-methods) explains the procedures.
 
@@ -250,8 +250,8 @@ In rare-disease studies, the Type I error probability and any alternative design
 
 | Example question | Planning focus | Route |
 |:--|:--|:--|
-| Do two individually allocated rehabilitation programs differ on a continuous improvement score? | Difference, common SD, analysis, Type I error probability/power or interval width | [Rehabilitation case](#rehabilitation); the [two-means calculator](https://katatam.github.io/sample-size-calculation/study/?activity=rehabilitation_calculation) applies under its assumptions |
-| Does probiotic supplementation reduce gestational diabetes in pregnant women with overweight or obesity? | Two event probabilities, allocation or observational exposure, diagnostic criteria, assessment time and effect scale | [Prevention trial](#adherence); the [two-proportions calculator](https://katatam.github.io/sample-size-calculation/study/?activity=probiotics_calculation) applies to an individually randomized, independent-group comparison under its assumptions |
+| Do two individually allocated rehabilitation programs differ on a continuous improvement score? | Difference, common SD, analysis, Type I error probability/power or interval width | [Rehabilitation case](#rehabilitation); the [two-means calculator](https://katatam.github.io/sample-size-calculation/book/calculations.html#activity-rehabilitation_calculation) applies under its assumptions |
+| Does probiotic supplementation reduce gestational diabetes in pregnant women with overweight or obesity? | Two event probabilities, allocation or observational exposure, diagnostic criteria, assessment time and effect scale | [Prevention trial](#adherence); the [two-proportions calculator](https://katatam.github.io/sample-size-calculation/book/calculations.html#activity-probiotics_calculation) applies to an individually randomized, independent-group comparison under its assumptions |
 | What proportion of eligible patients has a symptom? | Representative sample, confidence level and useful absolute margin of error | [Single-proportion precision activity](#prevalence); a simple independent sample |
 | Can a pathway recruit and retain enough patients for a future trial? | Feasibility outcomes, progression criteria and their precision | [Pilot case](#pilot-feasibility); [CONSORT pilot extension](https://www.bmj.com/content/355/bmj.i5239) for randomized pilots |
 | How accurately does a screening test identify disease? | Precision of sensitivity/specificity and enough reference-positive/reference-negative participants | [STARD 2015](https://www.bmj.com/content/351/bmj.h5527) for reporting; obtain diagnostic-accuracy planning methods |

@@ -8,7 +8,7 @@ Before planning, review relevant systematic reviews, previous studies, service r
 
 The app scenario assesses a retention proportion at fixed total n = 40, anticipated retention 0.80 and 95% confidence. It compares realized Wilson intervals with a full-width reference of 0.20. The shared definition is `pilot_feasibility` in `R/teaching_cases.R`.
 
-[Open the tutorial and app](https://katatam.github.io/sample-size-calculation/study/?activity=pilot_feasibility).
+[Open the tutorial and app](https://katatam.github.io/sample-size-calculation/book/estimation-planning.html#activity-pilot_feasibility).
 
 1. If 32 of 40 complete follow-up, interpret the retention estimate and interval.
 2. Compare the interval with a prospectively agreed retention criterion. Explain why an 80% point estimate does not establish retention of at least 80%.

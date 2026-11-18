@@ -6,7 +6,7 @@ A service wants to estimate the proportion of eligible patients with a symptom. 
 
 The normal planning approximation gives 246 completed observations. With no useful prior estimate, using 0.50 for planning gives 385. The shared definition is `prevalence` in `R/teaching_cases.R`.
 
-[Open the tutorial and app](https://katatam.github.io/sample-size-calculation/study/?activity=prevalence).
+[Open the tutorial and app](https://katatam.github.io/sample-size-calculation/book/estimation-planning.html#activity-prevalence).
 
 1. Explain why 0.50 is conservative for this absolute-precision formula.
 2. Halve the margin of error and predict how n changes.

@@ -67,6 +67,7 @@ jobs:
           node scripts/check_embedded_quiz.cjs
           node scripts/check_core_activities.cjs
           node scripts/check_app_previews.cjs
+          node scripts/check_activity_routes.cjs
           node scripts/check_inline_apps.cjs
           node scripts/check_remaining_embeds.cjs
           node scripts/check_planning_routes.cjs

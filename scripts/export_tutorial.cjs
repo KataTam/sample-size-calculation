@@ -100,7 +100,9 @@ let browser;
           url.pathname.startsWith(new URL(location.href).pathname.replace(/[^/]+$/, ''));
         a.setAttribute('href', internal ? (url.hash || '#tutorial-' + chapter[1]) :
           url.origin === location.origin ? publicBase + url.pathname + url.search + url.hash : url.href);
-        a.target = '_blank'; a.rel = 'noopener';
+        if (a.hasAttribute('data-inline-start') || internal && /^#activity-[a-z_]+$/.test(url.hash)) {
+          a.removeAttribute('target'); a.dataset.linkNavigation = 'same-tab';
+        } else { a.target = '_blank'; a.rel = 'noopener'; }
       });
       const glyphs = document.querySelector('#MathJax_SVG_glyphs');
       const mathCSS=Array.from(document.querySelectorAll('style')).map(el=>el.textContent).filter(text=>/MathJax|MJX_Assistive/.test(text)).join('\n');
@@ -112,7 +114,7 @@ let browser;
     pdfHeadings.push(...extracted.headings);
     const safeTitle=extracted.title.replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
     const chapterActivities = activityContents.find(entry => entry.chapter === slug);
-    const activityLinks = (chapterActivities?.activities || []).map(activity => `<li><a href="${publicBase}/${escapeHTML(activity.path)}" target="_blank" rel="noopener">Activity: ${escapeHTML(activity.label)}</a> <span class="contents-route">${escapeHTML(activity.route)}</span></li>`).join('');
+    const activityLinks = (chapterActivities?.activities || []).map(activity => `<li><a href="${activity.path.includes("#activity-") ? escapeHTML(activity.path.slice(activity.path.indexOf("#"))) : publicBase+"/"+escapeHTML(activity.path)}" data-link-navigation="same-tab">Activity: ${escapeHTML(activity.label)}</a> <span class="contents-route">${escapeHTML(activity.route)}</span></li>`).join('');
     contents.push(`<li><a href="#tutorial-${slug}">${safeTitle}</a>${activityLinks ? '<ul>'+activityLinks+'</ul>' : ''}</li>`);
     sections.push(`<section id="tutorial-${slug}" class="print-chapter"><style>${extracted.mathCSS}</style>${extracted.html}</section>`);
     console.log(`Included ${slug} in the complete tutorial`);
@@ -199,6 +201,9 @@ let browser;
     // together. Anchor the visible card title itself for accurate PDF links.
     document.querySelectorAll('.app-preview').forEach(preview => {
       const wrapper = preview.parentElement, title = preview.querySelector('.app-preview-title');
+      if (preview.id && title && !title.id) {
+        title.id = preview.id; preview.removeAttribute('id');
+      }
       if (wrapper.matches('div[id]') && wrapper.children.length === 1 && title && !title.id) {
         title.id = wrapper.id; wrapper.removeAttribute('id');
       }

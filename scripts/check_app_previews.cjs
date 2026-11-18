@@ -1,4 +1,4 @@
-// Compact invitations reuse the existing two-panel workspace and its answers.
+// Activity previews open in the lesson and preserve their current session.
 const {chromium}=require('playwright');
 const assert=require('node:assert/strict'),fs=require('node:fs');
 const base=(process.argv[2]||'http://127.0.0.1:8769').replace(/\/$/,'');
@@ -42,27 +42,23 @@ const base=(process.argv[2]||'http://127.0.0.1:8769').replace(/\/$/,'');
   assert(await preview.locator('[data-inline-start]').isVisible());
   assert.equal(await preview.locator('iframe').count(),1,'Closing preserves the existing app frame');
   await page.goto(base+'/book/reporting.html');
-  await page.locator('[data-preview-open="assumptions_report"]').click();
-  await page.waitForURL('**/study/?activity=assumptions_report');
-  const report=page.frameLocator('#app-frame');
+  const reportCard=page.locator('#activity-assumptions_report');
+  await reportCard.locator('[data-inline-start]').click();
+  const report=reportCard.frameLocator('iframe');
   await report.locator('#plan-title').fill('My preserved study title');
   const appFrame=page.frames().find(f=>f.url().includes('/assumptions_report/'));
   await appFrame.evaluate(()=>window.previewSentinel='same app instance');
-  await page.locator('#close-app-panel').click();
-  assert.equal(await page.locator('body').getAttribute('data-view'),'lesson');
-  const lesson=page.frameLocator('#lesson-frame');
-  // Navigate the lesson independently, then reopen the same app from a preview.
-  await page.locator('#lesson-frame').evaluate((el,url)=>{el.src=url},base+'/book/reporting.html');
-  await lesson.locator('[data-preview-open="assumptions_report"]').click();
-  await page.waitForFunction(()=>document.body.dataset.view==='both');
+  await reportCard.locator('[aria-label="Close app window"]').click();
+  await reportCard.locator('[data-inline-start]').click();
   assert.equal(await report.locator('#plan-title').inputValue(),'My preserved study title');
   assert.equal(await appFrame.evaluate(()=>window.previewSentinel),'same app instance');
   assert.equal(context.pages().length,1);
-  assert.equal(await page.locator('#lesson-frame').getAttribute('src').then(x=>x.includes('/study/')),false);
+  assert.match(page.url(),/book\/reporting\.html/);
+  assert.equal(await page.locator('#lesson-frame,#app-frame').count(),0);
   // The complete HTML is assembled from chapter DOMs. Copied initialization
   // flags must not suppress the event bindings on this new document.
   await page.goto(base+'/book/Sample_size_open_module.html');
-  assert.equal(await page.locator('.inline-activity').count(),12);
+  assert.equal(await page.locator('.inline-activity').count(),14);
   for(const card of await page.locator('.inline-activity').all()){
     assert.equal(await card.locator('[data-inline-dedicated]').count(),1);
     assert.equal(await card.locator('iframe').count(),0,'Apps start on demand');
@@ -73,6 +69,6 @@ const base=(process.argv[2]||'http://127.0.0.1:8769').replace(/\/$/,'');
   assert.match(page.url(),/book\/Sample_size_open_module\.html$/);
   assert.equal(await complete.locator('[aria-label="Close app window"]').innerText(),'\u00d7');
   assert.deepEqual(errors,[]);
-  console.log('App previews passed: responsive themes, inline startup, dedicated links, existing side panel and preserved report answers.');
+  console.log('App previews passed: responsive themes, inline startup, dedicated links, inline report and preserved answers.');
  }finally{await browser.close();}
 })().catch(e=>{console.error(e);process.exit(1)});

@@ -84,3 +84,9 @@
  .tutorial-embedded .single-population-inputs,.tutorial-embedded .single-population-inputs > .shiny-panel-conditional {grid-template-columns:1fr}
  .tutorial-embedded .well {gap:6px}
 }
+
+.tutorial-embedded[data-inline-engine="assumptions_report"] main {display:block;padding:8px;max-width:none}
+.tutorial-embedded[data-inline-engine="assumptions_report"] header {padding:10px}
+.tutorial-embedded[data-inline-engine="assumptions_report"] .report-pane {position:static;max-height:none;margin-top:12px}
+.tutorial-embedded[data-inline-engine="assumptions_report"] footer {padding:10px}
+.tutorial-embedded[data-inline-engine="design_questionnaire"] main {grid-template-columns:minmax(0,1fr)}

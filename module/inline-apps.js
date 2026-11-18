@@ -8,7 +8,8 @@
     recruitment_advanced:'dropout_adjustment', prevalence:'prevalence_precision',
     pilot_feasibility:'prevalence_precision', mean_precision:'power_explorer',
     pain_curves:'power_explorer', pain_simulation:'power_explorer',
-    alpha_beta:'sampling_distributions'
+    alpha_beta:'sampling_distributions', assumptions_report:'assumptions_report',
+    design_questionnaire:'design_questionnaire'
   };
   const windows = new Map();
   // Event bindings cannot be serialized with the complete HTML export.
@@ -98,6 +99,35 @@
       });
     });
   }
+  // Activity links in prose and menus reuse the app in the current chapter.
+  let openedActivityHash;
+  function openLinkedActivity(force = false) {
+    // GitBook can announce the initial fragment before the page load completes.
+    // A later load event must not reopen an app the learner has already closed.
+    if (force !== true && openedActivityHash === location.hash) return;
+    openedActivityHash = location.hash;
+    const card = document.getElementById(decodeURIComponent(location.hash.slice(1)));
+    if (!card?.matches('.inline-activity')) return;
+    for (let parent = card.parentElement; parent; parent = parent.parentElement) {
+      if (parent.tagName === 'DETAILS') parent.open = true;
+    }
+    card.querySelector('[data-inline-start]').click();
+    card.scrollIntoView({block: 'start'});
+  }
+  window.addEventListener('hashchange', openLinkedActivity);
+  window.addEventListener('load', openLinkedActivity);
+  document.addEventListener('click', event => {
+    const link = event.target.closest?.('a[href]');
+    if (!link || event.button || event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;
+    const url = new URL(link.href);
+    if (!url.hash.startsWith('#activity-') || url.origin !== location.origin) return;
+    const sameDocument = url.pathname === location.pathname || location.pathname.endsWith('/Sample_size_open_module.html');
+    if (!sameDocument || !document.getElementById(url.hash.slice(1))?.matches('.inline-activity')) return;
+    event.preventDefault(); event.stopPropagation();
+    document.getElementById('activity-menu')?.close();
+    history.replaceState(null, '', url.hash);
+    openLinkedActivity(true);
+  }, true);
   window.addEventListener('message', event => {
     if (event.origin !== location.origin || !event.data || event.data.type !== 'sample-size:inline') return;
     for (const item of windows.values()) {

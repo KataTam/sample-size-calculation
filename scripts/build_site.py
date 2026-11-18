@@ -74,7 +74,7 @@ for target in (SITE / "book").glob("*.html"):
             sections.setdefault(activity["section"], []).append(activity)
         for section, activities in sections.items():
             items = ''.join('<li><a href="../' + html.escape(activity["path"], quote=True)
-                + '" target="_blank" rel="noopener">Activity: ' + html.escape(activity["label"])
+                + '" data-link-navigation="same-tab">Activity: ' + html.escape(activity["label"])
                 + ' <span class="contents-route">' + html.escape(activity["route"]) + '</span></a></li>'
                 for activity in activities)
             href = chapter["chapter"] + '.html#' + section
@@ -107,7 +107,7 @@ for name in ["README.md", "CONTRIBUTING.md", "LICENSE", "LICENSE-code.md", "CITA
 shutil.copy2(ROOT / "module/references.bib", SITE / "module/references.bib")
 shutil.copy2(ROOT / "site/styles.css", SITE / "styles.css")
 shutil.copy2(ROOT / "site/link-behavior.js", SITE / "link-behavior.js")
-for name in ("input-guidance.js", "input-guidance.css", "app-layout.css", "app-layout.js", "plan-transfer.js", "learning-layout.css", "report-exports.js"):
+for name in ("input-guidance.js", "input-guidance.css", "inline-app.css", "inline-app-client.js", "app-layout.css", "app-layout.js", "plan-transfer.js", "learning-layout.css", "report-exports.js"):
     shutil.copy2(ROOT / "site" / name, SITE / name)
 shutil.copytree(ROOT / "site/vendor", SITE / "vendor")
 shutil.copytree(ROOT / "site/study", SITE / "study")
@@ -251,6 +251,11 @@ for case in cases.values():
     if anchor and anchor not in chapter_anchors:
         raise RuntimeError(f"Missing tutorial anchor for case {case['id']}: {anchor}")
 
+# Older shared activity links resolve to inline tutorial windows when available.
+activity_routes = {case['id']: chapter_anchors.get('activity-' + case['id'],
+    case['app'] + '/?activity=' + case['id']) for case in cases.values()}
+(SITE / 'activity-routes.json').write_text(json.dumps(activity_routes, indent=2), encoding='utf-8')
+
 # Maintain old documentation and case-study website addresses after the source moves.
 aliases = json.loads((ROOT / "site/legacy-paths.json").read_text(encoding="utf-8"))
 base = "https://katatam.github.io/sample-size-calculation/"
@@ -292,6 +297,8 @@ class NewTabLinks(HTMLParser):
         navigation = bool(classes & self.navigation_classes or attr.get("id") == "TOC" or attr.get("data-link-navigation") == "same-tab")
         inside_navigation = navigation or any(item[1] for item in self.stack)
         href = (attr.get("href") or "").strip()
+        if re.fullmatch(r'activity-[a-z_]+', urlsplit(href).fragment):
+            inside_navigation = True
         control = bool(classes & self.control_classes or attr.get("role") == "button" or any(key in attr for key in ["download", "data-question", "data-toggle", "data-bs-toggle"]))
         if tag == "a" and href and href != "#" and not re.match(r"(?:javascript|mailto|tel|data|blob):", href, re.I) and not inside_navigation and not control:
             original = self.get_starttag_text()

@@ -3,7 +3,12 @@
   'use strict';
   if (window.sampleSizeLinks) return;
   const controls = '.book-summary, .book-header, .navigation-prev, .navigation-next, #TOC, .tocify, .toc, [data-link-navigation="same-tab"]';
+  function isInlineLink(link) {
+    const url = new URL(link.href, location.href);
+    return url.origin === location.origin && /^#activity-[a-z_]+$/.test(url.hash) && url.pathname.includes('/book/');
+  }
   function isResourceLink(link) {
+    if (isInlineLink(link)) return false;
     const href = (link.getAttribute('href') || '').trim();
     if (!href || href === '#' || /^(?:javascript:|mailto:|tel:|data:|blob:)/i.test(href)) return false;
     if (link.hasAttribute('download') || link.hasAttribute('data-question') || link.getAttribute('role') === 'button') return false;
@@ -12,6 +17,7 @@
   }
   function apply(root = document) {
     root.querySelectorAll('a[href]').forEach(link => {
+      if (isInlineLink(link)) { link.removeAttribute('target'); link.dataset.linkNavigation = 'same-tab'; return; }
       if (!isResourceLink(link)) return;
       link.setAttribute('target', '_blank');
       const rel = new Set((link.getAttribute('rel') || '').split(/\s+/).filter(Boolean));

@@ -34,11 +34,11 @@ function relevant(field,a){
 }
 const links={
  chapter:['Study-design guide','../book/study-designs.html'],
- report:['Develop and justify your study plan','../study/?activity=assumptions_report'],
+ report:['Develop and justify your study plan','../book/reporting.html#activity-assumptions_report'],
  binary:['Two independent groups: binary outcome','../two_proportions/'],
  means:['Two independent groups: continuous outcome','../two_means/'],
- prevalence:['Estimate a population percentage','../study/?activity=prevalence'],
- pilot:['Pilot retention and precision','../study/?activity=pilot_feasibility'],
+ prevalence:['Estimate a population percentage','../book/estimation-planning.html#activity-prevalence'],
+ pilot:['Pilot retention and precision','../book/estimation-planning.html#activity-pilot_feasibility'],
  cdc:['CDC: cohort and case-control design considerations','https://www.cdc.gov/field-epi-manual/php/chapters/design-conduct-analyze-field-studies.html'],
  consort:['SPIRIT–CONSORT: trial protocol and reporting guidance','https://www.consort-spirit.org/'],
  strobe:['STROBE: observational reporting guidance','https://www.strobe-statement.org/'],

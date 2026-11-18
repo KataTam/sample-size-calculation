@@ -35,7 +35,7 @@ const base=process.argv[2]||'http://127.0.0.1:8769';
  }
  const menu=require('../module/activity-contents.json');
  for(const [activity,chapter] of [['mean_precision','estimation-planning'],['pilot_feasibility','estimation-planning'],['alpha_beta','curves'],['own_study','appendix']]){
-  const entries=menu.flatMap(c=>c.activities.filter(a=>a.path==='study/?activity='+activity).map(a=>({...a,chapter:c.chapter})));
+  const entries=menu.flatMap(c=>c.activities.filter(a=>a.path.endsWith('#activity-'+activity)||a.path.endsWith('/?activity='+activity)).map(a=>({...a,chapter:c.chapter})));
   assert.equal(entries.length,1);assert.equal(entries[0].chapter,chapter);
  }
  await p.goto(base+'/book/calculations.html',{waitUntil:'networkidle'});

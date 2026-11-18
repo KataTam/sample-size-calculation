@@ -16,9 +16,9 @@ The chronic pain case compares fictional Neravixa with duloxetine for painful di
 
 | Chapter | Core activity | Contribution to the continuing report |
 |---|---|---|
-| 1. Research question and power | [Chronic pain: one study and many studies](../study/?activity=pain_one_many) | Question, assumptions and interpretation of power |
+| 1. Research question and power | [Chronic pain: one study and many studies](../book/clinical-question.html#activity-pain_one_many) | Question, assumptions and interpretation of power |
 | 2. Calculating sample size and recruitment | [Calculate a sample size: chronic pain](../book/calculations.html#calculate-sample-size) | Inputs, procedure, software and analyzable counts |
-| 2. Calculating sample size and recruitment | [Adjust recruitment](../study/?activity=recruitment) using one shared loss percentage | Recruitment per group and in total, with a short justification |
+| 2. Calculating sample size and recruitment | [Adjust recruitment](../book/calculations.html#activity-recruitment) using one shared loss percentage | Recruitment per group and in total, with a short justification |
 | 3. The sample size calculation report | [Review and complete a report](../book/reporting.html#check-reporting) | Four-error review followed by a consistency check of the learner's report |
 
 Your report develops through these four activities in the same [study-plan workspace](../assumptions_report/). The default core view asks for the essentials; “Detailed study plan” adds detailed supporting prompts to the same answers. Additional discharge practice is optional basic practice. The later simulations and independent planning are extensions.
@@ -61,7 +61,7 @@ The [annotated report in Chapter 3](../book/reporting.html#write-a-sample-size-j
 
 ## Chronic pain: one study and many studies — core
 
-[Open activity](../study/?activity=pain_one_many) · [Matching explanation](../book/clinical-question.html#activity-1-one-study-then-many)
+[Open activity](../book/clinical-question.html#activity-pain_one_many) · [Matching explanation](../book/clinical-question.html#activity-1-one-study-then-many)
 
 Purpose: see why sample estimates differ from population values, interpret the uncertainty in one trial, and relate repeated trials to power.
 
@@ -85,7 +85,7 @@ The tutorial includes selectable passages in five review activities: [discharge 
 
 ## Type I and Type II error probabilities and power — Extensions
 
-[Open activity](../study/?activity=alpha_beta) · [Matching explanation](../book/curves.html#alpha-beta)
+[Open activity](../book/curves.html#activity-alpha_beta) · [Matching explanation](../book/curves.html#alpha-beta)
 
 Purpose: connect false positives, false negatives and power with the distributions that underlie repeated-study behavior. The app calculates the shaded areas from the normal distribution.
 
@@ -110,7 +110,7 @@ Purpose: reproduce the binary-outcome sample size calculation. The calculator us
 
 ## Calculate a sample size: chronic pain
 
-[Open activity](../study/?activity=pain_calculation) · [Matching explanation](../book/calculations.html#calculate-sample-size)
+[Open activity](../book/calculations.html#activity-pain_calculation) · [Matching explanation](../book/calculations.html#calculate-sample-size)
 
 1. The starting probabilities are 60% relief with Neravixa and 30% with duloxetine, with 90% power, a two-sided Type I error probability of 5%, and no loss allowance.
 2. The result is 56 analyzable patients per group, or 112 total. The report records the inputs, normal planning approximation, software and counts.
@@ -119,7 +119,7 @@ Purpose: reproduce the binary-outcome sample size calculation. The calculator us
 
 ## Additional practice: probiotics
 
-[Open activity](../study/?activity=probiotics_calculation) · [Matching explanation](../book/calculations.html#adherence)
+[Open activity](../book/calculations.html#activity-probiotics_calculation) · [Matching explanation](../book/calculations.html#adherence)
 
 Purpose: calculate a sample size for a binary outcome and examine its sensitivity to the target difference.
 
@@ -127,7 +127,7 @@ Purpose: calculate a sample size for a binary outcome and examine its sensitivit
 2. The calculator uses 90% power and a 5% Type I error probability. Expected loss starts at zero so this step gives the analyzable requirement. The following recruitment activity applies the chosen loss allowance.
 3. Your record should identify both event percentages, the 10-point target difference, error probability, power, method, software and analyzable count per group and in total. The optional comparison with 85% illustrates a smaller target difference.
 4. “Add this calculation to my study plan” attaches the selected result after your review. Its analyzable count is the starting point for the recruitment activity. Comparing several scenarios is an extension.
-5. The optional [simulation](../study/?activity=adherence) keeps the original sample fixed while changing the probabilities that generate outcomes. This asks how the original design would perform if the true difference were smaller.
+5. The optional [simulation](../power_explorer/?activity=adherence) keeps the original sample fixed while changing the probabilities that generate outcomes. This asks how the original design would perform if the true difference were smaller.
 
 
 ## Two-mean calculator — reference
@@ -144,19 +144,19 @@ Purpose: see how a target difference and between-patient variability determine a
 
 ## Additional practice: rehabilitation
 
-[Open activity](../study/?activity=rehabilitation_calculation) · [Matching explanation](../book/calculations.html#rehabilitation)
+[Open activity](../book/calculations.html#activity-rehabilitation_calculation) · [Matching explanation](../book/calculations.html#rehabilitation)
 
 1. The target mean difference is 3 units and the common SD is 5. The two-sided Type I error probability is 5% and target power is 90%.
 2. With expected loss left at zero, the pooled two-sample t-test calculation gives 60 analyzable participants per group, or 120 total.
 3. Changing the SD to 7 while retaining the 3-unit target difference shows how greater variability increases the requirement. Your record should identify the selected inputs, method, software and counts. “Add this calculation to my study plan” attaches the result after your review. The recruitment activity starts with this analyzable requirement.
 
-The [rehabilitation simulation](../study/?activity=rehabilitation) uses a t-test method and generated outcomes. It can examine confidence intervals and repeated-study performance after the core calculation.
+The [rehabilitation simulation](../power_explorer/?activity=rehabilitation) uses a t-test method and generated outcomes. It can examine confidence intervals and repeated-study performance after the core calculation.
 
 <span id="chronic-pain-power-and-recruitment--advanced"></span>
 
 ## Chronic pain: power and recruitment — Extensions
 
-[Open activity](../study/?activity=pain_curves) · [Power curves](../book/curves.html#activity-2-can-the-feasible-study-answer-the-question) · [Available sample and feasibility](../book/curves.html#available-sample)
+[Open activity](../book/curves.html#activity-pain_curves) · [Power curves](../book/curves.html#activity-2-can-the-feasible-study-answer-the-question) · [Available sample and feasibility](../book/curves.html#available-sample)
 
 Purpose: assess whether the feasible study can answer the intended question under less favorable assumptions.
 
@@ -170,7 +170,7 @@ Purpose: assess whether the feasible study can answer the intended question unde
 
 ## Repeated chronic-pain trials — Extensions
 
-[Open activity](../study/?activity=pain_simulation) · [Matching explanation](../book/simulation.html#activity-3-generate-analyze-repeat-summarize)
+[Open activity](../book/simulation.html#activity-pain_simulation) · [Matching explanation](../book/simulation.html#activity-3-generate-analyze-repeat-summarize)
 
 Purpose: extend the core simulation from power to confidence interval coverage, interval width and simulation uncertainty.
 
@@ -193,7 +193,7 @@ The simulation above uses one final analysis. For a design with interim stopping
 
 ## Recruitment adjustment — core
 
-[Open activity](../study/?activity=recruitment) · [Matching explanation](../book/calculations.html#account-for-expected-losses)
+[Open activity](../book/calculations.html#activity-recruitment) · [Matching explanation](../book/calculations.html#account-for-expected-losses)
 
 1. The starting count should be the analyzable requirement per group from your chosen calculation. The app opens with the chronic pain example of 56 per group; you can replace that count with your selected result.
 2. One expected loss percentage applies to both groups. For the chronic pain example, 5% expected loss gives 56 / 0.95, rounded upward to 59 recruits per group and 118 total.
@@ -212,7 +212,7 @@ The simulation above uses one final analysis. For a design with interim stopping
 
 ## Unequal losses and treatment switching — Extensions
 
-[Open extension](../study/?activity=recruitment_advanced) · [Matching explanation and review](../book/study-designs.html#recruitment-extensions)
+[Open extension](../book/study-designs.html#activity-recruitment_advanced) · [Matching explanation and review](../book/study-designs.html#recruitment-extensions)
 
 1. With 56 analyzable patients per group and expected losses of 20% with novel treatment and 10% with standard treatment, equal recruitment uses the larger requirement: 70 per group, or 140 total. Expected retained counts are 56 and 63.
 2. The switching approximation starts with a requirement assuming full adherence. Starting with 100 per group, switching of 10% from novel to standard and 5% in the other direction, followed by 5% missing outcomes, gives approximately 146 recruits per group. Intermediate values remain unrounded.
@@ -223,7 +223,7 @@ The simulation above uses one final analysis. For a design with interim stopping
 
 ## Estimate a population mean with a precision target — Extensions
 
-[Open activity](../study/?activity=mean_precision) · [Matching explanation](../book/estimation-planning.html#plan-for-precision)
+[Open activity](../book/estimation-planning.html#activity-mean_precision) · [Matching explanation](../book/estimation-planning.html#plan-for-precision)
 
 Purpose: plan a useful confidence-interval width for one population mean and examine its performance across repeated samples.
 
@@ -237,7 +237,7 @@ Purpose: plan a useful confidence-interval width for one population mean and exa
 
 ## Estimate a population percentage — Extensions
 
-[Open activity](../study/?activity=prevalence) · [Matching explanation](../book/estimation-planning.html#prevalence)
+[Open activity](../book/estimation-planning.html#activity-prevalence) · [Matching explanation](../book/estimation-planning.html#prevalence)
 
 Purpose: connect the precision needed for a descriptive decision with survey size and a possible realized estimate.
 
@@ -252,7 +252,7 @@ Purpose: connect the precision needed for a descriptive decision with survey siz
 
 ## Pilot study: retention — Extensions
 
-[Open activity](../study/?activity=pilot_feasibility) · [Matching explanation](../book/estimation-planning.html#pilot-feasibility)
+[Open activity](../book/estimation-planning.html#activity-pilot_feasibility) · [Matching explanation](../book/estimation-planning.html#pilot-feasibility)
 
 Purpose: assess whether a limited pilot provides useful information for a feasibility decision.
 
@@ -264,7 +264,7 @@ Purpose: assess whether a limited pilot provides useful information for a feasib
 
 ## Discharge percentages — additional basic practice
 
-[Open activity](../study/?activity=discharge) · [Matching explanation](../book/exercises.html#discharge)
+[Open activity](../power_explorer/?activity=discharge) · [Matching explanation](../book/exercises.html#discharge)
 
 Purpose: compare three sample size plans for a hypothetical trial of discharge within seven days, distinguishing relative changes from percentage-point differences.
 
@@ -280,7 +280,7 @@ For optional simulation exploration, “One study” shows possible discharge co
 
 ## Build your own study calculation — Extensions
 
-[Open activity](../study/?activity=own_study) · [Matching explanation](../book/appendix.html#own-study)
+[Open activity](../power_explorer/?activity=own_study) · [Matching explanation](../book/appendix.html#own-study)
 
 Purpose: bring together the clinical question, numerical requirements and practical constraints.
 
@@ -295,7 +295,7 @@ Purpose: bring together the clinical question, numerical requirements and practi
 
 ## Choosing a study design — Extensions
 
-[Open questionnaire](../study/?activity=design_questionnaire) · [Matching explanation](../book/study-designs.html#design-questionnaire)
+[Open questionnaire](../book/study-designs.html#activity-design_questionnaire) · [Matching explanation](../book/study-designs.html#design-questionnaire)
 
 Purpose: identify a suitable design family and the decisions that determine its planning method.
 

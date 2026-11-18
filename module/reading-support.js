@@ -18,22 +18,6 @@
   }
   if (redirectMovedSection()) return;
   window.addEventListener('hashchange', redirectMovedSection);
-  // Previews open the existing side-panel workspace without loading an app
-  // engine in every chapter. Within that workspace, reuse its current app pane.
-  document.addEventListener('click', event => {
-    const link = event.target.closest?.('a[data-preview-open]');
-    if (!link || event.button || event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;
-    event.preventDefault(); event.stopPropagation();
-    if (window.frameElement?.id === 'lesson-frame') {
-      parent.postMessage({type:'sample-size:open-activity', activity:link.dataset.previewOpen}, location.origin);
-      return;
-    }
-    const marker = location.pathname.indexOf('/book/');
-    const base = location.protocol !== 'file:' && marker >= 0
-      ? location.origin + location.pathname.slice(0, marker + 1)
-      : 'https://katatam.github.io/sample-size-calculation/';
-    location.assign(new URL('study/?activity=' + encodeURIComponent(link.dataset.previewOpen), base));
-  }, true);
   // The same contents panel appears in the book and the embedded lesson.
   const book = document.querySelector('.book');
   const sidebar = book?.querySelector('.book-summary');
@@ -246,7 +230,7 @@
     for (const item of group.activities) {
       const li = document.createElement('li'), a = document.createElement('a');
       a.textContent = 'Activity: ' + item.label + ' (' + item.route + ')'; a.href = new URL(item.path, root).href;
-      a.target = '_blank'; a.rel = 'noopener'; li.append(a); list.append(li);
+      a.dataset.linkNavigation = 'same-tab'; li.append(a); list.append(li);
     }
     dialog.append(list);
   }

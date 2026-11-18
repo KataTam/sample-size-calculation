@@ -7,7 +7,7 @@
     "activities": [
       {
         "label": "Chronic pain: one study and many studies",
-        "path": "study/?activity=pain_one_many",
+        "path": "book/clinical-question.html#activity-pain_one_many",
         "route": "Core material",
         "section": "activity-1-one-study-then-many"
       }
@@ -27,7 +27,7 @@
       },
       {
         "label": "Adjust recruitment",
-        "path": "study/?activity=recruitment",
+        "path": "book/calculations.html#activity-recruitment",
         "route": "Core material",
         "section": "account-for-expected-losses"
       }
@@ -54,7 +54,7 @@
     "activities": [
       {
         "label": "Estimate a percentage with useful precision",
-        "path": "study/?activity=prevalence",
+        "path": "book/estimation-planning.html#activity-prevalence",
         "route": "Extensions",
         "section": "prevalence"
       },
@@ -66,13 +66,13 @@
       },
       {
         "label": "Estimate a population mean with a precision target",
-        "path": "study/?activity=mean_precision",
+        "path": "book/estimation-planning.html#activity-mean_precision",
         "route": "Extensions",
         "section": "plan-for-precision"
       },
       {
         "label": "Pilot study: estimate retention",
-        "path": "study/?activity=pilot_feasibility",
+        "path": "book/estimation-planning.html#activity-pilot_feasibility",
         "route": "Extensions",
         "section": "pilot-feasibility"
       }
@@ -87,13 +87,13 @@
     "activities": [
       {
         "label": "Explore Type I and Type II error probabilities and power",
-        "path": "study/?activity=alpha_beta",
+        "path": "book/curves.html#activity-alpha_beta",
         "route": "Extensions",
         "section": "alpha-beta"
       },
       {
         "label": "Pain relief: a recruitment decision",
-        "path": "study/?activity=pain_curves",
+        "path": "book/curves.html#activity-pain_curves",
         "route": "Extensions",
         "section": "activity-2-can-the-feasible-study-answer-the-question"
       }
@@ -107,13 +107,13 @@
     "activities": [
       {
         "label": "Simulate repeated chronic-pain trials",
-        "path": "study/?activity=pain_simulation",
+        "path": "book/simulation.html#activity-pain_simulation",
         "route": "Extensions",
         "section": "activity-3-generate-analyze-repeat-summarize"
       },
       {
         "label": "Evaluate the discharge calculation",
-        "path": "study/?activity=discharge",
+        "path": "power_explorer/?activity=discharge",
         "route": "Extensions",
         "section": "discharge-simulation"
       }
@@ -127,13 +127,13 @@
     "activities": [
       {
         "label": "Choosing a study design",
-        "path": "study/?activity=design_questionnaire",
+        "path": "book/study-designs.html#activity-design_questionnaire",
         "route": "Extensions",
         "section": "design-questionnaire"
       },
       {
         "label": "Unequal losses and treatment switching",
-        "path": "study/?activity=recruitment_advanced",
+        "path": "book/study-designs.html#activity-recruitment_advanced",
         "route": "Extensions",
         "section": "recruitment-extensions"
       },
@@ -153,7 +153,7 @@
     "activities": [
       {
         "label": "Build your own study calculation",
-        "path": "study/?activity=own_study",
+        "path": "power_explorer/?activity=own_study",
         "route": "Extensions",
         "section": "own-study"
       },

@@ -1,14 +1,14 @@
 # Presentation helpers; statistical methods live in sample_size_functions.R.
 render_app_preview <- function(ids, description, image = NULL) {
-  # Calculation and simulation apps start in place on demand. Written planning
-  # keeps the study workspace; print and offline readers keep working links.
+  # Activity previews start in place on demand. Print and offline readers keep links.
   cases <- lapply(ids, teaching_case)
   previews <- lapply(cases, function(case) {
     engine <- if (case$app %in% c("two_proportions", "two_means", "power_explorer",
-      "dropout_adjustment", "prevalence_precision", "sampling_distributions")) case$app else NULL
+      "dropout_adjustment", "prevalence_precision", "sampling_distributions",
+      "assumptions_report", "design_questionnaire")) case$app else NULL
     if (!is.null(engine)) {
       url <- paste0("https://katatam.github.io/sample-size-calculation/", engine, "/?activity=", case$id)
-      return(htmltools::tags$aside(class = "app-preview inline-activity", `data-inline-app` = engine,
+      return(htmltools::tags$aside(class = "app-preview inline-activity", id = paste0("activity-", case$id), `data-inline-app` = engine,
         `data-activity` = case$id, `aria-label` = case$title,
         htmltools::tags$p(class = "app-preview-title", paste0("Activity: ", case$title)),
         htmltools::tags$a(href = url, `data-inline-start` = "", `data-link-navigation` = "same-tab",
@@ -22,16 +22,7 @@ render_app_preview <- function(ids, description, image = NULL) {
           `aria-label` = paste0("Open ", case$title, " on its own page"),
           "Open the app on its own page"))))
     }
-    htmltools::tags$aside(
-    class = "app-preview", `aria-label` = "App preview",
-    htmltools::tags$p(class = "app-preview-title", paste0("Activity: ", case$title)),
-    htmltools::tags$a(href = paste0("https://katatam.github.io/sample-size-calculation/study/?activity=", case$id),
-      `data-preview-open` = case$id, `data-link-navigation` = "same-tab",
-      `aria-label` = paste0("Open ", case$title, " beside the tutorial"),
-      htmltools::tags$img(class = "app-preview-image",
-        src = paste0("../figures/app-previews/", case$id, ".png"),
-        alt = paste0("Screenshot of ", case$title, ": inputs and current app view"),
-        loading = "lazy", width = 1120, height = 760)))
+    stop("Unsupported inline activity app: ", case$app)
   })
   markup <- as.character(htmltools::tagList(previews))
   # Pandoc interprets four-space HTML indentation as a code block in R Markdown.

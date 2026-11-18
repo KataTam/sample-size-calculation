@@ -17,7 +17,7 @@ Use the [full references](references.md) for bibliographic details and publisher
 
 Table: Reading that supports decisions in the core study plan.
 
-Complete the [assumptions report](https://katatam.github.io/sample-size-calculation/study/?activity=assumptions_report) progressively. The chronic-pain sensitivity table makes the consequence of choosing a target larger than the clinical threshold visible. Reporting guidelines help document decisions; they do not establish the correct target or supply universal input values.
+Complete the [assumptions report](https://katatam.github.io/sample-size-calculation/book/reporting.html#activity-assumptions_report) progressively. The chronic-pain sensitivity table makes the consequence of choosing a target larger than the clinical threshold visible. Reporting guidelines help document decisions; they do not establish the correct target or supply universal input values.
 
 ## Choose an extension for your question
 

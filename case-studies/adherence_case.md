@@ -6,11 +6,11 @@ Compare probiotic supplementation with no supplementation in pregnant women with
 
 For calculation practice, assume disease occurs in 20% without probiotics, an expected 8% with probiotics and a target of 10% with probiotics. The expected reduction is 12 percentage points, the target reduction is 10 points and the clinical threshold is 5 points. These are invented teaching values.
 
-The [lab](https://katatam.github.io/sample-size-calculation/study/?activity=adherence) uses a positive difference for benefit. Enter remaining free of gestational diabetes as the favorable event: 80% without probiotics versus 90% with probiotics. The resulting 10-point increase equals the 10-point reduction in disease. Specify the event and direction in the report.
+The [lab](https://katatam.github.io/sample-size-calculation/power_explorer/?activity=adherence) uses a positive difference for benefit. Enter remaining free of gestational diabetes as the favorable event: 80% without probiotics versus 90% with probiotics. The resulting 10-point increase equals the 10-point reduction in disease. Specify the event and direction in the report.
 
-Use Type I error probability 5%, target power 90%, equal independent groups and 15% expected loss per arm. The recruitment cap is 240. The [lab](https://katatam.github.io/sample-size-calculation/study/?activity=adherence) uses score-test power approximation and assesses finite-sample performance by simulation, with Newcombe-Wilson intervals. The shared definition is `adherence` in `R/teaching_cases.R`.
+Use Type I error probability 5%, target power 90%, equal independent groups and 15% expected loss per arm. The recruitment cap is 240. The [lab](https://katatam.github.io/sample-size-calculation/power_explorer/?activity=adherence) uses score-test power approximation and assesses finite-sample performance by simulation, with Newcombe-Wilson intervals. The shared definition is `adherence` in `R/teaching_cases.R`.
 
-[Open the tutorial and app](https://katatam.github.io/sample-size-calculation/study/?activity=adherence).
+[Open the tutorial and app](https://katatam.github.io/sample-size-calculation/power_explorer/?activity=adherence).
 
 1. Express the target as a disease reduction and as an increase in the percentage remaining disease-free.
 2. Predict whether the plan fits the recruitment cap after allowing for losses.
