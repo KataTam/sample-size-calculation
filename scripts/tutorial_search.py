@@ -4,6 +4,11 @@ from pathlib import Path
 import json
 import re
 
+# Preserve familiar search phrases when a question receives a clearer title.
+LEGACY_SEARCH_TERMS = {
+    'does-20-better-mean-20-percentage-points': '20% better',
+}
+
 
 class ChapterParser(HTMLParser):
     def __init__(self, filename):
@@ -79,6 +84,7 @@ def build_tutorial_search(book, script):
         parser.feed(content)
         for entry in parser.entries:
             entry['text'] = ' '.join(' '.join(entry.pop('parts')).split())
+            entry['keywords'] = LEGACY_SEARCH_TERMS.get(entry['url'].partition('#')[2], '')
             entries.append(entry)
         source = source.replace('</body>', '<script src="tutorial-search.js"></script>\n</body>')
         path.write_text(source, encoding='utf-8')

@@ -30,8 +30,10 @@ const base=(process.argv[2]||'http://127.0.0.1:8769').replace(/\/$/,'');
   };
   const handle=(side='upper',panel=0)=>frame.locator(`.boundary-handle[data-side="${side}"][data-panel="${panel}"]`);
   const reset=async()=>{
-   const settings=frame.locator('.app-settings');
-   if(await settings.count() && !await settings.evaluate(e=>e.open)) await settings.locator(':scope > summary').click();
+   // Inline layout places the case reset inside the additional input controls.
+   for(const settings of await frame.locator('details').filter({has:frame.locator('#load_case')}).all()) {
+    if(!await settings.evaluate(e=>e.open)) await settings.locator(':scope > summary').click();
+   }
    await frame.locator('#load_case').click();
    await frame.waitForFunction(()=>Math.abs(Number(document.querySelector('#boundary-controls').dataset.alpha)-.05)<1e-10 && document.querySelectorAll('.boundary-handle').length===2);
    await settled();

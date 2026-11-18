@@ -55,7 +55,7 @@
       if (sequence !== request) return;
       const words = normalize(query).split(/\s+/);
       const matches = index.filter(item => {
-        const text = normalize(item.chapter + ' ' + item.section + ' ' + item.text);
+        const text = normalize(item.chapter + ' ' + item.section + ' ' + item.text + ' ' + (item.keywords || ''));
         return words.every(word => text.includes(word));
       });
       results.replaceChildren(status);
