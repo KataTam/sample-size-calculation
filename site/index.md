@@ -21,6 +21,20 @@ Open teaching materials for reasoning about sample size in medical studies.
   </a>
 </nav>
 
+<section class="pilot-feedback" aria-labelledby="pilot-session-title">
+  <h2 id="pilot-session-title">Pilot session</h2>
+  <div class="pilot-form-links">
+    <a class="pilot-form-link" href="https://forms.cloud.microsoft/e/0v6PL2Xc6V">
+      <span>Before the session</span>
+      <span class="form-detail">Background and expectations · about 4 minutes</span>
+    </a>
+    <a class="pilot-form-link" href="https://forms.cloud.microsoft/e/HmKcrDJkMm">
+      <span>After the session</span>
+      <span class="form-detail">Experience and next steps · about 5 minutes</span>
+    </a>
+  </div>
+</section>
+
 Ideas, questions, or problems with the tutorial or activities? [Ideas and feedback](https://forms.cloud.microsoft/e/j00AMibqi5). You can leave an email address if you would like a reply.
 
 <footer class="landing-footer">

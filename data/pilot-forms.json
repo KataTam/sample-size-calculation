@@ -1,0 +1,180 @@
+{
+  "before": {
+    "title": "Before the session — your background and expectations",
+    "minutes": 4,
+    "introduction": "This resource is being developed together with students and educators. Your responses will help us make sample-size education clearer, more accessible, and more relevant to students and researchers.\n\nParticipation is voluntary. You may skip any question, and your responses will not affect your assessment or access to the materials. We collect feedback for educational development and evaluation. We will never sell your responses or use them for advertising or commercial profiling. Findings may be summarized in educational presentations or publications, with identifying details removed.\n\nWe do not ask for your name. Please avoid including patient information, names, or confidential project details.",
+    "confirmation": "Thank you for sharing your starting point. You can now explore the resource. At the end of the session, we will invite you to share how it worked for you.",
+    "questions": [
+      {
+        "type": "choice",
+        "title": "What best describes your current role?",
+        "options": [
+          "Bachelor’s student",
+          "Master’s student",
+          "PhD candidate",
+          "Researcher",
+          "Healthcare professional",
+          "Educator",
+          "Prefer not to say"
+        ],
+        "other": true
+      },
+      {
+        "type": "choice",
+        "title": "Which best describes your previous experience with sample-size calculations?",
+        "options": [
+          "I have not encountered them before.",
+          "I have learned about them but have not used them for a study.",
+          "I have used them with guidance or support.",
+          "I have used them independently.",
+          "I am not sure."
+        ]
+      },
+      {
+        "type": "choice",
+        "title": "Which situation best describes why you are using this resource?",
+        "options": [
+          "I am planning or designing a study.",
+          "I am collecting data for a study.",
+          "I am working with data that have already been collected.",
+          "I am learning about sample size without a particular study in mind.",
+          "I am exploring the resource for teaching or supporting others."
+        ],
+        "other": true
+      },
+      {
+        "type": "text",
+        "title": "If you have a study in mind, what would it investigate?",
+        "help": "One or two sentences are enough: what would you like to find out, who or what would you study, and what would you measure? It is fine if some details are undecided."
+      },
+      {
+        "type": "text",
+        "title": "What are your one or two main questions about sample size at the moment?",
+        "help": "These could concern a particular calculation, a term you find confusing, or a decision about your study."
+      },
+      {
+        "type": "text",
+        "title": "What would you most like to understand or be able to do after using this resource?",
+        "help": "You could complete this sentence: ‘By the end of the session, I hope to…’"
+      },
+      {
+        "type": "likert",
+        "title": "How confident do you currently feel about the following?",
+        "statements": [
+          "Identifying the information needed for a sample-size calculation",
+          "Interpreting the result of a sample-size calculation",
+          "Explaining why particular assumptions were chosen"
+        ],
+        "options": [
+          "Not at all confident",
+          "Slightly confident",
+          "Moderately confident",
+          "Very confident",
+          "Extremely confident",
+          "Not relevant to my current needs"
+        ]
+      }
+    ],
+    "url": "https://forms.cloud.microsoft/e/0v6PL2Xc6V"
+  },
+  "after": {
+    "title": "After the session — your experience and next steps",
+    "minutes": 5,
+    "introduction": "Thank you for exploring the resource. We would like to hear how it met your needs, what you learned, and what would benefit from further development. Your feedback will help us improve the materials for future students and researchers.\n\nYour experience of the parts you used is enough to answer this form.\n\nParticipation is voluntary. You may skip any question, and your responses will not affect your assessment or access to the materials. We collect feedback for educational development and evaluation. We will never sell your responses or use them for advertising or commercial profiling. Findings may be summarized in educational presentations or publications, with identifying details removed.\n\nWe do not ask for your name. Please avoid including patient information, names, or confidential project details.",
+    "confirmation": "Thank you for helping develop this resource. Your feedback will inform the next revisions. We plan to share a short summary of the suggestions received and how they were addressed.",
+    "questions": [
+      {
+        "type": "choice",
+        "title": "Which parts of the resource did you use during this session?",
+        "multiple": true,
+        "options": [
+          "Tutorial explanations and worked examples",
+          "Interactive apps and their activities",
+          "Study-plan and sample-size calculation report activity",
+          "‘Question to consider’ boxes and example answers",
+          "Chapter quizzes or the cumulative quiz",
+          "Glossary or common misconceptions",
+          "Flashcards",
+          "Teaching guide or adaptation guidance",
+          "I have not explored enough to comment."
+        ],
+        "other": true
+      },
+      {
+        "type": "choice",
+        "title": "Thinking back to the questions you had before the session, how far did the resource answer them?",
+        "options": [
+          "Not at all",
+          "To a small extent",
+          "Partly",
+          "Mostly",
+          "Fully",
+          "I did not reach the relevant material.",
+          "I did not have a particular question beforehand."
+        ]
+      },
+      {
+        "type": "choice",
+        "title": "How well did the resource meet what you hoped to gain from the session?",
+        "options": [
+          "Not at all",
+          "To a small extent",
+          "Partly",
+          "Mostly",
+          "Fully",
+          "I have not explored enough to judge.",
+          "I did not have a particular expectation beforehand."
+        ]
+      },
+      {
+        "type": "text",
+        "title": "What is one thing you learned or clarified, if anything?",
+        "help": "A specific idea, calculation, or decision is helpful. You can also describe something you now understand differently."
+      },
+      {
+        "type": "likert",
+        "title": "How confident do you currently feel about the following?",
+        "statements": [
+          "Identifying the information needed for a sample-size calculation",
+          "Interpreting the result of a sample-size calculation",
+          "Explaining why particular assumptions were chosen"
+        ],
+        "options": [
+          "Not at all confident",
+          "Slightly confident",
+          "Moderately confident",
+          "Very confident",
+          "Extremely confident",
+          "Not relevant to my current needs"
+        ]
+      },
+      {
+        "type": "text",
+        "title": "Which part helped you most, and what made it useful?",
+        "help": "You can name an explanation, example, figure, app, activity, or other feature."
+      },
+      {
+        "type": "text",
+        "title": "What is the most important thing we should improve or develop further?",
+        "help": "This could be an unanswered question, a confusing explanation, a missing topic, or difficulty reading, navigating, or using an app. A chapter or app name would help us locate it."
+      },
+      {
+        "type": "choice",
+        "title": "How likely are you to return to this resource?",
+        "options": [
+          "Very unlikely",
+          "Unlikely",
+          "Unsure",
+          "Likely",
+          "Very likely"
+        ]
+      },
+      {
+        "type": "text",
+        "title": "What would you return to it for, or what would make you more likely to return?",
+        "help": "For example, planning a study, checking a calculation, writing a report, reviewing concepts, or teaching."
+      }
+    ],
+    "url": "https://forms.cloud.microsoft/e/HmKcrDJkMm"
+  }
+}

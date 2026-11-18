@@ -8,13 +8,19 @@ table { border-collapse: collapse; display: block; max-width: 100%; overflow-x: 
 .start-route > span { display: block; color: #364d59; }
 .start-route strong { display: block; margin-top: .4rem; font-size: 1.2rem; }
 .start-route:hover { background: #e6f1f6; border-color: #075b86; }
+.pilot-feedback { margin: 1.5rem 0; }
+.pilot-feedback h2 { font-size: 1.25rem; margin: 0 0 .75rem; }
+.pilot-form-links { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .75rem 1.5rem; }
+.pilot-form-link { display: block; padding: .65rem 0; }
+.pilot-form-link span { display: block; }
+.pilot-form-link .form-detail { color: #415761; font-size: .9rem; text-decoration: none; }
 .landing-footer { border-top: 1px solid #ccd7df; padding-top: 1rem; margin-top: 2rem; font-size: .9rem; color: #415761; }
 .learning-goals { border-left: 4px solid #3263a0; background: #edf3fc; color: #25313b; padding: 12px 20px; margin: 20px 0 26px; }
 .learning-goals p:last-child { margin-bottom: 0; }
 .learning-goals ul { padding-left: 1.4em; margin-bottom: 0; }
 .learning-goals li + li { margin-top: .3em; }
 .learning-goals strong { color: #244f86; }
-@media(max-width: 600px) { .start-routes { grid-template-columns: 1fr; } }
+@media(max-width: 600px) { .start-routes, .pilot-form-links { grid-template-columns: 1fr; } }
 @media(max-width: 600px) { body { margin-top: 1.5rem; } h1 { font-size: 1.9rem; } }
 
 /* Normal-weight content; headings and disclosure titles keep their hierarchy. */
