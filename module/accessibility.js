@@ -21,7 +21,7 @@
     main.querySelectorAll('.core-heading > h1, .advanced-heading > h1').forEach(h => {
       if (h.querySelector('.reader-level')) return;
       const badge = document.createElement('span'); badge.className = 'reader-level';
-      badge.textContent = h.parentElement.classList.contains('advanced-heading') ? 'Advanced ' : 'Core '; h.prepend(badge);
+      badge.textContent = h.parentElement.classList.contains('advanced-heading') ? 'Extensions ' : 'Core material '; h.prepend(badge);
     });
     main.querySelectorAll('a[target="_blank"]').forEach(a => {
       if (!a.getAttribute('aria-label') && a.textContent.trim()) a.setAttribute('aria-label', a.textContent.trim() + ' (opens in a new tab)');

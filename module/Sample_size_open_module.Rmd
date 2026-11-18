@@ -55,7 +55,7 @@ Although the examples are clinical, the principles of justifying assumptions, ch
 
 ## How to use this tutorial {-}
 
-This tutorial is for students and researchers. Chapters 1–3 form the Core route for basic two-arm trial planning. Chapters 4–8 offer Advanced topics that you can consult according to your study question. The glossary and common questions are reference pages for either route.
+Chapters 1–3 form the Core material, covering the research question, calculations, recruitment and reporting for a basic two-arm trial. Chapters 4–8 are Extensions on estimation, uncertain assumptions, simulation, other study designs and reproducibility. Their relevance depends on your research question. The glossary and common questions support both parts.
 
 Activities are learning exercises; apps are the software used to carry them out. The roadmap links the reading, activities and apps. Expandable misconception boxes explain common difficulties as they arise.
 
@@ -72,9 +72,9 @@ cat('<figure class="tutorial-roadmap">',
 
 Chapter quizzes and the [cumulative quiz](#cumulative-quiz) help you check your understanding. The [activity walkthroughs](https://katatam.github.io/sample-size-calculation/student-materials/activity-walkthroughs.html) provide additional guidance when needed.
 
-The three core chapters develop one [sample size calculation report](#reporting), with a supporting study plan. Advanced chapters extend the calculations to estimation, uncertain assumptions, simulation and other study designs.
+The three core chapters develop one [sample size calculation report](#reporting), with a supporting study plan.
 
-[Flashcards](https://katatam.github.io/sample-size-calculation/student-materials/flashcards/index.html) are available for Core and Core + Advanced, with a [question-and-answer preview](https://katatam.github.io/sample-size-calculation/student-materials/flashcards/cards.html) and Anki/Quizlet downloads.
+[Flashcards](https://katatam.github.io/sample-size-calculation/student-materials/flashcards/index.html) are available as Core and Complete tutorial decks, with a [question-and-answer preview](https://katatam.github.io/sample-size-calculation/student-materials/flashcards/cards.html) and Anki/Quizlet downloads.
 
 <!-- PILOT_GENERAL_FEEDBACK_HIDDEN: restore this sentence after the pilot.
 Questions and suggestions are welcome through [Feedback](https://forms.cloud.microsoft/e/j00AMibqi5).
@@ -83,7 +83,7 @@ Questions and suggestions are welcome through [Feedback](https://forms.cloud.mic
 The overarching learning outcome is to critically appraise how a medical study justifies its sample size and judge whether its assumptions, methods and results support its conclusions. The outcomes below develop the knowledge and skills needed for that appraisal.
 
 ::: {.learning-goals .core-outcomes}
-## Core learning outcomes {#core-route .unnumbered .core-heading}
+## Learning outcomes for Core material {#core-route .unnumbered .core-heading}
 
 The linked sections should help you develop a sample size justification for a basic two-arm trial. By the end, you should be able to:
 
@@ -97,9 +97,9 @@ The linked sections should help you develop a sample size justification for a ba
 :::
 
 ::: {.learning-goals .advanced-outcomes}
-## Advanced learning outcomes {#advanced-route .unnumbered .advanced-heading}
+## Learning outcomes for Extensions {#advanced-route .unnumbered .advanced-heading}
 
-The extensions below may be relevant to your study question. They should help you:
+The Extensions address different study questions and methods. Their learning outcomes are to:
 
 - Plan a [prevalence estimate](#prevalence) or [population mean estimate](#plan-for-precision) for a useful confidence interval width, and [interpret intervals clinically](#interpret-a-confidence-interval-clinically).
 - Distinguish [an observed significance boundary from planned power](#critical-observed-difference) and explore [sampling distributions and error regions](#alpha-beta).
@@ -207,7 +207,7 @@ Table: (\#tab:pain-planning-values) Earlier observations and two planning decisi
 
 Figure \@ref(fig:planning-differences) places these values on the same scale. All are absolute differences in percentage points. Labels such as small, medium or large leave the clinical meaning unspecified [@caldwell2020].
 
-The advanced section [Choosing plausible assumptions](#st01-expectations) discusses how previous findings, target differences, and clinical judgments inform a study plan.
+The section [Choosing plausible assumptions](#st01-expectations) discusses how previous findings, target differences, and clinical judgments inform a study plan.
 
 ```{r planning-differences, echo=FALSE, fig.width=8, fig.height=3, fig.cap="Difference observed in the pilot, target difference and clinical threshold for the chronic pain trial. The pilot value is a sample result; the target and threshold concern population differences. All are expressed in percentage points. Their values may coincide or follow a different order in other studies.", fig.alt="Three compact horizontal rows share an axis for novel minus standard treatment. Each line starts at zero and ends at its labeled value: difference observed in the pilot, 40 percentage points, calculated from the pilot patients; target difference, 30 points, used to evaluate power; clinical threshold, 20 points, the smallest benefit judged worthwhile."}
 draw_planning_differences()
@@ -377,9 +377,9 @@ render_app_preview("pain_one_many", "Simulate further trials and compare differe
   image = "../figures/pain-trials-preview.png")
 ```
 
-This repeated-study approach follows the introductory teaching idea in @superpowerbook2022 and the use of simulation in health-sciences education [@thiesmeier2024; @rudolph2021]. The [advanced simulation explanation](#precision-of-a-simulation) examines how precisely a simulation estimates study performance.
+This repeated-study approach follows the introductory teaching idea in @superpowerbook2022 and the use of simulation in health-sciences education [@thiesmeier2024; @rudolph2021]. The [simulation explanation](#precision-of-a-simulation) examines how precisely a simulation estimates study performance.
 
-The advanced chapter on [power and uncertain assumptions](#curves) explains the sampling-distribution diagrams and the pilot's significance boundary. The simple simulation here provides the background needed for the basic calculations.
+The chapter on [power and uncertain assumptions](#curves) explains the sampling-distribution diagrams and the pilot's significance boundary. The simple simulation here provides the background needed for the basic calculations.
 
 <div class="chapter-recap">
 
@@ -582,9 +582,9 @@ render_app_preview("probiotics_calculation", "Apply the calculation to a prevent
 ```
 
 <details class="advanced-explanation">
-<summary>Advanced: simulate the prevention trial</summary>
+<summary>Simulate the prevention trial</summary>
 
-The [probiotics simulation activity](https://katatam.github.io/sample-size-calculation/study/?activity=adherence) also considers a recruitment ceiling of 240 and 15% unavailable outcomes. These assumptions give a requirement of `r 2 * adjust_for_dropout(adherence_plan$n, adherence_case$inputs$dropout)` recruits. The [advanced feasibility discussion](#stress-test-the-study-plan) explains how to assess such a shortfall.
+The [probiotics simulation activity](https://katatam.github.io/sample-size-calculation/study/?activity=adherence) also considers a recruitment ceiling of 240 and 15% unavailable outcomes. These assumptions give a requirement of `r 2 * adjust_for_dropout(adherence_plan$n, adherence_case$inputs$dropout)` recruits. The [feasibility discussion](#stress-test-the-study-plan) explains how to assess such a shortfall.
 
 </details>
 
@@ -657,7 +657,7 @@ Your study plan should document the source of the assumed SD and examine a plaus
 
 </details>
 
-Your study plan should record the inputs, pooled two-sample t-test procedure, software, two-sided test, equal allocation, and rounded counts. The advanced [software and statistical support guide](#software-support) reviews calculation software and explains when early advice from a statistician is useful. Its [worked example](#gpower-assumptions) shows how an effect-size input can change the result.
+Your study plan should record the inputs, pooled two-sample t-test procedure, software, two-sided test, equal allocation, and rounded counts. The [software and statistical support guide](#software-support) reviews calculation software and explains when early advice from a statistician is useful. Its [worked example](#gpower-assumptions) shows how an effect-size input can change the result.
 
 <details id="rehabilitation" class="optional-practice">
 <summary>Additional practice: rehabilitation</summary>
@@ -698,9 +698,9 @@ The pooled t-test calculation increases from `r rehabilitation_plan$n` to `r sam
 Although an improvement score uses before/after information within each patient, this example analyzes one score per patient across two independent groups. A single-group paired comparison, repeated-measures model, or baseline-adjusted analysis needs its own planning method.
 
 <details class="advanced-explanation">
-<summary>Advanced: simulate rehabilitation outcomes</summary>
+<summary>Simulate rehabilitation outcomes</summary>
 
-The [rehabilitation simulation](https://katatam.github.io/sample-size-calculation/study/?activity=rehabilitation) uses a t-test planning method. *One study* generates independent, normally distributed improvement scores. Its test evaluates evidence against a zero population difference. *Many studies* shows how conclusions vary under the same population assumptions. This optional advanced extension can be used after the core calculation.
+The [rehabilitation simulation](https://katatam.github.io/sample-size-calculation/study/?activity=rehabilitation) uses a t-test planning method. *One study* generates independent, normally distributed improvement scores. Its test evaluates evidence against a zero population difference. *Many studies* shows how conclusions vary under the same population assumptions. This extension can be used after the core calculation.
 
 </details>
 
@@ -756,7 +756,7 @@ For the chronic pain trial, 5% expected loss means approximately 95% of recruits
 <span id="model-answer-protocol-counts"></span>
 The protocol should report both the required [analyzable sample](#analyzable-sample-size) and the recruitment target, per group and in total: here, `r 2 * analyzable_per_group` analyzable patients and `r 2 * recruit_per_group` recruits across the two groups.
 
-Missing outcomes may be more common in one treatment group or among patients with poor outcomes. Your study should plan for follow-up and an appropriate analysis as well as the expected count. The advanced [missing-outcome extension](#explore-missing-outcomes) examines unequal losses and possible bias.
+Missing outcomes may be more common in one treatment group or among patients with poor outcomes. Your study should plan for follow-up and an appropriate analysis as well as the expected count. The [missing-outcome extension](#explore-missing-outcomes) examines unequal losses and possible bias.
 
 
 ```{r recruitment-app-preview, echo=FALSE, results='asis'}
@@ -771,7 +771,7 @@ Recruiting extra participants can help preserve the analyzable sample size and s
 
 </details>
 
-Treatment discontinuation, switching and rescue medication can affect the treatment difference used in planning. The advanced section [Treatment changes and the outcome you want to compare](#treatment-changes) explains how these events enter the research question and calculation.
+Treatment discontinuation, switching and rescue medication can affect the treatment difference used in planning. The section [Treatment changes and the outcome you want to compare](#treatment-changes) explains how these events enter the research question and calculation.
 
 ## Assessing recruitment feasibility {#recruitment-feasibility .core-heading}
 
@@ -783,7 +783,7 @@ For example, the clinics see 100 potentially relevant patients each month. Of th
 draw_recruitment_funnel()
 ```
 
-At this rate, recruiting `r 2 * recruit_per_group` patients would take `r ceiling(2 * recruit_per_group / 15)` whole months. The supporting plan should also consider site-opening delays and a slower recruitment scenario. The advanced section [Exploring power and uncertain assumptions](#planning-uncertainty) examines the evidence behind recruitment forecasts, while [Options when the study provides insufficient information](#what-if-the-study-is-too-small-for-its-purpose) discusses changes to the design or recruitment plan.
+At this rate, recruiting `r 2 * recruit_per_group` patients would take `r ceiling(2 * recruit_per_group / 15)` whole months. The supporting plan should also consider site-opening delays and a slower recruitment scenario. The section [Exploring power and uncertain assumptions](#planning-uncertainty) examines the evidence behind recruitment forecasts, while [Options when the study provides insufficient information](#what-if-the-study-is-too-small-for-its-purpose) discusses changes to the design or recruitment plan.
 
 <details class="misconception" id="lasagnas-law">
 <summary>Common misconception: many patients in the clinic means enough recruits</summary>
@@ -893,7 +893,7 @@ The [study-plan activity](https://katatam.github.io/sample-size-calculation/assu
 
 ## What belongs in the report? {#record-assumptions .core-heading}
 
-Table \@ref(tab:planning-assumptions) uses the same four headings as the report activity. The linked chapters explain each decision. The advanced view develops evidence appraisal, alternative assumptions and feasibility in more detail.
+Table \@ref(tab:planning-assumptions) uses the same four headings as the report activity. The linked chapters explain each decision. The detailed view develops evidence appraisal, alternative assumptions and feasibility in more detail.
 
 ::: {.planning-assumptions}
 
@@ -951,7 +951,7 @@ render_app_preview("assumptions_report", "Develop your question, assumptions and
 ```
 
 
-The [advanced planning extension](#extend-study-plan) develops alternative scenarios and a fuller evidence record. The [teaching guide](https://katatam.github.io/sample-size-calculation/teaching/TEACHING_GUIDE.html#extended-sample-size-justification) supplies a longer assignment and peer-review prompts.
+The [planning extension](#extend-study-plan) develops alternative scenarios and a fuller evidence record. The [teaching guide](https://katatam.github.io/sample-size-calculation/teaching/TEACHING_GUIDE.html#extended-sample-size-justification) supplies a longer assignment and peer-review prompts.
 
 <div class="chapter-recap">
 
@@ -1919,7 +1919,7 @@ Your study plan should describe how missing outcomes will be minimized, how thei
 
 The simulations below start with recruited participants so that losses affect the number available for analysis.
 
-The [repeated chronic pain trial activity](https://katatam.github.io/sample-size-calculation/study/?activity=pain_simulation) also lets you examine how missing outcomes affect a treatment comparison. In *Settings*, the advanced *Explore missing outcomes* controls offer four scenarios. Each uses the same recruited count and the same population relief probabilities, so you can distinguish the consequences of losing information from those of selectively losing particular outcomes.
+The [repeated chronic pain trial activity](https://katatam.github.io/sample-size-calculation/study/?activity=pain_simulation) also lets you examine how missing outcomes affect a treatment comparison. In *Settings*, the *Explore missing outcomes* controls offer four scenarios. Each uses the same recruited count and the same population relief probabilities, so you can distinguish the consequences of losing information from those of selectively losing particular outcomes.
 
 | Scenario | Assumptions about missing outcomes |
 |:--|:--|
@@ -2227,7 +2227,7 @@ Adaptations should keep the editable R Markdown, shared case settings, app code 
 
 <span id="extend-study-plan"></span>
 
-In [your continuing report](https://katatam.github.io/sample-size-calculation/assumptions_report/?level=advanced&stage=question), the advanced prompts expand the same answers into a fuller study plan. Under *Study settings*, selecting relevant design features adds prompts for clustering, repeated measurements, survival outcomes, noninferiority or equivalence, multiple claims, interim decisions, or simulation. An external calculation can be documented with its inputs, method, result and software version. You can appraise evidence for each input, justify plausible ranges, compare several sensitivity scenarios, and document feasibility and unresolved decisions. Switching views preserves your writing and attached calculations. The [teaching guide](https://katatam.github.io/sample-size-calculation/teaching/TEACHING_GUIDE.html#extended-sample-size-justification) provides an extended assignment and peer-review questions.
+In [your continuing report](https://katatam.github.io/sample-size-calculation/assumptions_report/?level=advanced&stage=question), the detailed prompts expand the same answers into a fuller study plan. Under *Study settings*, selecting relevant design features adds prompts for clustering, repeated measurements, survival outcomes, noninferiority or equivalence, multiple claims, interim decisions, or simulation. An external calculation can be documented with its inputs, method, result and software version. You can appraise evidence for each input, justify plausible ranges, compare several sensitivity scenarios, and document feasibility and unresolved decisions. Switching views preserves your writing and attached calculations. The [teaching guide](https://katatam.github.io/sample-size-calculation/teaching/TEACHING_GUIDE.html#extended-sample-size-justification) provides an extended assignment and peer-review questions.
 
 Your study report can include a simulation result with its generating assumptions, analysis, repetition count and Monte Carlo interval. Your explanation should address what it adds to the analytical calculation. You can also write a short hypothetical study abstract that distinguishes the planned design, realized results and interpretation, following the broader learning sequence used in DICE [@thiesmeier2024].
 
@@ -2320,7 +2320,7 @@ From a baseline of 80%, a 20% relative increase gives 96% ($0.80\times1.20=0.96$
 
 </details>
 
-The advanced [discharge simulation](#discharge-simulation) examines how the approximation performs when the assumed event probability is close to 100%.
+The [discharge simulation](#discharge-simulation) examines how the approximation performs when the assumed event probability is close to 100%.
 
 ## Cumulative quiz {#cumulative-quiz .unnumbered}
 
@@ -2362,7 +2362,7 @@ Your choice of reading can follow the decision you need to make; the [reading gu
 - Design-specific guidance: @ying2025 and @eldridge2016 address pilot objectives; @candel2023 addresses efficient designs; @riley2020 addresses prediction-model development. CONSORT's explanation and elaboration details reporting, including sample size assumptions in item 16a [@consortee2025].
 - For multiple outcomes and testing hierarchies, see @fdamultiple2022. For interim analyses, stopping guidelines and sample-size re-estimation, see ICH E9, Sections 3.4 and 4.4-4.6 [@iche91998], and @fdaadaptive2019. These support the [testing strategies](#multiple-outcomes-comparisons) and [additional reporting checklist](#complex-design-record).
 - For the distinction between an observed significance boundary and planned power, see @lakens2022 and section 1.7 of *Power Analysis with Superpower* [@superpowerbook2022]. Chapters 11 and 15 of that book extend the simulation examples.
-- Advanced methods and reference books: @pargent2024 explains mixed-model simulation, and @superpowerbook2022 supports exploring repeated studies. @julious2004 reviews normal-outcome trial calculations; @julious2023 provides broader design-specific sample size methods. @piantadosi2024 places planning within broader trial methodology. These books offer further detail on design-specific methods.
+- Further methods and reference books: @pargent2024 explains mixed-model simulation, and @superpowerbook2022 supports exploring repeated studies. @julious2004 reviews normal-outcome trial calculations; @julious2023 provides broader design-specific sample size methods. @piantadosi2024 places planning within broader trial methodology. These books offer further detail on design-specific methods.
 
 For readers exploring prediction models, @shamsutdinova2026 describes recent simulation-based approaches (currently in preprint).
 

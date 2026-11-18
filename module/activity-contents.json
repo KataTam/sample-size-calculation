@@ -3,12 +3,12 @@
     "chapter": "clinical-question",
     "anchor": "clinical-question",
     "title": "Research question and power",
-    "route": "Core",
+    "route": "Core material",
     "activities": [
       {
         "label": "Chronic pain: one study and many studies",
         "path": "study/?activity=pain_one_many",
-        "route": "Core",
+        "route": "Core material",
         "section": "activity-1-one-study-then-many"
       }
     ]
@@ -17,18 +17,18 @@
     "chapter": "calculations",
     "anchor": "calculations",
     "title": "Calculating sample size and recruitment",
-    "route": "Core",
+    "route": "Core material",
     "activities": [
       {
         "label": "Calculate a sample size: chronic pain",
         "path": "book/calculations.html#calculate-sample-size",
-        "route": "Core",
+        "route": "Core material",
         "section": "two-proportions"
       },
       {
         "label": "Adjust recruitment",
         "path": "study/?activity=recruitment",
-        "route": "Core",
+        "route": "Core material",
         "section": "account-for-expected-losses"
       }
     ]
@@ -37,12 +37,12 @@
     "chapter": "reporting",
     "anchor": "reporting",
     "title": "The sample size calculation report",
-    "route": "Core",
+    "route": "Core material",
     "activities": [
       {
         "label": "Review and complete a sample size calculation report",
         "path": "book/reporting.html#check-reporting",
-        "route": "Core",
+        "route": "Core material",
         "section": "check-reporting"
       }
     ]
@@ -50,30 +50,30 @@
   {
     "chapter": "estimation-planning",
     "anchor": "estimation-planning",
-    "route": "Advanced",
+    "route": "Extensions",
     "activities": [
       {
         "label": "Estimate a percentage with useful precision",
         "path": "study/?activity=prevalence",
-        "route": "Advanced",
+        "route": "Extensions",
         "section": "prevalence"
       },
       {
         "label": "Review an estimation sample size calculation report",
         "path": "book/estimation-planning.html#estimation-report-error-activity",
-        "route": "Advanced",
+        "route": "Extensions",
         "section": "estimation-report"
       },
       {
         "label": "Estimate a population mean with a precision target",
         "path": "study/?activity=mean_precision",
-        "route": "Advanced",
+        "route": "Extensions",
         "section": "plan-for-precision"
       },
       {
         "label": "Pilot study: estimate retention",
         "path": "study/?activity=pilot_feasibility",
-        "route": "Advanced",
+        "route": "Extensions",
         "section": "pilot-feasibility"
       }
     ],
@@ -83,18 +83,18 @@
     "chapter": "curves",
     "anchor": "curves",
     "title": "Exploring power and uncertain assumptions",
-    "route": "Advanced",
+    "route": "Extensions",
     "activities": [
       {
         "label": "Explore Type I and Type II error probabilities and power",
         "path": "study/?activity=alpha_beta",
-        "route": "Advanced",
+        "route": "Extensions",
         "section": "alpha-beta"
       },
       {
         "label": "Pain relief: a recruitment decision",
         "path": "study/?activity=pain_curves",
-        "route": "Advanced",
+        "route": "Extensions",
         "section": "activity-2-can-the-feasible-study-answer-the-question"
       }
     ]
@@ -103,18 +103,18 @@
     "chapter": "simulation",
     "anchor": "simulation",
     "title": "Building and evaluating simulations",
-    "route": "Advanced",
+    "route": "Extensions",
     "activities": [
       {
         "label": "Simulate repeated chronic-pain trials",
         "path": "study/?activity=pain_simulation",
-        "route": "Advanced",
+        "route": "Extensions",
         "section": "activity-3-generate-analyze-repeat-summarize"
       },
       {
         "label": "Evaluate the discharge calculation",
         "path": "study/?activity=discharge",
-        "route": "Advanced",
+        "route": "Extensions",
         "section": "discharge-simulation"
       }
     ]
@@ -123,24 +123,24 @@
     "chapter": "study-designs",
     "anchor": "study-designs",
     "title": "Study designs and testing strategies",
-    "route": "Advanced",
+    "route": "Extensions",
     "activities": [
       {
         "label": "Choosing a study design",
         "path": "study/?activity=design_questionnaire",
-        "route": "Advanced",
+        "route": "Extensions",
         "section": "design-questionnaire"
       },
       {
         "label": "Unequal losses and treatment switching",
         "path": "study/?activity=recruitment_advanced",
-        "route": "Advanced",
+        "route": "Extensions",
         "section": "recruitment-extensions"
       },
       {
         "label": "Review the recruitment plan",
         "path": "book/study-designs.html#recruitment-error-activity",
-        "route": "Advanced",
+        "route": "Extensions",
         "section": "recruitment-extensions"
       }
     ]
@@ -149,18 +149,18 @@
     "chapter": "appendix",
     "anchor": "appendix",
     "title": "Reproducibility and open science",
-    "route": "Advanced",
+    "route": "Extensions",
     "activities": [
       {
         "label": "Build your own study calculation",
         "path": "study/?activity=own_study",
-        "route": "Advanced",
+        "route": "Extensions",
         "section": "own-study"
       },
       {
         "label": "Review the software choices",
         "path": "book/appendix.html#software-error-activity",
-        "route": "Advanced",
+        "route": "Extensions",
         "section": "gpower-assumptions"
       }
     ]
@@ -169,7 +169,7 @@
     "chapter": "exercises",
     "anchor": "exercises",
     "title": "Test your understanding",
-    "route": "Core and advanced",
+    "route": "Core material and Extensions",
     "activities": [
       {
         "label": "Hospital discharge: additional calculation practice",
@@ -180,7 +180,7 @@
       {
         "label": "Check your understanding: cumulative quiz",
         "path": "book/exercises.html#cumulative-quiz",
-        "route": "Core and advanced",
+        "route": "Core material and Extensions",
         "section": "cumulative-quiz"
       }
     ]

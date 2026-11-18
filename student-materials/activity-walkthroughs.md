@@ -21,9 +21,9 @@ The chronic pain case compares fictional Neravixa with duloxetine for painful di
 | 2. Calculating sample size and recruitment | [Adjust recruitment](../study/?activity=recruitment) using one shared loss percentage | Recruitment per group and in total, with a short justification |
 | 3. The sample size calculation report | [Review and complete a report](../book/reporting.html#check-reporting) | Four-error review followed by a consistency check of the learner's report |
 
-Your report develops through these four activities in the same [study-plan workspace](../assumptions_report/). The default core view asks for the essentials; “Advanced study plan” adds detailed supporting prompts to the same answers. Additional discharge practice is optional basic practice. The later simulations and independent planning are advanced extensions.
+Your report develops through these four activities in the same [study-plan workspace](../assumptions_report/). The default core view asks for the essentials; “Detailed study plan” adds detailed supporting prompts to the same answers. Additional discharge practice is optional basic practice. The later simulations and independent planning are extensions.
 
-For an advanced project, *Study settings* includes design features that reveal relevant questions about clusters, repeated measurements, survival outcomes, margins, multiple claims, interim decisions or simulation. The calculation and software fields can record results from an external method. These answers appear in the calculation report and supporting study plan and are retained in saved work.
+For a project using Extensions, *Study settings* includes design features that reveal relevant questions about clusters, repeated measurements, survival outcomes, margins, multiple claims, interim decisions or simulation. The calculation and software fields can record results from an external method. These answers appear in the calculation report and supporting study plan and are retained in saved work.
 
 The chronic pain example connects the core simulation, calculation, recruitment adjustment and annotated report. Optional examples apply the method to a different outcome; any report based on one of them should retain that example throughout.
 
@@ -51,10 +51,10 @@ The reasoning lab and single-percentage app omit saved simulation results from t
 
 1. Your starting point can be your own study or the chronic-pain teaching example. A study title identifies the plan. Answers start empty. “Suggested structure” gives a framework for your own study. Selecting the teaching case shows its example answers; “Start the pain-relief plan” supplies the question and design when you choose it.
 2. Chapters 1–2 explain the question and power, calculation, and recruitment. Chapter 3 brings together the reporting guidance, checklist and complete example. You can record decisions in the same activity throughout and review the complete report in Chapter 3.
-3. In the core view, short explanations of the supplied assumptions are sufficient. Each section's “Ready for review” checkbox becomes available when its visible questions are answered. The advanced view adds evidence appraisal, plausible ranges, sensitivity scenarios and feasibility details; its completion checks include those extra prompts.
+3. In the core view, short explanations of the supplied assumptions are sufficient. Each section's “Ready for review” checkbox becomes available when its visible questions are answered. The detailed view adds evidence appraisal, plausible ranges, sensitivity scenarios and feasibility details; its completion checks include those extra prompts.
 4. In an app’s Report view, “Add this calculation to my study plan” opens a preview of the current inputs, result and method. You choose whether to attach it and whether to replace an earlier result of that type. Your written answers remain in place; affected sections are marked for another review.
 5. “Review before downloading” lists unresolved decisions and compares the analyzable requirement with the starting count in an attached recruitment calculation. Values written in free text still need your review. Optional simulations can be attached as explorations.
-6. The preview and PDF/Word downloads start with a concise sample size calculation report, followed by the supporting study plan, section review and attached results. Both parts update from the same answers; example hints are included only if you use them in an answer. “Save work for later” preserves the editable app state. Entries also persist in the same browser; the saved file supports another computer. The plan is complete for the core assignment when its applicable decisions and calculation have been reviewed. Advanced activities can extend it when relevant.
+6. The preview and PDF/Word downloads start with a concise sample size calculation report, followed by the supporting study plan, section review and attached results. Both parts update from the same answers; example hints are included only if you use them in an answer. “Save work for later” preserves the editable app state. Entries also persist in the same browser; the saved file supports another computer. The plan is complete for the core assignment when its applicable decisions and calculation have been reviewed. Activities in Extensions can extend it when relevant.
 
 
 The [annotated report in Chapter 3](../book/reporting.html#write-a-sample-size-justification) shows the completed two-proportion calculation. The chronic pain example uses 5% expected missing primary outcomes: 56 analyzable patients and 59 recruits per group, or 118 recruits total. Selecting this example makes its prepared calculation and software record available under the software question. Attached calculator results retain their own inputs and runtime versions; example answers for calculation fields follow that selected result. Your written answers should be reviewed when the calculation changes.
@@ -69,19 +69,21 @@ Purpose: see why sample estimates differ from population values, interpret the u
 2. In “One study and many studies,” “Simulate one study” generates patient outcomes. The animation follows the patient outcomes into the estimated difference and then the sampling distribution, with the population difference marked on both axes. “Animate 20 trials” builds a short sequence; pause, replay and reduced motion support closer inspection. Each accumulated dot represents one complete trial. “Additional calculations and simulations” opens the other calculation and study-planning views when needed.
 3. The 20-trial animation shows different possible trials while the population probabilities remain fixed. Patient outcomes produce each observed difference, which falls into the distribution of repeated-study estimates.
 4. “Many studies and a larger sample” opens further down the same page. “Simulate many studies” generates 5,000 independent trials. The distribution shows sampling variability; the percentage of significant results estimates power for this population scenario.
-5. The calculated requirement appears alongside the starting count: 56 analyzable patients per group for 90% power with the default assumptions. “Use 56 per group in the simulation” applies that count to subsequent runs. Larger samples improve precision and increase power at a nonzero population difference. “Settings” provides the other assumptions. Advanced controls start closed; coverage and Monte Carlo summaries appear when selected.
+5. The calculated requirement appears alongside the starting count: 56 analyzable patients per group for 90% power with the default assumptions. “Use 56 per group in the simulation” applies that count to subsequent runs. Larger samples improve precision and increase power at a nonzero population difference. “Settings” provides the other assumptions. Additional controls start closed; coverage and Monte Carlo summaries appear when selected.
 6. “Interpret the animation” describes the counts and difference currently displayed. “Report” records the population assumptions, pain-relief counts in one study, results across many studies, and reproducibility details. Participant records are available there after a single study has been simulated. The report can be downloaded as PDF or editable Word. After changing the sample size, a new run is needed for those results to appear in the report.
 
 ## Reviewing short examples
 
-The tutorial includes selectable passages in five review activities: [discharge calculations](../book/exercises.html#discharge-error-activity), [recruitment planning](../book/study-designs.html#recruitment-error-activity), [a sample size calculation report](../book/reporting.html#report-error-activity), [an estimation sample size calculation report](../book/estimation-planning.html#estimation-report-error-activity) and [advanced software choices](../book/appendix.html#software-error-activity).
+The tutorial includes selectable passages in five review activities: [discharge calculations](../book/exercises.html#discharge-error-activity), [recruitment planning](../book/study-designs.html#recruitment-error-activity), [a sample size calculation report](../book/reporting.html#report-error-activity), [an estimation sample size calculation report](../book/estimation-planning.html#estimation-report-error-activity) and [software choices](../book/appendix.html#software-error-activity).
 
 1. You can read the proposed statement and choose a passage that may need correction. Some passages are appropriate.
 2. Clicking or tapping a passage opens an explanation and a link to the relevant teaching material. With a keyboard, Tab reaches each passage and Enter or Space opens its explanation; Escape closes it.
 3. Passages already checked can be revisited by hovering or selecting them again. The count records problem areas found, and Reset activity starts again. Progress is stored in the current browser.
 4. The explanations can support a corrected version in your own words. The PDF and the expandable answer key provide the same explanations for offline review.
 
-## Type I and Type II error probabilities and power — advanced
+<span id="type-i-and-type-ii-error-probabilities-and-power--advanced"></span>
+
+## Type I and Type II error probabilities and power — Extensions
 
 [Open activity](../study/?activity=alpha_beta) · [Matching explanation](../book/curves.html#alpha-beta)
 
@@ -124,8 +126,8 @@ Purpose: calculate a sample size for a binary outcome and examine its sensitivit
 1. The favorable event is remaining free of gestational diabetes: 80% without probiotics and 90% with probiotics. These percentages correspond to 20% and 10% developing gestational diabetes. The calculation should give the same requirement with either event definition.
 2. The calculator uses 90% power and a 5% Type I error probability. Expected loss starts at zero so this step gives the analyzable requirement. The following recruitment activity applies the chosen loss allowance.
 3. Your record should identify both event percentages, the 10-point target difference, error probability, power, method, software and analyzable count per group and in total. The optional comparison with 85% illustrates a smaller target difference.
-4. “Add this calculation to my study plan” attaches the selected result after your review. Its analyzable count is the starting point for the recruitment activity. Comparing several scenarios is an advanced extension.
-5. The optional [advanced simulation](../study/?activity=adherence) keeps the original sample fixed while changing the probabilities that generate outcomes. This asks how the original design would perform if the true difference were smaller.
+4. “Add this calculation to my study plan” attaches the selected result after your review. Its analyzable count is the starting point for the recruitment activity. Comparing several scenarios is an extension.
+5. The optional [simulation](../study/?activity=adherence) keeps the original sample fixed while changing the probabilities that generate outcomes. This asks how the original design would perform if the true difference were smaller.
 
 
 ## Two-mean calculator — reference
@@ -148,9 +150,11 @@ Purpose: see how a target difference and between-patient variability determine a
 2. With expected loss left at zero, the pooled two-sample t-test calculation gives 60 analyzable participants per group, or 120 total.
 3. Changing the SD to 7 while retaining the 3-unit target difference shows how greater variability increases the requirement. Your record should identify the selected inputs, method, software and counts. “Add this calculation to my study plan” attaches the result after your review. The recruitment activity starts with this analyzable requirement.
 
-The [advanced rehabilitation simulation](../study/?activity=rehabilitation) uses a t-test method and generated outcomes. It can examine confidence intervals and repeated-study performance after the core calculation.
+The [rehabilitation simulation](../study/?activity=rehabilitation) uses a t-test method and generated outcomes. It can examine confidence intervals and repeated-study performance after the core calculation.
 
-## Chronic pain: power and recruitment — advanced
+<span id="chronic-pain-power-and-recruitment--advanced"></span>
+
+## Chronic pain: power and recruitment — Extensions
 
 [Open activity](../study/?activity=pain_curves) · [Power curves](../book/curves.html#activity-2-can-the-feasible-study-answer-the-question) · [Available sample and feasibility](../book/curves.html#available-sample)
 
@@ -162,7 +166,9 @@ Purpose: assess whether the feasible study can answer the intended question unde
 4. “Many studies” estimates power from generated patient data for the selected scenario.
 5. The chapter question asks which of the three differences reaches 90% power at the available count. The supporting study plan can record the evidence and uncertainty behind a recruitment or design decision.
 
-## Repeated chronic-pain trials — advanced
+<span id="repeated-chronic-pain-trials--advanced"></span>
+
+## Repeated chronic-pain trials — Extensions
 
 [Open activity](../study/?activity=pain_simulation) · [Matching explanation](../book/simulation.html#activity-3-generate-analyze-repeat-summarize)
 
@@ -174,7 +180,7 @@ Purpose: extend the core simulation from power to confidence interval coverage, 
 4. A custom treatment probability of 45%, with control still 30%, tests the plan under a 15-point true difference. A no-effect scenario estimates the false-positive probability.
 5. You can vary the repetition count while leaving patients per group fixed. More repetitions reduce Monte Carlo uncertainty while each trial's design stays fixed. A report should retain the generating assumptions, analysis and repetition count.
 
-Within the same activity, *Settings* → *Show advanced settings and results* reveals *Explore missing outcomes*:
+Within the same activity, *Settings* → *Additional settings* reveals *Explore missing outcomes*:
 
 1. You can select *Complete outcomes* and keep recruitment at 100 per group as a reference.
 2. *Equal losses* removes outcomes independently of relief with 10% probability in each group. One study shows recruited and retained counts and the records excluded from analysis.
@@ -183,7 +189,7 @@ Within the same activity, *Settings* → *Show advanced settings and results* re
 5. Across the four scenarios, Many studies compares the mean estimate, bias, coverage, interval width, retained counts, and significance percentage. A high significance percentage can coexist with bias and poor coverage. The model answer is in the [missing-outcome explanation](../book/simulation.html#explore-missing-outcomes).
 6. The report identifies recruited versus analyzable counts and, for matching simulations, retained counts, bias and coverage. Saved simulation CSV files retain the settings used when they were generated; the R script reproduces the current scenario. *Usual simulation* restores the original analysis with fixed analyzable counts.
 
-The simulation above uses one final analysis. For a design with interim stopping or sample-size adaptation, the [advanced simulation discussion](../book/simulation.html#simulating-decision-rules) explains the additional decisions that a design-specific simulation must reproduce.
+The simulation above uses one final analysis. For a design with interim stopping or sample-size adaptation, the [simulation discussion](../book/simulation.html#simulating-decision-rules) explains the additional decisions that a design-specific simulation must reproduce.
 
 ## Recruitment adjustment — core
 
@@ -202,7 +208,9 @@ The simulation above uses one final analysis. For a design with interim stopping
 2. After correcting these problems, you can check the corresponding entries in your own report against its attached calculations and the annotated example.
 3. A PDF or editable Word download contains the concise calculation report followed by the supporting study plan. This review serves as Chapter 3's check. The cumulative quiz offers optional further review.
 
-## Unequal losses and treatment switching — advanced
+<span id="unequal-losses-and-treatment-switching--advanced"></span>
+
+## Unequal losses and treatment switching — Extensions
 
 [Open extension](../study/?activity=recruitment_advanced) · [Matching explanation and review](../book/study-designs.html#recruitment-extensions)
 
@@ -211,7 +219,9 @@ The simulation above uses one final analysis. For a design with interim stopping
 3. “Expected switching is already included” prevents applying that allowance twice. For binary outcomes, the [two-proportion app](../two_proportions/) can recalculate using the revised event percentages in the [worked example](../book/study-designs.html#treatment-switching).
 4. The report records the applied adjustments and your explanation. The [recruitment review](../book/study-designs.html#recruitment-error-activity) checks their interpretation; the [missing-outcome simulation](../book/simulation.html#explore-missing-outcomes) examines information loss and bias.
 
-## Estimate a population mean with a precision target — advanced
+<span id="estimate-a-population-mean-with-a-precision-target--advanced"></span>
+
+## Estimate a population mean with a precision target — Extensions
 
 [Open activity](../study/?activity=mean_precision) · [Matching explanation](../book/estimation-planning.html#plan-for-precision)
 
@@ -223,7 +233,9 @@ Purpose: plan a useful confidence-interval width for one population mean and exa
 4. Repeated studies show the percentage of intervals containing the population mean and meeting the width target. A full width of 4 corresponds to a margin of about 2 for a symmetric interval.
 5. “Report” records the current assumptions, total sample size, simulations, and methods. PDF and editable Word downloads are available; “Save work for later” preserves the inputs for reopening.
 
-## Estimate a population percentage — advanced
+<span id="estimate-a-population-percentage--advanced"></span>
+
+## Estimate a population percentage — Extensions
 
 [Open activity](../study/?activity=prevalence) · [Matching explanation](../book/estimation-planning.html#prevalence)
 
@@ -236,7 +248,9 @@ Purpose: connect the precision needed for a descriptive decision with survey siz
 5. Your explanation should distinguish interval precision from representativeness. Here, n is the total number of participants in the sample.
 6. In “Report,” your explanation accompanies the confidence level, planning percentage, width target, sample size and recruitment allowance. The simulated interval is included when it matches the current example and settings; otherwise, you should draw another sample.
 
-## Pilot study: retention — advanced
+<span id="pilot-study-retention--advanced"></span>
+
+## Pilot study: retention — Extensions
 
 [Open activity](../study/?activity=pilot_feasibility) · [Matching explanation](../book/estimation-planning.html#pilot-feasibility)
 
@@ -262,7 +276,9 @@ Purpose: compare three sample size plans for a hypothetical trial of discharge w
 
 For optional simulation exploration, “One study” shows possible discharge counts and “Many studies” estimates the test's power under the selected assumptions. A no-effect scenario examines false positives. The [discharge simulation](../book/simulation.html#discharge-simulation) explains how simulation can assess the planning approximation near 100%.
 
-## Build your own study calculation — advanced application
+<span id="build-your-own-study-calculation--advanced-application"></span>
+
+## Build your own study calculation — Extensions
 
 [Open activity](../study/?activity=own_study) · [Matching explanation](../book/appendix.html#own-study)
 
@@ -275,7 +291,9 @@ Purpose: bring together the clinical question, numerical requirements and practi
 5. “Report” combines your study responses and recommendation with the current calculations, feasibility and matching simulations. Your written answers should reflect the selected example and settings. Unsupported designs receive a note about the need for a design-specific method.
 6. “Download report (PDF)” saves the summary; “Download editable report (Word)” provides an editable copy. The separate “Save work for later” controls save and reopen your settings and answers. The [file guide above](#reports-and-saved-work) explains backups, simulation data and the optional R script. Findings and their justification can be entered in the separate study-plan activity.
 
-## Choosing a study design — advanced
+<span id="choosing-a-study-design--advanced"></span>
+
+## Choosing a study design — Extensions
 
 [Open questionnaire](../study/?activity=design_questionnaire) · [Matching explanation](../book/study-designs.html#design-questionnaire)
 

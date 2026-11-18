@@ -18,7 +18,7 @@
       const storageKey='sample-size-embedded-'+root.id+'-v2';
       const signature=questions.map(q=>q.dataset.question+':'+q.textContent).join('|');
       // Removing a display-only level badge should preserve existing attempts.
-      const sameContent = value => value.replace(/^\s*Advanced\s*$/gm, ' ').replace(/\s+/g, ' ').trim();
+      const sameContent = value => value.replace(/^\s*(?:Extensions|Advanced)\s*$/gm, ' ').replace(/\s+/g, ' ').trim();
       function save(){if(restoring)return;try{localStorage.setItem(storageKey,JSON.stringify({signature,route:route?.value,active:active.map(q=>q.dataset.question),choices:Object.fromEntries(new FormData(form)),orders:Object.fromEntries(questions.map(q=>[q.dataset.question,[...q.querySelectorAll('input')].map(i=>i.value)])),submitted}));}catch(_) {}}
       const shuffle=values=>{for(let i=values.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[values[i],values[j]]=[values[j],values[i]]}return values;};
       function updateProgress() {

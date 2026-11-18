@@ -38,7 +38,7 @@
   const questions = Object.fromEntries(Object.values(features).map(([,id,,question]) => [id,question]));
   function validate(value) {
     const keys=(value.advanced_features || '').split(',').filter(Boolean);
-    if(keys.some(key=>!Object.hasOwn(features,key)) || new Set(keys).size!==keys.length) throw Error('Invalid advanced design selection.');
+    if(keys.some(key=>!Object.hasOwn(features,key)) || new Set(keys).size!==keys.length) throw Error('Invalid design selection.');
   }
   function init(form) {
     const holder=document.getElementById('advanced-features');

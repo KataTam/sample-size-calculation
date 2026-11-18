@@ -32,7 +32,7 @@ basic_calculator_ui <- function(outcome) {
       tabPanel("Overview",
         uiOutput("result"),
         app_overview(tagList(plotOutput("allocation_plot", height = "310px"), p(class = "caption", "Figure. Required analyzable participants per group across target differences. The labeled dot marks your current plan; other assumptions stay fixed.")),
-          tagList(textOutput("interpretation"), activity_details("Advanced simulation", uiOutput("lab_link")))),
+          tagList(textOutput("interpretation"), activity_details("Simulation", uiOutput("lab_link")))),
         activity_details("Current assumptions", tableOutput("assumptions"))),
       tabPanel("Explore assumptions",
         p("The curve varies the target difference while keeping the other assumptions fixed. The point marks your current plan."),
@@ -128,7 +128,7 @@ basic_calculator_server <- function(outcome) function(input, output, session) {
     v <- list(outcome = if (means) "means" else "proportions", goal = "fixed", fixed_n = x$n_per_group,
       alpha = input$alpha, target_power = input$power, dropout = input$dropout)
     v <- c(v, if (means) list(plan_delta = input$delta, plan_sd = input$sd) else list(plan_p0 = input$pi2, plan_p1 = input$pi1))
-    tags$a(href = lab_state_url(v), target = "_blank", rel = "noopener", class = "btn btn-primary", "Advanced: simulate this design")
+    tags$a(href = lab_state_url(v), target = "_blank", rel = "noopener", class = "btn btn-primary", "Simulate this design")
   })
   output$sample_size_plot <- renderPlot(draw_curve(), res = 96,
     alt = "Required analyzable participants per group across target differences, holding other assumptions fixed. The current plan is marked.")

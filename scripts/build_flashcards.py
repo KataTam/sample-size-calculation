@@ -73,7 +73,7 @@ def build():
         css='.card { font-family:Arial,sans-serif; font-size:21px; text-align:left; '
             'line-height:1.5; color:#243746; background:#fff; max-width:750px; margin:24px auto; padding:0 18px; }'
             '.level { display:inline-block; font-size:13px; padding:3px 9px; border-radius:4px; margin-bottom:15px; text-transform:capitalize; }'
-            '.core { background:#dbe9fb; color:#173d5b; } .advanced { background:#e7dcf6; color:#49316d; }'
+            '.core { background:#dbe9fb; color:#173d5b; } .extensions { background:#e7dcf6; color:#49316d; }'
             '.question { font-size:23px; } #answer { border:0; border-top:1px solid #aab7c2; margin:22px 0; }'
             '.source { font-size:13px; margin-top:24px; color:#526574; } a { color:#17658a; }'
             '.nightMode.card { background:#20252c; color:#eef3fa; } .nightMode .source { color:#bdc9d3; }'
@@ -84,21 +84,21 @@ def build():
                    '<a href="' + BASE + '">Tutorial</a>. Teaching content: '
                    '<a href="' + LICENSE + '">CC BY-SA 4.0</a>. Original build software: '
                    '<a href="https://opensource.org/license/mit">MIT</a>. '
-                   'Study Core for the core route; select Sample size tutorial to study both subdecks. '
-                   'Shared stable note IDs preserve existing core cards when adding Advanced.')
+                   'Core covers the Core material. Sample size tutorial contains the complete tutorial when both subdecks are imported. '
+                   'Shared stable note IDs preserve existing cards when adding Extensions.')
     packages = {}
     for stem, levels in [('sample-size-core', {'core'}),
-                         ('sample-size-core-and-advanced', {'core', 'advanced'})]:
+                         ('sample-size-complete', {'core', 'advanced'})]:
         chosen = [c for c in cards if c['level'] in levels]
         decks = {'root': genanki.Deck(ROOT_ID, 'Sample size tutorial', description=description),
                  'core': genanki.Deck(CORE_ID, 'Sample size tutorial::Core', description=description)}
         if 'advanced' in levels:
-            decks['advanced'] = genanki.Deck(ADVANCED_ID, 'Sample size tutorial::Advanced', description=description)
+            decks['advanced'] = genanki.Deck(ADVANCED_ID, 'Sample size tutorial::Extensions', description=description)
         for c in chosen:
             note = genanki.Note(model=model,
-                               fields=[c['id'], escape(c['front']), escape(c['back']), c['source'], c['level']],
+                               fields=[c['id'], escape(c['front']), escape(c['back']), c['source'], 'extensions' if c['level'] == 'advanced' else 'core'],
                                guid=genanki.guid_for('katatam-sample-size-flashcards-v1', c['id']),
-                               tags=['sample_size_tutorial', c['level']],
+                               tags=['sample_size_tutorial', 'extensions' if c['level'] == 'advanced' else 'core'],
                                due=cards.index(c) + 1)
             decks[c['level']].add_note(note)
         genanki.Package(list(decks.values())).write_to_file(str(OUT / (stem + '.apkg')))
@@ -112,23 +112,27 @@ def build():
         assert 'http://' not in text and 'https://' not in text
         packages[stem] = validate_package(OUT / (stem + '.apkg'), chosen)
     core = packages['sample-size-core']
-    combined = packages['sample-size-core-and-advanced']
+    combined = packages['sample-size-complete']
+    # Keep previously shared download links working while the visible labels change.
+    for suffix in ('.apkg', '-quizlet.txt'):
+        (OUT / ('sample-size-core-and-advanced' + suffix)).write_bytes((OUT / ('sample-size-complete' + suffix)).read_bytes())
     assert core.items() <= combined.items(), 'Core notes must retain GUIDs and content in the combined package'
     review = ['# Flashcard preview', '',
               '<nav class="app-navigation" aria-label="Flashcard resources"><a href="index.md">Downloads and import instructions</a><a href="../../book/">Tutorial</a></nav>', '',
               '<details class="activity-description"><summary>Description</summary><p>These cards help you review sample-size concepts and calculations. Each question links to the relevant tutorial explanation; numerical examples are hypothetical.</p></details>', '',
               '<div id="flashcard-controls" class="app-panel" hidden>',
               '<div class="app-controls">',
-              '<div><label for="flashcard-route">Level</label><select id="flashcard-route"><option value="all">Core + advanced</option><option value="core">Core</option><option value="advanced">Advanced</option></select><div class="input-guidance-source" data-for="flashcard-route">Core covers basic planning and calculations; Advanced covers further methods and designs. This filter changes the preview. Downloads contain the deck named on each link.</div></div>',
-              '<div class="search-control"><label for="flashcard-search">Search questions and answers</label><input id="flashcard-search" type="search" autocomplete="off"><div class="input-guidance-source" data-for="flashcard-search">Search matches words in either column within the selected level. Each matching row contains all the words you enter.</div></div>',
+              '<div><label for="flashcard-route">Tutorial part</label><select id="flashcard-route"><option value="all">Complete tutorial</option><option value="core">Core</option><option value="advanced">Extensions</option></select><div class="input-guidance-source" data-for="flashcard-route">Core covers the Core material. Extensions covers other planning goals, methods and designs. Complete tutorial includes both. This filter changes the preview. Downloads contain the deck named on each link.</div></div>',
+              '<div class="search-control"><label for="flashcard-search">Search questions and answers</label><input id="flashcard-search" type="search" autocomplete="off"><div class="input-guidance-source" data-for="flashcard-search">Search matches words in either column within the selected tutorial part. Each matching row contains all the words you enter.</div></div>',
               '<button type="button" class="secondary" id="clear-search">Clear search</button><button type="button" class="secondary" id="hide-answers" aria-pressed="false">Hide answers</button></div>',
               '<p id="flashcard-count" role="status" aria-live="polite"></p></div>', '',
-              '<p id="flashcard-empty" hidden>No cards match this search and level. You can try a shorter search or choose another level.</p>', '']
+              '<p id="flashcard-empty" hidden>No cards match this search and tutorial part. You can try a shorter search or choose another part.</p>', '']
     counts = Counter(c['level'] for c in cards)
     for level in ('core', 'advanced'):
+        label = 'Core' if level == 'core' else 'Extensions'
         review += [f'<section id="{level}" class="flashcard-level" data-level="{level}" aria-labelledby="{level}-{counts[level]}-cards">',
-                   f'<h2 id="{level}-{counts[level]}-cards">{level.capitalize()} <span class="level-count">({counts[level]} cards)</span></h2>',
-                   '<table><caption>' + level.capitalize() + ' questions and answers</caption><thead><tr><th scope="col">Question</th><th scope="col">Answer</th></tr></thead><tbody>']
+                   f'<h2 id="{level}-{counts[level]}-cards">{label} <span class="level-count">({counts[level]} cards)</span></h2>',
+                   '<table><caption>' + label + ' questions and answers</caption><thead><tr><th scope="col">Question</th><th scope="col">Answer</th></tr></thead><tbody>']
         for c in cards:
             if c['level'] != level:
                 continue
@@ -136,7 +140,7 @@ def build():
         review += ['</tbody></table></section>', '']
     review += ['<footer><p>Katalin Tamási. Teaching content: <a href="' + LICENSE + '">CC BY-SA 4.0</a>. Original software: <a href="https://opensource.org/license/mit">MIT</a>.</p></footer>', '']
     (OUT / 'cards.md').write_text('\n'.join(review), encoding='utf-8')
-    print(f"Built and checked {len(cards)} cards: {counts['core']} core and {counts['advanced']} advanced; two Anki and two Quizlet imports.")
+    print(f"Built and checked {len(cards)} cards: {counts['core']} Core and {counts['advanced']} Extensions. Core and Complete tutorial imports ready.")
 
 
 def validate_package(path, expected):

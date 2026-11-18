@@ -67,7 +67,7 @@ Each report should distinguish the current plan, simulation assumptions and the 
 
 The study-plan activity keeps one set of written answers. `conciseParagraphs()` in `site/assumptions_report/report.js` selects the relevant answers for the sample size calculation report; the supporting study plan retains all applicable answers and saved calculations. Both are regenerated together for preview and export. Changing the selected fields should preserve the full supporting answers and compatibility with saved work.
 
-The default core view has 12 prompts for a two-group power calculation. `PlanWorkflow.required()` selects these prompts for completion checks; the advanced view adds the remaining applicable fields. Hidden advanced answers remain saved and appear in the supporting report when populated. The four core activity entries are maintained in `module/activity-contents.json`: one simulation, one binary calculation, one shared-loss adjustment, and one report review. Rehabilitation provides optional mean-score calculation practice. The report review replaces Chapter 3's quiz. Additional discharge practice stays introductory; unequal-loss and switching work belongs to the advanced extension. `scripts/check_core_activities.cjs` checks route count, saved links and preservation of answers between views.
+The default core view has 12 prompts for a two-group power calculation. `PlanWorkflow.required()` selects these prompts for completion checks; the detailed view adds the remaining applicable fields. Hidden detailed answers remain saved and appear in the supporting report when populated. The four core activity entries are maintained in `module/activity-contents.json`: one simulation, one binary calculation, one shared-loss adjustment, and one report review. Rehabilitation provides optional mean-score calculation practice. The report review replaces Chapter 3's quiz. Additional discharge practice stays introductory; unequal-loss and switching work belongs to the extension. `scripts/check_core_activities.cjs` checks route count, saved links and preservation of answers between views.
 
 App previews use screenshots of the running apps, stored in `figures/app-previews/`. The image opens its named activity in the existing tutorial/app workspace. After changing an app's visible controls or results, `node scripts/capture_app_previews.cjs` refreshes the images against the local site at port 8769; an optional third argument selects comma-separated activity IDs. The HTML and PDF use the same screenshots. The capture script starts each named example and generates results for simulation previews. `scripts/check_app_previews.cjs` verifies image links, keyboard-accessible controls and preservation of report answers.
 
@@ -86,7 +86,7 @@ Possible combinations:
 | Binary outcome sample size | [Two-proportions section](../book/calculations.html#two-proportions), [calculator](../two_proportions/), short rubric |
 | Continuous outcome sample size | [Two-means section](../book/calculations.html#two-means), [calculator](../two_means/), short rubric |
 | Feasibility and power | [Power curves](../book/curves.html), [reasoning-lab activity](../study/?activity=pain_curves) |
-| Recruitment adjustment | Core recruitment adjustment in Chapter 2; advanced unequal losses and treatment switching in Chapter 7 in `apps/dropout_adjustment` |
+| Recruitment adjustment | Core recruitment adjustment in Chapter 2; unequal losses and treatment switching in Chapter 7 in `apps/dropout_adjustment` |
 | Protocol-writing practice | Build-your-own justification section, case template, assessment rubric |
 
 If you remove a section, also remove or revise related assessment tasks.
@@ -107,7 +107,9 @@ If you remove a section, also remove or revise related assessment tasks.
 - Ask students to compare two plausible assumptions.
 - Assess their written sample-size justification.
 
-### Advanced Level
+<span id="advanced-level"></span>
+
+### Extensions
 
 - Ask students to justify assumptions from literature or pilot data.
 - Discuss alternative designs, unequal allocation, non-inferiority, clustering, or repeated measures as extensions.

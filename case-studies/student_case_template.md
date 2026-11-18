@@ -75,11 +75,13 @@ For existing records: why this sample is available, completeness, selection and 
 
 ## Core interpretation and sensitivity
 
-Interpret a prepared estimate and confidence interval against zero and the clinical threshold. Record plausible alternatives and their sources. Compare required sample sizes, then hold the selected sample fixed to assess how its performance changes. Your core submission should include a table or curve with a written interpretation. Advanced work can add a simulation.
+Interpret a prepared estimate and confidence interval against zero and the clinical threshold. Record plausible alternatives and their sources. Compare required sample sizes, then hold the selected sample fixed to assess how its performance changes. Your core submission should include a table or curve with a written interpretation. Work in Extensions can add a simulation.
 
 For a fixed existing dataset, describe the new question, eligible records, missing observations and attainable precision. For a pilot, specify each feasibility outcome's denominator and what findings would support proceeding, amending or stopping. The information target should match the project's objective.
 
-## Advanced extension: one study and repeated studies
+<span id="advanced-extension-one-study-and-repeated-studies"></span>
+
+## Extension: one study and repeated studies
 
 Record the generating assumptions separately from the planning assumptions. Save the seed, replication count and analysis method, or attach the app export.
 

@@ -40,17 +40,17 @@ with tempfile.TemporaryDirectory(prefix='anki-', dir=QA) as tmp:
         card.reps = 3
         col.update_card(card)
         before = col.db.first('select id, nid, type, queue, ivl, due, reps from cards where id=?', cid)
-        load(col, 'sample-size-core-and-advanced')
+        load(col, 'sample-size-complete')
         assert col.db.scalar('select count(*) from notes') == len(expected)
         assert col.db.scalar('select count(*) from cards') == len(expected)
         assert col.db.first('select id, nid, type, queue, ivl, due, reps from cards where id=?', cid) == before
-        load(col, 'sample-size-core-and-advanced')
+        load(col, 'sample-size-complete')
         assert col.db.scalar('select count(*) from cards') == len(expected)
         load(col, 'sample-size-core')
         assert col.db.scalar('select count(*) from cards') == len(expected)
         assert col.db.first('select id, nid, type, queue, ivl, due, reps from cards where id=?', cid) == before
         assert len(col.find_cards('tag:core')) == core_count
-        assert len(col.find_cards('tag:advanced')) == len(expected) - core_count
+        assert len(col.find_cards('tag:extensions')) == len(expected) - core_count
         examples = []
         for c in expected:
             matches = col.find_cards('CardID:' + c['id'])
@@ -75,7 +75,7 @@ with tempfile.TemporaryDirectory(prefix='anki-', dir=QA) as tmp:
 with tempfile.TemporaryDirectory(prefix='anki-full-', dir=QA) as tmp:
     col = Collection(str(Path(tmp) / 'collection.anki2'))
     try:
-        load(col, 'sample-size-core-and-advanced')
+        load(col, 'sample-size-complete')
         assert col.db.scalar('select count(*) from notes') == len(expected)
         assert col.db.scalar('select count(*) from cards') == len(expected)
     finally:

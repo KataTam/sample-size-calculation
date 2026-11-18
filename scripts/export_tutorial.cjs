@@ -150,7 +150,7 @@ let browser;
       if (!group) {
         group = document.createElement('div');
         const heading = document.createElement('h2');
-        heading.textContent = 'Code for ' + clean(chapter.querySelector('h1').textContent).replace(/^(Core|Advanced) /, '');
+        heading.textContent = 'Code for ' + clean(chapter.querySelector('h1').textContent).replace(/^(Core material|Extensions|Core|Advanced) /, '');
         group.append(heading); appendix.append(group); groups.set(chapter.id, group);
         headings.push({title:heading.textContent, level:1});
       }

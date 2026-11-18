@@ -2,7 +2,7 @@
 
 Use these prepared synthetic results when the live app is unavailable. All studies use equal allocation and a two-sided Type I error probability of 5%. Full reproducible results and assumptions accompany the activity.
 
-For a core session, the [prepared trial results in Chapter 1](../book/clinical-question.html#activity-1-one-study-then-many) illustrate observed differences and power without requiring confidence intervals. The results below support advanced work on simulation, intervals and uncertainty.
+For a core session, the [prepared trial results in Chapter 1](../book/clinical-question.html#activity-1-one-study-then-many) illustrate observed differences and power without requiring confidence intervals. The results below support work in Extensions on simulation, intervals and uncertainty.
 
 ## Before viewing the results
 

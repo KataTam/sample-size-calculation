@@ -84,7 +84,7 @@
   function decorate(value, article, lines, active) {
     const statuses=read(value.decision_statuses,{}), records=validateRecords(value.calculation_records||'[]');currentRecords=records;
     const issues=[];let readySections=0;
-    if(AdvancedPlan.complex(value) && value.plan_level!=='advanced') issues.push('Advanced design selections are saved. The Advanced study plan view includes their additional prompts and report entries.');
+    if(AdvancedPlan.complex(value) && value.plan_level!=='advanced') issues.push('Design selections are saved. The Detailed study plan view includes their additional prompts and report entries.');
     groups.forEach(([title,definitions],index)=>{
       const relevant=definitions.filter(field=>active(field,value)&&required(field,value));
       const missing=relevant.filter(([id])=>!value[id].trim());

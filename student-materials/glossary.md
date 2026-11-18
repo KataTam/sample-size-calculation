@@ -1,6 +1,6 @@
 # Glossary {#glossary .unnumbered .reference-heading}
 
-These definitions support both routes and link to the explanations and examples in the tutorial. Advanced terms are identified individually.
+These definitions support both routes and link to the explanations and examples in the tutorial. Terms used in Extensions are grouped by topic.
 
 ## Research question and study plan {.core-heading .unnumbered}
 
@@ -113,7 +113,7 @@ Sampling variability is the variation between estimates from repeated samples dr
 
 Bias is a systematic deviation of an estimation procedure from the population quantity it aims to estimate. For example, knowledge of allocation might influence which patients are enrolled (selection bias); patients with poor relief might disproportionately miss follow-up (attrition bias); or additional care might differ between groups in ways that distort the intended comparison (performance bias). A large sample can produce a precise but biased estimate. The [missing-outcome discussion](#account-for-expected-losses) explains why prevention, design and analysis matter.
 
-### Estimand (advanced) {#estimand .advanced-heading .unnumbered}
+### Estimand {#estimand .advanced-heading .unnumbered}
 
 An estimand is the precisely defined population quantity the study aims to estimate. Its definition identifies the treatments, population, outcome, summary measure, and how events such as treatment discontinuation are handled. This makes the intended question clear before choosing an analysis or sample size method. See [ICH E9(R1)](https://database.ich.org/sites/default/files/E9-R1_Step4_Guideline_2019_1203.pdf).
 
@@ -182,12 +182,12 @@ A normal approximation uses the bell-shaped normal distribution to simplify a ca
 <span id="independent-groups">Independent, paired and clustered observations</span>
 : In the core examples, different patients belong to the two groups, with each patient contributing one outcome. The analysis assumes that one patient's outcome does not provide information about another patient's outcome beyond what the model accounts for. Different participants are not sufficient to establish independence: outcomes may still be related within clinics or families. Paired/within-subject data include linked measurements, such as both eyes or before/after observations from the same person. Clustered data include participants linked within allocated practices or wards. Correlation affects information and therefore planning; counting every measurement as independent can overstate the information available.
 
-## Advanced analysis terms {.advanced-heading .unnumbered}
+## Further analysis terms {#advanced-analysis-terms .advanced-heading .unnumbered}
 
 <span id="covariate-adjustment">Covariate adjustment</span>
 : A prespecified analysis can use prognostic baseline characteristics, such as baseline pain, to improve precision in a randomized treatment comparison. For a continuous outcome this may use analysis of covariance (ANCOVA). Its precision gain and sample size planning depend on the model and predictive value of those characteristics. Investigating whether treatment effects vary with a characteristic requires a treatment-by-characteristic comparison and its own justification. See the [design and analysis discussion](#increase-power) and [FDA guidance](https://www.fda.gov/regulatory-information/search-fda-guidance-documents/adjusting-covariates-randomized-clinical-trials-drugs-and-biological-products) [@fda2023covariates].
 
-## Advanced units and dependence {.advanced-heading .unnumbered}
+## Units and dependence {#advanced-units-and-dependence .advanced-heading .unnumbered}
 
 ### Unit of randomization {#unit-of-randomization .advanced-heading .unnumbered}
 
@@ -213,7 +213,7 @@ A measure of similarity between outcomes within the same cluster. In a simple ra
 
 The ratio of the variance of an estimate under a specified design to that under a comparable independent-observation design. For a simple cluster design with equal cluster size m and ICC rho, it is approximately 1 + (m - 1)rho; this can guide an initial sample size inflation.
 
-The [advanced explanation of units and dependence](#units-of-analysis) compares cluster-randomized and within-person designs [@campbell2012consort; @pandis2017withinperson].
+The [explanation of units and dependence](#units-of-analysis) compares cluster-randomized and within-person designs [@campbell2012consort; @pandis2017withinperson].
 
 ## Counts and losses {.core-heading .unnumbered}
 
@@ -235,7 +235,7 @@ A trial in which participants receive treatments in successive periods, with the
 
 A carryover effect occurs when an earlier treatment affects outcomes in a later period. Suitable crossover trials require a sufficiently stable condition, reversible treatment effects and control of carryover, sometimes through a washout period. [Treatment switching](#treatment-crossover) describes a change in treatment after assignment within another design.
 
-## Advanced testing and adaptation terms {.advanced-heading .unnumbered}
+## Testing and adaptation terms {#advanced-testing-and-adaptation-terms .advanced-heading .unnumbered}
 
 <span id="multiplicity">Multiplicity</span>
 : Multiple opportunities to make false-positive claims across a specified set of tests, such as several outcomes, treatment comparisons or interim analyses. The intended claims and success rule determine the appropriate error control. See [multiple outcomes and comparisons](#multiple-outcomes-comparisons).
@@ -255,7 +255,7 @@ A carryover effect occurs when an earlier treatment affects outcomes in a later 
 <span id="adaptive-design">Adaptive design</span>
 : A design allowing prespecified changes in response to accumulating trial data, such as revising sample size or selecting treatment arms. The decision rules and final analysis are planned and evaluated together. See [sample-size re-estimation](#sample-size-re-estimation).
 
-## Advanced simulation terms {.advanced-heading .unnumbered}
+## Simulation terms {#advanced-simulation-terms .advanced-heading .unnumbered}
 
 Planning and generating scenarios
 : The planning scenario contains the assumptions used to choose the sample size. A generating scenario contains the population values assumed to be true when simulating studies. Keeping the planned sample size fixed while changing those population values shows how the same study could perform if reality differed from the plan. Recalculating the sample size each time instead asks how the plan would need to change.

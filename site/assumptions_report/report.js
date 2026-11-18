@@ -7,7 +7,7 @@
   const status = document.getElementById('status');
   const groups = [
     ['Question and design', [
-      ['question', 'Research question', 'Your question should identify the Population, Intervention, Comparator and Outcome (PICO). The advanced prompts provide space for further detail.', 'The research question is'],
+      ['question', 'Research question', 'Your question should identify the Population, Intervention, Comparator and Outcome (PICO). The detailed prompts provide space for further detail.', 'The research question is'],
       ['population', 'Population', 'Your description should specify the setting and key eligibility criteria, including exclusions that limit who the findings apply to.', 'The population is'],
       ['intervention', 'Intervention or exposure', 'For treatment, relevant details include dose or intensity, schedule, duration, and provider. For an exposure, you should specify how it is measured and classified.', 'The intervention or exposure is', 'comparison'],
       ['comparator', 'Comparator', 'Your description should specify what usual care, placebo, or the comparison group involves, including permitted additional treatments and why this comparison is appropriate.', 'The comparator is', 'comparison'],

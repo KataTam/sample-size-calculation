@@ -87,7 +87,7 @@ Target: WCAG 2.2 AA. This is a scoped accessibility review, not a conformance ce
 - Automated axe-core checks cover Introduction, Power, and Calculations, including expanded quizzes and code, in day, sepia, and night themes, plus the two-panel study shell.
 - A separate audit exercised the loaded power-explorer app, its animation, controls, and results.
 - Shared fixes improve text/link/syntax/slider contrast, underline prose links, remove empty generated code links, identify the app language, label table headers, and provide a keyboard skip link.
-- Core/Advanced text accompanies chapter colors. New-tab links receive accessible descriptions. Existing native disclosure controls and keyboard-enabled panel resizing remain available.
+- Core material/Extensions text accompanies chapter colors. New-tab links receive accessible descriptions. Existing native disclosure controls and keyboard-enabled panel resizing remain available.
 - Wide tables have keyboard-focusable scrolling regions, so they do not widen the whole reading page at 320 CSS pixels.
 - The animation supplies a text description of the current trial's counts and estimated difference. Existing reduced-motion, pause, replay, and reset behaviors are retained.
 - PDF assembly preserves the browser-generated structure tree and sets the document language to US English. The publishing check detects loss of these tags.

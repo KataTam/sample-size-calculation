@@ -46,7 +46,7 @@ app_report_body <- function(paragraphs, data = NULL, heading = "Current report",
   if (!is.null(intro)) shiny::tags$p(intro),
   if (is.list(paragraphs)) lapply(names(paragraphs), function(title) {
     content <- shiny::tags$section(shiny::tags$h4(title), lapply(paragraphs[[title]][nzchar(paragraphs[[title]])], shiny::tags$p))
-    if (title == "Simulation record") shiny::tags$details(shiny::tags$summary("Advanced methods and reproducibility"), content)
+    if (title == "Simulation record") shiny::tags$details(shiny::tags$summary("Methods and reproducibility"), content)
     else content
   })
   else {

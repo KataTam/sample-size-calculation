@@ -38,7 +38,7 @@ The recruitment app uses `recruitment_plan()` in `R/sample_size_functions.R`. It
 
 For expected losses r1 and r0, equal recruitment is ceil(max(n_adjusted/(1-r1), n_adjusted/(1-r0))) per group. Intermediate counts remain unrounded. Equal recruitment with unequal losses yields unequal expected retained counts; the larger requirement preserves at least n_adjusted in expectation in each group. This is an allowance, with actual retention and missing-data bias requiring separate attention. A starting count of 100, switching of 10% and 5%, and shared losses of 5% gives 146 recruits per group. This avoids the extra participant produced by rounding at every intermediate step.
 
-The report records applied inputs, intermediate results, method, assumptions, R/Shiny versions, source history and the learner's justification. The lab link carries the starting analyzable count; switching and unequal losses remain specific to this calculation. The main simulations condition on complete outcomes; the advanced missing-outcome extension explicitly models attrition.
+The report records applied inputs, intermediate results, method, assumptions, R/Shiny versions, source history and the learner's justification. The lab link carries the starting analyzable count; switching and unequal losses remain specific to this calculation. The main simulations condition on complete outcomes; the missing-outcome extension explicitly models attrition.
 
 Sources: [Wittes (2002)](https://doi.org/10.1093/epirev/24.1.39), [Shardell and El-Kamary (2009)](https://doi.org/10.1111/j.1541-0420.2008.01114.x), and [ICH E9(R1)](https://www.fda.gov/media/148473/download).
 

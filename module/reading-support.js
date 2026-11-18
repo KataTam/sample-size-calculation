@@ -241,7 +241,7 @@
   const root = location.protocol === 'file:' || location.pathname === 'blank' || location.href === 'about:blank'
     ? 'https://katatam.github.io/sample-size-calculation/' : new URL('../', location.href).href;
   for (const group of ordered) {
-    const title = document.createElement('h3'); title.textContent = group.route + ': ' + group.title; title.className=group.route==='Core'?'activity-core-heading':'activity-advanced-heading'; dialog.append(title);
+    const title = document.createElement('h3'); title.textContent = group.route + ': ' + group.title; title.className=group.route==='Core material'?'activity-core-heading':'activity-advanced-heading'; dialog.append(title);
     const list = document.createElement('ul');
     for (const item of group.activities) {
       const li = document.createElement('li'), a = document.createElement('a');

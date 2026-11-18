@@ -1,14 +1,16 @@
 # Apps
 
-Apps are interactive software. Activities provide questions and exercises to help you use them. The [four core activities](book/#core-route) use the apps below. The continuing report brings their results together; advanced options support further exploration.
+Apps are interactive software. Activities provide questions and exercises to help you use them. The [four core activities](book/#core-route) use the apps below. The continuing report brings their results together; additional options support further exploration.
 
 Calculators and simulations also open within the tutorial when you select their previews. Main controls appear above the figures, and calculated results update with the inputs. Simulations run when you select the corresponding button. Each embedded app has a link underneath to open it on its own page.
 
 <span id="core-calculations-simulation-and-justification"></span>
 
-## Core apps
+<span id="core-apps"></span>
 
-- [Study plan](assumptions_report/): develop a PICO question and justify the calculation and recruitment plan. The short core view and expanded advanced view use one set of answers, producing a concise sample size calculation report followed by the supporting study plan.
+## Apps for Core material
+
+- [Study plan](assumptions_report/): develop a PICO question and justify the calculation and recruitment plan. The short core view and expanded detailed view use one set of answers, producing a concise sample size calculation report followed by the supporting study plan.
 
 - [Sample size reasoning lab](power_explorer/?activity=pain_one_many): simulate patient outcomes and compare results across studies. [Activity: Chronic pain: one study and many studies](study/?activity=pain_one_many).
 
@@ -22,11 +24,13 @@ The core [calculation activity](book/calculations.html#calculate-sample-size) us
 
 <span id="explore-further"></span>
 
-## Advanced apps and explorations
+<span id="advanced-apps-and-explorations"></span>
+
+## Apps for Extensions
 
 - [Recruitment extensions](study/?activity=recruitment_advanced): examine unequal losses and treatment switching. [Tutorial explanation](book/study-designs.html#recruitment-extensions).
 
-- [Advanced study plan](assumptions_report/?level=advanced): appraise evidence, justify ranges and compare sensitivity scenarios in the same report.
+- [Detailed study plan](assumptions_report/?level=advanced): appraise evidence, justify ranges and compare sensitivity scenarios in the same report.
 
 - [Mean estimation](power_explorer/?activity=mean_precision): calculate a sample size for a useful confidence-interval width and examine intervals across simulated studies. [Tutorial explanation](book/estimation-planning.html#plan-for-precision).
 
@@ -44,12 +48,12 @@ The calculation apps use four views: “Overview” for the main result, “Expl
 
 Each slider has an editable number beside it. Percentages use the displayed percentage scale: entering 5 means 5%. “Study settings” collapses in a narrow panel to leave room for the result. The introductory pain activity starts with its simulation, report and methods views; “Additional calculations and simulations” reveals the remaining views.
 
-The reasoning lab has core and advanced activities. Core activities start with advanced controls closed; “Settings” provides the other assumptions. Question help is available by hover, keyboard focus or tap. Expandable “Example answer” sections illustrate a response using the current parameters. Reports use your own entries. The [activity walkthroughs](student-materials/activity-walkthroughs.html) provide guidance for each one, including pilot retention, precision and recruitment scenarios.
+The reasoning lab supports Core material and Extensions. Core activities start with additional controls closed; “Settings” provides the other assumptions. Question help is available by hover, keyboard focus or tap. Expandable “Example answer” sections illustrate a response using the current parameters. Reports use your own entries. The [activity walkthroughs](student-materials/activity-walkthroughs.html) provide guidance for each one, including pilot retention, precision and recruitment scenarios.
 
 ## Review and practice
 
-- [Quizzes](quiz/): chapter checks and a cumulative quiz. Results link to the relevant explanations; missed questions can be retried. Chapters 1–2 and the advanced chapters have embedded quizzes. Chapter 3 uses the [four-error report review](book/reporting.html#check-reporting). The [discharge exercise](book/exercises.html#discharge) offers additional basic calculation practice.
-- [Flashcard preview](student-materials/flashcards/cards.md): a question-and-answer table with level filtering, search and optional hidden answers for self-testing. [Anki and Quizlet downloads](student-materials/flashcards/index.md) are available for review outside the tutorial.
+- [Quizzes](quiz/): chapter checks and a cumulative quiz. Results link to the relevant explanations; missed questions can be retried. Chapters 1–2 and the chapters in Extensions have embedded quizzes. Chapter 3 uses the [four-error report review](book/reporting.html#check-reporting). The [discharge exercise](book/exercises.html#discharge) offers additional basic calculation practice.
+- [Flashcard preview](student-materials/flashcards/cards.md): a question-and-answer table with filtering by tutorial part, search and optional hidden answers for self-testing. [Anki and Quizlet downloads](student-materials/flashcards/index.md) are available for review outside the tutorial.
 
 ## Tutorial beside the app
 
