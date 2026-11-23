@@ -36,7 +36,13 @@ let browser;
  assert.equal(await page.locator('.book-summary ul.summary > li.chapter > a').first().evaluate(el=>getComputedStyle(el).fontSize),'14px');
  assert.equal(await page.locator('.book-summary .activity-toc a').first().evaluate(el=>getComputedStyle(el).fontSize),'13px');
  assert.match(await page.locator('.page-inner h2').first().innerText(), /neuropathic pain/i);
- assert(await page.evaluate(()=>document.querySelector('#misconception-pilot-effect').compareDocumentPosition(document.getElementById('tab:pain-planning-values')) & Node.DOCUMENT_POSITION_PRECEDING));
+ const misconceptionContext=await page.locator('#misconception-pilot-effect').evaluate(el=>({
+  before:el.previousElementSibling.textContent,after:el.nextElementSibling.textContent,
+  consecutive:Array.from(document.querySelectorAll('details.misconception')).some(box=>box.nextElementSibling?.matches('details.misconception'))
+ }));
+ assert.match(misconceptionContext.before,/difference observed in the pilot/);
+ assert.match(misconceptionContext.after,/target difference/);
+ assert.equal(misconceptionContext.consecutive,false,'Misconceptions are separated by their relevant explanations');
  assert(await page.locator('table').first().isVisible());
  assert.equal(await page.locator('.page-inner p').first().evaluate(el=>getComputedStyle(el).fontWeight),'400');
  assert.equal(await page.locator('table th').first().evaluate(el=>getComputedStyle(el).fontWeight),'400');
@@ -109,6 +115,6 @@ let browser;
  await distant.dispatchEvent('focus');
  assert.equal(await page.locator('#reference-preview').isVisible(),false,'A visible original suppresses the duplicate preview');
  assert.deepEqual(errors,[]);
- console.log('READER TOOLS CHECK PASSED: case-first order, delayed misconception, raw output folded, visible summaries, hover/focus/cross-chapter/touch previews, reuse example, one complete HTML/PDF download pair, self-contained mathematical figures.');
+ console.log('READER TOOLS CHECK PASSED: case-first order, misconceptions beside their relevant explanations, raw output folded, visible summaries, hover/focus/cross-chapter/touch previews, reuse example, one complete HTML/PDF download pair, self-contained mathematical figures.');
  await browser.close();
 })().catch(async e=>{console.error(e);if(browser)await browser.close();process.exit(1);});
