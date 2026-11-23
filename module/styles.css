@@ -252,6 +252,11 @@ pre code { display: block; }
 .skip-to-content { position: fixed; left: 12px; top: -100px; z-index: 20000; padding: 12px; background: white; color: #17547b; }
 .skip-to-content:focus { top: 8px; }
 .reader-level { display: block; font-size: .6em; font-weight: normal; margin-bottom: .3em; }
+.book .book-summary ul.summary li.chapter a .sidebar-level { display:block; width:fit-content; margin-top:3px; padding:1px 5px; border-radius:3px; font-size:11px; font-weight:normal; line-height:1.5; color:#20343e; }
+.book .book-summary ul.summary li.chapter a .sidebar-level.sidebar-core { background:#dcecfb; }
+.book .book-summary ul.summary li.chapter a .sidebar-level.sidebar-extension { background:#e9def5; }
+table thead th, .page-inner table thead th { font-weight:normal; background:#edf1f4; }
+.color-theme-2 .page-inner table thead th { background:#303a46; color:#edf1f4; }
 .book :focus-visible { outline: 3px solid #a45115; outline-offset: 3px; }
 .book.color-theme-2 :focus-visible { outline-color: #ffcf70; }
 .book .book-body .page-wrapper .page-inner section.normal summary { min-height: 24px; }

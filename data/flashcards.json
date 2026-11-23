@@ -1256,6 +1256,76 @@
       "front": "Why should treatment changes and missing assessments be distinguished?",
       "back": "Treatment changes can affect the treatment comparison even when the outcome is recorded. Missing assessments concern unavailable measurements. Both need a specified approach in the study question, follow-up and analysis.",
       "source": "https://katatam.github.io/sample-size-calculation/book/study-designs.html#treatment-changes"
+    },
+    {
+      "id": "A096",
+      "level": "advanced",
+      "front": "Why can the planning formula and analysis interval for a percentage differ?",
+      "back": "The simple normal formula gives an initial sample requirement for a chosen margin. Wilson intervals use the observed event count, stay within 0% to 100%, and can have unequal margins. Record both procedures.",
+      "source": "https://katatam.github.io/sample-size-calculation/book/estimation-planning.html#estimation-report"
+    },
+    {
+      "id": "A097",
+      "level": "advanced",
+      "front": "How does the approximate sample size for a population mean depend on precision?",
+      "back": "For independent observations, n is approximately (z × population SD / margin) squared. At 95% confidence, SD 5 and margin 2 give 24.01, rounded to 25. Planning for an expected t interval width can give a different requirement.",
+      "source": "https://katatam.github.io/sample-size-calculation/book/estimation-planning.html#plan-for-precision"
+    },
+    {
+      "id": "A098",
+      "level": "advanced",
+      "front": "How many simulation repetitions approximately halve Monte Carlo standard error?",
+      "back": "Four times as many repetitions approximately halve MCSE when the generating assumptions remain fixed. The number of participants in each simulated study stays unchanged.",
+      "source": "https://katatam.github.io/sample-size-calculation/book/simulation.html#precision-of-a-simulation"
+    },
+    {
+      "id": "A099",
+      "level": "advanced",
+      "front": "Why can a pooled score test and a Newcombe Wilson interval disagree near the cutoff?",
+      "back": "The Newcombe Wilson difference interval combines separate group intervals. It is not obtained by inverting that pooled score test. Small differences near the cutoff are possible.",
+      "source": "https://katatam.github.io/sample-size-calculation/book/simulation.html#simulation-reproducibility"
+    },
+    {
+      "id": "A100",
+      "level": "advanced",
+      "front": "What are pilot progression criteria?",
+      "back": "Conditions agreed before the pilot that guide proceeding, modifying procedures or stopping. Examples concern recruitment, retention and acceptable delivery. Specify how uncertainty and other evidence will inform the decision.",
+      "source": "https://katatam.github.io/sample-size-calculation/book/estimation-planning.html#pilot-feasibility"
+    },
+    {
+      "id": "A101",
+      "level": "advanced",
+      "front": "What does assurance add to a calculation of power at one assumed effect?",
+      "back": "Assurance averages the probability of meeting a success rule over a justified distribution of uncertain parameters. Equally weighted scenarios with 60% and 90% power give 75% expected power.",
+      "source": "https://katatam.github.io/sample-size-calculation/book/curves.html#further-planning-approaches"
+    },
+    {
+      "id": "A102",
+      "level": "advanced",
+      "front": "What is an N-of-1 trial?",
+      "back": "A prospective treatment comparison within one person over repeated periods. Randomized pairs of treatment periods can compare symptoms while allowing for period effects and lasting effects of earlier treatment.",
+      "source": "https://katatam.github.io/sample-size-calculation/book/glossary.html#n-of-1"
+    },
+    {
+      "id": "A103",
+      "level": "advanced",
+      "front": "What is the experimental unit when treatments are assigned to cages?",
+      "back": "The cage is the independently allocated unit. Measurements from several animals in that cage are related and must be represented appropriately in planning and analysis.",
+      "source": "https://katatam.github.io/sample-size-calculation/book/glossary.html#experimental-unit"
+    },
+    {
+      "id": "A104",
+      "level": "advanced",
+      "front": "Why does ten events per variable give limited guidance for prediction models?",
+      "back": "It is a historical rule based on particular simulation settings. Required information also depends on outcome frequency, candidate parameters, expected model performance, overfitting and validation.",
+      "source": "https://katatam.github.io/sample-size-calculation/book/study-designs.html#match-the-question-to-a-method-and-resource"
+    },
+    {
+      "id": "A105",
+      "level": "advanced",
+      "front": "What belongs in a reproducibility record for a sample size calculation?",
+      "back": "The study question, assumptions and evidence, procedure, software and version, saved inputs or code, outputs and rounding. A simulation also needs its generating rules, repetitions and random settings. The record can accompany the protocol and SAP.",
+      "source": "https://katatam.github.io/sample-size-calculation/book/appendix.html#software-record"
     }
   ]
 }

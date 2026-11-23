@@ -18,10 +18,10 @@
       "link": "clinical-question.html#how-do-you-determine-the-minimum-required-sample-size",
       "question": "Which outcome matches the Neravixa-versus-duloxetine trial?",
       "options": [
-        "Achieved pain relief at four weeks: yes or no, assessed consistently in both groups",
-        "Patient improvement at any convenient visit",
-        "Any outcome showing a treatment difference",
-        "The outcome producing the smallest sample size"
+        "Relief at four weeks, assessed alike in both groups",
+        "Improvement at each patient's most convenient follow-up visit",
+        "The outcome showing the clearest observed treatment difference",
+        "The outcome requiring the fewest patients in the trial"
       ],
       "answer": 0,
       "explanation": "The outcome definition and measurement time point should be specified before choosing planning inputs. They are part of the Outcome component of PICO.",
@@ -29,7 +29,7 @@
         "The outcome definition and measurement time point should be specified before choosing planning inputs. They are part of the Outcome component of PICO.",
         "An unspecified visit allows the outcome timing to vary between participants.",
         "Selecting an outcome because it shows a difference makes the analysis data-dependent.",
-        "The outcome should follow the research question; a smaller calculation alone does not justify it."
+        "The outcome should follow the research question. a smaller calculation alone does not justify it."
       ]
     },
     {
@@ -46,12 +46,12 @@
         "30 percentage points"
       ],
       "answer": 3,
-      "explanation": "The target difference is the effect used in the power calculation. The difference observed in previous data and clinical threshold answer separate questions. Their values can coincide or follow a different order; this example uses three different values.",
+      "explanation": "The target difference is the effect used in the power calculation. The difference observed in previous data and clinical threshold answer separate questions. Their values can coincide or follow a different order. this example uses three different values.",
       "feedback": [
         "Twenty points is the clinical threshold. Power at that smaller difference needs a separate assessment.",
         "Forty points is the difference observed in previous data. The stated power calculation uses the target difference.",
         "Power changes with the size of the true difference.",
-        "The target difference is the effect used in the power calculation. The difference observed in previous data and clinical threshold answer separate questions. Their values can coincide or follow a different order; this example uses three different values."
+        "The target difference is the effect used in the power calculation. The difference observed in previous data and clinical threshold answer separate questions. Their values can coincide or follow a different order. this example uses three different values."
       ]
     },
     {
@@ -62,10 +62,10 @@
       "link": "clinical-question.html#what-do-we-expect-what-will-we-plan-for-and-what-matters-clinically",
       "question": "What does a 20-percentage-point clinical threshold mean for a binary outcome in this tutorial?",
       "options": [
-        "Exactly 20% of patients will benefit personally from treatment",
-        "The event probability in each group must exceed 20%",
-        "A clinically important difference between the population event percentages in the two groups",
-        "Every treated patient has a 20% improvement"
+        "A personal benefit for exactly 20% of treated patients",
+        "An event percentage above 20% in each treatment group",
+        "A worthwhile gap of 20 points between population percentages",
+        "An improvement of 20% in every treated patient's symptoms"
       ],
       "answer": 2,
       "explanation": "The threshold concerns a comparison between population percentages.",
@@ -106,10 +106,10 @@
       "link": "reporting.html#record-assumptions",
       "question": "A sample size calculation report selects a 30-point target difference. Which explanation best justifies this numerical entry?",
       "options": [
-        "A difference judged important and realistic using relevant evidence and clinical input",
-        "The largest effect reported in any small study",
-        "The effect that makes the recruitment target affordable",
-        "A standard value used for every disease"
+        "Relevant evidence and clinical judgment supporting that difference",
+        "The largest observed difference among the available small studies",
+        "The difference yielding the most affordable recruitment target",
+        "The standard difference conventionally applied to every clinical condition"
       ],
       "answer": 0,
       "explanation": "The target difference should have clinical importance and a defensible evidence base. Its uncertainty belongs in sensitivity analysis.",
@@ -128,16 +128,16 @@
       "link": "clinical-question.html#power",
       "question": "A Type I error probability of 5% describes which event?",
       "options": [
-        "Rejecting the null when the null hypothesis is true, under the test assumptions",
-        "The null having a 5% probability of being true",
-        "A 5% probability that any significant result is false",
-        "Missing a specified real difference in 5% of studies"
+        "Rejecting a true null under the test assumptions",
+        "The null being true with a probability of 5%",
+        "A significant result having a 5% chance of being false",
+        "Missing a real difference in 5% of repeated studies"
       ],
       "answer": 0,
       "explanation": "Type I error probability describes false-positive performance under the null.",
       "feedback": [
         "Type I error probability describes false-positive performance under the null.",
-        "The probability is conditional on a true null; it does not assign a probability to the hypothesis.",
+        "The probability is conditional on a true null. it does not assign a probability to the hypothesis.",
         "The fraction of significant results that are false depends on more than the Type I error probability.",
         "Missing a specified true difference is a Type II error."
       ]
@@ -150,10 +150,10 @@
       "link": "clinical-question.html#power",
       "question": "The Neravixa-versus-duloxetine plan specifies 90% power at a true 30-point difference. What does this mean?",
       "options": [
-        "The next study will estimate the effect with 90% accuracy",
-        "The alternative hypothesis has a 90% probability of being true",
-        "90% of treated patients will improve",
-        "About 90% of repeated studies under that difference and the stated assumptions would reject the null"
+        "The next study estimates the difference with 90% accuracy",
+        "The alternative hypothesis is true with a probability of 90%",
+        "About 90% of treated patients achieve the measured improvement",
+        "About 90% of such trials reject the null"
       ],
       "answer": 3,
       "explanation": "Power is the probability of rejecting the null under a specified true difference, design and analysis. Its complement is the Type II error probability at that difference.",
@@ -172,10 +172,10 @@
       "link": "clinical-question.html#activity-1-one-study-then-many",
       "question": "Two simulated Neravixa-versus-duloxetine trials use the same population probabilities and sample size but give different observed treatment differences. What explains this?",
       "options": [
-        "The population difference must have changed",
-        "One of the two studies must contain a coding error",
-        "Random sampling can produce different estimates under the same population assumptions",
-        "The study with the larger estimate used a different target power"
+        "A change in the true difference between the populations",
+        "An error in the code of one simulated trial",
+        "Sampling variation under the same assumptions",
+        "A different target power in the trial with greater relief"
       ],
       "answer": 2,
       "explanation": "Realized estimates vary between independently generated samples even when their population assumptions and designs are identical.",
@@ -194,17 +194,17 @@
       "link": "estimation-planning.html#interpret-a-confidence-interval-clinically",
       "question": "What does 95% confidence interval coverage mean under the method’s assumptions?",
       "options": [
-        "95% of individual patients have outcomes inside the interval",
-        "The true population value changes in 95% of studies",
-        "A narrow interval automatically has higher coverage than a wide one",
-        "About 95% of intervals from repeated studies contain the fixed true population value"
+        "95% of individual patient outcomes lie inside each interval",
+        "The population quantity changes its value in 95% of studies",
+        "Narrower intervals automatically achieve greater coverage than wider ones",
+        "About 95% of repeated intervals contain the population value"
       ],
       "answer": 3,
       "explanation": "Coverage describes the long-run performance of the interval procedure under its assumptions. It differs from the spread of individual patient outcomes.",
       "feedback": [
-        "Confidence intervals concern a population quantity; prediction intervals address individual outcomes.",
+        "Confidence intervals concern a population quantity. prediction intervals address individual outcomes.",
         "The population value is fixed in this repeated-study description.",
-        "Coverage depends on the interval method and its assumptions; narrowness alone does not establish coverage.",
+        "Coverage depends on the interval method and its assumptions. narrowness alone does not establish coverage.",
         "Coverage describes the long-run performance of the interval procedure under its assumptions. It differs from the spread of individual patient outcomes."
       ]
     },
@@ -216,10 +216,10 @@
       "link": "estimation-planning.html#interpret-a-confidence-interval-clinically",
       "question": "A trial estimates a 25-percentage-point benefit, with a 95% interval from 5 to 45 points. The clinical threshold is 20 points. What does the interval support?",
       "options": [
-        "Every treated patient benefits by at least 20 points",
-        "The result provides no evidence of a difference from zero",
-        "Benefits below the clinical threshold remain compatible with the data",
-        "The population benefit is certainly 25 points"
+        "A benefit of at least 20 points for every patient",
+        "An absence of evidence of a difference from zero",
+        "A range compatible with benefits below the clinical threshold",
+        "Certainty that the population benefit equals exactly 25 points"
       ],
       "answer": 2,
       "explanation": "The interval excludes zero but includes differences below and above the 20-point threshold. The estimate is a between-group population comparison.",
@@ -232,7 +232,7 @@
         "The interval concerns a between-group difference, rather than a minimum benefit for every patient.",
         "The interval excludes zero and therefore supports a positive difference under the interval method.",
         "The interval excludes zero but includes differences below and above the 20-point threshold. The estimate is a between-group population comparison.",
-        "The estimate is uncertain; the interval includes a range of compatible differences."
+        "The estimate is uncertain. the interval includes a range of compatible differences."
       ]
     },
     {
@@ -265,10 +265,10 @@
       "link": "calculations.html#two-means",
       "question": "Under the introductory two-means normal approximation, what happens to sample size if the target difference is halved and everything else stays fixed?",
       "options": [
-        "It is halved",
-        "It doubles",
-        "It remains unchanged",
-        "It becomes approximately four times as large"
+        "It falls to approximately one half",
+        "It rises to approximately twice the original",
+        "It stays approximately at the original value",
+        "It rises to approximately four times the original"
       ],
       "answer": 3,
       "explanation": "Required sample size is proportional to the inverse square of the target difference in this approximation. Halving the difference multiplies the requirement by four.",
@@ -314,16 +314,16 @@
       "link": "appendix.html#tutorial-methods",
       "question": "Why does the pooled two-sample t-test calculation give 60 patients per group when the introductory normal formula rounds to 59?",
       "options": [
-        "A larger number is always the correct choice for every study design",
-        "The t-test calculation accounts for estimating the common SD from the trial data",
-        "The t-test calculation already includes losses to follow-up",
-        "The normal formula counts measurements while the t test counts patients"
+        "A larger sample is appropriate regardless of the planned analysis",
+        "It accounts for estimating the common population SD",
+        "It includes the patients expected to miss follow-up",
+        "It counts patients while the normal formula counts measurements"
       ],
       "answer": 1,
-      "explanation": "The t-test calculation accounts for estimating the common SD. The normal formula explains the input relationships; the apps and reports use the t-test result for this planned analysis.",
+      "explanation": "The t-test calculation accounts for estimating the common SD. The normal formula explains the input relationships. the apps and reports use the t-test result for this planned analysis.",
       "feedback": [
         "The procedure should match the planned analysis.",
-        "The t-test calculation accounts for estimating the common SD. The normal formula explains the input relationships; the apps and reports use the t-test result for this planned analysis.",
+        "The t-test calculation accounts for estimating the common SD. The normal formula explains the input relationships. the apps and reports use the t-test result for this planned analysis.",
         "Losses to follow-up are accounted for separately after the analyzable requirement is calculated.",
         "Both counts refer to analyzable patients per group."
       ]
@@ -347,7 +347,7 @@
         "The absolute change is 10 percentage points. Relative to the original 40%, the increase is 10/40 = 25%.",
         "Ten is the absolute increase in percentage points.",
         "Fifty percent is the new discharge percentage.",
-        "125% expresses the new value as a percentage of the old value; the increase is 25%."
+        "125% expresses the new value as a percentage of the old value. the increase is 25%."
       ],
       "chapter_check": false
     },
@@ -365,10 +365,10 @@
         "90"
       ],
       "answer": 0,
-      "explanation": "The calculation is 90 divided by 0.90, giving 100 per group. Adding 10% to 90 gives only 99; expected losses apply to the recruited count.",
+      "explanation": "The calculation is 90 divided by 0.90, giving 100 per group. Adding 10% to 90 gives only 99. expected losses apply to the recruited count.",
       "feedback": [
-        "The calculation is 90 divided by 0.90, giving 100 per group. Adding 10% to 90 gives only 99; expected losses apply to the recruited count.",
-        "Adding 10% to 90 gives 99; retaining 90% of 99 gives only 89.1 in expectation.",
+        "The calculation is 90 divided by 0.90, giving 100 per group. Adding 10% to 90 gives only 99. expected losses apply to the recruited count.",
+        "Adding 10% to 90 gives 99. retaining 90% of 99 gives only 89.1 in expectation.",
         "Eighty-one is 90% of 90, which reduces the starting count.",
         "Recruiting 90 with 10% expected loss leaves about 81 for analysis."
       ]
@@ -397,10 +397,10 @@
       "link": "simulation.html#explore-missing-outcomes",
       "question": "A team increases recruitment to allow for losses, but participants without relief are more likely to have missing outcomes. What still needs attention?",
       "options": [
-        "Only whether the final total is even",
-        "Changing the target difference to the observed benefit",
-        "Prevention, reasons for missingness, and an appropriate analysis with sensitivity analyses",
-        "Nothing, provided the recruitment target was met"
+        "Whether the final recruitment total can be divided equally between groups",
+        "Whether the target difference can be replaced by the observed benefit",
+        "Prevention of missingness, assumptions about losses and planned analysis",
+        "Whether meeting the recruitment target makes additional analysis unnecessary"
       ],
       "answer": 2,
       "explanation": "Recruitment inflation helps preserve the expected analyzable count. Outcome-related missingness can still bias the available-case comparison, so the reasons and analysis assumptions need attention.",
@@ -419,10 +419,10 @@
       "link": "reporting.html#write-a-sample-size-justification",
       "question": "A sample size calculation report gives the outcome, event percentages, allocation, power, Type I error probability and participant counts. What would most help another researcher reproduce the calculation?",
       "options": [
-        "The calculator name alone",
-        "The exact procedure and settings, software version, rounding rule and supporting code",
-        "A statement that the chosen sample size is sufficient",
-        "The recruitment target repeated in the conclusion"
+        "The calculator name without its selected procedure or settings",
+        "Procedure, inputs, software version, rounding and code",
+        "A statement that the number of participants will be sufficient",
+        "The recruitment target repeated in every section of the report"
       ],
       "answer": 1,
       "explanation": "The procedure, settings, versions and rounding identify how the stated inputs produce the result. Supporting evidence also needs to justify those inputs.",
@@ -441,10 +441,10 @@
       "link": "curves.html#planning-uncertainty",
       "question": "Two plausible sets of assumptions produce substantially different sample sizes. What should the justification do?",
       "options": [
-        "Average the answers without justification",
-        "Treat the larger answer as evidence that its assumptions are true",
-        "Report the sensitivity and explain which assumptions support the chosen plan",
-        "Report only the smaller answer"
+        "Report their average as the requirement without further justification",
+        "Treat the larger count as evidence that its assumptions are true",
+        "Explain the sensitivity and justify the selected assumptions",
+        "Report the smaller count and omit the alternative assumptions"
       ],
       "answer": 2,
       "explanation": "The differences reveal uncertainty relevant to planning. The choice and its consequences need clinical and statistical justification.",
@@ -463,10 +463,10 @@
       "link": "curves.html#activity-2-can-the-feasible-study-answer-the-question",
       "question": "At 100 analyzable patients per group, the curve gives 59% power for a true 15-point difference. What does 59% describe?",
       "options": [
-        "The percentage of patients expected to achieve pain relief",
-        "The probability that the null hypothesis is true",
-        "The percentage of repeated trials expected to reject the null under these assumptions",
-        "The percentage of the target sample recruited"
+        "The fraction of patients expected to achieve relief",
+        "The chance that the null hypothesis is true",
+        "The fraction of such trials rejecting the null",
+        "The fraction of the recruitment target already enrolled"
       ],
       "answer": 2,
       "explanation": "About 59% of repeated trials using this sample, analysis and true difference would reject the null.",
@@ -529,10 +529,10 @@
       "link": "curves.html#available-sample",
       "question": "The available sample gives insufficient power across credible effect assumptions. What is the most defensible next step?",
       "options": [
-        "Keep reporting the original target power",
-        "Assess additional recruitment or a justified design change and recalculate",
-        "Increase the assumed effect until the required sample fits",
-        "Choose the rejection rule after seeing the trial results"
+        "Continue to report the power originally selected for the plan",
+        "Reassess achievable recruitment, revise the design and recalculate",
+        "Increase the assumed benefit until the sample fits available resources",
+        "Choose a more favorable rejection rule after inspecting the results"
       ],
       "answer": 1,
       "explanation": "The decision should reflect the available sample, credible inputs and a feasible design or objective.",
@@ -551,15 +551,15 @@
       "link": "curves.html#underpowered-studies",
       "question": "Why can focusing on statistically significant results from underpowered studies exaggerate a treatment benefit?",
       "options": [
-        "Every small study has biased measurements",
-        "Significant results favoring treatment tend to have unusually large estimated benefits",
-        "Low power changes the true population difference",
-        "The clinical threshold increases when a result is significant"
+        "All small studies necessarily use biased outcome measurement methods",
+        "Selection among low powered trials favors unusually large estimates",
+        "Low power changes the true difference between the treatment populations",
+        "Statistical significance increases the clinical threshold used to interpret benefit"
       ],
       "answer": 1,
       "explanation": "Selecting only significant results favors unusually large estimates among these noisy studies.",
       "feedback": [
-        "Small samples increase sampling variability; measurement bias is a separate issue.",
+        "Small samples increase sampling variability. measurement bias is a separate issue.",
         "Selecting only significant results favors unusually large estimates among these noisy studies.",
         "Power describes the study's performance under a specified population difference.",
         "Clinical importance is judged from the outcome and patient context."
@@ -573,10 +573,10 @@
       "link": "curves.html#stress-test-the-study-plan",
       "question": "A fixed sample of 100 per group is evaluated at a mean difference of 3 units. If the common SD increases from 5 to 7, what happens to power?",
       "options": [
-        "It increases because the observations span a wider range",
-        "It stays fixed because the mean difference is unchanged",
-        "It becomes the Type I error probability",
-        "It decreases because the difference is smaller relative to variability"
+        "It rises because the observed scores span a wider range",
+        "It stays fixed because the mean difference remains unchanged",
+        "It equals the Type I error probability used for testing",
+        "It falls as variability increases relative to the difference"
       ],
       "answer": 3,
       "explanation": "The same 3-unit difference is harder to distinguish with a larger SD at the same sample size.",
@@ -606,7 +606,7 @@
         "Doubling repetitions reduces the standard error by a factor of about 1.41.",
         "Monte Carlo standard error is proportional to 1/sqrt(B) at a fixed rejection probability. Four times as many repetitions approximately halves it.",
         "Fewer repetitions increase Monte Carlo uncertainty.",
-        "More patients change trial power; they do not supply the fourfold increase in independent simulation repetitions."
+        "More patients change trial power. they do not supply the fourfold increase in independent simulation repetitions."
       ]
     },
     {
@@ -617,10 +617,10 @@
       "link": "simulation.html#activity-3-generate-analyze-repeat-summarize",
       "question": "Which sequence describes a simulation-based power assessment?",
       "options": [
-        "Generate a hypothetical study, analyze it, repeat independently, summarize rejection frequency",
-        "Generate one study and treat its p-value as power",
-        "Choose significant datasets and average their effects",
-        "Increase the sample until the first significant result appears"
+        "Generate and analyze each independent trial, then summarize rejections",
+        "Generate one trial, analyze it, report its p-value as power",
+        "Generate trials, keep significant results, average their estimated effects",
+        "Generate larger trials, stop at significance, report that sample size"
       ],
       "answer": 0,
       "explanation": "Repeated studies under an explicit model allow the rejection probability to be estimated for the chosen analysis.",
@@ -639,16 +639,16 @@
       "link": "simulation.html#step-1-generate-one-trial",
       "question": "In a binary simulation, what do the specified treatment and control probabilities describe?",
       "options": [
-        "The exact event percentages that every sample will contain",
-        "The probabilities that the hypotheses are true",
-        "The percentage of simulations to discard",
-        "The assumed population event probabilities used to generate outcomes"
+        "The exact event percentages in each generated trial",
+        "The probabilities that the two competing hypotheses are true",
+        "The fractions of simulated trials excluded from analysis",
+        "The assumed population probabilities used to generate each trial"
       ],
       "answer": 3,
       "explanation": "The generating probabilities define the hypothetical population. Realized sample percentages vary around them.",
       "feedback": [
         "Sample event percentages vary even when their generating probabilities stay fixed.",
-        "These probabilities generate patient outcomes; they do not describe the truth of hypotheses.",
+        "These probabilities generate patient outcomes. they do not describe the truth of hypotheses.",
         "Discarding simulations would change the assessment and needs a separate justification.",
         "The generating probabilities define the hypothetical population. Realized sample percentages vary around them."
       ]
@@ -661,10 +661,10 @@
       "link": "simulation.html#step-4-summarize-what-the-design-achieves",
       "question": "How is confidence interval coverage measured in a simulation?",
       "options": [
-        "The average width of the intervals",
-        "The fraction of statistically significant trials",
-        "The fraction of intervals containing the specified true population value",
-        "The fraction of intervals excluding zero"
+        "The average width across the generated confidence intervals",
+        "The fraction of generated trials with significant results",
+        "The fraction of intervals containing the true value",
+        "The fraction of confidence intervals that exclude zero"
       ],
       "answer": 2,
       "explanation": "Coverage compares each interval with the known generating value. Rejection frequency and interval width measure different aspects of performance.",
@@ -683,10 +683,10 @@
       "link": "simulation.html#compare-simulation-with-a-planning-approximation",
       "question": "What can explain a difference between simulated power and approximate analytical power?",
       "options": [
-        "A guarantee that the assumed population is realistic",
-        "Monte Carlo uncertainty and differences between the approximation and finite-sample test performance",
-        "Only an incorrect random seed",
-        "A guarantee that the simulation is wrong"
+        "The population assumptions having been demonstrated to be realistic",
+        "Monte Carlo error and differences from the planning approximation",
+        "An unsuitable seed being the only possible cause",
+        "The simulation implementation necessarily containing a programming error"
       ],
       "answer": 1,
       "explanation": "More repetitions reduce Monte Carlo uncertainty. Analytical-approximation error and the credibility of the population assumptions require separate assessment.",
@@ -705,10 +705,10 @@
       "link": "simulation.html#simulating-decision-rules",
       "question": "Which simulation can evaluate a trial with an interim futility rule and possible sample-size re-estimation?",
       "options": [
-        "A fixed-sample simulation followed by deleting unfavorable results.",
-        "A simulation of the final test only, using the largest allowed sample.",
-        "A simulation that applies each interim decision and the resulting final analysis within every trial.",
-        "A simulation under a large benefit only."
+        "Simulate a fixed sample and discard unfavorable study results",
+        "Simulate the final test alone at the largest permitted sample",
+        "Simulate each decision and the resulting final analysis",
+        "Simulate only a large benefit to assess the decision rules"
       ],
       "answer": 2,
       "explanation": "Each simulated trial should follow the complete decision process. Evaluation includes false-positive probability, power, stopping probabilities and sample-size behavior under suitable scenarios.",
@@ -727,17 +727,17 @@
       "link": "estimation-planning.html#plan-for-precision",
       "question": "What is specified when planning estimation with a precision target?",
       "options": [
-        "The desired number of significant results",
-        "The probability that a fixed population parameter changes",
-        "A useful interval width and confidence level for the quantity being estimated",
-        "Only a p-value cutoff"
+        "The desired frequency of statistically significant study results",
+        "The chance that the population quantity changes between studies",
+        "A useful interval width at a chosen confidence level",
+        "A p-value cutoff for rejecting the zero-effect hypothesis"
       ],
       "answer": 2,
-      "explanation": "Estimation concerns the population quantity; precision concerns uncertainty around its estimate. Interval width at a stated confidence level can guide planning.",
+      "explanation": "Estimation concerns the population quantity. precision concerns uncertainty around its estimate. Interval width at a stated confidence level can guide planning.",
       "feedback": [
         "A precision target concerns uncertainty around an estimate.",
         "The parameter is treated as fixed in this interval-planning framework.",
-        "Estimation concerns the population quantity; precision concerns uncertainty around its estimate. Interval width at a stated confidence level can guide planning.",
+        "Estimation concerns the population quantity. precision concerns uncertainty around its estimate. Interval width at a stated confidence level can guide planning.",
         "A significance cutoff alone does not specify the desired interval width."
       ]
     },
@@ -749,10 +749,10 @@
       "link": "estimation-planning.html#pilot-feasibility",
       "question": "What is an appropriate primary planning focus for a pilot studying retention?",
       "options": [
-        "Assuming a universal sample size applies to every pilot",
-        "Useful precision for retention and prespecified progression criteria",
-        "Definitive proof of treatment effectiveness from a small sample",
-        "Selecting the largest observed effect for the main trial calculation"
+        "The sample size conventionally selected for every type of pilot",
+        "Retention precision and prespecified criteria for progression to the main trial",
+        "Definitive evidence of treatment effectiveness from the pilot alone",
+        "The largest observed effect for calculating the main trial size"
       ],
       "answer": 1,
       "explanation": "Pilot sample size should follow its feasibility objectives. Uncertain treatment effects from a small pilot should be interpreted cautiously.",
@@ -771,17 +771,17 @@
       "link": "study-designs.html#rare-diseases",
       "question": "How should a small available population in a rare disease influence planning?",
       "options": [
-        "The team should increase the assumed benefit until the sample fits",
-        "The team can treat historical controls as interchangeable with randomized controls without justification",
-        "The team should assess attainable information and justified design options, potentially using collaboration or suitable repeated measurements",
-        "The team can assume the conventional power target is automatically satisfied"
+        "Increase the assumed benefit until the required sample fits",
+        "Treat historical controls as equivalent to randomized controls without justification",
+        "Assess attainable information and suitable design or recruitment options",
+        "Assume that the conventional target power is achieved with available patients"
       ],
       "answer": 2,
-      "explanation": "Limited recruitment calls for realistic information targets and carefully justified design choices. Collaboration and efficient measurements may help; each option retains assumptions and limitations.",
+      "explanation": "Limited recruitment calls for realistic information targets and carefully justified design choices. Collaboration and efficient measurements may help. each option retains assumptions and limitations.",
       "feedback": [
         "Recruitment constraints do not justify inflating the assumed effect.",
         "Historical and randomized controls can differ in population, care and measurement.",
-        "Limited recruitment calls for realistic information targets and carefully justified design choices. Collaboration and efficient measurements may help; each option retains assumptions and limitations.",
+        "Limited recruitment calls for realistic information targets and carefully justified design choices. Collaboration and efficient measurements may help. each option retains assumptions and limitations.",
         "Limited recruitment may leave the desired power unattainable."
       ]
     },
@@ -793,17 +793,17 @@
       "link": "estimation-planning.html#dataset-reuse",
       "question": "A trial dataset is reused to estimate baseline sleep difficulty. Why is the original treatment-effect power calculation insufficient for this new question?",
       "options": [
-        "Randomization guarantees a representative estimate of all patients",
-        "The new objective requires its own assessment of usable records, precision, and the population represented",
-        "A new objective automatically doubles the sample requirement",
-        "Every descriptive analysis requires 90% treatment-effect power"
+        "Randomization ensures representation of every patient in the target population",
+        "Usable records, precision and population relevance need reassessment",
+        "Changing the study objective automatically doubles the required number of patients",
+        "Every descriptive question requires the original 90% treatment comparison power"
       ],
       "answer": 1,
       "explanation": "The available sample is fixed, but the target quantity and intended conclusion have changed. Missing baseline information and the original eligibility criteria also affect what the estimate can establish.",
       "feedback": [
         "Random allocation within a trial does not guarantee population-representative recruitment.",
         "The available sample is fixed, but the target quantity and intended conclusion have changed. Missing baseline information and the original eligibility criteria also affect what the estimate can establish.",
-        "A new question needs a relevant assessment; no universal doubling rule applies.",
+        "A new question needs a relevant assessment. no universal doubling rule applies.",
         "A descriptive percentage is commonly planned using interval precision."
       ]
     },
@@ -837,10 +837,10 @@
       "link": "study-designs.html#units-of-analysis",
       "question": "A cluster-randomized trial already includes many patients in each of a few hospitals. With positive within-hospital correlation, which change would usually provide more independent information if the same number of additional patients can be recruited?",
       "options": [
-        "Recruiting all additional patients within the existing hospitals",
-        "Adding hospitals that can be independently randomized, with patients recruited in each",
-        "Recording the same outcome twice for every existing patient",
-        "Treating each patient as independently randomized"
+        "Recruit the additional patients in the existing hospitals",
+        "Recruit patients in additional independently randomized hospitals",
+        "Repeat each existing patient's outcome measurement a second time",
+        "Analyze all existing patients as though independently randomized"
       ],
       "answer": 1,
       "explanation": "Additional independently randomized hospitals provide new clusters. Patients within an existing hospital share cluster characteristics, so adding more patients there has diminishing gains in information. The final calculation still needs the cluster sizes, ICC, and planned analysis.",
@@ -859,10 +859,10 @@
       "link": "study-designs.html#multicenter-trials",
       "question": "Patients are randomized individually within several hospitals. How should centers enter sample size planning?",
       "options": [
-        "Automatically apply the cluster-randomized inflation formula",
-        "Ignore centers because patients are randomized",
-        "Use a calculation reflecting center sizes, within-center allocation and the planned analysis",
-        "Multiply the single-center sample by the number of hospitals"
+        "Apply the inflation formula for whole-center randomization",
+        "Omit center information because patients are individually randomized",
+        "Match center recruitment, allocation and the planned analysis",
+        "Multiply the single-center requirement by the number of hospitals"
       ],
       "answer": 2,
       "explanation": "The method should match individual randomization within centers and the proposed model.",
@@ -881,10 +881,10 @@
       "link": "curves.html#further-planning-approaches",
       "question": "How can assurance differ from power at one fixed effect?",
       "options": [
-        "It always produces the same answer as fixed-effect power",
-        "It can average performance over a justified distribution of uncertain parameter values",
-        "It guarantees that the study will be significant",
-        "It removes the need to justify clinical importance"
+        "It must equal the power at the selected target difference",
+        "It averages success probabilities across a distribution of uncertain parameters",
+        "It guarantees that the next study will be statistically significant",
+        "It makes justification of clinical importance unnecessary for planning"
       ],
       "answer": 1,
       "explanation": "Assurance or expected power incorporates a specified distribution of uncertainty. That distribution and the decision rule require justification.",
@@ -931,12 +931,12 @@
         "An anticipated population percentage, confidence level, and useful absolute margin of error"
       ],
       "answer": 3,
-      "explanation": "A prevalence survey estimates one population percentage. These inputs guide the sample-size approximation; the sampling approach and missing data also matter for a credible estimate.",
+      "explanation": "A prevalence survey estimates one population percentage. These inputs guide the sample-size approximation. the sampling approach and missing data also matter for a credible estimate.",
       "feedback": [
         "A prevalence objective concerns one population percentage.",
         "Repeated recordings do not automatically provide independent participants.",
         "An earlier treatment-test p-value does not specify the desired prevalence precision.",
-        "A prevalence survey estimates one population percentage. These inputs guide the sample-size approximation; the sampling approach and missing data also matter for a credible estimate."
+        "A prevalence survey estimates one population percentage. These inputs guide the sample-size approximation. the sampling approach and missing data also matter for a credible estimate."
       ]
     },
     {
@@ -955,7 +955,7 @@
       "answer": 1,
       "explanation": "For independent tests, the joint probability is 0.90 × 0.90 = 0.81. Correlated outcomes require a calculation that accounts for their dependence.",
       "feedback": [
-        "Ninety percent describes each test separately; the trial requires both to succeed.",
+        "Ninety percent describes each test separately. the trial requires both to succeed.",
         "For independent tests, the joint probability is 0.90 × 0.90 = 0.81. Correlated outcomes require a calculation that accounts for their dependence.",
         "The Type I error probability does not determine this joint power.",
         "Adding the powers does not give the probability that both tests succeed."
@@ -969,10 +969,10 @@
       "link": "study-designs.html#multiple-outcomes-comparisons",
       "question": "A trial will claim benefit if any one of three primary outcomes is significant. Which plan addresses the resulting testing structure?",
       "options": [
-        "Choose the most favorable outcome after the trial.",
-        "Use an unadjusted 5% test for each outcome.",
-        "Choose a prespecified multiple-testing procedure and plan power for the intended claims.",
-        "Require all three outcomes to succeed while describing success as any one."
+        "Choose the outcome with the strongest evidence after the trial",
+        "Use a separate unadjusted 5% test for each primary outcome",
+        "Prespecify error control and power for the intended claims",
+        "Require success on all three while defining success as any one"
       ],
       "answer": 2,
       "explanation": "Any one of several outcomes can support a claim, so the plan needs error control across those opportunities and power appropriate to the intended conclusion.",
@@ -991,10 +991,10 @@
       "link": "study-designs.html#interim-analyses-stopping",
       "question": "Researchers want to examine efficacy halfway through a trial and stop early for benefit. What should change in the planning?",
       "options": [
-        "Keep the original final-analysis calculation and test at 5% at both looks.",
-        "Assume the required maximum sample size is halved.",
-        "Choose a stopping threshold after seeing the interim difference.",
-        "Specify the timing, stopping boundary and final test together, and evaluate the design."
+        "Retain ordinary 5% tests at both the interim and final analyses",
+        "Halve the maximum sample because there will be two planned analyses",
+        "Select the stopping threshold after examining the interim treatment difference",
+        "Prespecify the analysis timing, stopping boundaries and matching final test"
       ],
       "answer": 3,
       "explanation": "The procedure should account for all planned opportunities to stop and the final analysis. Maximum and expected sample sizes should be assessed under relevant scenarios.",
@@ -1013,10 +1013,10 @@
       "link": "study-designs.html#sample-size-re-estimation",
       "question": "What should a plan to revise sample size using an interim treatment difference include?",
       "options": [
-        "A prespecified adaptation rule, sample-size limits and a final analysis evaluated for that rule.",
-        "A rule to recruit until an ordinary test becomes significant.",
-        "Only the revised number of participants.",
-        "The assumption that every re-estimation method preserves the original false-positive probability."
+        "Prespecified adaptation, sample limits and a matching final analysis",
+        "Continued recruitment until an ordinary test first gives statistical significance",
+        "Only the revised participant count, entered after the interim analysis",
+        "An assumption that every re-estimation method preserves the original error probability"
       ],
       "answer": 0,
       "explanation": "Using an interim treatment difference makes sample size data-dependent. The adaptation and final analysis need joint planning and evaluation of their statistical performance.",
@@ -1035,10 +1035,10 @@
       "link": "appendix.html#why-reproducibility-matters",
       "question": "What is computational reproducibility in this tutorial?",
       "options": [
-        "Obtaining consistent computational results using the same inputs, procedures and conditions",
-        "Collecting new patient data and obtaining the same p-value",
-        "Using any software that gives a similar-looking plot",
-        "Repeating a calculation until the preferred result appears"
+        "Consistent results from the same inputs and procedures",
+        "The same p-value after collecting an independent patient sample",
+        "A similar plot produced by a different unspecified calculation",
+        "The preferred result obtained by repeatedly rerunning a calculation"
       ],
       "answer": 0,
       "explanation": "Computational reproducibility concerns checking the same computational work. Replication addresses the scientific question with newly collected data.",
@@ -1057,10 +1057,10 @@
       "link": "appendix.html#why-reproducibility-matters",
       "question": "Which approach supports open science for work involving confidential patient data?",
       "options": [
-        "Publishing identifiable patient records to make the study open",
-        "Withholding all methods whenever any data are restricted",
-        "Assuming a public PDF makes all computations reproducible",
-        "Sharing appropriate methods and code while using governed access or other suitable restrictions for protected data"
+        "Release identifiable patient records with the published analysis code",
+        "Withhold every method whenever any patient information is restricted",
+        "Treat the public report alone as sufficient to reproduce calculations",
+        "Share methods and code with appropriate data access controls"
       ],
       "answer": 3,
       "explanation": "Transparency and reuse can be supported through protocols, code and documentation while respecting consent and legitimate access restrictions.",
@@ -1079,10 +1079,10 @@
       "link": "appendix.html#complex-design-record",
       "question": "A sample size calculation report concerns a trial with multiple outcomes and an interim analysis. Which record best supports reproducibility?",
       "options": [
-        "Only the final recruitment total.",
-        "Only the software name and target power.",
-        "The smallest p-value and the chosen sample size.",
-        "The inputs, methods and software, plus the success rule, interim decisions, final analysis and dated protocol/SAP versions."
+        "The final recruitment total, entered in the protocol and SAP",
+        "The software name and target power, recorded before recruitment",
+        "The smallest observed p-value and the final number of patients",
+        "Inputs, software, decision rules, planned analysis and dated protocol/SAP documents"
       ],
       "answer": 3,
       "explanation": "The full decision procedure affects the calculation. Dated plans, software, code and inputs let another researcher check how the result and decisions were obtained.",
@@ -1098,13 +1098,13 @@
       "chapter": "appendix",
       "level": "advanced",
       "section": "Simulation reproduction",
-      "link": "appendix.html#simulation-reproducibility",
+      "link": "simulation.html#simulation-reproducibility",
       "question": "Is saving a random seed alone sufficient to reproduce a simulated batch exactly?",
       "options": [
-        "No; random simulations can never be reproduced",
-        "No; the procedure, generator settings and software environment also matter",
-        "Yes, regardless of software or algorithm",
-        "Yes, provided the plot colors are unchanged"
+        "No, because random outcomes cannot be reproduced even with code",
+        "No, the algorithm, random number generator and software also matter",
+        "Yes, even if a different simulation algorithm is used",
+        "Yes, if the same graph colors and labels are retained"
       ],
       "answer": 1,
       "explanation": "A seed identifies a starting random state under particular settings. Different generators, algorithms or environments can yield different realized draws.",
@@ -1123,10 +1123,10 @@
       "link": "reporting.html#write-a-sample-size-justification",
       "question": "A draft reports pilot relief of 70% versus 30%, but its attached calculation uses 60% versus 30%. What should the report clarify?",
       "options": [
-        "Which percentages were observed and which were selected for planning, with the reason for the chosen target",
-        "That the pilot percentages guarantee the future trial results",
-        "That software always selects a smaller difference automatically",
-        "Only the final total; the inputs can be omitted"
+        "Separate observed and planning percentages and justify the target",
+        "State that the pilot percentages guarantee the future trial outcomes",
+        "State that software automatically chooses a smaller difference for planning",
+        "Report only the final count because the inputs are already implied"
       ],
       "answer": 0,
       "explanation": "The 40-point pilot result informs planning. The 30-point target comes from the selected 60% and 30% assumptions. The report should state and justify the inputs that reproduce its sample size."
@@ -1139,13 +1139,13 @@
       "link": "reporting.html#record-assumptions",
       "question": "How should the concise calculation report relate to the supporting study plan?",
       "options": [
-        "They should contain separate answers collected independently",
-        "The concise report should summarize the selected calculation and its justification; the supporting plan retains evidence, alternatives and unresolved decisions",
-        "The supporting plan replaces the need to state calculation inputs",
-        "The concise report should include every explored simulation"
+        "Collect separate sets of answers for the report and supporting plan",
+        "Summarize the calculation, with evidence in the supporting plan",
+        "Use the supporting plan to replace the calculation inputs in the report",
+        "Include every explored simulation in the concise calculation report"
       ],
       "answer": 1,
-      "explanation": "One set of answers supports both documents. The concise report makes the selected calculation reproducible; the supporting plan preserves the fuller reasoning and evidence."
+      "explanation": "One set of answers supports both documents. The concise report makes the selected calculation reproducible. the supporting plan preserves the fuller reasoning and evidence."
     },
     {
       "id": "q53",
@@ -1155,10 +1155,10 @@
       "link": "study-designs.html#treatment-changes",
       "question": "The assumed relief percentages already include the expected missed doses and treatment switching. How should the same treatment changes enter the calculation?",
       "options": [
-        "Apply a second switching multiplier to the resulting sample size",
-        "Use the randomized-group percentages without a second adjustment for the same changes",
-        "Add the switching percentages to the expected loss to follow-up",
-        "Exclude every patient who changes treatment"
+        "Apply an additional switching multiplier to the calculated requirement",
+        "Use those percentages with no duplicate switching adjustment",
+        "Combine the switching percentages with the expected loss to follow-up",
+        "Exclude all participants who change treatment from the planned analysis"
       ],
       "answer": 1,
       "explanation": "The assumed percentages already describe the expected treatment experience. Another adjustment for the same events would count their effect twice. Unavailable outcomes are considered separately."
@@ -1189,13 +1189,13 @@
       "link": "curves.html#st01-expectations",
       "question": "A promising pilot used healthier patients and shorter follow-up than the intended trial. Which planning approach addresses this uncertainty?",
       "options": [
-        "Raise the clinical threshold to match the pilot estimate.",
-        "Assess how the population and follow-up differences could change the assumed outcomes, and examine plausible ranges.",
-        "Use the pilot estimate as the known future effect.",
-        "Run more simulations at the pilot estimate until the evidence transfers."
+        "Raise the clinical threshold to match the favorable pilot estimate",
+        "Assess population differences and plausible planning ranges",
+        "Treat the pilot estimate as the true effect in the future trial",
+        "Increase simulation repetitions until the pilot findings apply to the new population"
       ],
       "answer": 1,
-      "explanation": "The relevance and uncertainty of earlier evidence should inform assumptions; simulation repetition alone supplies no new clinical evidence."
+      "explanation": "The relevance and uncertainty of earlier evidence should inform assumptions. simulation repetition alone supplies no new clinical evidence."
     },
     {
       "id": "c05",
@@ -1223,10 +1223,10 @@
       "link": "simulation.html#compare-simulation-with-a-planning-approximation",
       "question": "A larger simulation batch gives a narrow Monte Carlo interval that still excludes the analytical power approximation. The sample size and population assumptions match. What should you check next?",
       "options": [
-        "Whether the approximation and simulated analysis use the same test, corrections and decision rule.",
-        "Whether increasing repetitions changed the true treatment difference.",
-        "Whether replacing the simulation estimate with the target power removes the discrepancy.",
-        "Whether increasing the number of simulated studies counts as recruiting more patients."
+        "Agreement of tests, corrections and decision rules",
+        "Whether more repetitions changed the true difference between the populations",
+        "Whether replacing the estimated power with target power removes the discrepancy",
+        "Whether extra simulated trials can be counted as additional recruited patients"
       ],
       "answer": 0,
       "explanation": "A persistent discrepancy after reducing Monte Carlo uncertainty calls for checking the methods and the accuracy of the approximation for this setting. More repetitions improve the simulation estimate without changing the trial design."
@@ -1240,10 +1240,10 @@
       "link": "clinical-question.html#clinical-question",
       "question": "A pilot suggests a 25-point treatment difference. Clinicians judge 15 points worthwhile, and the team selects 15 points for the calculation. Which statement fits this plan?",
       "options": [
-        "All three values must be different.",
-        "The target must exceed the clinical threshold.",
-        "The pilot estimate must replace both other values.",
-        "The target difference and clinical threshold coincide; the pilot estimate can differ."
+        "All three values must differ for the calculation to be valid",
+        "The target difference must exceed the threshold chosen by clinicians",
+        "The pilot estimate must replace the target and clinical threshold",
+        "The target and threshold can coincide"
       ],
       "answer": 3,
       "explanation": "The three roles are distinct, but their numerical values may coincide and have no fixed order."
@@ -1257,10 +1257,10 @@
       "link": "study-designs.html#study-designs",
       "question": "Two lesions in each patient receive different randomized local treatments. What is the key analysis feature for sample-size planning?",
       "options": [
-        "Treating all lesions as independent patients",
-        "Counting each patient as two independent treatment groups",
-        "Using the number of lesions as the number of randomized hospitals",
-        "The within-patient comparison and correlation between lesion outcomes"
+        "Treat every lesion as an independent patient in the calculation",
+        "Count each patient as two independently randomized treatment groups",
+        "Count lesions as the number of independently randomized hospitals",
+        "Plan for the paired comparison and within-patient correlation"
       ],
       "answer": 3,
       "explanation": "Outcomes are paired within patients. The variance of the within-patient contrast determines precision for this allocation structure."
@@ -1291,10 +1291,10 @@
       "link": "estimation-planning.html#estimation-foundations",
       "question": "In one simulated batch, 18 of 20 nominal 95% intervals contain the population value. How should this result be interpreted?",
       "options": [
-        "The number containing the value varies between batches; 95% describes long-run coverage.",
-        "The interval method must have 90% coverage.",
-        "Exactly 19 must contain the value in every batch.",
-        "The population value changes between these studies."
+        "Batch counts vary around long run coverage",
+        "The observed fraction proves the method has 90% long run coverage",
+        "Every batch must have exactly 19 intervals containing the value",
+        "The population value must have changed between these simulated studies"
       ],
       "answer": 0,
       "explanation": "Coverage is a repeated-study property. A short batch has sampling variation in its coverage count."
@@ -1308,10 +1308,10 @@
       "link": "reporting.html#reporting",
       "question": "A calculation is reproducible, but its report gives no reason for the chosen target difference. What remains incomplete?",
       "options": [
-        "The random-number generator setting for a deterministic calculation",
-        "The choice of font for the report",
-        "The scientific and clinical justification of a numerical assumption",
-        "The addition of the two group counts"
+        "The random seed used for the deterministic sample size formula",
+        "The chosen font used to display the final calculation report",
+        "Scientific and clinical justification of the assumption",
+        "A second calculation of the sum of the two groups"
       ],
       "answer": 2,
       "explanation": "A complete report combines the calculation record with reasoning about its assumptions."
@@ -1342,10 +1342,10 @@
       "link": "reporting.html#reporting",
       "question": "A report gives 60 per group, while a saved calculation file gives 59 under a normal approximation. The planned analysis is a pooled t test. What should the author check first?",
       "options": [
-        "Whether 59 looks more feasible",
-        "Whether the seed was even or odd",
-        "Whether the report can omit the procedure name",
-        "Whether the report and saved calculation use the same procedure and assumptions"
+        "Whether the smaller requirement makes recruitment more feasible",
+        "Whether an even seed was used for a deterministic calculation",
+        "Whether omitting the procedure name resolves the discrepancy",
+        "Agreement of calculation procedures and assumptions"
       ],
       "answer": 3,
       "explanation": "The procedure can change the sample-size result. Inputs, method and software should identify the calculation supporting the final count."
@@ -1359,10 +1359,10 @@
       "link": "study-designs.html#study-designs",
       "question": "A superiority comparison is non-significant. The team wants to claim non-inferiority. Which additional planning and analysis framework is needed?",
       "options": [
-        "A conclusion that both treatments are identical",
-        "A margin chosen after examining the estimate",
-        "A justified non-inferiority margin, suitable hypothesis and confidence-interval assessment",
-        "A larger p value alone"
+        "A conclusion that the treatments are identical following non-significance",
+        "A noninferiority margin selected after inspecting the observed treatment effect",
+        "A justified margin, hypothesis and corresponding interval assessment",
+        "An increased p-value cutoff applied to the original superiority result"
       ],
       "answer": 2,
       "explanation": "Non-inferiority evaluates a prespecified unacceptable disadvantage, with its own margin and assumptions."
@@ -1427,10 +1427,10 @@
       "link": "curves.html#compare-planning-assumptions",
       "question": "A design planned at a 30-point difference has only moderate power at a plausible 20-point difference. Which sensitivity result is most useful alongside the original calculation?",
       "options": [
-        "Only the most favorable treatment percentage",
-        "The number of simulations as a replacement for the patient count",
-        "Power at the fixed planned sample and the sample required to reach the target power at 20 points",
-        "Only the pilot p value"
+        "The power calculated from the single most favorable treatment percentage",
+        "The number of simulation repetitions substituted for the required patient count",
+        "Power at the planned count and required count at 20 points",
+        "The pilot p-value used as the only justification for the original plan"
       ],
       "answer": 2,
       "explanation": "These two views distinguish the performance of the chosen design from the requirement under a different planning assumption."
@@ -1442,7 +1442,7 @@
       "chapter_check": false,
       "section": "Chapter 7: Study designs and testing strategies",
       "link": "study-designs.html#study-designs",
-      "question": "A trial has two independent co-primary tests with powers of 80% and 90%; both must succeed. What is the probability of success on both?",
+      "question": "A trial has two independent co-primary tests with powers of 80% and 90%. both must succeed. What is the probability of success on both?",
       "options": [
         "170%",
         "72%",
@@ -1478,10 +1478,10 @@
       "link": "reporting.html#reporting",
       "question": "A protocol measures relief at four weeks, but the percentages used for planning came from a two-day assessment. What belongs in the supporting study plan?",
       "options": [
-        "A justification of their relevance to four-week outcomes and a range of plausible alternatives",
-        "Only the name of the calculator",
-        "A statement that both outcomes concern pain",
-        "The smaller of the two percentages, without explanation"
+        "Justify their relevance and examine plausible alternatives",
+        "Record only the calculator used to turn the percentages into a count",
+        "State that both assessments concern pain as sufficient justification",
+        "Choose the smaller percentage without considering the assessment time"
       ],
       "answer": 0,
       "explanation": "Outcome timing can change event percentages. The supporting plan should assess the evidence and its relevance to the defined outcome."
@@ -1495,13 +1495,13 @@
       "link": "estimation-planning.html#pilot-feasibility",
       "question": "A pilot retains 82 of 100 participants, with a 95% interval of approximately 73%–88%. The rule requires at least 80% retention, a lower limit above 70%, and acceptable delivery. Delivery was unacceptable. What follows?",
       "options": [
-        "All progression criteria have been met.",
-        "The pilot proves future retention exceeds 80%.",
-        "The sample-size formula should be changed until delivery is acceptable.",
-        "The retention criteria are met, but delivery needs improvement before progression."
+        "All conditions for progression have been satisfied by the retention results",
+        "The pilot establishes that retention in the future trial exceeds 80%",
+        "Changing the sample size formula will make the delivery acceptable",
+        "Retention criteria are met and delivery needs improvement"
       ],
       "answer": 3,
-      "explanation": "Progression depends on all prespecified criteria, including delivery; the retention results meet the two numerical conditions."
+      "explanation": "Progression depends on all prespecified criteria, including delivery. the retention results meet the two numerical conditions."
     },
     {
       "id": "c23",
@@ -1512,10 +1512,10 @@
       "link": "appendix.html#tutorial-methods",
       "question": "A collaborator has the seed and final simulation table but cannot recreate the results. Which package of records would most help?",
       "options": [
-        "Only a screenshot of the table",
-        "The data-generating assumptions, analysis code, software versions, repetitions and saved inputs",
-        "Only a different seed",
-        "Only the final p values"
+        "A screenshot of the table showing the final simulation output",
+        "Assumptions, code, software, repetitions and saved inputs",
+        "A different seed supplied without the generating assumptions or code",
+        "The final p-values supplied without their simulation settings or method"
       ],
       "answer": 1,
       "explanation": "Reproducibility depends on the full procedure and computational environment as well as the seed."
@@ -1529,10 +1529,10 @@
       "link": "simulation.html#explore-missing-outcomes",
       "question": "In a simulation, patients without relief are more likely to have missing outcomes. Increasing the simulation repetitions makes the estimated bias more stable. What does this show?",
       "options": [
-        "The missingness bias has been removed.",
-        "The simulated trials have gained patients.",
-        "The assumed missingness mechanism has been verified as true.",
-        "The simulation is estimating the bias more precisely under that missingness mechanism."
+        "The missingness bias has been eliminated by the additional repetitions",
+        "The number of patients in each simulated trial has increased",
+        "The assumed missingness mechanism has been verified against real patient outcomes",
+        "Bias is estimated more precisely under the assumed mechanism"
       ],
       "answer": 3,
       "explanation": "Repetition improves numerical precision for the specified mechanism. The mechanism itself is a separate assumption."
@@ -1563,13 +1563,19 @@
       "link": "study-designs.html#multicenter-trials",
       "question": "A trial adds several small recruiting centers, each assigning both treatments. Which additional information is most useful for revising its calculation?",
       "options": [
-        "Only the total number of hospitals",
-        "Expected recruitment and treatment balance within centers, center differences, and the planned analysis",
-        "The number of investigators named on the protocol",
-        "A fixed percentage increase for every extra center"
+        "Only the number of hospitals participating in patient recruitment",
+        "Center recruitment, treatment balance and planned analysis",
+        "Only the number of investigators listed in the study protocol",
+        "The same fixed percentage inflation for every newly added center"
       ],
       "answer": 1,
-      "explanation": "Center sizes, within-center balance, outcome differences and the analysis determine the consequences for power."
+      "explanation": "Center sizes, within-center balance, outcome differences and the analysis determine the consequences for power.",
+      "feedback": [
+        "The center count alone omits recruitment, treatment balance and the intended analysis.",
+        "Center sizes, within-center balance, outcome differences and the analysis determine the consequences for power.",
+        "The number of investigators does not describe the allocation or outcome variation.",
+        "The adjustment depends on the design and analysis. It is not a fixed increment per center."
+      ]
     }
   ],
   "chapter_checks": [

@@ -2,6 +2,8 @@
 
 The [activity walkthroughs](../student-materials/activity-walkthroughs.html) describe each activity's purpose, steps and connection to the narrative, distinguishing analytical calculations from simulated patient outcomes.
 
+The sidebar identifies Core and Extensions chapters with text and colour. Chapters 7 and 8 start with reading routes so learners can select material relevant to their question. Core learners record enough information to reproduce their calculation in Chapter 3. Chapter 8 develops the software and open science guidance. The implementation of simulations is explained alongside the simulation activities in [Chapter 6](../book/simulation.html#simulation-reproducibility).
+
 
 The module teaches sample size as a justified research-design decision. Activities combine predictions, app-based exploration and interpretation of results. A session can begin with a clinical question and end with an explanation of what the planned study could establish. The guided group activities below are optional teaching arrangements; independent learners can use the tutorial and its chapter quizzes on their own.
 
@@ -9,7 +11,9 @@ The neuropathic pain case compares fictional Neravixa with duloxetine for painfu
 
 ## Preparation and access
 
-The embedded [report review](../book/reporting.html#report-error-activity), [discharge review](../book/exercises.html#discharge-error-activity), [recruitment review](../book/study-designs.html#recruitment-error-activity) and [software review](../book/appendix.html#software-error-activity) ask learners to identify questionable passages. Some passages are appropriate. Learners can first give a reason for their choice, then open the explanation and draft a correction. A partner can check whether the revision preserves the intended study question and matches the calculation. The PDF provides the same passages and answer key. A count of passages opened measures participation in this exercise; an independently written correction gives stronger evidence of understanding.
+The embedded [report review](../book/reporting.html#report-error-activity), [discharge review](../book/exercises.html#discharge-error-activity), [recruitment review](../book/study-designs.html#recruitment-error-activity), [estimation review](../book/estimation-planning.html#estimation-report-error-activity) and [software review](../book/appendix.html#software-error-activity) ask learners to identify questionable passages. Some passages are appropriate. Learners can first give a reason for their choice, then open the explanation and draft a correction. A partner can check whether the revision preserves the intended study question and matches the calculation. The PDF provides the same passages and answer key. A count of passages opened measures participation in this exercise. An independently written correction gives stronger evidence of understanding.
+
+The estimation review uses interpreter need at an outpatient clinic, and the software review uses fatigue scores. Their settings and inputs differ from the preceding worked examples. Chapter checks and the cumulative quiz shuffle questions and answer options for each fresh attempt or retry. Reloading preserves an existing attempt. Feedback letters follow the displayed option order.
 
 For a pilot, the [observation notes](pilot_observation_notes.html#optional-page-time-recording) describe a possible opt-in page-time recorder, how to handle split-screen use and the limits of timing data. Recording is not currently enabled.
 

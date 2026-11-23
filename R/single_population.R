@@ -72,7 +72,7 @@ single_population_ui <- function(id) {
       conditionalPanel(sprintf("input['%s'] == 'means'", ns("outcome")),
         numericInput(ns("sd"), "Population standard deviation (outcome units)", 5, min=.01),
         numericInput(ns("width_m"), "Target full interval width (outcome units)", 4, min=.01),
-        activity_help("The full width is the distance between the two confidence limits. A width of 4 units corresponds to a margin of about 2 units on each side of the mean.", for_input=ns("width_m"))),
+        activity_help("Subtract the lower limit from the upper limit to obtain full width. A width of 4 units corresponds to a margin of about 2 units on each side. Planning uses the expected width of a t interval under normal sampling. Individual intervals can be wider or narrower.", for_input=ns("width_m"))),
       conditionalPanel(sprintf("input['%s'] == 'proportions'", ns("outcome")),
         percent_slider(ns("probability"), "Assumed event probability (%)", .01, .99, .3),
         percent_slider(ns("width_p"), "Target full interval width (percentage points)", .01, 1, .2, suffix=" percentage points"),

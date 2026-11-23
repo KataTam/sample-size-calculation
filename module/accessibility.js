@@ -23,6 +23,17 @@
       const badge = document.createElement('span'); badge.className = 'reader-level';
       badge.textContent = h.parentElement.classList.contains('advanced-heading') ? 'Extensions ' : 'Core material '; h.prepend(badge);
     });
+    const groups = JSON.parse(document.getElementById('activity-menu-data')?.textContent || '[]');
+    document.querySelectorAll('.book-summary li.chapter > a').forEach(a => {
+      const url = new URL(a.href, location.href);
+      if (url.hash || a.querySelector('.sidebar-level')) return;
+      const group = groups.find(g=>url.pathname.endsWith('/'+g.chapter+'.html'));
+      if (!group || !['Core material','Extensions'].includes(group.route)) return;
+      const badge = document.createElement('span');
+      badge.className = 'sidebar-level '+(group.route==='Core material'?'sidebar-core':'sidebar-extension');
+      badge.textContent = group.route==='Core material'?'Core':'Extensions';
+      a.append(document.createTextNode(' '), badge);
+    });
     main.querySelectorAll('a[target="_blank"]').forEach(a => {
       if (!a.getAttribute('aria-label') && a.textContent.trim()) a.setAttribute('aria-label', a.textContent.trim() + ' (opens in a new tab)');
     });

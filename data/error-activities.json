@@ -161,9 +161,9 @@
     "title": "Activity: Review the software choices",
     "segments": [
       {
-        "text": "For a target mean difference of 3 units and an SD of 5, Cohen's d is 0.60",
+        "text": "For a target mean difference of 2 fatigue score units and an SD of 4, Cohen's d is 0.50",
         "error": false,
-        "explanation": "For this independent two-group comparison, d = 3 / 5 = 0.60.",
+        "explanation": "For this independent two-group comparison, d = 2 / 4 = 0.50.",
         "link": "appendix.html#gpower-assumptions",
         "section": "Checking software assumptions"
       },
@@ -171,9 +171,9 @@
         "text": ". "
       },
       {
-        "text": "The corresponding two-group ANOVA therefore uses f = 0.60",
+        "text": "The corresponding two-group ANOVA therefore uses f = 0.50",
         "error": true,
-        "explanation": "For the stated unadjusted comparison with two equally sized groups, f = d / 2 = 0.30. Entering f = 0.60 represents a mean difference of 6 units at SD 5.",
+        "explanation": "For the stated unadjusted comparison with two equally sized groups, f = d / 2 = 0.25. Entering f = 0.50 represents a mean difference of 4 units at SD 4.",
         "link": "appendix.html#tab:gpower-effect-sizes",
         "section": "Effect-size inputs and sample sizes"
       },
@@ -191,7 +191,7 @@
         "text": ". "
       },
       {
-        "text": "Selecting this unadjusted ANOVA automatically accounts for baseline pain scores",
+        "text": "Selecting this unadjusted ANOVA automatically accounts for baseline fatigue scores",
         "error": true,
         "explanation": "Baseline-adjusted analysis requires a method and assumptions for the intended covariate adjustment. The simple two-group ANOVA calculation here contains no baseline covariate.",
         "link": "appendix.html#gpower-assumptions",
@@ -200,14 +200,15 @@
       {
         "text": "."
       }
-    ]
+    ],
+    "version": "2"
   },
   "estimation_report": {
     "id": "estimation-report-error-activity",
     "title": "Activity: Review an estimation sample size calculation report",
     "segments": [
       {
-        "text": "The survey will estimate peripheral neuropathy prevalence among adults with type 2 diabetes attending the clinic, assessed once at enrollment.",
+        "text": "The survey will estimate the percentage of outpatient clinic patients needing an interpreter, assessed at their next appointment.",
         "error": false,
         "explanation": "The population, quantity and assessment time are specified.",
         "link": "estimation-planning.html#estimation-foundations",
@@ -217,9 +218,9 @@
         "text": " "
       },
       {
-        "text": "With 90% power, 20% anticipated prevalence and a 5% margin of error, the sample size is 246.",
+        "text": "With 80% power, 30% anticipated prevalence and a 6% margin of error, the sample size is 225.",
         "error": true,
-        "explanation": "The survey estimates prevalence with a chosen precision. This calculation uses 95% confidence. The margin should be five percentage points: around an estimate of 20%, that means approximately 15% to 25%. Corrected wording: With anticipated prevalence of 20%, 95% confidence and a margin of error of five percentage points, 246 completed assessments are required.",
+        "explanation": "This estimates a population percentage with a chosen precision. Use 95% confidence and a margin of six percentage points. The normal approximation gives 1.96 squared times 0.30 times 0.70 divided by 0.06 squared, or 224.09, rounded upward to 225 completed assessments.",
         "link": "estimation-planning.html#prevalence",
         "section": "Prevalence sample size"
       },
@@ -227,9 +228,9 @@
         "text": " "
       },
       {
-        "text": "The requirement is 246 patients per group.",
+        "text": "The requirement is 225 patients per group.",
         "error": true,
-        "explanation": "There is one population sample. The requirement is 246 completed assessments in total.",
+        "explanation": "There is one population sample. The requirement is 225 completed assessments in total.",
         "link": "estimation-planning.html#prevalence",
         "section": "Total sample size"
       },
@@ -237,9 +238,9 @@
         "text": " "
       },
       {
-        "text": "The recruitment target is 246, allowing for 5% nonresponse.",
+        "text": "The recruitment target is 225, allowing for 10% nonresponse.",
         "error": true,
-        "explanation": "To obtain 246 completed assessments with 5% anticipated nonresponse, 246/0.95 is rounded upward to 259 patients to approach.",
+        "explanation": "To obtain 225 completed assessments with 10% anticipated nonresponse, divide by 0.90. The target is 250 patients to approach.",
         "link": "estimation-planning.html#estimation-report",
         "section": "The completed report"
       },
@@ -249,10 +250,11 @@
       {
         "text": "The calculation was performed with an online calculator.",
         "error": true,
-        "explanation": "The calculator, version or access date, exact inputs, formula and interval method should be identifiable. The completed example records R, its version, the planning formula and the Wilson method.",
+        "explanation": "Identify the calculator and version or access date, procedure, inputs and interval method. Another reader should be able to reproduce the calculation and check its assumptions.",
         "link": "estimation-planning.html#estimation-report",
         "section": "Reproducible reporting"
       }
-    ]
+    ],
+    "version": "2"
   }
 }

@@ -24,7 +24,7 @@
     return node;
   }
   function start(questions, retry = false, saved = null) {
-    current = !saved && !retry && chapter.value === 'all' ? shuffle([...questions]) : [...questions]; missed = []; submitted=false;orders=saved?.orders||{};
+    current = saved ? [...questions] : shuffle([...questions]); missed = []; submitted=false;orders=saved?.orders||{};
     $('setup').hidden = true; $('results').hidden = true; $('quiz').hidden = false;
     $('status').textContent = '';
     $('quiz-title').textContent = retry ? 'Retry missed questions' : chapter.value === 'all' ? 'Cumulative quiz' : bank.chapters[chapter.value];
@@ -69,10 +69,11 @@
       topics[q.chapter].total++; topics[q.chapter].correct += Number(right);
       const item = element('details', undefined, 'quiz-answer' + (right ? '' : ' quiz-incorrect'));item.open=!right;
       const summary=element('summary',`${index+1}. ${q.question}`);summary.append(element('span',right?'Correct':'Needs review','quiz-answer-status'));item.append(summary);
+      const optionLabel=i=>`${String.fromCharCode(65+orders[q.id].indexOf(i))}. ${q.options[i]}`;
       item.append(
-        element('p', `${right ? 'Correct' : 'Incorrect'}. Your answer: ${q.options[choice]}`),
-        element('p', `Correct answer: ${q.options[q.answer]}`), element('p', q.explanation));
-      if(q.feedback){if(!right)item.append(element('p',q.feedback[choice]));const detail=element('details');detail.append(element('summary','Other answer options'));q.options.forEach((text,i)=>{if(i!==q.answer&&i!==choice)detail.append(element('p',text+': '+q.feedback[i]));});item.append(detail);}
+        element('p', `${right ? 'Correct' : 'Incorrect'}. Your answer: ${optionLabel(choice)}`),
+        element('p', `Correct answer: ${optionLabel(q.answer)}`), element('p', q.explanation));
+      if(q.feedback){if(!right)item.append(element('p',q.feedback[choice]));const detail=element('details');detail.append(element('summary','Answer option explanations'));orders[q.id].forEach(i=>detail.append(element('p',optionLabel(i)+': '+q.feedback[i])));item.append(detail);}
       const link = element('a', `Review: ${q.section}`); link.href = '../book/' + q.link; link.target = '_blank'; link.rel = 'noopener';
       item.append(link); $('review').append(item);
     });

@@ -214,8 +214,14 @@ let browser;
       root.querySelector('.quiz-results').hidden = true;
       root.querySelector('.quiz-answer-key').hidden = false;
       root.querySelectorAll('fieldset, .quiz-answer').forEach((el) => { el.hidden = false; });
-      root.querySelectorAll('fieldset').forEach((el, i) => el.querySelector('.quiz-number').textContent = i + 1);
-      root.querySelectorAll('.quiz-answer').forEach((el, i) => el.querySelector('.quiz-number').textContent = i + 1);
+      root.querySelectorAll('fieldset').forEach((el, i) => {
+        el.querySelector('.quiz-number').textContent = i + 1;
+        const answer=root.querySelector(`.quiz-answer[data-question="${el.dataset.question}"]`);
+        answer.parentElement.append(answer);
+        answer.querySelector('.quiz-number').textContent = i + 1;
+        const label=el.querySelector(`input[value="${el.dataset.answer}"] + span`).textContent;
+        if(answer.querySelector('.quiz-correct-option').textContent!==label)throw Error('PDF quiz answer label mismatch: '+el.dataset.question);
+      });
     });
     document.querySelectorAll('details').forEach(el => el.open=true);
     document.querySelectorAll('.spot-choice').forEach(el => {

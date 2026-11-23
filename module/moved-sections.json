@@ -133,7 +133,7 @@
   "sensitivity-is-not-observed-post-hoc-power": "curves",
   "simulating-decision-rules": "simulation",
   "simulation": "simulation",
-  "simulation-reproducibility": "appendix",
+  "simulation-reproducibility": "simulation",
   "software-options": "appendix",
   "software-record": "appendix",
   "software-support": "appendix",
@@ -191,5 +191,13 @@
   "what-if-the-study-is-too-small-for-its-purpose": "curves",
   "why-reproducibility-matters": "appendix",
   "write-a-sample-size-justification": "reporting",
-  "your-task": "calculations"
+  "your-task": "calculations",
+  "wilson-interval": "glossary",
+  "continuity-correction": "glossary",
+  "assurance": "glossary",
+  "hybrid-planning": "glossary",
+  "bayesian-planning": "glossary",
+  "progression-criteria": "glossary",
+  "n-of-1": "glossary",
+  "experimental-unit": "glossary"
 }

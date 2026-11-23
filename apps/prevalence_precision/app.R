@@ -171,7 +171,7 @@ server <- function(input, output, session) {
     paste("The planned n is an approximation for independent sampling at a fixed absolute margin.",
       if (sparse) "Few expected events or non-events make this approximation less reliable. Rare outcomes require particular care and a justified binomial precision analysis."
       else "Expected counts and sampling assumptions should reflect the intended study.",
-      "Clustering, finite-population sampling and diagnostic-test error require additional methods.")
+      "Simulated intervals use the Wilson score method, which keeps limits between 0% and 100%. Its margins may be unequal and its width varies with the observed event count. Clustering, finite-population sampling and diagnostic-test error require additional methods.")
   })
   precision_curves <- reactive({
     x <- snapshot(); ps <- seq(.001, .999, length.out = 201)

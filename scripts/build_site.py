@@ -284,8 +284,9 @@ class NewTabLinks(HTMLParser):
     control_classes = {"anchor-section", "anchor", "shiny-download-link", "shiny-tab-input", "action-button", "dropdown-toggle", "toggle-dropdown"}
     void_elements = {"area", "base", "br", "col", "embed", "hr", "img", "input", "link", "meta", "param", "source", "track", "wbr"}
 
-    def __init__(self, source):
+    def __init__(self, source, page):
         super().__init__()
+        self.page = page.resolve()
         self.stack, self.replacements = [], []
         self.line_offsets = [0]
         for match in re.finditer("\n", source):
@@ -297,6 +298,9 @@ class NewTabLinks(HTMLParser):
         navigation = bool(classes & self.navigation_classes or attr.get("id") == "TOC" or attr.get("data-link-navigation") == "same-tab")
         inside_navigation = navigation or any(item[1] for item in self.stack)
         href = (attr.get("href") or "").strip()
+        url = urlsplit(href)
+        same_page = bool(url.fragment and not url.scheme and not url.netloc and not url.query and
+            ((self.page.parent / unquote(url.path)).resolve() if url.path else self.page) == self.page)
         if re.fullmatch(r'activity-[a-z_]+', urlsplit(href).fragment):
             inside_navigation = True
         control = bool(classes & self.control_classes or attr.get("role") == "button" or any(key in attr for key in ["download", "data-question", "data-toggle", "data-bs-toggle"]))
@@ -305,7 +309,8 @@ class NewTabLinks(HTMLParser):
             updated = re.sub(r'\s+target\s*=\s*(?:"[^"]*"|\x27[^\x27]*\x27|[^\s>]+)', "", original, flags=re.I)
             updated = re.sub(r'\s+rel\s*=\s*(?:"[^"]*"|\x27[^\x27]*\x27|[^\s>]+)', "", updated, flags=re.I)
             rel = " ".join(dict.fromkeys((attr.get("rel") or "").split() + ["noopener"]))
-            updated = updated[:-1] + ' target="_blank" rel="' + html.escape(rel, quote=True) + '">'
+            if not same_page:
+                updated = updated[:-1] + ' target="_blank" rel="' + html.escape(rel, quote=True) + '">'
             line, column = self.getpos()
             self.replacements.append((self.line_offsets[line - 1] + column, original, updated))
         if tag not in self.void_elements:
@@ -356,7 +361,7 @@ for target in SITE.rglob("*.html"):
             href += '?' + url.query
         return 'href="' + html.escape(href, quote=True) + '"'
     text = re.sub(r'href="([^"]+)"', chapter_entry_link, text)
-    parser = NewTabLinks(text)
+    parser = NewTabLinks(text, target)
     parser.feed(text)
     for offset, original, updated in reversed(parser.replacements):
         text = text[:offset] + updated + text[offset + len(original):]

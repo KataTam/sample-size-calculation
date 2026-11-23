@@ -626,5 +626,77 @@
       "crossover trials"
     ],
     "definition": "Participants receive treatments in a randomized sequence across successive periods. The comparison uses outcomes from the same participant."
+  },
+  {
+    "id": "wilson-interval",
+    "label": "Wilson score interval",
+    "aliases": [
+      "Wilson score interval",
+      "Wilson interval"
+    ],
+    "definition": "A confidence interval for one population proportion, obtained from the score test. It stays between 0% and 100% and can have unequal margins around the observed percentage."
+  },
+  {
+    "id": "continuity-correction",
+    "label": "Continuity correction",
+    "aliases": [
+      "continuity correction"
+    ],
+    "definition": "An adjustment used in some continuous approximations to discrete counts. It changes the calculation near a rejection boundary."
+  },
+  {
+    "id": "assurance",
+    "label": "Assurance",
+    "aliases": [
+      "assurance",
+      "expected power"
+    ],
+    "definition": "The probability of meeting a specified study success rule, averaged over a distribution describing uncertainty in the planning parameters."
+  },
+  {
+    "id": "hybrid-planning",
+    "label": "Hybrid planning",
+    "aliases": [
+      "hybrid planning",
+      "hybrid approaches"
+    ],
+    "definition": "Planning that averages the performance of a frequentist analysis over a distribution representing uncertainty about its parameters."
+  },
+  {
+    "id": "bayesian-planning",
+    "label": "Bayesian planning",
+    "aliases": [
+      "Bayesian planning",
+      "Bayesian approaches"
+    ],
+    "definition": "Planning that evaluates a Bayesian analysis and success rule using specified distributions for uncertain parameters."
+  },
+  {
+    "id": "progression-criteria",
+    "label": "Progression criteria",
+    "aliases": [
+      "progression criterion",
+      "progression criteria"
+    ],
+    "definition": "Conditions specified before a pilot starts to guide whether a main study should proceed, be modified or stop."
+  },
+  {
+    "id": "n-of-1",
+    "label": "N-of-1 trial",
+    "aliases": [
+      "N-of-1",
+      "n-of-1 design",
+      "N-of-1 trial"
+    ],
+    "definition": "A prospective comparison of treatments within one person over repeated treatment periods, often with randomized sequences."
+  },
+  {
+    "id": "experimental-unit",
+    "label": "Experimental unit",
+    "aliases": [
+      "experimental unit",
+      "experimental units"
+    ],
+    "definition": "The entity independently assigned to an intervention, such as a participant, cage or culture."
   }
 ]

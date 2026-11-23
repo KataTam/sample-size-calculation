@@ -27,19 +27,34 @@
         const bar=root.querySelector('.quiz-progress-bar');bar.max=active.length;bar.value=answered;
       }
       function begin(subset,saved=null) {
-        active = root.id === 'quiz-all' && !saved ? shuffle([...subset]) : [...subset];submitted=false;
-        if(root.id === 'quiz-all')active.forEach(q=>form.querySelector('.quiz-questions').append(q));
+        active = saved ? [...subset] : shuffle([...subset]);submitted=false;
+        active.forEach(q=>form.querySelector('.quiz-questions').append(q));
         form.reset(); form.hidden = false; results.hidden = true; key.hidden = true; key.open = false;
         questions.forEach(q => {
           const options=[...q.querySelectorAll('label.quiz-option')];
           const order=saved?.orders?.[q.dataset.question];
           const arranged=order?order.map(v=>options.find(o=>o.querySelector('input').value===v)):shuffle(options);
           arranged.forEach((label,index)=>{if(!label)return;const span=label.querySelector('span');span.textContent=String.fromCharCode(65+index)+'. '+span.textContent.replace(/^[A-Z]\. /,'');q.append(label);const input=label.querySelector('input');input.checked=saved?.choices?.[input.name]===input.value;});
+          const answer = answers.find(a=>a.dataset.question===q.dataset.question);
+          const optionLabel = value => q.querySelector(`input[value="${value}"]`)?.nextElementSibling.textContent;
+          answer.querySelector('.quiz-correct-option').textContent = optionLabel(q.dataset.answer);
+          const explanations = answer.querySelector('.quiz-option-feedback');
+          arranged.forEach(label=>{
+            const value=label.querySelector('input').value;
+            const row=explanations?.querySelector(`[data-option="${value}"]`);
+            if(row){row.querySelector('.quiz-option-text').textContent=optionLabel(value);explanations.append(row);}
+          });
           const selected = active.includes(q); q.hidden = !selected;
           q.querySelectorAll('input').forEach(input => { input.disabled = !selected; });
           if (selected) q.querySelector('.quiz-number').textContent = active.indexOf(q) + 1;
         });
         answers.forEach(answer => { answer.hidden = true; answer.open=false;answer.querySelector('.quiz-choice').textContent = '';answer.querySelector('.quiz-answer-status').textContent=''; });
+        // Keep the static/exported key in the same order as the displayed form.
+        form.querySelectorAll('fieldset').forEach(q => {
+          const answer = answers.find(a=>a.dataset.question===q.dataset.question);
+          key.append(answer);
+          answer.querySelector('.quiz-number').textContent=q.querySelector('.quiz-number').textContent;
+        });
         updateProgress();save();
       }
       function reset() {

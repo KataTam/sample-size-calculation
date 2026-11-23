@@ -104,7 +104,7 @@ ui <- fluidPage(
         p(tags$a(href="../book/simulation.html#explore-missing-outcomes", target="_blank", rel="noopener", "Explanation and model answer")))),
     tags$details(tags$summary("Reproducibility settings"), numericInput("seed", "Random seed", 20260914, min = 0, max = 2147483647, step = 1)),
     numericInput("B", "Number of simulated studies (B)", 1000, min = 100, max = 10000, step = 100),
-    activity_help("More repetitions stabilize the estimated power and coverage but take longer to run. Each simulated study keeps the selected number of participants.", for_input = "B")),
+    activity_help("More repetitions stabilize estimated power and coverage. Multiplying the repetitions by four approximately halves Monte Carlo standard error. Each simulated study keeps the selected number of participants.", for_input = "B")),
     p(tags$a(href = "../book/Sample_size_open_module.html#glossary", target = "_blank", rel = "noopener", "Key terms and assumptions"), " · ",
       tags$a(href = "../book/Sample_size_open_module.html#common-mistakes", target = "_blank", rel = "noopener", "Common mistakes and FAQ"))))),
   mainPanel(width = 8, conditionalPanel("input.goal != 'precision'", tabsetPanel(id = "stage",

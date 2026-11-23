@@ -312,3 +312,37 @@ The Central Committee on Research Involving Human Subjects directly reviews spec
 
 <span id="delta2">DELTA&sup2;</span>
 : Difference ELicitation in TriAls, second guidance project. The guidance explains how to choose and justify a target difference for a randomized trial, drawing on evidence about plausible differences and judgments about clinical importance [@cook2018delta2; @cook2019delta2].
+
+## Additional planning terms {.unnumbered}
+
+### Wilson score interval {#wilson-interval .advanced-heading .unnumbered}
+
+The Wilson score interval estimates a population proportion from an observed event count and sample size. It is obtained by inverting the score test for that proportion. Its limits stay between 0% and 100%, and its margins can be unequal. Its coverage is generally more reliable than the simple symmetric normal interval, particularly with small samples or proportions near zero or one [@brown2001interval]. The [prevalence example](#estimation-report) uses a normal approximation for initial planning and Wilson intervals for analysis.
+
+### Continuity correction {#continuity-correction .advanced-heading .unnumbered}
+
+A continuity correction adjusts a continuous approximation for the fact that event counts change in whole numbers. For example, some approximate tests of proportions use a half-count correction. Corrected and uncorrected tests can give different p-values and planning results. The tutorial's pooled score test omits this correction. Record the choice when comparing software.
+
+### Assurance {#assurance .advanced-heading .unnumbered}
+
+Assurance averages the probability of meeting a specified success rule over a justified distribution of uncertain planning parameters. With a frequentist testing rule, it is often described as expected power. Equally weighted scenarios with 60% and 90% power give 75% expected power. The uncertainty distribution and the success rule are part of the justification [@kunzmann2021review; @pezeshk2003]. See [planning with uncertainty](#further-planning-approaches).
+
+### Hybrid planning {#hybrid-planning .advanced-heading .unnumbered}
+
+Hybrid planning uses a probability distribution to describe uncertain parameters while evaluating a frequentist analysis, such as a test with a fixed Type I error probability. Averaging its power over this distribution gives expected power. The distribution used for planning and the intended analysis should be reported [@kunzmann2021review].
+
+### Bayesian planning {#bayesian-planning .advanced-heading .unnumbered}
+
+Bayesian planning can evaluate a decision based on posterior probabilities, such as requiring a sufficiently high posterior probability of benefit. Planning simulates or integrates over uncertain parameters and possible data. The planning distributions, analysis priors and success rule should all be identified [@kunzmann2021review].
+
+### Progression criteria {#progression-criteria .advanced-heading .unnumbered}
+
+Progression criteria are conditions specified before a pilot or feasibility study starts. They guide whether to proceed to the main study, modify its procedures or stop. Examples concern recruitment rate, retention and acceptable delivery. Numerical thresholds and how uncertainty or other evidence will be considered should be agreed in advance [@eldridge2016]. The [pilot example](#pilot-feasibility) combines retention and delivery criteria.
+
+### N-of-1 trial {#n-of-1 .advanced-heading .unnumbered}
+
+An N-of-1 trial prospectively compares treatments within one person over repeated periods. For example, several randomized pairs of treatment A and treatment B periods can compare symptoms in a stable condition. The design should account for period effects, repeated observations and any lasting effect of an earlier treatment. It suits reversible treatments whose effects can be evaluated within the periods. A series of such trials can also inform broader questions [@vohra2015cent].
+
+### Experimental unit {#experimental-unit .advanced-heading .unnumbered}
+
+The experimental unit is the entity independently assigned to an intervention. If cages are assigned, observations from several animals in one cage belong to the same allocation unit. Repeated measurements describe that unit in more detail. The [study design guide](#match-the-question-to-a-method-and-resource) explains the implications for sample size [@arrive2020].

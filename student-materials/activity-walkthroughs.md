@@ -12,6 +12,11 @@ The difference observed in previous data records a sample result that can inform
 
 The neuropathic pain case compares fictional Neravixa with duloxetine for painful diabetic peripheral neuropathy. Each patient contributes one four-week outcome: achieved pain relief or did not achieve pain relief. The pilot remains 7 of 10 versus 3 of 10; the calculation uses population assumptions of 60% versus 30%. Selecting a calculator or simulation preview opens the app within the chapter. Its main controls sit above the figure, and the result text updates with the calculation. A link underneath opens the app on its own page. Closing and reopening an embedded app preserves its inputs during that page visit.
 
+
+The sidebar labels distinguish Core chapters from Extensions. Chapters 7 and 8 provide reading routes for selecting topics relevant to a study. The [simulation implementation](../book/simulation.html#simulation-reproducibility) is in Chapter 6, with links to runnable R code.
+
+The [estimation review](../book/estimation-planning.html#estimation-report-error-activity) uses interpreter need at an outpatient clinic, with inputs that differ from the worked prevalence example. The [software review](../book/appendix.html#software-error-activity) uses fatigue scores. Apply the method to these new settings before revealing the explanations. Fresh quiz attempts and retries shuffle questions and answer options. Reloading keeps the current attempt, and feedback letters match the order on screen.
+
 ## The four-activity core route
 
 | Chapter | Core activity | Contribution to the continuing report |
