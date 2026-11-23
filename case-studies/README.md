@@ -1,6 +1,6 @@
 # Case studies
 
-Start with the [chronic pain example](chronic_pain_case.md), then use the [student case and assumption map](student_case_template.md) to develop a hypothetical study or a question supported by public evidence.
+Start with the [neuropathic pain example](chronic_pain_case.md), then use the [student case and assumption map](student_case_template.md) to develop a hypothetical study or a question supported by public evidence.
 
 The additional cases show how the research question changes the purpose of a calculation:
 

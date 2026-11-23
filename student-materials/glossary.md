@@ -5,10 +5,10 @@ These definitions support both routes and link to the explanations and examples 
 ## Research question and study plan {.core-heading .unnumbered}
 
 <span id="pico">PICO</span>
-: Population, Intervention, Comparator, and Outcome. These four elements help define a treatment-comparison question [@richardson1995]. The outcome should include the assessment time. In the chronic pain trial, they are patients with chronic pain, the novel treatment, standard treatment, and pain relief at four weeks.
+: Population, Intervention, Comparator, and Outcome. These four elements help define a treatment-comparison question [@richardson1995]. The outcome should include the assessment time. In the neuropathic pain trial, they are patients with neuropathic pain, the novel treatment, standard treatment, and pain relief at four weeks.
 
 <span id="primary-outcome">Primary outcome</span>
-: The main outcome chosen to answer the study's principal question. In the basic examples, it guides the sample size calculation. Its definition should specify what is measured, how it is measured, and when it is assessed. The chronic pain trial uses reported pain relief at four weeks.
+: The main outcome chosen to answer the study's principal question. In the basic examples, it guides the sample size calculation. Its definition should specify what is measured, how it is measured, and when it is assessed. The neuropathic pain trial uses reported pain relief at four weeks.
 
 <span id="binary-outcome">Binary outcome</span>
 : An outcome with two categories, such as pain relief: yes or no. Each group's outcome can be summarized as a count and a percentage, such as 6 of 10 patients (60%) reporting relief.
@@ -27,7 +27,7 @@ In this tutorial, Type I and Type II error probabilities and power describe how 
 
 ## Population, sample and planning values {.core-heading .unnumbered}
 
-The [chronic pain trial](#clinical-question) distinguishes the pilot estimates from the assumptions used for planning.
+The [neuropathic pain trial](#clinical-question) distinguishes the pilot estimates from the assumptions used for planning.
 
 <span id="population-parameter">Population parameter</span>
 : A population parameter is a feature of the population you want to learn about, such as its mean, proportion, or treatment difference.
@@ -36,7 +36,7 @@ The [chronic pain trial](#clinical-question) distinguishes the pilot estimates f
 : A sample estimate is calculated from the observations you obtained. In the pain pilot, 7/10 is a sample proportion, expressed as 70%. The treatment probability of 60% used in the sample size calculation is a planning assumption whose justification should draw on evidence and sensitivity analysis. A proportion such as 7/10 can also be written as 0.70 or expressed as a percentage, 70%.
 
 <span id="expected-difference">Difference observed in previous data</span>
-: The between-group difference calculated from an earlier sample, such as a pilot. It provides evidence for planning, with uncertainty. In the chronic pain pilot, 70% minus 30% gives an observed difference of 40 percentage points.
+: The between-group difference calculated from an earlier sample, such as a pilot. It provides evidence for planning, with uncertainty. In the neuropathic pain pilot, 70% minus 30% gives an observed difference of 40 percentage points.
 
 <span id="target-difference">Target difference</span>
 : The [target difference](#between-group-differences){.no-glossary-tooltip} is the between-group difference used in the sample size calculation, at which you calculate [power](#statistical-power).
@@ -107,7 +107,7 @@ Precision describes how little an estimate varies across repeated samples; estim
 
 ### Sampling variability {#sampling-variability .core-heading .unnumbered}
 
-Sampling variability is the variation between estimates from repeated samples drawn under the same population assumptions. In the chronic pain trial, the population relief probabilities stay fixed while the observed percentages and their difference vary between trials. This differs from variability between individual patients, measured by quantities such as the standard deviation.
+Sampling variability is the variation between estimates from repeated samples drawn under the same population assumptions. In the neuropathic pain trial, the population relief probabilities stay fixed while the observed percentages and their difference vary between trials. This differs from variability between individual patients, measured by quantities such as the standard deviation.
 
 ### Bias {#bias .core-heading .unnumbered}
 

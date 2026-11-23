@@ -23,7 +23,7 @@ pain_report_record <- function() {
     "analyzable_per_group <- ceiling(plan$n)",
     "# Divide by the expected retained fraction to allow for 5% missing outcomes.",
     "recruit_per_group <- ceiling(analyzable_per_group / 0.95)"), collapse = "\n")
-  list(title = "Prepared chronic pain calculation", kind = "calculation", source = "tutorial-example",
+  list(title = "Prepared neuropathic pain calculation", kind = "calculation", source = "tutorial-example",
     captured = format(Sys.time(), "%Y-%m-%dT%H:%M:%SZ", tz = "UTC"),
     facts = list(outcome = "binary", study_type = "comparison", goal = "testing",
       p_treatment = p_novel, p_control = p_standard, alpha = alpha, power = power,

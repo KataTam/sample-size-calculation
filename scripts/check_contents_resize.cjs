@@ -51,7 +51,7 @@ const base=(process.argv[2]||'http://127.0.0.1:8769').replace(/\/$/,'');
   if(!await handle.isVisible())await page.getByRole('link',{name:'Toggle Sidebar',exact:true}).click();
   assert.equal(await width(),420,'Inline activities retain the tutorial contents width');
   await page.goto(base+'/book/feasibility.html');
-  assert(!(await page.locator('section.normal').innerText()).includes('You should keep the chronic pain expected difference'));
+  assert(!(await page.locator('section.normal').innerText()).includes('You should keep the neuropathic pain expected difference'));
   assert.deepEqual(errors,[]);
   console.log('Contents resizing passed: drag, keyboard, limits, navigation, persistence, hide/show, print, night theme, mobile and inline activity navigation.');
  } finally {await browser.close();}

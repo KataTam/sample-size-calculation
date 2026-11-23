@@ -7,10 +7,10 @@ Use the same case and assumptions through the module, [lab](https://katatam.gith
 | Overarching: critically appraise a sample size justification | Review a published calculation or the report-review example | Identify an unsupported assumption, explain its consequences, and justify a revision | 3, 4, 10 |
 | Core: specify the comparison | Use a supplied two-arm case and a power target | PICO question and intended conclusion | 1 |
 | Core: distinguish the roles of differences | Explain the supplied target and clinical judgment | Difference observed in previous data, target difference and clinical threshold, with short justifications | 2 |
-| Core: calculate under explicit methods | Calculate the chronic pain requirement and compare one changed assumption within the existing activity | Original and revised inputs, method, software, reproducible counts and reason for the selected plan | 4 |
+| Core: calculate under explicit methods | Calculate the neuropathic pain requirement and compare one changed assumption within the existing activity | Original and revised inputs, method, software, reproducible counts and reason for the selected plan | 4 |
 | Plan recruitment | Inflate within each arm; discuss missing-data limits | Analyzable and recruitment counts | 5 |
 | Extensions: appraise evidence and explore sensitivity | Justify plausible ranges and compare several scenarios | Sources, relevance, before/after comparison and explanation | 3, 6 |
-| Core: understand power under specified assumptions | Compare one trial, repeated trials and a larger sample in the chronic pain activity | Explanation of fixed population assumptions, changing estimates, sampling variability and power | 7 |
+| Core: understand power under specified assumptions | Compare one trial, repeated trials and a larger sample in the neuropathic pain activity | Explanation of fixed population assumptions, changing estimates, sampling variability and power | 7 |
 | Extensions: evaluate precision | Compare CI width and clinical threshold | Interpretation of three prepared intervals | 8 |
 | Extensions: explain simulation uncertainty | Change B while keeping n fixed; check assumptions and analysis | Monte Carlo interval, seed, generating assumptions and failures | 9 |
 | Extensions: recognize complex testing decisions | Compare success rules and discuss a planned interim look using Chapter 7 | Explanation of required claims, error control, joint power, stopping and re-estimation decisions | Formative chapter check |
@@ -27,7 +27,7 @@ For the core route assess criteria 1, 2, 4, 5, 7 and 10. Evidence appraisal and 
 | Book activity | Outcome and assessment evidence | Rubric |
 |---|---|---|
 | One study and many studies (chapter 1) | Explain sampling variability, testing decisions, and patients per study versus simulation repetitions | 7 |
-| Chronic pain calculation (chapter 2) | Record the inputs, method, software and analyzable counts | 4 |
+| Neuropathic pain calculation (chapter 2) | Record the inputs, method, software and analyzable counts | 4 |
 | Shared-loss recruitment adjustment (chapter 2) | Apply one loss percentage and round per group; distinguish analysis and recruitment counts | 5 |
 | Report review and completion (chapter 3) | Correct four problem areas and review the same elements in the continuing report | 4, 5, 10 |
 | Power curves (chapter 5) | Interpret plausible effects, recruitment cap and fixed-n sensitivity | 5, 6, 10 |

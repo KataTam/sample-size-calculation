@@ -56,9 +56,13 @@ const base=(process.argv[2]||'http://127.0.0.1:8769').replace(/\/$/,'');
   await page.locator('#resume-plan-button').click();await openGroups();
   assert.match(await page.locator('#progress').innerText(),/All 12 prompts answered/);
   for(const name of coreFields)assert.equal(await page.locator('#'+name).inputValue(),'My '+name+' answer');
-  // An advanced link must preserve a saved plan even before the resume prompt is accepted.
+  // An extension link opens its prompts while keeping saved work available for explicit restoration.
   await page.goto(base+'/assumptions_report/?level=advanced&stage=calculation');
   await page.waitForFunction(()=>document.querySelector('[name=plan_level]').value==='advanced');
+  assert.equal(await page.locator('#question').inputValue(),'');
+  assert.equal(await page.locator('#resume-plan').isVisible(),true);
+  await page.locator('#resume-plan-button').click();
+  assert.equal(await page.locator('[name=plan_level]').inputValue(),'advanced');
   assert.equal(await page.locator('#question').inputValue(),'My question answer');
   assert.equal(await page.locator('#evidence_review').inputValue(),'Evidence note to preserve across views');
   assert.equal(await page.locator('#resume-plan').isVisible(),false);

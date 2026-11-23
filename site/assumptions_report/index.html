@@ -11,28 +11,28 @@
   <script src="../app-layout.js" defer></script>
   <script src="../report-exports.js" defer></script>
   <script src="plan-workflow.js" defer></script>
-  <script src="calculation-record.js" defer></script>
+  <script src="calculation-record.js?v=20261123" defer></script>
   <script src="advanced-design.js" defer></script>
-  <script src="report.js" defer></script>
+  <script src="report.js?v=20261123" defer></script>
 <link rel="stylesheet" href="../inline-app.css"><script src="../inline-app-client.js" defer></script></head>
 <body>
   <header>
     <h1>Develop and justify your study plan</h1>
     <details class="activity-description"><summary>Description</summary>
       <p>Your answers develop into a concise sample size calculation report followed by the supporting study plan. The core view contains 12 prompts for a two-group power calculation. You can complete these alongside the four core activities. Detailed study plan adds supporting evidence and alternative scenarios to the same answers.</p>
-      <p>You can start with your own study and empty answers, select the chronic pain example, or resume saved work. Underlined questions offer help; suggested structures and example answers can be opened when needed. Each section can be marked ready for review, and changes to inputs flag affected sections for review.</p>
+      <p>My own study starts with empty answers. Selecting the neuropathic pain example fills in its answers. Saved work can be restored with Resume saved plan. Underlined questions offer help, with suggested structures and example answers available when needed. Each section can be marked ready for review, and changes to inputs flag affected sections for review.</p>
       <p>Preview shows both parts of the report from the same answers. PDF and Word downloads share it with others; “Save work for later” keeps a file you can reopen in this app.</p>
     </details>
     <section id="resume-plan" hidden aria-label="Saved study plan">
-      <p>A saved plan is available in this browser. You can resume it or start a new plan. Editing the title or starting point also resumes your saved answers.</p>
+      <p>A saved plan is available in this browser. Resume saved plan restores its answers. New entries start a new plan.</p>
       <button id="resume-plan-button" type="button">Resume saved plan</button>
       <button id="new-plan-button" type="button" class="secondary-action">Start a new plan</button>
     </section>
     <details id="plan-identity" open><summary>Study title and starting point</summary>
     <section id="plan-start" aria-label="Your developing study plan">
       <label for="plan-title">Study title<input id="plan-title" name="plan_title" form="plan-form" maxlength="200" placeholder="A short title for your study"></label>
-      <label for="plan-basis">Starting point<select id="plan-basis" name="plan_basis" form="plan-form"><option value="own">My own study</option><option value="pain">Chronic-pain teaching example</option></select></label>
-      <button id="example" type="button" hidden>Start the pain-relief plan</button>
+      <label for="plan-basis">Starting point<select id="plan-basis" name="plan_basis" form="plan-form"><option value="own">My own study</option><option value="pain">Neuropathic pain teaching example</option></select></label>
+      <button id="example" type="button" hidden>Reload example answers</button>
     </section></details>
     <details id="advanced-plan"><summary>Detailed study plan</summary><p>Opening this adds detailed PICO, evidence appraisal, sensitivity and feasibility prompts. Under Study settings, you can select design features for additional prompts. Your existing answers and saved calculations are retained in either view.</p></details>
     <nav id="plan-stages" aria-label="Contributions to your study plan"></nav>
@@ -52,7 +52,7 @@
       <button id="download-text" type="button">Download plain text</button>
     </div>
     <p><a href="../book/reporting.html#record-assumptions" target="_blank" rel="noopener">Tutorial guidance</a> · <a href="../book/reporting.html#write-a-sample-size-justification">Annotated report example</a> · <a href="../book/appendix.html#reproducibility-record" target="_blank" rel="noopener">Methods and software to record</a></p>
-    <p class="note">Entries are saved in this browser. Starting the teaching example replaces current entries after confirmation.</p>
+    <p class="note">Entries are saved in this browser. Changing the starting point replaces the current entries. Save work for later keeps a separate copy.</p>
     <p class="note">Your entries should contain hypothetical or non-identifying study details.</p>
     <button id="clear" class="secondary-action" type="button">Clear entries</button>
     </details>

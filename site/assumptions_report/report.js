@@ -45,10 +45,9 @@
   function resumePrompt(saved) {
     pendingSaved = saved;
     document.getElementById('resume-plan').hidden = !saved;
-    document.getElementById('answer-fields').disabled = !!saved;
+    document.getElementById('answer-fields').disabled = false;
     document.getElementById('example').disabled = !!saved;
-    // Identity edits resume the saved answers before changing metadata.
-    if (saved) for (const name of ['plan_title', 'plan_basis']) form.elements[name].value = saved[name];
+    // A previous plan is restored only through the explicit resume action.
     document.getElementById('accept-transfer').disabled = !!saved;
     document.querySelectorAll('#save,#save-word,#download,#download-word,#download-text,#save-work').forEach(el => el.disabled = !!saved);
   }
@@ -333,6 +332,7 @@
   }
   function render(persist = true) {
     const value = snapshot(), article = document.getElementById('report'); article.replaceChildren();
+    document.getElementById('example').hidden = value.plan_basis !== 'pain';
     document.getElementById('advanced-plan').open=value.plan_level==='advanced';
     AdvancedPlan.sync(value);
     const single = value.study_type === 'single';
@@ -410,13 +410,20 @@
     notifyParent('state', {state: value});
   }
   function apply(value, persist = true) { const clean = validate(value); for (const name of names) if (form.elements[name].value !== clean[name]) form.elements[name].value = clean[name]; render(persist); }
-  window.addEventListener('plan-calculation-ready', () => render(false));
+  window.addEventListener('plan-calculation-ready', () => {
+    const value = snapshot();
+    // Complete automatically inserted software details without changing a learner's edit.
+    if (value.plan_basis === 'pain' && value.software === modelAnswers.software) {
+      form.elements.software.value = PlanCalculationRecord.answers(value, examples(value), answerFormats(value)).software;
+      render();
+    } else render(false);
+  });
   window.addEventListener('storage', event => {
     if (event.key !== storageKey || !event.newValue) return;
     try {
       const saved = validate(JSON.parse(event.newValue));
-      if (planActive) { apply(saved, false); status.textContent = 'Your study plan was updated from another open tab.'; }
-      else resumePrompt(saved);
+      if (planActive && saved.plan_basis === snapshot().plan_basis) { apply(saved, false); status.textContent = 'Your study plan was updated from another open tab.'; }
+      else if (!planActive) resumePrompt(saved);
     }
     catch (_) { status.textContent = 'An update from another tab could not be loaded. Your current entries remain in place.'; }
   });
@@ -427,12 +434,12 @@
   }
   form.addEventListener('plan-identity-input', event => {
     const {name, value} = event.detail;
-    if (pendingSaved) {
-      const saved = {...pendingSaved, [name]: value};
-      apply(saved, false);
-      PlanWorkflow.onEdit(name);
-      render();
-      status.textContent = 'Saved plan resumed. Your answers and calculations have been retained.';
+    if (name === 'plan_basis') {
+      if (value === 'pain') loadPainExample();
+      else { apply({}); status.textContent = 'My own study selected. Answers and calculation records are empty.'; }
+    } else if (name === 'plan_level' && !planActive) {
+      // Opening detailed prompts must leave a previous saved plan available.
+      render(false);
     } else { PlanWorkflow.onEdit(name); render(); }
   });
   form.addEventListener('input', event => {
@@ -443,7 +450,7 @@
   document.getElementById('clear').addEventListener('click', () => { if (!confirm('Clear this study plan? Save work for later first if you want to keep it.')) return; apply({}); status.textContent = 'Entries cleared. You can start a new plan.'; });
   const escapeHTML = text => String(text).replace(/[&<>"']/g, c => ({'&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;'}[c]));
   function reportDocument() {
-    const headings = new Set([...groups.map(group => group[0]), 'Section review', 'Prepared chronic pain calculation']);
+    const headings = new Set([...groups.map(group => group[0]), 'Section review', 'Prepared neuropathic pain calculation']);
     const content = reportLines.map(line => {
       const tag=['Sample size calculation report','Supporting study plan'].includes(line)?'h2':
         headings.has(line)||line.startsWith('Saved calculation: ')?'h3':'p';
@@ -495,14 +502,17 @@
     } catch (error) { status.textContent = 'Entries were not changed. ' + error.message; }
     event.target.value = '';
   });
-  document.getElementById('example').addEventListener('click', async () => {
-    if (fields.some(([id]) => form.elements[id].value.trim()) && !confirm('Replace this plan with the partially completed teaching example? Your current entries can be kept with Save work for later.')) return;
-    apply({plan_title:'Neravixa versus duloxetine: chronic pain trial', plan_basis:'pain', study_type:'comparison', outcome:'binary', goal:'testing',
-      question:'Does Neravixa increase the percentage achieving pain relief at four weeks compared with duloxetine in adults with painful diabetic peripheral neuropathy?',
-      population:modelAnswers.population, intervention:modelAnswers.intervention, comparator:modelAnswers.comparator,
-      outcome_detail:modelAnswers.outcome_detail, design:modelAnswers.design});
-    PlanWorkflow.showStage('question');
-    status.textContent='The research question and design are supplied. Later chapters help you justify the assumptions, calculation and recruitment.';
+  function loadPainExample() {
+    const value = validate({plan_title:'Neravixa versus duloxetine: neuropathic pain trial', plan_basis:'pain',
+      study_type:'comparison', outcome:'binary', goal:'testing'});
+    const answers = PlanCalculationRecord.answers(value, examples(value), answerFormats(value));
+    for (const field of fields) if (active(field, value) && answers[field[0]]) value[field[0]] = answers[field[0]];
+    apply(value);
+    status.textContent = 'Neuropathic pain example selected. The example answers are filled in and can be edited.';
+  }
+  document.getElementById('example').addEventListener('click', () => {
+    if (fields.some(([id]) => form.elements[id].value.trim()) && !confirm('Reload the example answers? This replaces your current entries.')) return;
+    loadPainExample();
   });
   window.addEventListener('message', event => {
     if (event.origin !== location.origin || event.source !== parent) return;
@@ -513,7 +523,9 @@
   });
   document.getElementById('resume-plan-button').addEventListener('click', () => {
     if (!pendingSaved) return;
-    apply(pendingSaved); status.textContent = 'Saved entries restored.';
+    const saved = {...pendingSaved};
+    if (new URL(location.href).searchParams.get('level') === 'advanced') saved.plan_level = 'advanced';
+    apply(saved); status.textContent = 'Saved entries restored.';
   });
   document.getElementById('new-plan-button').addEventListener('click', () => {
     if (!confirm('Start a new plan? This replaces the browser copy. Resume and save your earlier work to a file first if you need to keep it.')) return;

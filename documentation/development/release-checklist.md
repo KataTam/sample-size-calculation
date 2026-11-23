@@ -21,7 +21,7 @@ Use this checklist before sharing the resource with students, colleagues, or an 
 - [ ] Confirm whether students need local R/RStudio access or a hosted app link.
 - [ ] If using Shinylive, export and test the apps with `source("scripts/export_shinylive.R")`.
 - [ ] Prepare a non-interactive route for students who cannot run Shiny.
-- [ ] Decide whether students will use the chronic pain case or create their own case.
+- [ ] Decide whether students will use the neuropathic pain case or create their own case.
 - [ ] Provide the student case template and peer review form if using co-creation.
 - [ ] Explain how student cases may or may not be reused.
 - [ ] Review pilot feedback and decide which revisions are needed before wider use.

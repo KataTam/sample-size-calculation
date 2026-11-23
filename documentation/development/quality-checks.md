@@ -67,7 +67,7 @@ Before using the resource in class:
 - choose which app or apps students will use
 - choose the assessment route: short answer, assumptions table, or sample-size justification
 - check that the rubric matches the assessment task
-- decide whether students will use the chronic pain case or create their own cases
+- decide whether students will use the neuropathic pain case or create their own cases
 - prepare a backup route if Shiny is unavailable
 
 In the tutorial, check activity presets against the text, change an app input, then expand, close and reopen the inline app. Confirm that inputs and results remain while the page stays open. Check activity links in prose, the contents and the Activities menu, plus older `/study/` bookmarks. Test dedicated app links, calculator-to-lab transfer, study-plan download/reload and invalid plan handling in the actual browser. Inspect the PDF's first page, tables, plots, code wrapping and page breaks after rendering.

@@ -39,7 +39,7 @@ The main principle is simple: if you change the teaching context, update the exa
 
 ## Adapting Clinical Cases
 
-To replace the chronic pain example:
+To replace the neuropathic pain example:
 
 1. Choose a clinical context students will recognize.
 2. Decide whether the primary outcome is binary or continuous.

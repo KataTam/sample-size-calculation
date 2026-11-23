@@ -1,6 +1,8 @@
-# Case: Chronic Pain Painkiller Study
+<span id="case-chronic-pain-painkiller-study"></span>
 
-This example compares a novel painkiller with standard treatment in patients with chronic pain.
+# Case: Neuropathic pain trial
+
+This example compares a novel painkiller with standard treatment in patients with neuropathic pain.
 
 ## Outcome
 

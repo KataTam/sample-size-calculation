@@ -155,7 +155,7 @@ With 10% switching from novel to standard and 5% in the other direction, the mul
 
 Partial adherence, delayed switching, and switching prompted by poor response need more detailed assumptions. Methods that account for changes in variance and differences between adherence groups are available [@shardell2009].
 
-For binary outcomes, you can recalculate sample size using the revised event percentages. As a separate sensitivity scenario for chronic pain, suppose 60% and 30% describe relief under full adherence. With the switching percentages above, the simplified model gives:
+For binary outcomes, you can recalculate sample size using the revised event percentages. As a separate sensitivity scenario for neuropathic pain, suppose 60% and 30% describe relief under full adherence. With the switching percentages above, the simplified model gives:
 
 \[
 \begin{aligned}
@@ -180,7 +180,7 @@ render_error_activity("recruitment")
 
 The earlier treatment comparisons asked whether a novel treatment improves outcomes. A new treatment may also offer easier administration or fewer adverse effects. You may then want to establish whether it retains sufficient efficacy to be an acceptable alternative to an established treatment. This can motivate a noninferiority trial. An equivalence trial assesses whether the treatments differ only within prespecified, clinically acceptable limits [@schumi2011lookingglass].
 
-The margin defines the boundary used to assess the treatment difference. For noninferiority, it represents the largest acceptable loss of efficacy. Equivalence uses lower and upper boundaries. These margins concern the population-level difference between treatment groups. Their justification should reflect the outcome, follow-up period, clinical consequences, and evidence about the established treatment's benefit. The 20-percentage-point clinical threshold in the chronic pain trial describes a worthwhile improvement; an acceptable loss requires a separate justification [@fda2016noninferiority].
+The margin defines the boundary used to assess the treatment difference. For noninferiority, it represents the largest acceptable loss of efficacy. Equivalence uses lower and upper boundaries. These margins concern the population-level difference between treatment groups. Their justification should reflect the outcome, follow-up period, clinical consequences, and evidence about the established treatment's benefit. The 20-percentage-point clinical threshold in the neuropathic pain trial describes a worthwhile improvement; an acceptable loss requires a separate justification [@fda2016noninferiority].
 
 For an outcome such as pain relief, where higher percentages are better and the difference is novel minus standard treatment, noninferiority requires the lower confidence limit to lie above the prespecified lower boundary. Equivalence requires the entire confidence interval to lie within the two equivalence boundaries. The confidence level should match the planned test and Type I error probability. A nonsignificant superiority result alone cannot establish either conclusion [@piaggio2012consortni].
 
@@ -190,7 +190,7 @@ Sample-size planning should specify both the margin and the assumed true between
 
 ## Multiple outcomes and comparisons {#multiple-outcomes-comparisons .advanced-heading}
 
-The chronic pain calculation assumes one primary comparison at one final assessment. Suppose the study also measures sleep quality and physical function. Before calculating a sample size, your plan should specify which findings would support its main conclusion. [Multiplicity](#multiplicity){.no-glossary-tooltip} concerns the opportunities to make false-positive claims across the planned tests. The success rule determines both error control and the relevant definition of power [@iche91998; @fong2026].
+The neuropathic pain calculation assumes one primary comparison at one final assessment. Suppose the study also measures sleep quality and physical function. Before calculating a sample size, your plan should specify which findings would support its main conclusion. [Multiplicity](#multiplicity){.no-glossary-tooltip} concerns the opportunities to make false-positive claims across the planned tests. The success rule determines both error control and the relevant definition of power [@iche91998; @fong2026].
 
 | Intended conclusion | Testing strategy | What sample size planning should address |
 |:--|:--|:--|
@@ -209,7 +209,7 @@ The [FDA multiple-endpoints guidance](https://www.fda.gov/regulatory-information
 
 An [interim analysis](#interim-analysis){.no-glossary-tooltip} examines accumulating results before the planned final analysis. A trial may have prespecified opportunities to stop for convincing benefit, [futility](#futility){.no-glossary-tooltip} (a low prospect of demonstrating the planned benefit), or safety concerns. Repeated efficacy tests at the usual 5% threshold can increase the overall false-positive probability. A [group-sequential design](#group-sequential-design){.no-glossary-tooltip} accounts for the planned analyses and stopping opportunities [@iche91998].
 
-For the chronic pain trial, an interim efficacy analysis after some participants complete four-week follow-up would change the design used for the original calculation. The plan should identify when analyses occur, which results could trigger a recommendation to stop, and who reviews the unblinded results. Timing may use an information fraction, meaning the share of the planned statistical information available. For time-to-event outcomes, this often depends on observed events. A statistician can specify suitable boundaries, for example using an alpha-spending approach that allocates the overall Type I error probability across analyses [@iche91998; @fdaadaptive2019].
+For the neuropathic pain trial, an interim efficacy analysis after some participants complete four-week follow-up would change the design used for the original calculation. The plan should identify when analyses occur, which results could trigger a recommendation to stop, and who reviews the unblinded results. Timing may use an information fraction, meaning the share of the planned statistical information available. For time-to-event outcomes, this often depends on observed events. A statistician can specify suitable boundaries, for example using an alpha-spending approach that allocates the overall Type I error probability across analyses [@iche91998; @fdaadaptive2019].
 
 Recruitment planning should distinguish the maximum sample size from the expected sample size under different population scenarios. Early stopping may reduce expected recruitment; the maximum required sample can exceed that of a comparable design with only a final analysis. Safety monitoring also requires clinical judgment, and stopping guidelines should support the agreed review process. An independent data monitoring committee may review unblinded evidence while protecting trial conduct [@iche91998].
 

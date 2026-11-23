@@ -112,7 +112,7 @@
     {
       "id": "C016",
       "level": "core",
-      "front": "In the Neravixa–duloxetine chronic pain trial, what are the pilot difference, target difference and clinical threshold?",
+      "front": "In the Neravixa–duloxetine neuropathic pain trial, what are the pilot difference, target difference and clinical threshold?",
       "back": "The pilot observed 70% versus 30% relief: a 40-percentage-point difference. Planning assumes 60% versus 30%: a 30-point target difference. The clinical threshold is 20 points, reflecting the extra monitoring burden and potential harm.",
       "source": "https://katatam.github.io/sample-size-calculation/book/clinical-question.html"
     },
@@ -301,7 +301,7 @@
     {
       "id": "C043",
       "level": "core",
-      "front": "What sample size does the Neravixa–duloxetine chronic pain calculation give?",
+      "front": "What sample size does the Neravixa–duloxetine neuropathic pain calculation give?",
       "back": "With 60% versus 30% relief, a two-sided Type I error probability of 5%, and 90% target power, the tutorial's normal approximation gives 56 analyzable patients per group: 112 total.",
       "source": "https://katatam.github.io/sample-size-calculation/book/calculations.html"
     },

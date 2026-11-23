@@ -6,7 +6,7 @@
     "route": "Core material",
     "activities": [
       {
-        "label": "Chronic pain: one study and many studies",
+        "label": "Neuropathic pain: one study and many studies",
         "path": "book/clinical-question.html#activity-pain_one_many",
         "route": "Core material",
         "section": "activity-1-one-study-then-many"
@@ -20,7 +20,7 @@
     "route": "Core material",
     "activities": [
       {
-        "label": "Calculate a sample size: chronic pain",
+        "label": "Calculate a sample size: neuropathic pain",
         "path": "book/calculations.html#calculate-sample-size",
         "route": "Core material",
         "section": "two-proportions"
@@ -106,7 +106,7 @@
     "route": "Extensions",
     "activities": [
       {
-        "label": "Simulate repeated chronic-pain trials",
+        "label": "Simulate repeated neuropathic pain trials",
         "path": "book/simulation.html#activity-pain_simulation",
         "route": "Extensions",
         "section": "activity-3-generate-analyze-repeat-summarize"

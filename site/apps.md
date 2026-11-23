@@ -12,7 +12,7 @@ Calculators and simulations also open within the tutorial when you select their 
 
 - [Study plan](assumptions_report/): develop a PICO question and justify the calculation and recruitment plan. The short core view and expanded detailed view use one set of answers, producing a concise sample size calculation report followed by the supporting study plan.
 
-- [Sample size reasoning lab](power_explorer/?activity=pain_one_many): simulate patient outcomes and compare results across studies. [Activity: Chronic pain: one study and many studies](book/clinical-question.html#activity-pain_one_many).
+- [Sample size reasoning lab](power_explorer/?activity=pain_one_many): simulate patient outcomes and compare results across studies. [Activity: Neuropathic pain: one study and many studies](book/clinical-question.html#activity-pain_one_many).
 
 - [Two-proportion calculator](two_proportions/): calculate sample size for a difference between two event percentages. [Tutorial explanation](book/calculations.html#two-proportions).
 
@@ -20,7 +20,7 @@ Calculators and simulations also open within the tutorial when you select their 
 
 - [Recruitment adjustment](book/calculations.html#activity-recruitment): apply one expected loss percentage to the analyzable count from your chosen calculation. [Tutorial explanation](book/calculations.html#account-for-expected-losses).
 
-The core [calculation activity](book/calculations.html#calculate-sample-size) uses the chronic pain example. [Probiotics](book/calculations.html#adherence) and the [rehabilitation calculation](book/calculations.html#rehabilitation) provide optional practice applying the calculations to other outcomes. The fourth core activity is the embedded [report review and completion](book/reporting.html#check-reporting).
+The core [calculation activity](book/calculations.html#calculate-sample-size) uses the neuropathic pain example. [Probiotics](book/calculations.html#adherence) and the [rehabilitation calculation](book/calculations.html#rehabilitation) provide optional practice applying the calculations to other outcomes. The fourth core activity is the embedded [report review and completion](book/reporting.html#check-reporting).
 
 <span id="explore-further"></span>
 
@@ -34,7 +34,7 @@ The core [calculation activity](book/calculations.html#calculate-sample-size) us
 
 - [Mean estimation](power_explorer/?activity=mean_precision): calculate a sample size for a useful confidence-interval width and examine intervals across simulated studies. [Tutorial explanation](book/estimation-planning.html#plan-for-precision).
 
-- [Sample size reasoning lab](power_explorer/?activity=pain_simulation): simulate how treatment estimates, confidence intervals, and detection probabilities change under different assumptions and missing-outcome scenarios. [Activity: Simulate repeated chronic-pain trials](book/simulation.html#activity-pain_simulation).
+- [Sample size reasoning lab](power_explorer/?activity=pain_simulation): simulate how treatment estimates, confidence intervals, and detection probabilities change under different assumptions and missing-outcome scenarios. [Activity: Simulate repeated neuropathic pain trials](book/simulation.html#activity-pain_simulation).
 
 - [Estimate a population percentage](prevalence_precision/): calculate sample size for a chosen confidence interval width, or assess the anticipated width for an available sample. [Activity: Estimate a percentage with useful precision](book/estimation-planning.html#activity-prevalence).
 

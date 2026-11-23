@@ -10,14 +10,14 @@ In the reasoning lab, planning tables and curves update when inputs change. Simu
 
 The difference observed in previous data records a sample result that can inform planning, with uncertainty. It can equal the target difference or clinical threshold; the three roles have no fixed numerical order and each needs justification. With “Same as planning assumptions” selected, the simulations use the target difference and planning event probabilities. A custom population scenario lets you examine another true difference without changing the original plan. All treatment differences here are between-group differences.
 
-The chronic pain case compares fictional Neravixa with duloxetine for painful diabetic peripheral neuropathy. Each patient contributes one four-week outcome: achieved pain relief or did not achieve pain relief. The pilot remains 7 of 10 versus 3 of 10; the calculation uses population assumptions of 60% versus 30%. Selecting a calculator or simulation preview opens the app within the chapter. Its main controls sit above the figure, and the result text updates with the calculation. A link underneath opens the app on its own page. Closing and reopening an embedded app preserves its inputs during that page visit.
+The neuropathic pain case compares fictional Neravixa with duloxetine for painful diabetic peripheral neuropathy. Each patient contributes one four-week outcome: achieved pain relief or did not achieve pain relief. The pilot remains 7 of 10 versus 3 of 10; the calculation uses population assumptions of 60% versus 30%. Selecting a calculator or simulation preview opens the app within the chapter. Its main controls sit above the figure, and the result text updates with the calculation. A link underneath opens the app on its own page. Closing and reopening an embedded app preserves its inputs during that page visit.
 
 ## The four-activity core route
 
 | Chapter | Core activity | Contribution to the continuing report |
 |---|---|---|
-| 1. Research question and power | [Chronic pain: one study and many studies](../book/clinical-question.html#activity-pain_one_many) | Question, assumptions and interpretation of power |
-| 2. Calculating sample size and recruitment | [Calculate a sample size: chronic pain](../book/calculations.html#calculate-sample-size) | Inputs, procedure, software and analyzable counts |
+| 1. Research question and power | [Neuropathic pain: one study and many studies](../book/clinical-question.html#activity-pain_one_many) | Question, assumptions and interpretation of power |
+| 2. Calculating sample size and recruitment | [Calculate a sample size: neuropathic pain](../book/calculations.html#calculate-sample-size) | Inputs, procedure, software and analyzable counts |
 | 2. Calculating sample size and recruitment | [Adjust recruitment](../book/calculations.html#activity-recruitment) using one shared loss percentage | Recruitment per group and in total, with a short justification |
 | 3. The sample size calculation report | [Review and complete a report](../book/reporting.html#check-reporting) | Four-error review followed by a consistency check of the learner's report |
 
@@ -25,13 +25,13 @@ Your report develops through these four activities in the same [study-plan works
 
 For a project using Extensions, *Study settings* includes design features that reveal relevant questions about clusters, repeated measurements, survival outcomes, margins, multiple claims, interim decisions or simulation. The calculation and software fields can record results from an external method. These answers appear in the calculation report and supporting study plan and are retained in saved work.
 
-The chronic pain example connects the core simulation, calculation, recruitment adjustment and annotated report. Optional examples apply the method to a different outcome; any report based on one of them should retain that example throughout.
+The neuropathic pain example connects the core simulation, calculation, recruitment adjustment and annotated report. Optional examples apply the method to a different outcome; any report based on one of them should retain that example throughout.
 
 ## Reports and saved work
 
 “Report” previews the current calculation and any answers you have entered. In the reasoning lab, it also identifies the selected example, feasibility and simulation assumptions. Expandable example answers update with the example and parameters; only your entered responses appear as answers in the report. Your writing is preserved when settings change and should be reviewed against the new results.
 
-The apps remember edited inputs in the same browser. After reopening an app, “Help and saved inputs” offers “Restore previous inputs.” Simulations need to be run again with the restored settings. The study-plan activity opens with empty answers and the core two-group power settings; “Resume saved plan” restores your earlier work. Editing its title or starting point also resumes the saved answers and calculations. Quizzes restore their saved attempts automatically. A downloaded work file provides a backup or lets you continue on another computer.
+The apps remember edited inputs in the same browser. After reopening an app, “Help and saved inputs” offers “Restore previous inputs.” Simulations need to be run again with the restored settings. The study-plan activity defaults to “My own study” with empty answers and the core two-group power settings. “Resume saved plan” explicitly restores earlier work. Selecting the neuropathic pain example fills in its answers, while selecting “My own study” clears the example and its calculation records. Quizzes restore their saved attempts automatically. A downloaded work file provides a backup or lets you continue on another computer.
 
 The reasoning lab and single-percentage app omit saved simulation results from the report when their settings or example no longer match. A message explains which simulation needs rerunning. While the app remains open, its simulation panels and CSV downloads retain the original run and its recorded assumptions until another run replaces it. A downloaded file is a snapshot; after revising your plan, you should save a new report.
 
@@ -49,7 +49,7 @@ The reasoning lab and single-percentage app omit saved simulation results from t
 
 [Open your plan](../assumptions_report/?stage=question) · [Matching explanation](../book/reporting.html#record-assumptions)
 
-1. Your starting point can be your own study or the chronic-pain teaching example. A study title identifies the plan. Answers start empty. “Suggested structure” gives a framework for your own study. Selecting the teaching case shows its example answers; “Start the pain-relief plan” supplies the question and design when you choose it.
+1. “My own study” is the default, with empty answers. “Suggested structure” gives a framework for your responses. Selecting the neuropathic pain teaching example fills in its answers, including the calculation and recruitment assumptions. These answers can be edited. Switching back to “My own study” starts an empty plan.
 2. Chapters 1–2 explain the question and power, calculation, and recruitment. Chapter 3 brings together the reporting guidance, checklist and complete example. You can record decisions in the same activity throughout and review the complete report in Chapter 3.
 3. In the core view, short explanations of the supplied assumptions are sufficient. Each section's “Ready for review” checkbox becomes available when its visible questions are answered. The detailed view adds evidence appraisal, plausible ranges, sensitivity scenarios and feasibility details; its completion checks include those extra prompts.
 4. In an app’s Report view, “Add this calculation to my study plan” opens a preview of the current inputs, result and method. You choose whether to attach it and whether to replace an earlier result of that type. Your written answers remain in place; affected sections are marked for another review.
@@ -57,9 +57,11 @@ The reasoning lab and single-percentage app omit saved simulation results from t
 6. The preview and PDF/Word downloads start with a concise sample size calculation report, followed by the supporting study plan, section review and attached results. Both parts update from the same answers; example hints are included only if you use them in an answer. “Save work for later” preserves the editable app state. Entries also persist in the same browser; the saved file supports another computer. The plan is complete for the core assignment when its applicable decisions and calculation have been reviewed. Activities in Extensions can extend it when relevant.
 
 
-The [annotated report in Chapter 3](../book/reporting.html#write-a-sample-size-justification) shows the completed two-proportion calculation. The chronic pain example uses 5% expected missing primary outcomes: 56 analyzable patients and 59 recruits per group, or 118 recruits total. Selecting this example makes its prepared calculation and software record available under the software question. Attached calculator results retain their own inputs and runtime versions; example answers for calculation fields follow that selected result. Your written answers should be reviewed when the calculation changes.
+The [annotated report in Chapter 3](../book/reporting.html#write-a-sample-size-justification) shows the completed two-proportion calculation. The neuropathic pain example uses 5% expected missing primary outcomes: 56 analyzable patients and 59 recruits per group, or 118 recruits total. Selecting this example makes its prepared calculation and software record available under the software question. Attached calculator results retain their own inputs and runtime versions; example answers for calculation fields follow that selected result. Your written answers should be reviewed when the calculation changes.
 
-## Chronic pain: one study and many studies — core
+<span id="chronic-pain-one-study-and-many-studies--core"></span>
+
+## Neuropathic pain: one study and many studies — core
 
 [Open activity](../book/clinical-question.html#activity-pain_one_many) · [Matching explanation](../book/clinical-question.html#activity-1-one-study-then-many)
 
@@ -102,13 +104,15 @@ Purpose: connect false positives, false negatives and power with the distributio
 
 Purpose: reproduce the binary-outcome sample size calculation. The calculator uses a normal approximation.
 
-1. For the chronic pain example, you can enter 60% and 30%, Type I error probability 5%, target power 90% and initially no losses.
+1. For the neuropathic pain example, you can enter 60% and 30%, Type I error probability 5%, target power 90% and initially no losses.
 2. The result is 56 analyzable patients per group. The total and any recruitment adjustment have different denominators and should be recorded separately.
 3. Changing one input at a time shows how the required sample responds. The opening curve marks your current target difference and analyzable count per group. Adding expected losses changes the main result to recruitment per group, with the analyzable requirement retained below it.
 4. The link to the lab transfers this calculated count as a fixed sample. “Many studies” then lets you estimate the performance of the planned test through simulation and compare the estimated power with the planning target.
 5. “Explore assumptions” lets you compare a revised event percentage. “Report” includes both scenarios when they differ, together with their analyzable and recruitment counts and calculation method.
 
-## Calculate a sample size: chronic pain
+<span id="calculate-a-sample-size-chronic-pain"></span>
+
+## Calculate a sample size: neuropathic pain
 
 [Open activity](../book/calculations.html#activity-pain_calculation) · [Matching explanation](../book/calculations.html#calculate-sample-size)
 
@@ -155,7 +159,9 @@ The [rehabilitation simulation](../power_explorer/?activity=rehabilitation) uses
 
 <span id="chronic-pain-power-and-recruitment--advanced"></span>
 
-## Chronic pain: power and recruitment — Extensions
+<span id="chronic-pain-power-and-recruitment--extensions"></span>
+
+## Neuropathic pain: power and recruitment — Extensions
 
 [Open activity](../book/curves.html#activity-pain_curves) · [Power curves](../book/curves.html#activity-2-can-the-feasible-study-answer-the-question) · [Available sample and feasibility](../book/curves.html#available-sample)
 
@@ -169,7 +175,9 @@ Purpose: assess whether the feasible study can answer the intended question unde
 
 <span id="repeated-chronic-pain-trials--advanced"></span>
 
-## Repeated chronic-pain trials — Extensions
+<span id="repeated-chronic-pain-trials--extensions"></span>
+
+## Repeated neuropathic pain trials — Extensions
 
 [Open activity](../book/simulation.html#activity-pain_simulation) · [Matching explanation](../book/simulation.html#activity-3-generate-analyze-repeat-summarize)
 
@@ -196,8 +204,8 @@ The simulation above uses one final analysis. For a design with interim stopping
 
 [Open activity](../book/calculations.html#activity-recruitment) · [Matching explanation](../book/calculations.html#account-for-expected-losses)
 
-1. The starting count should be the analyzable requirement per group from your chosen calculation. The app opens with the chronic pain example of 56 per group; you can replace that count with your selected result.
-2. One expected loss percentage applies to both groups. For the chronic pain example, 5% expected loss gives 56 / 0.95, rounded upward to 59 recruits per group and 118 total.
+1. The starting count should be the analyzable requirement per group from your chosen calculation. The app opens with the neuropathic pain example of 56 per group; you can replace that count with your selected result.
+2. One expected loss percentage applies to both groups. For the neuropathic pain example, 5% expected loss gives 56 / 0.95, rounded upward to 59 recruits per group and 118 total.
 3. Your explanation should identify the starting count, expected retained percentage, recruitment count and basis for the loss assumption. Actual retention can vary, and missing outcomes also need prevention and an appropriate analysis.
 4. In “Report,” the calculation and your explanation can be added to the continuing study plan. Its review checks compare the starting count with the attached sample size calculation.
 

@@ -58,7 +58,7 @@ ui <- fluidPage(
       percent_slider("expected_p", "Difference observed in previous data (percentage points)", value = .4, min = -1, max = 1, step = .01, suffix = " percentage points"),
       percent_slider("plan_p0", "Standard treatment: event probability used for planning (%)", .01, .99, .3, step = .01),
       percent_slider("plan_p1", "Novel treatment: event probability used for planning (%)", .01, .99, .6, step = .01),
-      activity_help("Record a treatment-minus-control difference observed in earlier data, in percentage points. In the chronic pain pilot this was 40 points. Its relevance and uncertainty inform the target chosen below.", for_input = "expected_p"),
+      activity_help("Record a treatment-minus-control difference observed in earlier data, in percentage points. In the neuropathic pain pilot this was 40 points. Its relevance and uncertainty inform the target chosen below.", for_input = "expected_p"),
       activity_help("Use evidence for the same favorable event, population, and follow-up time. This percentage sets the baseline for the comparison.", for_input = "plan_p0"),
       activity_help("Its difference from the standard-treatment percentage sets the target difference. Both groups should use the same favorable-event definition and follow-up time.", for_input = "plan_p1"),
       tagList(
