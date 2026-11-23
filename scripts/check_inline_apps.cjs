@@ -31,6 +31,12 @@ const base=(process.argv[2]||'http://127.0.0.1:8769').replace(/\/$/,'');
    const settle=async()=>{await page.waitForTimeout(500);await app.waitForFunction(()=>!document.documentElement.classList.contains('shiny-busy'));await page.waitForTimeout(350);};
    const dimensions=async()=>{
     await settle();
+    // Shiny output and the debounced resize message can finish after the pause.
+    // Wait for the outer frame to reflect the current content before measuring.
+    await app.waitForFunction(()=>{
+     const content=document.querySelector('body > .container-fluid').getBoundingClientRect().bottom+scrollY;
+     return innerHeight>=content-2 && innerHeight<=content+25;
+    },null,{timeout:10000});
     const size=await app.evaluate(()=>({content:document.querySelector('body > .container-fluid').getBoundingClientRect().bottom+scrollY,
      height:innerHeight,width:innerWidth,scroll:document.documentElement.scrollWidth}));
     assert(size.height>=size.content-2,JSON.stringify(size));
