@@ -76,7 +76,7 @@ $$
 \text{Design effect}=1+(m-1)\rho,
 $$
 
-where $m$ is the number of participants per cluster and $\rho$ is the [intracluster correlation coefficient (ICC)](#intracluster-correlation). For example, with 20 participants per cluster and an ICC of 0.05, the design effect is $1.95$. An initial calculation based on independent participants would therefore be multiplied by approximately 1.95. For an initial requirement of 200 participants in total, this gives 390; with 20 patients per clinic, a plan with 20 clinics would recruit 400 patients. This is a starting approximation; the final calculation should also account for the number of clusters, unequal cluster sizes, and the planned analysis [@hayes1999].
+where $m$ is the number of participants per cluster and $\rho$ (rho) is the [intracluster correlation coefficient (ICC)](#intracluster-correlation). For example, with 20 participants per cluster and an ICC of 0.05, the design effect is $1.95$. An initial calculation based on independent participants would therefore be multiplied by approximately 1.95. For an initial requirement of 200 participants in total, this gives 390; with 20 patients per clinic, a plan with 20 clinics would recruit 400 patients. This is a starting approximation; the final calculation should also account for the number of clusters, unequal cluster sizes, and the planned analysis [@hayes1999].
 
 ### Treatment assigned within participants {.advanced-heading}
 
@@ -114,7 +114,7 @@ Treatment discontinuation and loss to follow-up should be recorded separately. W
 
 For example, the neuropathic pain trial could continue four-week assessments after treatment switching. If relief is unrecorded, a prespecified multiple imputation analysis might use treatment group, baseline severity and other relevant information to generate plausible missing values under stated assumptions. A sensitivity analysis could then examine less favourable relief outcomes among those with missing assessments. The protocol and SAP should justify those assumptions and specify the actual models and alternatives [@little2012missing].
 
-Your sample size assumptions should reflect the treatment changes expected in your study and the treatment effect you intend to estimate. Suppose the assumed 60% relief with Neravixa and 30% with duloxetine describe outcomes among patients assigned to each treatment, including expected missed doses, treatment changes and rescue medication. These assumptions already reflect those events. Applying another adjustment for the same changes would reduce the difference a second time and inflate the required sample again.
+Your sample size assumptions should reflect the treatment changes expected in your study and the treatment effect you intend to estimate. Suppose the assumed 60% relief with neravixa and 30% with duloxetine describe outcomes among patients assigned to each treatment, including expected missed doses, treatment changes and rescue medication. These assumptions already reflect those events. Applying another adjustment for the same changes would reduce the difference a second time and inflate the required sample again.
 
 If the percentages instead describe full adherence, expected treatment changes should be considered when deriving the randomized-group assumptions. The [switching example](#treatment-switching) illustrates this calculation. A separate allowance for unavailable four-week outcomes concerns whether the outcome is measured [@iche9r1]. Table \@ref(tab:anticipated-events) summarizes the implications of common events.
 
@@ -178,7 +178,7 @@ The resulting between-group difference is 25.5 percentage points. The [two-propo
 
 In the [recruitment extension](https://katatam.github.io/sample-size-calculation/book/study-designs.html#activity-recruitment_advanced), the switching calculation starts with a sample size that assumes full adherence. A separate loss allowance then reflects expected outcome completeness. Intermediate values remain unrounded until the final recruitment count. For example, starting with 100 per group, the switching assumptions above and 5% missing outcomes in both groups gives $\lceil100/(0.85^2\times0.95)\rceil=146$ recruits per group. With unequal losses, equal recruitment uses the larger requirement for both groups.
 
-Your report should document the switching assumptions, their evidence, the method used, and sensitivity to alternative assumptions. The downloadable app report includes these calculation steps and your written justification; the [reproducibility chapter](#tutorial-methods) explains the procedures.
+Your report should document the switching assumptions, their evidence, the method used, and sensitivity to alternative assumptions. The downloadable app report includes these calculation steps and your written justification; the [methods section](#tutorial-methods) explains the procedures.
 
 </details>
 

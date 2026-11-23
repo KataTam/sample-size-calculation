@@ -36,6 +36,12 @@ check_simulation <- function() {
   exact_cover <- sum(weights * (result$lower <= p1-p0 & result$upper >= p1-p0))
   sparse <- simulate_trials(study_spec(outcome = "proportions", n = n,
     p_control = p0, p_treatment = p1, B = 50000))
+  stopifnot(isTRUE(all.equal(sparse$illustrated_trial$result,
+                            sparse$results[1, , drop=FALSE])))
+  first_counts <- tapply(sparse$illustrated_trial$data$outcome,
+                         sparse$illustrated_trial$data$group, sum)
+  stopifnot(abs((first_counts['Treatment']-first_counts['Control'])/n -
+                 sparse$results$estimate[1]) < 1e-12)
   stopifnot(abs(mean(sparse$results$reject) - exact_reject) < .015,
             abs(mean(sparse$results$cover) - exact_cover) < .015)
   rows <- list()

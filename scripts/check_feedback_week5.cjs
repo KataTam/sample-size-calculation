@@ -10,8 +10,8 @@ const bank=JSON.parse(fs.readFileSync('site/quiz/questions.json','utf8'));
   // A deterministic shuffle prevents a chance unchanged order making this check flaky.
   await page.addInitScript(()=>{Math.random=()=>0;});
   await page.goto(base+'/book/estimation-planning.html',{waitUntil:'networkidle'});
-  assert.equal(await page.locator('.sidebar-core').count(),3);
-  assert.equal(await page.locator('.sidebar-extension').count(),5);
+  assert.equal(await page.locator('.sidebar-core').count(),0);
+  assert.equal(await page.locator('.sidebar-extension').count(),0);
   const local=await page.locator('.page-inner a[href]').evaluateAll(xs=>xs.filter(a=>{const u=new URL(a.href);return u.pathname===location.pathname&&u.hash.startsWith('#fig:')}).map(a=>({href:a.getAttribute('href'),target:a.target,label:a.getAttribute('aria-label')})));
   assert(local.length>0,'Chapter has figure references');
   assert(local.every(a=>!a.target&&!/opens in a new tab/.test(a.label||'')));

@@ -10,7 +10,7 @@ const base=(process.argv[2]||'http://127.0.0.1:8769').replace(/\/$/,'');
   // Routing/preview checks do not need to start a WebR session.
   await context.route('**/power_explorer/**',route=>route.fulfill({contentType:'text/html',body:'<!doctype html><title>App routing fixture</title>'}));
   await page.goto(base+'/book/clinical-question.html');
-  assert.match(await page.locator('.page-inner').innerText(),/Neravixa/);
+  assert.match(await page.locator('.page-inner').innerText(),/neravixa/);
   assert.match(await page.locator('#tab\\:pain-pico').evaluate(el=>el.closest('table').innerText),/diabetes mellitus/);
   assert.equal(await page.locator('.app-preview iframe').count(),0);
   assert.equal(await page.locator('.app-preview pre').count(),0,'Preview markup renders as content');

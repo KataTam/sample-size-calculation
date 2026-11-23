@@ -14,67 +14,18 @@
   function draw(progress) {
     if(data && el('journey-reading')) {
       const t=data.trials[index],labels=data.labels||['Standard','Novel'];
-      el('journey-reading').textContent=`Trial ${index+1}: ${t.counts[0]} of ${data.n} patients ${data.event || "had the event"} with ${labels[0]} (${pct(t.counts[0]/data.n)}), compared with ${t.counts[1]} of ${data.n} with ${labels[1]} (${pct(t.counts[1]/data.n)}). The observed difference is ${Math.round(t.estimate*1000)/10} percentage points. The pink dot carries that estimate to the lower graph. The accumulated dots show trial-to-trial variation around the assumed population difference of ${Math.round((data.p1-data.p0)*1000)/10} points.`;
+      el('journey-reading').textContent=`Trial ${index+1}: ${t.counts[0]} of ${data.n} patients ${data.event || "had the event"} with ${labels[0]} (${pct(t.counts[0]/data.n)}), compared with ${t.counts[1]} of ${data.n} with ${labels[1]} (${pct(t.counts[1]/data.n)}). The observed difference is ${Math.round(t.estimate*1000)/10} percentage points. ${data.batch ? `The lower graph contains all ${data.batch.estimates.length} estimates in this batch, including this first trial.` : 'The pink dot carries that estimate to the lower graph. Each accumulated dot represents one trial.'} Both use the same difference scale and the same population difference of ${Math.round((data.p1-data.p0)*1000)/10} points.`;
     }
 
     const host = el('sampling-journey'); if (!host || !data) return;
-    if(document.documentElement.classList.contains('tutorial-embedded')) { drawInline(host, progress); return; }
-    host.replaceChildren();
-    const rows = Math.ceil(Math.min(data.n,80)/16);
-    const endPatients = 110 + (rows-1)*16, heading2 = endPatients+40, axis1 = heading2+80;
-    const heading3 = axis1+52, axis2 = heading3+115, footer = axis2+48;
-    const svg = node(host,'svg',{viewBox:`0 0 500 ${footer+30}`,role:'img','aria-label':'Patient outcomes, estimated difference and accumulated trial estimates'});
-    const t = data.trials[index], reduced = el('journey-motion').checked;
-    const counts = t.counts;
-    const labels = data.labels || ['Standard', 'Novel'];
-    node(svg,'text',{x:15,y:23},`Population: ${labels[0]} ${pct(data.p0)}; ${labels[1]} ${pct(data.p1)}`);
-    node(svg,'text',{x:15,y:47},`1. Patient outcomes · trial ${index+1} of ${data.trials.length}`);
-    node(svg,'text',{x:15,y:endPatients},`${data.n} patients per group`);
-    [t.control,t.treatment].forEach((values,g) => {
-      const x0 = 20 + g*245, color = g ? '#984b87' : '#19738c';
-      node(svg,'text',{x:x0,y:73},`${labels[g]}: ${counts[g]}/${data.n} (${pct(counts[g]/data.n)})`);
-      values.slice(0,80).forEach((v,i) => node(svg,'circle',{
-        cx:x0+7+(i%16)*13,cy:94+Math.floor(i/16)*16,r:4.5,
-        fill:v?color:'white',stroke:color,'stroke-width':1.5}));
-    });
-    if(data.n>80) node(svg,'text',{x:15,y:endPatients+17},'First 80 shown per group; counts include everyone.');
-    node(svg,'path',{d:`M250 ${endPatients+8} L250 ${heading2-14} M244 ${heading2-20} L250 ${heading2-14} L256 ${heading2-20}`,fill:'none',stroke:'#64748b','stroke-width':2});
-    node(svg,'text',{x:15,y:heading2},'2. Estimated difference in this trial');
-    node(svg,'text',{x:15,y:heading2+23},`Estimated difference: ${pct(counts[1]/data.n)} − ${pct(counts[0]/data.n)}`);
-    node(svg,'text',{x:15,y:heading2+44},`= ${Math.round(t.estimate*1000)/10} percentage points (${labels[1]} − ${labels[0]})`);
-    [axis1,axis2].forEach(y => {
-      node(svg,'line',{x1:45,x2:455,y1:y,y2:y,stroke:'#64748b'});
-      [-1,-.5,0,.5,1].forEach(v => node(svg,'text',{x:point(v),y:y+19,'text-anchor':'middle'},v*100));
-    });
-    node(svg,'text',{x:15,y:heading3},'3. The same estimate joins earlier trials');
-    const bins = {}, positions=[];
-    for(let i=0;i<=index;i++) {
-      const v=data.trials[i].estimate, key=Math.round(v*1000000);
-      const level=bins[key]||0;bins[key]=level+1;
-      positions.push({x:point(v),y:axis2-10-level*4});
-    }
-    for(let i=0;i<index;i++) node(svg,'circle',{cx:positions[i].x,cy:positions[i].y,r:3,fill:'#546378'});
-    const truth=point(data.p1-data.p0);
-    [axis1,axis2].forEach(y => node(svg,'line',{x1:truth,x2:truth,y1:y-55,y2:y,stroke:'#17734c','stroke-dasharray':'4 3'}));
-    node(svg,'text',{x:15,y:footer},`Dashed line: assumed population difference ${Math.round((data.p1-data.p0)*1000)/10} points`);
-    node(svg,'text',{x:15,y:heading3+20},'Each dot is one trial. Both axes show percentage points.');
-    node(svg,'text',{x:15,y:footer+22},'Pink dot: the current trial’s estimated difference');
-    const x=point(t.estimate), destination=positions[index].y;
-    node(svg,'line',{x1:x,x2:x,y1:axis1,y2:destination,stroke:'#b53c69','stroke-width':2,'stroke-dasharray':'3 5',opacity:.45});
-    node(svg,'path',{d:`M${x-5} ${destination-10} L${x} ${destination-3} L${x+5} ${destination-10}`,fill:'none',stroke:'#b53c69','stroke-width':2});
-    node(svg,'circle',{cx:x,cy:axis1,r:6,fill:'white',stroke:'#b53c69','stroke-width':2});
-    node(svg,'circle',{cx:x,cy:destination,r:6,fill:'white',stroke:'#b53c69','stroke-dasharray':'2 2'});
-    node(svg,'text',{x:Math.max(65,Math.min(435,x)),y:axis1-12,'text-anchor':'middle'},`${Math.round(t.estimate*1000)/10} points`);
-    const phase = Math.max(0,Math.min(1,(progress-.35)/.5));
-    const moving = reduced ? (progress<.85?0:1) : phase*phase*(3-2*phase);
-    node(svg,'circle',{cx:point(t.estimate),'data-moving-estimate':'true',cy:axis1+(positions[index].y-axis1)*moving,r:5,fill:'#b53c69',stroke:'#fff','stroke-width':1});
+    drawInline(host, progress);
   }
   const measureText = document.createElement('canvas').getContext('2d');
   function drawInline(host, progress) {
     // Native-size lettering and wrapped labels keep the chart readable in a
     // narrow chapter column. Both estimate axes always use the same scale.
     host.replaceChildren();
-    const width=Math.max(250,Math.floor(host.clientWidth)), t=data.trials[index];
+    const width=Math.max(250,Math.floor(Math.min(760, host.clientWidth))), t=data.trials[index];
     const labels=data.labels || ['Standard','Novel'], at=x=>38+(x+1)*(width-76)/2;
     const svg=node(host,'svg',{viewBox:`0 0 ${width} 500`,role:'img','aria-label':'Patient outcomes, estimated difference and accumulated trial estimates'});
     function text(text,x,y,available=width-24) {
@@ -88,7 +39,7 @@
       node(svg,'text',{x,y,style:'font-size:14px'},line); return y;
     }
     let y=text(`Population: ${labels[0]} ${pct(data.p0)}; ${labels[1]} ${pct(data.p1)}`,12,22);
-    y=text(`1. Patient outcomes · trial ${index+1} of ${data.trials.length}`,12,y+26);
+    y=text(`1. Patient outcomes · trial ${index+1} of ${data.batch ? data.batch.estimates.length : data.trials.length}`,12,y+26);
     const cols=Math.max(7,Math.min(16,Math.floor((width/2-30)/13))), rows=Math.ceil(Math.min(data.n,80)/cols);
     const top=y+24;
     [t.control,t.treatment].forEach((values,g)=>{
@@ -103,55 +54,87 @@
     y=text('2. Estimated difference in this trial',12,y+48);
     y=text(`${pct(t.counts[1]/data.n)} − ${pct(t.counts[0]/data.n)} = ${Math.round(t.estimate*1000)/10} percentage points`,12,y+22);
     const axis1=y+42;
-    y=text('3. The same estimate joins earlier trials',12,axis1+50);
-    y=text('Each dot is one trial. Both axes show percentage points.',12,y+22);
-    const axis2=y+100, bins={},positions=[];
+    y=text(data.batch ? '3. Estimates across the full batch' : '3. The same estimate joins earlier trials',12,axis1+50);
+    y=text(data.batch ? `${data.batch.estimates.length} trials, each with ${data.n} patients per group` : 'Each dot is one trial. Both axes show percentage points.',12,y+22);
+    let axis2=y+130;
+    const bins={},positions=[];
     for(let i=0;i<=index;i++){
       const v=data.trials[i].estimate,key=Math.round(v*1000000),level=bins[key]||0;
-      bins[key]=level+1;positions.push({x:at(v),y:axis2-10-level*4});
+      bins[key]=level+1;positions.push({x:at(v),y:axis2-10-level*5});
     }
     [axis1,axis2].forEach(yy=>{
       node(svg,'line',{x1:38,x2:width-38,y1:yy,y2:yy,stroke:'#64748b'});
       [-1,-.5,0,.5,1].forEach(v=>node(svg,'text',{x:at(v),y:yy+20,'text-anchor':'middle',style:'font-size:14px'},v*100));
-      node(svg,'line',{x1:at(data.p1-data.p0),x2:at(data.p1-data.p0),y1:yy-32,y2:yy,stroke:'#17734c','stroke-dasharray':'4 3'});
+      node(svg,'line',{x1:at(data.p1-data.p0),x2:at(data.p1-data.p0),y1:yy-(yy===axis1?8:95),y2:yy,stroke:'#17734c','stroke-dasharray':'4 3'});
     });
-    for(let i=0;i<index;i++)node(svg,'circle',{cx:positions[i].x,cy:positions[i].y,r:3,fill:'#546378'});
-    const x=at(t.estimate),destination=positions[index].y;
-    node(svg,'line',{x1:x,x2:x,y1:axis1,y2:destination,stroke:'#b53c69','stroke-width':2,'stroke-dasharray':'3 5',opacity:.45});
-    node(svg,'path',{d:`M${x-5} ${destination-10} L${x} ${destination-3} L${x+5} ${destination-10}`,fill:'none',stroke:'#b53c69','stroke-width':2});
-    [axis1,destination].forEach(yy=>node(svg,'circle',{cx:x,cy:yy,r:6,fill:'white',stroke:'#b53c69','stroke-width':2}));
+    const x=at(t.estimate);
+    if(data.batch){
+      const counts=values=>{const b=Array(40).fill(0);values.forEach(v=>b[Math.max(0,Math.min(39,Math.floor((v+1)/.05+1e-9)))]+=100/values.length);return b;};
+      const current=counts(data.batch.estimates), ref=data.batch.reference;
+      const previous=ref?counts(ref.estimates):null;
+      const max=Math.max(...current,...(previous||[]),1)*1.1, yAt=v=>axis2-v/max*90;
+      node(svg,'text',{x:12,y:axis2-110,style:'font-size:12px'},'Trials (%)');
+      [0,Math.round(max/2),Math.round(max)].forEach(v=>node(svg,'text',{x:33,y:yAt(v)+4,'text-anchor':'end',style:'font-size:12px'},v));
+      current.forEach((v,i)=>node(svg,'rect',{x:at(-1+i*.05),y:yAt(v),width:(width-76)/40,height:axis2-yAt(v),fill:'#b9d4f3',stroke:'#fff','data-batch-bin':i}));
+      if(previous){
+        let d=`M${at(-1)} ${axis2}`;
+        previous.forEach((v,i)=>{d+=` L${at(-1+i*.05)} ${yAt(v)} L${at(-1+(i+1)*.05)} ${yAt(v)}`;});
+        node(svg,'path',{d,fill:'none',stroke:'#725197','stroke-width':2,'stroke-dasharray':'5 3','data-reference-batch':ref.n});
+      }
+      node(svg,'line',{x1:at(data.p1-data.p0),x2:at(data.p1-data.p0),y1:axis2-95,y2:axis2,stroke:'#17734c','stroke-dasharray':'4 3','stroke-width':2});
+      node(svg,'circle',{cx:x,cy:axis1,r:5,fill:'#b53c69'});
+      node(svg,'circle',{cx:x,cy:axis2,r:5,fill:'#b53c69','data-batch-first-estimate':t.estimate});
+      if(ref){
+        y=text(`Blue bars: ${data.n} per group. Purple outline: ${ref.n} per group in the first batch.`,12,axis2+45);
+        axis2=y;
+      }
+    }else{
+      for(let i=0;i<index;i++)node(svg,'circle',{cx:positions[i].x,cy:positions[i].y,r:3,fill:'#546378','data-trial-estimate':i+1});
+      const destination=positions[index].y;
+      node(svg,'line',{x1:x,x2:x,y1:axis1,y2:destination,stroke:'#b53c69','stroke-width':2,'stroke-dasharray':'3 5',opacity:.45});
+      node(svg,'path',{d:`M${x-5} ${destination-10} L${x} ${destination-3} L${x+5} ${destination-10}`,fill:'none',stroke:'#b53c69','stroke-width':2});
+      [axis1,destination].forEach(yy=>node(svg,'circle',{cx:x,cy:yy,r:6,fill:'white',stroke:'#b53c69','stroke-width':2}));
+      const phase=Math.max(0,Math.min(1,(progress-.35)/.5));
+      const moving=el('journey-motion').checked?(progress<.85?0:1):phase*phase*(3-2*phase);
+      node(svg,'circle',{cx:x,'data-moving-estimate':'true',cy:axis1+(destination-axis1)*moving,r:5,fill:'#b53c69',stroke:'white','stroke-width':1});
+    }
     node(svg,'text',{x:Math.max(48,Math.min(width-48,x)),y:axis1-12,'text-anchor':'middle',style:'font-size:14px'},`${Math.round(t.estimate*1000)/10} points`);
-    const phase=Math.max(0,Math.min(1,(progress-.35)/.5));
-    const moving=el('journey-motion').checked?(progress<.85?0:1):phase*phase*(3-2*phase);
-    node(svg,'circle',{cx:x,'data-moving-estimate':'true',cy:axis1+(destination-axis1)*moving,r:5,fill:'#b53c69',stroke:'white','stroke-width':1});
     y=text(`Dashed line: assumed population difference ${Math.round((data.p1-data.p0)*1000)/10} points`,12,axis2+48);
-    y=text('Pink dot: the current trial’s estimated difference',12,y+22);
+    y=text(data.batch ? 'Pink dots: the first trial, included in this batch' : 'Pink dot: the current trial’s estimated difference',12,y+22);
     svg.setAttribute('viewBox',`0 0 ${width} ${y+14}`);
   }
   function status() {
+    if(data.batch){
+      el('journey-description').textContent=`The patient outcomes belong to the first of ${data.batch.estimates.length} trials in this batch. All trials used ${data.n} patients per group.`;
+      el('journey-status').textContent=`${data.batch.estimates.length} trials; ${data.n} patients per group. ${stale?'Inputs changed. Run again to update.':''}`;
+      return;
+    }
     const t = data.trials[index];
     const labels = data.labels || ['Standard treatment', 'Novel treatment'];
     el('journey-description').textContent = `${labels[0]}: ${t.counts[0]} of ${data.n} patients (${pct(t.counts[0]/data.n)}); ${labels[1]}: ${t.counts[1]} of ${data.n} (${pct(t.counts[1]/data.n)}). The estimated between-group difference is ${Math.round(t.estimate*1000)/10} percentage points. This estimate becomes dot ${index+1} in the sampling distribution. The assumed population difference stays at ${Math.round((data.p1-data.p0)*1000)/10} percentage points.`;
     el('journey-status').textContent = `${paused?'Paused. ':''}Trial ${index+1} of ${data.trials.length}; ${data.n} patients per group. ${stale?'Inputs changed; this sequence retains its saved assumptions. Run again to update.':''}`;
   }
+  const duration=()=>el('journey-motion').checked?180:3800;
   function tick(now) {
     if(!data || paused) return;
     if(last) elapsed+=now-last;last=now;
-    if(elapsed>=3800) {
+    if(elapsed>=duration()) {
       if(index<data.trials.length-1){index++;elapsed=0;status();}
-      else {draw(1);el('journey-pause').disabled=true;return;}
+      else {draw(1);el('journey-pause').disabled=true;el('journey-finish').disabled=true;return;}
     }
-    draw(elapsed/3800);raf=requestAnimationFrame(tick);
+    draw(elapsed/duration());raf=requestAnimationFrame(tick);
   }
-  function play(){cancelAnimationFrame(raf);last=0;paused=false;el('journey-pause').textContent='Pause';el('journey-pause').disabled=false;status();raf=requestAnimationFrame(tick);}
-  window.addEventListener('resize',()=>{if(data)draw(Math.min(1,elapsed/3800));});
+  function play(){cancelAnimationFrame(raf);last=0;paused=false;el('journey-finish').disabled=data.trials.length<2;el('journey-pause').textContent='Pause';el('journey-pause').disabled=false;status();raf=requestAnimationFrame(tick);}
+  window.addEventListener('resize',()=>{if(data)draw(Math.min(1,elapsed/duration()));});
   function setup() {
     if(!window.Shiny || !el('journey-pause')) return setTimeout(setup,100);
     el('journey-motion').checked=matchMedia('(prefers-reduced-motion: reduce)').matches;
     el('journey-pause').onclick=()=>{paused=!paused;el('journey-pause').textContent=paused?'Resume':'Pause';if(paused){cancelAnimationFrame(raf);status();}else play();};
     el('journey-replay').onclick=()=>{index=0;elapsed=0;play();};
-    el('journey-motion').onchange=()=>{if(data)draw(elapsed/3800);};
+    el('journey-motion').onchange=()=>{elapsed=0;last=0;if(data)draw(0);};
+    el('journey-finish').onclick=()=>{if(!data || data.batch)return;cancelAnimationFrame(raf);index=data.trials.length-1;elapsed=duration();paused=false;draw(1);status();el('journey-pause').disabled=true;el('journey-finish').disabled=true;};
     Shiny.addCustomMessageHandler('lab-report-context',payload=>{
+      document.documentElement.classList.toggle('unified-sampling',payload.core);
       el('report-question-heading').textContent='Explain your decision';
       el('study-plan-guidance').hidden=payload.core;
       const field=el('justification'), label=document.querySelector('label[for="justification"]');
@@ -199,12 +182,16 @@
       let combined=el('combined-many-studies');
       if(payload.combine && !combined){
         combined=document.createElement('details');combined.id='combined-many-studies';combined.className='activity-details';
-        const summary=document.createElement('summary');summary.textContent='Many studies and a larger sample';
+        const summary=document.createElement('summary');summary.textContent='Batch results and p values';
         const content=document.createElement('div');content.className='combined-content';content.append(...manyPanel.childNodes);
         combined.append(summary,content);onePanel.append(combined);
+        onePanel.querySelector('.simulation-actions').append(el('run_many'));
+        onePanel.querySelector('h3').textContent='One study and many studies';
         const credit=el('journey-credit');if(credit)onePanel.append(credit);
       } else if(!payload.combine && combined){
-        manyPanel.append(...combined.querySelector('.combined-content').childNodes);combined.remove();
+        manyPanel.append(...combined.querySelector('.combined-content').childNodes);
+        manyPanel.querySelector('h3').after(el('run_many'));combined.remove();
+        onePanel.querySelector('h3').textContent='One simulated study';
       }
       oneLink.textContent=payload.combine?'One study and many studies':'One study';
       manyLink.parentElement.hidden=payload.combine;
@@ -216,8 +203,16 @@
     });
     Shiny.addCustomMessageHandler('sampling-journey',payload=>{
       cancelAnimationFrame(raf);
-      if(payload.clear){data=null;el('sampling-journey').replaceChildren();el('journey-description').textContent='';el('journey-reading').textContent='Each pair of patient groups produces one estimated treatment difference. Repeated trials show how that estimate varies around the same population difference.';el('journey-pause').disabled=true;el('journey-replay').disabled=true;el('journey-status').textContent='A single study or 20-trial sequence will appear here after simulation.';return;}
-      data=payload;index=0;elapsed=0;stale=false;el('journey-replay').disabled=false;play();
+      if(payload.clear){data=null;el('sampling-journey').replaceChildren();el('journey-description').textContent='';el('journey-reading').textContent='Each pair of patient groups produces one estimated treatment difference. Repeated trials show how that estimate varies around the same population difference.';el('journey-pause').disabled=true;el('journey-replay').disabled=true;el('journey-finish').disabled=true;el('journey-status').textContent='A single study or 20-trial sequence will appear here after simulation.';return;}
+      data=payload;index=0;elapsed=0;stale=false;el('journey-replay').disabled=false;document.documentElement.classList.remove('journey-batch-view');play();
+    });
+    Shiny.addCustomMessageHandler('sampling-batch',payload=>{
+      cancelAnimationFrame(raf);data=payload;index=0;elapsed=0;paused=false;stale=false;
+      ['journey-pause','journey-replay','journey-finish'].forEach(id=>el(id).disabled=true);
+      document.documentElement.classList.add('journey-batch-view');
+      draw(1);status();
+      const results=el('combined-many-studies');if(results)results.open=true;
+      window.dispatchEvent(new Event('resize'));
     });
     $(document).on('shiny:inputchanged', event => {
       if(data && ['fixed_n','plan_p0','plan_p1','goal','target_power','alpha','reality','true_p0','true_p1','seed','outcome','width_p'].includes(event.name)){stale=true;status();}

@@ -81,7 +81,7 @@ const base = (process.argv[2] || 'http://127.0.0.1:8769').replace(/\/$/, '');
     await f.locator('#run_many').click();
     await has(f,'sample_comparison','first batch used 20');
     await has(f,'sample_comparison','current batch uses 56');
-    await f.locator('#distribution img').waitFor();
+    await f.locator('[data-reference-batch="20"]').waitFor();
     await page.setViewportSize({width:1120,height:2100});
     await page.screenshot({path:'build/comparison-workflow/simulation.png',fullPage:true});
     await page.setViewportSize({width:1120,height:1000});

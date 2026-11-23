@@ -32,7 +32,7 @@ const {saveReportPair}=require('./report_test_helpers.cjs');
    assert.match(await page.locator(part).innerText(),/24 clinics/);
    assert.match(await page.locator(part).innerText(),/Both co-primary outcomes/);
   }
-  assert.doesNotMatch(await page.locator('#planning').getAttribute('data-example-answer'),/30 percentage points|Neravixa/);
+  assert.doesNotMatch(await page.locator('#planning').getAttribute('data-example-answer'),/30 percentage points|neravixa/);
   await page.locator('[data-plan-feature=clustered]').uncheck();
   assert.equal(await page.locator('#field-cluster_details').isVisible(),false);
   assert.doesNotMatch(await page.locator('#calculation-summary').innerText(),/24 clinics/);

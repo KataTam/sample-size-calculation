@@ -114,10 +114,10 @@ app_pain_simulation_report <- function(current, one, many, details) {
         else "power: the probability of detecting the specified population difference."))
   }
   sections <- list("Population assumptions and sample" = c(
-    paste0("These simulated trials compare duloxetine (standard treatment) with Neravixa (novel treatment) for painful diabetic peripheral neuropathy in two independent, equally sized groups. Each study has ",
+    paste0("These simulated trials compare duloxetine (standard treatment) with neravixa (novel treatment) for painful diabetic peripheral neuropathy in two independent, equally sized groups. Each study has ",
       x$n, " patients per group (", 2*x$n, " in total), all with observed outcomes. Each patient either achieved pain relief or did not."),
     paste0("The assumed population pain-relief percentages are ", format_percent(x$p_control), " with duloxetine and ",
-      format_percent(x$p_treatment), " with Neravixa: a between-group difference of ", effect(true_difference(x)),
+      format_percent(x$p_treatment), " with neravixa: a between-group difference of ", effect(true_difference(x)),
       " (novel minus standard). These are the population values used to generate the simulated data."),
     paste0("The analysis uses a two-sided test with Type I error probability ", format_percent(x$alpha),
       ".")),

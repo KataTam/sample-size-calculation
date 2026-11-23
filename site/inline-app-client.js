@@ -80,7 +80,7 @@
     if (engine === 'power_explorer') {
       for (const [figureId, textId] of [['planning_plot','overview_text'],['distribution','many_text']]) {
         const figure = document.getElementById(figureId), text = document.getElementById(textId);
-        if (figure && text) figure.after(text);
+        if (figure && text) (figure.closest('.separate-many-figure') || figure).after(text);
       }
     }
     for (const id of ['interpretation','precision_text','explanation','overview_text','recruitment_interpretation','precision-interpretation']) {

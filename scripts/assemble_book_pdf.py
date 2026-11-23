@@ -17,6 +17,10 @@ body = PdfReader(ROOT / 'build/pdf/tutorial-body.pdf')
 headings = json.loads((ROOT / 'build/pdf/headings.json').read_text(encoding='utf-8'))
 def normalize(text):
     return re.sub(r'\s+', ' ', text).strip()
+
+def contents_title(text):
+    # Keep the full heading for destination matching, and shorten only its label.
+    return re.sub(r'^(Core material|Extensions)\s+', '', normalize(text))
 destinations = {}
 def collect(items, chapter=None):
     current_chapter = chapter
@@ -62,11 +66,11 @@ license_note.wrap(width-2*margin, 40)
 license_note.drawOn(c, margin, 95)
 c.showPage()
 links=[]; toc_page=1; y=height-margin
-chapter_style=ParagraphStyle('chapter',fontName='Times-Bold',fontSize=11,leading=14)
+chapter_style=ParagraphStyle('chapter',fontName='Times-Roman',fontSize=11,leading=14)
 section_style=ParagraphStyle('section',fontName='Times-Roman',fontSize=10,leading=13)
 def start_contents(continued=False):
     global y
-    c.setFont('Times-Bold',23); c.drawString(margin,height-margin,'Contents' + (' (continued)' if continued else ''))
+    c.setFont('Times-Roman',23); c.drawString(margin,height-margin,'Contents' + (' (continued)' if continued else ''))
     y=height-margin-38
 
 def finish_contents():
@@ -75,7 +79,7 @@ def finish_contents():
 start_contents()
 for heading in headings:
     level=heading['level']; indent=14*level
-    para=Paragraph(escape(normalize(heading['title'])),section_style if level else chapter_style)
+    para=Paragraph(escape(contents_title(heading['title'])),section_style if level else chapter_style)
     pw,ph=para.wrap(width-2*margin-indent-38,100)
     gap=6 if level else 12
     if y-ph-gap<margin:
@@ -96,7 +100,7 @@ writer.add_outline_item('Title page',0)
 writer.add_outline_item('Contents',1)
 parent=None
 for heading in headings:
-    item=writer.add_outline_item(normalize(heading['title']),offset+heading['page'],parent=parent if heading['level'] else None)
+    item=writer.add_outline_item(contents_title(heading['title']),offset+heading['page'],parent=parent if heading['level'] else None)
     if heading['level']==0: parent=item
 for page,rect,dest in links:
     writer.add_annotation(page,Link(rect=rect,target_page_index=offset+dest))

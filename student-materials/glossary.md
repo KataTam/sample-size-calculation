@@ -132,7 +132,7 @@ The [hypotheses and power section](#power) connects these terms to repeated hypo
 : A result that meets the prespecified threshold for evidence against the null hypothesis. Here, this means a p-value below the chosen Type I error probability. The estimated difference and confidence interval are also needed to assess the size and clinical importance of a treatment benefit.
 
 <span id="null-hypothesis">Null hypothesis</span>
-: The null hypothesis in these treatment comparisons says that the population outcomes are equal: the between-group difference is zero. Rejecting it means that the chosen test provides sufficient statistical evidence of a difference. When the test does not reject the null hypothesis, the evidence is insufficient to establish a difference. The confidence interval shows which treatment differences remain compatible with the data.
+: The null hypothesis in these treatment comparisons claims that the population outcomes are equal: the between-group difference is zero. Rejecting it means that the chosen test provides sufficient statistical evidence of a difference. When the test does not reject the null hypothesis, the evidence is insufficient to establish a difference. The confidence interval shows which treatment differences remain compatible with the data.
 
 <span id="alternative-hypothesis">Alternative hypothesis</span>
 : The two-sided alternative hypothesis allows a difference in either direction. The target difference specifies the population effect at which power is calculated. Statistical significance is assessed against the null hypothesis.
@@ -148,11 +148,11 @@ The [hypotheses and power section](#power) connects these terms to repeated hypo
 
 ### Type I error probability {#alpha .core-heading .unnumbered}
 
-Type I error probability ($\alpha$) is the probability of falsely rejecting the null hypothesis: the [false-positive probability](#false-positive){.no-glossary-tooltip}. Here, that means finding a statistically significant treatment difference when the population outcomes are actually equal. A 5% probability means about 5 false positives per 100 repeated studies when there is no true difference, under the test's assumptions. It does not mean that 5% of all significant findings are false positives.
+Type I error probability ($\alpha$, alpha) is the probability of falsely rejecting the null hypothesis: the [false-positive probability](#false-positive){.no-glossary-tooltip}. Here, that means finding a statistically significant treatment difference when the population outcomes are actually equal. A 5% probability means about 5 false positives per 100 repeated studies when there is no true difference, under the test's assumptions. It does not mean that 5% of all significant findings are false positives.
 
 ### Type II error probability {#beta .core-heading .unnumbered}
 
-Type II error probability ($\beta$) is the probability of failing to reject a false null hypothesis: the [false-negative probability](#false-negative){.no-glossary-tooltip}. Here, that means missing a specified true treatment difference. For example, a 10% Type II error probability at a true 30-percentage-point difference means about 10 missed differences per 100 repetitions of that trial. This probability depends on the true difference, sample size and analysis.
+Type II error probability ($\beta$, beta) is the probability of failing to reject a false null hypothesis: the [false-negative probability](#false-negative){.no-glossary-tooltip}. Here, that means missing a specified true treatment difference. For example, a 10% Type II error probability at a true 30-percentage-point difference means about 10 missed differences per 100 repetitions of that trial. This probability depends on the true difference, sample size and analysis.
 
 ### Statistical power {#statistical-power .core-heading .unnumbered}
 
@@ -175,7 +175,7 @@ The [multiplier explanation](#how-error-rates-and-power-affect-sample-size) show
 ## Tests and designs {.core-heading .unnumbered}
 
 <span id="two-sided-test">One-sided and two-sided tests</span>
-: A two-sided test can reject for sufficiently strong differences in either direction. A one-sided test has a directional rejection rule. For treatment minus control, the two-sided alternative includes any nonzero population difference. A one-sided alternative may specify a positive population difference; its null then includes zero and negative differences. Sidedness needs justification before results are examined. The [sampling-distribution illustration](#alpha-beta) assumes a known population SD and illustrates a one-sided test, while the [reasoning lab](https://katatam.github.io/sample-size-calculation/power_explorer/?activity=own_study) uses two-sided comparisons.
+: A two-sided (two-tailed) test can reject for sufficiently strong differences in either direction. It is the usual choice for a superiority comparison when either better or worse outcomes would matter. For treatment minus control, its alternative includes any nonzero population difference. A one-sided test has a directional rejection rule. For a positive alternative, its null includes zero and negative differences. ICH E9 calls for the choice to be specified in advance and for one-sided testing to be justified before results are examined [@iche91998]. The [sampling-distribution illustration](#alpha-beta) illustrates a one-sided test. The [reasoning lab](https://katatam.github.io/sample-size-calculation/power_explorer/?activity=own_study) uses two-sided comparisons.
 
 A normal approximation uses the bell-shaped normal distribution to simplify a calculation. A t-test calculation also accounts for estimating variability from the study's patients. The two-means calculator and [lab](https://katatam.github.io/sample-size-calculation/power_explorer/?activity=own_study) both use pooled two-sample t-test power. The normal formula in Chapter 2 explains how the inputs affect sample size. See the [statistical methods](../documentation/statistical-methods.md) for exact implementation details.
 

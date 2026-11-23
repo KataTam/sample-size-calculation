@@ -328,15 +328,25 @@ simulate_trials <- function(spec) {
   # independent normal datasets. This avoids storing B * 2n patient records.
   with_study_seed(spec$seed, {
     n <- spec$n; B <- spec$B
+    illustrated_trial <- NULL
     if (spec$outcome == "means") {
       estimates <- rnorm(B, spec$delta, spec$sd * sqrt(2 / n))
       pooled_sd <- spec$sd * sqrt(rchisq(B, 2 * n - 2) / (2 * n - 2))
       results <- analyse_normal(estimates, pooled_sd, n, spec$alpha)
     } else {
-      results <- analyse_binary(rbinom(B, n, spec$p_treatment),
-                                rbinom(B, n, spec$p_control), n, spec$alpha)
+      treatment_counts <- rbinom(B, n, spec$p_treatment)
+      control_counts <- rbinom(B, n, spec$p_control)
+      results <- analyse_binary(treatment_counts, control_counts, n, spec$alpha)
+      # Retain the first trial's actual counts for the linked patient illustration.
+      # Outcomes are grouped by relief status in the display, not by patient order.
+      illustrated_trial <- list(data = data.frame(
+        group = rep(c("Control", "Treatment"), each = n),
+        outcome = c(rep(c(1, 0), c(control_counts[1], n-control_counts[1])),
+                    rep(c(1, 0), c(treatment_counts[1], n-treatment_counts[1])))),
+        result = add_operating_results(results[1, , drop=FALSE], spec), spec = spec)
     }
-    list(results = add_operating_results(results, spec), spec = spec)
+    list(results = add_operating_results(results, spec), spec = spec,
+         illustrated_trial = illustrated_trial)
   })
 }
 

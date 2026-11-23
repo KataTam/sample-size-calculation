@@ -108,13 +108,13 @@ let browser;
       const mathCSS=Array.from(document.querySelectorAll('style')).map(el=>el.textContent).filter(text=>/MathJax|MJX_Assistive/.test(text)).join('\n');
       const glyphSVG=glyphs && glyphs.closest('svg').cloneNode(true);
       if(glyphSVG) { glyphSVG.setAttribute('style','position:absolute;width:0;height:0;overflow:hidden'); glyphSVG.setAttribute('aria-hidden','true'); }
-      return {headings: Array.from(clone.querySelectorAll('h1,h2')).filter(el => !el.closest('#header')).map(el => ({title: el.textContent.trim(), level: el.tagName === 'H1' ? 0 : 1})), title: clone.querySelector('h1').textContent.trim(), mathCSS, html: (glyphSVG ? glyphSVG.outerHTML : '')+clone.innerHTML};
+      return {headings: Array.from(clone.querySelectorAll('h1,h2')).filter(el => !el.closest('#header')).map(el => ({title: el.textContent.trim(), level: el.tagName === 'H1' ? 0 : 1})), title: clone.querySelector('h1').textContent.trim().replace(/^(Core material|Extensions)\s+/, ''), mathCSS, html: (glyphSVG ? glyphSVG.outerHTML : '')+clone.innerHTML};
     }, publicBase);
 
     pdfHeadings.push(...extracted.headings);
     const safeTitle=extracted.title.replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
     const chapterActivities = activityContents.find(entry => entry.chapter === slug);
-    const activityLinks = (chapterActivities?.activities || []).map(activity => `<li><a href="${activity.path.includes("#activity-") ? escapeHTML(activity.path.slice(activity.path.indexOf("#"))) : publicBase+"/"+escapeHTML(activity.path)}" data-link-navigation="same-tab">Activity: ${escapeHTML(activity.label)}</a> <span class="contents-route">${escapeHTML(activity.route)}</span></li>`).join('');
+    const activityLinks = (chapterActivities?.activities || []).map(activity => `<li><a href="${activity.path.includes("#activity-") ? escapeHTML(activity.path.slice(activity.path.indexOf("#"))) : publicBase+"/"+escapeHTML(activity.path)}" data-link-navigation="same-tab">Activity: ${escapeHTML(activity.label)}</a></li>`).join('');
     contents.push(`<li><a href="#tutorial-${slug}">${safeTitle}</a>${activityLinks ? '<ul>'+activityLinks+'</ul>' : ''}</li>`);
     sections.push(`<section id="tutorial-${slug}" class="print-chapter"><style>${extracted.mathCSS}</style>${extracted.html}</section>`);
     console.log(`Included ${slug} in the complete tutorial`);

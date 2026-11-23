@@ -127,7 +127,7 @@ draw_pain_pilot_patients <- function() {
   }
   centers <- c(25, 75)
   responders <- c(3L, 7L)
-  text(centers, 96, c("Duloxetine (standard)", "Neravixa (novel)"),
+  text(centers, 96, c("duloxetine (standard)", "neravixa (novel)"),
     font = 2, cex = 1.12)
   text(50, 86, "Before treatment: all 10 patients in each group have pain", cex = 1)
   segments(50, 23, 50, 79, col = "#e0e5e9")
@@ -156,7 +156,7 @@ draw_three_pain_trials <- function(trials) {
   par(mar = c(2.8, .6, .5, .6), bg = "white", family = "sans",
     fg = "#26343d", xaxs = "i", yaxs = "i")
   plot.new(); plot.window(c(0, 100), c(-18, 100))
-  text(c(29, 52, 83), 96, c("Duloxetine", "Neravixa", "Observed difference"),
+  text(c(29, 52, 83), 96, c("duloxetine", "neravixa", "Observed difference"),
     font = 2, cex = .94)
   text(c(29, 52), 90, c("Population: 30% relief", "Population: 60% relief"), cex = .82)
   xs <- function(points) 69 + points / 60 * 28
@@ -181,7 +181,7 @@ draw_three_pain_trials <- function(trials) {
     text(xs(delta), y - 9, paste0(round(delta), " points"), cex = .83)
   }
   axis(1, at = xs(seq(0, 60, 10)), labels = seq(0, 60, 10), pos = 8, cex.axis = .8)
-  text(83, -10, "Neravixa minus duloxetine\n(percentage points)", cex = .8)
+  text(83, -10, "neravixa minus duloxetine\n(percentage points)", cex = .8)
   points(c(10, 31), c(-10, -10), pch = 21, bg = c("#19738c", "white"), col = "#19738c", cex = .9)
   text(c(12, 33), c(-10, -10), c("Achieved relief", "Did not achieve relief"), adj = 0, cex = .78)
 }
@@ -289,7 +289,7 @@ draw_treatment_followup <- function() {
   old <- par(no.readonly = TRUE)
   on.exit(par(old))
   diagram_canvas()
-  diagram_box(23, 84, 77, 98, "Randomized to Neravixa or duloxetine",
+  diagram_box(23, 84, 77, 98, "Randomized to neravixa or duloxetine",
     fill = "#e8f2f7", cex = 1.02)
   diagram_arrow(30, 84, 26, 77)
   diagram_arrow(70, 84, 74, 77)

@@ -66,6 +66,7 @@ jobs:
           node scripts/check_quiz.cjs
           node scripts/check_embedded_quiz.cjs
           node scripts/check_feedback_week5.cjs
+          node scripts/check_chapter_one_revision.cjs
           node scripts/check_core_activities.cjs
           node scripts/check_app_previews.cjs
           node scripts/check_activity_routes.cjs

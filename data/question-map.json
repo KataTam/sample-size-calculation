@@ -27,7 +27,7 @@
       "question": "What outcome do you expect with the novel treatment?",
       "original_excerpt": "This is naturally trickier to estimate since you normally do not have a good idea about the effect of the novel treatment, which is why you want to conduct the study in the first place. In many cases, a pilot study is an appropriate way to obtain a rough estimate of the effect.",
       "original_line": 67,
-      "explanation": "The pilot observed 70% relief with Neravixa; the calculation assumes 60%. The section [Pilot findings, target difference, and clinical importance](#what-do-we-expect-what-will-we-plan-for-and-what-matters-clinically) distinguishes these values."
+      "explanation": "The pilot observed 70% relief with neravixa; the calculation assumes 60%. The section [Pilot findings, target difference, and clinical importance](#what-do-we-expect-what-will-we-plan-for-and-what-matters-clinically) distinguishes these values."
     },
     {
       "id": "q4",

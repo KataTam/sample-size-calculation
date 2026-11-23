@@ -43,7 +43,8 @@ def collect_bookmarks(items):
 collect_bookmarks(r.outline)
 assert len(bookmarks)==len(headings)+2
 for heading,target,bookmark in zip(headings,target_pages,bookmarks[2:]):
- assert compact(bookmark.title)==compact(heading['title'])
+ contents_title=re.sub(r'^(Core material|Extensions)\s+', '', heading['title'])
+ assert compact(bookmark.title)==compact(contents_title)
  assert r.get_destination_page_number(bookmark)==target
 assert 'Draft version' in r.pages[0].extract_text()
 assert len(r.outline)>=14

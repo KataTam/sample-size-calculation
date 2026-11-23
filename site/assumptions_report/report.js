@@ -77,16 +77,16 @@
     conclusion: 'What could the study establish, and what remains uncertain?'
   };
   const modelAnswers = {
-    question: 'Does Neravixa increase the percentage achieving pain relief at four weeks compared with duloxetine in adults with painful diabetic peripheral neuropathy?',
+    question: 'Does neravixa increase the percentage achieving pain relief at four weeks compared with duloxetine in adults with painful diabetic peripheral neuropathy?',
     population: 'Adults with type 1 or type 2 diabetes mellitus, bilateral lower-extremity pain due to diabetic peripheral neuropathy for at least one year, and BMI at least 18 and below 40 kg/m².',
-    intervention: 'Neravixa, the fictional novel treatment in this teaching case, requires four additional safety-monitoring visits and carries a risk of short-lived dizziness. The protocol should specify its regimen and permitted background care.',
+    intervention: 'neravixa, the fictional novel treatment in this teaching case, requires four additional safety-monitoring visits and carries a risk of short-lived dizziness. The protocol should specify its regimen and permitted background care.',
     comparator: 'Duloxetine, the standard treatment, over four weeks. The protocol should specify its regimen and the background care permitted in both groups.',
     outcome_detail: 'Achieved measurable pain relief at four weeks: yes or no, assessed in the same way in both groups and summarized as the percentage achieving pain relief.',
-    design: 'Eligible adults will be recruited from participating clinics using [selection method] and individually randomized 1:1 to Neravixa or duloxetine. Each participant contributes one four-week outcome; outcomes from different participants are assumed independent. Bilateral pain contributes one patient-level outcome.',
-    scale: 'The difference in pain-relief percentages, Neravixa minus duloxetine, in percentage points. A positive difference favors Neravixa.',
+    design: 'Eligible adults will be recruited from participating clinics using [selection method] and individually randomized 1:1 to neravixa or duloxetine. Each participant contributes one four-week outcome; outcomes from different participants are assumed independent. Bilateral pain contributes one patient-level outcome.',
+    scale: 'The difference in pain-relief percentages, neravixa minus duloxetine, in percentage points. A positive difference favors neravixa.',
     expected: '40 percentage points: the pilot observed relief in 7 of 10 patients (70%) versus 3 of 10 (30%). The small groups make this estimate uncertain.',
     clinical: '20 percentage points: one additional patient with relief per five treated. In this teaching case, patient and clinical advisers judge this the minimum benefit to justify four additional safety-monitoring visits and the risk of short-lived dizziness.',
-    planning: '30 percentage points: 60% pain relief with Neravixa versus 30% with duloxetine. Power is evaluated at this assumed population difference. The 40-point pilot difference and 20-point clinical threshold inform separate judgments.',
+    planning: '30 percentage points: 60% pain relief with neravixa versus 30% with duloxetine. Power is evaluated at this assumed population difference. The 40-point pilot difference and 20-point clinical threshold inform separate judgments.',
     variation: '30% relief with standard treatment and 60% with novel treatment for the calculation. These illustrative percentages imply the 30-point target difference.',
     evidence_review: 'The small pilot leaves both relief percentages uncertain. I would compare pain severity, background medication and relief definitions across four-week studies, including less favorable findings, before judging which percentages apply.',
     sensitivity: 'I would assess power at 20-, 30-, and 40-point benefits with the sample fixed, then vary standard-treatment relief over an evidence-supported range to judge whether the recommendation changes.',
@@ -163,7 +163,7 @@
     if (value.plan_basis !== 'pain' || AdvancedPlan.complex(value)) return answerFormats(value);
     const result = {...modelAnswers};
     if (value.outcome === 'continuous') Object.assign(result, {
-      question: 'Does Neravixa improve the mean pain-improvement score at four weeks compared with duloxetine in adults with painful diabetic peripheral neuropathy?',
+      question: 'Does neravixa improve the mean pain-improvement score at four weeks compared with duloxetine in adults with painful diabetic peripheral neuropathy?',
       outcome_detail: 'Mean improvement in pain score from baseline to four weeks, using a prespecified scoring rule. Larger improvement means greater benefit.',
       scale: 'The between-group mean difference in pain-improvement score, novel minus standard treatment, in score units.',
       expected: 'An earlier study in this teaching example observed a 4-unit difference. Its population, outcome definition and uncertainty should inform whether it is useful for planning.',
@@ -503,7 +503,7 @@
     event.target.value = '';
   });
   function loadPainExample() {
-    const value = validate({plan_title:'Neravixa versus duloxetine: neuropathic pain trial', plan_basis:'pain',
+    const value = validate({plan_title:'neravixa versus duloxetine: neuropathic pain trial', plan_basis:'pain',
       study_type:'comparison', outcome:'binary', goal:'testing'});
     const answers = PlanCalculationRecord.answers(value, examples(value), answerFormats(value));
     for (const field of fields) if (active(field, value) && answers[field[0]]) value[field[0]] = answers[field[0]];
