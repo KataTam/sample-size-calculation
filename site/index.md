@@ -4,7 +4,7 @@ Open teaching materials for reasoning about sample size in medical studies.
 
 <section class="pilot-intro pilot-green" aria-labelledby="pilot-session-title">
   <h2 id="pilot-session-title">Medical statistics pilot students</h2>
-  <p>You should work through the <a href="book/">core material</a> and use the <a href="assumptions_report/?stage=question">study plan activity</a> to develop your sample size calculation report. If time allows, you can explore <a href="book/index.html#advanced-route">extensions relevant to your study</a>.</p>
+  <p>After completing the pre-session form, you can select “Start here” and read the Welcome section to choose the learning outcomes most relevant to you. The core outcomes (Chapters 1–3) are the recommended starting point, and extensions are optional. By the end of the session, you should have a draft sample size calculation report. Please leave five minutes at the end to complete the post-session form. Thank you for your participation and feedback!</p>
 </section>
 
 <a class="pilot-form-link pilot-green" href="https://forms.cloud.microsoft/e/0v6PL2Xc6V">Pre-session form</a>
