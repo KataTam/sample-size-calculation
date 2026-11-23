@@ -338,11 +338,11 @@ simulate_trials <- function(spec) {
       control_counts <- rbinom(B, n, spec$p_control)
       results <- analyse_binary(treatment_counts, control_counts, n, spec$alpha)
       # Retain the first trial's actual counts for the linked patient illustration.
-      # Outcomes are grouped by relief status in the display, not by patient order.
+      # Shuffle the displayed records so a truncated display remains representative.
       illustrated_trial <- list(data = data.frame(
         group = rep(c("Control", "Treatment"), each = n),
-        outcome = c(rep(c(1, 0), c(control_counts[1], n-control_counts[1])),
-                    rep(c(1, 0), c(treatment_counts[1], n-treatment_counts[1])))),
+        outcome = c(sample(rep(c(1, 0), c(control_counts[1], n-control_counts[1]))),
+                    sample(rep(c(1, 0), c(treatment_counts[1], n-treatment_counts[1]))))),
         result = add_operating_results(results[1, , drop=FALSE], spec), spec = spec)
     }
     list(results = add_operating_results(results, spec), spec = spec,
