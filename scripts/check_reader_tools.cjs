@@ -35,7 +35,7 @@ let browser;
 
  assert.equal(await page.locator('.book-summary ul.summary > li.chapter > a').first().evaluate(el=>getComputedStyle(el).fontSize),'14px');
  assert.equal(await page.locator('.book-summary .activity-toc a').first().evaluate(el=>getComputedStyle(el).fontSize),'13px');
- assert.match(await page.locator('.page-inner h2').first().innerText(), /chronic[- ]pain/i);
+ assert.match(await page.locator('.page-inner h2').first().innerText(), /neuropathic pain/i);
  assert(await page.evaluate(()=>document.querySelector('#misconception-pilot-effect').compareDocumentPosition(document.getElementById('tab:pain-planning-values')) & Node.DOCUMENT_POSITION_PRECEDING));
  assert(await page.locator('table').first().isVisible());
  assert.equal(await page.locator('.page-inner p').first().evaluate(el=>getComputedStyle(el).fontWeight),'400');
