@@ -81,8 +81,12 @@ const base=(process.argv[2]||'http://127.0.0.1:8769').replace(/\/$/,'');
   await direction('two.sided',4);
   await drag(handle('lower'),25);
   await frame.waitForFunction(()=>Number(document.querySelector('#boundary-controls').dataset.alpha)>.05);
-  const lower=Number(await handle('lower').getAttribute('aria-valuenow'));
-  const upper=Number(await handle('upper').getAttribute('aria-valuenow'));
+  await settled();
+  // Read both handles together so a Shiny update cannot fall between the reads.
+  const {lower,upper}=await frame.evaluate(()=>({
+   lower:Number(document.querySelector('.boundary-handle[data-side="lower"][data-panel="0"]').getAttribute('aria-valuenow')),
+   upper:Number(document.querySelector('.boundary-handle[data-side="upper"][data-panel="0"]').getAttribute('aria-valuenow'))
+  }));
   assert(Math.abs(lower+upper-240)<1e-9,'Equal-tail boundaries stay symmetric');
   assert.equal(await handle('lower',0).getAttribute('aria-valuenow'),await handle('lower',1).getAttribute('aria-valuenow'));
   console.log('Both panels and two-sided symmetry passed.');
