@@ -5,8 +5,12 @@ render_error_activity <- function(name) {
   if (is.null(activity)) stop("Unknown error-spotting activity: ", name)
   tags <- htmltools::tags
   title_tag <- if (name %in% c("discharge", "software")) tags$h4 else tags$h3
-  passages <- list(); answers <- list(); index <- 0L
+  passages <- list(); paragraphs <- list(); answers <- list(); index <- 0L
   for (segment in activity$segments) {
+    if (isTRUE(segment$break_before) && length(passages)) {
+      paragraphs <- c(paragraphs, list(tags$p(class = "spot-text", passages)))
+      passages <- list()
+    }
     if (is.null(segment$error)) {
       spacer <- if (nzchar(segment$text) && !nzchar(trimws(segment$text))) htmltools::HTML("&#32;") else segment$text
       passages <- c(passages, list(spacer))
@@ -23,13 +27,14 @@ render_error_activity <- function(name) {
             paste0("Review: ", segment$section))))))
     }
   }
+  if (length(passages)) paragraphs <- c(paragraphs, list(tags$p(class = "spot-text", passages)))
   # Emit one raw HTML block so Markdown does not parse indented nested tags.
   widget <- as.character(tags$div(class = "spot-activity", id = activity$id, `data-version` = if (is.null(activity$version)) "1" else as.character(activity$version), role = "region",
     `aria-labelledby` = paste0(activity$id, "-title"),
     title_tag(class = "spot-title", id = paste0(activity$id, "-title"), activity$title),
     tags$p(class = "spot-instructions", "Which passages need correction? Selecting a passage opens its explanation. Some passages are appropriate."),
     tags$p(class = "spot-print-instructions", "Which numbered passages need correction? Explanations follow."),
-    tags$p(class = "spot-text", passages),
+    paragraphs,
     tags$div(class = "spot-tools", tags$p(class = "spot-status", role = "status", `aria-live` = "polite"),
       tags$button(type = "button", class = "spot-reset", "Reset activity")),
     tags$details(class = "spot-answer-key model-answer", id = if (is.null(activity$answer_id)) paste0(activity$id, "-answers") else activity$answer_id,

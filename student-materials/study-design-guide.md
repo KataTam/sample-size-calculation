@@ -13,7 +13,7 @@ After this chapter, you should be able to:
 
 :::
 
-The study design and planning method should follow the research question, outcome, sampling structure and intended analysis. "Clinical," "retrospective," "diagnostic" and "within-subject" describe different aspects of a study and can apply together. A diagnostic study can be clinical and retrospective, and a preclinical experiment can have repeated measurements.
+The neuropathic pain example assigns treatments to individual patients and measures one outcome per patient. A study that assigns whole clinics, measures the same patient repeatedly, or needs success on several outcomes requires additional planning decisions. This chapter identifies those decisions and the methods they call for. "Clinical," "retrospective," "diagnostic" and "within-subject" describe different aspects of a study and can apply together. A diagnostic study can be clinical and retrospective, and a preclinical experiment can have repeated measurements.
 
 Use the dimensions below and the [questionnaire](#design-questionnaire) to describe your study, then select the relevant route:
 

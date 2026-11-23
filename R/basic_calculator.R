@@ -104,10 +104,10 @@ basic_calculator_server <- function(outcome) function(input, output, session) {
   output$result <- renderUI({
     x <- result()
     app_primary_result(paste0(if (x$dropout_rate > 0) x$total_with_dropout/2 else x$n_per_group, " per group"),
-      if (x$dropout_rate > 0) "participants to recruit" else "participants for analysis",
+      NULL,
       if (x$dropout_rate > 0) paste0(x$total_with_dropout, " to recruit in total, allowing for ",
         format_percent(x$dropout_rate), " expected loss. Analysis requires ", x$n_per_group, " per group (", x$total_n, " total).")
-      else paste0(x$n_per_group, " standard + ", x$n_per_group, " novel = ", x$total_n, " participants in total · ", format_percent(x$power), " target power · ",
+      else paste0(x$n_per_group, " standard + ", x$n_per_group, " novel = ", x$total_n, " participants for analysis in total · ", format_percent(x$power), " target power · ",
         format_percent(x$alpha), " Type I error probability"))
   })
   output$interpretation <- renderText({

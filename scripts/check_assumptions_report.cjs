@@ -31,6 +31,10 @@ const {saveReportPair} = require('./report_test_helpers.cjs');
     page.on('dialog',dialog=>dialog.accept());
     page.on('pageerror', error => errors.push(error.message));
     await page.goto(base + 'assumptions_report/');
+    const titleBox = await page.locator('#plan-title').boundingBox();
+    const basisBox = await page.locator('#plan-basis').boundingBox();
+    assert(Math.abs(titleBox.y - basisBox.y) < 1 && Math.abs(titleBox.height - basisBox.height) < 1,
+      'Study title and Starting point controls align at desktop width');
     const description=page.locator('details.activity-description');
     assert.equal(await description.locator('summary').innerText(),'Description');
     assert.equal(await description.getAttribute('open'),null);

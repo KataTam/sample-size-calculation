@@ -9,7 +9,8 @@
         "error": false,
         "explanation": "This identifies the population, comparison, allocation and primary outcome with its assessment time.",
         "link": "reporting.html#sample-size-calculation-report",
-        "section": "The complete report"
+        "section": "The complete report",
+        "break_before": true
       },
       {
         "text": " "
@@ -19,7 +20,8 @@
         "error": true,
         "explanation": "The requirement of 56 per group uses 60% versus 30%, a target difference of 30 percentage points. The pilot observed 70% versus 30%; those observations need to be distinguished from the inputs selected for the new calculation.",
         "link": "calculations.html#two-proportions",
-        "section": "Calculation inputs"
+        "section": "Calculation inputs",
+        "break_before": true
       },
       {
         "text": " "
@@ -29,7 +31,8 @@
         "error": true,
         "explanation": "Power is the probability that the planned test rejects the null when the specified population difference and other assumptions hold. Here it is evaluated at a 30-percentage-point difference.",
         "link": "clinical-question.html#power",
-        "section": "Interpreting power"
+        "section": "Interpreting power",
+        "break_before": true
       },
       {
         "text": " "
@@ -39,7 +42,8 @@
         "error": true,
         "explanation": "There are two groups: 56 analyzable patients per group means 112 in total. Both counts should appear in the report.",
         "link": "reporting.html#report-calculation-method",
-        "section": "Per-group and total counts"
+        "section": "Per-group and total counts",
+        "break_before": true
       },
       {
         "text": " "
@@ -49,7 +53,8 @@
         "error": true,
         "explanation": "The retained fraction is 0.95. Dividing 56 by 0.95 and rounding upward gives 59 recruits per group, or 118 in total. The analyzable requirement remains 56 per group.",
         "link": "calculations.html#account-for-expected-losses",
-        "section": "Loss adjustment and rounding"
+        "section": "Loss adjustment and rounding",
+        "break_before": true
       }
     ],
     "version": 3

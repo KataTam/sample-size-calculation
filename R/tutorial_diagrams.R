@@ -1,5 +1,37 @@
 # Original teaching illustrations, drawn by R when the tutorial is rendered.
 # These functions draw on the active graphics device and leave its settings intact.
+draw_error_power_counts <- function() {
+  old <- par(no.readonly = TRUE); on.exit(par(old))
+  choices <- data.frame(alpha = c(.05, .05, .05, .01), power = c(.80, .90, .95, .90))
+  counts <- mapply(function(a, p) sample_size_two_proportions(.60, .30, a, p),
+    choices$alpha, choices$power)
+  labels <- c("80% power, 5% Type I error", "90% power, 5% Type I error",
+    "95% power, 5% Type I error", "90% power, 1% Type I error")
+  y <- 4:1
+  par(mar = c(4.3, 12.5, 1.5, 2), family = "sans", bg = "white", fg = "#26343d", las = 1)
+  plot(NA, xlim = c(0, max(counts) * 1.12), ylim = c(.5, 4.5), axes = FALSE,
+    xlab = "Analyzable patients per group", ylab = "")
+  axis(1); axis(2, at = y, labels = labels, tick = FALSE, cex.axis = .84)
+  abline(v = axTicks(1), col = "#e6ebef")
+  segments(0, y, counts, y, col = c("#8195a3", "#245e90", "#8195a3", "#8195a3"), lwd = 3)
+  points(counts, y, pch = c(1, 19, 1, 1), cex = 1.3, col = "#245e90", lwd = 2)
+  text(counts, y, counts, pos = 4, cex = .95, col = "#26343d")
+}
+
+draw_recruitment_counts <- function(analyzable = 56, loss = .05) {
+  old <- par(no.readonly = TRUE); on.exit(par(old))
+  recruits <- ceiling(analyzable / (1 - loss))
+  par(mar = c(.5, .5, .5, .5), family = "sans", bg = "white", fg = "#26343d")
+  plot.new(); plot.window(xlim = c(0, 10), ylim = c(0, 3))
+  rect(c(.1, 6.8), .35, c(3.2, 9.9), 2.65, col = "#d4e7f7", border = "#245e90", lwd = 1.5)
+  text(c(1.65, 8.35), 2.23, c("Outcomes needed", "Recruitment target"), cex = 1)
+  text(c(1.65, 8.35), 1.55, paste(c(analyzable, recruits), "per group"), cex = 1.25)
+  text(c(1.65, 8.35), .82, paste(2 * c(analyzable, recruits), "in total"), cex = 1)
+  arrows(3.4, 1.5, 6.6, 1.5, length = .1, col = "#245e90", lwd = 2)
+  text(5, 2.05, paste0("Divide by ", 1 - loss), cex = .95)
+  text(5, .94, "Round upward\nin each group", cex = .9)
+}
+
 draw_normal_multiplier <- function() {
   old <- par(no.readonly=TRUE); on.exit(par(old))
   par(mfrow=c(2,1),mar=c(3.6,3,2.8,1),oma=c(1.8,0,0,0),family="sans",fg="#26343d",bg="white")

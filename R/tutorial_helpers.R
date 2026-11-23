@@ -29,15 +29,20 @@ render_app_preview <- function(ids, description, image = NULL) {
   cat(gsub("\n[ \t]+", "\n", markup), "\n")
 }
 
+compact_decimal <- function(x, digits = 1) {
+  value <- formatC(x, format = "f", digits = digits)
+  value <- sub("\\.0+$", "", value)
+  sub("(\\.[0-9]*[1-9])0+$", "\\1", value)
+}
+
 percent <- function(x, digits = 1) {
-  paste0(formatC(100 * x, format = "f", digits = digits), "%")
+  paste0(compact_decimal(100 * x, digits), "%")
 }
 
 display_probabilities <- function(x, probabilities = character(), points = character()) {
   stopifnot(all(c(probabilities, points) %in% names(x)))
   for (column in probabilities) x[[column]] <- percent(x[[column]])
-  for (column in points) x[[column]] <- paste0(formatC(100 * x[[column]],
-    format = "f", digits = 1), " percentage points")
+  for (column in points) x[[column]] <- paste0(compact_decimal(100 * x[[column]]), " percentage points")
   names(x)[names(x) == "alpha"] <- "Type I error probability"
   names(x)[names(x) == "beta"] <- "Type II error probability"
   names(x) <- gsub("_", " ", names(x), fixed = TRUE)

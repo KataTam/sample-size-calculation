@@ -75,7 +75,7 @@ for target in (SITE / "book").glob("*.html"):
         for section, activities in sections.items():
             items = ''.join('<li><a href="../' + html.escape(activity["path"], quote=True)
                 + '" data-link-navigation="same-tab">Activity: ' + html.escape(activity["label"])
-                + ' <span class="contents-route">' + html.escape(activity["route"]) + '</span></a></li>'
+                + '</a></li>'
                 for activity in activities)
             href = chapter["chapter"] + '.html#' + section
             pattern = r'(<li class="chapter"[^>]*><a href="' + re.escape(href) + r'"[^>]*>.*?</a>)'

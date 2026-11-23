@@ -17,6 +17,7 @@ const bank=JSON.parse(fs.readFileSync('data/error-activities.json','utf8'));
    const root=page.locator('#'+item.id),popup=root.locator('.spot-popover');
    await root.locator('.spot-reset').click();
    assert.equal(await root.locator('.spot-choice[role="button"]').count(),parts.length);
+   if(name==='report')assert.equal(await root.locator(':scope > .spot-text').count(),parts.length,'Report passages remain separated into readable paragraphs');
    assert.equal(await root.locator('.spot-found').count(),0);
    const correct=root.locator('.spot-choice[data-error="false"]').first();
    await correct.click();await popup.waitFor({state:'visible'});

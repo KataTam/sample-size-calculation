@@ -424,13 +424,15 @@ After this chapter, you should be able to:
 
 :::
 
-You can now apply these ideas to two-arm treatment comparisons. The formulas below assume two [independent groups](#independent-groups) with equal allocation and a [two-sided test](#two-sided-test). Studies that randomize hospitals, compare body sites within participants, or collect repeated measurements require calculations that account for dependence; see [units of randomization, measurement, and analysis](#units-of-analysis). The [recruitment section below](#account-for-expected-losses) considers whether you can obtain enough usable outcomes; the [reporting chapter](#reporting) brings the calculation and its justification together.
+The neuropathic pain trial now has a defined comparison: neravixa versus duloxetine, with pain relief assessed at four weeks. The plan uses 60% versus 30% relief, a target difference of 30 percentage points, a 5% Type I error probability and 90% power. How many patients would provide enough outcomes for this comparison, and how many should the clinics recruit?
 
-Having specified the neuropathic pain target difference and acceptable error risks, you can calculate the required number of analyzable patients. The first calculation concerns that trial; the next concerns a continuous-outcome comparison. You can then allow for missing outcomes and assess how long recruitment would take.
+This chapter turns those assumptions into patient counts. It first calculates the required analyzable sample, then allows for missing outcomes and checks recruitment time. A continuous-outcome example shows how the calculation changes when the outcome is a score. Both comparisons assume two [independent groups](#independent-groups), equal allocation and a [two-sided test](#two-sided-test). The section [Units of randomization, measurement, and analysis](#units-of-analysis) covers paired and clustered designs.
 
 ## How error probabilities and power affect sample size {#how-error-rates-and-power-affect-sample-size .core-heading}
 
-Your sample size calculation needs to account for two choices: the acceptable Type I error probability and the target power. A lower Type I error probability requires stronger evidence before concluding that the treatments differ. Higher power means a greater probability of detecting the target difference if it is the true population difference. In this calculation, lowering the Type I error probability or increasing target power increases the unrounded sample size requirement, with the other inputs unchanged.
+For the neuropathic pain trial, a 5% Type I error probability means that, if the treatments were equally effective, about 5 in 100 repeated trials would falsely conclude that they differ. Choosing 1% would reduce that allowance to about 1 in 100. The stronger evidence required would also increase the sample size.
+
+The 90% power target concerns a different scenario: if relief occurs in 60% with neravixa and 30% with duloxetine, about 90 in 100 trials should detect a difference. Raising the target to 95 in 100 would require more patients. These choices determine how much evidence the trial must provide at the selected 30-point difference.
 
 For the normal approximation, these choices are translated into [$z$-values](#z-value): positions on the standard normal bell-shaped curve, centered at zero with a standard deviation of one. They are then combined into a sample size multiplier, $M$:
 
@@ -451,7 +453,7 @@ For a two-sided Type I error probability of 5% and target power of 90%:
 
 Figure \@ref(fig:normal-multiplier) shows what these distances mean for a treatment comparison. The upper curve applies when the population difference is zero; the lower applies when it equals the target difference. The same rejection boundaries apply in both cases. Separating the centers by about 1.96 + 1.28 standard errors puts about 90% of the lower curve beyond the upper boundary.
 
-This multiplier combines the chosen error probabilities and power. The sample size calculation also uses the target difference and variability. You can use the table below without calculating the $z$-values yourself. The appropriate calculation still depends on your study design and planned analysis [@kirkwood2003; @wang2020].
+The cutoffs link the error and power choices to the patient count. The calculation also needs the target difference and the variability of the outcome, as the two examples below show [@kirkwood2003; @wang2020].
 
 ```{r multiplier}
 # Probabilities are entered as decimals: .05 = 5%, .90 = 90%.
@@ -467,20 +469,44 @@ M
 draw_normal_multiplier()
 ```
 
-```{r multiplier-table, echo=FALSE}
-grid <- expand.grid(alpha = c(.05, .01), power = c(.80, .90, .95))
-grid$multiplier <- with(grid, (qnorm(1 - alpha / 2) + qnorm(power))^2)
-knitr::kable(display_probabilities(grid, c("alpha", "power")), digits = 2,
-  caption = "Normal-approximation sample-size multipliers for different Type I error probability and target-power choices.")
-```
-
-The [methods and software record](#tutorial-methods) identifies the procedures used here and explains what should accompany an exported calculation.
-
 ## Two proportions {.core-heading}
 
 The event percentages in each group and the target difference between them are your starting inputs. For the neuropathic pain trial, the calculation assumes 60% relief with the novel treatment and 30% with standard treatment: a target difference of 30 [percentage points](#percentage-points).
 
-For two independent groups of equal size and a two-sided test, the tutorial and apps use the normal approximation in R's `power.prop.test()` [@rcore]. You specify the two event probabilities, Type I error probability and target power. The result is the required analyzable number per group, before allowing for losses.
+For two independent groups of equal size, the normal approximation combines the same two $z$-values with the variability of a yes/no outcome. Let $p_t$ and $p_c$ be the novel- and standard-treatment relief probabilities, and let $\bar p=(p_t+p_c)/2$ be their average. The required number in each group is approximately:
+
+\[
+n\approx\frac{\left[z_{1-\alpha/2}\sqrt{2\bar p(1-\bar p)}+
+z_{1-\beta}\sqrt{p_t(1-p_t)+p_c(1-p_c)}\right]^2}{(p_t-p_c)^2}.
+\]
+
+The quantities under the square roots describe variability in the two scenarios: equal treatment probabilities for the test boundary, and the specified treatment probabilities for power. The denominator is the squared target difference. With $p_t=0.60$, $p_c=0.30$, and $\bar p=0.45$:
+
+\[
+n\approx\frac{\left[1.96\sqrt{2\times0.45\times0.55}+
+1.282\sqrt{0.60\times0.40+0.30\times0.70}\right]^2}{(0.60-0.30)^2}
+\approx55.7.
+\]
+
+R's `power.prop.test()` uses unrounded cutoffs and includes both rejection tails with `strict = TRUE` [@rcore]. Rounding its result upward gives 56 analyzable patients per group, or 112 in total.
+
+```{r multiplier-table, echo=FALSE}
+# Keep relief probabilities fixed while comparing error and power choices.
+grid <- expand.grid(alpha = c(.05, .01), power = c(.80, .90, .95))
+grid$M <- with(grid, (qnorm(1 - alpha / 2) + qnorm(power))^2)
+grid$per_group <- mapply(function(a, p) sample_size_two_proportions(.60, .30, a, p),
+  grid$alpha, grid$power)
+shown <- display_probabilities(grid, c("alpha", "power"))
+names(shown)[names(shown) == "per group"] <- "Analyzable patients per group"
+knitr::kable(shown, digits = 2,
+  caption = "Error and power choices translated into patient counts for 60% versus 30% relief. M summarizes the normal cutoffs. The patient counts also account for the two event probabilities.")
+```
+
+Table \@ref(tab:multiplier-table) connects the cutoffs to recruitment planning. At 5% Type I error probability and 90% power, the calculation gives 56 analyzable patients per group. Lowering the error probability to 1% or raising power to 95% increases that requirement, with the relief probabilities unchanged.
+
+```{r error-power-counts, echo=FALSE, fig.width=7.5, fig.height=4.2, fig.cap="Analyzable patients per group under four error and power choices, with relief probabilities fixed at 60% and 30%. The blue point marks the neuropathic pain plan. Each other row changes one choice.", fig.alt="A horizontal patient-count plot compares the current plan, lower and higher target power, and a lower Type I error probability, keeping the treatment relief probabilities fixed."}
+draw_error_power_counts()
+```
 
 ```{r proportions}
 # Relief probabilities for novel treatment (t) and standard treatment (c).
@@ -504,9 +530,9 @@ knitr::kable(data.frame(`Analyzable per group`=n_per_group, `Analyzable total`=2
   caption = "Analyzable sample size for the neuropathic pain trial using the normal planning approximation.")
 ```
 
-The unrounded result is `r round(n_raw, 2)` patients per group. The trial therefore needs outcomes from `r n_per_group` patients in each treatment group, or `r 2 * n_per_group` patients altogether, after rounding upward. This analyzable count is used in the recruitment and fixed-sample sensitivity examples below. The `strict = TRUE` setting counts significant results in either direction for the two-sided test.
+These are patients with an outcome available for analysis. The recruitment allowance is calculated separately below.
 
-The calculation targets 90% power under the stated assumptions. Actual power for the planned test can differ because the calculation is approximate; simulation lets you examine that performance. Your report should identify the method, assumptions and rounding, and account for expected losses separately.
+The normal approximation targets 90% power under these assumptions. Simulation can examine the performance of the planned test.
 
 <details class="misconception" id="misconception-definitive-sample">
 <summary>Common misconception: a sample size calculator gives a minimum participant count that applies regardless of the planning assumptions</summary>
@@ -518,12 +544,11 @@ The calculated sample size depends on the effect, event probabilities or variabi
 ```{r proportion-changes}
 # Each row specifies a different set of assumptions.
 proportion_cases <- data.frame(
-  scenario = c("Original", "Smaller difference", "Lower probabilities",
-               "Type I error probability 1%", "Power 95%"),
-  treatment = c(.60, .60, .30, .60, .60),
-  control = c(.30, .45, .15, .30, .30),
-  alpha = c(.05, .05, .05, .01, .05),
-  power = c(.90, .90, .90, .90, .95))
+  scenario = c("Original", "Smaller difference", "Lower probabilities"),
+  treatment = c(.60, .60, .30),
+  control = c(.30, .45, .15),
+  alpha = c(.05, .05, .05),
+  power = c(.90, .90, .90))
 # mapply() calculates a sample size for each row using its four inputs.
 proportion_cases$per_group <- mapply(sample_size_two_proportions,
   proportion_cases$treatment, proportion_cases$control,
@@ -630,7 +655,7 @@ c(unrounded_per_group = normal_n_raw,
   rounded_per_group = ceiling(normal_n_raw))
 ```
 
-The normal approximation gives 58.4 patients per group, which rounds upward to 59. The planned analysis is a pooled two-sample t-test, which accounts for estimating the common SD from the trial data. Its sample size calculation gives 60 patients per group. The trial would therefore need outcomes from 60 patients in each group, or 120 altogether, for 90% power at a three-point mean difference with SD five. The app and subsequent examples use this result.
+The normal approximation gives 58.4 patients per group, which rounds upward to 59. The planned analysis is a pooled two-sample t-test, which accounts for estimating the common SD from the trial data. Its sample size calculation gives 60 patients per group. The trial would therefore need outcomes from 60 patients in each group, or 120 altogether, for 90% power at a three-point mean difference with SD five.
 
 ```{r t-test-planning}
 # Plan the pooled two-sample t test with the same inputs.
@@ -649,7 +674,7 @@ knitr::kable(data.frame(`Analyzable per group`=n_per_group, `Analyzable total`=2
   caption = "Analyzable sample size for the continuous-outcome comparison, planned for a pooled two-sample t test.")
 ```
 
-The result is `r n_per_group` analyzable patients per group, or `r 2 * n_per_group` in total. The recruitment section below allows for expected missing outcomes. Smaller target differences require larger samples because they are harder to distinguish from patient-to-patient variation. In the normal formula, halving the difference or doubling the SD multiplies the unrounded requirement by four. The t-test calculation gives approximately this increase.
+Smaller target differences require larger samples because they are harder to distinguish from patient-to-patient variation. In the normal formula, halving the difference or doubling the SD multiplies the unrounded requirement by four. The t-test calculation gives approximately this increase.
 
 <details>
 <summary>Raw and standardized differences</summary>
@@ -661,7 +686,7 @@ The target difference of 3 score units is a raw between-group difference. Dividi
 <details>
 <summary>Where does the assumed SD come from?</summary>
 
-Previous studies can inform the SD, but their patients, measurement scale, follow-up time and analysis should be relevant to your study. The SD of change from baseline is not interchangeable with the SD of final scores. A review of knee osteoarthritis trials found substantial variation in pain-score variability across studies [@bentin2026]. Its estimates concern continuous WOMAC pain scores. The binary pain-relief example requires assumptions about event percentages.
+Previous studies can inform the assumed SD. The most relevant evidence uses similar patients, the same outcome scale and assessment time, and a compatible analysis. For an analysis of change scores, the required SD describes changes within patients. For an analysis of final scores, it describes those final scores. Reviews show that variability can differ substantially between studies, supporting examination of a plausible range [@bentin2026].
 
 Your study plan should document the source of the assumed SD and examine a plausible range using the [two-means app](https://katatam.github.io/sample-size-calculation/two_means/).
 
@@ -720,23 +745,29 @@ render_app_preview("rehabilitation_calculation", "Compare SDs of 5 and 7 for a t
 
 </details>
 
-The following sections use the analyzable count to calculate recruitment and assess feasibility. Your record should identify the inputs, method, and analyzable count per group and in total. The [discharge exercise](#discharge) offers further optional calculation practice.
+The [discharge exercise](#discharge) offers additional practice with a binary outcome.
 
 <span id="feasibility"></span>
 
 ## Allowing for expected missing outcomes {#account-for-expected-losses .core-heading}
 
-The calculation gives patients needed for analysis. The recruitment target also allows for patients whose four-week outcome will be unavailable.
-
-
-If some recruited patients are expected to have no usable outcome, you will need to recruit more patients than the calculation requires for analysis. Here, $n$ is the required number per group and $r$ is the expected proportion lost, so $1-r$ is the expected [retention proportion](#retention). The brackets mean "round upward to the next whole patient":
+The neuropathic pain trial needs 56 usable outcomes per group. If 5% of recruited patients are expected to have no four-week outcome, the clinics need to recruit more than 56 per group. Here, $n$ is the required number per group and $r$ is the expected proportion lost, so $1-r$ is the expected [retention proportion](#retention). The brackets mean "round upward to the next whole patient":
 
 \begin{equation}
 n_{\mathrm{recruit,arm}}=\left\lceil\frac{n}{1-r}\right\rceil.
 (\#eq:dropout)
 \end{equation}
 
-The expected loss should draw on studies or records with a comparable population, treatment, outcome and follow-up period. For example, if 20 of 200 enrolled patients in a comparable study lacked the required outcome, the observed loss was 20/200 = 10%. Using $r=0.10$ in a new study assumes that this experience is relevant. Reasons for missing outcomes, differences between arms and uncertainty in a small pilot should inform that judgment. When evidence is limited, your report should identify a plausible range and show how recruitment changes across it.
+For 56 analyzable patients per group and 5% expected loss, $r=0.05$ and the expected retained fraction is $1-0.05=0.95$:
+
+\[
+n_{\mathrm{recruit,arm}}=\left\lceil\frac{56}{1-0.05}\right\rceil
+=\left\lceil58.95\right\rceil=59.
+\]
+
+The clinics would therefore recruit 59 patients for each treatment, or 118 altogether, to aim for 112 usable outcomes.
+
+The expected loss should draw on studies or records with a comparable population, treatment, outcome and follow-up period. For example, if 10 of 200 enrolled patients in a comparable study lacked the required outcome, the observed loss was 10/200 = 5%. Using $r=0.05$ in the new trial assumes that this experience is relevant. Reasons for missing outcomes, differences between arms and uncertainty in a small pilot should inform that judgment. When evidence is limited, your report should identify a plausible range and show how recruitment changes across it.
 
 ```{r recruitment}
 # Start with the 56 patients per group needed for analysis.
@@ -752,7 +783,9 @@ knitr::kable(data.frame(`Analyzable per group`=analyzable_per_group, `Recruit pe
   caption = "Neuropathic pain recruitment target allowing for 5% expected loss.")
 ```
 
-Allowing for 5% unavailable outcomes, the team would recruit `r recruit_per_group` patients per group (`r 2*recruit_per_group` overall), aiming to obtain the required `r analyzable_per_group` outcomes in each group.
+```{r recruitment-counts, echo=FALSE, fig.width=7.5, fig.height=3.3, fig.cap="The neuropathic pain calculation gives 56 analyzable patients per group. Dividing by 0.95 and rounding upward within each group gives a recruitment target of 59 per group. The totals include both treatment groups.", fig.alt="Two connected boxes show 56 analyzable patients per group, 112 total, followed by division by 0.95 and upward rounding to 59 recruits per group, 118 total."}
+draw_recruitment_counts(analyzable_per_group, .05)
+```
 
 <details class="misconception" id="misconception-dropout-arithmetic">
 <summary>Common misconception: 10% expected dropout is covered by adding 10% to the required analyzable sample</summary>
@@ -760,8 +793,6 @@ Allowing for 5% unavailable outcomes, the team would recruit `r recruit_per_grou
 If you expect 10% of participants to be lost, approximately 90% will remain. You should therefore divide the required analyzable sample size by 0.90. For example, 100 analyzable participants require recruiting 112 participants after rounding up.
 
 </details>
-
-For the neuropathic pain trial, 5% expected loss means approximately 95% of recruits will contribute to the analysis. To obtain `r analyzable_per_group` patients per group with usable outcomes, you would plan to recruit `r analyzable_per_group`/0.95 = `r round(analyzable_per_group / .95, 2)`, rounded upward to `r recruit_per_group` per group.
 
 <span id="model-answer-protocol-counts"></span>
 The protocol should report both the required [analyzable sample](#analyzable-sample-size) and the recruitment target, per group and in total: here, `r 2 * analyzable_per_group` analyzable patients and `r 2 * recruit_per_group` recruits across the two groups.
@@ -810,7 +841,6 @@ At this rate, recruiting `r 2 * recruit_per_group` patients would take `r ceilin
 - Comparing one changed assumption with the original plan helps explain its effect. The selected result should identify analyzable participants per group and in total.
 - Recruitment allows for expected missing outcomes, with rounding upward within each group.
 - Screening and enrollment records help assess whether the recruitment target is feasible.
-- The [reporting chapter](#reporting) brings the method, inputs, software and rounding together.
 
 </div>
 
@@ -833,7 +863,7 @@ After this chapter, you should be able to:
 - Write a concise calculation report with traceable inputs, software and supporting reasoning.
 :::
 
-A useful report lets another researcher understand your decisions and reproduce the calculation. The concise calculation report presents the selected design and numerical result; the supporting study plan retains evidence, alternative assumptions and unresolved decisions. The [study-plan activity](https://katatam.github.io/sample-size-calculation/assumptions_report/?stage=question) creates both from one set of answers.
+The neuropathic pain calculation gives 56 analyzable patients and 59 recruits per group. A reader should be able to reproduce those numbers and understand why the inputs were chosen. This chapter brings that reasoning and the calculation together in a report. The concise calculation report presents the selected design and numerical result; the supporting study plan retains evidence, alternative assumptions and unresolved decisions. The [study-plan activity](https://katatam.github.io/sample-size-calculation/assumptions_report/?stage=question) creates both from one set of answers.
 
 ## A complete sample size calculation report {#write-a-sample-size-justification .core-heading}
 
@@ -963,7 +993,7 @@ render_app_preview("assumptions_report", "Develop your question, assumptions and
 ```
 
 
-The [planning extension](#extend-study-plan) develops alternative scenarios and a fuller evidence record. The [teaching guide](https://katatam.github.io/sample-size-calculation/teaching/TEACHING_GUIDE.html#extended-sample-size-justification) supplies a longer assignment and peer-review prompts.
+The [planning extension](#extend-study-plan) develops alternative scenarios and a fuller evidence record.
 
 <div class="chapter-recap">
 
@@ -1757,7 +1787,7 @@ After this chapter, you should be able to:
 - Describe how evaluating interim decisions and adaptations extends the simulation workflow.
 :::
 
-A simulation is a computer generated experiment: outcomes are generated under stated population assumptions, analyzed, and generated again for the next trial. Chapter 1 showed how results vary between trials. Here, follow one trial through its analysis, repeat it and assess power and uncertainty. Then explore missing outcomes or interim decisions if they are relevant to your design. The starting count of 100 analyzable patients per group matches the fixed-sample comparison in Chapter 5.
+Suppose the neuropathic pain trial enrolls 100 analyzable patients per group, with population relief probabilities of 60% and 30%. Repeating that trial produces different outcomes each time. Simulation makes those repetitions visible by generating and analyzing trial data under the stated assumptions. This chapter follows one trial through its analysis, then uses many trials to assess power and simulation uncertainty. Further examples examine missing outcomes and interim decisions.
 
 Simulation is useful when the planned analysis or dependence between observations makes a simple formula inadequate. A simulation study should specify its aims, data-generating mechanisms, estimands (quantities to estimate), methods and performance measures—the ADEMP framework [@morris2019; @pargent2024]. Here these are the relief probabilities, between-group difference, score test and confidence interval, and their performance across repeated trials.
 
@@ -2074,7 +2104,7 @@ After this chapter, you should be able to:
 - Reproduce a saved result and document changes when adapting it to another study.
 :::
 
-The core [calculation report](#sample-size-report-methods) records the information needed to check a straightforward calculation. This extension develops that record. Use the software section when choosing or comparing tools, the records section when preparing a protocol, and the reproduction steps when rerunning or adapting a saved example. The detailed simulation algorithms are in [Chapter 6](#simulation-reproducibility).
+Another researcher should be able to rerun the neuropathic pain calculation and recover 56 analyzable patients and 59 recruits per group. That requires the inputs, procedure, software and rounding decisions recorded in the [calculation report](#sample-size-report-methods). This chapter explains how to preserve and share that record, compare software and reproduce a saved calculation. The detailed simulation algorithms are in [Chapter 6](#simulation-reproducibility).
 
 ## Why reproducibility matters {#why-reproducibility-matters .advanced-heading}
 
@@ -2280,7 +2310,7 @@ Adaptations should keep the editable R Markdown, shared case settings, app code 
 
 <span id="extend-study-plan"></span>
 
-In [your continuing report](https://katatam.github.io/sample-size-calculation/assumptions_report/?level=advanced&stage=question), the detailed prompts expand the same answers into a fuller study plan. Under *Study settings*, selecting relevant design features adds prompts for clustering, repeated measurements, survival outcomes, noninferiority or equivalence, multiple claims, interim decisions, or simulation. An external calculation can be documented with its inputs, method, result and software version. You can appraise evidence for each input, justify plausible ranges, compare several sensitivity scenarios, and document feasibility and unresolved decisions. Switching views preserves your writing and attached calculations. The [teaching guide](https://katatam.github.io/sample-size-calculation/teaching/TEACHING_GUIDE.html#extended-sample-size-justification) provides an extended assignment and peer-review questions.
+In [your continuing report](https://katatam.github.io/sample-size-calculation/assumptions_report/?level=advanced&stage=question), the detailed prompts expand the same answers into a fuller study plan. Under *Study settings*, selecting relevant design features adds prompts for clustering, repeated measurements, survival outcomes, noninferiority or equivalence, multiple claims, interim decisions, or simulation. An external calculation can be documented with its inputs, method, result and software version. You can appraise evidence for each input, justify plausible ranges, compare several sensitivity scenarios, and document feasibility and unresolved decisions. Switching views preserves your writing and attached calculations.
 
 Your study report can include a simulation result with its generating assumptions, analysis, repetition count and Monte Carlo interval. Your explanation should address what it adds to the analytical calculation. You can also write a short hypothetical study abstract that distinguishes the planned design, realized results and interpretation, following the broader learning sequence used in DICE [@thiesmeier2024].
 
@@ -2401,13 +2431,13 @@ This project was supported by the University of Groningen’s Open Education Inc
 
 This tutorial builds on Katalin Tamási’s original e-learning module [@tamasi2021]. Its presentation and three simulation activities draw on chapters 1, 11 and 15 of *Power Analysis with Superpower* [@superpowerbook2022]. Hans Burgerhof’s *Statistics 3: Sample size calculation* e-learning module informs the discussion of testing and estimation goals [@burgerhof2020], with further statistical background from @kirkwood2003, @whitley2002, @pourhoseingholi2013 and @wang2020.
 
-Our account of developing the epidemiology and medical statistics e-learning environment describes the learner and teacher needs underlying this approach [@wieringa2025]. Evaluation emphasizes explanations, application to new cases, and usability feedback, since access counts and time online may not reflect learning [@chan2019]. The [teaching guide](https://katatam.github.io/sample-size-calculation/teaching/TEACHING_GUIDE.html), [case template](https://katatam.github.io/sample-size-calculation/case-studies/student_case_template.html) and [assessment rubric](https://katatam.github.io/sample-size-calculation/teaching/assessment_rubric.html) support classroom use. The tutorial uses R Markdown [@allaire2021rmarkdown] and bookdown [@xie2021bookdown]; the build environment records the versions used for the current edition.
+Our account of developing the epidemiology and medical statistics e-learning environment describes the learner and teacher needs underlying this approach [@wieringa2025]. Evaluation emphasizes explanations, application to new cases, and usability feedback, since access counts and time online may not reflect learning [@chan2019]. The tutorial uses R Markdown [@allaire2021rmarkdown] and bookdown [@xie2021bookdown]; the build environment records the versions used for the current edition.
 
 Except where otherwise noted, original teaching materials are shared under [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/) and original code under the [MIT License](https://opensource.org/license/mit). The [reuse and citation guidance](https://katatam.github.io/sample-size-calculation/documentation/reuse-and-citation.html) explains attribution and third-party exceptions. Shared adaptations of the teaching materials must use the same or a compatible license. Publishing student work, identifiable feedback, or named student acknowledgments requires consent.
 
 ## Further reading {-}
 
-For communicating numerical findings, Gigerenzer and colleagues discuss transparent health statistics, and NICE recommends absolute risks with explicit denominators and time periods [@gigerenzer2007health; @nice2021shared]. Frequency formats and frequency trees support Bayesian diagnostic reasoning [@gigerenzer1995frequencies; @binder2021frequencies]. The [teaching guide](https://katatam.github.io/sample-size-calculation/teaching/TEACHING_GUIDE.html#interpreting-numerical-results) explains how these ideas inform the examples and critical-appraisal outcome, using revised Bloom's taxonomy [@krathwohl2002taxonomy].
+For communicating numerical findings, Gigerenzer and colleagues discuss transparent health statistics, and NICE recommends absolute risks with explicit denominators and time periods [@gigerenzer2007health; @nice2021shared]. Frequency formats and frequency trees support Bayesian diagnostic reasoning [@gigerenzer1995frequencies; @binder2021frequencies]. These principles inform the examples and the critical-appraisal learning outcome, expressed using revised Bloom's taxonomy [@krathwohl2002taxonomy].
 
 Your choice of reading can follow the decision you need to make; the [reading guide](https://katatam.github.io/sample-size-calculation/documentation/reading-guide.html) connects these sources to the activities.
 

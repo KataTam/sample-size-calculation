@@ -10,7 +10,7 @@ app_metrics <- function(values) shiny::tags$div(class = "app-metrics",
   lapply(names(values), function(label) shiny::tags$div(class = "app-metric",
     shiny::tags$span(class = "app-value", values[[label]]), shiny::tags$span(class = "app-label", label))))
 app_primary_result <- function(value, label, detail = NULL) shiny::tags$div(class = "app-primary-result",
-  shiny::tags$p(shiny::tags$span(class = "app-value", value), shiny::tags$span(class = "app-label", label)),
+  shiny::tags$p(shiny::tags$span(class = "app-value", value), if (!is.null(label)) shiny::tags$span(class = "app-label", label)),
   if (!is.null(detail)) shiny::tags$p(class = "app-secondary", detail))
 app_plot_style <- function(mar = c(4.2, 4.4, 1, 1)) {
   graphics::par(mar = mar, ps = if (grDevices::dev.size("in")[1] < 5.5) 11 else 13, cex.axis = 1, cex.lab = 1, las = 1,
