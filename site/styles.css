@@ -13,6 +13,7 @@ table { border-collapse: collapse; display: block; max-width: 100%; overflow-x: 
 .pilot-intro { margin: 1.5rem 0; padding: 1.25rem; }
 .pilot-intro h2 { color: inherit; font-size: 1.25rem; font-weight: 400; margin: 0 0 .65rem; }
 .pilot-intro p { margin: 0; }
+.pilot-intro p + p { margin-top: .65rem; }
 .pilot-form-link { display: block; padding: .75rem 1rem; text-align: center; }
 .pilot-form-link:hover, .start-route.pilot-green:hover { background: #c8e5d1; border-color: #37654b; }
 .pilot-green:focus-visible, .pilot-green a:focus-visible { outline: 3px solid #173f2b; outline-offset: 3px; }
