@@ -4,13 +4,31 @@ const page=await browser.newPage({viewport:{width:1400,height:1000}});const erro
 await page.goto('http://127.0.0.1:8769/study/?activity=design_questionnaire');
 const f=page.frameLocator('#activity-design_questionnaire iframe');await f.locator('#aim').waitFor();
 async function fill(values){for(const [id,value] of Object.entries(values))await f.locator('#'+id).selectOption(value);}
+async function showSuggestions(){
+ assert(await f.locator('#design-form').evaluate(form=>form.checkValidity()),'All active questionnaire fields are complete');
+ const button=f.getByRole('button',{name:'Show design suggestions'});
+ await button.scrollIntoViewIfNeeded();
+ // Conditional fields change the embedded height after a 100 ms debounce.
+ // Wait for that resize before dispatching a pointer click into the frame.
+ await page.waitForFunction(()=>{
+  const frame=document.querySelector('#activity-design_questionnaire iframe');
+  const button=frame?.contentDocument?.querySelector('button[type="submit"]');
+  if(!button)return false;
+  const frameBox=frame.getBoundingClientRect(),buttonBox=button.getBoundingClientRect();
+  const position=[frameBox.y,frameBox.height,buttonBox.x,buttonBox.y,buttonBox.width,buttonBox.height].join(',');
+  if(window.designButtonPosition?.position!==position){window.designButtonPosition={position,since:performance.now()};return false;}
+  return performance.now()-window.designButtonPosition.since>250;
+ },null,{polling:50});
+ await button.click();
+ await f.locator('#suggested-design').waitFor();
+}
 await fill({aim:'treatment',data:'new',structure:'independent',outcome:'binary',allocation:'individual',comparison:'parallel',claim:'superiority'});
-await f.getByRole('button',{name:'Show design suggestions'}).click();assert.match(await f.locator('#suggested-design').innerText(),/parallel-group/);
+await showSuggestions();assert.match(await f.locator('#suggested-design').innerText(),/parallel-group/);
 assert.equal(await f.locator('#result a[href="../two_proportions/"]').count(),1);
 assert.equal(await f.locator('#crossover').isVisible(),false);
 await f.locator('#comparison').selectOption('crossover');assert.equal(await f.locator('#suggested-design').count(),0);
-await f.locator('#crossover').selectOption('no');await f.getByRole('button',{name:'Show design suggestions'}).click();assert.match(await f.locator('#suggested-design').innerText(),/parallel-group/);
-await fill({aim:'association',data:'existing',sampling:'casecontrol'});await f.getByRole('button',{name:'Show design suggestions'}).click();assert.equal(await f.locator('#suggested-design').innerText(),'Case-control study');assert.equal(await f.locator('#result a[href="../two_proportions/"]').count(),0);
+await f.locator('#crossover').selectOption('no');await showSuggestions();assert.match(await f.locator('#suggested-design').innerText(),/parallel-group/);
+await fill({aim:'association',data:'existing',sampling:'casecontrol'});await showSuggestions();assert.equal(await f.locator('#suggested-design').innerText(),'Case-control study');assert.equal(await f.locator('#result a[href="../two_proportions/"]').count(),0);
 assert.equal(await f.locator('#comparison').isVisible(),false);
 fs.mkdirSync('build/browser-checks',{recursive:true});await page.screenshot({path:'build/browser-checks/design-questionnaire.png',fullPage:true});
 await f.locator('#start-again').click();assert.equal(await f.locator('#aim').inputValue(),'');assert.equal(await f.locator('#suggested-design').count(),0);
