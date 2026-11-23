@@ -44,11 +44,11 @@ const base = (process.argv[2] || 'http://127.0.0.1:8769').replace(/\/$/, '');
       await f.locator('#report_preview .app-report').waitFor();
       console.log(app+': checking changed inputs and report downloads');
       if(app==='two_means') {
-        await set(f,{delta:2,sd:7,compare_delta:1,dropout:.2}); await has(f,'target difference 1 units');
-        await has(f,'7² / 2²');
+        await set(f,{delta:2,sd:7,compare_delta:1,compare_sd:8,dropout:.2}); await has(f,'revised plan uses 1 units and SD 8');
+        await has(f,'sd = 7');
         await has(f,'With 20% expected dropout');
       } else if(app==='two_proportions') {
-        await set(f,{pi1:.5,pi2:.2,compare_pi1:.4,dropout:.15}); await has(f,'novel-treatment event probability 40%');
+        await set(f,{pi1:.5,pi2:.2,compare_pi1:.4,dropout:.15}); await has(f,'from 50% to 40%');
         await has(f,'p1 = 0.5, p2 = 0.2');
         await has(f,'With 15% expected dropout');
       } else if(app==='dropout_adjustment') {
@@ -69,7 +69,7 @@ const base = (process.argv[2] || 'http://127.0.0.1:8769').replace(/\/$/, '');
         await has(f,'My retention decision.');
       } else {
         await set(f,{activity_request:{activity:'adherence',nonce:Date.now()}});
-        await f.waitForFunction(()=>document.querySelector('#activity_context')?.textContent.includes('Probiotics:'));
+        await f.waitForFunction(()=>document.querySelector('#activity_choice')?.value==='adherence');
         await f.getByRole('tab',{name:'Report',exact:true}).click();
         await has(f,'Probiotics:');
         await set(f,{goal:'fixed',fixed_n:20,B:100,dropout:.2,study_question:'My study question.',clinical_relevance:'My clinical rationale.',

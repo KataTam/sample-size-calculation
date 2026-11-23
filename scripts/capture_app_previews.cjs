@@ -27,12 +27,14 @@ const ids=(process.argv[3]||'pain_one_many,pain_calculation,probiotics_calculati
      if(!app)await page.waitForTimeout(1000);
     }
     assert(app,id+' Shiny session ready');
+    console.log(id+': app session ready');
     // Case initialization follows the activity query parameter through the app bridge.
     if(id==='pain_calculation')await app.waitForFunction(()=>jQuery('#pi1').data('ionRangeSlider')?.result.from===.6 && document.querySelector('#result').textContent.includes('56'));
     if(id==='rehabilitation_calculation')await app.waitForFunction(()=>document.querySelector('#delta').value==='3');
     if(['prevalence_precision','sampling_distributions'].includes(record.app))await app.waitForFunction(()=>/Loaded shared case:/.test(document.querySelector('#bridge_status')?.textContent||''));
     if(['pain_one_many','pain_curves','pain_simulation'].includes(id))await app.waitForFunction(n=>document.querySelector('#fixed_n').value===String(n),record.inputs.fixed_n);
     await app.waitForFunction(()=>!document.querySelector('.shiny-busy'));
+    console.log(id+': inputs applied');
     if(id==='pain_one_many') {
      await app.locator('#run_one').click();
      await app.locator('#sampling-journey svg').waitFor({state:'visible'});
@@ -50,6 +52,7 @@ const ids=(process.argv[3]||'pain_one_many,pain_calculation,probiotics_calculati
      if(await overview.count())await overview.click();
     }
     await app.waitForFunction(()=>![...document.querySelectorAll('.recalculating')].some(el=>el.checkVisibility()));
+    console.log(id+': results ready');
     const errors=await app.locator('.shiny-output-error:not(.shiny-output-error-validation)').allTextContents();
     assert.deepEqual(errors,[],id+' rendered without an app error');
     await app.waitForFunction(()=>[...document.querySelectorAll('.shiny-plot-output img')].filter(i=>i.checkVisibility()).every(i=>i.complete&&i.naturalWidth>0));

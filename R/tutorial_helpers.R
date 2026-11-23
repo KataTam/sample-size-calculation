@@ -82,9 +82,11 @@ power_curve_data <- function(spec, effects, ns) {
 }
 
 plot_power_curves <- function(data, target = .90, cap = 100,
-                             outcome = "proportions", show_legend = TRUE) {
+                             outcome = "proportions", show_legend = TRUE, required = NULL,
+                             restore_par = TRUE) {
   old <- par(no.readonly = TRUE)
-  on.exit(par(old))
+  # Shiny needs the final plotting coordinates to translate pointer clicks.
+  if (restore_par) on.exit(par(old))
   par(mar = c(4.3, 4.4, 2.8, 1))
   effects <- unique(data$effect)
   colors <- c("#176675", "#a04a24", "#635493")
@@ -105,8 +107,8 @@ plot_power_curves <- function(data, target = .90, cap = 100,
     rows <- data[data$effect == effects[i], ]
     if (cap <= max(rows$n)) points(cap, approx(rows$n, rows$power, cap)$y,
       pch = 16, col = colors[i])
-    crossing <- which(rows$power >= target)[1]
-    if (!is.na(crossing)) points(rows$n[crossing], target, pch = 1, col = colors[i])
+    crossing <- if (is.null(required)) rows$n[which(rows$power >= target)[1]] else required[i]
+    if (is.finite(crossing) && crossing <= max(rows$n)) points(crossing, target, pch = 1, col = colors[i])
   }
   labels <- if (outcome == "proportions") paste(100 * effects, "percentage points") else
     paste(signif(effects, 3), "outcome units")

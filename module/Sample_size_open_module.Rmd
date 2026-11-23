@@ -89,9 +89,9 @@ The linked sections should help you develop a sample size justification for a ba
 
 - [Define a clinical question and justify assumptions](#clinical-question), distinguishing the [difference observed in previous data](#expected-difference), [target difference](#target-difference) and [clinical threshold](#clinical-threshold).
 - [Explain Type I error probability, Type II error probability and power](#power).
-- Use [one simulated study and many studies](#activity-1-one-study-then-many) to distinguish [sample estimates](#sample-estimate) from [population parameters](#population-parameter) and see how results vary.
+- Compare [one simulated study and many studies](#activity-1-one-study-then-many) to distinguish [sample estimates](#sample-estimate) from [population parameters](#population-parameter), then explain what changes with a larger sample.
 - [Calculate sample size for two proportions or two means](#calculations) and [adjust recruitment for expected losses](#account-for-expected-losses), distinguishing analyzable counts from recruitment counts.
-- Explain why a sample size requirement depends on its [specified assumptions](#calculations).
+- Compare calculations after changing one [assumption](#calculations) and justify the inputs selected for the report.
 - [Write a short sample size justification](#write-a-sample-size-justification) recording assumptions, calculation and recruitment, using [your continuing report](https://katatam.github.io/sample-size-calculation/assumptions_report/?stage=question).
 
 :::
@@ -121,7 +121,7 @@ After this chapter, you should be able to:
 - Specify a clinical question, outcome, design and planned comparison.
 - Distinguish a difference observed in earlier data, a calculation target and a clinical threshold.
 - Explain Type I and Type II error probabilities and power under specified assumptions.
-- Use one study and repeated studies to explain sampling variability and the effect of sample size.
+- Compare one trial, repeated trials and a larger sample to explain sampling variability and power.
 :::
 
 ## The chronic pain trial: how many patients do you need? {#the-chronic-pain-study-how-many-patients-do-we-need .core-heading}
@@ -370,7 +370,7 @@ Figure \@ref(fig:sample-differences) shows [sampling variability](#sampling-vari
 
 Increasing the sample size changes the information in each trial. Increasing simulation repetitions makes the estimated percentage of significant results more stable; each trial retains the same sample size and power.
 
-The app below generates further trials from these same 30% and 60% populations. It starts with 20 patients per group, matching the first illustrated trials. It also displays the calculated requirement of 56 per group for 90% power, explained in [Two proportions](#two-proportions); that count can be used directly in the simulation. Comparing the resulting dots and repeated-study graph shows what the extra patients change.
+The app below follows three steps: one trial, repeated trials and a larger sample. It starts with 20 patients per group from the same 30% and 60% populations. The calculated requirement of 56 per group for 90% power, explained in [Two proportions](#two-proportions), can then be used in the simulation. The repeated-study graph retains the first batch alongside the new batch, so the change in sampling variability can be seen directly.
 
 ```{r pain-app-preview, echo=FALSE, results='asis'}
 render_app_preview("pain_one_many", "Simulate further trials and compare different sample sizes.",
@@ -388,7 +388,7 @@ The chapter on [power and uncertain assumptions](#curves) explains the sampling-
 - A sample size calculation starts with the research question and planned analysis.
 - A pilot result describes its sample; relevant evidence and uncertainty inform the main study assumptions.
 - Power is the probability of rejecting the null under a specified true difference.
-- More patients change a study's power; more simulation repetitions make its estimated performance more stable.
+- Comparing sample sizes under the same population assumptions shows how additional patients affect sampling variability and power. More simulation repetitions make the summaries more stable.
 - The target difference and clinical threshold have distinct roles and may have the same value.
 
 </div>
@@ -405,7 +405,7 @@ render_chapter_quiz("clinical-question")
 ::: {.learning-goals .core-outcomes}
 After this section, you should be able to:
 
-- Explain how the [target difference](#target-difference), [event probabilities](#event-probability) or [standard deviation](#standard-deviation), [Type I error probability](#alpha), and target [power](#statistical-power) affect sample size.
+- Compare calculations after changing one input to explain how the [target difference](#target-difference), [event probabilities](#event-probability) or [standard deviation](#standard-deviation), [Type I error probability](#alpha), and target [power](#statistical-power) affect sample size.
 - Calculate the [analyzable sample size](#analyzable-sample-size) for two independent proportions or means.
 - Interpret per-group and total counts, including upward rounding.
 - Identify the procedure and inputs needed to reproduce a calculation.
@@ -705,7 +705,7 @@ The [rehabilitation simulation](https://katatam.github.io/sample-size-calculatio
 </details>
 
 ```{r rehabilitation-app-preview, echo=FALSE, results='asis'}
-render_app_preview("rehabilitation_calculation", "Compare SDs of 5 and 7 for a target difference of 3 units, keeping power, error probability and allocation unchanged.")
+render_app_preview("rehabilitation_calculation", "Compare SDs of 5 and 7 for a target difference of 3 units on the same graph, then justify the scenario selected for your report.")
 ```
 
 </details>
@@ -797,7 +797,7 @@ At this rate, recruiting `r 2 * recruit_per_group` patients would take `r ceilin
 ### Take-home points {.unnumbered}
 
 - Two-group calculations depend on the target difference, variability or event probabilities, Type I error probability and power.
-- The result should identify analyzable participants per group and in total.
+- Comparing one changed assumption with the original plan helps explain its effect. The selected result should identify analyzable participants per group and in total.
 - Recruitment allows for expected missing outcomes, with rounding upward within each group.
 - Screening and enrollment records help assess whether the recruitment target is feasible.
 - The [reporting chapter](#reporting) brings the method, inputs, software and rounding together.
@@ -958,7 +958,7 @@ The [planning extension](#extend-study-plan) develops alternative scenarios and 
 ### Take-home points {.unnumbered}
 
 - The report should state what was calculated, why those inputs were chosen, and how the result can be reproduced.
-- One answer set supplies the concise calculation report and the supporting study plan.
+- One answer set supplies the concise calculation report and the supporting study plan. The supporting plan should explain the choice of assumptions and the consequence of a plausible alternative.
 - A complete report identifies per-group and total analyzable counts and recruitment targets.
 - A review should check agreement between the narrative, saved calculations and planned analysis.
 
@@ -1318,7 +1318,7 @@ render_chapter_quiz("estimation-planning")
 ::: {.learning-goals .advanced-outcomes}
 After this chapter, you should be able to:
 
-- Interpret power curves and distinguish power at an available sample size from the sample required for a power target.
+- Read power at a selected sample size and the sample required for a selected power target from the same curves.
 - Justify plausible assumptions using relevant evidence and its uncertainty.
 - Assess how event probabilities, outcome variability and available sample size affect power.
 - Evaluate feasible design changes when the available sample provides insufficient power.
@@ -1376,7 +1376,7 @@ The target difference used in a sample size calculation is not a detection cutof
 
 </details>
 
-The [Sample size reasoning lab](https://katatam.github.io/sample-size-calculation/book/curves.html#activity-pain_curves) lets you explore the power curves in Figure \@ref(fig:power-curves), starting with 100 analyzable patients per group. Change the available sample or the assumed relief percentages to see how power changes.
+The [Sample size reasoning lab](https://katatam.github.io/sample-size-calculation/book/curves.html#activity-pain_curves) starts with 100 analyzable patients per group. Clicking its graph can select an available sample or a target power. The reference lines, marked crossings and table update together. The input fields provide the same choices with a keyboard. The axes stay fixed during comparisons, with an option to show crossings outside the current range.
 
 ```{r power-app-preview, echo=FALSE, results='asis'}
 render_app_preview("pain_curves", "Compare power for plausible treatment differences with 100 analyzable patients per group.")
@@ -1691,7 +1691,7 @@ Substituting the study's observed effect into a power calculation adds no indepe
 
 ### Take-home points {.unnumbered}
 
-- Power at an available sample and sample size required for a power target are two readings of the same curves.
+- The vertical reference line gives power at the available sample. The horizontal line gives the sample required for the selected power target. Comparing both supports a justified recruitment or design decision.
 - Relevant evidence and its uncertainty should support the plausible assumptions examined.
 - Event probabilities and outcome variability affect power even when the treatment difference stays fixed.
 - When power is insufficient, the planning decision concerns feasible recruitment, design changes or a justified revision of the objective.

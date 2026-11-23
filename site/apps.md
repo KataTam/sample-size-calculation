@@ -16,7 +16,7 @@ Calculators and simulations also open within the tutorial when you select their 
 
 - [Two-proportion calculator](two_proportions/): calculate sample size for a difference between two event percentages. [Tutorial explanation](book/calculations.html#two-proportions).
 
-- [Two-mean calculator](two_means/): calculate sample size for a difference between two group means. [Tutorial explanation](book/calculations.html#two-means).
+- [Two-mean calculator](two_means/): calculate a sample size, compare original and revised SD assumptions on one graph, and record the selected plan. [Tutorial explanation](book/calculations.html#two-means).
 
 - [Recruitment adjustment](book/calculations.html#activity-recruitment): apply one expected loss percentage to the analyzable count from your chosen calculation. [Tutorial explanation](book/calculations.html#account-for-expected-losses).
 

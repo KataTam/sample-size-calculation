@@ -1,4 +1,7 @@
 # Shared interface and readable report components. Original software: MIT.
+app_activity_sequence <- function(steps) shiny::tags$ol(class = "app-activity-sequence",
+  `aria-label` = "Activity sequence", lapply(steps, shiny::tags$li))
+
 app_input_group <- function(title, ..., advanced = FALSE, collapsed = FALSE) {
   if (collapsed) shiny::tags$details(class = paste("app-input-group", if (advanced) "app-advanced"), shiny::tags$summary(title), ...)
   else shiny::tags$section(class = "app-input-group", shiny::tags$h3(title), ...)

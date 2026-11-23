@@ -73,6 +73,7 @@ jobs:
           node scripts/check_planning_routes.cjs
           node scripts/check_learning_interfaces.cjs
           node scripts/check_help_input_access.cjs
+          node scripts/check_comparison_workflow.cjs
           node scripts/check_assumptions_report.cjs http://127.0.0.1:8769
           node scripts/check_advanced_report.cjs
           node scripts/check_report_exports.cjs

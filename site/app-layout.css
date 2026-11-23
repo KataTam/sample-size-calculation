@@ -108,3 +108,10 @@ textarea.form-control { min-height:88px; resize:vertical; }
 .activity-description { margin: .7rem 0 1rem; padding: .2rem .8rem; border: 1px solid #b5c8d9; border-radius: 6px; background: #eef4fa; color: #25313b; }
 .activity-description > summary { cursor: pointer; padding: .65rem 0; min-height: 44px; font-weight: 600; }
 .guided .activity-description { display: none; }
+/* Short directions remain visible while the full description is collapsed. */
+.app-activity-sequence {display:flex;flex-wrap:wrap;gap:8px 28px;margin:10px 0 16px;padding:10px 12px 10px 32px;background:#e7f0f9;border:1px solid #b3c9df;border-radius:5px;color:#234e70;font-size:1rem;line-height:1.5}
+.app-activity-sequence li {padding-left:2px;font-weight:400}
+.app-comparison .app-plot-key {margin:10px 0}
+.app-comparison .shiny-input-container {max-width:360px}
+.comparison-instruction {color:#234e70;margin:6px 0 12px}
+@media(max-width:600px){.app-activity-sequence{display:block}.app-activity-sequence li+li{margin-top:4px}}

@@ -23,6 +23,7 @@ ui <- fluidPage(
   tags$p(id = "download-status", role = "status", `aria-live` = "polite"),
   tags$head(tags$style(HTML("body{font-size:17px;line-height:1.55}.well{background:#f4f7fa}table{font-size:15px}.shiny-html-output{overflow-x:auto}.shiny-output-error-validation{color:#8a3410}.caption{font-size:.9em;color:#505b64;margin:8px 0 20px}"))),
   titlePanel("Sample size reasoning lab", windowTitle = "Sample size reasoning lab"),
+  uiOutput("activity_sequence"),
   tags$div(class = "activity-picker", selectInput("activity_choice", "Prepared activity", c("Choose an activity or use your own inputs" = "",
     setNames(names(teaching_cases()), vapply(teaching_cases(), function(x) x$title, character(1)))), width = "100%")),
   activity_description(uiOutput("activity_context")),
@@ -116,11 +117,14 @@ ui <- fluidPage(
         textOutput("planning_text"), textOutput("axis_note"), actionButton("fit_axis", "Fit axis to results"))),
     tabPanel("Explore assumptions", value = "Compare assumptions",
       h3("Power at the available sample"),
-      plotOutput("comparison_plot", height = "340px"), uiOutput("comparison_key"),
+      radioButtons("graph_selection", "Select on the graph", c("Available sample size" = "sample", "Target power" = "power"), inline = TRUE),
+      p(class = "comparison-instruction", "Click the graph to move the selected reference line. The sample-size field and target-power slider also accept keyboard input."),
+      plotOutput("comparison_plot", height = "340px", click = "comparison_click"), uiOutput("comparison_key"),
       p(class = "caption", "Figure 2. Power across sample sizes for the three treatment differences. Reference lines mark target power and the available analyzable count."),
       tableOutput("comparison_table"),
       p(class = "caption", "Table 2. Power at the vertical reference line and sample size required at the horizontal target-power line."),
       textOutput("comparison_text"),
+      textOutput("comparison_range"), actionButton("fit_comparison_axis", "Fit axis to results"),
       activity_details("Power across a wider range of differences",
       h4("Power across effects at the planned sample size"),
       plotOutput("effect_plot", height = "320px"),
@@ -155,6 +159,7 @@ ui <- fluidPage(
       conditionalPanel("output.many_ready", tableOutput("many_summary"),
         p(class = "caption", "Table 6. Summary of the saved simulation batch. Additional settings add coverage, interval-width targets and simulation uncertainty."),
         textOutput("many_text"), plotOutput("distribution", height = "300px"),
+        uiOutput("sample_comparison"),
         p(class = "caption", "Figure 6. Estimated treatment differences across independent studies. The dashed line marks the assumed population difference."),
         conditionalPanel("output.intervals_visible", activity_details("Intervals across studies", plotOutput("many_plot", height = "480px"), app_interval_key(),
           p(class = "caption", "Figure 5. The first 30 saved intervals and their point estimates. Lines mark zero, the clinical threshold and the assumed population difference."))),
@@ -267,6 +272,15 @@ server <- function(input, output, session) {
       session$sendCustomMessage("sampling-journey", journey_payload(list(x)))
   }, ignoreNULL = FALSE)
   many_saved <- reactiveVal(NULL)
+  baseline_many <- reactiveVal(NULL)
+  output$activity_sequence <- renderUI({
+    if (identical(current_activity(), "pain_one_many"))
+      app_activity_sequence(c("Simulate one trial", "Repeat the trial", "Compare a larger sample"))
+    else if (identical(current_activity(), "pain_curves"))
+      app_activity_sequence(c("Select a sample size", "Compare assumptions", "Justify a plan"))
+    else if (input$goal != "precision")
+      app_activity_sequence(c("Set the assumptions", "Explore the results", "Explain your decision"))
+  })
   output$one_ready <- reactive(!is.null(one_saved()))
   output$many_ready <- reactive(!is.null(many_saved()))
   outputOptions(output, "one_ready", suspendWhenHidden = FALSE)
@@ -307,7 +321,7 @@ server <- function(input, output, session) {
     routed_case(NULL)
     apply_lab_inputs(session, x$inputs[names(x$inputs) %in% names(lab_input_defaults())])
     if (isTRUE(reset)) {
-      one_saved(NULL); many_saved(NULL)
+      one_saved(NULL); many_saved(NULL); baseline_many(NULL)
       session$sendCustomMessage("sampling-journey", list(clear = TRUE))
       apply_study_inputs(session, study_input_defaults())
     }
@@ -403,7 +417,7 @@ server <- function(input, output, session) {
     apply_study_inputs(session, saved$study)
     activity <- if (saved$activity %in% names(teaching_cases()) && teaching_case(saved$activity)$app == "power_explorer") saved$activity else ""
     current_activity(activity); activity_selection(activity); routed_case(NULL)
-    one_saved(NULL); many_saved(NULL)
+    one_saved(NULL); many_saved(NULL); baseline_many(NULL)
     updateSelectInput(session, "activity_choice", selected = activity)
     updateCheckboxInput(session, "show_advanced", value = TRUE)
     import_status("Settings and written answers restored. Simulations can now be rerun for this plan.")
@@ -549,10 +563,20 @@ server <- function(input, output, session) {
     meta <- snapshot(); x <- if (is.null(meta$missing)) simulate_one_study(meta$generating) else simulate_missing_one(meta$generating, meta$missing); x$meta <- meta; one_saved(x)
   }, ignoreInit = TRUE)
   many <- reactive({ req(many_saved()); many_saved() })
+  # Compare sample sizes only when the generating population and test are unchanged.
+  same_simulation_population <- function(a, b) {
+    keys <- c("outcome", "p_control", "p_treatment", "delta", "sd", "alpha")
+    is.null(a$missing) && is.null(b$missing) &&
+      isTRUE(all.equal(a$spec[keys], b$spec[keys]))
+  }
   observeEvent(input$run_many, {
     meta <- snapshot()
     withProgress(message = "Simulating independent studies", value = .2, {
-      x <- if (is.null(meta$missing)) simulate_trials(meta$generating) else simulate_missing_trials(meta$generating, meta$missing); incProgress(.8); x$meta <- meta; many_saved(x)
+      x <- if (is.null(meta$missing)) simulate_trials(meta$generating) else simulate_missing_trials(meta$generating, meta$missing)
+      incProgress(.8); x$meta <- meta
+      original <- baseline_many()
+      if (is.null(original) || !same_simulation_population(original, x)) baseline_many(x)
+      many_saved(x)
     })
   }, ignoreInit = TRUE)
   status <- function(saved, label) {
@@ -610,7 +634,12 @@ server <- function(input, output, session) {
     if (is.null(axis_limit())) axis_limit(min(100000, max(250, 2*planned()$n)))
   }, priority = 100)
   plot_limit <- reactive({ req(axis_limit()); axis_limit() })
-  observeEvent(input$fit_axis, { axis_limit(min(100000, max(200, 2*planned()$n, input$recruit_cap))) })
+  fit_comparison_axis <- function() {
+    required <- comparison_results()[[3]]
+    axis_limit(min(100000, ceiling(max(250, 1.1*required, 1.1*comparison()$cap_n, na.rm = TRUE))))
+  }
+  observeEvent(input$fit_axis, { fit_comparison_axis() })
+  observeEvent(input$fit_comparison_axis, { fit_comparison_axis() })
   output$axis_note <- renderText({
     limit <- plot_limit(); n <- planned()$n
     paste0("The horizontal range stays at 2 to ", limit, " patients per group while you compare inputs. ",
@@ -648,12 +677,23 @@ server <- function(input, output, session) {
     })
     list(spec = x, cap_n = cap_n, scenarios = scenarios, effects = effects)
   })
+  observeEvent(input$comparison_click, {
+    point <- input$comparison_click
+    if (identical(input$graph_selection, "power")) {
+      req(is.finite(point$y))
+      updateSliderInput(session, "target_power", value = round(max(.5, min(.99, point$y)), 2))
+    } else {
+      req(is.finite(point$x))
+      updateSelectInput(session, "goal", selected = "fixed")
+      updateNumericInput(session, "fixed_n", value = round(max(2, min(100000, point$x))))
+    }
+  })
   output$comparison_plot <- renderPlot({
     z <- comparison(); x <- z$spec
     ns <- unique(round(seq(2, max(250, plot_limit()), length.out = 250)))
     app_plot_style()
     plot_power_curves(power_curve_data(x, z$effects, ns), input$target_power,
-      z$cap_n, outcome = x$outcome, show_legend = FALSE)
+      z$cap_n, outcome = x$outcome, show_legend = FALSE, required = comparison_results()[[3]], restore_par = FALSE)
   }, res = 96, alt = "Power versus analyzable participants per group, with labeled target-power and available-count reference lines. The table gives power at the available count and the required count for each difference.")
   output$comparison_key <- renderUI({
     z <- comparison()
@@ -677,11 +717,19 @@ server <- function(input, output, session) {
     result
   })
   output$comparison_table <- renderTable(comparison_results(), digits = 0, na = "—")
+  output$comparison_range <- renderText({
+    required <- comparison_results()[[3]]
+    outside <- required[is.finite(required) & required > plot_limit()]
+    paste0("The horizontal axis stays fixed while inputs change. ",
+      if (length(outside)) paste0("Required counts outside this range: ", paste(outside, collapse = ", "),
+        " per group. Fit the axis to show these target-power crossings.") else
+        "Filled dots show power at the selected sample. Open circles mark the target-power crossings.")
+  })
   output$comparison_text <- renderText({
     z <- comparison()
     powers <- vapply(z$scenarios, function(x) spec_power(x, z$cap_n), numeric(1))
     paste0("With ", z$cap_n, " analyzable participants per group, power is ",
-      paste(paste0(format_percent(powers, 1), " at ", effect_text(z$effects, z$spec$outcome, 1)), collapse = "; "),
+      paste(paste0(format_percent(powers, 1), " at ", effect_text(z$effects, z$spec$outcome, 1)), collapse = ", "),
       ". The table's last column gives the analyzable count required for ", format_percent(input$target_power), " power.")
   })
   output$effect_plot <- renderPlot({
@@ -761,12 +809,44 @@ server <- function(input, output, session) {
     x <- many(); x$results <- x$results[is.finite(x$results$estimate), , drop=FALSE]
     validate(need(nrow(x$results)>0, "No estimable comparisons in this batch.")); x
   })
+  sample_comparison <- reactive({
+    a <- baseline_many(); b <- many_saved()
+    if (is.null(a) || is.null(b) || a$spec$n == b$spec$n || !same_simulation_population(a,b)) return(NULL)
+    list(original = a, current = b)
+  })
+  sample_comparison_text <- reactive({
+    z <- sample_comparison(); if (is.null(z)) return(character())
+    a <- z$original; b <- z$current
+    paste0("The first batch used ", a$spec$n, " participants per group and ", nrow(a$results),
+      " simulated trials. The current batch uses ", b$spec$n, " per group and ", nrow(b$results),
+      " trials, with the same population and test assumptions. The SD of the estimated differences is ",
+      effect_text(sd(a$results$estimate),a$spec$outcome), " in the first batch and ",
+      effect_text(sd(b$results$estimate),b$spec$outcome), " in the current batch. A narrower distribution means less variation between trial estimates.")
+  })
+  output$sample_comparison <- renderUI({
+    z <- sample_comparison(); req(z)
+    tagList(tags$div(class="app-plot-key",
+      tags$span(class="solid",style="--key-color:#245e90",paste0("First batch: ",z$original$spec$n," per group")),
+      tags$span(class="dashed",style="--key-color:#725197",paste0("Current batch: ",z$current$spec$n," per group"))),
+      p(sample_comparison_text()))
+  })
   output$many_plot <- renderPlot(plot_trial_intervals(valid_many()$results, many()$spec, show_legend=FALSE, show_tests=input$goal != "precision"), alt = "First 30 study intervals; summary percentages and downloadable data provide a text alternative.")
   output$distribution <- renderPlot({
     x <- valid_many(); scale <- if (x$spec$outcome == "proportions") 100 else 1
     app_plot_style(c(4.2,4.4,2,1))
-    hist(scale * x$results$estimate, breaks = 25, col = "#dbeafe", border = "white", main = "Sampling distribution of effects",
-      xlab = if (x$spec$outcome == "proportions") "Treatment minus control (points)" else "Treatment minus control (outcome units)")
+    z <- sample_comparison()
+    xlab <- if (x$spec$outcome == "proportions") "Treatment minus control (points)" else "Treatment minus control (outcome units)"
+    if (is.null(z)) hist(scale * x$results$estimate, breaks = 25, col = "#dbeafe", border = "white",
+      main = "Sampling distribution of effects", xlab = xlab) else {
+      first <- scale*z$original$results$estimate
+      current <- scale*x$results$estimate
+      breaks <- pretty(range(first,current), n=25)
+      a <- hist(first, breaks=breaks, plot=FALSE); b <- hist(current, breaks=breaks, plot=FALSE)
+      pa <- 100*a$counts/sum(a$counts); pb <- 100*b$counts/sum(b$counts)
+      plot(range(breaks), c(0,max(pa,pb)*1.1),type="n",xlab=xlab,ylab="Simulated studies (%)",main="Estimates at two sample sizes")
+      rect(head(breaks,-1),0,tail(breaks,-1),pa,col="#245e9033",border="#245e90",lwd=1.5)
+      lines(rep(breaks,each=2),c(0,rep(pb,each=2),0),col="#725197",lwd=2.5,lty=2)
+    }
     abline(v = scale * true_difference(x$spec), lty = 3, lwd = 2)
   }, alt = "Effect estimate histogram; mean estimate and the true effect assumed for simulation are provided above.")
   output$p_values <- renderPlot({
@@ -798,7 +878,18 @@ server <- function(input, output, session) {
   outputOptions(output, "download_many", suspendWhenHidden=FALSE)
   report_sections <- reactive({
     details <- study_details()
-    if (pain_report()) return(app_pain_simulation_report(snapshot(), one_saved(), many_saved(), details))
+    if (pain_report()) {
+      sections <- app_pain_simulation_report(snapshot(), one_saved(), many_saved(), details)
+      comparison_text <- sample_comparison_text()
+      if (length(comparison_text) && identical(many_saved()$meta, snapshot())) {
+        sections[["Comparing sample sizes"]] <- comparison_text
+        first <- baseline_many()$spec
+        sections[["Simulation record"]] <- c(sections[["Simulation record"]],
+          paste0("Retained first batch: ", first$n, " participants per group, ", first$B,
+            " repetitions, random seed ", first$seed, ". Population and test assumptions match the current batch."))
+      }
+      return(sections)
+    }
     answer <- app_answer
     compatible <- details$study_design == "two_groups" && is.null(routed_case())
     calculation <- if (compatible) {

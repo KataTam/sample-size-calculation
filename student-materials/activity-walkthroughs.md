@@ -69,7 +69,7 @@ Purpose: see why sample estimates differ from population values, interpret the u
 2. In “One study and many studies,” “Simulate one study” generates patient outcomes. The animation follows the patient outcomes into the estimated difference and then the sampling distribution, with the population difference marked on both axes. “Animate 20 trials” builds a short sequence; pause, replay and reduced motion support closer inspection. Each accumulated dot represents one complete trial. “Additional calculations and simulations” opens the other calculation and study-planning views when needed.
 3. The 20-trial animation shows different possible trials while the population probabilities remain fixed. Patient outcomes produce each observed difference, which falls into the distribution of repeated-study estimates.
 4. “Many studies and a larger sample” opens further down the same page. “Simulate many studies” generates 5,000 independent trials. The distribution shows sampling variability; the percentage of significant results estimates power for this population scenario.
-5. The calculated requirement appears alongside the starting count: 56 analyzable patients per group for 90% power with the default assumptions. “Use 56 per group in the simulation” applies that count to subsequent runs. Larger samples improve precision and increase power at a nonzero population difference. “Settings” provides the other assumptions. Additional controls start closed; coverage and Monte Carlo summaries appear when selected.
+5. The calculated requirement appears alongside the starting count: 56 analyzable patients per group for 90% power with the default assumptions. “Use 56 per group in the simulation” applies that count to subsequent runs. After another batch is simulated, the graph retains the first batch and overlays the current batch on the same axes. Comparing their spread shows the effect of a larger sample. A change to the population or test assumptions starts a new comparison. “Settings” provides the other assumptions.
 6. “Interpret the animation” describes the counts and difference currently displayed. “Report” records the population assumptions, pain-relief counts in one study, results across many studies, and reproducibility details. Participant records are available there after a single study has been simulated. The report can be downloaded as PDF or editable Word. After changing the sample size, a new run is needed for those results to appear in the report.
 
 ## Reviewing short examples
@@ -115,7 +115,7 @@ Purpose: reproduce the binary-outcome sample size calculation. The calculator us
 1. The starting probabilities are 60% relief with Neravixa and 30% with duloxetine, with 90% power, a two-sided Type I error probability of 5%, and no loss allowance.
 2. The result is 56 analyzable patients per group, or 112 total. The report records the inputs, normal planning approximation, software and counts.
 3. In the recruitment activity, 5% unavailable outcomes gives 59 recruits per group, or 118 total. The annotated report in Chapter 3 brings these decisions together.
-4. An optional comparison at 50% versus 30% shows why detecting a 20-point difference with the same power requires a larger sample.
+4. “Compare two scenarios” retains the original 60% versus 30% plan while a revised 50% versus 30% scenario shows the requirement for a 20-point difference. In “Report,” the selected scenario and your written reason form the record. The evidence behind the chosen event percentages belongs in that reason.
 
 ## Additional practice: probiotics
 
@@ -148,7 +148,8 @@ Purpose: see how a target difference and between-patient variability determine a
 
 1. The target mean difference is 3 units and the common SD is 5. The two-sided Type I error probability is 5% and target power is 90%.
 2. With expected loss left at zero, the pooled two-sample t-test calculation gives 60 analyzable participants per group, or 120 total.
-3. Changing the SD to 7 while retaining the 3-unit target difference shows how greater variability increases the requirement. Your record should identify the selected inputs, method, software and counts. “Add this calculation to my study plan” attaches the result after your review. The recruitment activity starts with this analyzable requirement.
+3. In “Compare two scenarios,” the revised SD starts at 7 while the target difference stays at 3. The original SD 5 curve stays visible. The revised requirement is 116 per group, or 232 total, showing how greater variability increases the sample needed.
+4. In “Report,” you can select the scenario to use and explain the evidence supporting its assumptions. “Add this calculation to my study plan” attaches that selected result and explanation after review. The recruitment activity starts with the selected analyzable requirement.
 
 The [rehabilitation simulation](../power_explorer/?activity=rehabilitation) uses a t-test method and generated outcomes. It can examine confidence intervals and repeated-study performance after the core calculation.
 
@@ -162,7 +163,7 @@ Purpose: assess whether the feasible study can answer the intended question unde
 
 1. The activity starts with 100 analyzable patients per group. The available count is shown directly; recruitment after expected losses is calculated separately.
 2. “Explore assumptions” shows calculated curves for 15-, 20- and 30-point differences. The vertical line marks 100 per group and the horizontal line marks 90% power. The table gives approximately 59%, 83% and 99% power, and required counts of 217, 124 and 56 per group.
-3. Changing the analyzable count updates the vertical reference line, table and report. Under Settings, “Assumptions for the simulated studies” → “Custom effect or variability” changes the simulated population while retaining that count.
+3. With “Available sample size” selected, clicking the graph changes the count and vertical reference line. With “Target power” selected, clicking changes the horizontal line and required counts. The sample-size field and target-power slider support the same choices by keyboard. The axes stay fixed until “Fit axis to results” is selected. A notice identifies any required counts outside the current range.
 4. “Many studies” estimates power from generated patient data for the selected scenario.
 5. The chapter question asks which of the three differences reaches 90% power at the available count. The supporting study plan can record the evidence and uncertainty behind a recruitment or design decision.
 

@@ -29,7 +29,7 @@ teaching_cases <- function() {
       "This optional calculation applies the two-proportion method to preventing gestational diabetes. Entering 80% and 90% remaining disease-free gives the same requirement as 20% and 10% developing the disease. Your report should identify the event and the analyzable counts.",
       "adherence", list(outcome = "proportions", plan_p0 = .80, plan_p1 = .90, expected_p = .12, threshold_p = .05, target_power = .90, dropout = 0), app = "two_proportions"),
     rehabilitation_calculation = case("rehabilitation_calculation", "Rehabilitation: calculate a mean-difference sample size",
-      "This optional practice compares SDs of 5 and 7 with a target mean difference of 3 units. Keeping power, error probability and allocation unchanged shows how variability affects the pooled t-test sample size. Your report should justify the SD and identify the method and counts.",
+      "This optional practice retains the original SD 5 calculation alongside a revised SD 7 calculation, with a target mean difference of 3 units. The shared graph shows how variability affects the pooled t-test sample size. The report uses the selected scenario and your explanation of the evidence supporting it.",
       "rehabilitation", list(plan_delta = 3, plan_sd = 5, target_power = .90, dropout = 0), app = "two_means"),
     recruitment = case("recruitment", "Adjust recruitment",
       "Your starting count is the analyzable requirement from the calculation you chose. Applying one expected loss percentage to both groups gives recruitment per group and in total, rounded upward. You can add this adjustment and a short justification to your continuing report.",

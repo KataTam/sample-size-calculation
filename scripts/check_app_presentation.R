@@ -14,10 +14,23 @@ check_app_presentation <- function() {
         grepl("Current report", output$report_preview$html))
       revised <- if (outcome == "means") calculate(difference = 2) else calculate(probability = .5)
       stopifnot(revised$n_per_group > result()$n_per_group)
+      if (outcome == "means") {
+        session$setInputs(compare_delta = 3, compare_sd = 7, report_scenario = "revised",
+          decision = "Comparable follow-up data support SD 7.")
+        stopifnot(result()$n_per_group == 60, revised_result()$n_per_group == 116,
+          selected_result()$sd == 7, !is.null(output$comparison_plot),
+          grepl("sd = 7", paste(method_text(),collapse=" "), fixed=TRUE),
+          grepl("Comparable follow-up data", paste(report_paragraphs(),collapse=" "),fixed=TRUE))
+        session$setInputs(report_scenario = "original")
+        stopifnot(selected_result()$n_per_group == 60,
+          identical(input$decision, "Comparable follow-up data support SD 7."))
+      }
       session$setInputs(dropout = .2)
       stopifnot(result()$total_with_dropout == 2*ceiling(result()$n_per_group/.8),
         grepl(as.character(result()$total_with_dropout), paste(report_paragraphs(), collapse = " ")))
       if (outcome == "proportions") {
+        session$setInputs(compare_pi1 = .1)
+        stopifnot(!is.null(output$comparison_plot))
         session$setInputs(pi1 = .1, compare_pi1 = .2)
         stopifnot(!is.null(output$sample_size_plot))
         session$setInputs(pi1 = .3)
