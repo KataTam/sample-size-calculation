@@ -249,21 +249,25 @@ A test's decision can agree or disagree with reality: the population pain-relief
 
 ```{r error-table, echo=FALSE}
 knitr::kable(data.frame(
-  Decision = c("Statistically significant difference (reject the null)", "No statistically significant difference (do not reject the null)"),
-  `Equal population relief percentages: 30% and 30%` = c("False positive (Type I error)", "True negative"),
-  `Different population relief percentages: 60% and 30%` = c("True positive (power)", "False negative (Type II error)"),
-  check.names = FALSE), caption = "Four possible testing decisions in the neuropathic pain trial. The columns describe two possible population scenarios.")
+  `Population or decision` = c("Population relief percentages: duloxetine and neravixa", "Correct decision", "Error"),
+  `Scenario 1: Equal population relief percentages` = c("30% and 30% (null hypothesis true)", "True negative: do not reject the null", "False positive (Type I error): reject the null"),
+  `Scenario 2: Different population relief percentages` = c("30% and 60% (null hypothesis false)", "True positive (power): reject the null", "False negative (Type II error): do not reject the null"),
+  check.names = FALSE), caption = "Two population scenarios and their possible testing decisions in the neuropathic pain trial. Correct decisions precede errors in each scenario.")
 ```
 
-Scenario 1: the treatments have equal population relief percentages. Suppose both treatments provide relief to 30% of patients. With a 5% Type I error probability, about 5 of every 100 repetitions would incorrectly find a statistically significant difference. These are false positives. The other approximately 95 would correctly leave the null hypothesis unrejected: true negatives.
+### Scenario 1: Equal population relief percentages {.unnumbered}
 
-```{r error-scenario-null, echo=FALSE, fig.width=8, fig.height=7, fig.cap="Equal population relief percentages: 30% with each treatment. The grid illustrates expected frequencies under a 5% Type I error probability. The first five amber crosses represent false positives, followed by 95 blue circles for true negatives. Each tile represents one complete trial.", fig.alt="A red bar represents eligible patients, all with neuropathic pain before treatment. Stick figures illustrate 30% relief with each treatment. A 10 by 10 grid begins with five amber crosses for false positives, followed by 95 blue circles for true negatives."}
+Suppose both treatments provide relief to 30% of patients. With a 5% Type I error probability, about 95 of every 100 repetitions would correctly leave the null hypothesis unrejected: true negatives. About 5 would incorrectly find a statistically significant difference: false positives.
+
+```{r error-scenario-null, echo=FALSE, fig.width=8, fig.height=7, fig.cap="Equal population relief percentages: 30% with each treatment. The grid illustrates expected frequencies under a 5% Type I error probability. The first 95 blue circles represent true negatives, followed by five amber crosses for false positives. Each tile represents one complete trial.", fig.alt="Red stick figures represent the eligible population with neuropathic pain. Stick figures illustrate 30% relief with each treatment. A 10 by 10 grid begins with 95 blue circles for true negatives, followed by five amber crosses for false positives."}
 draw_error_scenario("null")
 ```
 
-Scenario 2: the novel treatment helps more patients. Suppose 60% achieve relief with neravixa and 30% with duloxetine. A trial with 90% power at this difference would detect a statistically significant difference in about 90 of every 100 repetitions: true positives. About 10 would fail to detect it: false negatives.
+### Scenario 2: Different population relief percentages {.unnumbered}
 
-```{r error-scenario-effect, echo=FALSE, fig.width=8, fig.height=7, fig.cap="Different population relief percentages: 30% with standard treatment and 60% with novel treatment. The grid illustrates expected frequencies for trials designed for 90% power at this difference. The first ten amber crosses represent false negatives, followed by 90 blue circles for true positives. Each tile represents one complete trial.", fig.alt="A red bar represents eligible patients with neuropathic pain. Stick figures illustrate 30% relief with duloxetine and 60% with neravixa. A 10 by 10 grid begins with ten amber crosses for false negatives, followed by 90 blue circles for true positives."}
+Suppose 30% achieve relief with duloxetine and 60% with neravixa. A trial with 90% power at this difference would detect a statistically significant difference in about 90 of every 100 repetitions: true positives. About 10 would fail to detect it: false negatives.
+
+```{r error-scenario-effect, echo=FALSE, fig.width=8, fig.height=7, fig.cap="Different population relief percentages: 30% with standard treatment and 60% with novel treatment. The grid illustrates expected frequencies for trials designed for 90% power at this difference. The first 90 blue circles represent true positives, followed by ten amber crosses for false negatives. Each tile represents one complete trial.", fig.alt="Red stick figures represent the eligible population with neuropathic pain. Stick figures illustrate 30% relief with duloxetine and 60% with neravixa. A 10 by 10 grid begins with 90 blue circles for true positives, followed by ten amber crosses for false negatives."}
 draw_error_scenario("effect")
 ```
 
@@ -337,7 +341,7 @@ trial_examples <- do.call(rbind, lapply(seq_along(example_trials), function(i) {
 knitr::kable(trial_examples, caption = "Three simulated trials with 20 patients per group, all sampled under the same 30% and 60% population event probabilities.")
 ```
 
-```{r three-pain-trials, echo=FALSE, fig.width=9, fig.height=5.3, fig.cap="Three simulated trials with 20 patients per group. All use the same population pain-relief probabilities: 30% with duloxetine and 60% with neravixa. Filled circles show achieved pain relief; open circles show no pain relief. Arrows connect each pair of groups to its observed difference. The dashed line marks the population difference of 30 percentage points.", fig.alt="Three rows show individual patient outcomes in the duloxetine and neravixa groups, their relief counts and percentages, and the resulting treatment differences on a shared scale. The patient outcomes and estimates vary while the population difference stays at 30 percentage points."}
+```{r three-pain-trials, echo=FALSE, fig.width=9, fig.height=6.5, fig.cap="Three simulated trials with 20 patients per group. All use the same population pain-relief probabilities: 30% with duloxetine and 60% with neravixa. Green stick figures show achieved pain relief and red figures show no pain relief. Arrows connect each pair of groups to its observed difference. The dashed green line marks the population difference of 30 percentage points. The blue line marks the mean of the three trial estimates.", fig.alt="Three rows show individual patient outcomes in the duloxetine and neravixa groups, their relief counts and percentages, and the resulting treatment differences on a shared scale. The eligible population and sampled outcomes use stick figures. Patient outcomes and estimates vary while the population difference stays at 30 percentage points. A blue line marks the mean of the three estimates."}
 draw_three_pain_trials(example_trials)
 ```
 
@@ -387,7 +391,7 @@ Figure \@ref(fig:sample-differences) shows [sampling variability](#sampling-vari
 
 Increasing the sample size changes the information in each trial. Increasing simulation repetitions makes the estimated percentage of significant results more stable; each trial retains the same sample size and power.
 
-The app below follows patient outcomes through the estimated difference to the p value and test decision. It starts with 20 patients per group and shows two population scenarios side by side: 30% relief with both treatments, and 30% with duloxetine versus 60% with neravixa. Repeated trials show false positives, false negatives and power at the selected sample size.
+The app below follows patient outcomes through the estimated difference to the p value and test decision. It starts with 20 patients per group and shows two population scenarios side by side: 30% relief with both treatments, and 30% with duloxetine versus 60% with neravixa. The two scenarios distinguish correct decisions and errors. Completed runs show mean relief percentages and the mean estimated difference. The calculated power uses the assumed population percentages, selected sample size and test.
 
 ```{r pain-app-preview, echo=FALSE, results='asis'}
 render_app_preview("pain_one_many", "Simulate further trials and compare different sample sizes.",

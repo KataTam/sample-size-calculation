@@ -71,6 +71,7 @@ const base=(process.argv[2]||'http://127.0.0.1:8769').replace(/\/$/,'');
     await app.locator('#fixed_n').fill('40');await app.locator('#fixed_n').press('Tab');
     await app.locator('#run_one').click();
     await app.locator('#sampling-journey svg').first().waitFor();
+    await app.waitForFunction(()=>document.querySelectorAll('[data-patient]').length===160);
     await app.waitForFunction(()=>/Trial 1:.*of 40.*estimated difference/.test(document.querySelector('#journey-reading').textContent));
     await app.locator('#inline-study-explanation > summary').click();
     assert.match(await app.locator('#journey-reading').innerText(),/Trial 1:.*of 40.*estimated difference/);
@@ -97,8 +98,8 @@ const base=(process.argv[2]||'http://127.0.0.1:8769').replace(/\/$/,'');
     assert.equal(await app.locator('a[data-value="Methods"]').count(),0);
     assert(!/Your reflection/.test(await app.locator('#report_preview').innerText()));
    }
-   // Both readable formats work from the nested inline frame.
-   for(const format of ['pdf','docx']) {
+   // Calculators retain readable downloads. The introductory simulation is explored in place.
+   for(const format of engine==='two_proportions'?['pdf','docx']:[]) {
     const button=app.locator(`[data-report-format="${format}"]`).first();
     const downloadPromise=page.waitForEvent('download',{timeout:90000});await button.click();
     const download=await downloadPromise;
@@ -106,6 +107,7 @@ const base=(process.argv[2]||'http://127.0.0.1:8769').replace(/\/$/,'');
     const path=await download.path(),bytes=fs.readFileSync(path);
     assert(bytes.length>1000);assert.equal(bytes.subarray(0,format==='pdf'?4:2).toString(),format==='pdf'?'%PDF':'PK');
    }
+   if(engine==='power_explorer')assert.equal(await app.locator('[data-report-format]:visible, .shiny-download-link:visible').count(),0);
    await dimensions();
    const expand=card.locator('[aria-label="Expand app"]');await expand.click();
    assert(await card.locator('[role="dialog"]').isVisible());

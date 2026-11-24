@@ -4,6 +4,12 @@
 .tutorial-embedded #sampling-journey.journey-comparison {max-width:none}
 .journey-scenario{min-width:0;background:#f6f9fc;border-radius:8px}
 .journey-comparison .journey-scenario{border:1px solid #cad5df}
+.journey-scenario-title{font-size:1.05rem!important;font-weight:400!important;line-height:1.4;margin:0!important;padding:12px;background:#dcecfb;border-radius:8px 8px 0 0;color:#233e59}
+#sampling-journey .journey-step-heading{font-size:15px!important;font-weight:400;fill:#193b5c}
+#journey-reading.journey-comparison{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+#journey-reading section{min-width:0;padding:10px 12px;background:#eef5fc;border-radius:6px}
+#journey-reading h4{font-weight:400;font-size:1rem;line-height:1.4}
+.unified-sampling :is(.report-downloads,.shiny-download-link,.journey-download-only){display:none!important}
 .repeat-trial-controls{display:flex;flex-wrap:wrap;gap:8px;align-items:end}
 .repeat-trial-controls .shiny-input-container{width:145px!important;margin:0}
 .simulation-actions{align-items:end!important}
@@ -12,7 +18,7 @@
 .playback-controls label{font-size:.88rem;margin:0}
 .pain-focus .legacy-p-values{display:none}
 .pain-focus:not(.lab-expanded) #scenario_summary{display:none}
-@media(max-width:540px){#sampling-journey.journey-comparison{grid-template-columns:minmax(0,1fr)}}
+@media(max-width:540px){#sampling-journey.journey-comparison,#journey-reading.journey-comparison{grid-template-columns:minmax(0,1fr)}}
 .journey-playback{margin:8px 0 12px}
 .journey-playback summary{font-weight:400}
 .playback-controls select{min-height:36px;padding:4px 8px;border:1px solid #718096;border-radius:4px;background:white;color:#243447}

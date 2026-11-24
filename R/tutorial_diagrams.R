@@ -11,9 +11,8 @@ draw_error_scenario <- function(scenario = c("null", "effect")) {
     segments(x,y+.08*size,x+c(-.14,.14)*size,y+if(relief) .26*size else -.02*size,col=col,lwd=1.6)
     segments(x,y-.12*size,x+c(-.14,.14)*size,y-.38*size,col=col,lwd=1.6)
   }
-  text(6,11.65,"Eligible population: all have neuropathic pain before treatment",cex=1)
-  rect(.5,10.95,11.5,11.3,col="#b83c46",border=NA)
-  text(6,10.6,"100% have pain before treatment",cex=.88)
+  text(6,11.65,"Eligible population with neuropathic pain",cex=1)
+  for(i in 1:24) person(.6+(i-1)*.47,10.98,.7,"#b83c46")
   arrows(6,10.3,6,9.94,length=.08,col="#64778a",lwd=1.5)
   text(6,9.65,"Population pain-relief probabilities at four weeks",cex=1)
   for (g in 1:2) {
@@ -22,7 +21,7 @@ draw_error_scenario <- function(scenario = c("null", "effect")) {
     text(center,9.13,paste0(c("duloxetine: ","neravixa: ")[g],successes*10,"%"),cex=1)
     for(i in 1:10) person(center-2.05+(i-1)*.455,8.55,.9,if(i<=successes)"#237747" else "#b83c46",i<=successes)
   }
-  text(6,7.91,"Each person represents 10%: raised arms indicate pain relief",cex=.82)
+  text(6,7.91,"Each person represents 10% of the population",cex=.82)
   arrows(6,7.65,6,7.25,length=.08,col="#64778a",lwd=1.5)
   text(6,6.98,if(scenario=="null")"Trials using a 5% Type I error probability" else
     "Trials designed for 90% power at the 30 percentage point difference",cex=.96)
@@ -30,10 +29,10 @@ draw_error_scenario <- function(scenario = c("null", "effect")) {
   correct <- if(scenario=="null") 95 else 90
   errors <- 100-correct
   for(i in 1:100) {
-    error <- i<=errors
+    error <- i>correct
     x<-2.7+((i-1)%%10)*.67; y<-6.02-floor((i-1)/10)*.43
     rect(x-.28,y-.18,x+.28,y+.18,col=if(error)"#f8e5bb" else "#e2edf8",border=NA)
-    # Crosses come first in these illustrations of expected frequencies.
+    # Correct decisions precede errors in both scenarios.
     if(error) {
       segments(x-.075,y-.075,x+.075,y+.075,col="#9b600e",lwd=1.8)
       segments(x-.075,y+.075,x+.075,y-.075,col="#9b600e",lwd=1.8)
@@ -192,8 +191,8 @@ draw_pain_pilot_patients <- function() {
   old <- par(no.readonly = TRUE)
   on.exit(par(old))
   diagram_canvas()
-  pain <- "#b43c36"
-  relief <- "#21834a"
+  pain <- "#b83c46"
+  relief <- "#237747"
   person <- function(x, y, improved = FALSE) {
     color <- if (improved) relief else pain
     segments(x, y + 4, x, y - 3, col = color, lwd = 2.2)
@@ -233,35 +232,47 @@ draw_three_pain_trials <- function(trials) {
   on.exit(par(old))
   par(mar = c(2.8, .6, .5, .6), bg = "white", family = "sans",
     fg = "#26343d", xaxs = "i", yaxs = "i")
-  plot.new(); plot.window(c(0, 100), c(-18, 100))
+  plot.new(); plot.window(c(0, 100), c(-28, 123))
+  person <- function(x,y,relief=FALSE,size=1) {
+    color <- if(relief) "#237747" else "#b83c46"
+    symbols(x,y+1.45*size,circles=.43*size,inches=FALSE,add=TRUE,bg=color,fg=color)
+    segments(x,y+1.02*size,x,y-.6*size,col=color,lwd=1.4)
+    segments(x,y+.4*size,x+c(-.75,.75)*size,y+if(relief)1.35*size else -.4*size,col=color,lwd=1.3)
+    segments(x,y-.6*size,x+c(-.7,.7)*size,y-1.85*size,col=color,lwd=1.3)
+  }
+  text(50,119,"Eligible population with neuropathic pain",cex=.94)
+  for(j in 1:28) person(14+(j-1)*2.7,111,FALSE,1.1)
+  arrows(50,107,50,102,length=.06,col="#64748b")
   text(c(29, 52, 83), 96, c("duloxetine", "neravixa", "Observed difference"),
-    font = 2, cex = .94)
+    font = 1, cex = .94)
   text(c(29, 52), 90, c("Population: 30% relief", "Population: 60% relief"), cex = .82)
   xs <- function(points) 69 + points / 60 * 28
-  segments(xs(30), 13, xs(30), 84, lty = 2, col = "#72428b", lwd = 1.5)
+  segments(xs(30), 13, xs(30), 84, lty = 2, col = "#17734c", lwd = 1.5)
+  average_difference <- mean(vapply(trials,function(t)100*t$result$estimate,numeric(1)))
+  segments(xs(average_difference),13,xs(average_difference),84,col="#245e90",lwd=1.5)
   for (i in seq_along(trials)) {
     y <- 73 - (i - 1) * 25
     trial <- trials[[i]]
     text(8, y - 3, paste("Trial", i), cex = .98)
     for (g in 1:2) {
       values <- trial$data$outcome[trial$data$group == c("Control", "Treatment")[g]]
-      center <- c(29, 52)[g]; color <- c("#19738c", "#984b87")[g]
-      # Filled/open symbols provide a distinction independent of color.
-      for (j in seq_along(values)) points(center - 9 + ((j - 1) %% 10) * 2,
-        y + 3 - ((j - 1) %/% 10) * 5, pch = 21, cex = .9,
-        col = color, bg = if (values[j] == 1) color else "white", lwd = 1.1)
+      center <- c(29, 52)[g]
+      for (j in seq_along(values)) person(center - 9 + ((j - 1) %% 10) * 2,
+        y + 3 - ((j - 1) %/% 10) * 5, values[j] == 1, .85)
       text(center, y - 10, sprintf("%d of %d (%d%%)", sum(values), length(values),
         round(100 * mean(values))), cex = .87)
     }
     delta <- 100 * trial$result$estimate
     arrows(64, y - 2, xs(delta) - 1.6, y - 2, length = .07, col = "#687985", lwd = 1.2)
-    points(xs(delta), y - 2, pch = 21, bg = "#984b87", col = "white", cex = 1.7)
+    points(xs(delta), y - 2, pch = 21, bg = "#b53c69", col = "white", cex = 1.7)
     text(xs(delta), y - 9, paste0(round(delta), " points"), cex = .83)
   }
   axis(1, at = xs(seq(0, 60, 10)), labels = seq(0, 60, 10), pos = 8, cex.axis = .8)
   text(83, -10, "neravixa minus duloxetine\n(percentage points)", cex = .8)
-  points(c(10, 31), c(-10, -10), pch = 21, bg = c("#19738c", "white"), col = "#19738c", cex = .9)
-  text(c(12, 33), c(-10, -10), c("Achieved relief", "Did not achieve relief"), adj = 0, cex = .78)
+  text(3,-7,"Green: pain relief",adj=0,cex=.8,col="#237747")
+  text(3,-12,"Red: no pain relief",adj=0,cex=.8,col="#b83c46")
+  text(3,-18,"Dashed green line: population difference, 30 points",adj=0,cex=.77,col="#17734c")
+  text(3,-23,paste0("Blue line: mean of these trial estimates, ",round(average_difference,1)," points"),adj=0,cex=.77,col="#245e90")
 }
 
 draw_planning_differences <- function() {

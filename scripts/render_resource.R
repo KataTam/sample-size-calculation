@@ -13,7 +13,7 @@ render_resource <- function(include_pdf = TRUE) {
   preview_trials <- lapply(20260941:20260943, function(seed)
     simulate_one_study(study_spec(outcome = "proportions", n = 20,
       p_control = .30, p_treatment = .60, threshold = .20, seed = seed)))
-  png("figures/pain-trials-preview.png", width = 1440, height = 848, res = 160)
+  png("figures/pain-trials-preview.png", width = 1440, height = 1040, res = 160)
   draw_three_pain_trials(preview_trials)
   dev.off()
   on.exit(setwd(root), add = TRUE)

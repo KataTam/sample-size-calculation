@@ -36,6 +36,10 @@
     form=f;fields=definitions;groups=sections;
     for(const name of metaNames.filter(n=>!form.elements[n])){const input=element('input');input.type='hidden';input.name=name;form.append(input);}
     const advanced=document.getElementById('advanced-plan');
+    // This control only expands fields in the current report.
+    advanced.querySelector('summary').addEventListener('click',event=>{
+      event.preventDefault();event.stopPropagation();advanced.open=!advanced.open;
+    });
     advanced.addEventListener('toggle',()=>{
       const level=advanced.open?'advanced':'core';
       if(form.elements.plan_level.value===level)return;

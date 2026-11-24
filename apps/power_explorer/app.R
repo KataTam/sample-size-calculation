@@ -36,8 +36,8 @@ ui <- fluidPage(
       activity_help("Enter the number with analyzable outcomes in each group. The power curves and simulation use this count; expected losses are applied separately when calculating recruitment.", for_input = "fixed_n")),
     conditionalPanel("output.pain_report && !input.show_advanced",
       radioButtons("pain_population", "Population pain-relief percentages",
-        c("30% standard; 60% novel: treatments differ"="difference",
-          "30% standard; 30% novel: equal effects"="equal"), selected="difference"),
+        c("Scenario 1: Equal relief percentages (30% and 30%)"="equal",
+          "Scenario 2: Different relief percentages (30% and 60%)"="difference"), selected="difference"),
       checkboxInput("compare_populations", "Show both population scenarios side by side", TRUE)),
     tags$details(id="lab-settings", class="activity-details", tags$summary("Settings"),
     selectInput("goal", "Planning goal", c("Test a difference from zero" = "testing", "Estimation with a target interval width" = "precision", "Assess a fixed number of available participants" = "fixed")),
@@ -161,7 +161,7 @@ ui <- fluidPage(
         tags$p(id = "journey-description", class = "sr-only"),
         tags$p(id = "journey-status", role = "status", `aria-live` = "polite", "The patient outcomes and estimated difference will appear here."),
         tags$details(id="inline-study-explanation", class="inline-study-explanation", tags$summary("Interpret the figure"),
-          p(id="journey-reading", "Patient outcomes produce an estimated difference and a p value. Repeated trials show how often the test detects a difference."))),
+          tags$div(id="journey-reading", "Patient outcomes produce an estimated difference and a p value. Repeated trials show how often the test detects a difference."))),
       conditionalPanel("output.one_ready && (input.outcome == 'means' || output.one_has_missing)", textOutput("one_interpretation")),
       conditionalPanel("output.one_ready && output.intervals_visible",
         activity_details("Interval for this study", plotOutput("one_plot", height="300px"), app_interval_key(),
@@ -274,7 +274,7 @@ server <- function(input, output, session) {
     B <- input$journey_repetitions
     validate(need(is.finite(B) && B==floor(B) && B>=2 && B<=10000,
       "Choose a whole number of trials between 2 and 10000."))
-    if(B>100) run_batch(B) else {
+    if(B>20) run_batch(B, show_journey=TRUE) else {
       meta <- simulation_meta(B)
       x <- simulate_trials(meta$generating)
       if(meta$compare_populations) x$population_comparison <- simulate_trials(comparison_spec(meta$generating))
@@ -625,7 +625,8 @@ server <- function(input, output, session) {
   batch_payload <- function(x) {
     payload <- journey_payload(list(x$illustrated_trial))
     payload$batch <- list(estimates=as.list(x$results$estimate),
-      p_values=as.list(x$results$p_value),reject=as.list(x$results$reject))
+      p_values=as.list(x$results$p_value),reject=as.list(x$results$reject),
+      relief_rates=list(as.list(x$trial_counts[[1]]/x$spec$n), as.list(x$trial_counts[[2]]/x$spec$n)))
     payload
   }
   sequence_payload <- function(x) {
@@ -641,13 +642,13 @@ server <- function(input, output, session) {
     }))
     payload
   }
-  run_batch <- function(B) {
+  run_batch <- function(B, show_journey=FALSE) {
     meta <- simulation_meta(B)
     withProgress(message="Simulating independent trials",value=.2,{
       x <- if(is.null(meta$missing)) simulate_trials(meta$generating) else simulate_missing_trials(meta$generating,meta$missing)
       if(meta$compare_populations) x$population_comparison <- simulate_trials(comparison_spec(meta$generating))
       incProgress(.8); save_batch(x,meta)
-      if(identical(current_activity(),"pain_one_many") && !is.null(x$illustrated_trial)) {
+      if((identical(current_activity(),"pain_one_many") || show_journey) && !is.null(x$illustrated_trial)) {
         payload <- batch_payload(x)
         reference <- baseline_many()
         if(reference$spec$n!=x$spec$n && same_simulation_population(reference,x))
