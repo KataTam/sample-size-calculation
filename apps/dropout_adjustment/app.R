@@ -191,7 +191,7 @@ server <- function(input, output, session) {
     paste0("Expected losses, novel / standard: ", paste(format_percent(plan()$losses), collapse = " / "),
       ". Expected outcomes available, novel / standard: ", paste(round(plan()$expected_retained, 2), collapse = " / "), "."),
     if (switching_applied()) "The switching approximation assumes complete switching, comparable outcome distributions among recipients of the same treatment, and little change in variance.",
-    "The study plan should describe follow-up and the analysis of missing outcomes.",
+    "The sample size calculation report should describe follow-up and the analysis of missing outcomes.",
     paste("Your explanation:", app_answer(input$reasoning)),
     "Your explanation is reproduced as entered and should be reviewed after changing the settings.",
     "Procedure: recruitment_plan() in R/sample_size_functions.R. References: Wittes (2002), doi:10.1093/epirev/24.1.39; Shardell and El-Kamary (2009), doi:10.1111/j.1541-0420.2008.01114.x; ICH E9(R1)."))

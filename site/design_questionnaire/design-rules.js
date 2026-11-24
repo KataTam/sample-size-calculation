@@ -34,7 +34,7 @@ function relevant(field,a){
 }
 const links={
  chapter:['Study-design guide','../book/study-designs.html'],
- report:['Develop and justify your study plan','../book/reporting.html#activity-assumptions_report'],
+ report:['Prepare a sample size calculation report','../book/reporting.html#activity-assumptions_report'],
  binary:['Two independent groups: binary outcome','../two_proportions/'],
  means:['Two independent groups: continuous outcome','../two_means/'],
  prevalence:['Estimate a population percentage','../book/estimation-planning.html#activity-prevalence'],

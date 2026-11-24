@@ -10,7 +10,7 @@ Each app has one teaching purpose and can be run independently from its own fold
 - `dropout_adjustment`: recruitment target after expected dropout or loss to follow-up.
 - `prevalence_precision`: analytical precision planning and a simulated one-sample interval.
 - `sampling_distributions`: analytical normal-distribution areas for error probabilities and power.
-- The report builder in `site/assumptions_report/` assembles written study plans without calculating or simulating results.
+- The report builder in `site/assumptions_report/` assembles written sample size calculation reports without calculating or simulating results.
 
 See the [activity walkthroughs](../student-materials/activity-walkthroughs.html) for matched lesson links and steps.
 

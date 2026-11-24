@@ -28,7 +28,7 @@ const {saveReportPair}=require('./report_test_helpers.cjs');
   await page.locator('#cluster_details').fill('24 clinics with 30 patients each; ICC 0.02.');
   await page.locator('#testing_details').fill('Both co-primary outcomes must meet the prespecified rule.');
   await page.locator('#software').fill('External procedure v2; inputs and code archived.');
-  for(const part of ['#calculation-summary','#supporting-study-plan']){
+  for(const part of ['#calculation-summary']){
    assert.match(await page.locator(part).innerText(),/24 clinics/);
    assert.match(await page.locator(part).innerText(),/Both co-primary outcomes/);
   }

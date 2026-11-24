@@ -38,6 +38,7 @@
     ]]
   ];
   groups[2][1].push(groups[3][1].shift());
+  groups[2][1].push(['references', 'Study references', 'Full references for sources cited in the answers should include authors, year, title and DOI or URL. References for this report app and its reporting guidance are included automatically.', 'The study references are']);
   groups[1][1].push(...AdvancedPlan.fields);
   const fields = groups.flatMap(group => group[1]);
   let reportLines = [];
@@ -53,6 +54,7 @@
   }
   const questions = {
     ...AdvancedPlan.questions,
+    references: 'Which sources support the study assumptions and method?',
     question: 'What question should your study answer?',
     population: 'Who is the study about? (Population)',
     intervention: 'What intervention or exposure will you study? (Intervention)',
@@ -82,28 +84,29 @@
     intervention: 'neravixa, the fictional novel treatment in this teaching case, requires four additional safety-monitoring visits and carries a risk of short-lived dizziness. The protocol should specify its regimen and permitted background care.',
     comparator: 'Duloxetine, the standard treatment, over four weeks. The protocol should specify its regimen and the background care permitted in both groups.',
     outcome_detail: 'Achieved measurable pain relief at four weeks: yes or no, assessed in the same way in both groups and summarized as the percentage achieving pain relief.',
-    design: 'Eligible adults will be recruited from participating clinics using [selection method] and individually randomized 1:1 to neravixa or duloxetine. Each participant contributes one four-week outcome; outcomes from different participants are assumed independent. Bilateral pain contributes one patient-level outcome.',
+    design: 'Eligible adults will be recruited from participating clinics using [selection method] and individually randomized 1:1 to neravixa or duloxetine. Each participant contributes one four-week outcome. Outcomes from different participants are assumed independent.',
     scale: 'The difference in pain-relief percentages, neravixa minus duloxetine, in percentage points. A positive difference favors neravixa.',
     expected: '40 percentage points: the pilot observed relief in 7 of 10 patients (70%) versus 3 of 10 (30%). The small groups make this estimate uncertain.',
     clinical: '20 percentage points: one additional patient with relief per five treated. In this teaching case, patient and clinical advisers judge this the minimum benefit to justify four additional safety-monitoring visits and the risk of short-lived dizziness.',
-    planning: '30 percentage points: 60% pain relief with neravixa versus 30% with duloxetine. Power is evaluated at this assumed population difference. The 40-point pilot difference and 20-point clinical threshold inform separate judgments.',
-    variation: '30% relief with standard treatment and 60% with novel treatment for the calculation. These illustrative percentages imply the 30-point target difference.',
-    evidence_review: 'The small pilot leaves both relief percentages uncertain. I would compare pain severity, background medication and relief definitions across four-week studies, including less favorable findings, before judging which percentages apply.',
-    sensitivity: 'I would assess power at 20-, 30-, and 40-point benefits with the sample fixed, then vary standard-treatment relief over an evidence-supported range to judge whether the recommendation changes.',
+    planning: '30 percentage points, selected as a clinically worthwhile difference below the 40-point pilot estimate to allow for uncertainty in that small study.',
+    variation: '30% pain relief with duloxetine and 60% with neravixa.',
+    evidence_review: 'The small pilot leaves both relief percentages uncertain. Evidence appraisal should compare pain severity, background medication and relief definitions across four-week studies, including less favorable findings.',
+    sensitivity: 'Sensitivity analysis will assess power at 20-, 30-, and 40-point benefits with the sample fixed, then vary standard-treatment relief over an evidence-supported range.',
     progression: 'Retention at four weeks would inform feasibility. The proceed, amend, and stop thresholds remain to be agreed before data collection.',
     analysis: 'A two-sided pooled score test for independent proportions without continuity correction.',
-    software: 'The two-proportion app and its normal approximation, with inputs, rounding, software versions, and source version saved alongside the calculation.',
-    power: 'A 5% Type I error probability and 90% target power at a 30-percentage-point difference, using a two-sided test.',
+    software: 'The normal approximation in stats::power.prop.test(), with a two-sided test and strict = TRUE. Software versions are recorded with the calculation.',
+    power: 'A 5% Type I error probability and 90% target power at the stated target difference.',
     precision: 'A 95% interval with full width 20 percentage points gives a margin of about 10 points; its clinical usefulness remains to be justified.',
-    counts: '56 analyzable patients per group, 112 in total, using the tutorial approximation with 30% versus 60% relief, 5% Type I error probability and 90% power.',
+    counts: 'The calculated 55.68382 patients per group is rounded upward to 56, giving 112 analyzable patients in total.',
     recruitment: 'With illustrative 5% unavailable primary outcomes, 56 / 0.95 rounds up to 59 per group (118 total). The loss assumption needs evidence, and the analysis plan should address missing outcomes and treatment changes.',
     resources: 'Screening records suggest 100 potentially relevant patients per month: 40 eligible, 30 available after competing studies and practical barriers, and half consenting. At 15 recruits per month, 118 recruits require about eight months; the plan also allows for site-opening delays.',
-    conclusion: 'The plan provides 90% power at a true 30-point difference under the stated assumptions. Power is lower at a smaller true difference, including the 20-point clinical threshold. The supporting evidence and recruitment feasibility need review.'
+    conclusion: 'The planned test evaluates whether pain-relief percentages differ between treatments. Power is lower if the true difference is smaller than the target difference, including at the clinical threshold.'
   };
   function answerFormats(value) {
     const single = value.study_type === 'single', binary = value.outcome === 'binary', pilot = value.goal === 'feasibility';
     const units = binary ? 'percentage points' : '[outcome units]';
     const result = {
+      references: '[Author(s)]. ([Year]). [Title]. [Journal or publisher]. [DOI or URL].',
       ...AdvancedPlan.formats,
       question: pilot ? 'Can [study procedures] meet [feasibility criteria] within [time and resources]?'
         : value.study_type === 'other' ? '[Research question] about [primary outcome] in [population] at [assessment time].'
@@ -124,7 +127,7 @@
       planning: '[Target difference] ' + units + ', supported as worthwhile and plausible by [evidence].',
       variation: binary ? '[Event percentage(s)] for [population and assessment time], supported by [source].' : 'SD [value] ' + units + ' from [comparable population and measurement method].',
       evidence_review: '[Source] is relevant because [patients, background care, outcome and follow-up are comparable]. [Design limitation or conflicting finding] makes [input] uncertain; [further evidence or independent review] would help.',
-      sensitivity: 'Based on [evidence], I would examine [plausible range, including less favorable values], holding [quantities] fixed. [Result] would change my recommendation to [decision].',
+      sensitivity: 'Based on [evidence], sensitivity analysis will examine [plausible range, including less favorable values], holding [quantities] fixed. [Result] would support [decision].',
       progression: 'Proceed at [acceptable result], amend at [intermediate result], and stop at [unacceptable result], using [outcome and denominator].',
       analysis: value.goal === 'testing' ? '[Test and sidedness], accounting for [design and dependence between observations].' : '[Confidence interval method and level], accounting for [design and dependence between observations].',
       software: '[Method] in [software and version], with [code version, inputs, and rounding]. For simulation: [generating assumptions, repetitions, and random-number settings].',
@@ -171,14 +174,14 @@
       planning: '3 score units, the target difference used for power. A smaller 2-unit benefit would have lower power at the same sample size.',
       variation: 'A common SD of 5 score units is assumed for this teaching example; comparable patient data are needed to justify it.',
       analysis: 'A two-sided comparison of independent group means with a 95% confidence interval for the mean difference. The analysis should reflect the distribution and design.',
-      software: 'The two-mean app plans a pooled two-sample t test using R stats::power.t.test with two-sided testing and both rejection tails included. The report records the difference, SD, error probabilities, rounding and source version.',
+      software: 'The two-mean app plans a pooled two-sample t test using R stats::power.t.test with two-sided testing and both rejection tails included. The calculation record includes inputs, rounding and software versions.',
       power: 'A 5% Type I error probability and 90% target power at a between-group mean difference of 3 score units.',
       precision: 'A 95% confidence interval with a full width of 4 score units would have a margin of about 2 units. Its usefulness needs clinical justification.',
       counts: '60 analyzable patients per group, 120 total, using the pooled two-sample t-test calculation with a 3-unit target, SD 5, 5% Type I error probability and 90% power.',
       recruitment: 'With illustrative 5% expected losses, 60 / 0.95 rounds up to 64 patients per group (128 total). Missing outcomes and treatment changes also need an analysis plan.',
       resources: 'At 20 eligible patients per month and 70% consent, recruitment of 126 would take about nine months, allowing only for whole months.',
-      sensitivity: 'I would assess power at 2-, 3-, and 4-unit differences and plausible SDs around 5, holding the sample fixed.',
-      evidence_review: 'I would compare baseline pain, background care, measurement and four-week follow-up across studies. Differences in these features and small samples leave the mean difference and SD uncertain; less favorable findings should inform the ranges.'
+      sensitivity: 'Sensitivity analysis will assess power at 2-, 3-, and 4-unit differences and plausible SDs around 5, holding the sample fixed.',
+      evidence_review: 'The analysis will compare baseline pain, background care, measurement and four-week follow-up across studies. Differences in these features and small samples leave the mean difference and SD uncertain; less favorable findings should inform the ranges.'
     });
     if (value.study_type === 'single') Object.assign(result, {
       question: value.outcome === 'binary' ? 'What percentage of adults in the target population have the condition during the specified survey period?' : 'What is the mean pain score in the target population at the specified assessment time?',
@@ -194,8 +197,8 @@
       recruitment: 'The recruitment allowance should reflect the expected nonresponse and missing measurements. The denominator and reasons for missing observations will be recorded.',
       resources: 'The sampling frame, contact rate, expected consent and assessment time should support the required total within the available period.',
       software: 'The calculation record includes the one-population method, confidence level, interval-width target, assumptions, software version and rounding.',
-      sensitivity: 'I would compare required counts across plausible population values, then assess interval width at the selected sample size.',
-      evidence_review: 'I would compare the sampling, outcome definition and assessment time across relevant surveys. Nonresponse or conflicting findings could widen the plausible range; an independent review could help assess it.',
+      sensitivity: 'The analysis will compare required counts across plausible population values, then assess interval width at the selected sample size.',
+      evidence_review: 'The analysis will compare the sampling, outcome definition and assessment time across relevant surveys. Nonresponse or conflicting findings could widen the plausible range; an independent review could help assess it.',
       conclusion: 'The study will estimate the population value with a confidence interval. Sampling coverage and nonresponse affect how well the findings represent the population.'
     });
     if (value.goal === 'fixed') Object.assign(result, {
@@ -226,8 +229,8 @@
       for (const id of ['counts', 'recruitment', 'resources', 'software']) result[id] = formats[id];
       if (value.goal === 'feasibility') {
         result.precision = formats.precision;
-        result.sensitivity = 'I would vary the retention or assessment-time assumptions and check whether the progression decision changes.';
-        result.evidence_review = 'I would compare recruitment and follow-up records from similar procedures, including slower or less successful studies, and ask a colleague to assess the plausible range.';
+        result.sensitivity = 'Sensitivity analysis will vary the retention or assessment-time assumptions and check whether the progression decision changes.';
+        result.evidence_review = 'The analysis will compare recruitment and follow-up records from similar procedures, including slower or less successful studies, and ask a colleague to assess the plausible range.';
       }
     }
     return result;
@@ -269,13 +272,13 @@
   document.getElementById('plan-section-0').append(document.getElementById('study-settings'));
   document.getElementById('field-software').append(document.getElementById('example-calculation'));
   const preview = document.getElementById('preview');
-  const wide = matchMedia('(min-width: 1100px)');
+  const wide = matchMedia('(min-width: 700px)');
   let previewChosen = false;
   function showPreview(show, focus = false) {
     const pane = document.getElementById('report-pane');
     pane.hidden = !show; document.body.classList.toggle('report-visible', show);
     preview.setAttribute('aria-expanded', String(show));
-    preview.textContent = show ? (wide.matches ? 'Hide study plan preview' : 'Back to questions') : 'Preview study plan';
+    preview.textContent = show ? (wide.matches ? 'Hide report preview' : 'Back to questions') : 'Preview report';
     if (focus && show) document.getElementById('report-title').focus();
     else if (focus) preview.focus();
     window.dispatchEvent(new Event('resize'));
@@ -307,29 +310,6 @@
     return true;
   }
   function notifyParent(type, extra = {}) { if (parent !== window) parent.postMessage({type: 'sample-size:' + type, app, ...extra}, location.origin); }
-  // Both parts are generated from the same answers. Never copy example hints
-  // or inferred values into the concise report, or keep a second editable draft.
-  function conciseParagraphs(value, wording) {
-    const sections = [
-      ['question', 'outcome_detail', 'design'],
-      ['scale', 'expected', 'clinical', 'planning', 'variation'],
-      ['analysis', ...AdvancedPlan.fields.map(field=>field[0]), 'power', 'precision', 'progression', 'counts', 'software'],
-      ['recruitment']
-    ];
-    const labels = {question:'', outcome_detail:'Primary outcome', design:'Design and allocation',
-      scale:'Effect scale', expected:'Difference observed in previous data', clinical:'Clinical threshold',
-      planning:'Target difference', variation:value.outcome==='binary'?'Event probabilities':'Standard deviation',
-      analysis:'Planned analysis', power:'Type I error probability and power',
-      precision:'Precision target', progression:'Progression criteria', counts:'Analyzable sample',
-      software:'Calculation procedure and software', recruitment:'Recruitment and losses'};
-    return sections.map(ids => ids.map(id => {
-      const field=fields.find(item=>item[0]===id);
-      if (!active(field,value) || !value[id].trim()) return '';
-      const answer=value[id].trim().replace(/\s+/g,' ');
-      const label=wording[id]?.[0] ?? labels[id] ?? field[1];
-      return (label?label+': ':'')+answer+(/[.!?]["'\u201d\u2019)]?$/.test(answer)?'':'.');
-    }).filter(Boolean).join(' ')).filter(Boolean);
-  }
   function render(persist = true) {
     const value = snapshot(), article = document.getElementById('report'); article.replaceChildren();
     document.getElementById('example').hidden = value.plan_basis !== 'pain';
@@ -364,48 +344,34 @@
     intro.textContent = 'This study concerns ' + structure[value.study_type] + ' with ' + ({binary:'a binary outcome',continuous:'a continuous outcome',survival:'a time-to-event outcome',other:'the specified outcome measure'})[value.outcome] + '. Its planning goal is ' + goalText[value.goal] + '.';
     const studyTitle=value.plan_title.trim();
     if (studyTitle) {const title=document.createElement('h3');title.textContent=studyTitle;article.append(title);}
-    const concise=document.createElement('section');concise.id='calculation-summary';
-    const conciseHeading=document.createElement('h3');conciseHeading.textContent='Sample size calculation report';concise.append(conciseHeading);
-    const paragraphs=conciseParagraphs(value,wording);
-    for (const text of paragraphs) {const p=document.createElement('p');p.textContent=text;concise.append(p);}
-    if (!paragraphs.length) {const p=document.createElement('p');p.className='note';p.textContent='Your calculation report will appear here as you complete the study plan.';concise.append(p);}
-    const supporting=document.createElement('section');supporting.id='supporting-study-plan';
-    const supportingHeading=document.createElement('h3');supportingHeading.textContent='Supporting study plan';supporting.append(supportingHeading);
-    article.append(concise,supporting);
-    reportLines = [...(studyTitle?['Study: '+studyTitle]:[]), 'Sample size calculation report',
-      ...(paragraphs.length?paragraphs:['The sample size calculation report is not yet completed.']),
-      'Supporting study plan', intro.textContent];
-    let completed = 0, required = 0;
+    const report=document.createElement('section'); report.id='calculation-summary';
+    article.append(report);
+    let completed=0, required=0;
     for (const [groupIndex, [title, definitions]] of groups.entries()) {
-      const heading = document.createElement('h4'); heading.textContent = title;
-      const paragraphs = [];
-      let groupCompleted = 0, groupRequired = 0;
-      reportLines.push(title);
+      const section=document.createElement('section'), heading=document.createElement('h3');
+      heading.textContent=title; section.append(heading);
       for (const field of definitions) {
-        const [id, originalLabel] = field, enabled = active(field, value);
-        const label = wording[id] ? wording[id][0] : originalLabel;
+        const [id, originalLabel]=field, enabled=active(field,value);
         const needed=enabled && PlanWorkflow.required(field,value);
-        document.getElementById('field-' + id).hidden = !needed;
+        document.getElementById('field-'+id).hidden=!needed;
+        if (id==='references') continue;
         if (!enabled || (!needed && !value[id].trim())) continue;
-        if (needed) {required++; groupRequired++;}
-        const answer = value[id].trim(), paragraph = document.createElement('p');
-        if (answer) { if (needed) {completed++; groupCompleted++;} paragraph.textContent = label + ': ' + answer; paragraphs.push(paragraph); }
-        else { paragraph.textContent = label + ': not yet specified.'; }
-        reportLines.push(paragraph.textContent);
+        if (needed) required++;
+        const answer=value[id].trim();
+        if (!answer) continue;
+        if (needed) completed++;
+        const paragraph=document.createElement('p'); paragraph.dataset.reportField=id;
+        paragraph.textContent=(wording[id]?.[0] || originalLabel)+': '+answer;
+        section.append(paragraph);
       }
-      if (paragraphs.length) supporting.append(heading, ...paragraphs);
-      const summary = document.querySelector('#plan-section-' + groupIndex + ' > summary');
-      let count = summary.querySelector('.section-progress');
-      if (!count) { count = document.createElement('span'); count.className = 'section-progress'; summary.append(count); }
-      count.textContent = `${groupCompleted} of ${groupRequired} answered`;
+      if (section.children.length>1) report.append(section);
     }
-    if (completed) supportingHeading.after(intro);
-    else { const empty = document.createElement('p'); empty.textContent = 'Your full answers, supporting evidence and saved calculations will appear here.'; supporting.append(empty); }
-    PlanWorkflow.decorate(value, supporting, reportLines, active);
-    PlanCalculationRecord.decorate(value, supporting, reportLines);
-    const progress = document.getElementById('progress');
-    const progressText = completed === required ? 'All ' + required + ' prompts answered. Your assumptions and calculations still need review.' : 'Draft: ' + completed + ' of ' + required + ' prompts answered.';
-    if (progress.textContent !== progressText) progress.textContent = progressText;
+    if (completed) report.prepend(intro);
+    else {const p=document.createElement('p');p.className='report-empty';p.textContent='The sample size calculation report will appear here as answers are entered.';report.append(p);}
+    PlanWorkflow.decorate(value, report, [], active);
+    PlanCalculationRecord.decorate(value);
+    ReportReferences.append(article,value.references);
+    reportLines=Array.from(article.querySelectorAll('h3,p,pre')).map(el=>el.textContent);
     if (persist) { planActive = true; resumePrompt(null); try { localStorage.setItem(storageKey, JSON.stringify(value)); } catch (_) { status.textContent = 'Browser saving is unavailable. Save your entries to a file.'; } }
     notifyParent('state', {state: value});
   }
@@ -422,7 +388,7 @@
     if (event.key !== storageKey || !event.newValue) return;
     try {
       const saved = validate(JSON.parse(event.newValue));
-      if (planActive && saved.plan_basis === snapshot().plan_basis) { apply(saved, false); status.textContent = 'Your study plan was updated from another open tab.'; }
+      if (planActive && saved.plan_basis === snapshot().plan_basis) { apply(saved, false); status.textContent = 'Your sample size calculation report was updated from another open tab.'; }
       else if (!planActive) resumePrompt(saved);
     }
     catch (_) { status.textContent = 'An update from another tab could not be loaded. Your current entries remain in place.'; }
@@ -447,30 +413,23 @@
     PlanWorkflow.onEdit(event.target.name);render();
   });
   form.addEventListener('submit', event => event.preventDefault());
-  document.getElementById('clear').addEventListener('click', () => { if (!confirm('Clear this study plan? Save work for later first if you want to keep it.')) return; apply({}); status.textContent = 'Entries cleared. You can start a new plan.'; });
+  document.getElementById('clear').addEventListener('click', () => { if (!confirm('Clear this sample size calculation report? Save work for later first if you want to keep it.')) return; apply({}); status.textContent = 'Entries cleared. You can start a new plan.'; });
   const escapeHTML = text => String(text).replace(/[&<>"']/g, c => ({'&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;'}[c]));
   function reportDocument() {
-    const headings = new Set([...groups.map(group => group[0]), 'Section review', 'Prepared neuropathic pain calculation']);
-    const content = reportLines.map(line => {
-      const tag=['Sample size calculation report','Supporting study plan'].includes(line)?'h2':
-        headings.has(line)||line.startsWith('Saved calculation: ')?'h3':'p';
-      return '<'+tag+'>'+escapeHTML(line)+'</'+tag+'>';
-    }).join('\n');
-    return '<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Study plan</title>' +
-      '<style>body{max-width:800px;margin:2rem auto;padding:0 1rem;font:17px/1.6 system-ui,sans-serif;color:#20343e}p{white-space:pre-wrap;overflow-wrap:anywhere}h2{margin-top:1.5em;font-size:1.2em}h3{font-size:1.05em}a{color:#006481}footer{border-top:1px solid #abc;margin-top:2rem;font-size:.9em}@media print{body{margin:0;max-width:none;font-size:11pt}h2,h3{break-after:avoid}a{color:inherit}}</style></head><body><h1>Study plan</h1>' +
-      '<p>Generated ' + new Intl.DateTimeFormat('en-US', {dateStyle:'long'}).format(new Date()) + '</p>' +
-      '<p>' + escapeHTML(document.getElementById('progress').textContent) + '</p>' + content +
-      '<footer><p>This draft contains your entries and identifies unanswered decisions.</p>' +
-      document.getElementById('guidance-credit').innerHTML.replace(/<(\/?)(?:details)[^>]*>/g, '<$1section>').replace(/<(\/?)(?:summary)>/g, '<$1h2>') + '</footer>' +
-      '</body></html>';
+    const content=document.getElementById('report').cloneNode(true);
+    content.querySelectorAll('.report-empty').forEach(el=>el.remove());
+    return '<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Sample size calculation report</title>' +
+      '<style>body{max-width:800px;margin:2rem auto;padding:0 1rem;font:17px/1.6 system-ui,sans-serif;color:#20343e}p{white-space:pre-wrap;overflow-wrap:anywhere}h2,h3{font-weight:400;margin-top:1.5em;font-size:1.2em}a{color:#006481}@media print{body{margin:0;max-width:none;font-size:11pt}h2,h3{break-after:avoid}a{color:inherit}}</style></head><body><h1>Sample size calculation report</h1>' +
+      '<p>Prepared '+new Intl.DateTimeFormat('en-US',{dateStyle:'long'}).format(new Date())+'</p>'+content.innerHTML+'</body></html>';
   }
+
   async function saveReport(event) {
     const button = event.currentTarget;
     if (button.getAttribute('aria-busy') === 'true') return;
     button.setAttribute('aria-busy', 'true'); status.textContent = 'Preparing report...';
     try {
       render();
-      const name = await ReportExports.download(reportDocument(), button.id.endsWith('word') ? 'docx' : 'pdf', 'study-plan-report');
+      const name = await ReportExports.download(reportDocument(), button.id.endsWith('word') ? 'docx' : 'pdf', 'sample-size-calculation-report');
       status.textContent = 'Report downloaded: ' + name;
     } catch (error) { status.textContent = 'The report could not be downloaded. ' + error.message; }
     finally { button.removeAttribute('aria-busy'); }
@@ -481,14 +440,14 @@
   document.getElementById('download-word').addEventListener('click', saveReport);
   document.getElementById('save-work').addEventListener('click', () => {
     download(JSON.stringify({schema:'sample-size-assumptions-report',version:3,entries:snapshot()}, null, 2),
-      'application/json', 'study-plan-work.json');
+      'application/json', 'sample-size-calculation-report-work.json');
     status.textContent = 'Work saved. Reopen this file here to continue editing.';
   });
   document.getElementById('download-text').addEventListener('click', () => {
-    const lines = ['Study plan', document.getElementById('progress').textContent, '', ...reportLines,
-      'Guidance: PICO (Richardson et al., 1995), https://doi.org/10.7326/ACPJC-1995-123-3-A12; SPIRIT 2025, https://www.consort-spirit.org/; DELTA² (Cook et al., 2018), https://doi.org/10.1136/bmj.k3750. Educational selection; a full protocol should use its complete design-specific guidance.',
-      'Teaching materials: CC BY-SA 4.0, https://creativecommons.org/licenses/by-sa/4.0/. Software: MIT, https://opensource.org/license/mit.'];
-    download(lines.join('\n\n'), 'text/plain;charset=utf-8', 'study-plan-report.txt'); status.textContent = 'Plain-text report downloaded.';
+    const doc=new DOMParser().parseFromString(reportDocument(),'text/html');
+    const lines=Array.from(doc.body.querySelectorAll('h1,h2,h3,p,pre')).map(el=>el.textContent);
+    download(lines.join('\n\n'),'text/plain;charset=utf-8','sample-size-calculation-report.txt');
+    status.textContent='Plain-text report downloaded.';
   });
   document.getElementById('restore').addEventListener('change', async event => {
     const file = event.target.files[0]; if (!file) return;
@@ -528,7 +487,7 @@
     apply(saved); status.textContent = 'Saved entries restored.';
   });
   document.getElementById('new-plan-button').addEventListener('click', () => {
-    if (!confirm('Start a new plan? This replaces the browser copy. Resume and save your earlier work to a file first if you need to keep it.')) return;
+    if (!confirm('Start a new report? This replaces the browser copy. Resume and save your earlier work to a file first if you need to keep it.')) return;
     apply({}); status.textContent = 'New plan started with the core two-group comparison and power settings.';
   });
   try {

@@ -70,7 +70,7 @@ cat('<figure class="tutorial-roadmap">',
 
 Chapter quizzes and the [cumulative quiz](#cumulative-quiz) help you check your understanding. The [activity walkthroughs](https://katatam.github.io/sample-size-calculation/student-materials/activity-walkthroughs.html) provide additional guidance when needed.
 
-The three core chapters develop one [sample size calculation report](#reporting), with a supporting study plan.
+The three core chapters develop one [sample size calculation report](#reporting).
 
 [Flashcards](https://katatam.github.io/sample-size-calculation/student-materials/flashcards/index.html) are available as Core and Complete tutorial decks, with a [question-and-answer preview](https://katatam.github.io/sample-size-calculation/student-materials/flashcards/cards.html) and Anki/Quizlet downloads.
 
@@ -221,7 +221,7 @@ Table: (\#tab:pain-planning-values) Earlier observations and two planning decisi
 
 Figure \@ref(fig:planning-differences) places these values on the same scale. All are absolute differences in percentage points. The clinical meaning becomes clearer when a difference is expressed as additional patients benefiting per 100 treated and considered alongside treatment burden. Labels such as “small,” “medium” and “large” need that clinical context [@caldwell2020].
 
-The section [Choosing plausible assumptions](#st01-expectations) discusses how previous findings, target differences, and clinical judgments inform a study plan.
+The section [Choosing plausible assumptions](#st01-expectations) discusses how previous findings, target differences, and clinical judgments inform a sample size calculation report.
 
 ```{r planning-differences, echo=FALSE, fig.width=8, fig.height=3, fig.cap="Difference observed in the pilot, target difference and clinical threshold for the neuropathic pain trial. The pilot value is a sample result; the target and threshold concern population differences. All are expressed in percentage points. Their values may coincide or follow a different order in other studies.", fig.alt="Three compact horizontal rows share an axis for novel minus standard treatment. Each line starts at zero and ends at its labeled value: difference observed in the pilot, 40 percentage points, calculated from the pilot patients; target difference, 30 points, used to evaluate power; clinical threshold, 20 points, the smallest benefit judged worthwhile."}
 draw_planning_differences()
@@ -697,11 +697,11 @@ The target difference of 3 score units is a raw between-group difference. Dividi
 
 Previous studies can inform the assumed SD. The most relevant evidence uses similar patients, the same outcome scale and assessment time, and a compatible analysis. For an analysis of change scores, the required SD describes changes within patients. For an analysis of final scores, it describes those final scores. Reviews show that variability can differ substantially between studies, supporting examination of a plausible range [@bentin2026].
 
-Your study plan should document the source of the assumed SD and examine a plausible range using the [two-means app](https://katatam.github.io/sample-size-calculation/two_means/).
+Your sample size calculation report should document the source of the assumed SD and examine a plausible range using the [two-means app](https://katatam.github.io/sample-size-calculation/two_means/).
 
 </details>
 
-Your study plan should record the inputs, pooled two-sample t-test procedure, software, two-sided test, equal allocation, and rounded counts. The [software and statistical support guide](#software-support) reviews calculation software and explains when early advice from a statistician is useful. Its [worked example](#gpower-assumptions) shows how an effect-size input can change the result.
+Your sample size calculation report should record the inputs, pooled two-sample t-test procedure, software, two-sided test, equal allocation, and rounded counts. The [software and statistical support guide](#software-support) reviews calculation software and explains when early advice from a statistician is useful. Its [worked example](#gpower-assumptions) shows how an effect-size input can change the result.
 
 <details id="rehabilitation" class="optional-practice">
 <summary>Additional practice: rehabilitation</summary>
@@ -834,7 +834,7 @@ For example, the clinics see 100 potentially relevant patients each month. Of th
 draw_recruitment_funnel()
 ```
 
-At this rate, recruiting `r 2 * recruit_per_group` patients would take `r ceiling(2 * recruit_per_group / 15)` whole months. The supporting plan should also consider site-opening delays and a slower recruitment scenario. The section [Choosing plausible assumptions](#st01-expectations) examines the evidence behind recruitment forecasts, while [Options when the study provides insufficient information](#what-if-the-study-is-too-small-for-its-purpose) discusses changes to the design or recruitment plan.
+At this rate, recruiting `r 2 * recruit_per_group` patients would take `r ceiling(2 * recruit_per_group / 15)` whole months. The report should also consider site-opening delays and a slower recruitment scenario. The section [Choosing plausible assumptions](#st01-expectations) examines the evidence behind recruitment forecasts, while [Options when the study provides insufficient information](#what-if-the-study-is-too-small-for-its-purpose) discusses changes to the design or recruitment plan.
 
 <details class="misconception" id="lasagnas-law">
 <summary>Common misconception: a clinic with many patients will necessarily recruit enough eligible, consenting participants</summary>
@@ -873,7 +873,7 @@ After this chapter, you should be able to:
 - Write a concise calculation report with traceable inputs, software and supporting reasoning.
 :::
 
-The neuropathic pain calculation gives 56 analyzable patients and 59 recruits per group. A reader should be able to reproduce those numbers and understand why the inputs were chosen. This chapter brings that reasoning and the calculation together in a report. The concise calculation report presents the selected design and numerical result; the supporting study plan retains evidence, alternative assumptions and unresolved decisions. The [study-plan activity](https://katatam.github.io/sample-size-calculation/assumptions_report/?stage=question) creates both from one set of answers.
+The neuropathic pain calculation gives 56 analyzable patients and 59 recruits per group. A reader should be able to reproduce those numbers and understand why the inputs were chosen. This chapter brings that reasoning and the calculation together in a report. The [report activity](https://katatam.github.io/sample-size-calculation/assumptions_report/?stage=question) combines the research question, evidence, assumptions, calculation and recruitment justification in one sample size calculation report.
 
 ## A complete sample size calculation report {#write-a-sample-size-justification .core-heading}
 
@@ -937,7 +937,7 @@ c(unrounded_per_group = plan$n,
   recruit_total = 2 * recruit_per_group)
 ```
 
-The [study-plan activity](https://katatam.github.io/sample-size-calculation/assumptions_report/?stage=calculation) includes the prepared calculation's software record when the neuropathic pain comparison is selected. An attached calculator result retains the inputs and software used for that result. The [reproducibility section](#reproducibility-record) explains the full record.
+The [report activity](https://katatam.github.io/sample-size-calculation/assumptions_report/?stage=calculation) includes the prepared calculation's software record when the neuropathic pain comparison is selected. An attached calculator result retains the inputs and software used for that result. The [reproducibility section](#reproducibility-record) explains the full record.
 
 </details>
 
@@ -968,16 +968,17 @@ Table \@ref(tab:planning-assumptions) uses the same four headings as the report 
 | Calculation procedure and software | Method or formula; software, package and code versions; saved inputs and calculation steps. For simulations: data-generating assumptions, repetitions and random-number settings. See [Methods and software to record](#reproducibility-record) |
 | Type I error probability and target power | Chosen probabilities and the target difference at which power is evaluated |
 | Sample size needed or available for analysis | Per-group and total analyzable counts; calculation result and upward rounding, or the available sample for an existing-data study |
+| Study references | Full references for the evidence and methods cited in the report, including DOI or URL where available |
 | **Recruitment and conclusion** | [Chapter 2: Calculating sample size and recruitment](#calculations) connects the analyzable count to a recruitment target and final justification. |
 | Losses, missing data and recruitment | Expected losses, recruitment target and how missing outcomes or treatment changes affect the plan |
 | Feasibility and resources | Expected recruitment rate, recruitment period, available resources and other practical constraints |
 | Intended conclusion | What the design could establish and what remains uncertain |
 
-Table: (\#tab:planning-assumptions) Decisions and assumptions to record in the study-plan activity, with links to the core chapters that develop each part of the study plan.
+Table: (\#tab:planning-assumptions) Decisions and assumptions to record in the report activity, with links to the core chapters that develop each part of the sample size calculation report.
 
 :::
 
-@wang2024bep illustrate how evidence supports numerical inputs, using local data for the control percentage and a systematic review for the target risk ratio. Your supporting plan should retain each source, its relevance and the plausible alternatives considered; [Chapter 5](#curves) develops that assessment.
+@wang2024bep illustrate how evidence supports numerical inputs, using local data for the control percentage and a systematic review for the target risk ratio. Your report should retain each source, its relevance and the plausible alternatives considered; [Chapter 5](#curves) develops that assessment.
 
 Clear reporting also makes measurement choices open to scrutiny. In a review of 185 studies using the BREAST-Q Reconstruction Module, a patient-reported questionnaire for breast reconstruction, only 17 reported a sample-size calculation and 71 reported the primary outcome's assessment time; 36 had questionnaire-administration errors [@gallo2022]. These findings underline why your plan should specify how and when the outcome is measured alongside the calculation. Missing calculation details leave the sample-size justification unassessable. A review of 385 phase III oncology trials found that 41 (10.6%) cited previous clinical data to support the assumed hazard ratio. This concerns the evidence behind the numerical assumption, reinforcing the need to report both the calculation and the sources supporting its inputs [@noticewala2025effects].
 
@@ -996,7 +997,7 @@ render_error_activity("report")
 
 ## Complete your report {#complete-calculation-report .core-heading}
 
-Your final review should check that the inputs, target difference, power, procedure and participant counts agree across the report and attached calculations. The activity uses your answers for the concise calculation report and its supporting study plan. Unresolved assumptions can remain provisional, with the evidence needed recorded beside them.
+Your final review should check that the inputs, target difference, power, procedure and participant counts agree across the report and attached calculations. The activity uses the same answers for the live report and its PDF and Word downloads. Unresolved assumptions can remain provisional, with the evidence needed recorded beside them.
 
 ```{r plan-app-preview, echo=FALSE, results='asis'}
 render_app_preview("assumptions_report", "Develop your question, assumptions and calculation in one continuing report.")
@@ -1010,7 +1011,7 @@ The [planning extension](#extend-study-plan) develops alternative scenarios and 
 ### Take-home points {.unnumbered}
 
 - The report should state what was calculated, why those inputs were chosen, and how the result can be reproduced.
-- One answer set supplies the concise calculation report and the supporting study plan. The supporting plan should explain the choice of assumptions and the consequence of a plausible alternative.
+- The sample size calculation report should explain the choice of assumptions and the consequence of a plausible alternative.
 - A complete report identifies per-group and total analyzable counts and recruitment targets.
 - A review should check agreement between the narrative, saved calculations and planned analysis.
 
@@ -1117,7 +1118,7 @@ The survey's anticipated prevalence, confidence level, margin of error and requi
 
 ## Reporting an estimation-based sample size {#estimation-report .advanced-heading}
 
-An estimation plan identifies the population quantity, outcome and assessment time, confidence level, desired full interval width, anticipated percentages or SD, interval method, software and participant counts. Its justification explains why the chosen width would be useful. For existing data, it describes the available count and anticipated precision. The [study-plan activity](https://katatam.github.io/sample-size-calculation/assumptions_report/?stage=calculation) displays these fields when an estimation goal is selected; [Chapter 3](#reporting) explains the common report structure.
+An estimation plan identifies the population quantity, outcome and assessment time, confidence level, desired full interval width, anticipated percentages or SD, interval method, software and participant counts. Its justification explains why the chosen width would be useful. For existing data, it describes the available count and anticipated precision. The [report activity](https://katatam.github.io/sample-size-calculation/assumptions_report/?stage=calculation) displays these fields when an estimation goal is selected; [Chapter 3](#reporting) explains the common report structure.
 
 The report below follows the study-size and statistical-method reporting items in STROBE and the precision-based approach in the published neuropathy study [@strobe2007; @negussie2024].
 
@@ -1297,7 +1298,7 @@ Before analyzing the reused data, you should check that the required variables a
 ::: {.activity}
 <p class="question-label">Question to consider</p>
 
-For your adapted research question, your plan should identify the new outcome, target population, available sample and missing observations. Would an interval of this width answer your project question? Your report should record these decisions in the [Activity: Develop and justify your study plan](https://katatam.github.io/sample-size-calculation/book/reporting.html#activity-assumptions_report), using a fixed-resource estimation goal.
+For your adapted research question, your plan should identify the new outcome, target population, available sample and missing observations. Would an interval of this width answer your project question? Your report should record these decisions in the [Activity: Prepare a sample size calculation report](https://katatam.github.io/sample-size-calculation/book/reporting.html#activity-assumptions_report), using a fixed-resource estimation goal.
 
 <details class="model-answer" id="model-answer-existing-data">
 <summary>Model answer</summary>
@@ -1719,7 +1720,7 @@ knitr::kable(data.frame(
 
 For binary outcomes, the event probabilities determine variability, so the same absolute difference can give different power. For continuous outcomes, a larger standard deviation makes the specified mean difference harder to detect. Relevant evidence should support the alternatives and their ranges [@cook2018delta2; @candel2023].
 
-The [Sample size reasoning lab](https://katatam.github.io/sample-size-calculation/book/curves.html#activity-pain_curves) lets you vary the event percentages, mean difference, standard deviation and available sample used in the sensitivity analysis. Its Description explains how the calculated curves and simulated studies relate. Your supporting study plan should record the alternatives that affect the decision. For example, the BEP protocol presents its principal calculation in the main text and alternative assumptions in an additional file [@wang2024bep]. DELTA² and CONSORT recommend documenting sensitivity to calculation inputs [@cook2018delta2; @consortee2025].
+The [Sample size reasoning lab](https://katatam.github.io/sample-size-calculation/book/curves.html#activity-pain_curves) lets you vary the event percentages, mean difference, standard deviation and available sample used in the sensitivity analysis. Its Description explains how the calculated curves and simulated studies relate. Your sample size calculation report should record the alternatives that affect the decision. For example, the BEP protocol presents its principal calculation in the main text and alternative assumptions in an additional file [@wang2024bep]. DELTA² and CONSORT recommend documenting sensitivity to calculation inputs [@cook2018delta2; @consortee2025].
 
 ## When the available sample is insufficient {#what-if-the-study-is-too-small-for-its-purpose .advanced-heading}
 
@@ -2000,7 +2001,7 @@ The percentage of participants lost to follow-up may differ between treatment gr
 
 The reasons for missing outcomes also matter. In the neuropathic pain trial, patients who experience little relief might be more likely to miss the final assessment. If this happens more often in the novel-treatment group, an analysis restricted to participants with observed outcomes could overestimate its benefit. [Bias](#bias) can occur with equal or unequal dropout percentages. Assessing it requires information about why outcomes are missing, the treatment effect being estimated, and the analysis used [@bell2013dropout].
 
-Your study plan should describe how missing outcomes will be minimized, how their reasons will be recorded in each group, and how the analysis will handle them. [Sensitivity analyses](#sensitivity-analysis) should examine whether conclusions change under plausible alternative assumptions about the missing outcomes [@little2012missing].
+Your sample size calculation report should describe how missing outcomes will be minimized, how their reasons will be recorded in each group, and how the analysis will handle them. [Sensitivity analyses](#sensitivity-analysis) should examine whether conclusions change under plausible alternative assumptions about the missing outcomes [@little2012missing].
 
 The simulations below start with recruited participants so that losses affect the number available for analysis.
 
@@ -2238,7 +2239,7 @@ The reproducibility record is the collection of materials needed to check the ca
 
 The study protocol sets out the design and objectives. The SAP specifies the analyses in enough detail to implement them. Their outcome definitions, sample size assumptions and primary analysis should agree. The [UMCG SAP template](https://umcg.zenya.work/document/2f52710d-3ebc-495e-a4dc-6dee95742c78) supplies a structure for this record [@umcgsap].
 
-The supporting study plan should retain the evidence and reasoning behind each numerical input, alternative scenarios and dated amendments. A revision should identify what changed, why, and what information was available when the decision was made. The [software record](#software-record) and [simulation record in Chapter 6](#simulation-reproducibility) specify the computational details to preserve alongside this scientific reasoning.
+The sample size calculation report should retain the evidence and reasoning behind each numerical input, alternative scenarios and dated amendments. A revision should identify what changed, why, and what information was available when the decision was made. The [software record](#software-record) and [simulation record in Chapter 6](#simulation-reproducibility) specify the computational details to preserve alongside this scientific reasoning.
 
 <details class="advanced-explanation" id="complex-design-record">
 <summary>Additional records for complex designs</summary>
@@ -2251,7 +2252,7 @@ For the [testing strategies in Chapter 7](#multiple-outcomes-comparisons), the p
 - Maximum and expected sample sizes under stated scenarios, with the planning method or simulation used to evaluate false-positive probability, power and other relevant performance measures.
 - The dated protocol and SAP versions, software, code and inputs needed to reproduce the decisions, and a record of any amendments and the information available when they were made.
 
-The [UMCG SAP template](https://umcg.zenya.work/document/2f52710d-3ebc-495e-a4dc-6dee95742c78) includes sections on significance and multiplicity, interim analyses and changes from the protocol. In the [study-plan activity](https://katatam.github.io/sample-size-calculation/assumptions_report/?stage=review), the planned analysis, software and conclusion fields can identify the design-specific plan, supporting documents and unresolved decisions. The [annotated core report](#write-a-sample-size-justification) remains a worked example for one comparison and a final analysis.
+The [UMCG SAP template](https://umcg.zenya.work/document/2f52710d-3ebc-495e-a4dc-6dee95742c78) includes sections on significance and multiplicity, interim analyses and changes from the protocol. In the [report activity](https://katatam.github.io/sample-size-calculation/assumptions_report/?stage=review), the planned analysis, software and conclusion fields can identify the design-specific plan, supporting documents and unresolved decisions. The [annotated core report](#write-a-sample-size-justification) remains a worked example for one comparison and a final analysis.
 
 </details>
 
@@ -2289,7 +2290,7 @@ sessionInfo()
 
 ## Reproduce or adapt an example {#reproduce-or-adapt-the-examples .advanced-heading}
 
-You can begin with [Activity: Simulate repeated neuropathic pain trials](https://katatam.github.io/sample-size-calculation/book/simulation.html#activity-pain_simulation). After running a scenario, you can save its replications and assumptions, study plan and R script using the lab's download controls. The script loads shared functions from a repository checkout, so that checkout's commit should be recorded alongside it.
+You can begin with [Activity: Simulate repeated neuropathic pain trials](https://katatam.github.io/sample-size-calculation/book/simulation.html#activity-pain_simulation). After running a scenario, you can save its replications and assumptions, sample size calculation report and R script using the lab's download controls. The script loads shared functions from a repository checkout, so that checkout's commit should be recorded alongside it.
 
 A practical reproduction follows these steps:
 
@@ -2323,7 +2324,7 @@ Adaptations should keep the editable R Markdown, shared case settings, app code 
 
 <span id="extend-study-plan"></span>
 
-In [your continuing report](https://katatam.github.io/sample-size-calculation/assumptions_report/?level=advanced&stage=question), the detailed prompts expand the same answers into a fuller study plan. Under *Study settings*, selecting relevant design features adds prompts for clustering, repeated measurements, survival outcomes, noninferiority or equivalence, multiple claims, interim decisions, or simulation. An external calculation can be documented with its inputs, method, result and software version. You can appraise evidence for each input, justify plausible ranges, compare several sensitivity scenarios, and document feasibility and unresolved decisions. Switching views preserves your writing and attached calculations.
+In [your continuing report](https://katatam.github.io/sample-size-calculation/assumptions_report/?level=advanced&stage=question), the detailed prompts expand the same answers into a fuller sample size calculation report. Under *Study settings*, selecting relevant design features adds prompts for clustering, repeated measurements, survival outcomes, noninferiority or equivalence, multiple claims, interim decisions, or simulation. An external calculation can be documented with its inputs, method, result and software version. You can appraise evidence for each input, justify plausible ranges, compare several sensitivity scenarios, and document feasibility and unresolved decisions. Switching views preserves your writing and attached calculations.
 
 Your study report can include a simulation result with its generating assumptions, analysis, repetition count and Monte Carlo interval. Your explanation should address what it adds to the analytical calculation. You can also write a short hypothetical study abstract that distinguishes the planned design, realized results and interpretation, following the broader learning sequence used in DICE [@thiesmeier2024].
 
@@ -2367,7 +2368,7 @@ Each plan specifies its target difference. All three use equal group sizes, a tw
 | B | An absolute increase of 10 [percentage points](#percentage-points) | 80% |
 | C | The same target difference as Plan A | 90% |
 
-Table: (\#tab:discharge-task) Three discharge-study plans with a 5% Type I error probability and a two-sided comparison.
+Table: (\#tab:discharge-task) Three discharge-sample size calculation reports with a 5% Type I error probability and a two-sided comparison.
 
 ### Your task {.unnumbered}
 
@@ -2454,7 +2455,7 @@ For communicating numerical findings, Gigerenzer and colleagues discuss transpar
 
 Your choice of reading can follow the decision you need to make; the [reading guide](https://katatam.github.io/sample-size-calculation/documentation/reading-guide.html) connects these sources to the activities.
 
-- @fong2026 and @zrineh2026 introduce clinical planning; @lakens2022 explains alternative sample size justifications; @cook2018delta2 supports choosing and reporting a [target difference](#target-difference). Apply these to the assumptions report.
+- @fong2026 and @zrineh2026 introduce clinical planning; @lakens2022 explains alternative sample size justifications; @cook2018delta2 supports choosing and reporting a [target difference](#target-difference). Apply these to the sample size calculation report.
 - Design-specific guidance: @ying2025 and @eldridge2016 address pilot objectives; @candel2023 addresses efficient designs; @riley2020 addresses prediction-model development. CONSORT's explanation and elaboration details reporting, including sample size assumptions in item 16a [@consortee2025].
 - For multiple outcomes and testing hierarchies, see @fdamultiple2022. For interim analyses, stopping guidelines and sample-size re-estimation, see ICH E9, Sections 3.4 and 4.4-4.6 [@iche91998], and @fdaadaptive2019. These support the [testing strategies](#multiple-outcomes-comparisons) and [additional reporting checklist](#complex-design-record).
 - For the distinction between an observed significance boundary and planned power, see @lakens2022 and section 1.7 of *Power Analysis with Superpower* [@superpowerbook2022]. Chapters 11 and 15 of that book extend the simulation examples.

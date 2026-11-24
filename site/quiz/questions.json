@@ -14,7 +14,7 @@
       "id": "q01",
       "chapter": "clinical-question",
       "level": "core",
-      "section": "PICO and the study plan",
+      "section": "PICO and the sample size calculation report",
       "link": "clinical-question.html#how-do-you-determine-the-minimum-required-sample-size",
       "question": "Which outcome matches the neravixa-versus-duloxetine trial?",
       "options": [
@@ -1137,15 +1137,15 @@
       "level": "core",
       "section": "Reproducibility and supporting records",
       "link": "reporting.html#record-assumptions",
-      "question": "How should the concise calculation report relate to the supporting study plan?",
+      "question": "How should the concise calculation report relate to the sample size calculation report?",
       "options": [
-        "Collect separate sets of answers for the report and supporting plan",
-        "Summarize the calculation, with evidence in the supporting plan",
-        "Use the supporting plan to replace the calculation inputs in the report",
+        "Collect separate sets of answers for the report and report",
+        "Summarize the calculation, with evidence in the report",
+        "Use the report to replace the calculation inputs in the report",
         "Include every explored simulation in the concise calculation report"
       ],
       "answer": 1,
-      "explanation": "One set of answers supports both documents. The concise report makes the selected calculation reproducible. the supporting plan preserves the fuller reasoning and evidence."
+      "explanation": "One set of answers supports both documents. The concise report makes the selected calculation reproducible. the report preserves the fuller reasoning and evidence."
     },
     {
       "id": "q53",
@@ -1476,7 +1476,7 @@
       "chapter_check": false,
       "section": "Chapter 3: The sample size calculation report",
       "link": "reporting.html#reporting",
-      "question": "A protocol measures relief at four weeks, but the percentages used for planning came from a two-day assessment. What belongs in the supporting study plan?",
+      "question": "A protocol measures relief at four weeks, but the percentages used for planning came from a two-day assessment. What belongs in the sample size calculation report?",
       "options": [
         "Justify their relevance and examine plausible alternatives",
         "Record only the calculator used to turn the percentages into a count",
@@ -1484,7 +1484,7 @@
         "Choose the smaller percentage without considering the assessment time"
       ],
       "answer": 0,
-      "explanation": "Outcome timing can change event percentages. The supporting plan should assess the evidence and its relevance to the defined outcome."
+      "explanation": "Outcome timing can change event percentages. The report should assess the evidence and its relevance to the defined outcome."
     },
     {
       "id": "c13",

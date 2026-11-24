@@ -1,4 +1,4 @@
-/* Explicit calculation snapshots for the developing study plan. MIT. */
+/* Explicit calculation snapshots for the developing sample size calculation report. MIT. */
 (() => {
   if (window.SampleSizePlanTransfer) return;
   window.SampleSizePlanTransfer = true;
@@ -14,9 +14,9 @@
       const root = window.SampleSizeSiteRoot || new URL('../', location.href).href;
       const target = new URL('assumptions_report/?stage=review&transfer=' + id, root);
       const link = document.createElement('a'); link.href = target.href; link.target = '_blank'; link.rel = 'noopener';
-      link.textContent = 'Review this calculation in my study plan';
+      link.textContent = 'Review this calculation in the report';
       status.replaceChildren(link); link.click();
-    } catch (_) { status.textContent = 'The calculation could not be transferred. Browser storage may be unavailable; you can copy the report into your study plan.'; }
+    } catch (_) { status.textContent = 'The calculation could not be transferred. Browser storage may be unavailable; you can copy the report into your sample size calculation report.'; }
   });
 })();
 
@@ -50,7 +50,7 @@
         }
         text.textContent='Previous inputs restored. A new simulation run will use these settings.';button.disabled=true;
       });box.append(button);
-    const plan=document.createElement('a');plan.href=new URL('assumptions_report/',window.SampleSizeSiteRoot||new URL('../',location.href)).href;plan.target='_blank';plan.rel='noopener';plan.textContent='My study plan';box.append(plan);
+    const plan=document.createElement('a');plan.href=new URL('assumptions_report/',window.SampleSizeSiteRoot||new URL('../',location.href)).href;plan.target='_blank';plan.rel='noopener';plan.textContent='Sample size calculation report';box.append(plan);
     document.querySelector('.container-fluid')?.prepend(box);
     let timer;const save=()=>{clearTimeout(timer);timer=setTimeout(()=>{timer=null;try{localStorage.setItem(key,JSON.stringify(snapshot()))}catch(_){}},250)};
     function changeActivity(next, reset=false){

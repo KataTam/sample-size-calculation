@@ -3,39 +3,40 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Develop and justify your study plan | Sample size calculation</title>
+  <title>Prepare a sample size calculation report | Sample size calculation</title>
   <link rel="stylesheet" href="../app-layout.css">
-  <link rel="stylesheet" href="report.css">
+  <link rel="stylesheet" href="report.css?v=20261124">
   <link rel="stylesheet" href="../input-guidance.css">
   <script src="../input-guidance.js" defer></script>
   <script src="../app-layout.js" defer></script>
   <script src="../report-exports.js" defer></script>
-  <script src="plan-workflow.js" defer></script>
-  <script src="calculation-record.js?v=20261123" defer></script>
+  <script src="plan-workflow.js?v=20261124" defer></script>
+  <script src="calculation-record.js?v=20261124" defer></script>
   <script src="advanced-design.js" defer></script>
-  <script src="report.js?v=20261123" defer></script>
+  <script src="report-references.js" defer></script>
+  <script src="report.js?v=20261124" defer></script>
 <link rel="stylesheet" href="../inline-app.css"><script src="../inline-app-client.js" defer></script></head>
 <body>
   <header>
-    <h1>Develop and justify your study plan</h1>
+    <h1>Prepare a sample size calculation report</h1>
     <details class="activity-description"><summary>Description</summary>
-      <p>Your answers develop into a concise sample size calculation report followed by the supporting study plan. The core view contains 12 prompts for a two-group power calculation. You can complete these alongside the four core activities. Detailed study plan adds supporting evidence and alternative scenarios to the same answers.</p>
-      <p>My own study starts with empty answers. Selecting the neuropathic pain example fills in its answers. Saved work can be restored with Resume saved plan. Underlined questions offer help, with suggested structures and example answers available when needed. Each section can be marked ready for review, and changes to inputs flag affected sections for review.</p>
-      <p>Preview shows both parts of the report from the same answers. PDF and Word downloads share it with others; “Save work for later” keeps a file you can reopen in this app.</p>
+      <p>The same answers build one sample size calculation report containing the research question, assumptions, calculation and recruitment justification. Additional prompts cover evidence, sensitivity analyses and more complex designs.</p>
+      <p>My own study starts with empty answers. Selecting the neuropathic pain example fills its answers for editing. Saved work can be restored with Resume saved report. Underlined questions offer help and suggested answers.</p>
+      <p>The report updates beside the questions. PDF and Word downloads contain the report and references. Save work for later preserves the entries for reopening in this app.</p>
     </details>
-    <section id="resume-plan" hidden aria-label="Saved study plan">
-      <p>A saved plan is available in this browser. Resume saved plan restores its answers. New entries start a new plan.</p>
-      <button id="resume-plan-button" type="button">Resume saved plan</button>
-      <button id="new-plan-button" type="button" class="secondary-action">Start a new plan</button>
+    <section id="resume-plan" hidden aria-label="Saved sample size calculation report">
+      <p>A saved report is available in this browser. Resume saved report restores its answers. New entries start a new report.</p>
+      <button id="resume-plan-button" type="button">Resume saved report</button>
+      <button id="new-plan-button" type="button" class="secondary-action">Start a new report</button>
     </section>
     <details id="plan-identity" open><summary>Study title and starting point</summary>
-    <section id="plan-start" aria-label="Your developing study plan">
+    <section id="plan-start" aria-label="Your developing sample size calculation report">
       <label for="plan-title">Study title<input id="plan-title" name="plan_title" form="plan-form" maxlength="200" placeholder="A short title for your study"></label>
       <label for="plan-basis">Starting point<select id="plan-basis" name="plan_basis" form="plan-form"><option value="own">My own study</option><option value="pain">Neuropathic pain teaching example</option></select></label>
       <button id="example" type="button" hidden>Reload example answers</button>
     </section></details>
-    <details id="advanced-plan"><summary>Detailed study plan</summary><p>Opening this adds detailed PICO, evidence appraisal, sensitivity and feasibility prompts. Under Study settings, you can select design features for additional prompts. Your existing answers and saved calculations are retained in either view.</p></details>
-    <nav id="plan-stages" aria-label="Contributions to your study plan"></nav>
+    <details id="advanced-plan"><summary>Additional report prompts</summary><p>Opening this adds detailed PICO, evidence appraisal, sensitivity and feasibility prompts. Under Study settings, you can select design features for additional prompts. Your existing answers and saved calculations are retained in either view.</p></details>
+    <nav id="plan-stages" aria-label="Contributions to your sample size calculation report"></nav>
     <div id="plan-stage-guidance" tabindex="-1"></div>
     <section id="transfer-preview" hidden aria-label="Review a calculation before adding it">
       <h2 class="transfer-title"></h2><p class="transfer-scope"></p><div class="transfer-lines"></div>
@@ -43,9 +44,9 @@
       <button id="accept-transfer" type="button">Add this result</button><button id="cancel-transfer" type="button">Cancel</button>
     </section>
     <div class="actions">
-      <button id="preview" type="button" aria-expanded="false" aria-controls="report-pane">Preview study plan</button>
-      <button id="save" type="button">Download study plan (PDF)</button>
-      <button id="save-word" type="button" class="secondary-action">Download editable study plan (Word)</button>
+      <button id="preview" type="button" aria-expanded="false" aria-controls="report-pane">Preview report</button>
+      <button id="save" type="button">Download report (PDF)</button>
+      <button id="save-word" type="button" class="secondary-action">Download editable report (Word)</button>
     </div>
     <div class="secondary-controls"><details id="file-actions"><summary>Help</summary>
     <div class="actions">
@@ -65,7 +66,7 @@
   </header>
   <main>
     <section class="form-pane" aria-labelledby="form-title">
-      <h2 id="form-title">Your study plan</h2>
+      <h2 id="form-title">Report entries</h2>
       <form id="plan-form">
         <fieldset id="answer-fields"><legend class="sr-only">Study settings and answers</legend>
         <details id="study-settings"><summary>Study settings</summary><div class="choices">
@@ -82,11 +83,10 @@
       </form>
     </section>
     <section id="report-pane" class="report-pane" aria-labelledby="report-title" hidden>
-      <div class="report-heading"><h2 id="report-title" tabindex="-1">Study plan</h2><p id="progress" role="status" aria-live="polite"></p></div>
+      <div class="report-heading"><h2 id="report-title" tabindex="-1">Sample size calculation report</h2></div>
       <article id="report"></article>
-      <p class="note">Both parts update from your answers. The supporting study plan includes unresolved items and saved calculations.</p>
-      <div class="report-downloads"><button id="download" type="button">Download study plan (PDF)</button>
-        <button id="download-word" type="button" class="secondary-action">Download editable study plan (Word)</button></div>
+      <div class="report-downloads"><button id="download" type="button">Download report (PDF)</button>
+        <button id="download-word" type="button" class="secondary-action">Download editable report (Word)</button></div>
     </section>
   </main>
   <footer id="guidance-credit">

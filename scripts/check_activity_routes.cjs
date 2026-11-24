@@ -31,11 +31,11 @@ const base=(process.argv[2]||'http://127.0.0.1:8769').replace(/\/$/,'');
   const link=page.locator('section.normal p a[href$="#activity-pain_curves"]').first();
   await link.click();await page.locator('#activity-pain_curves iframe').waitFor();
   assert.equal(context.pages().length,1,'A prose link uses the current lesson');
-  await page.locator('#activity-menu-button').click();
-  await page.locator('#activity-menu a[href$="#activity-alpha_beta"]').click();
-  await page.locator('#activity-alpha_beta iframe').waitFor();
-  assert.equal(await page.locator('#activity-menu').isVisible(),false);
-  assert.equal(context.pages().length,1,'The Activities menu uses the current lesson');
+  assert.equal(await page.locator('#activity-menu-button').count(),0);
+  assert.equal(await page.locator('#report-link').innerText(),'Report');
+  const popupPromise=context.waitForEvent('page');await page.locator('#report-link').click();
+  const reportPage=await popupPromise;await reportPage.waitForLoadState('domcontentloaded');
+  assert.match(reportPage.url(),/assumptions_report\//);await reportPage.close();
   fs.mkdirSync('build/inline-routing',{recursive:true});
   for(const id of ['assumptions_report','design_questionnaire']){
    await page.goto(base+'/'+routes[id]);

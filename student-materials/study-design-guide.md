@@ -23,7 +23,7 @@ Use the dimensions below and the [questionnaire](#design-questionnaire) to descr
 - For decisions during recruitment, use [interim analyses](#interim-analyses-stopping) and [sample size re-estimation](#sample-size-re-estimation).
 - For a rare disease or another research setting, use [restricted recruitment](#rare-diseases) and the [question and method table](#match-the-question-to-a-method-and-resource).
 
-Each route identifies the decisions needed for the calculation. The chapter can be used as a reference while developing the study plan.
+Each route identifies the decisions needed for the calculation. The chapter can be used as a reference while developing the sample size calculation report.
 
 ## Describe these dimensions first {.advanced-heading}
 

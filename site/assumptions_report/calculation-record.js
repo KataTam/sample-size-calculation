@@ -14,13 +14,13 @@
     if(value.plan_basis!=='pain' || AdvancedPlan.complex(value)) return result;
     const attached=selected(value);
     if(!attached) {
-      if(showPrepared(value)) result.software='Normal approximation using stats::power.prop.test(), two-sided with strict = TRUE; R '+prepared.r_version+', stats '+prepared.stats_version+'. The prepared calculation record gives the command, inputs, date and source version.';
+      if(showPrepared(value)) result.software='Normal approximation using stats::power.prop.test(), two-sided with strict = TRUE; R '+prepared.r_version+', stats '+prepared.stats_version+'. Both rejection tails are included.';
       return result;
     }
     for(const id of ['software','counts','recruitment','resources','power','planning','variation','sensitivity']) result[id]=formats[id];
     if(!compatible(value,attached)) return result;
     const f=attached.facts;
-    result.software=attached.lines.filter(line=>/^(Procedure:|R stats::|M =|Software:)/.test(line)).join('\n') || formats.software;
+    result.software=attached.lines.filter(line=>/^(Procedure:|R stats::|M =|Software:)/.test(line)).map(cleanLine).join('\n') || formats.software;
     if(Number.isFinite(f.analyzable)) result.counts=f.analyzable+' analyzable patients per group, '+2*f.analyzable+' total, from the attached calculation.';
     if(Number.isFinite(f.alpha)&&Number.isFinite(f.power)) result.power='Type I error probability '+pct(f.alpha)+'; target power '+pct(f.power)+', using a two-sided test at the attached target difference.';
     const lossRecord=records(value).filter(r=>r.kind==='recruitment').at(-1);
@@ -35,21 +35,37 @@
     }
     return result;
   }
-  function decorate(value, article, lines) {
+  const cleanLine = line => line.replace(/;?\s*source version:.*$/i,'').replace(/\bYour written answers remain separate\.?/g,'').trim();
+  function appendSaved(value, record, article) {
+    const section=document.createElement('section');
+    section.append(node('h3',record.kind==='recruitment'?'Recruitment calculation':record.kind==='exploration'?'Sensitivity calculation':'Calculation record'));
+    const allAnswers=Object.entries(value).filter(([key])=>!['calculation_records','decision_statuses'].includes(key)).map(([,answer])=>answer).join(' ');
+    for(const raw of record.lines) {
+      const line=cleanLine(raw);
+      if(!line || /^(Saved |Captured |Prepared |This record|Your |Selected scenario:)/.test(line)) continue;
+      if(allAnswers.includes(line)) continue;
+      // Written entries are the report's current statements. Keep additional
+      // result details when the corresponding entry has not been completed.
+      const written = /^(Procedure:|R stats::|M =|Software:|Reproducible R command:)/.test(line)?value.software:
+        /^(Inputs:|Population:|Planning:)/.test(line)?value.variation:
+        /^(Analyzable sample:|Sample size:)/.test(line)?value.counts:
+        /^(Expected unavailable|Recruitment:|Expected dropout:)/.test(line)?value.recruitment:'';
+      if(written?.trim()) continue;
+      section.append(node('p',line));
+    }
+    if(section.children.length>1) article.append(section);
+  }
+  function decorate(value) {
     const container=document.getElementById('example-calculation');
     const visible=Boolean(showPrepared(value)); container.hidden=!visible;
     if(!visible) return;
-    const heading='Prepared neuropathic pain calculation';
     container.replaceChildren(node('summary','Example calculation and software'));
-    const section=document.createElement('section');section.append(node('h4',heading));
-    const stamp='Calculated '+prepared.captured.slice(0,10)+'. This record uses the prepared 5% loss assumption. Your written answers remain separate.';
-    for(const parent of [container,section]) {
-      parent.append(node('p',stamp));
-      for(const line of prepared.lines) parent.append(node(line.startsWith('Reproducible R command:')?'pre':'p',line));
+    for(const raw of prepared.lines) {
+      const line=cleanLine(raw);
+      if(line) container.append(node(line.startsWith('Reproducible R command:')?'pre':'p',line));
     }
-    article.append(section);lines.push(heading,stamp,...prepared.lines);
   }
-  window.PlanCalculationRecord={answers,decorate};
+  window.PlanCalculationRecord={answers,decorate,appendSaved};
   fetch('example-calculation.json').then(r=>{if(!r.ok)throw Error('Example calculation unavailable');return r.json();})
     .then(record=>{prepared=record;window.dispatchEvent(new Event('plan-calculation-ready'));})
     .catch(()=>{document.getElementById('calculation-load-status').textContent='The prepared software record could not be loaded. The linked tutorial example contains the calculation.';});

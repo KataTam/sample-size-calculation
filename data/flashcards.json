@@ -245,7 +245,7 @@
     {
       "id": "C035",
       "level": "core",
-      "front": "What stays fixed across simulated trials of the same study plan?",
+      "front": "What stays fixed across simulated trials with the same design and assumptions?",
       "back": "The assumed population parameters, planned sample size, allocation, and analysis.",
       "source": "https://katatam.github.io/sample-size-calculation/book/clinical-question.html#activity-1-one-study-then-many"
     },
@@ -770,7 +770,7 @@
     {
       "id": "C088",
       "level": "core",
-      "front": "If the required sample exceeds available resources, what should the study plan explain?",
+      "front": "If the required sample exceeds available resources, what should the sample size calculation report explain?",
       "back": "Whether recruitment, collaboration, design, or objectives can change, and what uncertainty will remain at the feasible sample. Assumptions still need evidence.",
       "source": "https://katatam.github.io/sample-size-calculation/book/reporting.html#write-a-sample-size-justification"
     },

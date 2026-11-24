@@ -141,11 +141,11 @@ dt { font-style: normal; font-weight: 600; margin-top: .8em; break-after: avoid;
 dd { margin-bottom: .6em; }
 .float { break-inside: avoid; }
 .figcaption { font-size: .9em; line-height: 1.5; margin: .6em 0 1.2em; }
-#activity-menu-button { position:fixed; right:118px; top:8px; z-index:1001; background:#e1edf8; color:#173d5b; border:1px solid #91afc9; border-radius:5px; padding:7px 12px; font:14px Arial,sans-serif; cursor:pointer; }
-.book-header #activity-menu-button { position:absolute; }
+#report-link { position:fixed; right:118px; top:8px; z-index:1001; background:#e1edf8; color:#173d5b; border:1px solid #91afc9; border-radius:5px; padding:7px 12px; font:14px Arial,sans-serif; cursor:pointer; }
+.book-header #report-link { position:absolute; }
 #feedback-link { position:absolute; right:18px; top:8px; z-index:1001; background:#fff; color:#173d5b; border:1px solid #91afc9; border-radius:5px; padding:7px 12px; font:14px Arial,sans-serif; line-height:normal; text-decoration:none; }
 #feedback-link:hover, #feedback-link:focus-visible { background:#e1edf8; text-decoration:underline; }
-@media (max-width:1000px) { .book .book-header { height:90px; } .book-header #feedback-link, .book-header #activity-menu-button { top:50px; } .book-header #feedback-link { right:18px; padding:7px 8px; } }
+@media (max-width:1000px) { .book .book-header { height:90px; } .book-header #feedback-link, .book-header #report-link { top:50px; } .book-header #feedback-link { right:18px; padding:7px 8px; } }
 @media (max-width:1000px) { .book .book-body.fixed { top:90px; } .book .book-body.fixed .body-inner { top:auto; } }
 @media print { #feedback-link { display:none!important; } }
 #activity-menu { background:#fff; color:#26343d; border:1px solid #91afc9; border-radius:8px; padding:22px; width:min(580px,calc(100vw - 32px)); max-height:85vh; overflow:auto; font:16px/1.5 Arial,sans-serif; }
@@ -153,7 +153,7 @@ dd { margin-bottom: .6em; }
 #activity-menu > button { float:right; }
 #activity-menu h3 { font-size:17px; margin-bottom:.3em; }
 .reference-number { color:#405a70; }
-@media print { #activity-menu, #activity-menu-button, #citation-tooltip { display:none!important; } }
+@media print { #activity-menu, #report-link, #citation-tooltip { display:none!important; } }
 
 /* Quiet chapter arrows after the complete reading content. */
 .book .book-body .page-wrapper .page-inner section.normal .chapter-end-nav {
@@ -314,7 +314,7 @@ details.section-disclosure > summary > :is(h2,h3,h4,h5,h6) {
 .book.toc-resizing { cursor: col-resize; user-select: none; }
 .book.toc-resizing .book-body, .book.toc-resizing .book-summary { transition: none !important; }
 .book.toc-narrow-reader .book-header { height: 90px; }
-.book.toc-narrow-reader .book-header :is(#feedback-link, #activity-menu-button) { top: 50px; }
+.book.toc-narrow-reader .book-header :is(#feedback-link, #report-link) { top: 50px; }
 .book.toc-narrow-reader .book-body.fixed { top: 90px; }
 .book.toc-narrow-reader .book-body .body-inner { position: static; min-height: calc(100% - 50px); }
 .book.toc-narrow-reader .book-body.fixed .body-inner { top: auto; }
@@ -390,3 +390,6 @@ details.section-disclosure > summary > :is(h2,h3,h4,h5,h6) {
 .book.color-theme-2.with-search .book-summary .book-search { background:#22323f; }
 .book.color-theme-2.with-search .book-summary .book-search input { background:#172630; color:#f4f8fa; border-color:#a5b9c7; }
 .book.color-theme-2 #tutorial-search-results mark { background:#f4d38c; color:#292011; }
+
+#report-link {text-decoration:none;line-height:normal}
+#report-link:hover,#report-link:focus-visible {text-decoration:underline}

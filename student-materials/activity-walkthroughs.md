@@ -2,7 +2,7 @@
 
 These walkthroughs connect each activity to the question it helps answer. The clinical values are hypothetical teaching assumptions. The simulations generate hypothetical patient outcomes from specified population assumptions.
 
-Before changing an input, you can predict what the result will do and identify the quantities you will keep fixed. After exploring, your explanation should compare the result with your prediction and note what it means for the study plan.
+Before changing an input, you can predict what the result will do and identify the quantities you will keep fixed. After exploring, your explanation should compare the result with your prediction and note what it means for the sample size calculation report.
 
 You can drag a slider or type its value in the adjacent number field. Percentages are entered on the displayed scale, so 5 means 5%. In a narrow app panel, “Study settings” opens the inputs; closing it leaves room for the result and graph. Secondary calculation settings remain available in their expandable groups.
 
@@ -26,9 +26,9 @@ The [estimation review](../book/estimation-planning.html#estimation-report-error
 | 2. Calculating sample size and recruitment | [Adjust recruitment](../book/calculations.html#activity-recruitment) using one shared loss percentage | Recruitment per group and in total, with a short justification |
 | 3. The sample size calculation report | [Review and complete a report](../book/reporting.html#check-reporting) | Four-error review followed by a consistency check of the learner's report |
 
-Your report develops through these four activities in the same [study-plan workspace](../assumptions_report/). The default core view asks for the essentials; “Detailed study plan” adds detailed supporting prompts to the same answers. Additional discharge practice is optional basic practice. The later simulations and independent planning are extensions.
+Your report develops through these four activities in the same [report workspace](../assumptions_report/). The default core view asks for the essentials; “Additional report prompts” adds detailed supporting prompts to the same answers. Additional discharge practice is optional basic practice. The later simulations and independent planning are extensions.
 
-For a project using Extensions, *Study settings* includes design features that reveal relevant questions about clusters, repeated measurements, survival outcomes, margins, multiple claims, interim decisions or simulation. The calculation and software fields can record results from an external method. These answers appear in the calculation report and supporting study plan and are retained in saved work.
+For a project using Extensions, *Study settings* includes design features that reveal relevant questions about clusters, repeated measurements, survival outcomes, margins, multiple claims, interim decisions or simulation. The calculation and software fields can record results from an external method. These answers appear in the sample size calculation report and are retained in saved work.
 
 The neuropathic pain example connects the core simulation, calculation, recruitment adjustment and annotated report. Optional examples apply the method to a different outcome; any report based on one of them should retain that example throughout.
 
@@ -36,30 +36,30 @@ The neuropathic pain example connects the core simulation, calculation, recruitm
 
 “Report” previews the current calculation and any answers you have entered. In the reasoning lab, it also identifies the selected example, feasibility and simulation assumptions. Expandable example answers update with the example and parameters; only your entered responses appear as answers in the report. Your writing is preserved when settings change and should be reviewed against the new results.
 
-The apps remember edited inputs in the same browser. After reopening an app, “Help and saved inputs” offers “Restore previous inputs.” Simulations need to be run again with the restored settings. The study-plan activity defaults to “My own study” with empty answers and the core two-group power settings. “Resume saved plan” explicitly restores earlier work. Selecting the neuropathic pain example fills in its answers, while selecting “My own study” clears the example and its calculation records. Quizzes restore their saved attempts automatically. A downloaded work file provides a backup or lets you continue on another computer.
+The apps remember edited inputs in the same browser. After reopening an app, “Help and saved inputs” offers “Restore previous inputs.” Simulations need to be run again with the restored settings. The report activity defaults to “My own study” with empty answers and the core two-group power settings. “Resume saved report” explicitly restores earlier work. Selecting the neuropathic pain example fills in its answers, while selecting “My own study” clears the example and its calculation records. Quizzes restore their saved attempts automatically. A downloaded work file provides a backup or lets you continue on another computer.
 
 The reasoning lab and single-percentage app omit saved simulation results from the report when their settings or example no longer match. A message explains which simulation needs rerunning. While the app remains open, its simulation panels and CSV downloads retain the original run and its recorded assumptions until another run replaces it. A downloaded file is a snapshot; after revising your plan, you should save a new report.
 
 | File | What it contains | How you can use it |
 |---|---|---|
-| Report (PDF) | Current assumptions, calculated results, matching simulated results where available, and your written responses | The default download for reading, sharing, printing or submitting. The study-plan form includes your entries and decisions still to complete. |
+| Report (PDF) | Current assumptions, calculated results, matching simulated results where available, and your written responses | The default download for reading, sharing, printing or submitting. The report form includes your entries and decisions still to complete. |
 | Editable report (Word) | The same report in a .docx document | Open it in Word or another compatible editor to revise or combine with your assignment. Edits in Word remain in that document. |
-| Saved work (JSON) | The example, settings and answers needed to resume in the reasoning lab, or entries from the study-plan form | Open “Save work for later,” then use “Reopen saved work” in the same app. The lab clears previous simulations, which should be rerun. |
+| Saved work (JSON) | The example, settings and answers needed to resume in the reasoning lab, or entries from the report form | Open “Save work for later,” then use “Reopen saved work” in the same app. The lab clears previous simulations, which should be rerun. |
 | Simulation data (CSV) | The saved study or repetitions and the assumptions used to generate them | Open the file in a spreadsheet or analysis program to inspect the saved run. |
 | Reproducible script (R) | Code for the reasoning lab's current simulation settings | Run it from the downloaded source folder with its shared R functions; see [Source and reuse](../documentation/reuse-and-citation.md). |
 
-“Save work for later” is separate from the report downloads. Its JSON file can remain unopened on your computer until you reopen it in the app. The study-plan form also accepts its earlier saved HTML reports and JSON entries, and offers a plain-text report. For a class submission, your teacher can specify the report and supporting results needed.
+“Save work for later” is separate from the report downloads. Its JSON file can remain unopened on your computer until you reopen it in the app. The report form also accepts its earlier saved HTML reports and JSON entries, and offers a plain-text report. For a class submission, your teacher can specify the report and supporting results needed.
 
-## Develop and justify your study plan
+## Prepare a sample size calculation report
 
 [Open your plan](../assumptions_report/?stage=question) · [Matching explanation](../book/reporting.html#record-assumptions)
 
 1. “My own study” is the default, with empty answers. “Suggested structure” gives a framework for your responses. Selecting the neuropathic pain teaching example fills in its answers, including the calculation and recruitment assumptions. These answers can be edited. Switching back to “My own study” starts an empty plan.
 2. Chapters 1–2 explain the question and power, calculation, and recruitment. Chapter 3 brings together the reporting guidance, checklist and complete example. You can record decisions in the same activity throughout and review the complete report in Chapter 3.
-3. In the core view, short explanations of the supplied assumptions are sufficient. Each section's “Ready for review” checkbox becomes available when its visible questions are answered. The detailed view adds evidence appraisal, plausible ranges, sensitivity scenarios and feasibility details; its completion checks include those extra prompts.
-4. In an app’s Report view, “Add this calculation to my study plan” opens a preview of the current inputs, result and method. You choose whether to attach it and whether to replace an earlier result of that type. Your written answers remain in place; affected sections are marked for another review.
+3. In the core view, short explanations of the supplied assumptions are sufficient. The detailed view adds evidence appraisal, plausible ranges, sensitivity scenarios and feasibility details; the same report includes these additional answers.
+4. In an app’s Report view, “Add this calculation to the report” opens a preview of the current inputs, result and method. You choose whether to attach it and whether to replace an earlier result of that type. The written answers remain in place, and the app checks for mismatches between attached calculations.
 5. “Review before downloading” lists unresolved decisions and compares the analyzable requirement with the starting count in an attached recruitment calculation. Values written in free text still need your review. Optional simulations can be attached as explorations.
-6. The preview and PDF/Word downloads start with a concise sample size calculation report, followed by the supporting study plan, section review and attached results. Both parts update from the same answers; example hints are included only if you use them in an answer. “Save work for later” preserves the editable app state. Entries also persist in the same browser; the saved file supports another computer. The plan is complete for the core assignment when its applicable decisions and calculation have been reviewed. Activities in Extensions can extend it when relevant.
+6. The sample size calculation report combines the research question, assumptions, evidence, calculation and recruitment justification. Its live preview and PDF and Word downloads use the same answers, with references at the end. “Save work for later” preserves entries and attached calculations for reopening. Review checks remain in the app.
 
 
 The [annotated report in Chapter 3](../book/reporting.html#write-a-sample-size-justification) shows the completed two-proportion calculation. The neuropathic pain example uses 5% expected missing primary outcomes: 56 analyzable patients and 59 recruits per group, or 118 recruits total. Selecting this example makes its prepared calculation and software record available under the software question. Attached calculator results retain their own inputs and runtime versions; example answers for calculation fields follow that selected result. Your written answers should be reviewed when the calculation changes.
@@ -135,7 +135,7 @@ Purpose: calculate a sample size for a binary outcome and examine its sensitivit
 1. The favorable event is remaining free of gestational diabetes: 80% without probiotics and 90% with probiotics. These percentages correspond to 20% and 10% developing gestational diabetes. The calculation should give the same requirement with either event definition.
 2. The calculator uses 90% power and a 5% Type I error probability. Expected loss starts at zero so this step gives the analyzable requirement. The following recruitment activity applies the chosen loss allowance.
 3. Your record should identify both event percentages, the 10-point target difference, error probability, power, method, software and analyzable count per group and in total. The optional comparison with 85% illustrates a smaller target difference.
-4. “Add this calculation to my study plan” attaches the selected result after your review. Its analyzable count is the starting point for the recruitment activity. Comparing several scenarios is an extension.
+4. “Add this calculation to the report” attaches the selected result after your review. Its analyzable count is the starting point for the recruitment activity. Comparing several scenarios is an extension.
 5. The optional [simulation](../power_explorer/?activity=adherence) keeps the original sample fixed while changing the probabilities that generate outcomes. This asks how the original design would perform if the true difference were smaller.
 
 
@@ -158,7 +158,7 @@ Purpose: see how a target difference and between-patient variability determine a
 1. The target mean difference is 3 units and the common SD is 5. The two-sided Type I error probability is 5% and target power is 90%.
 2. With expected loss left at zero, the pooled two-sample t-test calculation gives 60 analyzable participants per group, or 120 total.
 3. In “Compare two scenarios,” the revised SD starts at 7 while the target difference stays at 3. The original SD 5 curve stays visible. The revised requirement is 116 per group, or 232 total, showing how greater variability increases the sample needed.
-4. In “Report,” you can select the scenario to use and explain the evidence supporting its assumptions. “Add this calculation to my study plan” attaches that selected result and explanation after review. The recruitment activity starts with the selected analyzable requirement.
+4. In “Report,” you can select the scenario to use and explain the evidence supporting its assumptions. “Add this calculation to the report” attaches that selected result and explanation after review. The recruitment activity starts with the selected analyzable requirement.
 
 The [rehabilitation simulation](../power_explorer/?activity=rehabilitation) uses a t-test method and generated outcomes. It can examine confidence intervals and repeated-study performance after the core calculation.
 
@@ -176,7 +176,7 @@ Purpose: assess whether the feasible study can answer the intended question unde
 2. “Explore assumptions” shows calculated curves for 15-, 20- and 30-point differences. The vertical line marks 100 per group and the horizontal line marks 90% power. The table gives approximately 59%, 83% and 99% power, and required counts of 217, 124 and 56 per group.
 3. With “Available sample size” selected, clicking the graph changes the count and vertical reference line. With “Target power” selected, clicking changes the horizontal line and required counts. The sample-size field and target-power slider support the same choices by keyboard. The axes stay fixed until “Fit axis to results” is selected. A notice identifies any required counts outside the current range.
 4. “Repeated trials” estimates power from generated patient data for the selected scenario.
-5. The chapter question asks which of the three differences reaches 90% power at the available count. The supporting study plan can record the evidence and uncertainty behind a recruitment or design decision.
+5. The chapter question asks which of the three differences reaches 90% power at the available count. The sample size calculation report can record the evidence and uncertainty behind a recruitment or design decision.
 
 <span id="repeated-chronic-pain-trials--advanced"></span>
 
@@ -212,7 +212,7 @@ The simulation above uses one final analysis. For a design with interim stopping
 1. The starting count should be the analyzable requirement per group from your chosen calculation. The app opens with the neuropathic pain example of 56 per group; you can replace that count with your selected result.
 2. One expected loss percentage applies to both groups. For the neuropathic pain example, 5% expected loss gives 56 / 0.95, rounded upward to 59 recruits per group and 118 total.
 3. Your explanation should identify the starting count, expected retained percentage, recruitment count and basis for the loss assumption. Actual retention can vary, and missing outcomes also need prevention and an appropriate analysis.
-4. In “Report,” the calculation and your explanation can be added to the continuing study plan. Its review checks compare the starting count with the attached sample size calculation.
+4. In “Report,” the calculation and your explanation can be added to the continuing sample size calculation report. Its review checks compare the starting count with the attached sample size calculation.
 
 ## Review and complete a report — core
 
@@ -220,7 +220,7 @@ The simulation above uses one final analysis. For a design with interim stopping
 
 1. The short example contains four problem areas: calculation inputs, the interpretation of power, per-group versus total counts, and the loss adjustment. Selecting a passage opens an explanation; the PDF includes the same answer key.
 2. After correcting these problems, you can check the corresponding entries in your own report against its attached calculations and the annotated example.
-3. A PDF or editable Word download contains the concise calculation report followed by the supporting study plan. This review serves as Chapter 3's check. The cumulative quiz offers optional further review.
+3. The sample size calculation report combines the research question, assumptions, evidence, calculation and recruitment justification. Its live preview and PDF and Word downloads use the same answers, with references at the end. “Save work for later” preserves entries and attached calculations for reopening. Review checks remain in the app.
 
 <span id="unequal-losses-and-treatment-switching--advanced"></span>
 
@@ -303,7 +303,7 @@ Purpose: bring together the clinical question, numerical requirements and practi
 3. The eligible-participant, consent and recruitment-period inputs help assess recruitment feasibility. Actual recruitment and retention can vary from these expectations.
 4. For a supported design, “One trial” and “Repeated trials” can examine possible results and performance. Sensitivity scenarios should change the assumed population while retaining the original plan when that is the question.
 5. “Report” combines your study responses and recommendation with the current calculations, feasibility and matching simulations. Your written answers should reflect the selected example and settings. Unsupported designs receive a note about the need for a design-specific method.
-6. “Download report (PDF)” saves the summary; “Download editable report (Word)” provides an editable copy. The separate “Save work for later” controls save and reopen your settings and answers. The [file guide above](#reports-and-saved-work) explains backups, simulation data and the optional R script. Findings and their justification can be entered in the separate study-plan activity.
+6. “Download report (PDF)” saves the summary; “Download editable report (Word)” provides an editable copy. The separate “Save work for later” controls save and reopen your settings and answers. The [file guide above](#reports-and-saved-work) explains backups, simulation data and the optional R script. Findings and their justification can be entered in the separate report activity.
 
 <span id="choosing-a-study-design--advanced"></span>
 

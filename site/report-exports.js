@@ -171,8 +171,8 @@
       styles:{default:{document:{run:{font:'Calibri',size:22,color:'20343E',language:{value:'en-US'}},
         paragraph:{spacing:{after:150,line:288},widowControl:true}},
         title:{run:{font:'Calibri',size:42,bold:false,color:'000000'},paragraph:{spacing:{before:0,after:260},keepNext:true}},
-        heading1:{run:{font:'Calibri',size:27,bold:true,color:'17547B'},paragraph:{spacing:{before:220,after:120},keepNext:true}},
-        heading2:{run:{font:'Calibri',size:24,bold:true,color:'17547B'},paragraph:{spacing:{before:180,after:100},keepNext:true}}}},
+        heading1:{run:{font:'Calibri',size:27,bold:false,color:'17547B'},paragraph:{spacing:{before:220,after:120},keepNext:true}},
+        heading2:{run:{font:'Calibri',size:24,bold:false,color:'17547B'},paragraph:{spacing:{before:180,after:100},keepNext:true}}}},
       sections:[{properties:{page:{size:{width:11906,height:16838},margin:{top:1247,bottom:1247,left:1247,right:1247}}},
         footers:{default:new d.Footer({children:[new d.Paragraph({alignment:d.AlignmentType.RIGHT,
           children:[new d.TextRun({children:['Page ',d.PageNumber.CURRENT,' of ',d.PageNumber.TOTAL_PAGES],size:18,color:'52616B'})]})]})},children}]});

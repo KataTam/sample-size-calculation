@@ -1,8 +1,8 @@
 # Reading guide
 
-Use the [full references](references.md) for bibliographic details and publisher links. Choose a source for the planning decision you need to make; reading every paper is not a prerequisite. Keep one study plan alongside the tutorial and use reading to improve its justification.
+Use the [full references](references.md) for bibliographic details and publisher links. Choose a source for the planning decision you need to make; reading every paper is not a prerequisite. Keep one sample size calculation report alongside the tutorial and use reading to improve its justification.
 
-## Start here: the core study plan
+## Start here: the core sample size calculation report
 
 | Decision | Suggested reading | Use it in the tutorial |
 |---|---|---|
@@ -13,11 +13,11 @@ Use the [full references](references.md) for bibliographic details and publisher
 | Assess prior evidence | Albers and Lakens (2018); Caldwell and Vigotsky (2020) | Treat small pilot differences as uncertain; use clinically interpretable units and plausible ranges |
 | Interpret raw and standardized differences | [Kallogjeri and Piccirillo (2023)](https://doi.org/10.1001/jamaoto.2023.0159) | Keep clinical units visible; distinguish clinical importance from a difference relative to the SD |
 | Choose an SD from prior evidence | [Bentin et al. (2026)](https://doi.org/10.1002/ejp.70283) | Match population, outcome scale, follow-up and change versus final scores; explore plausible SD values |
-| Report the calculation | [CONSORT 2025 explanation and elaboration](https://doi.org/10.1136/bmj-2024-081124) | Record target justification, event probabilities or SD, error probabilities, method, counts and losses in the assumptions report |
+| Report the calculation | [CONSORT 2025 explanation and elaboration](https://doi.org/10.1136/bmj-2024-081124) | Record target justification, event probabilities or SD, error probabilities, method, counts and losses in the sample size calculation report |
 
-Table: Reading that supports decisions in the core study plan.
+Table: Reading that supports decisions in the core sample size calculation report.
 
-Complete the [assumptions report](https://katatam.github.io/sample-size-calculation/book/reporting.html#activity-assumptions_report) progressively. The neuropathic pain sensitivity table makes the consequence of choosing a target larger than the clinical threshold visible. Reporting guidelines help document decisions; they do not establish the correct target or supply universal input values.
+Complete the [sample size calculation report](https://katatam.github.io/sample-size-calculation/book/reporting.html#activity-assumptions_report) progressively. The neuropathic pain sensitivity table makes the consequence of choosing a target larger than the clinical threshold visible. Reporting guidelines help document decisions; they do not establish the correct target or supply universal input values.
 
 ## Choose an extension for your question
 

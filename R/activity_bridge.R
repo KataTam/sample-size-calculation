@@ -46,7 +46,7 @@ activity_count_result <- function(x) shiny::tags$div(class = "calculation-result
   shiny::tags$p(paste(x$total_n, "participants in total for analysis")),
   if (x$dropout_rate > 0) shiny::tags$p(paste("Recruitment target:", x$total_with_dropout, "in total")))
 
-# Browser activity links and portable study plans. Statistical methods live in
+# Browser activity links and portable sample size calculation reports. Statistical methods live in
 # sample_size_functions.R; these helpers validate UI state before applying it.
 lab_input_defaults <- function() list(
   outcome = "means", goal = "testing", expected_m = 4, expected_p = .4, plan_delta = 3, plan_sd = 5,
@@ -151,11 +151,11 @@ apply_study_inputs <- function(session, values) {
 
 read_study_plan <- function(text) {
   if (length(text) != 1 || !is.character(text) || nchar(text, type = "bytes") > 100000)
-    stop("Choose a study-plan JSON file smaller than 100 KB.", call. = FALSE)
+    stop("Choose a saved-work JSON file smaller than 100 KB.", call. = FALSE)
   x <- jsonlite::fromJSON(text, simplifyVector = FALSE)
   if (!is.list(x) || !identical(x$schema, "sample-size-study-plan") ||
       !is.numeric(x$version) || length(x$version) != 1 || x$version != 1)
-    stop("This file is not a supported sample size study plan.", call. = FALSE)
+    stop("This file is not a supported sample size sample size calculation report.", call. = FALSE)
   list(inputs = validate_lab_inputs(x$inputs), study = validate_study_inputs(x$study),
        activity = if (is.character(x$activity) && length(x$activity) == 1) x$activity else "")
 }

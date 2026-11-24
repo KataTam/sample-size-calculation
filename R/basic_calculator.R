@@ -7,8 +7,8 @@ basic_calculator_ui <- function(outcome) {
     titlePanel(title, windowTitle = title),
     app_activity_sequence(c("Calculate a plan", "Compare one assumption", "Justify the choice")),
     activity_description(p(class = "app-intro", if (means)
-      "This app calculates the participants needed per group to detect a target difference between two population means at your chosen power. It assumes equal group sizes, independent participant outcomes, and a two-sided test. Comparing two scenarios shows how changes in the target difference, variability or power affect the requirement; a selected result can be added to your study plan."
-      else "This app calculates the participants needed per group to detect a target difference between two population event percentages at your chosen power. It assumes equal group sizes, independent participant outcomes, and a two-sided test. Comparing two scenarios shows how changes in the target difference, variability or power affect the requirement; a selected result can be added to your study plan.")),
+      "This app calculates the participants needed per group to detect a target difference between two population means at your chosen power. It assumes equal group sizes, independent participant outcomes, and a two-sided test. Comparing two scenarios shows how changes in the target difference, variability or power affect the requirement; a selected result can be added to your sample size calculation report."
+      else "This app calculates the participants needed per group to detect a target difference between two population event percentages at your chosen power. It assumes equal group sizes, independent participant outcomes, and a two-sided test. Comparing two scenarios shows how changes in the target difference, variability or power affect the requirement; a selected result can be added to your sample size calculation report.")),
     sidebarLayout(sidebarPanel(width = 4,
       app_input_group("Study assumptions",
         if (means) tagList(
@@ -209,7 +209,7 @@ basic_calculator_server <- function(outcome) function(input, output, session) {
   report_sections <- reactive(list("Sample size calculation report" = c(sample_size_interpretation(selected_result()),
     "Two independent groups, equal allocation, two-sided test. Each participant contributes one outcome, and outcomes from different participants are assumed independent. The target difference and variation assumptions require evidence appropriate to the intended population and outcome.", method_text(),
     "Expected losses affect recruitment counts. Missing outcomes and treatment changes also require prevention and an appropriate analysis plan."),
-    "Supporting study plan" = c(paste0("Selected scenario: ",if(identical(input$report_scenario,"revised")) "revised." else "original."),
+    "Justification" = c(paste0("Selected scenario: ",if(identical(input$report_scenario,"revised")) "revised." else "original."),
       paste0("Reason for the choice: ",app_answer(input$decision)),
       tryCatch(comparison_interpretation(), error=function(e) "The alternative scenario needs valid inputs before it can be compared."))))
   report_paragraphs <- reactive(unname(unlist(report_sections())))

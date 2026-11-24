@@ -37,6 +37,6 @@ await page.locator('#aim').selectOption('prevalence');await page.locator('#data'
 assert.match(await page.locator('#suggested-design').innerText(),/prevalence/);assert(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth));
 await page.locator('#result-panel').screenshot({path:'build/browser-checks/design-questionnaire-mobile.png'});
 await page.goto('http://127.0.0.1:8769/book/study-designs.html');assert(await page.locator('#design-questionnaire a[href*="activity=design_questionnaire"]').count());
-await page.locator('#activity-menu-button').click();assert(await page.locator('#activity-menu a[href*="#activity-design_questionnaire"]').count());
+assert.equal(await page.locator('#report-link').innerText(),'Report');assert(await page.locator('#activity-design_questionnaire').count());
 assert.deepEqual(errors,[]);console.log('Questionnaire browser checks passed: conditional fields, stale suggestions, case routing, calculator eligibility, inline reset, mobile layout and Chapter 8/menu links.');
 }finally{await browser.close();}})().catch(e=>{console.error(e);process.exit(1)});

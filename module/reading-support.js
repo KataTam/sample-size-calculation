@@ -212,42 +212,13 @@
   }
   window.addEventListener('hashchange', revealTarget); revealTarget();
 
-  const registry = document.getElementById('activity-menu-data');
-  if (!registry || document.getElementById('activity-menu-button')) return;
-  const groups = JSON.parse(registry.textContent);
-  const dialog = document.createElement('dialog'); dialog.id = 'activity-menu';
-  const heading = document.createElement('h2'); heading.textContent = 'Activities';
-  heading.id = 'activity-menu-title'; dialog.setAttribute('aria-labelledby', heading.id);
-  const close = document.createElement('button'); close.textContent = 'Close'; close.type = 'button';
-  close.addEventListener('click', () => dialog.close()); dialog.append(close, heading);
-  const slug = location.pathname.split('/').pop().replace(/\.html$/, '');
-  const ordered = [...groups].sort((a,b) => Number(b.chapter === slug) - Number(a.chapter === slug));
-  const root = location.protocol === 'file:' || location.pathname === 'blank' || location.href === 'about:blank'
-    ? 'https://katatam.github.io/sample-size-calculation/' : new URL('../', location.href).href;
-  for (const group of ordered) {
-    const title = document.createElement('h3'); title.textContent = group.route + ': ' + group.title; title.className=group.route==='Core material'?'activity-core-heading':'activity-advanced-heading'; dialog.append(title);
-    const list = document.createElement('ul');
-    for (const item of group.activities) {
-      const li = document.createElement('li'), a = document.createElement('a');
-      a.textContent = 'Activity: ' + item.label + ' (' + item.route + ')'; a.href = new URL(item.path, root).href;
-      a.dataset.linkNavigation = 'same-tab'; li.append(a); list.append(li);
-    }
-    dialog.append(list);
-  }
-  const flashcards = document.createElement('p');
-  const flashcardLink = document.createElement('a');
-  flashcardLink.textContent = 'Flashcards';
-  flashcardLink.href = new URL('student-materials/flashcards/index.html', root).href;
-  flashcardLink.target = '_blank'; flashcardLink.rel = 'noopener';
-  flashcards.append(flashcardLink); dialog.append(flashcards);
-  const button = document.createElement('button'); button.id = 'activity-menu-button';
-  if (!generalFeedbackEnabled) button.style.right = '18px';
-  button.type='button'; button.textContent='Activities'; button.setAttribute('aria-haspopup','dialog');
-  button.addEventListener('click', () => dialog.showModal());
-  dialog.addEventListener('click', event => { if (event.target === dialog) { const r=dialog.getBoundingClientRect(); if(event.clientX<r.left || event.clientX>r.right || event.clientY<r.top || event.clientY>r.bottom) dialog.close(); } });
-  document.body.append(dialog);
-  const planLink=document.createElement('a');planLink.id='my-study-plan';planLink.textContent='My study plan';planLink.href=new URL('assumptions_report/',root).href;planLink.target='_blank';planLink.rel='noopener';(header||document.body).append(planLink);
-  const feedbackLink = document.getElementById('feedback-link');
-  if (feedbackLink) feedbackLink.before(button);
-  else (header || document.body).append(button);
+  if(document.getElementById('report-link')) return;
+  const root=location.protocol==='file:' || location.pathname==='blank' || location.href==='about:blank'
+    ? 'https://katatam.github.io/sample-size-calculation/' : new URL('../',location.href).href;
+  const link=document.createElement('a'); link.id='report-link'; link.textContent='Report';
+  link.href=new URL('assumptions_report/',root).href; link.target='_blank'; link.rel='noopener';
+  link.setAttribute('aria-label','Sample size calculation report');
+  if(!generalFeedbackEnabled) link.style.right='18px';
+  const feedback=document.getElementById('feedback-link');
+  if(feedback) feedback.before(link); else (header||document.body).append(link);
 })();

@@ -211,10 +211,10 @@ ui <- fluidPage(
       p(tags$a(href = "../book/appendix.html#own-study", target = "_blank", rel = "noopener", "Read the study justification guidance"))),
     tabPanel("Report", value = "Justify and communicate",
       conditionalPanel("!output.pain_report", h3(id = "report-question-heading", "Explain your decision"),
-      activity_text_input("justification", "What study plan would you recommend, and why?",
+      activity_text_input("justification", "What sample size calculation report would you recommend, and why?",
         "The example updates with the selected case and current calculation inputs.",
         "Your recommendation should give analyzable and recruitment counts, supporting evidence, and the effect of plausible alternative assumptions. It should identify remaining limitations.", rows = 8),
-      p(id = "study-plan-guidance", "A structured ", tags$a(href = "../assumptions_report/", "study plan"), " brings these decisions together using PICO, selected SPIRIT 2025 items and DELTA² guidance.")),
+      p(id = "study-plan-guidance", "A structured ", tags$a(href = "../assumptions_report/", "sample size calculation report"), " brings these decisions together using PICO, selected SPIRIT 2025 items and DELTA² guidance.")),
       uiOutput("report_preview"), activity_report_downloads("download_plan"),
       conditionalPanel("output.one_ready", activity_details("Participant records for the saved study",
         tableOutput("one_data"), textOutput("one_missing_data_note"),
@@ -430,7 +430,7 @@ server <- function(input, output, session) {
   }))
   observeEvent(input$upload_plan, handle({
     req(input$upload_plan$datapath)
-    if (input$upload_plan$size > 100000) stop("Choose a study-plan file smaller than 100 KB.")
+    if (input$upload_plan$size > 100000) stop("Choose a saved-work file smaller than 100 KB.")
     saved <- read_study_plan(paste(readLines(input$upload_plan$datapath, warn = FALSE), collapse = "\n"))
     apply_lab_inputs(session, saved$inputs)
     apply_study_inputs(session, saved$study)
@@ -547,7 +547,7 @@ server <- function(input, output, session) {
     core <- pain_report()
     session$sendCustomMessage("lab-report-context", list(core = core,
       question = if (core) "What do these simulations show about sampling variability and sample size?"
-        else "What study plan would you recommend, and why?",
+        else "What sample size calculation report would you recommend, and why?",
       help = if (core) "The model answers beside the simulations explain how the estimates vary across studies."
         else "Your recommendation should give analyzable and recruitment counts, supporting evidence, and the effect of plausible alternative assumptions. It should identify remaining limitations."))
   })
@@ -1059,12 +1059,12 @@ server <- function(input, output, session) {
   report_heading <- reactive(if (pain_report()) "Pain relief: simulation report" else "Sample size reasoning lab report")
   report_intro <- reactive(if (pain_report())
     "This report records the current population assumptions and the latest matching simulations."
-    else "This report records the current study plan, matching simulation results, and your written justification.")
+    else "This report records the current calculation, matching simulation results, and written justification.")
   output$report_preview <- renderUI(app_report_body(report_sections(), heading = report_heading(), intro = report_intro()))
-  output$download_plan <- downloadHandler(filename = function() if (pain_report()) "pain-relief-simulation-report.html" else "sample-size-study-plan.html",
+  output$download_plan <- downloadHandler(filename = function() if (pain_report()) "pain-relief-simulation-report.html" else "sample-size-calculation-report.html",
     content = function(file) writeLines(app_report_document(report_heading(), "power_explorer", report_sections(),
       report_heading = report_heading(), report_intro = report_intro()), file, useBytes = TRUE))
-  output$download_plan_json <- downloadHandler(filename = function() "sample_size_study_plan.json", content = function(file) {
+  output$download_plan_json <- downloadHandler(filename = function() "sample-size-calculation-report-work.json", content = function(file) {
     plan <- list(schema = "sample-size-study-plan", version = 1, activity = current_activity(),
       inputs = current_lab_inputs(), study = study_details())
     writeLines(jsonlite::toJSON(plan, auto_unbox = TRUE, pretty = TRUE, digits = 16, null = "null"), file)

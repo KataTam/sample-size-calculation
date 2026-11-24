@@ -10,7 +10,7 @@ Calculators and simulations also open within the tutorial when you select their 
 
 ## Apps for Core material
 
-- [Study plan](assumptions_report/): develop a PICO question and justify the calculation and recruitment plan. The short core view and expanded detailed view use one set of answers, producing a concise sample size calculation report followed by the supporting study plan.
+- [Sample size calculation report](assumptions_report/): combine the research question, assumptions, evidence, calculation and recruitment justification in one report. PDF and Word downloads include references.
 
 - [Sample size reasoning lab](power_explorer/?activity=pain_one_many): simulate patient outcomes and compare results across studies. [Activity: Neuropathic pain: one trial and repeated trials](book/clinical-question.html#activity-pain_one_many).
 
@@ -30,7 +30,7 @@ The core [calculation activity](book/calculations.html#calculate-sample-size) us
 
 - [Recruitment extensions](book/study-designs.html#activity-recruitment_advanced): examine unequal losses and treatment switching. [Tutorial explanation](book/study-designs.html#recruitment-extensions).
 
-- [Detailed study plan](assumptions_report/?level=advanced): appraise evidence, justify ranges and compare sensitivity scenarios in the same report.
+- [Additional report prompts](assumptions_report/?level=advanced): appraise evidence, justify ranges and compare sensitivity scenarios in the same report.
 
 - [Mean estimation](power_explorer/?activity=mean_precision): calculate a sample size for a useful confidence-interval width and examine intervals across simulated studies. [Tutorial explanation](book/estimation-planning.html#plan-for-precision).
 
@@ -42,9 +42,9 @@ The core [calculation activity](book/calculations.html#calculate-sample-size) us
 
 - [Study-design questionnaire](design_questionnaire/): consider designs suited to your research question. [Activity: Choosing a study design](book/study-designs.html#activity-design_questionnaire).
 
-Your [study plan](assumptions_report/?stage=question) develops through the core chapters. The Report view in each app offers “Add this calculation to my study plan.” A preview lets you attach the selected result and its inputs; your written answers remain in place. “Review before downloading” identifies unresolved decisions and checks attached calculation and recruitment counts.
+Your [sample size calculation report](assumptions_report/?stage=question) develops through the core chapters. The Report view in each app offers “Add this calculation to the report.” A preview lets you attach the selected result and its inputs; your written answers remain in place. “Review before downloading” identifies unresolved decisions and checks attached calculation and recruitment counts.
 
-The calculation apps use four views: “Overview” for the main result, “Explore assumptions” for graphs and comparisons, “Report” for a readable summary of current inputs and results, and “Methods and references” for calculation details. Reports download as PDF by default, with an editable Word alternative. The reasoning lab also has simulation and “My study” views; the study plan follows four writing stages. In the lab and study-plan form, separate “Save work for later” controls preserve settings and answers for reopening.
+The calculation apps use four views: “Overview” for the main result, “Explore assumptions” for graphs and comparisons, “Report” for a readable summary of current inputs and results, and “Methods and references” for calculation details. Reports download as PDF by default, with an editable Word alternative. The reasoning lab also has simulation and “My study” views; the sample size calculation report follows four writing stages. In the lab and report form, separate “Save work for later” controls preserve settings and answers for reopening.
 
 Each slider has an editable number beside it. Percentages use the displayed percentage scale: entering 5 means 5%. “Study settings” collapses in a narrow panel to leave room for the result. The introductory pain activity starts with its simulation, report and methods views; “Additional calculations and simulations” reveals the remaining views.
 

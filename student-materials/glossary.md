@@ -2,7 +2,7 @@
 
 These definitions support both routes and link to the explanations and examples in the tutorial. Terms used in Extensions are grouped by topic.
 
-## Research question and study plan {.core-heading .unnumbered}
+## Research question and sample size calculation report {.core-heading .unnumbered}
 
 <span id="pico">PICO</span>
 : Population, Intervention, Comparator, and Outcome. These four elements help define a treatment-comparison question [@richardson1995]. The outcome should include the assessment time. In the neuropathic pain trial, they are patients with neuropathic pain, the novel treatment, standard treatment, and pain relief at four weeks.

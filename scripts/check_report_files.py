@@ -35,7 +35,8 @@ for source in root.glob('*.model.json'):
     walk(structure)
     assert {'/Document', '/H1', '/P'} <= set(roles), (stem, roles)
     uris = {str(a.get_object().get('/A', {}).get('/URI')) for page in reader.pages for a in page.get('/Annots', [])}
-    for url in ['https://creativecommons.org/licenses/by-sa/4.0/', 'https://opensource.org/license/mit']:
+    expected_links = ['https://github.com/KataTam/sample-size-calculation', 'https://doi.org/10.1136/bmj.k3750'] if model['title'] == 'Sample size calculation report' else ['https://creativecommons.org/licenses/by-sa/4.0/', 'https://opensource.org/license/mit']
+    for url in expected_links:
         assert url in uris, (stem, 'PDF link', url)
     with ZipFile(root / (stem + '.docx')) as archive:
         doc = ET.fromstring(archive.read('word/document.xml'))
@@ -46,8 +47,7 @@ for source in root.glob('*.model.json'):
         assert 'Title' in style_ids, (stem, style_ids)
         relationships = ET.fromstring(archive.read('word/_rels/document.xml.rels'))
         links = {el.attrib.get('Target') for el in relationships if el.attrib.get('TargetMode') == 'External'}
-        assert 'https://creativecommons.org/licenses/by-sa/4.0/' in links, stem
-        assert 'https://opensource.org/license/mit' in links, stem
+        for url in expected_links: assert url in links, (stem,url)
         for block in model['blocks']:
             cells = [cell for row in block['rows'] for cell in row] if block['type'] == 'table' else [block]
             for cell in cells:
