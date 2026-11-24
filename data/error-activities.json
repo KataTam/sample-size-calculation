@@ -5,59 +5,76 @@
     "answer_id": "model-answer-report-review",
     "segments": [
       {
-        "text": "Adults with painful diabetic peripheral neuropathy will be individually randomized 1:1 to neravixa or duloxetine. Achieved pain relief at four weeks is the primary binary outcome.",
+        "text": "The trial asks whether neravixa increases four-week pain relief compared with duloxetine. Adults with type 1 or type 2 diabetes, bilateral lower-extremity pain due to diabetic peripheral neuropathy for at least one year, and BMI at least 18 and below 40 kg/m² will be individually randomized 1:1. Each participant contributes one yes-or-no pain-relief outcome, assessed in the same way in both groups.",
         "error": false,
-        "explanation": "This identifies the population, comparison, allocation and primary outcome with its assessment time.",
-        "link": "reporting.html#sample-size-calculation-report",
-        "section": "The complete report",
-        "break_before": true
+        "explanation": "The population, comparison, allocation and primary outcome with its assessment time are specified. Individual randomization and one outcome per participant support the proposed independent-group comparison.",
+        "link": "clinical-question.html#how-do-you-determine-the-minimum-required-sample-size",
+        "section": "Research question and design",
+        "break_before": true,
+        "heading": "Question and design"
       },
       {
-        "text": " "
+        "text": "The pilot observed relief in 7 of 10 patients receiving neravixa and 3 of 10 receiving duloxetine. Because these small groups leave substantial uncertainty, the target difference is set at 30 percentage points. Patient and clinical advisers consider 20 points the minimum worthwhile increase to justify the additional monitoring visits and risk of dizziness. Differences are expressed as neravixa minus duloxetine.",
+        "error": false,
+        "explanation": "The pilot observation, target difference and clinical threshold have distinct, justified roles. Their numerical values can coincide in other studies.",
+        "link": "clinical-question.html#what-do-we-expect-what-will-we-plan-for-and-what-matters-clinically",
+        "section": "Observed difference, target difference and clinical threshold",
+        "break_before": true,
+        "heading": "Assumptions and evidence"
       },
       {
-        "text": "For 70% versus 30% relief, a two-sided 5% test and 90% power require 56 analyzable patients per group.",
+        "text": "The calculation therefore assumes 70% relief with neravixa and 30% with duloxetine. At a two-sided Type I error probability of 5% and 90% power, 56 analyzable patients are required per group.",
         "error": true,
-        "explanation": "The requirement of 56 per group uses 60% versus 30%, a target difference of 30 percentage points. The pilot observed 70% versus 30%; those observations need to be distinguished from the inputs selected for the new calculation.",
+        "explanation": "The stated percentages differ by 40 points, while the selected target is 30 points. The 56-per-group result uses 60% versus 30%. A consistent revision is: “The calculation assumes 60% relief with neravixa and 30% with duloxetine. At a two-sided Type I error probability of 5% and 90% power, 56 analyzable patients are required per group.”",
         "link": "calculations.html#two-proportions",
         "section": "Calculation inputs",
-        "break_before": true
+        "break_before": true,
+        "heading": "Calculation"
       },
       {
-        "text": " "
-      },
-      {
-        "text": "The planned power gives a 90% probability that the novel treatment works.",
-        "error": true,
-        "explanation": "Power is the probability that the planned test rejects the null when the specified population difference and other assumptions hold. Here it is evaluated at a 30-percentage-point difference.",
+        "text": "A power of 90% means that the planned test would detect a difference in about 90 of 100 repeated trials if the population relief percentages were 60% and 30% and the other assumptions held.",
+        "error": false,
+        "explanation": "This interpretation connects power to repeated trials under the specified population assumptions. It also makes the inconsistency in the preceding calculation inputs visible.",
         "link": "clinical-question.html#power",
         "section": "Interpreting power",
         "break_before": true
       },
       {
-        "text": " "
-      },
-      {
-        "text": "The total analyzable sample is therefore 56.",
+        "text": "The primary outcome will be compared using a standard statistical test. The sample size was calculated in R.",
         "error": true,
-        "explanation": "There are two groups: 56 analyzable patients per group means 112 in total. Both counts should appear in the report.",
-        "link": "reporting.html#report-calculation-method",
-        "section": "Per-group and total counts",
+        "explanation": "The procedure and software record are incomplete. The report should specify a two-sided pooled score test for independent proportions without continuity correction, the normal planning approximation in stats::power.prop.test(), alternative = “two.sided”, strict = TRUE, and the R and stats versions. The recorded command should reproduce the stated inputs and result.",
+        "link": "reporting.html#sample-size-report-methods",
+        "section": "Calculation procedure and software",
         "break_before": true
       },
       {
-        "text": " "
+        "text": "The required analyzable sample is 56 patients in total, with 28 in each group.",
+        "error": true,
+        "explanation": "The calculation gives 56 per group. A consistent statement is: “The unrounded requirement of 55.68382 per group is rounded upward to 56, giving 112 analyzable patients in total.”",
+        "link": "reporting.html#sample-size-calculation-report",
+        "section": "The worked report",
+        "break_before": true
       },
       {
-        "text": "To allow for 5% missing outcomes, adding 5% and rounding down gives 58 recruits per group.",
+        "text": "To allow for 5% unavailable outcomes, 5% is added to 56 and the result is rounded down to 58 recruits per group, giving 116 recruits in total.",
         "error": true,
-        "explanation": "The retained fraction is 0.95. Dividing 56 by 0.95 and rounding upward gives 59 recruits per group, or 118 in total. The analyzable requirement remains 56 per group.",
+        "explanation": "The retained fraction is 0.95. The calculation should divide 56 by 0.95 and round upward: 59 recruits per group, or 118 in total. The report also needs a justification for the assumed 5% loss.",
         "link": "calculations.html#account-for-expected-losses",
         "section": "Loss adjustment and rounding",
+        "break_before": true,
+        "heading": "Recruitment and conclusion"
+      },
+      {
+        "text": "Screening records suggest 15 recruits per month after eligibility, availability and consent are considered. Recruitment is planned over eight months, with additional time for site opening. The trial will test whether the population pain-relief percentages differ between treatments.",
+        "error": false,
+        "explanation": "At 15 recruits per month, eight months provides capacity for 120 recruits, enough for the corrected total of 118. The stated conclusion matches the superiority test. The forecast should be supported by the screening records.",
+        "link": "calculations.html#recruitment-feasibility",
+        "section": "Recruitment feasibility",
         "break_before": true
       }
     ],
-    "version": 3
+    "version": 4,
+    "instructions": "Four passages need correction. A reason and a proposed revision can be considered before selecting each passage to check the explanation."
   },
   "discharge": {
     "id": "discharge-error-activity",

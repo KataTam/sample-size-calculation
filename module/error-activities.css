@@ -2,6 +2,7 @@
 .spot-activity { --spot-bg:#eef5fd; --spot-ink:#213b51; --spot-line:#3a6590; --spot-mark:#ffe4ae; --spot-correct:#daeaf9; margin:1.6em 0; padding:18px 20px; border:1px solid var(--spot-line); border-left-width:4px; border-radius:5px; background:var(--spot-bg); color:var(--spot-ink); }
 .spot-activity .spot-title { color:inherit; font-size:1.15em; margin:0 0 .7em; }
 .spot-activity .spot-text { line-height:1.9; }
+.spot-activity .spot-part { margin:1.2em 0 .3em; padding-bottom:.3em; border-bottom:1px solid var(--spot-line); color:var(--spot-ink); font-weight:400; break-after:avoid; }
 .spot-choice { border-radius:3px; padding:2px 0; box-decoration-break:clone; -webkit-box-decoration-break:clone; }
 [data-spot-ready] .spot-choice { cursor:pointer; }
 @media screen { [data-spot-ready] .spot-choice { padding:4px 0; } }

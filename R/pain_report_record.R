@@ -23,7 +23,15 @@ pain_report_record <- function() {
     "analyzable_per_group <- ceiling(plan$n)",
     "# Divide by the expected retained fraction to allow for 5% missing outcomes.",
     "recruit_per_group <- ceiling(analyzable_per_group / 0.95)"), collapse = "\n")
+  # Parse the shared JSON object without evaluating browser code.
+  shared <- paste(readLines("site/assumptions_report/teaching-example.js", encoding = "UTF-8"), collapse = "\n")
+  shared <- sub("^[\\s\\S]*?window\\.PainReportExample = ", "", shared, perl = TRUE)
+  shared <- sub(";[[:space:]]*$", "", shared)
+  example <- jsonlite::fromJSON(shared, simplifyVector = FALSE)
+  example$answers$software <- paste0("Normal approximation using stats::power.prop.test(), two-sided with strict = TRUE. R ",
+    getRversion(), ", stats ", utils::packageVersion("stats"), ". Both rejection tails are included.")
   list(title = "Prepared neuropathic pain calculation", kind = "calculation", source = "tutorial-example",
+    example_answers = example$answers, example_sections = example$sections,
     captured = format(Sys.time(), "%Y-%m-%dT%H:%M:%SZ", tz = "UTC"),
     facts = list(outcome = "binary", study_type = "comparison", goal = "testing",
       p_treatment = p_novel, p_control = p_standard, alpha = alpha, power = power,
@@ -39,6 +47,28 @@ pain_report_record <- function() {
       sprintf("Expected unavailable primary outcomes: 5%% in each group. Recruitment: ceiling(%d / 0.95) = %d per group, %d total.", n, recruit, 2*recruit),
       paste("Software: R", getRversion(), "; stats", utils::packageVersion("stats"), "; source version:", source_version),
       paste("Reproducible R command:\n", command)))
+}
+
+render_pain_report_example <- function(record) {
+  tags <- htmltools::tags
+  # Numeric entities preserve symbols when R runs under a non-UTF-8 locale.
+  html_text <- function(value) {
+    points <- utf8ToInt(htmltools::htmlEscape(enc2utf8(value)))
+    htmltools::HTML(paste0(ifelse(points > 127, paste0("&#", points, ";"),
+      intToUtf8(points, multiple = TRUE)), collapse = ""))
+  }
+  content <- list(tags$p(class = "caption", id = "sample-size-report-caption",
+    tags$span(id = "sample-size-calculation-report", "Example 3.1: Sample size calculation report for the neuropathic pain trial.")))
+  for (section in record$example_sections) {
+    content <- c(content, list(tags$p(class = "report-part", section[[1]])))
+    for (field in section[[2]]) {
+      content <- c(content, list(tags$p(`data-report-field` = field[[1]],
+        tags$span(class = "report-mark", paste0(field[[2]], ": ")), html_text(record$example_answers[[field[[1]]]]))))
+    }
+  }
+  widget <- as.character(tags$div(class = "annotated-report", role = "group",
+    `aria-labelledby` = "sample-size-report-caption", content))
+  cat(gsub("[\r\n]+[ ]*", "", widget), "\n\n", sep = "")
 }
 
 write_pain_report_record <- function() {

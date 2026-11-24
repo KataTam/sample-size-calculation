@@ -218,7 +218,7 @@ The simulation above uses one final analysis. For a design with interim stopping
 
 [Open activity](../book/reporting.html#check-reporting) · [Your continuing report](../assumptions_report/?stage=review)
 
-1. The short example contains four problem areas: calculation inputs, the interpretation of power, per-group versus total counts, and the loss adjustment. Selecting a passage opens an explanation; the PDF includes the same answer key.
+1. The draft follows the same four report headings as Example 3.1. Its four problem areas concern calculation inputs, the method and software record, per-group versus total counts, and the loss adjustment. A proposed correction can be considered before selecting a passage. Appropriate passages include the clinical justification and interpretation of power. The final prompt asks what information should still be obtained. The PDF includes the same answer key.
 2. After correcting these problems, you can check the corresponding entries in your own report against its attached calculations and the annotated example.
 3. The sample size calculation report combines the research question, assumptions, evidence, calculation and recruitment justification. Its live preview and PDF and Word downloads use the same answers, with references at the end. “Save work for later” preserves entries and attached calculations for reopening. Review checks remain in the app.
 

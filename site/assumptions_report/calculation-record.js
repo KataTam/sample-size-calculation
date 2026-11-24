@@ -14,7 +14,7 @@
     if(value.plan_basis!=='pain' || AdvancedPlan.complex(value)) return result;
     const attached=selected(value);
     if(!attached) {
-      if(showPrepared(value)) result.software='Normal approximation using stats::power.prop.test(), two-sided with strict = TRUE; R '+prepared.r_version+', stats '+prepared.stats_version+'. Both rejection tails are included.';
+      if(showPrepared(value)) result.software=prepared.example_answers.software;
       return result;
     }
     for(const id of ['software','counts','recruitment','resources','power','planning','variation','sensitivity']) result[id]=formats[id];

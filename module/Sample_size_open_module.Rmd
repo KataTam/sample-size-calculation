@@ -875,43 +875,15 @@ After this chapter, you should be able to:
 
 The neuropathic pain calculation gives 56 analyzable patients and 59 recruits per group. A reader should be able to reproduce those numbers and understand why the inputs were chosen. This chapter brings that reasoning and the calculation together in a report. The [report activity](https://katatam.github.io/sample-size-calculation/assumptions_report/?stage=question) combines the research question, evidence, assumptions, calculation and recruitment justification in one sample size calculation report.
 
-## A complete sample size calculation report {#write-a-sample-size-justification .core-heading}
+## A worked sample size calculation report {#write-a-sample-size-justification .core-heading}
 
-Example 3.1 brings together the decisions developed in Chapters 1 and 2. Blue annotations identify the information another researcher needs to understand and repeat the calculation.
+Example 3.1 shows the report produced when the neuropathic pain teaching example is selected in the [report activity](https://katatam.github.io/sample-size-calculation/assumptions_report/?stage=review). Its four parts bring together the decisions developed in Chapters 1 and 2. The blue labels identify the entries that can be edited in the activity.
 
 The example and checklist follow PICO, SPIRIT 2025, CONSORT 2025, DELTA² and section 4.1 of the UMCG SAP template [@richardson1995; @spiritconsort2025; @consortee2025; @cook2018delta2; @umcgsap; @roa2024comet]. UMCG students and researchers can access the [SAP template in Zenya](https://umcg.zenya.work/document/2f52710d-3ebc-495e-a4dc-6dee95742c78).
 
-<div class="annotated-report" role="group" aria-labelledby="sample-size-report-caption">
-<p class="caption" id="sample-size-report-caption"><span id="sample-size-calculation-report">Example 3.1: Sample size calculation report for the neuropathic pain trial.</span></p>
-
-<p class="report-part">Question and design</p>
-
-The trial will <span class="report-mark">[A] individually randomize adults with type 1 or type 2 diabetes, bilateral lower-extremity pain due to diabetic peripheral neuropathy for at least one year, and BMI ≥18 and <40 kg/m² to neravixa or duloxetine in a 1:1 ratio. The primary outcome is achieved pain relief at four weeks, recorded as yes or no</span> using the same prespecified question in both groups. The treatment effect is the absolute difference in relief percentages, neravixa minus duloxetine.
-
-<p class="report-part">Assumptions and evidence</p>
-
-The pilot observed relief in 7 of 10 patients receiving novel treatment and 3 of 10 receiving standard treatment. Given the uncertainty of these small-sample estimates, the calculation uses <span class="report-mark">[B] 60% relief with novel treatment and 30% with standard treatment, a target difference of 30 percentage points</span>, below the pilot's 40-point difference. Patient and clinical advisers set the minimum worthwhile increase at 20 percentage points: one additional patient reporting relief per five treated with the novel treatment instead of standard treatment. They judged this additional relief necessary to justify four additional safety-monitoring visits and the risk of short-lived dizziness.
-
-<p class="report-part">Calculation</p>
-
-The primary comparison will use a <span class="report-mark">[C] two-sided pooled score test for independent proportions without continuity correction or covariate adjustment</span>. A normal planning approximation with <span class="report-mark">[D] a Type I error probability of 5% and 90% power at the 30-point target difference</span> gives <span class="report-mark">[E] `r sprintf("%.2f", report_example$facts$raw_n)` analyzable patients per group, rounded upward to `r report_example$facts$analyzable` per group (`r 2 * report_example$facts$analyzable` total)</span>. The conventional two-sided 5% significance level is used; the 90% power target limits the probability of failing to detect the target difference to 10%. The calculation uses <span class="report-mark">[F] R `r report_example$r_version`, stats `r report_example$stats_version`, and `stats::power.prop.test()` with `alternative = "two.sided"` and `strict = TRUE`</span>.
-
-<p class="report-part">Recruitment</p>
-
-Given the short four-week assessment period, the calculation allows for <span class="report-mark">[E] 5% unavailable primary outcomes in each group. Dividing the analyzable requirement by 0.95 gives `r report_example$facts$recruitment` recruits per group: `r report_example$facts$analyzable`/0.95, rounded upward, or `r 2 * report_example$facts$recruitment` participants in total</span>.
-
-</div>
-
-| Label | What this part makes explicit |
-|:--|:--|
-| A: Question and design | Population, primary outcome, time point and allocation. |
-| B: Numerical assumptions | Both event percentages, the target difference and the reasoning behind the selected values. |
-| C: Procedure | The planned test, sidedness, corrections and covariate adjustment. |
-| D: Statistical performance | Type I error probability and power at the specified difference. |
-| E: Participant counts | Unrounded and rounded requirements, per-group and total counts, and the loss allowance. |
-| F: Software | Function, settings and versions needed to repeat the calculation. |
-
-Table: (\#tab:report-annotations) Essential elements of the sample size calculation report in Example 3.1. Letters connect the explanation to the blue annotations.
+```{r worked-report, echo=FALSE, results='asis'}
+render_pain_report_example(report_example)
+```
 
 The accompanying [R code and software record](#sample-size-report-methods) reproduce the calculation: `r report_example$facts$analyzable` analyzable patients per group, followed by the 5% loss adjustment to `r report_example$facts$recruitment` recruits per group.
 
@@ -945,36 +917,20 @@ Computational reproducibility means that another researcher can use the recorded
 
 ## What belongs in the report? {#record-assumptions .core-heading}
 
-Table \@ref(tab:planning-assumptions) uses the same four headings as the report activity. The linked chapters explain each decision. The detailed view develops evidence appraisal, alternative assumptions and feasibility in more detail.
+Table \@ref(tab:planning-assumptions) is a checklist for Example 3.1 and the report activity. Each row connects one part of the report to the chapters that explain its decisions.
+
+<span id="tab:report-annotations"></span>
 
 ::: {.planning-assumptions}
 
-| Decision | What to make explicit |
-|---|---|
-| **Question and design** | [Chapter 1: Research question and power](#clinical-question) introduces this section. |
-| Research question: PICO | Population, Intervention, Comparator, and Outcome, including the measurement time point |
-| Intervention and comparator | What each group receives, how it is delivered, by whom and on what schedule; relevant dose or intensity and permitted additional care |
-| Design, sampling and allocation | Study design, participant selection, unit of allocation and allocation ratio; any paired, repeated or clustered observations |
-| **Assumptions and evidence** | [Chapter 1](#clinical-question) develops the assumptions; [Exploring power and uncertain assumptions](#curves) examines alternatives. |
-| Effect scale | Treatment minus control; score units or percentage points; direction of benefit |
-| Difference observed in previous data | Observed result, source, relevance and uncertainty; gaps in the available evidence |
-| Clinical threshold | Smallest worthwhile between-group benefit, justified against treatment harms, burden and alternatives |
-| Target difference | Difference used in the power calculation, with justification |
-| Variation or event probabilities | Common standard deviation or both groups' event percentages; source, population, outcome definition and assessment time |
-| Evidence relevance and uncertainty | Whether differences in patients, care or measurement limit applicability; uncertain inputs and evidence needed |
-| Sensitivity analysis | Plausible alternatives supported by the evidence review; whether sample size changes or stays fixed, and implications for the recommendation |
-| **Calculation** | The section [Hypotheses, error probabilities, and power](#power) explains the criteria; [Chapter 2: Calculating sample size and recruitment](#calculations) supplies the calculations. |
-| Planned analysis | Planned test and sidedness; how pairing or clustering will be handled, where relevant |
-| Calculation procedure and software | Method or formula; software, package and code versions; saved inputs and calculation steps. For simulations: data-generating assumptions, repetitions and random-number settings. See [Methods and software to record](#reproducibility-record) |
-| Type I error probability and target power | Chosen probabilities and the target difference at which power is evaluated |
-| Sample size needed or available for analysis | Per-group and total analyzable counts; calculation result and upward rounding, or the available sample for an existing-data study |
-| Study references | Full references for the evidence and methods cited in the report, including DOI or URL where available |
-| **Recruitment and conclusion** | [Chapter 2: Calculating sample size and recruitment](#calculations) connects the analyzable count to a recruitment target and final justification. |
-| Losses, missing data and recruitment | Expected losses, recruitment target and how missing outcomes or treatment changes affect the plan |
-| Feasibility and resources | Expected recruitment rate, recruitment period, available resources and other practical constraints |
-| Intended conclusion | What the design could establish and what remains uncertain |
+| Report part | What should be recorded and checked? |
+|:--|:--|
+| Question and design — [Chapter 1](#clinical-question) | PICO, eligibility and participant selection, treatment regimens and permitted additional care, primary outcome and assessment time. The allocation unit, ratio and dependence between observations should agree with the proposed analysis. |
+| Assumptions and evidence — [Chapter 1](#clinical-question) and [Exploring power and uncertain assumptions](#curves) | The effect scale and direction, previous observations and their sources, clinical threshold and its justification, target difference, and both event percentages or the common SD. The evidence should be relevant to the patients, outcome and follow-up. Additional prompts cover uncertain inputs and plausible alternatives. |
+| Calculation — [Chapter 2](#calculations) and [Methods and software to record](#reproducibility-record) | Planned test, sidedness and adjustments, Type I error probability, power at the specified difference, calculation procedure, software and versions. Unrounded and rounded analyzable counts should be given per group and in total. Estimation reports use a confidence level and precision target. Sources and reproducible commands should be retained. |
+| Recruitment and conclusion — [Chapter 2](#calculations) | Expected unavailable outcomes and their justification, upward-rounded recruitment counts per group and in total, and how missing outcomes or treatment changes will be handled. Recruitment rates, time and resources should support feasibility. The intended conclusion should reflect the design and its statistical performance. |
 
-Table: (\#tab:planning-assumptions) Decisions and assumptions to record in the report activity, with links to the core chapters that develop each part of the sample size calculation report.
+Table: (\#tab:planning-assumptions) Checklist for the four parts of the sample size calculation report, with links to the relevant chapters and methods.
 
 :::
 
@@ -989,11 +945,20 @@ The [optional mean-score report](#rehabilitation-report) gives the corresponding
 
 ## Check your understanding {#check-reporting .unnumbered}
 
-The short report below contains four problem areas. After reviewing them, you can check the same elements in [your continuing report](https://katatam.github.io/sample-size-calculation/assumptions_report/?stage=review).
+The trial team is preparing its protocol for review. The draft below uses the same four headings as Example 3.1. Which statements would need correction before the sample size could be justified?
 
 ```{r report-error-review, echo=FALSE, results='asis'}
 render_error_activity("report")
 ```
+
+<details class="model-answer">
+<summary>What information should the team still obtain?</summary>
+
+The draft also needs the participant selection method, treatment regimens and permitted additional care, a defined pain-relief assessment, and evidence supporting the 5% loss assumption and recruitment forecast. Full references should identify the pilot and other supporting sources. These details can be requested from the trial team and recorded in the corresponding report entries.
+
+</details>
+
+The same checklist can guide the final review of [your sample size calculation report](https://katatam.github.io/sample-size-calculation/assumptions_report/?stage=review).
 
 ## Complete your report {#complete-calculation-report .core-heading}
 
