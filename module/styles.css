@@ -93,6 +93,13 @@ body :where(h1,h2,h3,h4,h5,h6,summary,legend) :where(a,span,strong,b,code) { fon
 .activity-contents { margin: 1em 0; padding: .8em 1em; background: #dfedf7; border-radius: 5px; }
 .activity-contents li { margin: .35em 0; }
 .contents-route { display: inline-block; font-size: .78em; color: #465562; background: #e3eaf0; border-radius: 3px; padding: .1em .4em; margin-left: .3em; }
+.book .book-body a.glossary-definition-link, a.glossary-definition-link {
+  color:inherit; text-decoration:underline dashed #78818a!important;
+  text-underline-offset:.22em; text-decoration-thickness:1px;
+}
+a.glossary-definition-link::after { content:"?"; display:inline; font-size:.65em; vertical-align:sub; color:#68727c; margin-left:.12em; }
+.color-theme-2 a.glossary-definition-link::after {color:#bdc7d1}
+a.glossary-definition-link:focus-visible {outline:2px solid #42749a;outline-offset:3px}
 /* Bookdown opens the current chapter's sections. Deeper headings and activities
    follow the selected section instead of expanding the entire chapter. */
 .book-summary .summary li.chapter > ul { display: none !important; }

@@ -1,5 +1,17 @@
 #sampling-journey {max-width:760px;margin:12px 0;background:#f6f9fc;border:1px solid #cad5df;border-radius:8px}
 #sampling-journey svg {display:block;width:100%;height:auto}
+#sampling-journey.journey-comparison {max-width:none;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;background:transparent;border:0}
+.journey-scenario{min-width:0;background:#f6f9fc;border-radius:8px}
+.journey-comparison .journey-scenario{border:1px solid #cad5df}
+.repeat-trial-controls{display:flex;flex-wrap:wrap;gap:8px;align-items:end}
+.repeat-trial-controls .shiny-input-container{width:145px!important;margin:0}
+.simulation-actions{align-items:end!important}
+.playback-controls{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:8px 0 14px;padding-top:8px;border-top:1px solid #cad5df}
+.playback-controls button{font-size:.88rem!important;background:#fff!important;color:#344a5c!important}
+.playback-controls label{font-size:.88rem;margin:0}
+.pain-focus .legacy-p-values{display:none}
+.pain-focus:not(.lab-expanded) #scenario_summary{display:none}
+@media(max-width:720px){#sampling-journey.journey-comparison{grid-template-columns:minmax(0,1fr)}}
 #sampling-journey text {font:13px system-ui,sans-serif;fill:#243447}
 #journey-pause,#journey-replay,#journey-finish {margin:4px;padding:6px 12px;border:1px solid #718096;border-radius:4px;background:white;color:#243447}
 #journey-motion {margin-left:10px}

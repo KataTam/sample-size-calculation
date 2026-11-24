@@ -57,8 +57,6 @@ Although the examples are clinical, the principles of justifying assumptions, ch
 
 Chapters 1–3 form the Core material, covering the research question, calculations, recruitment and reporting for a basic two-arm trial. Chapters 4–8 are Extensions on estimation, uncertain assumptions, simulation, other study designs and reproducibility. Core chapters guide you through developing and reporting a sample size calculation. Extensions explore additional planning goals, study designs and methods relevant to your study. Select extensions using the chapter learning outcomes. The glossary and common questions support both parts.
 
-Activities are learning exercises; apps are the software used to carry them out. The roadmap links the reading, activities and apps. Expandable misconception boxes explain common difficulties as they arise.
-
 ```{r tutorial-roadmap, echo=FALSE, results='asis'}
 roadmap <- paste(readLines("../figures/tutorial-roadmap.svg",
   encoding="UTF-8", warn=FALSE), collapse="\n")
@@ -89,7 +87,7 @@ The linked sections should help you develop a sample size justification for a ba
 
 - [Define a clinical question and justify assumptions](#clinical-question), distinguishing the [difference observed in previous data](#expected-difference), [target difference](#target-difference) and [clinical threshold](#clinical-threshold).
 - [Explain Type I error probability, Type II error probability and power](#power).
-- Compare [one simulated study and many studies](#activity-1-one-study-then-many) to distinguish [sample estimates](#sample-estimate) from [population parameters](#population-parameter), then explain what changes with a larger sample.
+- Compare [one simulated trial and repeated trials](#activity-1-one-study-then-many) to distinguish [sample estimates](#sample-estimate) from [population parameters](#population-parameter), then explain what changes with a larger sample.
 - [Calculate sample size for two proportions or two means](#calculations) and [adjust recruitment for expected losses](#account-for-expected-losses), distinguishing analyzable counts from recruitment counts.
 - Compare calculations after changing one [assumption](#calculations) and justify the inputs selected for the report.
 - [Write a short sample size justification](#write-a-sample-size-justification) recording assumptions, calculation and recruitment, using [your continuing report](https://katatam.github.io/sample-size-calculation/assumptions_report/?stage=question).
@@ -259,7 +257,15 @@ knitr::kable(data.frame(
 
 Scenario 1: the treatments have equal population relief percentages. Suppose both treatments provide relief to 30% of patients. With a 5% Type I error probability, about 5 of every 100 repetitions would incorrectly find a statistically significant difference. These are false positives. The other approximately 95 would correctly leave the null hypothesis unrejected: true negatives.
 
+```{r error-scenario-null, echo=FALSE, fig.width=8, fig.height=7, fig.cap="Equal population relief percentages: 30% with each treatment. The lower layer illustrates 100 trials under a 5% Type I error probability, with 95 true negatives and 5 false positives. Each small pair represents one complete trial.", fig.alt="Population stick figures show 30% relief in each treatment group. Below, 95 trial symbols indicate no significant difference and 5 indicate a false positive."}
+draw_error_scenario("null")
+```
+
 Scenario 2: the novel treatment helps more patients. Suppose 60% achieve relief with neravixa and 30% with duloxetine. A trial with 90% power at this difference would detect a statistically significant difference in about 90 of every 100 repetitions: true positives. About 10 would fail to detect it: false negatives.
+
+```{r error-scenario-effect, echo=FALSE, fig.width=8, fig.height=7, fig.cap="Different population relief percentages: 30% with standard treatment and 60% with novel treatment. The lower layer illustrates 100 trials planned for 90% power at this difference, with 90 true positives and 10 false negatives. Each small pair represents one complete trial.", fig.alt="Population stick figures show 30% and 60% relief. Below, 90 trial symbols indicate a detected difference and 10 indicate a false negative."}
+draw_error_scenario("effect")
+```
 
 These scenarios give the error probabilities their meaning:
 
@@ -300,7 +306,7 @@ The choice depends on which difference the trial needs a high probability of det
 </details>
 :::
 
-## One study and many studies {#activity-1-one-study-then-many .core-heading}
+## One trial and repeated trials {#activity-1-one-study-then-many .core-heading}
 
 The pilot observed 70% versus 30% relief. The simulation explores the planning assumption of population probabilities of 60% with neravixa and 30% with duloxetine. This makes the population difference known, so the results of individual trials can be compared with it.
 
@@ -358,9 +364,9 @@ knitr::kable(data.frame(`Patients per group` = power_results$n_per_group,
   check.names = FALSE), caption = "Percentage of 5,000 simulated trials detecting the assumed 30-percentage-point population difference at each sample size.")
 ```
 
-```{r sample-differences, echo=FALSE, fig.height=7, fig.cap="Observed treatment differences across 5,000 simulated trials at each sample size. The dashed line marks the specified population difference of 30 percentage points. As a rule, larger samples produce less variable estimates.", fig.alt="Three histograms of observed relief differences with 20, 50 and 80 patients per group, showing progressively narrower distributions around the same population difference of 30 percentage points."}
+```{r sample-differences, echo=FALSE, fig.height=9, fig.cap="Observed treatment differences across 5,000 simulated trials at each sample size. The dashed line marks the specified population difference of 30 percentage points. As a rule, larger samples produce less variable estimates.", fig.alt="Three histograms of observed relief differences with 20, 50 and 80 patients per group, showing progressively narrower distributions around the same population difference of 30 percentage points."}
 local({
-  old_par <- par(mfrow = c(3, 1), mar = c(5.2, 4, 2, 1))
+  old_par <- par(mfrow = c(3, 1), mar = c(5.4, 4, 3.7, 1))
   on.exit(par(old_par))
   for (batch in batches) {
     hist(100 * batch$results$estimate, breaks = seq(-100, 100, 5),
@@ -369,7 +375,7 @@ local({
       xlab = "", ylab = "Number of trials")
     abline(v = 30, lty = 2, lwd = 2, col = "#69509a")
     axis(1, at = 30, labels = FALSE, col.ticks = "#69509a")
-    mtext("30: true population difference", side = 1, at = 30, line = 2.2, cex = .8, col = "#69509a")
+    mtext("30 percentage points: true population difference", side = 1, at = 30, line = 2.2, cex = .8, col = "#69509a")
     mtext("Observed difference in relief (percentage points)", side = 1, line = 4, cex = .8)
   }
 })
@@ -381,7 +387,7 @@ Figure \@ref(fig:sample-differences) shows [sampling variability](#sampling-vari
 
 Increasing the sample size changes the information in each trial. Increasing simulation repetitions makes the estimated percentage of significant results more stable; each trial retains the same sample size and power.
 
-The app below connects one trial to many repetitions in the same display. It starts with 20 patients per group and population relief percentages of 30% and 60%. Comparing larger samples shows how the estimates become less variable and how often the test detects a difference.
+The app below follows patient outcomes through the estimated difference to the p value and test decision. It starts with 20 patients per group and population relief percentages of 30% and 60%. The equal-percentage scenario shows false positives. Repeated trials and larger samples show how estimates and detection change.
 
 ```{r pain-app-preview, echo=FALSE, results='asis'}
 render_app_preview("pain_one_many", "Simulate further trials and compare different sample sizes.",
@@ -453,7 +459,7 @@ For a two-sided Type I error probability of 5% and target power of 90%:
 
 Figure \@ref(fig:normal-multiplier) shows what these distances mean for a treatment comparison. The upper curve applies when the population difference is zero; the lower applies when it equals the target difference. The same rejection boundaries apply in both cases. Separating the centers by about 1.96 + 1.28 standard errors puts about 90% of the lower curve beyond the upper boundary.
 
-The cutoffs link the error and power choices to the patient count. The calculation also needs the target difference and the variability of the outcome, as the two examples below show [@kirkwood2003; @wang2020].
+The multiplier summarizes how demanding the error and power choices are. In the two-means normal approximation, both cutoffs multiply the same variability term, so they can be combined into $M$. For two proportions, variability differs between the no-difference and target-difference scenarios. The calculation therefore keeps the two cutoffs separate, weighting each by its scenario's variability. Both formulas use the same cutoffs introduced here [@kirkwood2003; @wang2020].
 
 ```{r multiplier}
 # Probabilities are entered as decimals: .05 = 5%, .90 = 90%.
@@ -473,20 +479,22 @@ draw_normal_multiplier()
 
 The event percentages in each group and the target difference between them are your starting inputs. For the neuropathic pain trial, the calculation assumes 60% relief with the novel treatment and 30% with standard treatment: a target difference of 30 [percentage points](#percentage-points).
 
-For two independent groups of equal size, the normal approximation combines the same two $z$-values with the variability of a yes/no outcome. Let $p_t$ and $p_c$ be the novel- and standard-treatment relief probabilities, and let $\bar p=(p_t+p_c)/2$ be their average. The required number in each group is approximately:
+For two independent groups of equal size, the normal approximation uses the two $z$-values from Equation \@ref(eq:multiplier) separately. Each is multiplied by the variability for its scenario before the terms are added and squared. Let $p_t$ and $p_c$ be the novel- and standard-treatment relief probabilities, and let $\bar p=(p_t+p_c)/2$ be their average. The required number in each group is approximately:
 
-\[
+\begin{equation}
 n\approx\frac{\left[z_{1-\alpha/2}\sqrt{2\bar p(1-\bar p)}+
 z_{1-\beta}\sqrt{p_t(1-p_t)+p_c(1-p_c)}\right]^2}{(p_t-p_c)^2}.
-\]
+(\#eq:proportions-normal)
+\end{equation}
 
 The quantities under the square roots describe variability in the two scenarios: equal treatment probabilities for the test boundary, and the specified treatment probabilities for power. The denominator is the squared target difference. With $p_t=0.60$, $p_c=0.30$, and $\bar p=0.45$:
 
-\[
+\begin{equation}
 n\approx\frac{\left[1.96\sqrt{2\times0.45\times0.55}+
 1.282\sqrt{0.60\times0.40+0.30\times0.70}\right]^2}{(0.60-0.30)^2}
 \approx55.7.
-\]
+(\#eq:proportions-worked)
+\end{equation}
 
 R's `power.prop.test()` uses unrounded cutoffs and includes both rejection tails with `strict = TRUE` [@rcore]. Rounding its result upward gives 56 analyzable patients per group, or 112 in total.
 
@@ -629,7 +637,7 @@ The [probiotics simulation activity](https://katatam.github.io/sample-size-calcu
 
 For a continuous outcome, you should identify the target difference and the [standard deviation](#standard-deviation) in the same measurement units before calculating.
 
-In the formula below, $n$ is the number of patients needed in each group, $\delta$ (delta) is the target difference between the group means, and $\sigma$ (sigma) is the assumed SD of individual scores within each group. The calculation assumes the same SD in both groups. The multiplier $M$ combines the error-probability and power choices explained above:
+In the formula below, $n$ is the number of patients needed in each group, $\delta$ (delta) is the target difference between the group means, and $\sigma$ (sigma) is the assumed SD of individual scores within each group. The calculation assumes the same SD in both groups. Here the same variability term applies to both cutoffs. Their sum can be squared once and written as $M$, giving the compact form below:
 
 \begin{equation}
 n\approx M\frac{2\sigma^2}{\delta^2}.
@@ -640,9 +648,10 @@ Suppose an earlier study observed a 4-unit [between-group difference](#expected-
 
 The normal formula makes the calculation transparent:
 
-\[
+\begin{equation}
 n\approx10.51\times\frac{2\times5^2}{3^2}\approx58.4.
-\]
+(\#eq:means-worked)
+\end{equation}
 
 ```{r means}
 # Target mean difference and common standard deviation, in score units.
@@ -735,7 +744,7 @@ Although an improvement score uses before/after information within each patient,
 <details class="advanced-explanation">
 <summary>Simulate rehabilitation outcomes</summary>
 
-The [rehabilitation simulation](https://katatam.github.io/sample-size-calculation/power_explorer/?activity=rehabilitation) uses a t-test planning method. *One study* generates independent, normally distributed improvement scores. Its test evaluates evidence against a zero population difference. *Many studies* shows how conclusions vary under the same population assumptions. This extension can be used after the core calculation.
+The [rehabilitation simulation](https://katatam.github.io/sample-size-calculation/power_explorer/?activity=rehabilitation) uses a t-test planning method. *One trial* generates independent, normally distributed improvement scores. Its test evaluates evidence against a zero population difference. *Repeated trials* shows how conclusions vary under the same population assumptions. This extension can be used after the core calculation.
 
 </details>
 
@@ -760,10 +769,11 @@ n_{\mathrm{recruit,arm}}=\left\lceil\frac{n}{1-r}\right\rceil.
 
 For 56 analyzable patients per group and 5% expected loss, $r=0.05$ and the expected retained fraction is $1-0.05=0.95$:
 
-\[
+\begin{equation}
 n_{\mathrm{recruit,arm}}=\left\lceil\frac{56}{1-0.05}\right\rceil
 =\left\lceil58.95\right\rceil=59.
-\]
+(\#eq:dropout-worked)
+\end{equation}
 
 The clinics would therefore recruit 59 patients for each treatment, or 118 altogether, to aim for 112 usable outcomes.
 
@@ -1068,11 +1078,12 @@ n\approx\frac{z_{1-\alpha/2}^{2}p_0(1-p_0)}{d^2}.
 
 Here $p_0$ is the anticipated population proportion and $d$ is the desired margin of error, both entered as decimals. At 95% confidence, the standard-normal cutoff is approximately $z_{1-\alpha/2}=1.96$. Substituting 20% prevalence and a margin of 5 percentage points into Equation \@ref(eq:single-proportion) gives:
 
-\[
+\begin{equation}
 n\approx\frac{1.96^2\times0.20\times(1-0.20)}{0.05^2}
 =\frac{3.8416\times0.20\times0.80}{0.0025}
 =245.86.
-\]
+(\#eq:prevalence-worked)
+\end{equation}
 
 Rounding upward gives 246 completed assessments. The clinic would select patients from its register and aim to obtain this many completed neuropathy assessments. The planned precision would help estimate follow-up workload to within about five affected patients per 100 clinic patients.
 
@@ -1803,7 +1814,7 @@ render_app_preview("pain_simulation", "Generate patient outcomes and examine res
 ```
 
 
-This extends the core simulation: the question is now whether the analysis has useful power, confidence interval coverage and interval width under the specified population. The activity opens in *Many studies*. You can first select *One study* to follow one generated dataset through its analysis, then return to *Many studies* and run 5,000 repetitions. Each trial contains 100 patients per group; the simulation repeats that trial 5,000 times.
+This extends the core simulation: the question is now whether the analysis has useful power, confidence interval coverage and interval width under the specified population. The activity opens in *Repeated trials*. You can first select *One trial* to follow one generated dataset through its analysis, then return to *Repeated trials* and run 5,000 repetitions. Each trial contains 100 patients per group; the simulation repeats that trial 5,000 times.
 
 Figure \@ref(fig:simulation-loop) shows how these repetitions surround the generation and analysis of one trial. The population assumptions and analysis stay fixed while each repetition generates new patient outcomes.
 
@@ -2006,9 +2017,9 @@ Table: Missing-outcome scenarios in the repeated neuropathic pain trial activity
 
 This [sensitivity analysis](#sensitivity-analysis) uses hypothetical teaching assumptions. In the outcome-related scenario, the missingness probabilities are calibrated to preserve 20% expected loss in the novel-treatment group. At 60% population relief, the probabilities of a missing outcome are approximately 11.1% among those with relief and 33.3% among those without it. Actual losses vary between simulated studies. Equal recruitment is retained; group sizes after loss can differ.
 
-In *One study*, you can see recruited, retained, and missing counts in each group, together with example participant records. The simulation shows the underlying outcomes for teaching, including those marked missing. The analysis uses only observed outcomes. In a real study, those missing outcomes would be unknown.
+In *One trial*, you can see recruited, retained, and missing counts in each group, together with example participant records. The simulation shows the underlying outcomes for teaching, including those marked missing. The analysis uses only observed outcomes. In a real study, those missing outcomes would be unknown.
 
-In *Many studies*, the mean estimated difference is compared with the known population difference; their difference estimates bias. Coverage is assessed against that same full-population difference. The table also reports retained counts, interval widths, and statistically significant results. A high significance percentage can accompany biased estimates and poor coverage. Comparisons with no observed outcomes in one group are reported as unavailable; performance summaries use the estimable comparisons.
+In *Repeated trials*, the mean estimated difference is compared with the known population difference; their difference estimates bias. Coverage is assessed against that same full-population difference. The table also reports retained counts, interval widths, and statistically significant results. A high significance percentage can accompany biased estimates and poor coverage. Comparisons with no observed outcomes in one group are reported as unavailable; performance summaries use the estimable comparisons.
 
 The available-case analysis uses a two-sided pooled score test and a Newcombe-Wilson interval with the actual retained group sizes. It illustrates the consequences of a simple analysis under different missingness assumptions. Planning an appropriate missing-data analysis for a real trial requires assumptions and methods matched to the intended treatment effect [@bell2013dropout; @little2012missing]. The [recruitment discussion](#account-for-expected-losses) explains differential dropout and recruitment allowances; the [methods section](#tutorial-methods) records the simulation procedures.
 
@@ -2034,11 +2045,11 @@ When loss is unrelated to relief, estimates should remain centered approximately
 
 The preceding sections explain what the simulation evaluates. The following implementation details identify how the apps generate data and record results so that a saved batch can be reproduced.
 
-For one binary study, the app generates independent Bernoulli patient outcomes. For many studies, it generates binomial event counts for each group and analyzes each pair of counts. Normal-outcome studies assume independent observations with a common SD. The repeated-study implementation generates normally distributed mean differences and chi-squared pooled variances; under these assumptions, these have the same sampling distributions as the corresponding summaries of complete patient datasets.
+For one binary trial, the app generates independent Bernoulli patient outcomes. For repeated trials, it generates binomial event counts for each group and analyzes each pair of counts. The animation and batch summaries use these same counts, estimated differences and p values. The individual records in a repeated-trial report represent the first trial in its batch. Normal-outcome studies assume independent observations with a common SD. The repeated-study implementation generates normally distributed mean differences and chi-squared pooled variances; under these assumptions, these have the same sampling distributions as the corresponding summaries of complete patient datasets.
 
 Simulation summaries should retain the number of repetitions, Monte Carlo standard error and interval procedure. The apps use Wilson intervals for simulated rejection and coverage fractions.
 
-The missing-outcome extension uses binary relief outcomes and a fixed recruited count per group. Its four scenarios assume no loss, 10% loss in both groups, 10%/20% loss independent of relief, or 10%/20% loss with outcome-related selection in the novel-treatment group. For population relief probability $p$, overall loss $r$, and missingness risk ratio $k$ for no relief versus relief, the probabilities are $q_{\mathrm{relief}}=r/[p+k(1-p)]$ and $q_{\mathrm{no\ relief}}=kq_{\mathrm{relief}}$. The selective scenario uses $k=3$ in the novel group and $k=1$ in the standard group. One study generates patient outcomes and missingness indicators; repeated studies use mathematically equivalent multinomial counts for observed/missing outcomes with/without relief. Available cases are analyzed using the actual group sizes, the pooled score test without continuity correction, and Newcombe-Wilson intervals. Bias and coverage refer to the full recruited population difference. Unestimable comparisons are counted separately. Downloads record the scenario, recruitment count, loss assumptions, selection multiplier, population probabilities, repetition count, and random seed.
+The missing-outcome extension uses binary relief outcomes and a fixed recruited count per group. Its four scenarios assume no loss, 10% loss in both groups, 10%/20% loss independent of relief, or 10%/20% loss with outcome-related selection in the novel-treatment group. For population relief probability $p$, overall loss $r$, and missingness risk ratio $k$ for no relief versus relief, the probabilities are $q_{\mathrm{relief}}=r/[p+k(1-p)]$ and $q_{\mathrm{no\ relief}}=kq_{\mathrm{relief}}$. The selective scenario uses $k=3$ in the novel group and $k=1$ in the standard group. One trial generates patient outcomes and missingness indicators; repeated studies use mathematically equivalent multinomial counts for observed/missing outcomes with/without relief. Available cases are analyzed using the actual group sizes, the pooled score test without continuity correction, and Newcombe-Wilson intervals. Bias and coverage refer to the full recruited population difference. Unestimable comparisons are counted separately. Downloads record the scenario, recruitment count, loss assumptions, selection multiplier, population probabilities, repetition count, and random seed.
 
 The random seed, random-number generator settings and software environment help reproduce a particular simulated batch. Changing the simulation algorithm can change the realized random draws even when its statistical model is equivalent. Agreement of individual random outcomes requires the same computational procedure as well as the same assumptions.
 
@@ -2153,15 +2164,17 @@ Every calculation depends on the selected method and the meaning of its inputs. 
 
 [G\*Power](https://www.psychologie.hhu.de/arbeitsgruppen/allgemeine-psychologie-und-arbeitspsychologie/gpower) asks for different effect-size measures depending on the selected analysis [@faul2007]. For an independent-samples t test, Cohen's $d$ expresses the target difference relative to the common within-group SD:
 
-\[
+\begin{equation}
 d=\frac{3}{5}=0.60.
-\]
+(\#eq:standardized-d)
+\end{equation}
 
 The one-way analysis of variance (ANOVA) procedure asks for Cohen's $f$. It describes the spread of the group means around their overall mean, relative to the within-group SD. With two equally sized groups, a common SD and no covariate adjustment, the group means each lie half the between-group difference from their overall mean. Consequently [@gpowermanual2023]:
 
-\[
+\begin{equation}
 f=\frac{d}{2}=\frac{0.60}{2}=0.30.
-\]
+(\#eq:standardized-f)
+\end{equation}
 
 The letter beside the effect-size field changes which value you should enter. Table \@ref(tab:gpower-effect-sizes) shows the consequence of entering $d$ in a field that expects $f$.
 

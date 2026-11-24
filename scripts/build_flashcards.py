@@ -67,8 +67,7 @@ def build():
         templates=[{
             'name': 'Question and answer',
             'qfmt': '<div class="level {{Level}}">{{Level}}</div><div class="question"><a href="{{Source}}">{{Question}}</a></div>',
-            'afmt': '{{FrontSide}}<hr id="answer"><div class="answer">{{Answer}}</div>'
-                    '<div class="source">Katalin Tamási · <a href="' + LICENSE + '">CC BY-SA 4.0</a></div>',
+            'afmt': '{{FrontSide}}<hr id="answer"><div class="answer">{{Answer}}</div>',
         }],
         css='.card { font-family:Arial,sans-serif; font-size:21px; text-align:left; '
             'line-height:1.5; color:#243746; background:#fff; max-width:750px; margin:24px auto; padding:0 18px; }'
@@ -156,6 +155,11 @@ def validate_package(path, expected):
             assert len(notes) == len(expected)
             assert conn.execute('select count(*) from cards').fetchone()[0] == len(expected)
             assert conn.execute('select count(*) from revlog').fetchone()[0] == 0
+            models = json.loads(conn.execute('select models from col').fetchone()[0])
+            for model in models.values():
+                for template in model['tmpls']:
+                    for side in ('qfmt', 'afmt'):
+                        assert 'Katalin' not in template[side] and 'CC BY-SA' not in template[side]
             assert all(len(fields.split('\x1f')) == 5 for _, fields in notes)
             assert {fields.split('\x1f')[0] for _, fields in notes} == {c['id'] for c in expected}
             assert conn.execute('select count(*) from cards where type != 0 or queue != 0').fetchone()[0] == 0

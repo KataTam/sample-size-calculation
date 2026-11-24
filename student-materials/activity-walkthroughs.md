@@ -21,7 +21,7 @@ The [estimation review](../book/estimation-planning.html#estimation-report-error
 
 | Chapter | Core activity | Contribution to the continuing report |
 |---|---|---|
-| 1. Research question and power | [Neuropathic pain: one study and many studies](../book/clinical-question.html#activity-pain_one_many) | Question, assumptions and interpretation of power |
+| 1. Research question and power | [Neuropathic pain: one trial and repeated trials](../book/clinical-question.html#activity-pain_one_many) | Question, assumptions and interpretation of power |
 | 2. Calculating sample size and recruitment | [Calculate a sample size: neuropathic pain](../book/calculations.html#calculate-sample-size) | Inputs, procedure, software and analyzable counts |
 | 2. Calculating sample size and recruitment | [Adjust recruitment](../book/calculations.html#activity-recruitment) using one shared loss percentage | Recruitment per group and in total, with a short justification |
 | 3. The sample size calculation report | [Review and complete a report](../book/reporting.html#check-reporting) | Four-error review followed by a consistency check of the learner's report |
@@ -66,18 +66,18 @@ The [annotated report in Chapter 3](../book/reporting.html#write-a-sample-size-j
 
 <span id="chronic-pain-one-study-and-many-studies--core"></span>
 
-## Neuropathic pain: one study and many studies — core
+## Neuropathic pain: one trial and repeated trials — core {#neuropathic-pain-one-study-and-many-studies--core}
 
 [Open activity](../book/clinical-question.html#activity-pain_one_many) · [Matching explanation](../book/clinical-question.html#activity-1-one-study-then-many)
 
 Purpose: see why sample estimates differ from population values, interpret the uncertainty in one trial, and relate repeated trials to power.
 
-1. The starting population has 30% relief with standard treatment and 60% with novel treatment, with 20 analyzable patients per group and a 5% Type I error probability.
-2. In “One study and many studies,” “Simulate one study” generates patient outcomes. The animation follows the patient outcomes into the estimated difference and then the sampling distribution, with the population difference marked on both axes. “Animate 20 trials” builds a short sequence; pause, replay and reduced motion support closer inspection. Each accumulated dot represents one complete trial. “Additional calculations and simulations” opens the other calculation and study-planning views when needed.
-3. The 20-trial animation shows different possible trials while the population probabilities remain fixed. Patient outcomes produce each observed difference, which falls into the distribution of repeated-study estimates.
-4. “Simulate many studies” updates the same display with 5,000 independent trials. The patient illustration shows the first trial in this batch. The lower graph contains the estimates from all trials. “Batch results and p values” reports the percentage of significant results and explains what the p values mean.
-5. Changing the patients per group, for example from 20 to 50, and simulating another batch overlays the original batch on the same axes. Comparing the spread shows the effect of a larger sample. A change to the population or test assumptions starts a new comparison. “Show all 20 trials” finishes the animation immediately. Reduced motion shows the complete sequence in a few seconds.
-6. “Interpret the animation” describes the counts and difference currently displayed. “Report” records the population assumptions, pain-relief counts in one study, results across many studies, and reproducibility details. Participant records are available there after a single study has been simulated. The report can be downloaded as PDF or editable Word. After changing the sample size, a new run is needed for those results to appear in the report.
+1. The starting population has 30% relief with duloxetine and 60% with neravixa, with 20 patients per group and a 5% Type I error probability. The equal-effects option uses 30% in each group.
+2. “Simulate one trial” follows patient outcomes through four steps: outcomes, estimated difference, estimates across trials, and the p value and test decision.
+3. The repetition field starts at 20. “Simulate selected trials” animates up to 100 trials. Larger selected counts appear together as distributions. “Simulate 5000 trials” provides a quick view of repeated performance.
+4. “Compare both populations” places the unequal and equal population scenarios beside each other. Each trial's estimate and p value come from the same patient outcomes. Rejections detect a difference in the unequal scenario and are false positives in the equal scenario.
+5. Pause, replay and show-all controls operate on the animation. Reduced motion speeds it up. “Reset results” clears the simulations while keeping the input settings. Increasing the sample from 20 to 50 per group and generating another batch overlays the earlier estimates for comparison.
+6. “Interpret the figure” describes the displayed trial or batch. “Report” records the assumptions, the first trial's patient counts, repeated results and any comparison population. Reports can be downloaded as PDF or editable Word. The R script reproduces the current assumptions and selected repetition count.
 
 ## Reviewing short examples
 
@@ -112,7 +112,7 @@ Purpose: reproduce the binary-outcome sample size calculation. The calculator us
 1. For the neuropathic pain example, you can enter 60% and 30%, Type I error probability 5%, target power 90% and initially no losses.
 2. The result is 56 analyzable patients per group. The total and any recruitment adjustment have different denominators and should be recorded separately.
 3. Changing one input at a time shows how the required sample responds. The opening curve marks your current target difference and analyzable count per group. Adding expected losses changes the main result to recruitment per group, with the analyzable requirement retained below it.
-4. The link to the lab transfers this calculated count as a fixed sample. “Many studies” then lets you estimate the performance of the planned test through simulation and compare the estimated power with the planning target.
+4. The link to the lab transfers this calculated count as a fixed sample. “Repeated trials” then lets you estimate the performance of the planned test through simulation and compare the estimated power with the planning target.
 5. “Explore assumptions” lets you compare a revised event percentage. “Report” includes both scenarios when they differ, together with their analyzable and recruitment counts and calculation method.
 
 <span id="calculate-a-sample-size-chronic-pain"></span>
@@ -175,7 +175,7 @@ Purpose: assess whether the feasible study can answer the intended question unde
 1. The activity starts with 100 analyzable patients per group. The available count is shown directly; recruitment after expected losses is calculated separately.
 2. “Explore assumptions” shows calculated curves for 15-, 20- and 30-point differences. The vertical line marks 100 per group and the horizontal line marks 90% power. The table gives approximately 59%, 83% and 99% power, and required counts of 217, 124 and 56 per group.
 3. With “Available sample size” selected, clicking the graph changes the count and vertical reference line. With “Target power” selected, clicking changes the horizontal line and required counts. The sample-size field and target-power slider support the same choices by keyboard. The axes stay fixed until “Fit axis to results” is selected. A notice identifies any required counts outside the current range.
-4. “Many studies” estimates power from generated patient data for the selected scenario.
+4. “Repeated trials” estimates power from generated patient data for the selected scenario.
 5. The chapter question asks which of the three differences reaches 90% power at the available count. The supporting study plan can record the evidence and uncertainty behind a recruitment or design decision.
 
 <span id="repeated-chronic-pain-trials--advanced"></span>
@@ -189,18 +189,18 @@ Purpose: assess whether the feasible study can answer the intended question unde
 Purpose: extend the core simulation from power to confidence interval coverage, interval width and simulation uncertainty.
 
 1. The activity starts in “Many studies,” with 100 analyzable patients per group, relief probabilities 30% and 60%, 5,000 repetitions and target full interval width 30 percentage points.
-2. You can first visit “One study” to inspect one generated dataset, its estimated difference, interval and test result.
-3. After “Simulate many studies,” you can examine the rejection percentage, coverage of the specified true difference and percentage meeting the width target. These answer different questions.
+2. You can first visit “One trial” to inspect one generated dataset, its estimated difference, interval and test result.
+3. After simulating repeated trials, you can examine the rejection percentage, coverage of the specified true difference and percentage meeting the width target. These answer different questions.
 4. A custom treatment probability of 45%, with control still 30%, tests the plan under a 15-point true difference. A no-effect scenario estimates the false-positive probability.
 5. You can vary the repetition count while leaving patients per group fixed. More repetitions reduce Monte Carlo uncertainty while each trial's design stays fixed. A report should retain the generating assumptions, analysis and repetition count.
 
 Within the same activity, *Settings* → *Additional settings* reveals *Explore missing outcomes*:
 
 1. You can select *Complete outcomes* and keep recruitment at 100 per group as a reference.
-2. *Equal losses* removes outcomes independently of relief with 10% probability in each group. One study shows recruited and retained counts and the records excluded from analysis.
+2. *Equal losses* removes outcomes independently of relief with 10% probability in each group. One trial shows recruited and retained counts and the records excluded from analysis.
 3. *Unequal losses* uses 10% expected loss in the standard group and 20% in the novel group. Recruitment and population probabilities stay fixed.
 4. *Outcome-related losses* keeps those expected percentages but makes missingness three times as likely without relief in the novel group. The standard group retains outcome-independent loss.
-5. Across the four scenarios, Many studies compares the mean estimate, bias, coverage, interval width, retained counts, and significance percentage. A high significance percentage can coexist with bias and poor coverage. The model answer is in the [missing-outcome explanation](../book/simulation.html#explore-missing-outcomes).
+5. Across the four scenarios, Repeated trials compares the mean estimate, bias, coverage, interval width, retained counts, and significance percentage. A high significance percentage can coexist with bias and poor coverage. The model answer is in the [missing-outcome explanation](../book/simulation.html#explore-missing-outcomes).
 6. The report identifies recruited versus analyzable counts and, for matching simulations, retained counts, bias and coverage. Saved simulation CSV files retain the settings used when they were generated; the R script reproduces the current scenario. *Usual simulation* restores the original analysis with fixed analyzable counts.
 
 The simulation above uses one final analysis. For a design with interim stopping or sample-size adaptation, the [simulation discussion](../book/simulation.html#simulating-decision-rules) explains the additional decisions that a design-specific simulation must reproduce.
@@ -288,7 +288,7 @@ Purpose: compare three sample size plans for a hypothetical trial of discharge w
 4. For Plan C, the novel-treatment percentage returns to 96%, and power increases to 90%. How does the required sample compare with Plan A?
 5. Your explanation should compare A with B to discuss the target difference, and A with C to discuss power. The worked answer in the tutorial shows all three calculations.
 
-For optional simulation exploration, “One study” shows possible discharge counts and “Many studies” estimates the test's power under the selected assumptions. A no-effect scenario examines false positives. The [discharge simulation](../book/simulation.html#discharge-simulation) explains how simulation can assess the planning approximation near 100%.
+For optional simulation exploration, “One trial” shows possible discharge counts and “Repeated trials” estimates the test's power under the selected assumptions. A no-effect scenario examines false positives. The [discharge simulation](../book/simulation.html#discharge-simulation) explains how simulation can assess the planning approximation near 100%.
 
 <span id="build-your-own-study-calculation--advanced-application"></span>
 
@@ -301,7 +301,7 @@ Purpose: bring together the clinical question, numerical requirements and practi
 1. In “My study,” you can describe the question, design, evidence, participant burden and resources. The numerical model supports two independent, equally sized groups. Other designs require calculations matched to their structure and analysis.
 2. For a supported design, you can select testing, interval-width planning or a fixed available sample and enter justified assumptions in “Settings.” Other designs require an appropriate external calculation.
 3. The eligible-participant, consent and recruitment-period inputs help assess recruitment feasibility. Actual recruitment and retention can vary from these expectations.
-4. For a supported design, “One study” and “Many studies” can examine possible results and performance. Sensitivity scenarios should change the assumed population while retaining the original plan when that is the question.
+4. For a supported design, “One trial” and “Repeated trials” can examine possible results and performance. Sensitivity scenarios should change the assumed population while retaining the original plan when that is the question.
 5. “Report” combines your study responses and recommendation with the current calculations, feasibility and matching simulations. Your written answers should reflect the selected example and settings. Unsupported designs receive a note about the need for a design-specific method.
 6. “Download report (PDF)” saves the summary; “Download editable report (Word)” provides an editable copy. The separate “Save work for later” controls save and reopen your settings and answers. The [file guide above](#reports-and-saved-work) explains backups, simulation data and the optional R script. Findings and their justification can be entered in the separate study-plan activity.
 

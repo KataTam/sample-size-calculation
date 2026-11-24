@@ -25,7 +25,7 @@ const specs = [
       if (app==='power_explorer') {
         await f.evaluate(()=>Shiny.setInputValue('activity_request',{activity:'pain_one_many',nonce:Date.now()}));
         await f.waitForFunction(()=>document.querySelector('#fixed_n').value==='20' && document.querySelector('#outcome').value==='proportions');
-        await f.getByRole('tab',{name:'One study and many studies',exact:true}).click();
+        await f.getByRole('tab',{name:'One trial and repeated trials',exact:true}).click();
         await f.locator('#run_one').click();
         await f.locator('#sampling-journey svg').waitFor({timeout:60000});
         assert.equal(await f.locator('.nav-tabs a:visible').count(),3,'Focused simulation has three primary views');

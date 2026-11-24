@@ -77,11 +77,11 @@ app_answer <- function(x) if (is.null(x) || !nzchar(trimws(x))) "Not yet specifi
 app_sampling_explanation <- function(x) paste0(
   "With ", x$n, " patients per group, the population pain-relief probabilities (standard ",
   format_percent(x$p_control), "; novel ", format_percent(x$p_treatment),
-  ") and the sample size stay fixed across repeated studies. The sampled patients, pain-relief counts, and estimated differences vary. ",
+  ") and the sample size stay fixed across repeated trials. The sampled patients, pain-relief counts, and estimated differences vary. ",
   if (true_difference(x) == 0)
     "As a rule, larger samples produce less variable estimates. With equal population probabilities, significant results are false positives. "
   else "As a rule, larger samples produce less variable estimates and greater power to detect this population difference. ",
-  "More simulation repetitions stabilize the summary of repeated studies; each study still has the same sample size and power.")
+  "More simulation repetitions stabilize the summary of repeated trials. Each trial still has the same sample size and power.")
 
 # The introductory pain activity reports the experiment the learner explored.
 # Unfilled research-planning fields belong to the full study plan.
@@ -89,39 +89,51 @@ app_pain_simulation_report <- function(current, one, many, details) {
   x <- current$generating
   effect <- function(v) paste0(round(100 * v, 2), " percentage points")
   matches <- function(saved) !is.null(saved) && identical(saved$meta, current)
-  single <- if (is.null(one)) "No single-study simulation has been saved." else if (!matches(one)) "The saved study uses earlier inputs and is omitted; simulate again to update the report." else "The comparison could not be estimated."
+  single <- if (is.null(one)) "No single trial has been simulated." else if (!matches(one)) "The saved trial uses earlier inputs. A new simulation will update the report." else "The comparison could not be estimated."
   if (matches(one) && is.finite(one$result$estimate)) {
     counts <- vapply(c("Control", "Treatment"), function(group)
       sum(one$data$outcome[one$data$group == group]), numeric(1))
     single <- c(paste0("Pain relief occurred in ", counts[1], "/", x$n, " patients (", format_percent(counts[1]/x$n, 1),
       ") with standard treatment and ", counts[2], "/", x$n, " (", format_percent(counts[2]/x$n, 1), ") with novel treatment."),
       paste0("Estimated difference: ", effect(one$result$estimate), "; two-sided p value: ", signif(one$result$p_value, 3), "; ", if (one$result$reject) "reject zero" else "do not reject zero", "."), if (abs(one$result$estimate - true_difference(x)) < 1e-12)
-        "In this study, the estimate equals the assumed population difference. A new sample can give a different estimate."
+        "In this trial, the estimate equals the assumed population difference. A new sample can give a different estimate."
       else paste0("The estimate is ", effect(abs(one$result$estimate - true_difference(x))),
         if (one$result$estimate > true_difference(x)) " above" else " below",
-        " the assumed population difference. This discrepancy reflects sampling variability in this simulated study."))
+        " the assumed population difference. This discrepancy reflects sampling variability in this simulated trial."))
   }
   repeated <- if (is.null(many)) "No batch has been simulated." else "The saved batch uses earlier inputs and is omitted; simulate again to update the report."
   if (matches(many)) {
     r <- many$results; valid <- is.finite(r$estimate)
     if (any(valid)) repeated <- c(
-      paste0("The latest batch contains ", nrow(r), " independently simulated studies, each with ", x$n,
-        " patients per group. The single study and this batch were generated separately."),
+      paste0("The latest batch contains ", nrow(r), " independently simulated trials, each with ", x$n,
+        " patients per group. ", if (isTRUE(one$from_batch)) "The patient illustration and individual result show the first trial in this batch." else "The individual trial was generated separately."),
       paste0("The mean estimated difference is ", effect(mean(r$estimate[valid])), "; the assumed population difference is ",
         effect(true_difference(x)), "."),
-      paste0(format_percent(mean(r$reject[valid]), 1), " of the studies gave a statistically significant result. Under these assumptions, this percentage estimates ",
+      paste0(format_percent(mean(r$reject[valid]), 1), " of the trials gave a statistically significant result. Under these assumptions, this percentage estimates ",
         if (true_difference(x) == 0) "the Type I error probability (false positives when the population difference is zero)."
         else "power: the probability of detecting the specified population difference."))
   }
   sections <- list("Population assumptions and sample" = c(
-    paste0("These simulated trials compare duloxetine (standard treatment) with neravixa (novel treatment) for painful diabetic peripheral neuropathy in two independent, equally sized groups. Each study has ",
+    paste0("These simulated trials compare duloxetine (standard treatment) with neravixa (novel treatment) for painful diabetic peripheral neuropathy in two independent, equally sized groups. Each trial has ",
       x$n, " patients per group (", 2*x$n, " in total), all with observed outcomes. Each patient either achieved pain relief or did not."),
     paste0("The assumed population pain-relief percentages are ", format_percent(x$p_control), " with duloxetine and ",
       format_percent(x$p_treatment), " with neravixa: a between-group difference of ", effect(true_difference(x)),
       " (novel minus standard). These are the population values used to generate the simulated data."),
     paste0("The analysis uses a two-sided test with Type I error probability ", format_percent(x$alpha),
       ".")),
-    "One simulated study" = single, "Many simulated studies" = repeated)
+    "One simulated trial" = single, "Repeated simulated trials" = repeated)
+  comparison <- if (matches(many)) many$population_comparison else if (matches(one)) one$population_comparison else NULL
+  if (!is.null(comparison)) {
+    other <- comparison$spec
+    r <- if (!is.null(comparison$results)) comparison$results else comparison$result
+    sections[["Comparison population"]] <- c(
+      paste0("The second population has ", format_percent(other$p_control), " pain relief with standard treatment and ",
+        format_percent(other$p_treatment), " with novel treatment, with ", other$n, " patients per group in each trial."),
+      paste0("Across ", nrow(r), " simulated ", if (nrow(r)==1) "trial" else "trials", ", ", sum(r$reject),
+        " gave a statistically significant result (", format_percent(mean(r$reject), 1), "). ",
+        if (true_difference(other)==0) "These rejections are false positives because the population difference is zero."
+        else "These rejections detect the 30-percentage-point population difference."))
+  }
   labels <- c(study_question = "Research question and primary outcome", clinical_relevance = "Clinical relevance",
     participant_burden = "Participant burden and ethics", evidence_sources = "Supporting evidence")
   filled <- names(labels)[vapply(names(labels), function(id) !is.null(details[[id]]) && nzchar(trimws(details[[id]])), logical(1))]
@@ -137,7 +149,7 @@ app_pain_simulation_report <- function(current, one, many, details) {
 
 # Reports include only simulations from the current example and assumptions.
 app_simulation_report <- function(saved, current, many = FALSE) {
-  label <- if (many) "many-study simulation" else "single-study simulation"
+  label <- if (many) "repeated-trial simulation" else "single-trial simulation"
   if (is.null(saved)) return(paste0("No ", label, " has been run."))
   if (!identical(saved$meta, current)) return(paste0("The saved ", label,
     " uses earlier settings or a different example and is omitted. Rerunning it will include current results."))
@@ -147,7 +159,7 @@ app_simulation_report <- function(saved, current, many = FALSE) {
   r <- if (many) saved$results else saved$result
   valid <- is.finite(r$estimate)
   if (!any(valid)) return("The simulation produced no estimable comparisons; the retained sample was insufficient.")
-  if (many) c(paste0(nrow(r), " simulated studies; ", sum(valid), " estimable comparisons. Significant results: ",
+  if (many) c(paste0(nrow(r), " simulated trials; ", sum(valid), " estimable comparisons. Significant results: ",
     format_percent(mean(r$reject[valid]), 1), "; intervals containing the true difference: ", format_percent(mean(r$cover[valid]), 1),
     "; intervals meeting the width target: ", format_percent(mean(r$width_met[valid]), 1), "."),
     paste0("Mean estimated difference: ", effect(mean(r$estimate[valid])), "; mean full interval width: ", effect(mean(r$width[valid])), "."),

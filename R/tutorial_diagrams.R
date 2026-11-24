@@ -1,5 +1,46 @@
 # Original teaching illustrations, drawn by R when the tutorial is rendered.
 # These functions draw on the active graphics device and leave its settings intact.
+draw_error_scenario <- function(scenario = c("null", "effect")) {
+  scenario <- match.arg(scenario)
+  old <- par(no.readonly=TRUE); on.exit(par(old))
+  par(mar=c(.3,.3,.3,.3),family="sans",bg="white",fg="#26343d")
+  plot.new(); plot.window(xlim=c(0,12),ylim=c(0,10.5),xaxs="i",yaxs="i")
+  person <- function(x,y,size,col) {
+    symbols(x,y+.25*size,circles=.08*size,inches=FALSE,add=TRUE,bg=col,fg=col)
+    segments(x,y+.17*size,x,y-.12*size,col=col,lwd=1.8)
+    segments(x,y+.08*size,x+c(-.14,.14)*size,y-.02*size,col=col,lwd=1.6)
+    segments(x,y-.12*size,x+c(-.14,.14)*size,y-.38*size,col=col,lwd=1.6)
+  }
+  text(6,10.1,"Population pain-relief percentages",cex=1.15)
+  for (g in 1:2) {
+    successes <- if(g==1 || scenario=="null") 3 else 6
+    center <- c(3,9)[g]
+    text(center,9.5,paste0(c("duloxetine: ","neravixa: ")[g],successes*10,"%"),cex=1)
+    for(i in 1:10) person(center-2.05+(i-1)*.455,8.8,.9,if(i<=successes)"#27824a" else "#929ca4")
+  }
+  text(6,8.05,"Each large figure represents 10% of the population",cex=.82)
+  text(6,7.63,"Green: achieved pain relief     Gray: no pain relief",cex=.82)
+  arrows(6,7.3,6,6.65,length=.1,col="#64778a",lwd=2)
+  text(6,6.22,"100 illustrative repetitions of the planned trial",cex=1.05)
+  correct <- if(scenario=="null") 95 else 90
+  counts <- c(correct,100-correct)
+  labels <- if(scenario=="null")c("No difference detected","Difference detected") else c("Difference detected","No difference detected")
+  terms <- if(scenario=="null")c("True negatives","False positives: Type I errors") else c("True positives: power","False negatives: Type II errors")
+  for(g in 1:2) {
+    center<-c(3,9)[g];col<-c("#245e90","#9b5b15")[g]
+    text(center,5.65,paste(counts[g],"trials"),cex=1.1,col=col)
+    text(center,5.25,labels[g],cex=.9,col=col)
+    text(center,4.87,terms[g],cex=.8,col=col)
+    for(i in seq_len(counts[g])) {
+      columns<-if(g==1) 10 else 5
+      x<-if(g==1) .65+((i-1)%%columns)*.5 else 7.85+((i-1)%%columns)*.5
+      y<-4.33-floor((i-1)/columns)*.36
+      person(x-.07,y,.34,col);person(x+.07,y,.34,col)
+    }
+  }
+  text(6,.35,"Each small pair represents one complete trial",cex=.85)
+}
+
 draw_error_power_counts <- function() {
   old <- par(no.readonly = TRUE); on.exit(par(old))
   choices <- data.frame(alpha = c(.05, .05, .05, .01), power = c(.80, .90, .95, .90))

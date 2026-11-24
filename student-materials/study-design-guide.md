@@ -72,9 +72,10 @@ With positive within-cluster correlation, a study provides less information than
 
 For a simple design with approximately equal cluster sizes, an approximate inflation factor is the [design effect](#design-effect) [@campbell2012consort]:
 
-$$
+\begin{equation}
 \text{Design effect}=1+(m-1)\rho,
-$$
+(\#eq:cluster-design-effect)
+\end{equation}
 
 where $m$ is the number of participants per cluster and $\rho$ (rho) is the [intracluster correlation coefficient (ICC)](#intracluster-correlation). For example, with 20 participants per cluster and an ICC of 0.05, the design effect is $1.95$. An initial calculation based on independent participants would therefore be multiplied by approximately 1.95. For an initial requirement of 200 participants in total, this gives 390; with 20 patients per clinic, a plan with 20 clinics would recruit 400 patients. This is a starting approximation; the final calculation should also account for the number of clusters, unequal cluster sizes, and the planned analysis [@hayes1999].
 
@@ -167,12 +168,13 @@ Partial adherence, delayed switching, and switching prompted by poor response ne
 
 For binary outcomes, you can recalculate sample size using the revised event percentages. As a separate sensitivity scenario for neuropathic pain, suppose 60% and 30% describe relief under full adherence. With the switching percentages above, the simplified model gives:
 
-\[
+\begin{equation}
 \begin{aligned}
 \text{Assigned novel treatment: }&0.90(60\%)+0.10(30\%)=57\%,\\
 \text{Assigned standard treatment: }&0.95(30\%)+0.05(60\%)=31.5\%.
 \end{aligned}
-\]
+(\#eq:switching-worked)
+\end{equation}
 
 The resulting between-group difference is 25.5 percentage points. The [two-proportion app](https://katatam.github.io/sample-size-calculation/two_proportions/) can calculate the sample needed at these revised percentages. The revised event percentages can be entered directly in the calculation.
 

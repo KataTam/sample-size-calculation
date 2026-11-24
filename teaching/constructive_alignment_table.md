@@ -26,7 +26,7 @@ For the core route assess criteria 1, 2, 4, 5, 7 and 10. Evidence appraisal and 
 
 | Book activity | Outcome and assessment evidence | Rubric |
 |---|---|---|
-| One study and many studies (chapter 1) | Explain sampling variability, testing decisions, and patients per study versus simulation repetitions | 7 |
+| One trial and repeated trials (chapter 1) | Explain sampling variability, testing decisions, and patients per study versus simulation repetitions | 7 |
 | Neuropathic pain calculation (chapter 2) | Record the inputs, method, software and analyzable counts | 4 |
 | Shared-loss recruitment adjustment (chapter 2) | Apply one loss percentage and round per group; distinguish analysis and recruitment counts | 5 |
 | Report review and completion (chapter 3) | Correct four problem areas and review the same elements in the continuing report | 4, 5, 10 |

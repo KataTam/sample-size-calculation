@@ -12,7 +12,7 @@ Calculators and simulations also open within the tutorial when you select their 
 
 - [Study plan](assumptions_report/): develop a PICO question and justify the calculation and recruitment plan. The short core view and expanded detailed view use one set of answers, producing a concise sample size calculation report followed by the supporting study plan.
 
-- [Sample size reasoning lab](power_explorer/?activity=pain_one_many): simulate patient outcomes and compare results across studies. [Activity: Neuropathic pain: one study and many studies](book/clinical-question.html#activity-pain_one_many).
+- [Sample size reasoning lab](power_explorer/?activity=pain_one_many): simulate patient outcomes and compare results across studies. [Activity: Neuropathic pain: one trial and repeated trials](book/clinical-question.html#activity-pain_one_many).
 
 - [Two-proportion calculator](two_proportions/): calculate sample size for a difference between two event percentages. [Tutorial explanation](book/calculations.html#two-proportions).
 

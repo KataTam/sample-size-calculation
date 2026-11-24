@@ -72,6 +72,14 @@
     const seenByChapter = new Map();
     // Optional boxes must not consume the first definition link in the main text.
     const links = Array.from(document.querySelectorAll('.page-inner a[href], .main-container a[href], main a[href]'));
+    // A dashed definition link and lowered question mark distinguish glossary
+    // help from navigation. Keep its original text intact for term matching.
+    links.forEach(link => {
+      const entry = byId.get(decodeURIComponent(new URL(link.href, location.href).hash.slice(1)));
+      if (!entry || link.closest('pre,code,.csl-entry,.tutorial-contents,#TOC')) return;
+      link.classList.add('glossary-definition-link');
+      link.setAttribute('aria-label', link.textContent.trim() + ' (glossary definition)');
+    });
     const optional = a => !!a.closest('details');
     links.sort((a, b) => Number(optional(a)) - Number(optional(b)));
     links.forEach(link => {

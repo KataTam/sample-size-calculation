@@ -75,12 +75,12 @@ const base = (process.argv[2] || 'http://127.0.0.1:8769').replace(/\/$/, '');
         await set(f,{goal:'fixed',fixed_n:20,B:100,dropout:.2,study_question:'My study question.',clinical_relevance:'My clinical rationale.',
           participant_burden:'My burden assessment.',evidence_sources:'My supporting evidence.',justification:'My recommendation.'});
         await has(f,'20 per group; 40 total'); await has(f,'My recommendation.');
-        await f.getByRole('tab',{name:'One study',exact:true}).click(); await f.locator('#run_one').click();
-        await f.getByRole('tab',{name:'Many studies',exact:true}).click(); await f.locator('#run_many').click();
-        await f.getByRole('tab',{name:'Report',exact:true}).click(); await has(f,'100 simulated studies'); await has(f,'Estimated difference:');
+        await f.getByRole('tab',{name:'One trial',exact:true}).click(); await f.locator('#run_one').click();
+        await f.getByRole('tab',{name:'Repeated trials',exact:true}).click(); await f.locator('#run_many').click();
+        await f.getByRole('tab',{name:'Report',exact:true}).click(); await has(f,'100 simulated trials'); await has(f,'Estimated difference:');
         await save(f,download,app+'-simulation');
         await set(f,{fixed_n:17}); await has(f,'17 per group; 34 total'); await has(f,'uses earlier settings');
-        assert(!await f.locator('#report_preview').innerText().then(t=>t.includes('100 simulated studies')));
+        assert(!await f.locator('#report_preview').innerText().then(t=>t.includes('100 simulated trials')));
         for(const text of ['My study question.','My clinical rationale.','My burden assessment.','My supporting evidence.','My recommendation.']) await has(f,text);
         await f.locator('details').filter({has:f.locator('#download_plan_json')}).locator('summary').click();
         const pending=page.waitForEvent('download'); await f.locator('#download_plan_json').click();

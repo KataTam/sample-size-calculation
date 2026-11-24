@@ -54,7 +54,8 @@ lab_input_defaults <- function() list(
   width_m = 4, width_p = .2, alpha = .05, target_power = .8,
   missing_mode = "off", missing_n = 60, fixed_n = 60, dropout = .1, recruit_cap = 200, reality = "same",
   true_delta = 1, true_sd = 7, true_p0 = .3, true_p1 = .4,
-  seed = 20260914, B = 1000, stage = "Explore assumptions")
+  seed = 20260914, B = 1000, pain_population = "difference", compare_populations = FALSE,
+  journey_repetitions = 20, stage = "Explore assumptions")
 
 study_input_defaults <- function() list(
   study_question = "", study_design = "two_groups", clinical_relevance = "",
@@ -68,7 +69,7 @@ validate_lab_inputs <- function(values, complete = TRUE) {
   if (any(!names(values) %in% names(defaults)))
     stop("This plan contains unsupported lab inputs.", call. = FALSE)
   enums <- list(missing_mode = c("off", "complete", "equal", "differential", "selective"), outcome = c("means", "proportions"),
-    goal = c("testing", "precision", "fixed"), reality = c("same", "null", "custom"),
+    goal = c("testing", "precision", "fixed"), reality = c("same", "null", "custom"), pain_population = c("difference", "equal"),
     stage = c("Explore assumptions", "Compare assumptions", "One study", "Many studies", "My study", "Justify and communicate", "Methods"))
   ranges <- list(missing_n = c(2, 100000), expected_m = c(-1e6, 1e6), expected_p = c(-1, 1),
     plan_delta = c(-1e6, 1e6), plan_sd = c(.1, 1e6),
@@ -77,10 +78,12 @@ validate_lab_inputs <- function(values, complete = TRUE) {
     alpha = c(.001, .1), target_power = c(.5, .99), fixed_n = c(2, 100000),
     dropout = c(0, .5), recruit_cap = c(4, 200000), true_delta = c(-1e6, 1e6),
     true_sd = c(.1, 1e6), true_p0 = c(.01, .99), true_p1 = c(.01, .99),
-    seed = c(0, 2147483647), B = c(100, 10000))
+    seed = c(0, 2147483647), B = c(2, 10000), journey_repetitions = c(2, 10000))
   for (name in names(values)) {
     value <- values[[name]]
-    if (name %in% names(enums)) {
+    if (name == "compare_populations") {
+      if (!is.logical(value) || length(value) != 1 || is.na(value)) stop("Invalid population comparison selection.", call. = FALSE)
+    } else if (name %in% names(enums)) {
       if (!is.character(value) || length(value) != 1 || is.na(value) || !value %in% enums[[name]])
         stop(paste("Invalid", name, "selection."), call. = FALSE)
     } else {
@@ -88,7 +91,7 @@ validate_lab_inputs <- function(values, complete = TRUE) {
       if (!is.numeric(value) || length(value) != 1 || !is.finite(value) ||
           value < limits[1] || value > limits[2])
         stop(paste("Invalid", name, "value."), call. = FALSE)
-      if (name %in% c("missing_n", "fixed_n", "recruit_cap", "seed", "B") && value != floor(value))
+      if (name %in% c("missing_n", "fixed_n", "recruit_cap", "seed", "B", "journey_repetitions") && value != floor(value))
         stop(paste(name, "must be an integer."), call. = FALSE)
     }
   }
@@ -127,6 +130,8 @@ apply_lab_inputs <- function(session, values) {
   for (name in names(values)) {
     if (name == "stage") shiny::updateTabsetPanel(session, "stage", selected = if(values[[name]] == "Methods") "Justify and communicate" else values[[name]])
     else if (name %in% sliders) shiny::updateSliderInput(session, name, value = values[[name]])
+    else if (name == "pain_population") shiny::updateRadioButtons(session, name, selected = values[[name]])
+    else if (name == "compare_populations") shiny::updateCheckboxInput(session, name, value = values[[name]])
     else if (name %in% selectors) shiny::updateSelectInput(session, name, selected = values[[name]])
     else shiny::updateNumericInput(session, name, value = values[[name]])
   }

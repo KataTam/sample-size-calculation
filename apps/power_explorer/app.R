@@ -34,6 +34,11 @@ ui <- fluidPage(
       conditionalPanel("input.activity_choice != 'pain_curves' && input.activity_choice != 'pain_one_many'", uiOutput("simulation_target"))),
     conditionalPanel("input.goal == 'fixed'", numericInput("fixed_n", "Analyzable participants per group", 60, min = 2, max = 100000, step = 1),
       activity_help("Enter the number with analyzable outcomes in each group. The power curves and simulation use this count; expected losses are applied separately when calculating recruitment.", for_input = "fixed_n")),
+    conditionalPanel("output.pain_report && !input.show_advanced",
+      radioButtons("pain_population", "Population pain-relief percentages",
+        c("30% standard; 60% novel: treatments differ"="difference",
+          "30% standard; 30% novel: equal effects"="equal"), selected="difference"),
+      checkboxInput("compare_populations", "Compare both populations", FALSE)),
     tags$details(id="lab-settings", class="activity-details", tags$summary("Settings"),
     selectInput("goal", "Planning goal", c("Test a difference from zero" = "testing", "Estimation with a target interval width" = "precision", "Assess a fixed number of available participants" = "fixed")),
     activity_help("Testing and the fixed-sample option concern two treatment groups. Estimation uses a confidence-interval-width target for one population mean or percentage.", for_input = "goal"),
@@ -72,16 +77,16 @@ ui <- fluidPage(
     activity_help("A 5% setting allows a 5% false-positive probability when population outcomes are equal. The app uses a two-sided test.", for_input = "alpha"),
     percent_slider("target_power", tags$span("Target ", tags$a(href = "../book/Sample_size_open_module.html#statistical-power", target = "_blank", rel = "noopener", "power"),
       " (%)"), .5, .99, .8, step = .01),
-    activity_help("A 90% target aims to detect the specified true difference in 90% of repeated studies, leaving a 10% false-negative probability. Higher targets require more participants.", for_input = "target_power")),
+    activity_help("A 90% target aims to detect the specified true difference in 90% of repeated trials, leaving a 10% false-negative probability. Higher targets require more participants.", for_input = "target_power")),
     conditionalPanel("input.goal == 'precision'", percent_slider("confidence", "Confidence level (%)", .90, .999, .95, step = .001),
-      activity_help("For 95% confidence, about 95% of intervals across repeated studies contain the population value under the model assumptions.", for_input = "confidence")),
+      activity_help("For 95% confidence, about 95% of intervals across repeated trials contain the population value under the model assumptions.", for_input = "confidence")),
     percent_slider("dropout", "Expected loss to follow-up in each group (%)", 0, .5, .1, step = .01),
     activity_help("This percentage adjusts recruitment. For a fixed analyzable sample, the curve keeps the selected count. The missing-outcome settings simulate incomplete outcomes.", for_input = "dropout"),
     tags$div(class = "lab-recruitment", numericInput("recruit_cap", "Maximum recruitment, across both groups", 200, min = 4, max = 200000, step = 2),
     activity_help("Enter total recruitment across both groups. In sample-size planning, this sets the graph's available count after expected losses. In fixed-sample mode, the graph uses the analyzable count entered above.", for_input = "recruit_cap")),
     conditionalPanel("input.show_advanced",
     h4("What if the assumptions differ?"),
-    selectInput("reality", "Assumptions for the simulated studies", c("Same as planning assumptions" = "same", "No true treatment effect" = "null", "Custom effect or variability" = "custom")),
+    selectInput("reality", "Assumptions for the simulated trials", c("Same as planning assumptions" = "same", "No true treatment effect" = "null", "Custom effect or variability" = "custom")),
     activity_help("These choices change the populations generating the simulated data while keeping the planned sample size fixed. The null scenario assesses false positives.", for_input = "reality"),
     conditionalPanel("input.reality == 'custom' && input.outcome == 'means'",
       numericInput("true_delta", "True treatment effect assumed for simulation (outcome units; zero or negative allowed)", 1, step = .5),
@@ -100,11 +105,11 @@ ui <- fluidPage(
         numericInput("missing_n", "Recruited participants per group for these scenarios", 60, min=2, max=100000, step=1),
         activity_help("Equal and unequal losses are unrelated to the event. Outcome-related losses make missingness three times as likely without the event in the novel group, while retaining 20% average loss. Standard-group losses remain unrelated to the event.", for_input = "missing_mode"),
         activity_help("Use the starting recruitment in each group. Simulations then remove outcomes according to the selected missingness scenario.", for_input = "missing_n"),
-        p("One study and Many studies use this recruited count while the extension is active. Planning curves retain their complete-data assumptions."),
+        p("One trial and Repeated trials use this recruited count while the extension is active. Planning curves retain their complete-data assumptions."),
         p(tags$a(href="../book/simulation.html#explore-missing-outcomes", target="_blank", rel="noopener", "Explanation and model answer")))),
     tags$details(tags$summary("Reproducibility settings"), numericInput("seed", "Random seed", 20260914, min = 0, max = 2147483647, step = 1)),
-    numericInput("B", "Number of simulated studies (B)", 1000, min = 100, max = 10000, step = 100),
-    activity_help("More repetitions stabilize estimated power and coverage. Multiplying the repetitions by four approximately halves Monte Carlo standard error. Each simulated study keeps the selected number of participants.", for_input = "B")),
+    numericInput("B", "Number of simulated trials (B)", 1000, min = 2, max = 10000, step = 100),
+    activity_help("More repetitions stabilize estimated power and coverage. Multiplying the repetitions by four approximately halves Monte Carlo standard error. Each simulated trial keeps the selected number of participants.", for_input = "B")),
     p(tags$a(href = "../book/Sample_size_open_module.html#glossary", target = "_blank", rel = "noopener", "Key terms and assumptions"), " · ",
       tags$a(href = "../book/Sample_size_open_module.html#common-mistakes", target = "_blank", rel = "noopener", "Common mistakes and FAQ"))))),
   mainPanel(width = 8, conditionalPanel("input.goal != 'precision'", tabsetPanel(id = "stage",
@@ -132,36 +137,41 @@ ui <- fluidPage(
       p("Each point gives the probability of detecting the specified true difference at the selected analyzable count.")),
       h4("Sensitivity analysis: what if the assumptions differ?"), tableOutput("sensitivity"),
       textOutput("sensitivity_caption", container = function(...) tags$p(class = "caption", ...)),
-      p("The table keeps the planned sample size fixed. Missing-outcome scenarios start with recruited participants; their results appear in One study and Many studies.")),
-    tabPanel("One study", h3("One simulated study"),
+      p("The table keeps the planned sample size fixed. Missing-outcome scenarios start with recruited participants. Their results appear in One trial and Repeated trials.")),
+    tabPanel("One trial", value="One study", h3("One simulated trial"),
       tags$div(class = "simulation-actions",
-        actionButton("run_one", "Simulate one study", class = "btn-primary"),
+        actionButton("run_one", "Simulate one trial", class = "btn-primary"),
         conditionalPanel("input.outcome == 'proportions' && !output.one_has_missing",
-          actionButton("run_journey", "Animate 20 trials"),
-          tags$button(id = "journey-finish", type = "button", "Show all 20 trials", disabled = NA),
-          tags$button(id = "journey-pause", type = "button", "Pause", disabled = NA),
-          tags$button(id = "journey-replay", type = "button", "Replay", disabled = NA))),
+          tags$div(class="repeat-trial-controls",
+            numericInput("journey_repetitions", "Number of trials", 20, min=2, max=10000, step=1),
+            actionButton("run_journey", "Simulate selected trials", class="btn-primary")))),
+      conditionalPanel("input.outcome == 'proportions' && !output.one_has_missing",
+        tags$div(class="playback-controls", `aria-label`="Animation playback",
+          tags$button(id="journey-pause",type="button","Pause",disabled=NA),
+          tags$button(id="journey-replay",type="button","Replay",disabled=NA),
+          tags$button(id="journey-finish",type="button","Show all trials",disabled=NA),
+          tags$label(tags$input(id="journey-motion",type="checkbox")," Reduced motion"),
+          actionButton("reset_trials","Reset results"))),
       textOutput("one_status"),
       conditionalPanel("input.outcome == 'proportions' && !output.one_has_missing",
         tags$div(id = "sampling-journey", `aria-describedby` = "journey-description"),
         tags$p(id = "journey-description", class = "sr-only"),
         tags$p(id = "journey-status", role = "status", `aria-live` = "polite", "The patient outcomes and estimated difference will appear here."),
-        tags$details(id="inline-study-explanation", class="inline-study-explanation", tags$summary("Interpret the animation"),
-          p(id="journey-reading", "Each pair of patient groups produces one estimated treatment difference. Repeated trials show how that estimate varies around the same population difference."),
-          tags$label(tags$input(id = "journey-motion", type = "checkbox"), " Reduced motion"))),
+        tags$details(id="inline-study-explanation", class="inline-study-explanation", tags$summary("Interpret the figure"),
+          p(id="journey-reading", "Patient outcomes produce an estimated difference and a p value. Repeated trials show how often the test detects a difference."))),
       conditionalPanel("output.one_ready && (input.outcome == 'means' || output.one_has_missing)", textOutput("one_interpretation")),
       conditionalPanel("output.one_ready && output.intervals_visible",
         activity_details("Interval for this study", plotOutput("one_plot", height="300px"), app_interval_key(),
           p(class="caption", "Figure. The saved estimate and confidence interval, with the population difference and clinical threshold marked."))),
       tags$div(id = "journey-credit", tags$hr(), p("The animated connection between samples, estimates, and sampling distributions was inspired by Douwe Postmus’s ", tags$a(href = "https://postmus.github.io/sampling-simulator/", target = "_blank", rel = "noopener", "Statistical Concepts Lab"), "."))),
-    tabPanel("Many studies", h3("Many simulated studies"),
-      actionButton("run_many", "Simulate many studies", class = "btn-primary"),
+    tabPanel("Repeated trials", value="Many studies", h3("Repeated simulated trials"),
+      actionButton("run_many", "Simulate 5000 trials", class = "btn-primary"),
       textOutput("many_status"),
       conditionalPanel("output.many_ready", tableOutput("many_summary"),
         p(class = "caption", "Table 6. Summary of the saved simulation batch. Additional settings add coverage, interval-width targets and simulation uncertainty."),
         textOutput("many_text"), tags$div(class="separate-many-figure", plotOutput("distribution", height = "300px")),
         uiOutput("sample_comparison"),
-        p(class = "caption separate-many-figure", "Estimated treatment differences across independent studies. The dashed line marks the assumed population difference."),
+        p(class = "caption separate-many-figure", "Estimated treatment differences across independent trials. The dashed line marks the assumed population difference."),
         conditionalPanel("output.intervals_visible", activity_details("Intervals across studies", plotOutput("many_plot", height = "480px"), app_interval_key(),
           p(class = "caption", "Figure 5. The first 30 saved intervals and their point estimates. Lines mark zero, the clinical threshold and the assumed population difference."))),
         conditionalPanel("input.goal != 'precision'", activity_details("P values in the latest batch", plotOutput("p_values", height = "300px"),
@@ -245,7 +255,7 @@ server <- function(input, output, session) {
   one_saved <- reactiveVal(NULL)
   journey_payload <- function(trials) {
     x <- trials[[1]]
-    list(n = x$spec$n, p0 = x$spec$p_control, p1 = x$spec$p_treatment,
+    list(n = x$spec$n, p0 = x$spec$p_control, p1 = x$spec$p_treatment, alpha=x$spec$alpha, expected=spec_power(x$spec),
       labels = if (current_activity() %in% c("pain_one_many", "pain_curves", "pain_simulation"))
         c("duloxetine", "neravixa") else c("Standard", "Novel"),
       event = if (current_activity() %in% c("pain_one_many", "pain_curves", "pain_simulation")) "achieved pain relief" else "had the event",
@@ -254,23 +264,31 @@ server <- function(input, output, session) {
         treatment = as.list(head(t$data$outcome[t$data$group == "Treatment"], 80)),
         counts = as.list(c(sum(t$data$outcome[t$data$group == "Control"]),
                           sum(t$data$outcome[t$data$group == "Treatment"]))),
-        estimate = t$result$estimate[[1]])))
+        estimate = t$result$estimate[[1]], p_value=t$result$p_value[[1]], reject=t$result$reject[[1]])))
   }
   observeEvent(input$run_journey, {
-    req(is.null(missing_settings()))
-    spec <- generating()
-    req(spec$outcome == "proportions")
-    trials <- lapply(0:19, function(i) {
-      next_spec <- spec; next_spec$seed <- (as.double(spec$seed) + i) %% 2147483647
-      simulate_one_study(next_spec)
-    })
-    session$sendCustomMessage("sampling-journey", journey_payload(trials))
-  }, ignoreInit = TRUE)
+    req(is.null(missing_settings()), input$outcome=="proportions")
+    B <- input$journey_repetitions
+    validate(need(is.finite(B) && B==floor(B) && B>=2 && B<=10000,
+      "Choose a whole number of trials between 2 and 10000."))
+    if(B>100) run_batch(B) else {
+      meta <- simulation_meta(B)
+      x <- simulate_trials(meta$generating)
+      if(meta$compare_populations) x$population_comparison <- simulate_trials(comparison_spec(meta$generating))
+      save_batch(x,meta)
+      payload <- sequence_payload(x)
+      if(!is.null(x$population_comparison)) payload$comparison <- sequence_payload(x$population_comparison)
+      session$sendCustomMessage("sampling-journey",payload)
+    }
+  }, ignoreInit=TRUE)
   observeEvent(one_saved(), {
     x <- one_saved()
     if (is.null(x) || !is.null(x$missing)) session$sendCustomMessage("sampling-journey", list(clear = TRUE))
-    else if (x$spec$outcome == "proportions" && !isTRUE(x$from_batch))
-      session$sendCustomMessage("sampling-journey", journey_payload(list(x)))
+    else if (x$spec$outcome == "proportions" && !isTRUE(x$from_batch)) {
+      payload <- journey_payload(list(x))
+      if(!is.null(x$population_comparison)) payload$comparison <- journey_payload(list(x$population_comparison))
+      session$sendCustomMessage("sampling-journey",payload)
+    }
   }, ignoreNULL = FALSE)
   many_saved <- reactiveVal(NULL)
   baseline_many <- reactiveVal(NULL)
@@ -460,6 +478,10 @@ server <- function(input, output, session) {
       if (x$outcome == "means") { x$delta <- input$true_delta; x$sd <- input$true_sd }
       else { x$p_control <- input$true_p0; x$p_treatment <- input$true_p1 }
     }
+    if(identical(current_activity(),"pain_one_many") && !isTRUE(input$show_advanced) && x$outcome=="proportions") {
+      x$p_control <- .30
+      x$p_treatment <- if(identical(input$pain_population,"equal")) .30 else .60
+    }
     safe(do.call(study_spec, x))
   })
   missing_settings <- reactive({
@@ -478,7 +500,9 @@ server <- function(input, output, session) {
   snapshot <- reactive({
     missing <- missing_settings(); simulated <- generating()
     if (!is.null(missing)) simulated$n <- missing$n
-    list(activity = current_activity(), missing = missing, plan = planned(), generating = simulated, goal = input$goal,
+    list(activity = current_activity(), missing = missing,
+      compare_populations=identical(current_activity(),"pain_one_many") && !isTRUE(input$show_advanced) && isTRUE(input$compare_populations) && simulated$outcome=="proportions",
+      plan = planned(), generating = simulated, goal = input$goal,
       target_power = input$target_power, dropout = input$dropout,
       recruitment_cap = input$recruit_cap, expected_effect = expected_effect())
   })
@@ -556,12 +580,16 @@ server <- function(input, output, session) {
       else if (true_difference(x) == 0) "Larger samples improve precision; with no true difference, rejections are false positives and their nominal probability stays at the Type I error setting. "
       else "Larger samples improve precision and increase power at this nonzero difference. ",
       "More repetitions stabilize simulation summaries while leaving each trial's sample size fixed. ",
-      if (!is.null(saved)) paste0("The displayed batch contains ", x$B, " studies. ",
+      if (!is.null(saved)) paste0("The displayed batch contains ", x$B, " trials. ",
         if (!identical(saved$meta, snapshot())) "It uses earlier inputs." else "") else "")
   })
   one <- reactive({ req(one_saved()); one_saved() })
   observeEvent(input$run_one, {
-    meta <- snapshot(); x <- if (is.null(meta$missing)) simulate_one_study(meta$generating) else simulate_missing_one(meta$generating, meta$missing); x$meta <- meta; one_saved(x)
+    meta <- snapshot(); x <- if (is.null(meta$missing)) simulate_one_study(meta$generating) else simulate_missing_one(meta$generating, meta$missing)
+    if(meta$compare_populations) x$population_comparison <- simulate_one_study(comparison_spec(meta$generating))
+    x$meta <- meta
+    if(identical(current_activity(),"pain_one_many")) many_saved(NULL)
+    one_saved(x)
   }, ignoreInit = TRUE)
   many <- reactive({ req(many_saved()); many_saved() })
   # Compare sample sizes only when the generating population and test are unchanged.
@@ -570,29 +598,69 @@ server <- function(input, output, session) {
     is.null(a$missing) && is.null(b$missing) &&
       isTRUE(all.equal(a$spec[keys], b$spec[keys]))
   }
-  observeEvent(input$run_many, {
+  comparison_spec <- function(spec) {
+    spec$p_control <- .30
+    spec$p_treatment <- if(abs(spec$p_treatment-.30)<1e-10) .60 else .30
+    spec
+  }
+  simulation_meta <- function(B) {
     meta <- snapshot()
-    withProgress(message = "Simulating independent studies", value = .2, {
-      x <- if (is.null(meta$missing)) simulate_trials(meta$generating) else simulate_missing_trials(meta$generating, meta$missing)
-      incProgress(.8); x$meta <- meta
-      original <- baseline_many()
-      if (is.null(original) || !same_simulation_population(original, x)) baseline_many(x)
-      many_saved(x)
-      if (identical(current_activity(), "pain_one_many") && !is.null(x$illustrated_trial)) {
-        illustrated <- x$illustrated_trial
-        illustrated$meta <- meta
-        illustrated$from_batch <- TRUE
-        one_saved(illustrated)
-        payload <- journey_payload(list(x$illustrated_trial))
-        payload$batch <- list(estimates = as.list(x$results$estimate))
+    meta$plan$B <- as.numeric(B); meta$generating$B <- as.numeric(B)
+    updateNumericInput(session,"B",value=B)
+    meta
+  }
+  save_batch <- function(x,meta) {
+    x$meta <- meta
+    original <- baseline_many()
+    if(is.null(original) || !same_simulation_population(original,x)) baseline_many(x)
+    many_saved(x)
+    if(identical(current_activity(),"pain_one_many") && !is.null(x$illustrated_trial)) {
+      illustrated <- x$illustrated_trial; illustrated$meta <- meta; illustrated$from_batch <- TRUE
+      one_saved(illustrated)
+    }
+  }
+  batch_payload <- function(x) {
+    payload <- journey_payload(list(x$illustrated_trial))
+    payload$batch <- list(estimates=as.list(x$results$estimate),
+      p_values=as.list(x$results$p_value),reject=as.list(x$results$reject))
+    payload
+  }
+  sequence_payload <- function(x) {
+    payload <- journey_payload(list(x$illustrated_trial))
+    # The animation and histogram share the same binomial counts and analyses.
+    # Additional patient arrangements are sampled conditional on those counts.
+    payload$trials <- with_study_seed(x$spec$seed,lapply(seq_len(nrow(x$results)),function(i) {
+      if(i==1) return(payload$trials[[1]])
+      counts <- unlist(x$trial_counts[i,],use.names=FALSE)
+      records <- lapply(counts,function(count) as.list(head(sample(rep(c(1,0),c(count,x$spec$n-count))),80)))
+      list(control=records[[1]],treatment=records[[2]],counts=as.list(counts),
+        estimate=x$results$estimate[i],p_value=x$results$p_value[i],reject=x$results$reject[i])
+    }))
+    payload
+  }
+  run_batch <- function(B) {
+    meta <- simulation_meta(B)
+    withProgress(message="Simulating independent trials",value=.2,{
+      x <- if(is.null(meta$missing)) simulate_trials(meta$generating) else simulate_missing_trials(meta$generating,meta$missing)
+      if(meta$compare_populations) x$population_comparison <- simulate_trials(comparison_spec(meta$generating))
+      incProgress(.8); save_batch(x,meta)
+      if(identical(current_activity(),"pain_one_many") && !is.null(x$illustrated_trial)) {
+        payload <- batch_payload(x)
         reference <- baseline_many()
-        if (reference$spec$n != x$spec$n && same_simulation_population(reference, x))
-          payload$batch$reference <- list(n = reference$spec$n,
-            estimates = as.list(reference$results$estimate))
-        session$sendCustomMessage("sampling-batch", payload)
+        if(reference$spec$n!=x$spec$n && same_simulation_population(reference,x))
+          payload$batch$reference <- list(n=reference$spec$n,estimates=as.list(reference$results$estimate))
+        if(!is.null(x$population_comparison)) payload$comparison <- batch_payload(x$population_comparison)
+        session$sendCustomMessage("sampling-batch",payload)
       }
     })
-  }, ignoreInit = TRUE)
+  }
+  observeEvent(input$run_many, run_batch(if(identical(current_activity(),"pain_one_many"))5000 else input$B),ignoreInit=TRUE)
+  observe({updateActionButton(session,"run_many",label=paste("Simulate",
+    if(identical(current_activity(),"pain_one_many"))5000 else input$B,"trials"))})
+  observeEvent(input$reset_trials,{
+    one_saved(NULL);many_saved(NULL);baseline_many(NULL)
+    session$sendCustomMessage("sampling-journey",list(clear=TRUE))
+  },ignoreInit=TRUE)
   status <- function(saved, label) {
     if (identical(current_activity(), "pain_one_many")) return(paste0(label, ": ", saved$spec$n,
       " patients per group. ", if (!identical(saved$meta, snapshot())) "Inputs changed; run again to update." else "Results match current inputs."))
@@ -640,7 +708,7 @@ server <- function(input, output, session) {
   output$planning_text <- renderText({ if (!intervals_visible()) return("Power is evaluated under the assumed population difference and the specified test."); paste(if (planned()$outcome == "means")
     "The width curve shows the expected width of the confidence interval for the difference between the two population means. It assumes normal outcomes with equal variances." else
     "The width curve shows the approximate confidence interval width for the difference between groups, based on the assumed event percentages.",
-    "Realized interval widths vary. Many studies reports the fraction that meets the width target.") })
+    "Repeated trials reports the fraction of intervals that meet the width target.") })
   observeEvent(input$outcome, { axis_limit(NULL) }, ignoreInit = TRUE)
   # Initialize the sticky axis before outputs render. Changing reactive state
   # inside plot_limit() can invalidate an output while it is still rendering.
@@ -769,7 +837,7 @@ server <- function(input, output, session) {
     data.frame(Scenario = c("Plan", "Reality assumed for simulation", "Null effect"), Difference = effect_text(vapply(xs, true_difference, numeric(1)), p$outcome),
       Power = format_percent(vapply(xs, spec_power, numeric(1)), 1), Full_width = effect_text(vapply(xs, anticipated_width, numeric(1)), p$outcome))
   }, digits = 3)
-  output$one_status <- renderText({ req(input$run_one > 0); status(one(), "Saved single study") })
+  output$one_status <- renderText({ req(input$run_one > 0); status(one(), "Saved single trial") })
   output$one_retention <- renderTable({
     x <- one(); req(!is.null(x$missing))
     n <- x$spec$n; retained <- c(x$result$retained_control, x$result$retained_treatment)
@@ -795,7 +863,7 @@ server <- function(input, output, session) {
       effect_text(x$result$upper, x$spec$outcome), ". Full width: ", effect_text(x$result$width, x$spec$outcome), "."))
     paste(interval_interpretation(x$result, x$spec), if (!is.null(x$missing)) "The available-case analysis uses observed outcomes. Selective missingness can bias its estimate of the full-population difference." else "")
   })
-  output$one_plot <- renderPlot({ validate(need(is.finite(one()$result$estimate), "No estimable comparison in this study.")); plot_trial_intervals(one()$result, one()$spec, show_legend=FALSE, show_tests=input$goal != "precision") }, alt = "One study estimate and interval; values and interpretation are stated above.")
+  output$one_plot <- renderPlot({ validate(need(is.finite(one()$result$estimate), "No estimable comparison in this trial.")); plot_trial_intervals(one()$result, one()$spec, show_legend=FALSE, show_tests=input$goal != "precision") }, alt = "One study estimate and interval; values and interpretation are stated above.")
   output$one_data <- renderTable({
     d <- one()$data
     if ("missing" %in% names(d)) d <- d[order(!d$missing), ]
@@ -805,7 +873,7 @@ server <- function(input, output, session) {
     req(!is.null(one()$missing))
     "Simulated outcomes are shown for teaching. Outcomes marked missing are excluded from the analysis and would be unknown in a real study. All participant records are in the download."
   })
-  output$many_status <- renderText({ req(input$run_many > 0); paste(status(many(), "Saved batch"), "B =", many()$spec$B) })
+  output$many_status <- renderText({ paste(status(many(), "Saved batch"), "B =", many()$spec$B) })
   output$many_summary <- renderTable({
     if (!is.null(many()$missing)) return(missing_outcome_summary(many()))
     if (input$goal == "precision") return(data.frame(Measure=c("Intervals containing the population difference", "Intervals meeting the width target"), Percentage=percent(c(mean(many()$results$cover),mean(many()$results$width_met)))))
@@ -872,7 +940,7 @@ server <- function(input, output, session) {
     x <- valid_many()
     app_plot_style(c(4.2,4.4,2,1))
     hist(x$results$p_value, breaks = seq(0,1,.025), col = "#d2e6e9", border = "white",
-      xlab = "p value", ylab = "Number of studies", main = paste(nrow(x$results), "trials in the latest batch"))
+      xlab = "p value", ylab = "Number of trials", main = paste(nrow(x$results), "trials in the latest batch"))
     abline(v = x$spec$alpha, lty = 2, lwd = 2, col = "#923d20")
   }, alt = "Histogram of saved simulation p-values. The significance percentage is reported in the summary table.")
   output$p_value_interpretation <- renderText({
@@ -975,13 +1043,13 @@ server <- function(input, output, session) {
       sections[["Simulation assumptions"]] <- c(
         paste0("Population assumed for simulation: ", if (g$outcome == "means") paste0("mean difference ", effect_text(g$delta, g$outcome), "; SD ", g$sd)
           else paste0("standard event percentage ", format_percent(g$p_control), "; novel event percentage ", format_percent(g$p_treatment)),
-          ". Each simulated study uses ", g$n, if (is.null(meta$missing)) " analyzable" else " recruited", " participants per group."),
+          ". Each simulated trial uses ", g$n, if (is.null(meta$missing)) " analyzable" else " recruited", " participants per group."),
         if (!is.null(meta$missing)) paste0("Missing-outcome scenario: ", missing_scenario_label(meta$missing),
           ". Complete-outcome planning values above and simulated available-case results use different sample definitions."),
         paste0("Analysis: ", if (input$goal == "precision") { if (g$outcome == "means") "pooled-variance t confidence interval" else "Newcombe-Wilson difference interval" } else method_label(g$outcome), if (!is.null(meta$missing)) "; available outcomes with their actual group sizes" else "", "."),
         paste0("Reproducibility settings: random seed ", g$seed, "; requested repetitions ", g$B, "."))
-      sections[["One simulated study"]] <- if (input$goal == "precision") app_estimation_report(one_saved(), meta) else app_simulation_report(one_saved(), meta)
-      sections[["Many simulated studies"]] <- if (input$goal == "precision") app_estimation_report(many_saved(), meta, many = TRUE) else app_simulation_report(many_saved(), meta, many = TRUE)
+      sections[["One simulated trial"]] <- if (input$goal == "precision") app_estimation_report(one_saved(), meta) else app_simulation_report(one_saved(), meta)
+      sections[["Many simulated trials"]] <- if (input$goal == "precision") app_estimation_report(many_saved(), meta, many = TRUE) else app_simulation_report(many_saved(), meta, many = TRUE)
     }
     sections[["Your recommendation and justification"]] <- answer(details$justification)
     sections[["Planning guidance"]] <- "PICO (Richardson et al., 1995), doi:10.7326/ACPJC-1995-123-3-A12; SPIRIT 2025, https://www.consort-spirit.org/; DELTA² (Cook et al., 2018), doi:10.1136/bmj.k3750."
@@ -1004,18 +1072,27 @@ server <- function(input, output, session) {
   output$download_code <- downloadHandler(filename = function() "reproduce_studies.R", content = function(file) {
     x <- snapshot()
     calls <- if (is.null(x$missing)) c(
-      '# Generate and analyze one study, then the requested number of repetitions.',
+      '# Generate and analyze one trial, then the requested number of repetitions.',
       'one <- simulate_one_study(generating)', 'many <- simulate_trials(generating)',
-      '# Summarize performance across the repeated studies.', 'simulation_summary(many)') else
+      '# Summarize performance across the repeated trials.', 'simulation_summary(many)') else
       c('# Specify which outcomes may be missing and how they will be analyzed.',
         'settings <-', capture.output(dput(x$missing)),
-        '# Apply those assumptions to one study and to repeated studies.',
+        '# Apply those assumptions to one study and to repeated trials.',
         'one <- simulate_missing_one(generating, settings)', 'many <- simulate_missing_trials(generating, settings)',
         '# Summarize missingness, bias and interval performance.', 'missing_outcome_summary(many)')
+    if (isTRUE(one_saved()$from_batch)) calls <- c(calls,
+      '# The displayed patient records show the first trial in this batch.',
+      'one <- many$illustrated_trial')
+    if (isTRUE(x$compare_populations)) calls <- c(calls,
+      '# Repeat the analysis for the other population shown beside the main plot.',
+      'comparison <-', capture.output(dput(comparison_spec(x$generating))),
+      'comparison_one <- simulate_one_study(comparison)',
+      'comparison_many <- simulate_trials(comparison)',
+      'simulation_summary(comparison_many)')
     writeLines(c('# Current inputs. Run from the repository root.', 'source("R/sample_size_functions.R")',
       '# Planning assumptions used to choose the sample size.',
       'plan <-', capture.output(dput(x$plan)),
-      '# Assumed population values used to generate the simulated studies.',
+      '# Assumed population values used to generate the simulated trials.',
       'generating <-', capture.output(dput(x$generating)), calls,
       '# Display the result from the single study.', 'one$result',
       '# Keep studies with an estimable difference before plotting their intervals.',

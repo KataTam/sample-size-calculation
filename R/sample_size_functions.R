@@ -346,7 +346,9 @@ simulate_trials <- function(spec) {
         result = add_operating_results(results[1, , drop=FALSE], spec), spec = spec)
     }
     list(results = add_operating_results(results, spec), spec = spec,
-         illustrated_trial = illustrated_trial)
+         illustrated_trial = illustrated_trial,
+         trial_counts = if(spec$outcome=="proportions")
+           data.frame(control=control_counts,treatment=treatment_counts) else NULL)
   })
 }
 

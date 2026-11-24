@@ -63,8 +63,8 @@ raw_page_text=[page.extract_text() for page in r.pages]
 assert not any(re.search(r'<U\+[0-9A-Fa-f]{4,6}>', text) for text in raw_page_text), 'PDF contains an escaped Unicode label'
 roadmap_pages=[text for text in raw_page_text if 'Roadmap' in text and 'Flashcards' in text]
 assert len(roadmap_pages)==1, 'The roadmap must remain legible text on one page'
-for label in ['Chapters 1-3', 'Chapters 4-8', 'Flashcards: review and recall']:
- assert label in roadmap_pages[0].replace(chr(0x2013), '-'), f'Missing or damaged roadmap label: {label}'
+for label in ['Research question and power', 'Calculations and recruitment', 'Calculation report', 'Study designs', 'Flashcards']:
+ assert compact(label) in compact(roadmap_pages[0]), f'Missing or damaged roadmap label: {label}'
 page_text=[semantic(text) for text in raw_page_text]
 chapter_bounds={}
 for pos,start in enumerate(chapter_indices):

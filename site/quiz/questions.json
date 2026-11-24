@@ -168,7 +168,7 @@
       "id": "q07",
       "chapter": "clinical-question",
       "level": "core",
-      "section": "One study and many studies",
+      "section": "One trial and repeated trials",
       "link": "clinical-question.html#activity-1-one-study-then-many",
       "question": "Two simulated neravixa-versus-duloxetine trials use the same population probabilities and sample size but give different observed treatment differences. What explains this?",
       "options": [
