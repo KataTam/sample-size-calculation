@@ -88,7 +88,7 @@ const base = (process.argv[2] || 'http://127.0.0.1:8769').replace(/\/$/, '');
         assert.equal(data.inputs.fixed_n,17); assert.equal(data.study.justification,'My recommendation.'); assert.equal(data.activity,'adherence');
         await set(f,{fixed_n:31,justification:'Changed answer.'}); await has(f,'31 per group; 62 total');
         await f.locator('#upload_plan').setInputFiles({name:'plan.json',mimeType:'application/json',buffer:Buffer.from(json)});
-        await has(f,'17 per group; 34 total'); await has(f,'My recommendation.'); await has(f,'No single-study simulation');
+        await has(f,'17 per group; 34 total'); await has(f,'My recommendation.'); await has(f,'No single-trial simulation');
         assert.equal(await f.locator('#justification').inputValue(),'My recommendation.');
       }
       await save(f,download,app);
