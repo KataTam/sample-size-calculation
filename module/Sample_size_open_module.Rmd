@@ -257,13 +257,13 @@ knitr::kable(data.frame(
 
 Scenario 1: the treatments have equal population relief percentages. Suppose both treatments provide relief to 30% of patients. With a 5% Type I error probability, about 5 of every 100 repetitions would incorrectly find a statistically significant difference. These are false positives. The other approximately 95 would correctly leave the null hypothesis unrejected: true negatives.
 
-```{r error-scenario-null, echo=FALSE, fig.width=8, fig.height=7, fig.cap="Equal population relief percentages: 30% with each treatment. The lower layer illustrates 100 trials under a 5% Type I error probability, with 95 true negatives and 5 false positives. Each small pair represents one complete trial.", fig.alt="Population stick figures show 30% relief in each treatment group. Below, 95 trial symbols indicate no significant difference and 5 indicate a false positive."}
+```{r error-scenario-null, echo=FALSE, fig.width=8, fig.height=7, fig.cap="Equal population relief percentages: 30% with each treatment. The grid illustrates expected frequencies under a 5% Type I error probability. The first five amber crosses represent false positives, followed by 95 blue circles for true negatives. Each tile represents one complete trial.", fig.alt="A red bar represents eligible patients, all with neuropathic pain before treatment. Stick figures illustrate 30% relief with each treatment. A 10 by 10 grid begins with five amber crosses for false positives, followed by 95 blue circles for true negatives."}
 draw_error_scenario("null")
 ```
 
 Scenario 2: the novel treatment helps more patients. Suppose 60% achieve relief with neravixa and 30% with duloxetine. A trial with 90% power at this difference would detect a statistically significant difference in about 90 of every 100 repetitions: true positives. About 10 would fail to detect it: false negatives.
 
-```{r error-scenario-effect, echo=FALSE, fig.width=8, fig.height=7, fig.cap="Different population relief percentages: 30% with standard treatment and 60% with novel treatment. The lower layer illustrates 100 trials planned for 90% power at this difference, with 90 true positives and 10 false negatives. Each small pair represents one complete trial.", fig.alt="Population stick figures show 30% and 60% relief. Below, 90 trial symbols indicate a detected difference and 10 indicate a false negative."}
+```{r error-scenario-effect, echo=FALSE, fig.width=8, fig.height=7, fig.cap="Different population relief percentages: 30% with standard treatment and 60% with novel treatment. The grid illustrates expected frequencies for trials designed for 90% power at this difference. The first ten amber crosses represent false negatives, followed by 90 blue circles for true positives. Each tile represents one complete trial.", fig.alt="A red bar represents eligible patients with neuropathic pain. Stick figures illustrate 30% relief with duloxetine and 60% with neravixa. A 10 by 10 grid begins with ten amber crosses for false negatives, followed by 90 blue circles for true positives."}
 draw_error_scenario("effect")
 ```
 
@@ -387,7 +387,7 @@ Figure \@ref(fig:sample-differences) shows [sampling variability](#sampling-vari
 
 Increasing the sample size changes the information in each trial. Increasing simulation repetitions makes the estimated percentage of significant results more stable; each trial retains the same sample size and power.
 
-The app below follows patient outcomes through the estimated difference to the p value and test decision. It starts with 20 patients per group and population relief percentages of 30% and 60%. The equal-percentage scenario shows false positives. Repeated trials and larger samples show how estimates and detection change.
+The app below follows patient outcomes through the estimated difference to the p value and test decision. It starts with 20 patients per group and shows two population scenarios side by side: 30% relief with both treatments, and 30% with duloxetine versus 60% with neravixa. Repeated trials show false positives, false negatives and power at the selected sample size.
 
 ```{r pain-app-preview, echo=FALSE, results='asis'}
 render_app_preview("pain_one_many", "Simulate further trials and compare different sample sizes.",

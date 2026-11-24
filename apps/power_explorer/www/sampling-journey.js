@@ -1,6 +1,6 @@
 /* Original implementation for this tutorial. MIT licensed. */
 (() => {
-  let data, index = 0, elapsed = 0, last = 0, raf, paused = false, stale = false, generation = 0;
+  let data, index = 0, elapsed = 0, last = 0, raf, paused = false, stale = false, generation = 0, drawnIndex = -1, frameProgress = 0;
   const el = id => document.getElementById(id);
   const ns = 'http://www.w3.org/2000/svg';
   const pct = x => `${Math.round(x * 1000) / 10}%`;
@@ -12,31 +12,53 @@
     svg.append(n); return n;
   }
   const pText = p => Number.isFinite(p) ? p<.001 ? '< 0.001' : '= '+Number(p.toPrecision(3)) : 'unavailable';
+  // Red and green describe patient outcomes. Blue and amber describe trial decisions.
+  const colors={pain:'#b83c46',relief:'#237747',correct:'#245e90',error:'#9b600e',
+    correctFill:'#e2edf8',errorFill:'#f8e5bb',neutral:'#64748b'};
+  const isNull=source=>Math.abs(source.p1-source.p0)<1e-10;
+  const decisionCorrect=(source,reject)=>isNull(source)?!reject:reject;
+  function decisionSummary(source,decisions) {
+    const n=decisions.length,rejected=decisions.filter(Boolean).length;
+    const fraction=k=>`${k}/${n} (${pct(k/n)})`;
+    return isNull(source)?[
+      `Falsely rejected H₀: ${fraction(rejected)} · false positives`,
+      `Correctly did not reject H₀: ${fraction(n-rejected)} · true negatives`
+    ]:[
+      `Correctly rejected H₀: ${fraction(rejected)} · true positives`,
+      `Failed to reject H₀: ${fraction(n-rejected)} · false negatives`
+    ];
+  }
   function interpretation(source,progress) {
     const t=source.trials[index],labels=source.labels||['Standard','Novel'];
-    const truth=Math.abs(source.p1-source.p0)<1e-10;
+    const truth=isNull(source);
     const first=`Trial ${index+1}: ${t.counts[0]} of ${source.n} patients achieved pain relief with ${labels[0]}, and ${t.counts[1]} of ${source.n} with ${labels[1]}. The estimated difference is ${Math.round(t.estimate*1000)/10} percentage points.`;
     if(!source.batch && source.trials.length===1)
-      return first+` Its p value ${pText(t.p_value)}. ${t.reject?'The test detects a difference.':'The test does not detect a statistically significant difference.'}`;
+      return first+` Its p value ${pText(t.p_value)}. `+(truth?
+        (t.reject?'H₀ is falsely rejected: a false positive.':'H₀ is correctly not rejected: a true negative.'):
+        (t.reject?'H₀ is correctly rejected: a true positive.':'H₀ is not rejected despite a population difference: a false negative.'));
     const trials=source.batch?source.batch.reject:source.trials.slice(0,index+1).map(t=>t.reject);
     const detected=trials.filter(Boolean).length;
-    return (source.batch?`The patient layer shows the first trial in the batch of ${trials.length}. `:first+' ')+
-      `${detected} of the ${trials.length} ${source.batch?'simulated':'displayed'} trials detect a difference (${pct(detected/trials.length)}). `+
+    return `Across ${trials.length} trials with ${source.n} patients per group, `+
+      `${detected} detect a difference (${pct(detected/trials.length)}) and ${trials.length-detected} do not (${pct(1-detected/trials.length)}). `+
       (truth?'These detections are false positives because the population relief percentages are equal.':
       'These detections are true positives. Their percentage across many trials estimates power at the selected population difference and sample size.')+
       (truth?` The planned Type I error probability is ${pct(source.alpha)}.`:` Calculated power for these assumptions is ${pct(source.expected)}.`)+
-      ' The fourth step places the p values from those same trials against the test cutoff.';
+      (source.batch?' The patient figures show the first trial in this batch.':' The patient figures show the latest displayed trial.');
   }
   function draw(progress) {
     const host=el('sampling-journey');if(!host||!data)return;
+    frameProgress=progress;
     host.classList.toggle('journey-comparison',!!data.comparison);
     host.replaceChildren();
-    for(const source of [data,data.comparison].filter(Boolean)) {
+    // Keep the null scenario on the left and the treatment difference on the right.
+    const sources=[data,data.comparison].filter(Boolean).sort((a,b)=>Number(!isNull(a))-Number(!isNull(b)));
+    for(const source of sources) {
       const panel=document.createElement('div');panel.className='journey-scenario';host.append(panel);
       drawInline(panel,progress,source);
     }
-    if(el('journey-reading'))el('journey-reading').textContent=interpretation(data,progress)+
-      (data.comparison?' In the other population: '+interpretation(data.comparison,progress):'');
+    if(el('journey-reading'))el('journey-reading').textContent=sources.map(source=>
+      (data.comparison?(isNull(source)?'Equal relief probabilities. ':'Different relief probabilities. '):'')+interpretation(source,progress)).join(' ');
+    drawnIndex=index;
   }
   const measureText = document.createElement('canvas').getContext('2d');
   function drawInline(host, progress, data) {
@@ -56,18 +78,33 @@
       }
       node(svg,'text',{x,y,style:'font-size:14px'},line); return y;
     }
-    let y=text(`Population: ${labels[0]} ${pct(data.p0)}, ${labels[1]} ${pct(data.p1)}`,12,22);
-    y=text(`1. Patient outcomes · trial ${index+1} of ${data.batch ? data.batch.estimates.length : data.trials.length}`,12,y+26);
-    const cols=Math.max(7,Math.min(16,Math.floor((width/2-30)/13))), rows=Math.ceil(Math.min(data.n,80)/cols);
+    const pain=data.event==='achieved pain relief', shown=Math.min(data.n,20);
+    let y=text(isNull(data)?'H₀ true: equal population probabilities':'H₀ false: different population probabilities',12,22);
+    y=text(pain?'Eligible population: all have neuropathic pain':'Eligible population before treatment',12,y+25);
+    node(svg,'rect',{x:12,y:y+10,width:width-24,height:15,fill:pain?colors.pain:colors.neutral,'data-population-bar':'true'});
+    y=text(pain?'100% have pain before treatment':'One outcome per participant',12,y+45);
+    y=text(`Recruit ${2*data.n} patients · randomize 1:1`,12,y+24);
+    node(svg,'path',{d:`M${width/2} ${y+8} v18 m-5 -6 l5 6 l5 -6`,fill:'none',stroke:colors.neutral,'stroke-width':1.5});
+    y=text(`1. ${pain?'Four-week':'Patient'} outcomes · trial ${index+1} of ${data.batch ? data.batch.estimates.length : data.trials.length}`,12,y+48);
+    const cols=Math.max(4,Math.min(10,Math.floor((width/2-24)/23))), rows=Math.ceil(shown/cols);
     const top=y+24;
+    let groupBottom=top;
     [t.control,t.treatment].forEach((values,g)=>{
-      const x=14+g*width/2,color=g?'#984b87':'#19738c';
-      text(labels[g],x,top,width/2-22);
-      text(`${t.counts[g]}/${data.n} (${pct(t.counts[g]/data.n)})`,x,top+20,width/2-22);
-      values.slice(0,80).forEach((v,i)=>node(svg,'circle',{cx:x+5+(i%cols)*13,cy:top+38+Math.floor(i/cols)*15,r:4.5,fill:v?color:'white',stroke:color,'stroke-width':1.5}));
+      const x=12+g*width/2;
+      let groupY=text(labels[g],x,top,width/2-24);
+      groupY=text(`Population: ${pct(g?data.p1:data.p0)} ${pain?'relief':'event'}`,x,groupY+20,width/2-24);
+      groupY=text(`Trial: ${t.counts[g]}/${data.n} (${pct(t.counts[g]/data.n)})`,x,groupY+20,width/2-24);
+      values.slice(0,shown).forEach((v,i)=>{
+        const person=node(svg,'g',{transform:`translate(${x+9+(i%cols)*23} ${groupY+18+Math.floor(i/cols)*32})`,
+          'data-patient':i+1,'data-group':g,'data-outcome':v?'relief':'pain',stroke:v?colors.relief:colors.pain,fill:'none','stroke-width':2.2,'stroke-linecap':'round'});
+        node(person,'circle',{cx:0,cy:0,r:3.4,fill:v?colors.relief:colors.pain,stroke:'none'});
+        node(person,'path',{d:`M0 3.4V17 M0 17L-5 26 M0 17L5 26 ${v?'M-6 5L0 11L6 5':'M-6 17L0 11L6 17'}`});
+      });
+      groupBottom=Math.max(groupBottom,groupY+18+rows*32);
     });
-    y=text(`${data.n} patients per group`,12,top+38+rows*15+5);
-    if(data.n>80)y=text('First 80 shown per group; counts include everyone.',12,y+20);
+    y=text(`${data.n} patients per group`,12,groupBottom+10);
+    y=text(pain?'Raised arms: pain relief. Arms down: no pain relief.':'Raised arms: event. Arms down: no event.',12,y+21);
+    if(data.n>shown)y=text(`First ${shown} shown per group. Counts include everyone.`,12,y+21);
     node(svg,'path',{d:`M${width/2} ${y+8} v18 m-5 -6 l5 6 l5 -6`,fill:'none',stroke:'#64748b','stroke-width':2});
     y=text('2. Estimated difference in this trial',12,y+48);
     y=text(`${pct(t.counts[1]/data.n)} − ${pct(t.counts[0]/data.n)} = ${Math.round(t.estimate*1000)/10} percentage points`,12,y+22);
@@ -116,7 +153,7 @@
       [axis1,destination].forEach(yy=>node(svg,'circle',{cx:x,cy:yy,r:6,fill:'white',stroke:'#b53c69','stroke-width':2}));
       const phase=Math.max(0,Math.min(1,(progress-.35)/.5));
       const moving=el('journey-motion').checked?(progress<.85?0:1):phase*phase*(3-2*phase);
-      node(svg,'circle',{cx:x,'data-moving-estimate':'true',cy:axis1+(destination-axis1)*moving,r:5,fill:'#b53c69',stroke:'white','stroke-width':1});
+      node(svg,'circle',{cx:x,'data-moving-estimate':'true','data-motion-start':axis1,'data-motion-end':destination,cy:axis1+(destination-axis1)*moving,r:5,fill:'#b53c69',stroke:'white','stroke-width':1});
     }
     node(svg,'text',{x:Math.max(48,Math.min(width-48,x)),y:axis1-12,'text-anchor':'middle',style:'font-size:14px'},`${Math.round(t.estimate*1000)/10} points`);
     y=text(`Dashed line: assumed population difference ${Math.round((data.p1-data.p0)*1000)/10} points`,12,axis2+48);
@@ -127,27 +164,47 @@
     const decisions=data.batch?data.batch.reject:data.trials.slice(0,index+1).map(t=>t.reject);
     const detected=decisions.filter(Boolean).length, px=p=>38+p*(width-76), cutoff=px(data.alpha);
     y=text(`Trial ${index+1}: p ${pText(t.p_value)}`,12,y+23);
-    y=text(t.reject?'Statistically significant difference':'No statistically significant difference',12,y+21);
+    y=text(t.reject?'H₀ rejected: statistically significant difference':'H₀ not rejected',12,y+21);
     const pStacks={};values.forEach(p=>{const key=Math.round(p*1000);pStacks[key]=(pStacks[key]||0)+1;});
     const pAxis=y+(data.batch?150:Math.max(125,30+7*Math.max(...Object.values(pStacks))));
     node(svg,'rect',{x:38,y:pAxis-95,width:cutoff-38,height:95,fill:'#e4edf8'});
     if(data.batch) {
-      const bins=Array(40).fill(0);values.forEach(p=>{if(Number.isFinite(p))bins[Math.min(39,Math.floor(p*40))]++;});
+      const bins=Array(40).fill(0),correctBins=Array(40).fill(0);
+      values.forEach((p,i)=>{if(Number.isFinite(p)){
+        const bin=Math.min(39,Math.floor(p*40));bins[bin]++;
+        if(decisionCorrect(data,decisions[i]))correctBins[bin]++;
+      }});
       const max=Math.max(...bins,1);
-      bins.forEach((n,i)=>node(svg,'rect',{x:px(i/40),y:pAxis-n/max*80,width:(width-76)/40,height:n/max*80,
-        fill:i/40<data.alpha?'#245e90':'#b2bcc6',stroke:'white','data-pvalue-bin':i,'data-count':n}));
+      // A bin can cross the test cutoff. Its segments retain the actual decisions.
+      bins.forEach((n,i)=>{
+        const bar=node(svg,'g',{'data-pvalue-bin':i,'data-count':n});
+        const good=correctBins[i],bad=n-good,bw=(width-76)/40;
+        node(bar,'rect',{x:px(i/40),y:pAxis-good/max*80,width:bw,height:good/max*80,fill:colors.correct,stroke:'white'});
+        node(bar,'rect',{x:px(i/40),y:pAxis-n/max*80,width:bw,height:bad/max*80,fill:colors.error,stroke:'white'});
+      });
       text(`Highest bar: ${max} trials`,12,y+45);
     } else {
       const bins={};
       values.forEach((p,i)=>{if(!Number.isFinite(p))return;const key=Math.round(p*1000),level=bins[key]||0;bins[key]=level+1;
-        node(svg,'circle',{cx:px(p),cy:pAxis-9-level*7,r:3.5,fill:decisions[i]?'#245e90':'#7d8791','data-pvalue-trial':i+1,'data-pvalue':p});});
+        node(svg,'circle',{cx:px(p),cy:pAxis-9-level*7,r:3.5,fill:decisionCorrect(data,decisions[i])?colors.correct:colors.error,'data-pvalue-trial':i+1,'data-pvalue':p});});
     }
     node(svg,'line',{x1:38,x2:width-38,y1:pAxis,y2:pAxis,stroke:'#64748b'});
     node(svg,'line',{x1:cutoff,x2:cutoff,y1:pAxis-97,y2:pAxis,stroke:'#245e90','stroke-dasharray':'4 3'});
     [0,.5,1].forEach(p=>node(svg,'text',{x:px(p),y:pAxis+19,'text-anchor':'middle',style:'font-size:14px'},p));
     y=text(`p-value cutoff: ${data.alpha}. Values below it reject the null hypothesis.`,12,pAxis+44);
-    if(values.length>1)y=text(`${detected} of ${values.length} trials detect a difference (${pct(detected/values.length)})`,12,y+23);
-    y=text(Math.abs(data.p1-data.p0)<1e-10?'Equal population percentages: detections are false positives.':'Different population percentages: detections are true positives.',12,y+23);
+    y=text(`Completed trials: ${values.length}`,12,y+24);
+    for(const line of decisionSummary(data,decisions))y=text(line,12,y+23);
+    y=text(isNull(data)?`Planned Type I error probability: ${pct(data.alpha)}`:`Calculated power at this sample size: ${pct(data.expected)}`,12,y+23);
+    const tiles=decisions.slice(-100),tileCols=10,tileWidth=(width-24)/tileCols,tileHeight=23;
+    y=text(tiles.length<decisions.length?'Latest 100 trial decisions · one tile per trial':'One tile represents one complete trial',12,y+28);
+    tiles.forEach((reject,i)=>{
+      const correct=decisionCorrect(data,reject),tx=12+(i%tileCols)*tileWidth,ty=y+12+Math.floor(i/tileCols)*tileHeight;
+      const tile=node(svg,'g',{'data-decision-trial':decisions.length-tiles.length+i+1,'data-correct':String(correct)});
+      node(tile,'rect',{x:tx,y:ty,width:tileWidth-3,height:tileHeight-3,fill:correct?colors.correctFill:colors.errorFill});
+      node(tile,'text',{x:tx+(tileWidth-3)/2,y:ty+15,'text-anchor':'middle',style:`fill:${correct?colors.correct:colors.error};font-size:15px`},correct?'○':'×');
+    });
+    y+=12+Math.ceil(tiles.length/tileCols)*tileHeight;
+    y=text('○ Correct decision     × Error',12,y+23);
     svg.setAttribute('viewBox',`0 0 ${width} ${y+14}`);
   }
   function status() {
@@ -161,7 +218,16 @@
     el('journey-description').textContent = `${labels[0]}: ${t.counts[0]} of ${data.n} patients (${pct(t.counts[0]/data.n)}); ${labels[1]}: ${t.counts[1]} of ${data.n} (${pct(t.counts[1]/data.n)}). The estimated between-group difference is ${Math.round(t.estimate*1000)/10} percentage points. This estimate becomes dot ${index+1} in the sampling distribution. The assumed population difference stays at ${Math.round((data.p1-data.p0)*1000)/10} percentage points.`;
     el('journey-status').textContent = `${paused?'Paused. ':''}Trial ${index+1} of ${data.trials.length}; ${data.n} patients per group. ${stale?'Inputs changed; this sequence retains its saved assumptions. Run again to update.':''}`;
   }
-  const duration=()=>el('journey-motion').checked?80:3200;
+  const duration=()=>el('journey-motion').checked?45:el('journey-speed')?.value==='fast'?1100:3200;
+  function moveEstimate(progress) {
+    frameProgress=progress;
+    const phase=Math.max(0,Math.min(1,(progress-.35)/.5));
+    const moving=el('journey-motion').checked?(progress<.85?0:1):phase*phase*(3-2*phase);
+    el('sampling-journey').querySelectorAll('[data-moving-estimate]').forEach(dot=>{
+      const start=Number(dot.dataset.motionStart),end=Number(dot.dataset.motionEnd);
+      dot.setAttribute('cy',start+(end-start)*moving);
+    });
+  }
   function tick(now,token) {
     if(!data || paused || token!==generation)return;
     if(last)elapsed+=now-last;last=now;
@@ -169,10 +235,11 @@
       if(index<data.trials.length-1){index++;elapsed=0;status();}
       else {elapsed=duration();draw(1);el('journey-pause').disabled=true;el('journey-finish').disabled=true;return;}
     }
-    draw(elapsed/duration());raf=requestAnimationFrame(now=>tick(now,token));
+    if(drawnIndex!==index)draw(elapsed/duration());else moveEstimate(elapsed/duration());
+    raf=requestAnimationFrame(now=>tick(now,token));
   }
   function stop(){generation++;cancelAnimationFrame(raf);last=0;}
-  function play(){stop();paused=false;el('journey-finish').disabled=false;el('journey-pause').textContent='Pause';el('journey-pause').disabled=false;status();const token=generation;raf=requestAnimationFrame(now=>tick(now,token));}
+  function play(){stop();drawnIndex=-1;paused=false;el('journey-finish').disabled=false;el('journey-pause').textContent='Pause';el('journey-pause').disabled=false;status();const token=generation;raf=requestAnimationFrame(now=>tick(now,token));}
   function clear(){stop();data=null;index=0;elapsed=0;paused=false;stale=false;el('sampling-journey').replaceChildren();el('sampling-journey').classList.remove('journey-comparison');el('journey-description').textContent='';el('journey-reading').textContent='Patient outcomes produce an estimated difference and a p value. Repeated trials show how often the test detects a difference.';['journey-pause','journey-replay','journey-finish'].forEach(id=>el(id).disabled=true);el('journey-pause').textContent='Pause';el('journey-status').textContent='Simulation results cleared. The population and sample settings are retained.';}
   window.addEventListener('resize',()=>{if(data)draw(data.batch?1:Math.min(1,elapsed/duration()));});
   function setup() {
@@ -181,7 +248,9 @@
     el('journey-pause').onclick=()=>{paused=!paused;el('journey-pause').textContent=paused?'Resume':'Pause';if(paused){stop();status();}else play();};
     el('journey-replay').onclick=()=>{if(!data||data.batch)return;index=0;elapsed=0;play();};
     el('reset_trials').addEventListener('click',clear);
-    el('journey-motion').onchange=()=>{elapsed=0;last=0;if(data)draw(0);};
+    const changePlayback=()=>{elapsed=frameProgress*duration();last=0;if(data)draw(data.batch?1:frameProgress);};
+    el('journey-motion').onchange=changePlayback;
+    el('journey-speed').onchange=changePlayback;
     el('journey-finish').onclick=()=>{if(!data || data.batch)return;stop();index=data.trials.length-1;elapsed=duration();paused=false;draw(1);status();el('journey-pause').disabled=true;el('journey-finish').disabled=true;};
     Shiny.addCustomMessageHandler('lab-report-context',payload=>{
       document.documentElement.classList.toggle('unified-sampling',payload.core);
@@ -216,7 +285,7 @@
       const estimating=document.documentElement.classList.contains('single-population-mode');
       if(title) title.textContent=estimating?'Estimate one population':payload.combine?'Pain relief: one trial and repeated trials':'Sample size reasoning lab';
       if(intro) intro.textContent=estimating?'Choose a confidence interval width for a population mean or percentage, then explore repeated samples.':payload.combine
-        ?'You can sample patients from two treatment groups and see how their estimated difference varies across trials.'
+        ?'Follow patients through a simulated trial, then compare repeated trials under equal and different population relief probabilities.'
         :'You can calculate sample size or assess power and precision for two-group comparisons, then simulate trials to see how results vary.';
       document.documentElement.classList.toggle('lab-expanded', Boolean(el('show_advanced')?.checked));
       ['Explore assumptions','Compare assumptions','My study'].forEach(value=>{
@@ -253,7 +322,7 @@
     Shiny.addCustomMessageHandler('sampling-journey',payload=>{
       stop();
       if(payload.clear){clear();return;}
-      data=payload;index=0;elapsed=0;stale=false;el('journey-finish').textContent=data.trials.length===1?'Finish trial':'Show all '+data.trials.length+' trials';el('journey-replay').disabled=false;document.documentElement.classList.remove('journey-batch-view');play();
+      data=payload;index=0;elapsed=0;stale=false;el('journey-finish').textContent=data.trials.length===1?'Finish trial':'Finish this batch';el('journey-replay').disabled=false;document.documentElement.classList.remove('journey-batch-view');play();
     });
     Shiny.addCustomMessageHandler('sampling-batch',payload=>{
       stop();data=payload;index=0;elapsed=0;paused=false;stale=false;

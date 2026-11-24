@@ -72,11 +72,11 @@ The [annotated report in Chapter 3](../book/reporting.html#write-a-sample-size-j
 
 Purpose: see why sample estimates differ from population values, interpret the uncertainty in one trial, and relate repeated trials to power.
 
-1. The starting population has 30% relief with duloxetine and 60% with neravixa, with 20 patients per group and a 5% Type I error probability. The equal-effects option uses 30% in each group.
+1. Two population scenarios appear side by side: 30% relief with each treatment, and 30% with duloxetine versus 60% with neravixa. Both start with 20 patients per group and a 5% Type I error probability. The red population bar indicates that all eligible patients have neuropathic pain before treatment.
 2. “Simulate one trial” follows patient outcomes through four steps: outcomes, estimated difference, estimates across trials, and the p value and test decision.
 3. The repetition field starts at 20. “Simulate selected trials” animates up to 100 trials. Larger selected counts appear together as distributions. “Simulate 5000 trials” provides a quick view of repeated performance.
-4. “Compare both populations” places the unequal and equal population scenarios beside each other. Each trial's estimate and p value come from the same patient outcomes. Rejections detect a difference in the unequal scenario and are false positives in the equal scenario.
-5. Pause, replay and show-all controls operate on the animation. Reduced motion speeds it up. “Reset results” clears the simulations while keeping the input settings. Increasing the sample from 20 to 50 per group and generating another batch overlays the earlier estimates for comparison.
+4. Red stick figures show patients without pain relief, and green figures with raised arms show patients who achieved relief. Each trial's estimate and p value come from those patient outcomes. Blue circles mark correct test decisions, and amber crosses mark errors. Counts and percentages summarize both decisions in each population scenario.
+5. “Display and replay options” contains Pause, Replay, “Finish this batch,” animation speed and reduced motion. “Reset results” clears the simulations while keeping the input settings. Increasing the sample from 20 to 50 per group and generating another batch overlays the earlier estimates for comparison.
 6. “Interpret the figure” describes the displayed trial or batch. “Report” records the assumptions, the first trial's patient counts, repeated results and any comparison population. Reports can be downloaded as PDF or editable Word. The R script reproduces the current assumptions and selected repetition count.
 
 ## Reviewing short examples

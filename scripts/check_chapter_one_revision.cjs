@@ -2,7 +2,7 @@
 const {chromium}=require('playwright'),assert=require('node:assert/strict'),fs=require('node:fs');
 const base=(process.argv[2]||'http://127.0.0.1:8769').replace(/\/$/,'');
 (async()=>{
- const browser=await chromium.launch({headless:true});
+ const browser=await chromium.launch({headless:true,...(process.platform==='win32'?{channel:'msedge'}:{})});
  try{
   const page=await browser.newPage({viewport:{width:1360,height:1100}}),errors=[];
   page.setDefaultTimeout(90000);
@@ -27,23 +27,40 @@ const base=(process.argv[2]||'http://127.0.0.1:8769').replace(/\/$/,'');
   assert.equal(await app.locator('#run_many').innerText(),'Simulate 5000 trials');
   await app.locator('#run_journey').click();
   await app.waitForFunction(()=>document.querySelector('#journey-status').textContent.includes('of 20'));
+  await app.locator('.journey-playback > summary').click();
   await app.locator('#journey-finish').click();
   assert.match(await app.locator('#journey-status').innerText(),/Trial 20 of 20/);
-  assert.equal(await app.locator('[data-trial-estimate]').count(),19);
-  assert.equal(await app.locator('[data-pvalue-trial]').count(),20);
+  assert.equal(await app.locator('[data-trial-estimate]').count(),38);
+  assert.equal(await app.locator('[data-pvalue-trial]').count(),40);
+  assert.equal(await app.locator('[data-patient]').count(),80);
+  assert.deepEqual(await app.locator('#sampling-journey svg').evaluateAll(xs=>xs.map(x=>Number(x.dataset.population))),[.3,.6]);
+  assert.equal(await app.locator('[data-population-bar]').count(),2);
+  const decisions=await app.locator('#sampling-journey svg').evaluateAll(xs=>xs.map(svg=>({
+    rejects:Array.from(svg.querySelectorAll('[data-pvalue-trial]')).filter(p=>Number(p.dataset.pvalue)<.05).length,
+    correct:svg.querySelectorAll('[data-decision-trial][data-correct="true"]').length,
+    total:svg.querySelectorAll('[data-decision-trial]').length
+  })));
+  assert.equal(decisions[0].correct,20-decisions[0].rejects);
+  assert.equal(decisions[1].correct,decisions[1].rejects);
+  assert(decisions.every(x=>x.total===20));
+  fs.mkdirSync('build/chapter-one-review',{recursive:true});
+  await app.locator('#sampling-journey').screenshot({path:'build/chapter-one-review/stick-figures-twenty.png'});
   assert(await app.locator('#journey-finish').isDisabled());
+  await app.locator('#journey-speed').selectOption('fast');
+  assert(await app.locator('[data-moving-estimate]').evaluateAll(xs=>xs.every(dot=>Number(dot.getAttribute('cy'))===Number(dot.dataset.motionEnd))),'Changing speed preserves completed trials');
+  await app.locator('#journey-speed').selectOption('normal');
   await app.locator('#journey-motion').check();
   const began=Date.now();await app.locator('#journey-replay').click();
   await app.waitForFunction(()=>document.querySelector('#journey-status').textContent.includes('Trial 20 of 20')&&document.querySelector('#journey-pause').disabled,null,{timeout:8000});
   assert(Date.now()-began<8000,'Reduced motion completes promptly');
   await app.locator('#run_many').click();
-  await app.waitForFunction(()=>document.querySelectorAll('[data-batch-bin]').length===40,null,{timeout:90000});
+  await app.waitForFunction(()=>document.querySelectorAll('[data-batch-bin]').length===80,null,{timeout:90000});
   assert.equal(await app.locator('#distribution').isVisible(),false);
   assert.match(await app.locator('#sampling-journey').innerText(),/5000 trials, each with 20/);
   await app.locator('#many_text').filter({hasText:'batch of estimates'}).waitFor();
-  assert.equal(await app.locator('[data-pvalue-bin]').count(),40);
-  assert.equal(await app.locator('[data-pvalue-bin]').evaluateAll(bins=>bins.reduce((n,b)=>n+Number(b.dataset.count),0)),5000);
-  assert.match(await app.locator('#sampling-journey').innerText(),/Values below it reject the null/);
+  assert.equal(await app.locator('[data-pvalue-bin]').count(),80);
+  assert.equal(await app.locator('[data-pvalue-bin]').evaluateAll(bins=>bins.reduce((n,b)=>n+Number(b.dataset.count),0)),10000);
+  assert.match(await app.locator('#sampling-journey').innerText(),/Values\s+below\s+it\s+reject\s+the\s+null/);
   await app.locator('#fixed_n').fill('50');await app.locator('#fixed_n').press('Tab');
   await app.waitForFunction(()=>document.querySelector('#journey-status').textContent.includes('Inputs changed'));
   assert.match(await app.locator('#sampling-journey').innerText(),/20 patients per group/);
@@ -69,9 +86,9 @@ const base=(process.argv[2]||'http://127.0.0.1:8769').replace(/\/$/,'');
   await app.locator('#journey-pause').click();
   await app.waitForFunction(()=>!document.querySelector('#journey-status').textContent.startsWith('Paused.'));
   await app.locator('#journey-finish').click();
-  assert.equal(await app.locator('[data-pvalue-trial]').count(),12);
+  assert.equal(await app.locator('[data-pvalue-trial]').count(),24);
   await app.locator('#pain_population input[value="equal"]').focus();await app.locator('#pain_population input[value="equal"]').press('Space');
-  await app.locator('#compare_populations').focus();await app.locator('#compare_populations').press('Space');
+  await app.locator('#compare_populations').check();
   await app.waitForFunction(()=>Shiny.shinyapp.$inputValues.pain_population==='equal'&&Shiny.shinyapp.$inputValues.compare_populations);
   await app.locator('#run_many').focus();await app.locator('#run_many').press('Enter');
   await app.waitForFunction(()=>document.querySelectorAll('#sampling-journey svg').length===2&&document.querySelectorAll('[data-batch-bin]').length===80);

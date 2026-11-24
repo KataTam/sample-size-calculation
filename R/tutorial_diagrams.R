@@ -4,41 +4,46 @@ draw_error_scenario <- function(scenario = c("null", "effect")) {
   scenario <- match.arg(scenario)
   old <- par(no.readonly=TRUE); on.exit(par(old))
   par(mar=c(.3,.3,.3,.3),family="sans",bg="white",fg="#26343d")
-  plot.new(); plot.window(xlim=c(0,12),ylim=c(0,10.5),xaxs="i",yaxs="i")
-  person <- function(x,y,size,col) {
+  plot.new(); plot.window(xlim=c(0,12),ylim=c(0,12),xaxs="i",yaxs="i")
+  person <- function(x,y,size,col,relief=FALSE) {
     symbols(x,y+.25*size,circles=.08*size,inches=FALSE,add=TRUE,bg=col,fg=col)
     segments(x,y+.17*size,x,y-.12*size,col=col,lwd=1.8)
-    segments(x,y+.08*size,x+c(-.14,.14)*size,y-.02*size,col=col,lwd=1.6)
+    segments(x,y+.08*size,x+c(-.14,.14)*size,y+if(relief) .26*size else -.02*size,col=col,lwd=1.6)
     segments(x,y-.12*size,x+c(-.14,.14)*size,y-.38*size,col=col,lwd=1.6)
   }
-  text(6,10.1,"Population pain-relief percentages",cex=1.15)
+  text(6,11.65,"Eligible population: all have neuropathic pain before treatment",cex=1)
+  rect(.5,10.95,11.5,11.3,col="#b83c46",border=NA)
+  text(6,10.6,"100% have pain before treatment",cex=.88)
+  arrows(6,10.3,6,9.94,length=.08,col="#64778a",lwd=1.5)
+  text(6,9.65,"Population pain-relief probabilities at four weeks",cex=1)
   for (g in 1:2) {
     successes <- if(g==1 || scenario=="null") 3 else 6
     center <- c(3,9)[g]
-    text(center,9.5,paste0(c("duloxetine: ","neravixa: ")[g],successes*10,"%"),cex=1)
-    for(i in 1:10) person(center-2.05+(i-1)*.455,8.8,.9,if(i<=successes)"#27824a" else "#929ca4")
+    text(center,9.13,paste0(c("duloxetine: ","neravixa: ")[g],successes*10,"%"),cex=1)
+    for(i in 1:10) person(center-2.05+(i-1)*.455,8.55,.9,if(i<=successes)"#237747" else "#b83c46",i<=successes)
   }
-  text(6,8.05,"Each large figure represents 10% of the population",cex=.82)
-  text(6,7.63,"Green: achieved pain relief     Gray: no pain relief",cex=.82)
-  arrows(6,7.3,6,6.65,length=.1,col="#64778a",lwd=2)
-  text(6,6.22,"100 illustrative repetitions of the planned trial",cex=1.05)
+  text(6,7.91,"Each person represents 10%: raised arms indicate pain relief",cex=.82)
+  arrows(6,7.65,6,7.25,length=.08,col="#64778a",lwd=1.5)
+  text(6,6.98,if(scenario=="null")"Trials using a 5% Type I error probability" else
+    "Trials designed for 90% power at the 30 percentage point difference",cex=.96)
+  text(6,6.55,"Illustration of expected frequencies: each tile is one complete trial",cex=.82)
   correct <- if(scenario=="null") 95 else 90
-  counts <- c(correct,100-correct)
-  labels <- if(scenario=="null")c("No difference detected","Difference detected") else c("Difference detected","No difference detected")
-  terms <- if(scenario=="null")c("True negatives","False positives: Type I errors") else c("True positives: power","False negatives: Type II errors")
-  for(g in 1:2) {
-    center<-c(3,9)[g];col<-c("#245e90","#9b5b15")[g]
-    text(center,5.65,paste(counts[g],"trials"),cex=1.1,col=col)
-    text(center,5.25,labels[g],cex=.9,col=col)
-    text(center,4.87,terms[g],cex=.8,col=col)
-    for(i in seq_len(counts[g])) {
-      columns<-if(g==1) 10 else 5
-      x<-if(g==1) .65+((i-1)%%columns)*.5 else 7.85+((i-1)%%columns)*.5
-      y<-4.33-floor((i-1)/columns)*.36
-      person(x-.07,y,.34,col);person(x+.07,y,.34,col)
-    }
+  errors <- 100-correct
+  for(i in 1:100) {
+    error <- i<=errors
+    x<-2.7+((i-1)%%10)*.67; y<-6.02-floor((i-1)/10)*.43
+    rect(x-.28,y-.18,x+.28,y+.18,col=if(error)"#f8e5bb" else "#e2edf8",border=NA)
+    # Crosses come first in these illustrations of expected frequencies.
+    if(error) {
+      segments(x-.075,y-.075,x+.075,y+.075,col="#9b600e",lwd=1.8)
+      segments(x-.075,y+.075,x+.075,y-.075,col="#9b600e",lwd=1.8)
+    } else symbols(x,y,circles=.075,inches=FALSE,add=TRUE,bg=NA,fg="#245e90",lwd=1.5)
   }
-  text(6,.35,"Each small pair represents one complete trial",cex=.85)
+  text(6,1.45,if(scenario=="null")"95/100 (95%): correctly did not reject H0 (true negatives)" else
+    "90/100 (90%): correctly rejected H0 (true positives, power)",cex=.88,col="#245e90")
+  text(6,.9,if(scenario=="null")"5/100 (5%): falsely rejected H0 (false positives)" else
+    "10/100 (10%): failed to reject H0 (false negatives)",cex=.88,col="#9b600e")
+  text(6,.3,"Illustrative counts. The counts in a simulated batch vary.",cex=.8)
 }
 
 draw_error_power_counts <- function() {

@@ -27,7 +27,7 @@ const specs = [
         await f.waitForFunction(()=>document.querySelector('#fixed_n').value==='20' && document.querySelector('#outcome').value==='proportions');
         await f.getByRole('tab',{name:'One trial and repeated trials',exact:true}).click();
         await f.locator('#run_one').click();
-        await f.locator('#sampling-journey svg').waitFor({timeout:60000});
+        await f.locator('#sampling-journey svg').first().waitFor({timeout:60000});
         assert.equal(await f.locator('.nav-tabs a:visible').count(),3,'Focused simulation has three primary views');
         assert(await f.locator('#journey-motion').isChecked(),'Respects reduced motion');
       }

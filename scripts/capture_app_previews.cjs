@@ -37,7 +37,7 @@ const ids=(process.argv[3]||'pain_one_many,pain_calculation,probiotics_calculati
     console.log(id+': inputs applied');
     if(id==='pain_one_many') {
      await app.locator('#run_one').click();
-     await app.locator('#sampling-journey svg').waitFor({state:'visible'});
+     await app.locator('#sampling-journey svg').first().waitFor({state:'visible'});
     }else if(id==='pain_simulation') {
      await app.locator('#run_many').click();
     }else if(id==='mean_precision'){
