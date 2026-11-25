@@ -40,6 +40,9 @@ const base=(process.argv[2]||'http://127.0.0.1:8769').replace(/\/$/,'');
   const exampleFields=await chapter.locator('.annotated-report [data-report-field]').evaluateAll(nodes=>nodes.map(p=>[p.dataset.reportField,p.textContent.trim()]));
   const appFields=await page.locator('#report [data-report-field]').evaluateAll(nodes=>nodes.map(p=>[p.dataset.reportField,p.textContent.trim()]));
   assert.deepEqual(exampleFields,appFields,'Example 3.1 matches the selected teaching report, including its software record');
+  assert(await chapter.locator('.annotated-report [data-report-field] + [data-report-field]').evaluateAll(nodes=>
+    nodes.length>0 && nodes.every(el=>el.previousSibling.nodeType===Node.TEXT_NODE && /^\s+$/.test(el.previousSibling.textContent))),
+    'Combined report entries retain a space between sentences');
   assert.equal(await chapter.locator('.page-inner table').count(),1,'The reporting checklists are consolidated');
   assert.equal(await chapter.locator('[id="tab:report-annotations"]').count(),1,'The old table link remains available');
   assert.equal(await chapter.locator('#report-error-activity .spot-part').count(),4,'The review follows the same four report sections');

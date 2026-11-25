@@ -70,7 +70,7 @@ render_pain_report_example <- function(record) {
       if (field[[1]] == "analysis") answer <- htmltools::HTML(sub("score test",
         '<a href="#score-test">score test</a>', as.character(answer), fixed = TRUE))
       paragraph <- c(paragraph, list(tags$span(`data-report-field` = field[[1]],
-        tags$span(class = "report-mark", paste0(field[[2]], ": ")), answer), " "))
+        tags$span(class = "report-mark", paste0(field[[2]], ": ")), answer), htmltools::HTML("&nbsp;")))
       if (field[[1]] %in% paragraph_ends) {
         content <- c(content, list(tags$p(paragraph)))
         paragraph <- list()
