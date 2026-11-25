@@ -251,12 +251,12 @@ A test's decision can agree or disagree with reality: the population pain-relief
 ```{r error-table, echo=FALSE}
 knitr::kable(data.frame(
   `Population or decision` = c("Population relief percentages: duloxetine and neravixa", "Correct decision", "Error"),
-  `Scenario 1: Equal population relief percentages` = c("30% and 30% (null hypothesis true)", "True negative: do not reject the null", "False positive (Type I error): reject the null"),
-  `Scenario 2: Different population relief percentages` = c("30% and 60% (null hypothesis false)", "True positive (power): reject the null", "False negative (Type II error): do not reject the null"),
+  `Scenario 1: H0 is true` = c("30% and 30% (equal population relief percentages)", "True negative: do not reject the null", "False positive (Type I error): reject the null"),
+  `Scenario 2: H0 is not true` = c("30% and 60% (different population relief percentages)", "True positive (power): reject the null", "False negative (Type II error): do not reject the null"),
   check.names = FALSE), caption = "Two population scenarios and their possible testing decisions in the neuropathic pain trial. Correct decisions precede errors in each scenario.")
 ```
 
-### Scenario 1: Equal population relief percentages {.unnumbered}
+### Scenario 1: H₀ is true (equal population relief percentages) {#scenario-1-equal-population-relief-percentages .unnumbered}
 
 Suppose both treatments provide relief to 30% of patients. With a 5% Type I error probability, about 95 of every 100 repetitions would correctly leave the null hypothesis unrejected: true negatives. About 5 would incorrectly find a statistically significant difference: false positives.
 
@@ -264,7 +264,7 @@ Suppose both treatments provide relief to 30% of patients. With a 5% Type I erro
 draw_error_scenario("null")
 ```
 
-### Scenario 2: Different population relief percentages {.unnumbered}
+### Scenario 2: H₀ is not true (different population relief percentages) {#scenario-2-different-population-relief-percentages .unnumbered}
 
 Suppose 30% achieve relief with duloxetine and 60% with neravixa. A trial with 90% power at this difference would detect a statistically significant difference in about 90 of every 100 repetitions: true positives. About 10 would fail to detect it: false negatives.
 
@@ -392,9 +392,11 @@ Figure \@ref(fig:sample-differences) shows [sampling variability](#sampling-vari
 
 Increasing the sample size changes the information in each trial. Increasing simulation repetitions makes the estimated percentage of significant results more stable; each trial retains the same sample size and power.
 
-The app below starts with 20 patients per group and compares two population scenarios: 30% relief with both treatments, and 30% with duloxetine versus 60% with neravixa. Each trial contributes patient outcomes, an estimated difference, a two-sided p value and a test decision.
+The app below starts with 20 patients per group. In Scenario 1, $H_0$ is true: both treatments provide 30% population relief. In Scenario 2, $H_0$ is not true: population relief is 30% with duloxetine and 60% with neravixa. Each trial contributes patient outcomes, an estimated difference, a two-sided p value and a test decision.
 
-Step 4 plots the two-sided p values. A sufficiently large positive or negative difference produces a small p value. Values below 0.05 reject the hypothesis of equal population relief percentages. Steps 2–3 show the direction of the observed difference. Completed runs summarize the estimates and decisions for each population scenario.
+Step 4 plots the two-sided p values. A sufficiently large positive or negative difference produces a small p value. Values below 0.05 reject the hypothesis of equal population relief percentages. Steps 2–3 show the direction of the observed difference. The 100-tile grid summarizes the decision percentages across all completed trials, rounded to whole percentages. Exact counts appear above it.
+
+In Scenario 1 ($H_0$ is true), the p values have spikes and gaps because relief counts are whole numbers. Equal counts, such as 6 of 20 patients in each group, give p = 1. At these population settings, equal counts occur in about 14 of every 100 trials. Increasing the number of simulated trials makes this pattern clearer. Increasing the patients per group allows a finer range of p values.
 
 ```{r pain-app-preview, echo=FALSE, results='asis'}
 render_app_preview("pain_one_many", "Simulate further trials and compare different sample sizes.",

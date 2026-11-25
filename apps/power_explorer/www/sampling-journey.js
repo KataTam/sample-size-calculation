@@ -5,7 +5,7 @@
   const ns = 'http://www.w3.org/2000/svg';
   const pct = x => `${Math.round(x * 1000) / 10}%`;
   const average = values => values.reduce((a,b)=>a+b,0)/values.length;
-  const scenarioName = source => isNull(source)?'Scenario 1: Equal population relief percentages':'Scenario 2: Different population relief percentages';
+  const scenarioName = source => isNull(source)?'Scenario 1: H₀ is true · equal population relief percentages':'Scenario 2: H₀ is not true · different population relief percentages';
   function node(svg, tag, attrs, text) {
     const n = document.createElementNS(ns, tag);
     Object.entries(attrs).forEach(([k,v]) => n.setAttribute(k,v));
@@ -224,7 +224,7 @@
       const max=Math.max(...bins,1);
       // A bin can cross the test cutoff. Its segments retain the actual decisions.
       bins.forEach((n,i)=>{
-        const bar=node(svg,'g',{'data-pvalue-bin':i,'data-count':n});
+        const bar=node(svg,'g',{'data-pvalue-bin':i,'data-count':n,'data-correct-count':correctBins[i]});
         const good=correctBins[i],bad=n-good,bw=(width-76)/40;
         node(bar,'rect',{x:px(i/40),y:pAxis-good/max*80,width:bw,height:good/max*80,fill:colors.correct,stroke:'white'});
         node(bar,'rect',{x:px(i/40),y:pAxis-n/max*80,width:bw,height:bad/max*80,fill:colors.error,stroke:'white'});
@@ -249,19 +249,25 @@
     [0,.5,1].forEach(p=>node(svg,'text',{x:px(p),y:pAxis+19,'text-anchor':'middle',style:'font-size:14px'},p));
     node(svg,'text',{x:width/2,y:pAxis+43,'text-anchor':'middle',style:'font-size:14px'},'Two-sided p value');
     y=text(`The test considers differences in either direction. A sufficiently large positive or negative difference produces a small p value. Results below ${data.alpha} reject the hypothesis of equal population ${pain ? 'relief percentages' : 'event percentages'}.`,12,pAxis+69);
+    if(isNull(data) && data.batch) y=text(`Whole-patient counts create repeated p values. Equal ${pain?'relief':'event'} counts in both groups give p = 1 (${values.filter(p=>p===1).length} of ${values.length} trials). More simulated trials make this pattern clearer.`,12,y+24);
     y=text(`Completed trials: ${values.length}`,12,y+24);
     decisionSummary(data,decisions).forEach((line,i)=>{y=text(line,12,align('decision-'+i,y+23));});
     y=text(isNull(data)?`Planned Type I error probability: ${pct(data.alpha)}`:`Approximate power for these population assumptions: ${pct(data.expected)}`,12,align('benchmark',y+23));
     if(!isNull(data))y=text(`With ${data.n} patients per group and population relief of ${pct(data.p0)} and ${pct(data.p1)}, the calculation predicts detection in about ${Math.round(100*data.expected)} of 100 repeated trials.`,12,y+23);
-    const tiles=decisions.slice(-100).sort((a,b)=>Number(decisionCorrect(data,b))-Number(decisionCorrect(data,a))),tileCols=10,tileWidth=(width-24)/tileCols,tileHeight=23;
-    y=text(tiles.length<decisions.length?'Latest 100 trial decisions, grouped by outcome':'One tile per trial, grouped by outcome',12,align('decision-grid',y+28));
-    tiles.forEach((reject,i)=>{
-      const correct=decisionCorrect(data,reject),tx=12+(i%tileCols)*tileWidth,ty=y+12+Math.floor(i/tileCols)*tileHeight;
-      const tile=node(svg,'g',{'data-decision-trial':i+1,'data-correct':String(correct)});
+    // Scale the complete run to 100 tiles. Exact counts remain in the summary.
+    const errors=decisions.filter(reject=>!decisionCorrect(data,reject)).length;
+    const errorTiles=decisions.length?Math.round(100*errors/decisions.length):0;
+    const tileCount=decisions.length?100:0,tileCols=10,tileWidth=(width-24)/tileCols,tileHeight=23;
+    y=text(decisions.length?`${decisions.length===1?'The completed trial':`All ${decisions.length} completed trials`}, scaled to 100 tiles`:'Decision percentages appear after the first trial',12,align('decision-grid',y+28));
+    if(tileCount)y=text('Each tile is one percentage point, rounded to whole percentages.',12,y+22);
+    const grid=node(svg,'g',{'data-decision-grid':'true','data-total-trials':decisions.length,'data-error-count':errors});
+    for(let i=0;i<tileCount;i++){
+      const correct=i<100-errorTiles,tx=12+(i%tileCols)*tileWidth,ty=y+12+Math.floor(i/tileCols)*tileHeight;
+      const tile=node(grid,'g',{'data-decision-tile':i+1,'data-correct':String(correct)});
       node(tile,'rect',{x:tx,y:ty,width:tileWidth-3,height:tileHeight-3,fill:correct?colors.correctFill:colors.errorFill});
       node(tile,'text',{x:tx+(tileWidth-3)/2,y:ty+15,'text-anchor':'middle',style:`fill:${correct?colors.correct:colors.error};font-size:15px`},correct?'○':'×');
-    });
-    y+=12+Math.ceil(tiles.length/tileCols)*tileHeight;
+    }
+    y+=12+Math.ceil(tileCount/tileCols)*tileHeight;
     y=text('○ Correct decision     × Error',12,y+23);
     svg.setAttribute('viewBox',`0 0 ${width} ${align('end',y+14)}`);
   }
@@ -307,6 +313,10 @@
   window.addEventListener('resize',()=>{if(data)draw(data.batch?1:Math.min(1,elapsed/duration()));});
   function setup() {
     if(!window.Shiny || !el('journey-pause')) return setTimeout(setup,100);
+    const repetitions=el('journey_repetitions'), simulate=el('run_journey');
+    const updateSimulationLabel=()=>simulate.setAttribute('aria-label',`Simulate ${repetitions.value} trials`);
+    repetitions.addEventListener('input',updateSimulationLabel);
+    updateSimulationLabel();
     el('journey-motion').checked=matchMedia('(prefers-reduced-motion: reduce)').matches;
     el('journey-pause').onclick=()=>{paused=!paused;el('journey-pause').textContent=paused?'Resume':'Pause';if(paused){stop();status();}else play();};
     el('journey-replay').onclick=()=>{if(!data||data.batch)return;index=0;elapsed=0;play();};

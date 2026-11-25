@@ -14,7 +14,8 @@ draw_error_scenario <- function(scenario = c("null", "effect")) {
   text(6,11.65,"Eligible population with neuropathic pain",cex=1)
   for(i in 1:24) person(.6+(i-1)*.47,10.98,.7,"#b83c46")
   arrows(6,10.3,6,9.94,length=.08,col="#64778a",lwd=1.5)
-  text(6,9.65,"Population pain-relief probabilities at four weeks",cex=1)
+  text(6,9.65,if(scenario=="null") expression(paste("Scenario 1: ",H[0]," is true")) else
+    expression(paste("Scenario 2: ",H[0]," is not true")),cex=1)
   for (g in 1:2) {
     successes <- if(g==1 || scenario=="null") 3 else 6
     center <- c(3,9)[g]

@@ -48,6 +48,9 @@ const base=(process.argv[2]||'http://127.0.0.1:8769').replace(/\/$/,'');
   assert.equal(await app.locator('#simulation_target').isVisible(),false);
   assert(await app.locator('#run_many').isVisible());
   assert.equal(await app.locator('#run_many').innerText(),'Simulate 5000 trials');
+  assert.equal(await app.locator('#run_journey').innerText(),'Simulate');
+  assert.equal(await app.locator('#run_journey').getAttribute('aria-label'),'Simulate 20 trials');
+  assert.equal(await app.locator('.repeat-trial-controls #journey_repetitions').count(),1);
   await app.locator('#run_journey').click();
   await app.waitForFunction(()=>document.querySelector('#journey-status').textContent.includes('of 20'));
   await app.locator('.journey-playback > summary').click();
@@ -68,17 +71,33 @@ const base=(process.argv[2]||'http://127.0.0.1:8769').replace(/\/$/,'');
   await checkAlignment();
   await page.setViewportSize({width:1360,height:1100});await page.waitForTimeout(500);
   for(const svg of await app.locator('#sampling-journey svg').all()){
-    const correct=await svg.locator('[data-decision-trial]').evaluateAll(xs=>xs.map(x=>x.dataset.correct==='true'));
+    const correct=await svg.locator('[data-decision-tile]').evaluateAll(xs=>xs.map(x=>x.dataset.correct==='true'));
     assert.deepEqual(correct,[...correct].sort((a,b)=>Number(b)-Number(a)),'Correct decisions precede errors');
   }
   const decisions=await app.locator('#sampling-journey svg').evaluateAll(xs=>xs.map(svg=>({
     rejects:Array.from(svg.querySelectorAll('[data-pvalue-trial]')).filter(p=>Number(p.dataset.pvalue)<.05).length,
-    correct:svg.querySelectorAll('[data-decision-trial][data-correct="true"]').length,
-    total:svg.querySelectorAll('[data-decision-trial]').length
+    correct:svg.querySelectorAll('[data-decision-tile][data-correct="true"]').length,
+    total:svg.querySelectorAll('[data-decision-tile]').length
   })));
-  assert.equal(decisions[0].correct,20-decisions[0].rejects);
-  assert.equal(decisions[1].correct,decisions[1].rejects);
-  assert(decisions.every(x=>x.total===20));
+  assert.equal(decisions[0].correct,100-5*decisions[0].rejects);
+  assert.equal(decisions[1].correct,5*decisions[1].rejects);
+  assert(decisions.every(x=>x.total===100));
+  assert.match(await app.locator('.journey-scenario-title').nth(0).textContent(),/Scenario 1: H₀ is true/);
+  assert.match(await app.locator('.journey-scenario-title').nth(1).textContent(),/Scenario 2: H₀ is not true/);
+  const checkBatchGrid=async()=>{
+    const grids=await app.locator('#sampling-journey svg').evaluateAll(svgs=>svgs.map(svg=>({
+      total:[...svg.querySelectorAll('[data-pvalue-bin]')].reduce((n,bin)=>n+Number(bin.dataset.count),0),
+      correct:[...svg.querySelectorAll('[data-pvalue-bin]')].reduce((n,bin)=>n+Number(bin.dataset.correctCount),0),
+      errorTiles:svg.querySelectorAll('[data-decision-tile][data-correct="false"]').length,
+      tiles:svg.querySelectorAll('[data-decision-tile]').length,
+      statedTotal:Number(svg.querySelector('[data-decision-grid]').dataset.totalTrials)
+    })));
+    for(const grid of grids){
+      assert.equal(grid.tiles,100);
+      assert.equal(grid.statedTotal,grid.total);
+      assert.equal(grid.errorTiles,Math.round(100*(grid.total-grid.correct)/grid.total),'Every trial contributes to the decision percentages');
+    }
+  };
   fs.mkdirSync('build/chapter-one-review',{recursive:true});
   await capture('stick-figures-twenty');
   console.log('Completed 20-trial decisions, means and outcome ordering checked.');
@@ -97,6 +116,8 @@ const base=(process.argv[2]||'http://127.0.0.1:8769').replace(/\/$/,'');
   await app.locator('#many_text').filter({hasText:'batch of estimates'}).waitFor();
   assert.equal(await app.locator('[data-pvalue-bin]').count(),80);
   assert.equal(await app.locator('[data-pvalue-bin]').evaluateAll(bins=>bins.reduce((n,b)=>n+Number(b.dataset.count),0)),10000);
+  await checkBatchGrid();
+  assert.match(await app.locator('#sampling-journey').innerText(),/Equal\s+relief\s+counts\s+in\s+both\s+groups\s+give\s+p\s+=\s+1/);
   await checkAlignment();
   assert.match(await app.locator('#sampling-journey').innerText(),/Two-sided p value/);
   assert.match(await app.locator('#sampling-journey').innerText(),/Results\s+below\s+0\.05\s+reject\s+the\s+hypothesis\s+of\s+equal\s+population/);
@@ -112,6 +133,7 @@ const base=(process.argv[2]||'http://127.0.0.1:8769').replace(/\/$/,'');
   await app.locator('#journey-motion').focus();await app.locator('#journey-motion').press('Space');
   assert.equal(await app.locator('#journey-motion').isChecked(),false);
   await app.locator('#journey_repetitions').fill('12');await app.locator('#journey_repetitions').press('Tab');
+  assert.equal(await app.locator('#run_journey').getAttribute('aria-label'),'Simulate 12 trials');
   await app.waitForFunction(()=>Object.entries(Shiny.shinyapp.$inputValues).some(([k,v])=>k.split(':')[0]==='journey_repetitions'&&v===12));
   await app.locator('#run_journey').focus();await app.locator('#run_journey').press('Enter');
   await app.waitForFunction(()=>document.querySelector('#journey-status').textContent.includes('of 12')).catch(async e=>{
@@ -136,6 +158,7 @@ const base=(process.argv[2]||'http://127.0.0.1:8769').replace(/\/$/,'');
   await app.waitForFunction(()=>document.querySelector('#journey-status').textContent.startsWith('21 trials;'));
   assert(await app.locator('#journey-pause').isDisabled(),'More than 20 trials render without animation');
   assert.equal(await app.locator('[data-pvalue-bin]').evaluateAll(xs=>xs.reduce((sum,x)=>sum+Number(x.dataset.count),0)),42);
+  await checkBatchGrid();
   console.log('Pause/resume, larger-group bars and immediate 21-trial results checked.');
   await app.locator('#pain_population input[value="equal"]').focus();await app.locator('#pain_population input[value="equal"]').press('Space');
   await app.locator('#compare_populations').check();
