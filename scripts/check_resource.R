@@ -159,6 +159,7 @@ check_resource <- function(render_module = FALSE) {
   check_app_reports()
   source("scripts/check_calculation_validation.R", local = TRUE)
   check_calculation_validation()
+  source("scripts/check_uncertain_planning.R", local = TRUE)
   say("All checks passed.")
   invisible(TRUE)
 }

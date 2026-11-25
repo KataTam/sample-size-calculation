@@ -28,7 +28,7 @@ a { color: #17658a; } .tutorial-downloads { display: none; }
  table, caption, .caption { font-family: Arial, sans-serif; }
  a { text-decoration: none; }
  h1 { font-size: 22pt; } h2 { font-size: 16pt; } h3 { font-size: 13pt; }
- h1, h2, h3, h4, summary, caption { break-after: avoid; }
+ h1, h2, h3, h4, summary, caption { break-after: avoid; break-inside: avoid; }
  table { font-size: 8pt; break-inside: avoid; } thead { display: table-header-group; } tr { break-inside: avoid; }
  .figure { break-inside: avoid; } .figure img { max-height: 210mm; object-fit: contain; }
  .learning-goals, .misconception { break-inside: avoid; }
@@ -165,8 +165,9 @@ let browser;
       const forward = document.createElement('a'); forward.href = '#pdf-code-' + number;
       forward.textContent = box.querySelector('summary').textContent + ' (appendix, calculation ' + number + ')';
       source.append(forward); box.before(source);
-      const entry = document.createElement('div'); entry.id = 'pdf-code-' + number;
-      const heading = document.createElement('h3'); heading.textContent = 'Calculation ' + number + ': ' + label;
+      const entry = document.createElement('div');
+      const heading = document.createElement('h3'); heading.id = 'pdf-code-' + number;
+      heading.textContent = 'Calculation ' + number + ': ' + label;
       const back = document.createElement('a'); back.href = '#' + source.id; back.textContent = 'Return to the explanation';
       const paragraph = document.createElement('p'); paragraph.append(back);
       entry.append(heading, paragraph, box); group.append(entry);

@@ -26,7 +26,7 @@
     ]],
     ['Calculation', [
       ['analysis', 'Planned analysis', 'Your record should name the planned test for a testing goal, or the interval method and confidence level for an estimation goal. It should explain any pairing or clustering.', 'The planned analysis is'],
-      ['software', 'Calculation procedure and software', 'A reproducible record needs the method, software and code versions, and saved inputs. Simulations also need the data-generating assumptions, repetitions, and random-number settings.', 'The calculation procedure, software and reproducibility record are'],
+      ['software', 'Calculation procedure and software', 'Record the method, software and code versions, saved inputs, and an independent calculation or benchmark used to check the result. Simulations also need generating assumptions, repetitions and random-number settings.', 'The calculation procedure, software and reproducibility record are'],
       ['power', 'Type I error probability and target power', 'Both values should be percentages, with the difference used to evaluate power. A fixed sample requires reporting attainable power at specified true differences.', 'The Type I error probability and power specification is', 'power'],
       ['precision', 'Precision: desired confidence interval width', 'Your answer should give the full width, units, and confidence level. A fixed sample requires assessing the anticipated width under the stated assumptions.', 'The precision specification is', 'precision']
     ]],
@@ -107,7 +107,7 @@
       sensitivity: 'Based on [evidence], sensitivity analysis will examine [plausible range, including less favorable values], holding [quantities] fixed. [Result] would support [decision].',
       progression: 'Proceed at [acceptable result], amend at [intermediate result], and stop at [unacceptable result], using [outcome and denominator].',
       analysis: value.goal === 'testing' ? '[Test and sidedness], accounting for [design and dependence between observations].' : '[Confidence interval method and level], accounting for [design and dependence between observations].',
-      software: '[Method] in [software and version], with [code version, inputs, and rounding]. For simulation: [generating assumptions, repetitions, and random-number settings].',
+      software: '[Method] in [software and version], with [code version, inputs, and rounding]. Checked against [independent calculation or benchmark] with result [count and explanation of any discrepancy]. For simulation: [generating assumptions, repetitions, and random-number settings].',
       power: value.goal === 'fixed' ? 'At [available sample size] and [specified true difference], attainable power is [value]%, using [Type I error probability]% and [test sidedness].'
         : '[Type I error probability]% and [target power]% at [target difference], using [test sidedness].',
       precision: '[Confidence level]% confidence and full width [value] ' + units + '. The anticipated width at the selected sample size is [value].',

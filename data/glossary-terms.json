@@ -25,7 +25,7 @@
       "difference observed in the pilot",
       "observed pilot difference"
     ],
-    "definition": "The between-group difference calculated from an earlier sample. It can inform planning, with uncertainty; the neuropathic pain pilot showed a 40-percentage-point difference."
+    "definition": "The treatment difference calculated from an earlier sample. The neuropathic pain pilot showed a difference of 40 percentage points."
   },
   {
     "id": "target-difference",
@@ -33,7 +33,7 @@
     "aliases": [
       "target difference"
     ],
-    "definition": "The between-group difference used to calculate the sample size at the chosen power. It can equal the difference observed in previous data or clinical threshold; the three roles have no fixed numerical order."
+    "definition": "The treatment difference used to calculate sample size at the chosen power. The neuropathic pain calculation uses 30 percentage points."
   },
   {
     "id": "clinical-threshold",
@@ -51,7 +51,7 @@
       "between-group differences",
       "between-group differences and individual benefit"
     ],
-    "definition": "A comparison of group averages or percentages. Individual patients may benefit by different amounts; the group comparison cannot identify how much each person would benefit."
+    "definition": "Differences between group averages or percentages. They describe an average comparison across patients. They do not predict the benefit for an individual patient."
   },
   {
     "id": "percentage-points",
@@ -92,7 +92,7 @@
     "aliases": [
       "standard error"
     ],
-    "definition": "The typical variation in an estimate if new samples of the same size were taken from the same population. A smaller standard error means greater precision."
+    "definition": "The typical amount an estimate varies between new samples of the same size."
   },
   {
     "id": "confidence-interval",
@@ -101,7 +101,7 @@
       "confidence interval",
       "confidence intervals"
     ],
-    "definition": "A range of values compatible with the data under the analysis assumptions. A narrower interval indicates greater precision at the same confidence level."
+    "definition": "An interval calculated from the data to express uncertainty about a population value."
   },
   {
     "id": "estimation",
@@ -117,7 +117,7 @@
     "aliases": [
       "precision"
     ],
-    "definition": "How closely estimates from new samples of the same size would cluster together. At the same confidence level, a narrower interval indicates greater precision."
+    "definition": "How narrowly a quantity is estimated. At the same confidence level, a narrower confidence interval indicates greater precision."
   },
   {
     "id": "margin-of-error",
@@ -126,7 +126,7 @@
       "margin of error",
       "half-width"
     ],
-    "definition": "For a symmetric interval, the distance from the estimate to either limit. An estimate of 20% with limits of 15% and 25% has a margin of error of 5 percentage points."
+    "definition": "For a symmetric confidence interval, the distance from the estimate to either limit. From 20% to a limit of 25%, it is 5 percentage points."
   },
   {
     "id": "full-width",
@@ -203,7 +203,7 @@
     "aliases": [
       "independent groups"
     ],
-    "definition": "Separate groups of participants whose outcomes are assumed independent. Paired measurements or people grouped within clinics may need a different analysis."
+    "definition": "Groups made up of different participants, with outcomes assumed independent. Measurements linked within patients, clinics or families require attention to their relationship."
   },
   {
     "id": "analyzable-sample-size",
@@ -221,7 +221,7 @@
       "sampling variability",
       "sampling variation"
     ],
-    "definition": "The variation in results between samples from the same population. Larger independent samples generally reduce it."
+    "definition": "Variation in results between samples from the same population. Larger independent samples reduce this variation."
   },
   {
     "id": "bias",
@@ -246,7 +246,7 @@
     "aliases": [
       "estimand"
     ],
-    "definition": "The precise population quantity your study aims to estimate, including which treatments and outcome are compared and how treatment changes are handled."
+    "definition": "The population quantity the study aims to estimate. Its definition specifies the treatments, patients, outcome and handling of events such as treatment discontinuation."
   },
   {
     "id": "monte-carlo-error",
@@ -255,7 +255,7 @@
       "Monte Carlo error",
       "Monte Carlo uncertainty"
     ],
-    "definition": "Random variation caused by using a limited number of simulated studies. More simulation repetitions reduce this uncertainty."
+    "definition": "Random variation in simulation results caused by using a limited number of simulated trials."
   },
   {
     "id": "false-positive",
@@ -536,7 +536,7 @@
     "aliases": [
       "frequentist methods"
     ],
-    "definition": "Statistical methods interpreted through their performance across hypothetical repetitions of the same study."
+    "definition": "Methods evaluated by how they perform across many repetitions of a study, such as how often they detect a true treatment difference."
   },
   {
     "id": "statistical-significance",
@@ -634,7 +634,7 @@
       "Wilson score interval",
       "Wilson interval"
     ],
-    "definition": "A confidence interval for a population percentage, calculated from the event count. It stays within 0% and 100% and can extend farther on one side of the observed percentage."
+    "definition": "A confidence interval for a population percentage based on an observed event count. Its limits stay between 0% and 100%."
   },
   {
     "id": "continuity-correction",
@@ -642,7 +642,7 @@
     "aliases": [
       "continuity correction"
     ],
-    "definition": "An adjustment used in some continuous approximations to discrete counts. It changes the calculation near a rejection boundary."
+    "definition": "An adjustment for using a smooth distribution to approximate whole-number counts. It can change p values and required sample sizes."
   },
   {
     "id": "assurance",
@@ -651,7 +651,7 @@
       "assurance",
       "expected power"
     ],
-    "definition": "The probability of meeting a specified study success rule, averaged over a distribution describing uncertainty in the planning parameters."
+    "definition": "The probability that a planned study meets a stated success criterion, allowing for uncertainty in its assumptions. A criterion could be p < 0.05."
   },
   {
     "id": "hybrid-planning",
@@ -660,7 +660,7 @@
       "hybrid planning",
       "hybrid approaches"
     ],
-    "definition": "Planning that averages the performance of a frequentist analysis over a distribution representing uncertainty about its parameters."
+    "definition": "Planning that averages a frequentist test's performance across plausible values of uncertain assumptions. The completed study still uses that frequentist test."
   },
   {
     "id": "bayesian-planning",
@@ -669,7 +669,7 @@
       "Bayesian planning",
       "Bayesian approaches"
     ],
-    "definition": "Planning that evaluates a Bayesian analysis and success rule using specified distributions for uncertain parameters."
+    "definition": "Planning how often trial data will provide sufficiently strong posterior evidence, given stated prior distributions and a decision rule."
   },
   {
     "id": "progression-criteria",
@@ -706,6 +706,33 @@
       "score test",
       "pooled score test"
     ],
-    "definition": "A test that compares the observed result with variation expected under the null hypothesis. For two percentages, the pooled version uses one combined event percentage when testing equality."
+    "definition": "A test of how unusual a result would be under the null hypothesis. One example is the pooled two-proportion z test used to compare relief percentages."
+  },
+  {
+    "id": "statistical-simulation",
+    "label": "Simulation",
+    "aliases": [
+      "simulation",
+      "simulations"
+    ],
+    "definition": "A computer-generated experiment used to explore what a study could show. Data are generated from specified assumptions or by resampling existing observations."
+  },
+  {
+    "id": "prior-distribution",
+    "label": "Prior distribution",
+    "aliases": [
+      "prior distribution",
+      "prior"
+    ],
+    "definition": "A distribution describing uncertainty about a quantity before the new study data are considered."
+  },
+  {
+    "id": "posterior-distribution",
+    "label": "Posterior distribution",
+    "aliases": [
+      "posterior distribution",
+      "posterior"
+    ],
+    "definition": "A distribution describing uncertainty after a prior has been updated using the observed data and the statistical model."
   }
 ]

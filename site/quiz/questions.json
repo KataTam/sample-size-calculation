@@ -265,10 +265,10 @@
       "link": "calculations.html#two-means",
       "question": "Under the introductory two-means normal approximation, what happens to sample size if the target difference is halved and everything else stays fixed?",
       "options": [
-        "It falls to approximately one half",
-        "It rises to approximately twice the original",
-        "It stays approximately at the original value",
-        "It rises to approximately four times the original"
+        "It becomes half the original size",
+        "It becomes twice the original size",
+        "It remains at the original size",
+        "It becomes four times the original size"
       ],
       "answer": 3,
       "explanation": "Required sample size is proportional to the inverse square of the target difference in this approximation. Halving the difference multiplies the requirement by four.",
@@ -749,10 +749,10 @@
       "link": "estimation-planning.html#pilot-feasibility",
       "question": "What is an appropriate primary planning focus for a pilot studying retention?",
       "options": [
-        "The sample size conventionally selected for every type of pilot",
-        "Retention precision and prespecified criteria for progression to the main trial",
-        "Definitive evidence of treatment effectiveness from the pilot alone",
-        "The largest observed effect for calculating the main trial size"
+        "A conventional participant count used for all pilot studies",
+        "Retention precision and agreed criteria for proceeding",
+        "Definitive treatment-effect evidence from the pilot study alone",
+        "The largest pilot effect as the main-trial target"
       ],
       "answer": 1,
       "explanation": "Pilot sample size should follow its feasibility objectives. Uncertain treatment effects from a small pilot should be interpreted cautiously.",
@@ -879,20 +879,20 @@
       "level": "advanced",
       "section": "Planning with uncertainty about the true difference",
       "link": "curves.html#further-planning-approaches",
-      "question": "How can assurance differ from power at one fixed effect?",
+      "question": "A trial has 90% power at a true 30-point difference. Its chance of p < 0.05 averaged across four plausible differences is 74%. What does 74% describe?",
       "options": [
-        "It must equal the power at the selected target difference",
-        "It averages success probabilities across a distribution of uncertain parameters",
-        "It guarantees that the next study will be statistically significant",
-        "It makes justification of clinical importance unnecessary for planning"
+        "Power evaluated only at the 30-point target",
+        "Assurance for the stated p < 0.05 criterion",
+        "The posterior probability of benefit after observing data",
+        "The probability that all clinical assumptions are correct"
       ],
       "answer": 1,
-      "explanation": "Assurance or expected power incorporates a specified distribution of uncertainty. That distribution and the decision rule require justification.",
+      "explanation": "Assurance averages the probability of meeting a stated success criterion across the planning distribution. Here the criterion is p < 0.05 and the distribution contains four possible true differences.",
       "feedback": [
-        "Averaging over uncertain parameters can change the result.",
-        "Assurance or expected power incorporates a specified distribution of uncertainty. That distribution and the decision rule require justification.",
-        "Assurance remains a probability under specified assumptions.",
-        "The uncertainty distribution and clinical objective still need justification."
+        "Power at the fixed 30-point difference remains about 90%.",
+        "Assurance averages the probability of meeting a stated success criterion across the planning distribution. Here the criterion is p < 0.05 and the distribution contains four possible true differences.",
+        "A posterior probability is calculated after combining prior information with observed data.",
+        "The planning distribution expresses uncertainty about assumptions. It does not establish that they are correct."
       ]
     },
     {
@@ -925,18 +925,18 @@
       "link": "estimation-planning.html#prevalence",
       "question": "A service wants to estimate how common a symptom is at a defined time. Which inputs match the simple independent-sample prevalence calculation?",
       "options": [
-        "A treatment-control difference and target power",
-        "The number of recordings, regardless of how many people contribute them",
-        "The observed p-value from an earlier treatment trial",
-        "An anticipated population percentage, confidence level, and useful absolute margin of error"
+        "A treatment difference, Type I error probability and target power",
+        "A recording count, follow-up duration and treatment allocation ratio",
+        "An earlier p value, treatment effect and target power",
+        "An anticipated percentage, confidence level and margin of error"
       ],
       "answer": 3,
-      "explanation": "A prevalence survey estimates one population percentage. These inputs guide the sample-size approximation. the sampling approach and missing data also matter for a credible estimate.",
+      "explanation": "A prevalence survey estimates one population percentage. These inputs determine the simple sample size approximation. The sampling approach and missing outcomes also affect the estimate.",
       "feedback": [
         "A prevalence objective concerns one population percentage.",
-        "Repeated recordings do not automatically provide independent participants.",
-        "An earlier treatment-test p-value does not specify the desired prevalence precision.",
-        "A prevalence survey estimates one population percentage. These inputs guide the sample-size approximation. the sampling approach and missing data also matter for a credible estimate."
+        "The calculation needs the number of independent patients and a precision target.",
+        "An earlier treatment-test p value does not specify prevalence precision.",
+        "A prevalence survey estimates one population percentage. These inputs determine the simple sample size approximation. The sampling approach and missing outcomes also affect the estimate."
       ]
     },
     {
@@ -1325,10 +1325,10 @@
       "link": "simulation.html#simulation",
       "question": "With equal population event probabilities, 124 of 2,500 simulated trials reject the null. Which quantity is this estimating?",
       "options": [
-        "The population event probability",
-        "Confidence interval width",
+        "The population event probability, about 5%",
+        "The Type II error probability, about 5%",
         "The Type I error probability, about 5%",
-        "Power at the 30-point target difference"
+        "Power at the target difference, about 5%"
       ],
       "answer": 2,
       "explanation": "When the null hypothesis is true, rejections are false positives: 124/2500 is 4.96%."

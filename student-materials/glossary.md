@@ -85,7 +85,7 @@ The [two-means example](#two-means) illustrates individual variability; the [one
 : Standard error (SE) describes how much an estimate would vary if you repeated the study with new patients. For one mean, SE = SD/sqrt(n). If the population SD is 15 mmHg, 25 independent patients give an SE of 3 mmHg; 100 patients give 1.5 mmHg. Increasing the sample size reduces the standard error of the mean while the population SD remains fixed. If the population SD is unknown, the sample SD is used to estimate the SE.
 
 <span id="confidence-interval">Confidence interval</span>
-: A confidence interval is a range of values compatible with the study data under the analysis assumptions. It shows uncertainty around an estimate. At the same confidence level, a narrower interval indicates greater precision. For a treatment difference, its position relative to zero and the clinical threshold helps you interpret the result; the [clinical interval examples](#interpret-a-confidence-interval-clinically) illustrate this.
+: A confidence interval expresses uncertainty about a population value using sample data. For example, a clinic survey might estimate neuropathy prevalence as 20%, with a 95% interval from 15% to 25%. At the same confidence level, a narrower interval indicates greater precision. For a treatment difference, its position relative to zero and the clinical threshold helps you interpret the result; the [clinical interval examples](#interpret-a-confidence-interval-clinically) illustrate this.
 
 The 95% describes the procedure. If it has 95% coverage under the stated assumptions, about 950 of 1,000 new studies would produce intervals containing the population value. As more studies are added, that fraction tends toward the procedure's coverage probability. Each study produces its own interval. The [methods record](#tutorial-methods) provides details of the interval calculations used in the apps.
 
@@ -103,7 +103,7 @@ Estimation uses sample data to learn about a population quantity, such as a mean
 
 ### Precision {#precision .core-heading .unnumbered}
 
-Precision describes how little an estimate varies when new samples of the same size are taken from the same population; estimation is the process that produces the estimate. You can assess it using the standard error or, at a specified confidence level, the confidence-interval width. A smaller standard error or narrower interval indicates greater precision. A larger independent sample generally improves precision. Bias can still shift the estimate systematically away from the population value. Precision is also distinct from power, which concerns how often a specified test rejects the null under an assumed effect.
+Precision describes how narrowly a population quantity is estimated. For example, a 95% interval from 18% to 22% estimates prevalence more precisely than one from 15% to 25%. Precision can be assessed through the standard error or interval width at a specified confidence level. Larger independent samples reduce sampling variability. [Bias](#bias) concerns a systematic shift in estimates and needs separate attention.
 
 ### Sampling variability {#sampling-variability .core-heading .unnumbered}
 
@@ -115,7 +115,7 @@ Bias is a systematic deviation of an estimation procedure from the population qu
 
 ### Estimand {#estimand .advanced-heading .unnumbered}
 
-An estimand is the precisely defined population quantity the study aims to estimate. Its definition identifies the treatments, population, outcome, summary measure, and how events such as treatment discontinuation are handled. This makes the intended question clear before choosing an analysis or sample size method. See [ICH E9(R1)](https://database.ich.org/sites/default/files/E9-R1_Step4_Guideline_2019_1203.pdf).
+Suppose a participant stops neravixa after two weeks. A comparison of treatment assignment can still use that participant's pain-relief outcome at four weeks. A comparison assuming continued treatment asks a different question. The estimand specifies the intended population quantity, including the treatments, patients, outcome, summary measure and handling of treatment changes. See [ICH E9(R1)](https://database.ich.org/sites/default/files/E9-R1_Step4_Guideline_2019_1203.pdf).
 
 ### Sensitivity analysis {#sensitivity-analysis .core-heading .unnumbered}
 
@@ -126,7 +126,7 @@ A sensitivity analysis examines how results or conclusions change under plausibl
 The [hypotheses and power section](#power) connects these terms to repeated hypothetical studies.
 
 <span id="frequentist-methods">Frequentist methods</span>
-: Statistical methods interpreted through their performance across hypothetical repetitions of the same study. For example, power describes how often a test detects a specified true difference, and a confidence level describes how often the interval method captures the population value.
+: Methods evaluated by their performance across many repetitions of a study. For example, with 90% power at a true 30-point relief difference, about 900 of 1,000 trials would detect that difference. Each trial collects new data under the same population assumptions.
 
 <span id="statistical-significance">Statistical significance</span>
 : A result that meets the prespecified threshold for evidence against the null hypothesis. Here, this means a p-value below the chosen Type I error probability. The estimated difference and confidence interval are also needed to assess the size and clinical importance of a treatment benefit.
@@ -207,7 +207,7 @@ Two linked observations, such as outcomes from two treated sites in one particip
 
 ### Intracluster correlation coefficient (ICC) {#intracluster-correlation .advanced-heading .unnumbered}
 
-A measure of similarity between outcomes within the same cluster. In a simple random-intercept model, it is the proportion of total outcome variance attributable to differences between clusters.
+Patients attending the same clinic may share care practices and have more similar outcomes. The ICC summarizes this within-clinic similarity. Recruiting 200 patients across ten clinics therefore needs a calculation that accounts for their grouping. In a simple random-intercept model, the ICC is the proportion of total outcome variance attributable to differences between clusters.
 
 ### Design effect {#design-effect .advanced-heading .unnumbered}
 
@@ -257,6 +257,12 @@ A carryover effect occurs when an earlier treatment affects outcomes in a later 
 
 ## Simulation terms {#advanced-simulation-terms .advanced-heading .unnumbered}
 
+### Simulation {#statistical-simulation .core-heading .unnumbered}
+
+A simulation is an experiment run on a computer to explore what a study could show. In the neuropathic pain example, the computer generates outcomes for 20 patients per group using relief probabilities of 30% and 60%. It analyzes those outcomes and repeats the trial. The resulting differences and test decisions show how trial results vary under the same assumptions.
+
+Generation can use a statistical model informed by pilot data, published studies or clinical knowledge. Another approach is to resample existing observations to create new datasets, as in a bootstrap. The sampling procedure should preserve relevant relationships, such as repeated measurements from the same patient. The [introductory activity](#activity-1-one-study-then-many) uses model-generated outcomes.
+
 Planning and generating scenarios
 : The planning scenario contains the assumptions used to choose the sample size. A generating scenario contains the population values assumed to be true when simulating studies. Keeping the planned sample size fixed while changing those population values shows how the same study could perform if reality differed from the plan. Recalculating the sample size each time instead asks how the plan would need to change.
 
@@ -265,7 +271,7 @@ Simulation repetitions (B)
 
 ### Monte Carlo error {#monte-carlo-error .advanced-heading .unnumbered}
 
-Monte Carlo error is the random difference between a simulation estimate and the value approached as more and more trials are generated under the same assumptions. Two batches might estimate power at 79% and 81% even though the trial design and population are unchanged.
+Two batches of simulated trials might estimate power at 79% and 81% even though their trial design and population assumptions are identical. This variation is Monte Carlo error, caused by using a limited number of repetitions. Larger batches give more stable estimates of the same trial performance.
 
 The Monte Carlo standard error (MCSE) describes variation between independent batches. For a simulated rejection fraction $\hat p$ from $B$ independent trials, $\mathrm{MCSE}=\sqrt{\hat p(1-\hat p)/B}$. More repetitions reduce this uncertainty while each trial retains its original power. The [simulation-precision section](#precision-of-a-simulation) gives a worked example and distinguishes this uncertainty from sampling variability within a trial.
 
@@ -327,7 +333,9 @@ The [prevalence example](#estimation-report) uses the normal approximation for i
 
 ### Score test {#score-test .advanced-heading .unnumbered}
 
-A score test compares the observed result with the variation expected if the null hypothesis were true. For the neuropathic pain comparison, the null claims equal population relief percentages. The pooled score test estimates this common percentage by combining the relief counts from both groups, then asks how unusual their observed difference would be under that equality assumption. The tutorial uses a two-sided test without continuity correction [@pass2022].
+A score test assesses how unusual an observed result would be if the null hypothesis were true. An example is the pooled two-proportion z test for equal population percentages. In R, `stats::prop.test(c(34, 17), c(56, 56), correct = FALSE)` applies this procedure to relief in 34 of 56 versus 17 of 56 patients.
+
+Under the null hypothesis, both groups share one relief probability. Combining their counts gives 51 of 112 patients, about 46%. The test uses this pooled percentage to assess how much the group percentages could differ through sampling variability. It gives a two-sided p value without continuity correction. R reports the equivalent one-degree-of-freedom chi-squared statistic [@pass2022].
 
 For one percentage, a score test can instead assess a proposed population value, such as 20% prevalence. The Wilson 95% interval contains the proposed values that the two-sided score test would retain at a 5% significance threshold [@brown2001interval].
 
@@ -337,15 +345,25 @@ A continuity correction adjusts a continuous approximation for the fact that eve
 
 ### Assurance {#assurance .advanced-heading .unnumbered}
 
-Assurance averages the probability of meeting a specified success rule over a justified distribution of uncertain planning parameters. With a frequentist testing rule, it is often described as expected power. Equally weighted scenarios with 60% and 90% power give 75% expected power. The uncertainty distribution and the success rule are part of the justification [@kunzmann2021review; @pezeshk2003]. See [planning with uncertainty](#further-planning-approaches).
+Assurance is the probability that a planned study will meet its stated success criterion, allowing for uncertainty about the true treatment difference or other assumptions. The success criterion defines the result required to support the intended conclusion. Examples are a two-sided p value below 0.05 or a posterior probability of benefit above 97.5%.
+
+For each possible population scenario, the probability of meeting the criterion is calculated. Those probabilities are averaged using the specified planning weights. In the [neuropathic pain example](#further-planning-approaches), 56 patients per group give approximately 90% power at a true 30-point difference and approximately 74% assurance for p < 0.05 across the four weighted scenarios. The criterion, distribution and weights are part of the calculation [@kunzmann2021review; @pezeshk2003].
 
 ### Hybrid planning {#hybrid-planning .advanced-heading .unnumbered}
 
-Hybrid planning uses a probability distribution to describe uncertain parameters while evaluating a frequentist analysis, such as a test with a fixed Type I error probability. Averaging its power over this distribution gives expected power. The distribution used for planning and the intended analysis should be reported [@kunzmann2021review].
+Hybrid planning allows uncertainty about assumptions while retaining a frequentist analysis for the completed study. For example, several true relief differences can be assigned planning weights. The chance of p < 0.05 is calculated for each and then averaged. The [worked example](#further-planning-approaches) shows the calculation and its success criterion [@kunzmann2021review].
 
 ### Bayesian planning {#bayesian-planning .advanced-heading .unnumbered}
 
-Bayesian planning can evaluate a decision based on posterior probabilities, such as requiring a sufficiently high posterior probability of benefit. Planning simulates or integrates over uncertain parameters and possible data. The planning distributions, analysis priors and success rule should all be identified [@kunzmann2021review].
+Bayesian planning evaluates how often future data would meet a Bayesian decision rule. For example, the neuropathic pain trial could require a posterior probability above 97.5% that neravixa improves relief. Planning considers possible true differences and possible trial results, then calculates how often the rule would be met. The [worked example](#further-planning-approaches) specifies the planning distribution, analysis priors and criterion [@fda2010bayesian].
+
+### Prior and posterior distributions {.advanced-heading .unnumbered}
+
+<span id="prior-distribution">Prior distribution</span>
+: A distribution describing uncertainty about a quantity before the new data are considered. It can reflect previous studies or other justified assumptions. In the worked diagnostic example, the prior probability of neuropathy is 20%.
+
+<span id="posterior-distribution">Posterior distribution</span>
+: The updated distribution after the prior is combined with the observed data through a statistical model. In the diagnostic example, a positive result raises the probability of neuropathy to approximately 69%. For a treatment comparison, the posterior can describe the range of plausible treatment differences and the probability that the difference exceeds zero.
 
 ### Progression criteria {#progression-criteria .advanced-heading .unnumbered}
 

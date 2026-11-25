@@ -144,7 +144,7 @@
         groupBottom=Math.max(groupBottom,groupY+8);
       }
     });
-    y=text(`${data.n} patients per group`,12,groupBottom+10);
+    y=text(`Each computer-generated trial: ${data.n} patients per group`,12,groupBottom+10);
     if(info.complete && info.rates) y=text(`Mean across trials: ${labels[0]} ${pct(average(info.rates[0]))} · ${labels[1]} ${pct(average(info.rates[1]))}`,12,y+23);
     node(svg,'path',{d:`M${width/2} ${y+8} v18 m-5 -6 l5 6 l5 -6`,fill:'none',stroke:'#64748b','stroke-width':2});
     y=heading('2. Estimated difference in this trial',align('step2',y+53));

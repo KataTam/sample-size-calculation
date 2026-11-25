@@ -1148,8 +1148,8 @@
     {
       "id": "A076",
       "level": "advanced",
-      "front": "How does assurance or expected power differ from power at one fixed difference?",
-      "back": "It averages performance over a justified distribution of plausible parameter values, according to the specified planning framework.",
+      "front": "How does assurance differ from power at one fixed treatment difference?",
+      "back": "Power evaluates a test at a specified true difference. Assurance averages the probability of meeting a stated success criterion across a distribution of uncertain assumptions. In the neuropathic pain example, power is about 90% at 30 points and assurance is about 74% for p < 0.05 across the four weighted scenarios.",
       "source": "https://katatam.github.io/sample-size-calculation/book/curves.html#further-planning-approaches"
     },
     {
@@ -1295,8 +1295,8 @@
     {
       "id": "A101",
       "level": "advanced",
-      "front": "What does assurance add to a calculation of power at one assumed effect?",
-      "back": "Assurance averages the probability of meeting a success rule over a justified distribution of uncertain parameters. Equally weighted scenarios with 60% and 90% power give 75% expected power.",
+      "front": "What is a success criterion in an assurance calculation?",
+      "back": "The result the completed study must achieve to support its intended conclusion. Examples are a two-sided p value below 0.05 or a posterior probability of benefit above 97.5%. Assurance is calculated for the specified criterion and planning distribution.",
       "source": "https://katatam.github.io/sample-size-calculation/book/curves.html#further-planning-approaches"
     },
     {

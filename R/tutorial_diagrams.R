@@ -21,7 +21,6 @@ draw_error_scenario <- function(scenario = c("null", "effect")) {
     text(center,9.13,paste0(c("duloxetine: ","neravixa: ")[g],successes*10,"%"),cex=1)
     for(i in 1:10) person(center-2.05+(i-1)*.455,8.55,.9,if(i<=successes)"#237747" else "#b83c46",i<=successes)
   }
-  text(6,7.91,"Each person represents 10% of the population",cex=.82)
   arrows(6,7.65,6,7.25,length=.08,col="#64778a",lwd=1.5)
   text(6,6.98,if(scenario=="null")"Trials using a 5% Type I error probability" else
     "Trials designed for 90% power at the 30 percentage point difference",cex=.96)
@@ -233,12 +232,17 @@ draw_three_pain_trials <- function(trials) {
   par(mar = c(2.8, .6, .5, .6), bg = "white", family = "sans",
     fg = "#26343d", xaxs = "i", yaxs = "i")
   plot.new(); plot.window(c(0, 100), c(-28, 123))
+  # Match horizontal and vertical physical distances so people keep the same
+  # proportions on screen and in the PDF, despite this tall coordinate range.
+  person_y_scale <- (diff(par("usr")[3:4]) / par("pin")[2]) /
+    (diff(par("usr")[1:2]) / par("pin")[1])
   person <- function(x,y,relief=FALSE,size=1) {
     color <- if(relief) "#237747" else "#b83c46"
-    symbols(x,y+1.45*size,circles=.43*size,inches=FALSE,add=TRUE,bg=color,fg=color)
-    segments(x,y+1.02*size,x,y-.6*size,col=color,lwd=1.4)
-    segments(x,y+.4*size,x+c(-.75,.75)*size,y+if(relief)1.35*size else -.4*size,col=color,lwd=1.3)
-    segments(x,y-.6*size,x+c(-.7,.7)*size,y-1.85*size,col=color,lwd=1.3)
+    sy <- size * person_y_scale
+    symbols(x,y+1.45*sy,circles=.43*size,inches=FALSE,add=TRUE,bg=color,fg=color)
+    segments(x,y+1.02*sy,x,y-.6*sy,col=color,lwd=1.4)
+    segments(x,y+.4*sy,x+c(-.75,.75)*size,y+if(relief)1.35*sy else -.4*sy,col=color,lwd=1.3)
+    segments(x,y-.6*sy,x+c(-.7,.7)*size,y-1.85*sy,col=color,lwd=1.3)
   }
   text(50,119,"Eligible population with neuropathic pain",cex=.94)
   for(j in 1:28) person(14+(j-1)*2.7,111,FALSE,1.1)
@@ -258,8 +262,8 @@ draw_three_pain_trials <- function(trials) {
       values <- trial$data$outcome[trial$data$group == c("Control", "Treatment")[g]]
       center <- c(29, 52)[g]
       for (j in seq_along(values)) person(center - 9 + ((j - 1) %% 10) * 2,
-        y + 3 - ((j - 1) %/% 10) * 5, values[j] == 1, .85)
-      text(center, y - 10, sprintf("%d of %d (%d%%)", sum(values), length(values),
+        y + 5 - ((j - 1) %/% 10) * 9, values[j] == 1, .85)
+      text(center, y - 14, sprintf("%d of %d (%d%%)", sum(values), length(values),
         round(100 * mean(values))), cex = .87)
     }
     delta <- 100 * trial$result$estimate

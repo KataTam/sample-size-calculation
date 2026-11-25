@@ -51,7 +51,7 @@ const base=process.argv[2]||'http://127.0.0.1:8769';
  await page.goto(base+'/book/clinical-question.html');
  const groupDifference=page.locator('a[data-glossary-term="between-group-differences"]');
  await groupDifference.hover();
- assert.match(await page.locator('#glossary-tooltip').innerText(),/Individual patients.*each person/s);
+ assert.match(await page.locator('#glossary-tooltip').innerText(),/individual patient/i);
  await page.keyboard.press('Escape');
  for (const [box,id] of [['q6','alpha'],['q7','beta']]) {
   const inline=page.locator('#sample-size-question-'+box+' > summary[data-glossary-hint="'+id+'"]');
