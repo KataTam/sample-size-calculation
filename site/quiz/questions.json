@@ -298,11 +298,11 @@
         "It decreases"
       ],
       "answer": 2,
-      "explanation": "Higher target power requires greater ability to detect the specified difference. The normal-quantile multiplier increases, so the sample-size requirement increases.",
+      "explanation": "Higher target power requires a greater probability of detecting the specified difference. With the other inputs unchanged, more patients are needed.",
       "feedback": [
         "The requirement depends on the chosen power.",
         "Target difference remains an input when power changes.",
-        "Higher target power requires greater ability to detect the specified difference. The normal-quantile multiplier increases, so the sample-size requirement increases.",
+        "Higher target power requires a greater probability of detecting the specified difference. With the other inputs unchanged, more patients are needed.",
         "A higher probability of detection requires more information."
       ]
     },
@@ -1459,7 +1459,7 @@
       "chapter_check": false,
       "section": "Chapter 2: Calculating sample size and recruitment",
       "link": "calculations.html#calculations",
-      "question": "Under the two-means normal approximation, the SD rises from 4 to 6 while the target difference, power and Type I error probability stay fixed. What is the approximate sample-size multiplier?",
+      "question": "Under the two-means normal approximation, the SD rises from 4 to 6 while the target difference, power and Type I error probability stay fixed. By what factor does the required sample size increase?",
       "options": [
         "2.25",
         "1.5",

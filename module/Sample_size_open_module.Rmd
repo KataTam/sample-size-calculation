@@ -446,12 +446,7 @@ For the neuropathic pain trial, a 5% Type I error probability means that, if the
 
 The 90% power target concerns a different scenario: if relief occurs in 60% with neravixa and 30% with duloxetine, about 90 in 100 trials should detect a difference. Raising the target to 95 in 100 would require more patients. These choices determine how much evidence the trial must provide at the selected 30-point difference.
 
-For the normal approximation, these choices are translated into [$z$-values](#z-value): positions on the standard normal bell-shaped curve, centered at zero with a standard deviation of one. They are then combined into a sample size multiplier, $M$:
-
-\begin{equation}
-M=\left(z_{1-\alpha/2}+z_{1-\beta}\right)^2.
-(\#eq:multiplier)
-\end{equation}
+For the normal approximation, these choices are translated into [$z$-values](#z-value): positions on the standard normal bell-shaped curve, centered at zero with a standard deviation of one. The sample size formulas use one value for the Type I error probability, $z_{1-\alpha/2}$, and another for target power, $z_{1-\beta}$.
 
 Here, $\alpha$ (alpha) is the Type I error probability, $\beta$ (beta) is the [Type II error probability](#beta), and $1-\beta$ is the target power.
 
@@ -461,31 +456,20 @@ For a two-sided Type I error probability of 5% and target power of 90%:
 
 - The 5% error allowance is split between the two ends of the distribution: 2.5% in each tail. This gives $z_{1-0.05/2}=z_{0.975}\approx1.96$.
 - The target power of 90% gives $z_{0.90}\approx1.28$.
-- The multiplier is therefore approximately $(1.96+1.28)^2\approx10.51$, using the unrounded $z$-values.
 
 Figure \@ref(fig:normal-multiplier) shows what these distances mean for a treatment comparison. The upper curve applies when the population difference is zero; the lower applies when it equals the target difference. The same rejection boundaries apply in both cases. Separating the centers by about 1.96 + 1.28 standard errors puts about 90% of the lower curve beyond the upper boundary.
 
-The multiplier summarizes how demanding the error and power choices are. In the two-means normal approximation, both cutoffs multiply the same variability term, so they can be combined into $M$. For two proportions, variability differs between the no-difference and target-difference scenarios. The calculation therefore keeps the two cutoffs separate, weighting each by its scenario's variability. Both formulas use the same cutoffs introduced here [@kirkwood2003; @wang2020].
+The formulas below combine these two $z$-values with the target difference and outcome variability. A lower Type I error probability increases the first $z$-value, and higher target power increases the second. Either change requires more patients when the other inputs stay the same [@kirkwood2003; @wang2020].
 
-```{r multiplier}
-# Probabilities are entered as decimals: .05 = 5%, .90 = 90%.
-alpha <- .05
-target_power <- .90
-# qnorm() finds standard-normal cutoffs. Divide alpha by 2 for two tails.
-# Add the cutoffs, then square the sum (^2) to obtain the multiplier M.
-M <- (qnorm(1 - alpha / 2) + qnorm(target_power))^2
-M
-```
-
-```{r normal-multiplier, echo=FALSE, fig.width=7, fig.height=6, fig.cap="The two curves represent different population scenarios. Above: no treatment difference (H0 true), with 5% in the two rejection tails. Below: the target difference (H0 false), with approximately 90% beyond the upper rejection boundary. On the standard-error scale, 1.96 plus 1.28 separates the two centers; squaring this distance gives M = 10.51.", fig.alt="Two sampling distributions on the same standard-error scale. The upper distribution is centered at zero under H0; the lower is centered at the target difference, 3.24 standard errors above zero. The same rejection boundaries are used for both. Shading shows false positives under H0 and power at the target difference."}
-draw_normal_multiplier()
+```{r normal-multiplier, echo=FALSE, fig.width=7, fig.height=6, fig.cap="The two curves represent different population scenarios. Above: no treatment difference (H0 true), with 5% in the two rejection tails. Below: the target difference (H0 false), with approximately 90% beyond the upper rejection boundary. The centers are separated by 1.96 + 1.28 = 3.24 standard errors.", fig.alt="Two sampling distributions on the same standard-error scale. The upper distribution is centered at zero under H0; the lower is centered at the target difference, 3.24 standard errors above zero. The same rejection boundaries are used for both. Shading shows false positives under H0 and power at the target difference."}
+draw_normal_cutoffs()
 ```
 
 ## Two proportions {.core-heading}
 
 The event percentages in each group and the target difference between them are your starting inputs. For the neuropathic pain trial, the calculation assumes 60% relief with the novel treatment and 30% with standard treatment: a target difference of 30 [percentage points](#percentage-points).
 
-For two independent groups of equal size, the normal approximation uses the two $z$-values from Equation \@ref(eq:multiplier) separately. Each is multiplied by the variability for its scenario before the terms are added and squared. Let $p_t$ and $p_c$ be the novel- and standard-treatment relief probabilities, and let $\bar p=(p_t+p_c)/2$ be their average. The required number in each group is approximately:
+For two independent groups of equal size, the normal approximation uses the two $z$-values illustrated in Figure \@ref(fig:normal-multiplier). Each is multiplied by the variability for its scenario before the terms are added and squared. Let $p_t$ and $p_c$ be the novel- and standard-treatment relief probabilities, and let $\bar p=(p_t+p_c)/2$ be their average. The required number in each group is approximately:
 
 \begin{equation}
 n\approx\frac{\left[z_{1-\alpha/2}\sqrt{2\bar p(1-\bar p)}+
@@ -507,13 +491,12 @@ R's `power.prop.test()` uses unrounded cutoffs and includes both rejection tails
 ```{r multiplier-table, echo=FALSE}
 # Keep relief probabilities fixed while comparing error and power choices.
 grid <- expand.grid(alpha = c(.05, .01), power = c(.80, .90, .95))
-grid$M <- with(grid, (qnorm(1 - alpha / 2) + qnorm(power))^2)
 grid$per_group <- mapply(function(a, p) sample_size_two_proportions(.60, .30, a, p),
   grid$alpha, grid$power)
 shown <- display_probabilities(grid, c("alpha", "power"))
 names(shown)[names(shown) == "per group"] <- "Analyzable patients per group"
 knitr::kable(shown, digits = 2,
-  caption = "Error and power choices translated into patient counts for 60% versus 30% relief. M summarizes the normal cutoffs. The patient counts also account for the two event probabilities.")
+  caption = "Analyzable patients per group for different Type I error probabilities and target powers, with relief probabilities fixed at 60% and 30%.")
 ```
 
 Table \@ref(tab:multiplier-table) connects the cutoffs to recruitment planning. At 5% Type I error probability and 90% power, the calculation gives 56 analyzable patients per group. Lowering the error probability to 1% or raising power to 95% increases that requirement, with the relief probabilities unchanged.
@@ -643,10 +626,10 @@ The [probiotics simulation activity](https://katatam.github.io/sample-size-calcu
 
 For a continuous outcome, you should identify the target difference and the [standard deviation](#standard-deviation) in the same measurement units before calculating.
 
-In the formula below, $n$ is the number of patients needed in each group, $\delta$ (delta) is the target difference between the group means, and $\sigma$ (sigma) is the assumed SD of individual scores within each group. The calculation assumes the same SD in both groups. Here the same variability term applies to both cutoffs. Their sum can be squared once and written as $M$, giving the compact form below:
+In the formula below, $n$ is the number of patients needed in each group, $\delta$ (delta) is the target difference between the group means, and $\sigma$ (sigma) is the assumed SD of individual scores within each group. The calculation assumes the same SD in both groups. The two $z$-values introduced above are added and squared. The factor $2\sigma^2$ accounts for variability in both independent groups:
 
 \begin{equation}
-n\approx M\frac{2\sigma^2}{\delta^2}.
+n\approx\frac{2\sigma^2\left(z_{1-\alpha/2}+z_{1-\beta}\right)^2}{\delta^2}.
 (\#eq:means)
 \end{equation}
 
@@ -655,7 +638,7 @@ Suppose an earlier study observed a 4-unit [between-group difference](#expected-
 The normal formula makes the calculation transparent:
 
 \begin{equation}
-n\approx10.51\times\frac{2\times5^2}{3^2}\approx58.4.
+n\approx\frac{2\times5^2\times(1.96+1.282)^2}{3^2}\approx58.4.
 (\#eq:means-worked)
 \end{equation}
 
@@ -663,9 +646,15 @@ n\approx10.51\times\frac{2\times5^2}{3^2}\approx58.4.
 # Target mean difference and common standard deviation, in score units.
 delta <- 3
 sigma <- 5
+# Probabilities are entered as decimals: .05 = 5%, .90 = 90%.
+alpha <- .05
+target_power <- .90
+# qnorm() gives each normal cutoff. Divide alpha by 2 for a two-sided test.
+z_error <- qnorm(1 - alpha / 2)
+z_power <- qnorm(target_power)
 # The normal formula illustrates how the inputs affect the requirement.
 # The factor 2 allows for variability in both independent groups.
-normal_n_raw <- M * 2 * sigma^2 / delta^2
+normal_n_raw <- 2 * sigma^2 * (z_error + z_power)^2 / delta^2
 c(unrounded_per_group = normal_n_raw,
   rounded_per_group = ceiling(normal_n_raw))
 ```
@@ -2322,7 +2311,7 @@ The following calculations were run in G\*Power 3.1.9.7 and PASS 2022 version 22
 
 Table: (\#tab:software-validation) Direct software checks of the tutorial's basic calculation examples. Exact procedure names and settings are retained in the [validation record](https://katatam.github.io/sample-size-calculation/documentation/software-validation.html).
 
-For the mean example, the app's expected full width is approximately 3.999 units at 26 observations. PASS's full width is approximately 3.956 units at 27 observations when the sample SD is fixed at 5. The normal illustration uses the 1.96 multiplier and gives 25. These differences can be understood from the stated methods [@pass2022].
+For the mean example, the app's expected full width is approximately 3.999 units at 26 observations. PASS's full width is approximately 3.956 units at 27 observations when the sample SD is fixed at 5. The normal illustration uses a $z$-value of 1.96 and gives 25. These differences can be understood from the stated methods [@pass2022].
 
 A useful validation record retains the original inputs, software versions, both outputs and the reason for agreement or disagreement. For open source functions, the saved test should be rerun after a relevant code or package update. Agreement supports the numerical implementation. Whether the assumptions represent the intended study remains a scientific question.
 

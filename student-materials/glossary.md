@@ -167,13 +167,13 @@ A p-value is the probability, assuming the null hypothesis and statistical model
 
 ## Normal distribution and z-values {.core-heading .unnumbered}
 
-The [multiplier explanation](#how-error-rates-and-power-affect-sample-size) shows how these values enter a sample size calculation.
+The section [How error probabilities and power affect sample size](#how-error-rates-and-power-affect-sample-size) shows how these values enter a sample size calculation.
 
 <span id="z-value">Z-value</span>
 : The standard normal distribution is a bell-shaped curve with a mean of zero and a standard deviation of one. A z-value gives a position on that curve in standard-deviation units. For example, 1.96 is 1.96 standard deviations above its center.
 
 <span id="quantile">Quantile</span>
-: A quantile is a cutoff below which a stated proportion of a distribution lies. For the standard normal distribution, $z_{0.975}=1.96$ means that 97.5% lies below 1.96. The sample size multiplier uses these cutoffs to translate the Type I error probability and target power into numbers for the formula. You can use the tutorial's multiplier table without calculating the cutoffs yourself.
+: A quantile is a cutoff below which a stated proportion of a distribution lies. For the standard normal distribution, $z_{0.975}=1.96$ means that 97.5% lies below 1.96. In the normal sample size formulas, $z_{1-\alpha/2}$ represents the chosen two-sided Type I error probability, and $z_{1-\beta}$ represents target power. The calculation software supplies these values.
 
 ## Tests and designs {.core-heading .unnumbered}
 

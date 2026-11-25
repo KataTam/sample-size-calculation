@@ -21,13 +21,6 @@ check_positive_number <- function(x, name) {
   invisible(TRUE)
 }
 
-multiplier_alpha_power <- function(alpha = 0.05, power = 0.90) {
-  check_probability(alpha, "alpha")
-  check_probability(power, "power")
-  beta <- 1 - power
-  (qnorm(1 - alpha / 2) + qnorm(1 - beta))^2
-}
-
 sample_size_two_proportions_raw <- function(pi1, pi2, alpha = 0.05, power = 0.90) {
   check_probability(pi1, "pi1")
   check_probability(pi2, "pi2")
@@ -58,7 +51,6 @@ sample_size_two_proportions_details <- function(pi1, pi2, alpha = 0.05, power = 
     difference = abs(pi1 - pi2),
     alpha = alpha,
     power = power,
-    multiplier = multiplier_alpha_power(alpha, power),
     raw_n_per_group = raw_n,
     n_per_group = n_per_group,
     total_n = total_n,
@@ -95,7 +87,6 @@ sample_size_two_means_details <- function(delta, sd, alpha = 0.05, power = 0.90,
     sd = sd,
     alpha = alpha,
     power = power,
-    multiplier = multiplier_alpha_power(alpha, power),
     raw_n_per_group = raw_n,
     n_per_group = n_per_group,
     total_n = total_n,

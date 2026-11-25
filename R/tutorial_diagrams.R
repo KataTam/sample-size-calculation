@@ -77,7 +77,7 @@ draw_recruitment_counts <- function(analyzable = 56, loss = .05) {
   text(5, .94, "Round upward\nin each group", cex = .9)
 }
 
-draw_normal_multiplier <- function() {
+draw_normal_cutoffs <- function() {
   old <- par(no.readonly=TRUE); on.exit(par(old))
   par(mfrow=c(2,1),mar=c(3.6,3,2.8,1),oma=c(1.8,0,0,0),family="sans",fg="#26343d",bg="white")
   critical <- qnorm(.975); distance <- critical+qnorm(.90)
@@ -107,7 +107,7 @@ draw_normal_multiplier <- function() {
       text(c(critical/2,(critical+distance)/2),.51,c("1.96","1.28"),pos=3,cex=.8,xpd=NA)
     }
   }
-  mtext("M = (1.96 + 1.28)^2 = 10.51, using unrounded cutoffs",side=1,outer=TRUE,line=.3,cex=.85)
+  mtext("Distance between centers: 1.96 + 1.28 = 3.24 standard errors",side=1,outer=TRUE,line=.3,cex=.85)
 }
 
 draw_interval_margin <- function() {

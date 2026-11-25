@@ -34,7 +34,6 @@
   "eq:hypotheses": "clinical-question",
   "eq:mcse": "simulation",
   "eq:means": "calculations",
-  "eq:multiplier": "calculations",
   "eq:single-proportion": "estimation-planning",
   "eq:switching": "study-designs",
   "estimation-foundations": "estimation-planning",
