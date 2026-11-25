@@ -71,7 +71,7 @@ plot_p_values <- function(batch) {
   hist(values, breaks = seq(0, 1, .025), col = "#d2e6e9", border = "white",
     main = sprintf("%s per group; statistically significant results %.1f%%",
       batch$spec$n, 100 * mean(batch$results$reject)),
-    xlab = "p-value", ylab = "Number of studies", xlim = c(0, 1))
+    xlab = "Two-sided p value", ylab = "Number of trials", xlim = c(0, 1))
   abline(v = batch$spec$alpha, lty = 2, lwd = 2, col = "#923d20")
 }
 

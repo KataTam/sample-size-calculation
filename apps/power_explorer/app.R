@@ -944,15 +944,15 @@ server <- function(input, output, session) {
     x <- valid_many()
     app_plot_style(c(4.2,4.4,2,1))
     hist(x$results$p_value, breaks = seq(0,1,.025), col = "#d2e6e9", border = "white",
-      xlab = "p value", ylab = "Number of trials", main = paste(nrow(x$results), "trials in the latest batch"))
+      xlab = "Two-sided p value", ylab = "Number of trials", main = paste(nrow(x$results), "trials in the latest batch"))
     abline(v = x$spec$alpha, lty = 2, lwd = 2, col = "#923d20")
   }, alt = "Histogram of saved simulation p-values. The significance percentage is reported in the summary table.")
   output$p_value_interpretation <- renderText({
     x <- valid_many(); r <- x$results
     observed <- mean(r$reject)
-    paste0("Each p value comes from one of the ", nrow(r), " trials in the latest batch, with ",
+    paste0("Each two-sided p value comes from one of the ", nrow(r), " trials in the latest batch, with ",
       x$spec$n, " participants per group. The dashed line is p = ", format(x$spec$alpha),
-      ". Values below it lead to rejection of the null hypothesis of equal population outcomes. ",
+      ". Sufficiently large differences in either direction produce small p values. Values below the line reject the null hypothesis of equal population outcomes. ",
       sum(r$reject), " of ", nrow(r), " trials (", format_percent(observed, 1), ") rejected the null. ",
       if (!is.null(x$missing)) "Missing outcomes can affect both the estimate and this rejection percentage. The missing-outcome summary gives bias and coverage alongside it." else
         paste0("With equal population outcomes, approximately ", format_percent(x$spec$alpha),

@@ -73,11 +73,11 @@ The [annotated report in Chapter 3](../book/reporting.html#write-a-sample-size-j
 Purpose: see why sample estimates differ from population values, interpret the uncertainty in one trial, and relate repeated trials to power.
 
 1. Scenario 1 uses 30% relief with each treatment, and Scenario 2 uses 30% with duloxetine and 60% with neravixa. The scenarios appear side by side, each starting with 20 patients per group and a 5% Type I error probability. Red stick figures represent the eligible population with neuropathic pain.
-2. “Simulate one trial” follows patient outcomes through four steps: outcomes, estimated difference, estimates across trials, and the p value and test decision.
+2. “Simulate one trial” follows patient outcomes through four steps: outcomes, estimated difference, estimates across trials, and the two-sided p value and test decision. Step 4 combines evidence in both directions into one p value. Values below the selected cutoff reject equal population relief percentages. Steps 2–3 retain the direction of the observed difference.
 3. The repetition field starts at 20. “Simulate selected trials” animates up to 20 trials. Larger selected counts appear immediately as distributions. Up to 40 patients per group appear as stick figures. Larger groups use red/green bars with exact outcome counts. Correct decisions precede errors in both scenario grids. Each scenario has its own interpretation, with mean relief percentages and the mean estimated difference after a completed run. “Simulate 5000 trials” provides a quick view of repeated performance.
 4. Red stick figures show patients without pain relief, and green figures with raised arms show patients who achieved relief. Each trial's estimate and p value come from those patient outcomes. Blue circles mark correct test decisions, and amber crosses mark errors. Counts and percentages summarize both decisions in each population scenario.
 5. “Display and replay options” contains Pause, Replay, “Finish this batch,” animation speed and reduced motion. “Reset results” clears the simulations while keeping the input settings. Increasing the sample from 20 to 50 per group and generating another batch overlays the earlier estimates for comparison.
-6. “Interpret the figure” explains each scenario in its own column. The Report tab gathers the assumptions, patient counts and repeated-trial summaries.
+6. “Interpret the figure” explains each scenario in its own column, including the observed percentages of correct decisions and errors.
 
 ## Reviewing short examples
 

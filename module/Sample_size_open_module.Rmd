@@ -392,7 +392,9 @@ Figure \@ref(fig:sample-differences) shows [sampling variability](#sampling-vari
 
 Increasing the sample size changes the information in each trial. Increasing simulation repetitions makes the estimated percentage of significant results more stable; each trial retains the same sample size and power.
 
-The app below follows patient outcomes through the estimated difference to the p value and test decision. It starts with 20 patients per group and shows two population scenarios side by side: 30% relief with both treatments, and 30% with duloxetine versus 60% with neravixa. The two scenarios distinguish correct decisions and errors. Completed runs show mean relief percentages and the mean estimated difference. The calculated power uses the assumed population percentages, selected sample size and test.
+The app below starts with 20 patients per group and compares two population scenarios: 30% relief with both treatments, and 30% with duloxetine versus 60% with neravixa. Each trial contributes patient outcomes, an estimated difference, a two-sided p value and a test decision.
+
+Step 4 plots the two-sided p values. A sufficiently large positive or negative difference produces a small p value. Values below 0.05 reject the hypothesis of equal population relief percentages. Steps 2–3 show the direction of the observed difference. Completed runs summarize the estimates and decisions for each population scenario.
 
 ```{r pain-app-preview, echo=FALSE, results='asis'}
 render_app_preview("pain_one_many", "Simulate further trials and compare different sample sizes.",
@@ -1983,9 +1985,9 @@ plot_trial_intervals(trials$results, trial_spec)
 <details class="advanced-explanation" id="sample-size-simulation-distributions">
 <summary>Comparing results at different sample sizes</summary>
 
-The core activity generated 5,000 trials at each of 20, 50 and 80 patients per group, assuming 30% and 60% relief. Returning to those trials, the following histograms count the [p-values](#p-value) from the independent simulated studies. The dashed line marks the chosen significance level. The fraction below the line estimates power under the specified alternative (Figure \@ref(fig:p-values)).
+The core activity generated 5,000 trials at each of 20, 50 and 80 patients per group, assuming 30% and 60% relief. Returning to those trials, the following histograms count the two-sided [p-values](#p-value) from the independent simulated trials. Both positive and negative differences can produce small p values. The dashed line marks the chosen significance level. The fraction below the line estimates power under the specified alternative (Figure \@ref(fig:p-values)).
 
-```{r p-values, echo=FALSE, fig.height=7, fig.cap="P-values from 5,000 independent clinical trials at each sample size. The percentage of p-values below the chosen significance level estimates power for the assumed relief probabilities.", fig.alt="Three histograms compare p-values with 20, 50 and 80 patients per group. The percentages of statistically significant results and their Monte Carlo intervals are in the following table."}
+```{r p-values, echo=FALSE, fig.height=7, fig.cap="Two-sided p values from 5,000 independent clinical trials at each sample size. The percentage of p-values below the chosen significance level estimates power for the assumed relief probabilities.", fig.alt="Three histograms compare two-sided p values with 20, 50 and 80 patients per group. The percentages of statistically significant results and their Monte Carlo intervals are in the following table."}
 par(mfrow = c(3, 1), mar = c(4, 4, 2, 1))
 for (batch in batches) plot_p_values(batch)
 ```

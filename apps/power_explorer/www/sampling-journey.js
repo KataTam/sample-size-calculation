@@ -86,7 +86,7 @@
     host.replaceChildren();
     const width=Math.max(250,Math.floor(Math.min(760, host.clientWidth))), t=data.trials[index];
     const labels=data.labels || ['Standard','Novel'], at=x=>38+(x+1)*(width-76)/2;
-    const svg=node(host,'svg',{viewBox:`0 0 ${width} 500`,role:'img','aria-label':'Patient outcomes, estimated differences, p values and test decisions','data-population':data.p1});
+    const svg=node(host,'svg',{viewBox:`0 0 ${width} 500`,role:'img','aria-label':'Patient outcomes, estimated differences, two-sided p values and test decisions','data-population':data.p1});
     let previousBoundary=0;
     function align(key,proposed){
       const height=proposed-previousBoundary;
@@ -247,7 +247,8 @@
     node(svg,'line',{x1:38,x2:width-38,y1:pAxis,y2:pAxis,stroke:'#64748b','data-aligned-axis':'decisions'});
     node(svg,'line',{x1:cutoff,x2:cutoff,y1:pAxis-97,y2:pAxis,stroke:'#245e90','stroke-dasharray':'4 3'});
     [0,.5,1].forEach(p=>node(svg,'text',{x:px(p),y:pAxis+19,'text-anchor':'middle',style:'font-size:14px'},p));
-    y=text(`p-value cutoff: ${data.alpha}. Values below it reject the null hypothesis.`,12,pAxis+44);
+    node(svg,'text',{x:width/2,y:pAxis+43,'text-anchor':'middle',style:'font-size:14px'},'Two-sided p value');
+    y=text(`The test considers differences in either direction. A sufficiently large positive or negative difference produces a small p value. Results below ${data.alpha} reject the hypothesis of equal population ${pain ? 'relief percentages' : 'event percentages'}.`,12,pAxis+69);
     y=text(`Completed trials: ${values.length}`,12,y+24);
     decisionSummary(data,decisions).forEach((line,i)=>{y=text(line,12,align('decision-'+i,y+23));});
     y=text(isNull(data)?`Planned Type I error probability: ${pct(data.alpha)}`:`Approximate power for these population assumptions: ${pct(data.expected)}`,12,align('benchmark',y+23));
