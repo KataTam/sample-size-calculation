@@ -1,0 +1,48 @@
+{
+  "checked_on": "2026-11-25",
+  "software": {
+    "GPower": "3.1.9.7",
+    "PASS": "2022 version 22.0.8",
+    "R": "4.5.1"
+  },
+  "comparison_settings": {
+    "sides": 2,
+    "alpha": 0.05,
+    "power": 0.9,
+    "allocation_ratio": 1,
+    "counts": "analyzable"
+  },
+  "two_proportions": {
+    "p_standard": 0.3,
+    "p_treatment": 0.6,
+    "gpower_n_per_group": 56,
+    "pass_n_per_group": 56,
+    "gpower_power": 0.9016504,
+    "pass_power": 0.90165,
+    "gpower_continuity_corrected_n_per_group": 62
+  },
+  "two_means": {
+    "difference": 3,
+    "sd": 5,
+    "gpower_n_per_group": 60,
+    "pass_n_per_group": 60,
+    "gpower_power": 0.9031154,
+    "pass_power": 0.90312
+  },
+  "one_proportion": {
+    "confidence": 0.95,
+    "p": 0.2,
+    "full_width": 0.1,
+    "pass_n": 246,
+    "pass_full_width": 0.09997
+  },
+  "one_mean": {
+    "confidence": 0.95,
+    "sd": 5,
+    "full_width": 4,
+    "pass_n": 27,
+    "pass_full_width": 3.95586,
+    "app_expected_width_n": 26,
+    "app_expected_full_width": 3.998908
+  }
+}

@@ -8,7 +8,7 @@ For classroom use, start with the [teaching guide](../teaching/TEACHING_GUIDE.md
 - [Evidence and design rationale](evidence-and-design-rationale.md): scholarly background for teachers and adapters.
 - [Reading guide](reading-guide.md) and [references](references.md).
 - [Student-feedback implementation](student-feedback-implementation.md).
-- [Optional teacher software validation](software-validation.md).
+- [Software validation and G*Power/PASS comparisons](software-validation.md).
 - [Adaptation guide](../teaching/adaptation_guide.md): where to edit cases, model answers and reports, and what to check after a change.
 
 ## Reuse and credit

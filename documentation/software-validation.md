@@ -2,9 +2,9 @@
 
 The student resource uses reproducible R calculations and browser apps. The tutorial and apps share the functions in `R/sample_size_functions.R`; the exported browser apps run those calculations through Shinylive/webR.
 
-## What agreement does and does not establish
+## What agreement establishes
 
-The same inputs should produce consistent results across the tutorial and matching app. Because they share code, this agreement is a consistency check rather than independent validation of the statistical method. Statistical checks use separate reference analyses and simulated operating characteristics.
+The same inputs should produce consistent results across the tutorial and matching app. Their shared code makes this a consistency check. Independent validation requires a separate implementation or reference calculation. Statistical checks use separate reference analyses and simulated operating characteristics.
 
 Two answers should only be compared after matching the intended hypothesis, test, allocation, variance assumptions, sidedness, significance level, target power, continuity correction, interval method and rounding. A different procedure may legitimately give a different answer.
 
@@ -32,23 +32,53 @@ These checks assess the stated methods under the stated generating models. They 
 
 `scripts/check_feedback.R` checks the single-proportion planning inversion and Wilson intervals against R reference intervals, including zero/all-event samples, and compares known-SD normal error probabilities with numerical density integration. It also checks the specialist activity servers. Enumeration of binomial outcomes illustrates that nominal planning width and realized Wilson width attainment are different quantities.
 
-## Optional external software comparisons
+## Direct checks in G*Power and PASS 2022
 
-PASS 2022 can provide an additional reference if it is already available to the teacher. It is not a dependency for students or for rebuilding the resource. A comparison must record the exact PASS procedure and settings rather than treating the product name as a statistical method. PASS supplies integrated method documentation and reports. [Official PASS information](https://www.ncss.com/software/pass/)
+The following calculations were run on 25 November 2026 in G*Power 3.1.9.7 and PASS 2022 version 22.0.8. The recorded values are outputs observed in those applications. All counts below refer to analyzable participants. The separate dropout fields in PASS were excluded from this comparison.
 
-PASS 2022 comparison status: NOT RUN. No external PASS result is claimed in this resource. This table is a recording template for a future check:
+The two-group checks used equal allocation, two-sided tests, Type I error probability 0.05 and target power 0.90. G*Power used “A priori: Compute required sample size”. PASS solved for sample size.
 
-| Scenario | R method to match | Settings to record | PASS result/status |
+| Example | Software and exact procedure | Additional settings | Observed result |
 |---|---|---|---|
-| Score difference: 3; SD: 5; two-sided alpha: .05; power: .80 | Equal-size pooled t test | Procedure, variance assumptions, allocation and whether both rejection tails are counted | NOT RUN |
-| Event probabilities: .30 and .60; alpha: .05; power: .90 | Approximate independent-proportion test | Exact/approximate procedure, pooled/nonpooled variance, continuity correction and allocation | NOT RUN |
-| Fixed sample: 60 per group, same event probabilities | Score-test finite-sample rejection rate | Compare the stated test with its simulation/enumeration, allowing for Monte Carlo uncertainty | NOT RUN |
+| Two percentages | G*Power, z tests, Proportions: Difference between two independent proportions | p1 = 0.30, p2 = 0.60, allocation ratio 1, continuity correction off, arcsine transform off | 56 per group, 112 total. Power 0.9016504. |
+| Two percentages | PASS, Tests for Two Proportions | P1 = 0.60, P2 = 0.30, Normal Approximation, Z-Test (Pooled) | 56 per group, 112 total. Power 0.90165. |
+| Continuity correction sensitivity check | G*Power, same z-test procedure | Same inputs, continuity correction on, arcsine transform off | 62 per group, 124 total. |
+| Two means | G*Power, t tests, Means: Difference between two independent means (two groups) | Cohen's d = 3/5 = 0.60, allocation ratio 1 | 60 per group, 120 total. Power 0.9031154. |
+| Two means | PASS, Two-Sample T-Tests Assuming Equal Variance | Means 3 and 0, common SD 5 | 60 per group, 120 total. Power 0.90312. |
+| One percentage | PASS, Confidence Intervals for One Proportion | Simple Asymptotic, Two-Sided, confidence 0.95, P = 0.20, full width 0.10 | 246 total. Width 0.09997, limits 0.15001 to 0.24999. |
+| One mean | PASS, Confidence Intervals for One Mean | Two-Sided, infinite population, confidence 0.95, distance to limits 2, SD 5, known SD unchecked | 27 total. Half-width 1.97793, full width 3.95586. |
 
-For each external check, save the software version, procedure, inputs, unrounded sample size where available, rounded analyzable counts per group, recruitment adjustment, output/report and reason for any discrepancy. Do not require agreement between different tests merely because both compare proportions.
+The G*Power precision procedures were not compared. PASS supplies dedicated confidence interval procedures for these checks. The recorded outputs are also retained in [a machine-readable validation record](../data/software-validation.json).
+
+### How the results compare with R
+
+The tutorial's independent-proportion normal approximation gives 56 per group and power 0.9016504 at that rounded count. The pooled t-test calculation gives 60 per group and power 0.9031154. Both agree with the matched external procedures. The teaching normal approximation for two means gives 59 per group because it uses a normal critical value in place of the t-test calculation that accounts for estimating the SD.
+
+The normal calculation for one percentage gives 246 total, agreeing with PASS. This check concerns the planning approximation. The app's intervals around observed percentages use Wilson's method.
+
+For one mean, three width criteria explain the three counts:
+
+| Method | Count | Width criterion |
+|---|---|---|
+| Teaching normal formula | 25 | A fixed SD of 5 and the normal critical value 1.96 give an unrounded requirement of 24.01. |
+| Tutorial app, expected t-interval width | 26 | Full width averaged over normally distributed samples is 3.99891 units. The calculation includes the sampling distribution of the sample SD. |
+| PASS unknown-SD procedure | 27 | The t critical value is used with the entered sample SD held at 5. The resulting full width is 3.95586 units. |
+
+At 26 observations, holding the sample SD at 5 gives a full t-interval width slightly above four. Averaging over its sampling distribution gives a slightly smaller width because the mean sample SD is below the population SD. The chosen width criterion should therefore be recorded with the result.
+
+Selecting a continuity correction in G*Power raises the two-percentage requirement from 56 to 62 per group. That is a different planning procedure. A comparison should preserve this setting alongside sidedness, allocation, input scale, approximation and rounding.
+
+### Keeping the checks reproducible
+
+`scripts/check_calculation_validation.R` compares the tutorial functions with the recorded external counts and rounded powers. It also checks the two distinct mean-width criteria, the normal planning count and the Wilson intervals shown in the glossary against R's independent score-test implementation. It is run by `scripts/check_resource.R`, so changes to the numerical functions are checked against these saved benchmarks.
+
+A new software version or changed method should be checked with matching inputs and the original output retained. For a method without a suitable independent calculator, a published worked example, direct derivation or simulation of the planned analysis can supply a benchmark. The [tutorial's validation section](../book/appendix.html#validating-calculations) explains the design and directional checks that accompany numerical agreement.
+
+Procedure documentation: [G*Power manual](https://www.psychologie.hhu.de/fileadmin/redaktion/Fakultaeten/Mathematisch-Naturwissenschaftliche_Fakultaet/Psychologie/AAP/gpower/GPowerManual.pdf), [PASS two proportions](https://www.ncss.com/wp-content/themes/ncss/pdf/Procedures/PASS/Tests_for_Two_Proportions.pdf), [PASS one-proportion intervals](https://www.ncss.com/wp-content/themes/ncss/pdf/Procedures/PASS/Confidence_Intervals_for_One_Proportion.pdf), [PASS one-mean intervals](https://www.ncss.com/wp-content/themes/ncss/pdf/Procedures/PASS/Confidence_Intervals_for_One_Mean.pdf).
 
 The tutorial's worked example, [Beware of your assumptions in every calculation tool or software you use](../book/appendix.html#gpower-assumptions), uses the existing 3-unit target difference and SD 5 to distinguish Cohen's d = 0.60 from Cohen's f = 0.30. Its counts and power are reproduced in R with noncentral t and F distributions for two independent, equally sized groups, a common SD and no covariate adjustment. The example also records the matching G*Power procedures. The software's manual, introductory tutorial and methodological publications provide further details. [Official G*Power documentation and terms](https://www.psychologie.hhu.de/arbeitsgruppen/allgemeine-psychologie-und-arbeitspsychologie/gpower)
 
-## Reporting a sample size calculation report
+## Recording the calculation
 
 The sample size calculation report should record the clinical question, primary outcome and planned analysis; target difference and variability or event probabilities; evidence and sensitivity scenarios; Type I error probability, power or full interval-width target; allocation; analyzable and recruitment counts; expected losses; recruitment feasibility; software/functions and versions; and the limits of the intended conclusion. Your written justification should explain these choices.
 

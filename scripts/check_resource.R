@@ -157,6 +157,8 @@ check_resource <- function(render_module = FALSE) {
   check_app_presentation()
   source("scripts/check_app_reports.R", local = TRUE)
   check_app_reports()
+  source("scripts/check_calculation_validation.R", local = TRUE)
+  check_calculation_validation()
   say("All checks passed.")
   invisible(TRUE)
 }

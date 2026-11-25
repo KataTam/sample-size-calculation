@@ -46,7 +46,7 @@
     const mean=info.complete?` The mean estimated difference is ${Math.round(average(info.estimates)*1000)/10} percentage points. `+
       (info.rates?`Mean relief across these trials is ${pct(average(info.rates[0]))} with ${labels[0]} and ${pct(average(info.rates[1]))} with ${labels[1]}. `:''):'';
     const benchmark=isNull(source)?`The planned Type I error probability is ${pct(source.alpha)}.`:
-      `Approximate power is ${pct(source.expected)} for repeated trials with ${source.n} patients per group, population relief probabilities of ${pct(source.p0)} and ${pct(source.p1)}, and the selected test. The simulated true-positive percentage estimates the same repeated-trial probability.`;
+      `Approximate power is ${pct(source.expected)} for repeated trials with ${source.n} patients per group, population relief probabilities of ${pct(source.p0)} and ${pct(source.p1)}, and the selected test. As more trials are added, the simulated detection percentage becomes more stable around the score test's power. The normal planning approximation can differ slightly from this probability.`;
     return `Across ${info.count} completed trials with ${source.n} patients per group: `+decisions+mean+benchmark;
   }
   function draw(progress) {

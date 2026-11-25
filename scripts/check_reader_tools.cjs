@@ -54,7 +54,7 @@ let browser;
  assert.equal(misconceptionContext.consecutive,false,'Misconceptions are separated by their relevant explanations');
  assert(await page.locator('table').first().isVisible());
  assert.equal(await page.locator('.page-inner p').first().evaluate(el=>getComputedStyle(el).fontWeight),'400');
- assert.equal(await page.locator('table th').first().evaluate(el=>getComputedStyle(el).fontWeight),'400');
+ assert(Number(await page.locator('table th').first().evaluate(el=>getComputedStyle(el).fontWeight)) >= 600);
  assert(Number(await page.locator('.page-inner h1').evaluate(el=>getComputedStyle(el).fontWeight))>=500);
  assert(Number(await page.locator('details summary').first().evaluate(el=>getComputedStyle(el).fontWeight))>=500);
  assert(!(await page.locator('.page-inner').innerText()).includes('analysable'));

@@ -59,12 +59,24 @@ render_pain_report_example <- function(record) {
   }
   content <- list(tags$p(class = "caption", id = "sample-size-report-caption",
     tags$span(id = "sample-size-calculation-report", "Example 3.1: Sample size calculation report for the neuropathic pain trial.")))
+  # Keep related entries in paragraphs while retaining each editable field's label.
+  paragraph_ends <- c("population", "comparator", "design", "expected", "variation",
+    "sensitivity", "software", "counts", "recruitment", "conclusion")
   for (section in record$example_sections) {
     content <- c(content, list(tags$p(class = "report-part", section[[1]])))
+    paragraph <- list()
     for (field in section[[2]]) {
-      content <- c(content, list(tags$p(`data-report-field` = field[[1]],
-        tags$span(class = "report-mark", paste0(field[[2]], ": ")), html_text(record$example_answers[[field[[1]]]]))))
+      answer <- html_text(record$example_answers[[field[[1]]]])
+      if (field[[1]] == "analysis") answer <- htmltools::HTML(sub("score test",
+        '<a href="#score-test">score test</a>', as.character(answer), fixed = TRUE))
+      paragraph <- c(paragraph, list(tags$span(`data-report-field` = field[[1]],
+        tags$span(class = "report-mark", paste0(field[[2]], ": ")), answer), " "))
+      if (field[[1]] %in% paragraph_ends) {
+        content <- c(content, list(tags$p(paragraph)))
+        paragraph <- list()
+      }
     }
+    if (length(paragraph)) content <- c(content, list(tags$p(paragraph)))
   }
   widget <- as.character(tags$div(class = "annotated-report", role = "group",
     `aria-labelledby` = "sample-size-report-caption", content))

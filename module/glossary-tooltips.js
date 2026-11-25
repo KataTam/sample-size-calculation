@@ -39,7 +39,7 @@
     // controls and collapsed explanations free of nested links.
     const autoIds = new Set(['pico','alternative-hypothesis','null-hypothesis','alpha','beta',
       'statistical-power','confidence-interval','standard-deviation','standard-error',
-      'target-difference','clinical-threshold','binary-outcome','sampling-variability','precision','margin-of-error']);
+      'target-difference','clinical-threshold','binary-outcome','sampling-variability','precision','margin-of-error','score-test','wilson-interval']);
     const escape = text => text.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
     const aliases = entries.filter(e => autoIds.has(e.id)).flatMap(entry => entry.aliases.map(label => ({label,entry})))
       .sort((a,b) => b.label.length-a.label.length);

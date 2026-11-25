@@ -404,3 +404,10 @@ details.section-disclosure > summary > :is(h2,h3,h4,h5,h6) {
 
 #report-link {text-decoration:none;line-height:normal}
 #report-link:hover,#report-link:focus-visible {text-decoration:underline}
+
+/* Table headers are the explicit exception to regular-weight body labels. */
+body table thead th, body .page-inner table thead th {font-weight:600 !important;background:#dae6ef;border-bottom:2px solid #8298a6;}
+body.color-theme-1 table thead th, .book.color-theme-1 .page-inner table thead th {background:#e9dfce;color:#403b32;}
+.book.color-theme-2 .page-inner table thead th {background:#35495d;color:#f3f6f9;border-bottom-color:#8ba4b8;}
+.annotated-report p {margin-bottom:.8em;}
+@media print {table thead th {print-color-adjust:exact;-webkit-print-color-adjust:exact;}}

@@ -609,8 +609,8 @@
     {
       "id": "C065",
       "level": "advanced",
-      "front": "What does a 95% confidence interval mean across repeated studies?",
-      "back": "Under the model assumptions, about 95% of intervals calculated by the method would contain the true population value.",
+      "front": "What does 95% confidence mean if many new samples are collected?",
+      "back": "A procedure with 95% coverage would give intervals containing the true population value in about 950 of 1,000 new samples. As more samples are added, that fraction tends toward the coverage probability. The population value stays fixed while the intervals change.",
       "source": "https://katatam.github.io/sample-size-calculation/book/estimation-planning.html#estimation-foundations"
     },
     {

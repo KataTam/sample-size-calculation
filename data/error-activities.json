@@ -230,53 +230,67 @@
     "title": "Activity: Review an estimation sample size calculation report",
     "segments": [
       {
-        "text": "The survey will estimate the percentage of outpatient clinic patients needing an interpreter, assessed at their next appointment.",
+        "text": "The survey will estimate the percentage of adult outpatient clinic patients who need an interpreter at their next appointment. Patients will be selected at random from the appointment register, with one assessment per patient and the same question about interpreter need.",
         "error": false,
-        "explanation": "The population, quantity and assessment time are specified.",
+        "explanation": "The population, outcome, time point and selection method are stated. One assessment per patient supports a single population estimate.",
         "link": "estimation-planning.html#estimation-foundations",
-        "section": "The survey question"
+        "section": "Research question and sampling",
+        "break_before": true,
+        "heading": "Question and design"
       },
       {
-        "text": " "
-      },
-      {
-        "text": "With 80% power, 30% anticipated prevalence and a 6% margin of error, the sample size is 225.",
-        "error": true,
-        "explanation": "This estimates a population percentage with a chosen precision. Use 95% confidence and a margin of six percentage points. The normal approximation gives 1.96 squared times 0.30 times 0.70 divided by 0.06 squared, or 224.09, rounded upward to 225 completed assessments.",
+        "text": "Appointment records suggest that 30% of patients need an interpreter. A margin of six percentage points was selected so that language support can be planned to within approximately six patients per 100 appointments. The records cover the same clinic and patient group.",
+        "error": false,
+        "explanation": "The assumed percentage has a stated source, and the margin is linked to a practical decision. The date and reference for the appointment records would complete the evidence record.",
         "link": "estimation-planning.html#prevalence",
-        "section": "Prevalence sample size"
+        "section": "Assumptions and their justification",
+        "break_before": true,
+        "heading": "Assumptions and evidence"
       },
       {
-        "text": " "
-      },
-      {
-        "text": "The requirement is 225 patients per group.",
+        "text": "With 80% power, anticipated interpreter need of 30% and a margin of error of six percentage points, the normal approximation requires 225 completed assessments.",
         "error": true,
-        "explanation": "There is one population sample. The requirement is 225 completed assessments in total.",
+        "explanation": "The goal is a precise percentage estimate. This calculation needs a confidence level. The stated result uses 95% confidence: 1.96² × 0.30 × 0.70 / 0.06² = 224.09, rounded upward to 225. Replace “80% power” with “95% confidence.”",
         "link": "estimation-planning.html#prevalence",
-        "section": "Total sample size"
+        "section": "Confidence level and calculation",
+        "break_before": true,
+        "heading": "Calculation"
       },
       {
-        "text": " "
-      },
-      {
-        "text": "The recruitment target is 225, allowing for 10% nonresponse.",
+        "text": "The required sample is therefore 225 patients per group.",
         "error": true,
-        "explanation": "To obtain 225 completed assessments with 10% anticipated nonresponse, divide by 0.90. The target is 250 patients to approach.",
-        "link": "estimation-planning.html#estimation-report",
-        "section": "The completed report"
+        "explanation": "The survey samples one population. The requirement is 225 completed assessments in total.",
+        "link": "estimation-planning.html#prevalence",
+        "section": "Total sample size",
+        "break_before": true
       },
       {
-        "text": " "
-      },
-      {
-        "text": "The calculation was performed with an online calculator.",
+        "text": "The sample size was obtained using an online calculator. The final percentage will be reported with a 95% confidence interval.",
         "error": true,
-        "explanation": "Identify the calculator and version or access date, procedure, inputs and interval method. Another reader should be able to reproduce the calculation and check its assumptions.",
+        "explanation": "A reproducible record identifies the calculator, version or access date, planning formula and inputs. It also names the analysis interval, for example Wilson without continuity correction. A named interval makes the analysis reproducible.",
         "link": "estimation-planning.html#estimation-report",
-        "section": "Reproducible reporting"
+        "section": "Procedure and software",
+        "break_before": true
+      },
+      {
+        "text": "Allowing for 10% nonresponse, the clinic will approach 225 patients. This will provide 225 completed assessments.",
+        "error": true,
+        "explanation": "Ten of every 100 invited patients are expected not to respond. To obtain 225 completed assessments, the clinic should approach 225 / 0.90 = 250 patients. The report also needs the evidence supporting the nonresponse assumption.",
+        "link": "estimation-planning.html#estimation-report",
+        "section": "Recruitment allowance",
+        "break_before": true,
+        "heading": "Recruitment and conclusion"
+      },
+      {
+        "text": "The appointment register contains enough eligible patients for the planned invitations. Results will be expressed as the estimated number needing an interpreter per 100 clinic patients, with the interval showing uncertainty around that estimate.",
+        "error": false,
+        "explanation": "The report connects the sampling frame and planned estimate to staffing decisions. It should also state the recruitment period and check capacity for the corrected 250 invitations.",
+        "link": "estimation-planning.html#estimation-report",
+        "section": "Feasibility and interpretation",
+        "break_before": true
       }
     ],
-    "version": "2"
+    "version": 3,
+    "instructions": "Four passages need correction. Each selected passage explains what is sound or what should change."
   }
 }

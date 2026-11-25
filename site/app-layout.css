@@ -115,3 +115,6 @@ textarea.form-control { min-height:88px; resize:vertical; }
 .app-comparison .shiny-input-container {max-width:360px}
 .comparison-instruction {color:#234e70;margin:6px 0 12px}
 @media(max-width:600px){.app-activity-sequence{display:block}.app-activity-sequence li+li{margin-top:4px}}
+
+/* Header emphasis distinguishes table labels from data in app results. */
+.app-table thead th { font-weight:600; background:#dae6ef; border-bottom:2px solid #8298a6; }

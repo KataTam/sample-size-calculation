@@ -30,7 +30,7 @@ const base=process.argv[2]||'http://127.0.0.1:8769';
    assert.equal(await link.evaluate(el=>getComputedStyle(el).textDecorationStyle),'dashed');
    assert.equal(await link.evaluate(el=>getComputedStyle(el,'::after').content),'"?"');
    await link.hover();await page.locator('#glossary-tooltip:not([hidden])').waitFor();
-   assert.match(await page.locator('#glossary-tooltip').innerText(),id==='precision'?/narrower confidence interval/:/5 percentage points/);
+   assert.match(await page.locator('#glossary-tooltip').innerText(),id==='precision'?/narrower (?:confidence )?interval/:/5 percentage points/);
    await page.keyboard.press('Escape');
   }
   const term=page.locator('a[data-glossary-term="full-width"]:not(.no-glossary-tooltip)').first();

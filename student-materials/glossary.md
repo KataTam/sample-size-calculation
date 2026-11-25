@@ -87,7 +87,7 @@ The [two-means example](#two-means) illustrates individual variability; the [one
 <span id="confidence-interval">Confidence interval</span>
 : A confidence interval is a range of values compatible with the study data under the analysis assumptions. It shows uncertainty around an estimate. At the same confidence level, a narrower interval indicates greater precision. For a treatment difference, its position relative to zero and the clinical threshold helps you interpret the result; the [clinical interval examples](#interpret-a-confidence-interval-clinically) illustrate this.
 
-The 95% refers to the method: across repeated studies, about 95% of intervals calculated this way would contain the true population value, if the assumptions hold. Each study produces its own interval. The [methods record](#tutorial-methods) provides details of the interval calculations used in the apps.
+The 95% describes the procedure. If it has 95% coverage under the stated assumptions, about 950 of 1,000 new studies would produce intervals containing the population value. As more studies are added, that fraction tends toward the procedure's coverage probability. Each study produces its own interval. The [methods record](#tutorial-methods) provides details of the interval calculations used in the apps.
 
 <span id="full-width">Full interval width</span>
 : Full width is the upper confidence limit minus the lower. For a symmetric interval its half-width, or margin of error, is half the full width.
@@ -99,11 +99,11 @@ The 95% refers to the method: across repeated studies, about 95% of intervals ca
 
 ### Estimation {#estimation .core-heading .unnumbered}
 
-Estimation uses sample data to learn about a population quantity, such as a mean, a prevalence, or a between-group difference. A point estimate gives a single value; an interval estimate expresses uncertainty around it. Precision describes how much an estimate varies across repeated samples. For example, estimating prevalence is the task; seeking a 95% confidence interval with a margin of error of 5 percentage points sets a precision target. A study planned for hypothesis testing can also provide estimates and confidence intervals.
+Estimation uses sample data to learn about a population quantity, such as a mean, a prevalence, or a between-group difference. A point estimate gives a single value; an interval estimate expresses uncertainty around it. Precision describes how much an estimate varies when new samples of the same size are taken from the same population. For example, estimating prevalence is the task; seeking a 95% confidence interval with a margin of error of 5 percentage points sets a precision target. A study planned for hypothesis testing can also provide estimates and confidence intervals.
 
 ### Precision {#precision .core-heading .unnumbered}
 
-Precision describes how little an estimate varies across repeated samples; estimation is the process that produces the estimate. You can assess it using the standard error or, at a specified confidence level, the confidence-interval width. A smaller standard error or narrower interval indicates greater precision. A larger independent sample generally improves precision. Bias can still shift the estimate systematically away from the population value. Precision is also distinct from power, which concerns how often a specified test rejects the null under an assumed effect.
+Precision describes how little an estimate varies when new samples of the same size are taken from the same population; estimation is the process that produces the estimate. You can assess it using the standard error or, at a specified confidence level, the confidence-interval width. A smaller standard error or narrower interval indicates greater precision. A larger independent sample generally improves precision. Bias can still shift the estimate systematically away from the population value. Precision is also distinct from power, which concerns how often a specified test rejects the null under an assumed effect.
 
 ### Sampling variability {#sampling-variability .core-heading .unnumbered}
 
@@ -265,7 +265,7 @@ Simulation repetitions (B)
 
 ### Monte Carlo error {#monte-carlo-error .advanced-heading .unnumbered}
 
-Monte Carlo error is the random difference between a finite simulation estimate and the value approached with indefinitely many repetitions under the same assumptions. Two batches might estimate power at 79% and 81% even though the trial design and population are unchanged.
+Monte Carlo error is the random difference between a simulation estimate and the value approached as more and more trials are generated under the same assumptions. Two batches might estimate power at 79% and 81% even though the trial design and population are unchanged.
 
 The Monte Carlo standard error (MCSE) describes variation between independent batches. For a simulated rejection fraction $\hat p$ from $B$ independent trials, $\mathrm{MCSE}=\sqrt{\hat p(1-\hat p)/B}$. More repetitions reduce this uncertainty while each trial retains its original power. The [simulation-precision section](#precision-of-a-simulation) gives a worked example and distinguishes this uncertainty from sampling variability within a trial.
 
@@ -317,7 +317,19 @@ The Central Committee on Research Involving Human Subjects directly reviews spec
 
 ### Wilson score interval {#wilson-interval .advanced-heading .unnumbered}
 
-The Wilson score interval estimates a population proportion from an observed event count and sample size. It is obtained by inverting the score test for that proportion. Its limits stay between 0% and 100%, and its margins can be unequal. Its coverage is generally more reliable than the simple symmetric normal interval, particularly with small samples or proportions near zero or one [@brown2001interval]. The [prevalence example](#estimation-report) uses a normal approximation for initial planning and Wilson intervals for analysis.
+A Wilson interval gives a range for a population percentage from the observed event count. Both Wilson and the simple normal (Wald) interval use a normal critical value, such as 1.96 for 95% confidence. They use it differently. The Wald interval starts at the observed percentage and adds the same margin on both sides. Wilson checks which candidate population percentages are compatible with the observed count using a [score test](#score-test). Its limits stay within 0% and 100%, and the margins can differ [@brown2001interval].
+
+![Normal (Wald) and Wilson 95% intervals for the same patient counts. Dots mark the observed percentages. With 50 events in 100 patients, the intervals are similar. With one event in 20 patients, the normal lower limit is negative. With zero events in 20, the normal interval collapses to zero, while Wilson still allows population percentages up to about 16%.](../figures/wald-wilson-intervals.png)
+
+The normal formula is useful for understanding interval width and initial sample size planning. For an observed percentage, Wilson is a useful routine choice, including for common outcomes. Its advantages are particularly visible with small samples or percentages near 0% or 100%. A zero count in 20 patients still leaves uncertainty about events in the population. For very rare outcomes or requirements for conservative coverage, an exact binomial interval may be appropriate. The method should be named in the analysis plan [@brown2001interval; @nistbinomial].
+
+The [prevalence example](#estimation-report) uses the normal approximation for initial planning and Wilson intervals for the completed survey. Comparing these methods helps explain why planning and analysis procedures are recorded separately.
+
+### Score test {#score-test .advanced-heading .unnumbered}
+
+A score test compares the observed result with the variation expected if the null hypothesis were true. For the neuropathic pain comparison, the null claims equal population relief percentages. The pooled score test estimates this common percentage by combining the relief counts from both groups, then asks how unusual their observed difference would be under that equality assumption. The tutorial uses a two-sided test without continuity correction [@pass2022].
+
+For one percentage, a score test can instead assess a proposed population value, such as 20% prevalence. The Wilson 95% interval contains the proposed values that the two-sided score test would retain at a 5% significance threshold [@brown2001interval].
 
 ### Continuity correction {#continuity-correction .advanced-heading .unnumbered}
 

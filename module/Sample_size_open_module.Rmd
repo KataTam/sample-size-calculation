@@ -280,16 +280,16 @@ These scenarios give the error probabilities their meaning:
 <details class="misconception" id="misconception-power-meaning">
 <summary>Common misconception: 90% power means a 90% probability that the treatment works</summary>
 
-Power assumes a particular true difference and describes the planned test's performance across repeated studies. A study with 90% power can still miss that difference.
+Suppose the population relief percentages really are 60% with neravixa and 30% with duloxetine. A design with 90% power would detect a difference in about 900 of 1,000 trials conducted under those assumptions. As more trials are added, the detected fraction tends toward the test's power, with smaller random fluctuations. This calculation assumes the population difference when evaluating the test.
 
 </details>
 
 A false positive could contribute to adopting a treatment that adds burden without improving pain relief. A false negative could delay recognition of a worthwhile benefit. These consequences, alongside methodological and regulatory guidance, inform the chosen error probabilities. The neuropathic pain plan uses a two-sided Type I error probability of 5% and 90% power at the 30-point target difference.
 
 <details class="misconception" id="misconception-Type I error probability-meaning">
-<summary>Common misconception: Type I error probability of 5% means a significant result has a 5% probability of being a false positive</summary>
+<summary>Common misconception: a significant result has only a 5% probability of being a false positive</summary>
 
-The 5% probability applies to studies in which the null hypothesis is true. The percentage of significant findings that are false positives also depends on how often real differences exist and on the studies' power.
+The 5% refers to trials where the population relief percentages are equal. In 1,000 such trials, a test with a 5% false-positive probability would give about 50 significant results. To ask how many significant findings are false positives also requires information about how often treatments truly differ and how much power the studies have.
 
 </details>
 
@@ -349,7 +349,7 @@ These trials share population probabilities, group sizes, allocation and testing
 
 ### Many trials and a larger sample {.core-heading}
 
-Repeating the trial 5,000 times shows a range of possible sample differences. As a rule, larger samples produce less variable estimates. Across repeated trials, their estimates are more tightly clustered around the population difference.
+Repeating the trial 5,000 times shows a range of possible sample differences. As a rule, larger samples produce less variable estimates. The 5,000 estimates from larger samples form a tighter cluster around the population difference. Separately, as more simulated trials are added at any fixed sample size, their average difference tends toward the known 30-point population difference. More repetitions make the simulation summary more stable.
 
 ```{r three-samples}
 # c() collects the three patient counts to compare.
@@ -547,9 +547,9 @@ These are patients with an outcome available for analysis. The recruitment allow
 The normal approximation targets 90% power under these assumptions. Simulation can examine the performance of the planned test.
 
 <details class="misconception" id="misconception-definitive-sample">
-<summary>Common misconception: a sample size calculator gives a minimum participant count that applies regardless of the planning assumptions</summary>
+<summary>Common misconception: the calculator gives one correct sample size for my research question</summary>
 
-The calculated sample size depends on the effect, event probabilities or variability, error targets and analysis method you specify. It is a conditional planning result. You should check plausible alternative assumptions and whether the reported number is per group or for the whole study before interpreting it.
+For the neuropathic pain trial, 60% versus 30% relief requires 56 patients per group. Planning for 50% versus 30% requires more patients at the same power and Type I error probability. The result follows from the entered assumptions. The report should identify those assumptions and whether the count is per group or total.
 
 </details>
 
@@ -732,7 +732,25 @@ knitr::kable(data.frame(`Analyzable per group`=rehabilitation_plan$n, `Analyzabl
 <details id="rehabilitation-report">
 <summary>Example report for the mean-score comparison</summary>
 
-The trial compares mean six-week mobility improvement between two equally sized, independent rehabilitation groups using a pooled two-sample t test. A target difference of 3 score units, common SD of 5, two-sided Type I error probability of 5%, and 90% power require `r rehabilitation_plan$n` analyzable patients per group. Allowing for 5% unavailable outcomes gives `r ceiling(rehabilitation_plan$n / .95)` recruits per group (`r 2 * ceiling(rehabilitation_plan$n / .95)` total). The calculation uses R `r report_example$r_version`, stats `r report_example$stats_version`, and `power.t.test()` with `type = "two.sample"`, `alternative = "two.sided"` and `strict = TRUE`.
+<div class="annotated-report" role="group" aria-label="Sample size calculation report for the rehabilitation trial">
+
+<p class="report-part">Question and design</p>
+
+<span class="report-mark">Question and outcome:</span> The trial compares mean improvement in mobility scores six weeks after starting the novel or standard rehabilitation program. <span class="report-mark">Allocation and analysis unit:</span> Participants are individually randomized 1:1, with one improvement score per participant and independent treatment groups.
+
+<p class="report-part">Assumptions and evidence</p>
+
+<span class="report-mark">Target difference and variability:</span> The calculation uses a 3-unit difference and a common SD of 5 units, corresponding to a standardized difference of 0.60. The report should identify the clinical basis for three units and the studies supporting the SD on this outcome scale. <span class="report-mark">Sensitivity analysis:</span> An SD of 7 would increase the requirement to `r sample_size_two_means(3, 7, .05, .90)` patients per group, with the other inputs unchanged.
+
+<p class="report-part">Calculation</p>
+
+<span class="report-mark">Procedure:</span> A two-sided pooled two-sample t test, with a 5% Type I error probability and 90% target power at a 3-unit difference. <span class="report-mark">Software:</span> R `r report_example$r_version`, stats `r report_example$stats_version`, and `power.t.test(delta=3, sd=5, sig.level=.05, power=.90, type="two.sample", alternative="two.sided", strict=TRUE)`. <span class="report-mark">Required sample:</span> Rounding upward gives `r rehabilitation_plan$n` analyzable patients per group, or `r 2*rehabilitation_plan$n` in total.
+
+<p class="report-part">Recruitment and conclusion</p>
+
+<span class="report-mark">Recruitment:</span> Allowing for 5% unavailable six-week outcomes gives `r ceiling(rehabilitation_plan$n/.95)` recruits per group (`r 2*ceiling(rehabilitation_plan$n/.95)` total). The loss assumption and recruitment period should be supported by follow-up and screening records. <span class="report-mark">Intended conclusion:</span> The trial evaluates whether mean improvement differs between the programs. The observed difference and its uncertainty will inform its clinical interpretation.
+
+</div>
 
 </details>
 
@@ -820,9 +838,9 @@ render_app_preview("recruitment", "Use your analyzable count and one expected lo
 
 
 <details class="misconception" id="misconception-dropout">
-<summary>Common misconception: recruiting extra participants removes bias caused by missing outcomes</summary>
+<summary>Common misconception: recruiting extra patients removes bias caused by missing outcomes</summary>
 
-Recruiting extra participants can help preserve the analyzable sample size and statistical power. Addressing missing-data bias requires prevention, appropriate analysis, and sensitivity analyses alongside the recruitment allowance [@little2012missing].
+Suppose patients with persistent pain are more likely to miss follow-up. The observed relief percentage may then be too high, even after extra patients are recruited. Preventing missing outcomes and choosing an appropriate analysis address this problem [@little2012missing].
 
 </details>
 
@@ -841,9 +859,9 @@ draw_recruitment_funnel()
 At this rate, recruiting `r 2 * recruit_per_group` patients would take `r ceiling(2 * recruit_per_group / 15)` whole months. The report should also consider site-opening delays and a slower recruitment scenario. The section [Choosing plausible assumptions](#st01-expectations) examines the evidence behind recruitment forecasts, while [Options when the study provides insufficient information](#what-if-the-study-is-too-small-for-its-purpose) discusses changes to the design or recruitment plan.
 
 <details class="misconception" id="lasagnas-law">
-<summary>Common misconception: a clinic with many patients will necessarily recruit enough eligible, consenting participants</summary>
+<summary>Common misconception: a busy clinic will easily recruit enough patients for a trial</summary>
 
-*Lasagna's law* describes the tendency to overestimate how many patients will actually be available for a study. Eligibility criteria, willingness to participate, competing studies and practical barriers reduce the pool. A recruitment forecast should follow these steps using recent screening and enrollment records [@lasagna1979].
+*Lasagna's law* describes overestimating how many patients are available for a study. In the screening funnel, 100 potentially relevant patients per month becomes 15 recruits after eligibility, competing demands and consent are considered. Recent screening records should support the recruitment forecast [@lasagna1979].
 
 </details>
 
@@ -1012,20 +1030,20 @@ Suppose a survey estimates neuropathy prevalence as 20%, with a symmetric 95% co
 draw_interval_margin()
 ```
 
-The confidence level describes the statistical procedure used to calculate the interval from sample data. Imagine repeatedly sampling new patients from the same population and applying that procedure each time. Under its assumptions, a 95% confidence procedure produces intervals containing the population value about 95% of the time over a long sequence of repetitions. The population value stays fixed while the samples and their intervals change.
+The confidence level describes the statistical procedure used to calculate the interval from sample data. Imagine repeatedly sampling new patients from the same population and applying that procedure each time. If the procedure has 95% coverage under those assumptions, about 950 of 1,000 intervals would contain the population value. With more repetitions, the observed fraction tends toward the procedure's coverage probability. The population value stays fixed while the samples and their intervals change.
 
 Each row in Figure \@ref(fig:twenty-prevalence-intervals) represents a separate simulated sample of 246 patients from the same clinic population, where 20% have neuropathy. Different samples include different patients, so the observed percentages vary. Each dot shows one sample's percentage; its horizontal line is a 95% confidence interval calculated from those patients to describe uncertainty about the population percentage.
 
-The vertical line marks the known population value of 20%. In this illustrated batch, 19 green intervals contain it and one red interval misses it. The number containing it varies between batches. The 95% describes this long run behaviour. It does not require exactly 19 successes in each batch of 20. Repeated sampling is a way to interpret the procedure, and does not require the clinic to conduct its survey repeatedly.
+The vertical line marks the known population value of 20%. In this illustrated batch, 19 green intervals contain it and one red interval misses it. The number containing it varies between batches. Over many such surveys, the fraction of intervals containing 20% would approach the coverage probability of this interval procedure. The clinic conducts one survey. Imagining many surveys explains what the confidence level describes.
 
 ```{r twenty-prevalence-intervals, echo=FALSE, fig.width=8, fig.height=6.4, fig.cap="Twenty simulated clinic samples of 246 adults, with population neuropathy prevalence fixed at 20%. Nineteen green intervals contain 20%; one red interval misses it. Circles and a cross distinguish the two outcomes as well as color. This batch illustrates the repeated-study meaning of 95% confidence.", fig.alt="Twenty horizontal confidence intervals around estimates from simulated clinic samples. A vertical line marks population neuropathy prevalence of 20%. Nineteen green intervals cross the line; one red interval, marked by a cross, lies entirely below it."}
 draw_prevalence_coverage()
 ```
 
 <details class="misconception" id="misconception-confidence-probability">
-<summary>Common misconception: a 95% confidence interval assigns a 95% probability to the population prevalence lying within its calculated limits</summary>
+<summary>Common misconception: there is a 95% probability that prevalence lies between the observed limits of 15% and 25%</summary>
 
-For the survey example above, the calculated confidence interval has fixed limits of 15% and 25%, and the population percentage is also fixed. The 95% describes how often the method produces an interval containing that percentage across repeated studies. It does not assign a probability to the population percentage lying inside these particular limits.
+Those limits come from one survey. To understand 95% confidence, imagine 1,000 new surveys from the same population, each producing its own interval. A procedure with 95% coverage would include the population prevalence in about 950 of them. The fraction becomes more stable as more surveys are added. The particular interval from 15% to 25% either contains the population prevalence or misses it.
 
 </details>
 
@@ -1091,13 +1109,27 @@ An estimation plan identifies the population quantity, outcome and assessment ti
 
 The report below follows the study-size and statistical-method reporting items in STROBE and the precision-based approach in the published neuropathy study [@strobe2007; @negussie2024].
 
-The normal approximation above gives an initial sample size from the anticipated percentage and desired margin. The analysis of the completed survey uses a [Wilson score interval](#wilson-interval). This interval is obtained from a score test for one population proportion and stays within 0% and 100%. Its coverage is generally more reliable than the simple symmetric normal interval, particularly with small samples or percentages near these limits [@brown2001interval]. Its two margins can differ. The report identifies both the planning approximation and the interval used for the observed data.
+The normal approximation gives an initial sample size from the anticipated percentage and desired margin. The completed survey will use a [Wilson score interval](#wilson-interval), which stays within 0% and 100% and allows different margins on either side of the estimate. It is based on a [score test](#score-test). The glossary illustration compares Wilson and normal intervals using the same patient counts [@brown2001interval]. The report records the planning method and analysis interval separately.
 
 <div class="annotated-report" id="estimation-report-example" role="group" aria-labelledby="estimation-report-caption">
 
 <p class="caption" id="estimation-report-caption">Example 4.1. Sample size calculation report for the neuropathy prevalence survey.</p>
 
-Peripheral neuropathy prevalence will be estimated among adults with type 2 diabetes attending the clinic, using one assessment per patient at enrollment. Patients will be selected by simple random sampling from the clinic register. With anticipated prevalence of 20%, 95% confidence and a margin of error of five percentage points, the single-proportion normal approximation gives $1.96^2\times0.20\times0.80/0.05^2=245.86$, rounded upward to 246 completed assessments. The margin was chosen to support workload planning to within approximately five affected patients per 100 clinic patients. If about five of every 100 invited patients do not participate, $\lceil246/0.95\rceil=259$ eligible patients will be approached to obtain approximately 246 completed assessments. The observed prevalence will be reported with a 95% Wilson confidence interval. The calculation uses R `r getRversion()`, `stats::qnorm(0.975)` and the formula shown; the interval uses the Wilson score method without continuity correction. The inputs and commented code are retained with the calculation record.
+<p class="report-part">Question and design</p>
+
+<span class="report-mark">Research question and population:</span> What percentage of adults with type 2 diabetes attending the clinic have peripheral neuropathy? <span class="report-mark">Outcome and sampling:</span> Peripheral neuropathy will be assessed once per patient at enrollment using the same diagnostic criteria. A simple random sample will be drawn from the clinic register, with one observation per patient.
+
+<p class="report-part">Assumptions and evidence</p>
+
+<span class="report-mark">Anticipated prevalence:</span> The calculation uses 20%, approximately one patient in five, informed by the clinic study motivating this service plan [@negussie2024]. <span class="report-mark">Precision target:</span> A 95% confidence interval with a margin of error of five percentage points is intended to support workload planning to within approximately five affected patients per 100 clinic patients. Its full width is ten percentage points. <span class="report-mark">Sensitivity analysis:</span> An anticipated prevalence of 25% would require 289 completed assessments under the same normal approximation. The selected prevalence and its relevance to the clinic population will be reviewed before recruitment.
+
+<p class="report-part">Calculation</p>
+
+<span class="report-mark">Planning procedure and software:</span> The single-proportion normal approximation uses $n=z_{0.975}^2p(1-p)/d^2$, with $p=0.20$ and $d=0.05$, implemented in R `r getRversion()` with `stats::qnorm(0.975)`. <span class="report-mark">Required sample:</span> The unrounded result is 245.85336, rounded upward to 246 completed assessments in total. <span class="report-mark">Planned analysis:</span> The observed percentage will be reported with a two-sided 95% Wilson score interval without continuity correction. The planning formula, inputs and software record are retained with the report.
+
+<p class="report-part">Recruitment and conclusion</p>
+
+<span class="report-mark">Nonresponse:</span> Allowing for five nonparticipants per 100 invited patients gives $\lceil246/0.95\rceil=259$ eligible patients to approach. <span class="report-mark">Feasibility:</span> The clinic register and appointment schedule will be checked for this number of eligible patients. <span class="report-mark">Intended use:</span> The prevalence estimate and its interval will inform the number of patients likely to need neuropathy care in a comparable clinic population.
 
 </div>
 
@@ -1122,7 +1154,15 @@ n\approx\left(\frac{z_{1-\alpha/2}\sigma}{d}\right)^2.
 (\#eq:single-mean-precision)
 \end{equation}
 
-With SD $\sigma=5$ and a margin of 2 score units (full width 4), Equation \@ref(eq:single-mean-precision) gives $(1.96\times5/2)^2=24.01$, rounded upward to 25 completed observations. The app refines this calculation for a t interval, whose width also reflects estimation of the SD from the sample.
+With SD $\sigma=5$ and a margin of 2 score units (full width 4), substituting into Equation \@ref(eq:single-mean-precision) gives:
+
+\begin{equation}
+n\approx\left(\frac{1.96\times5}{2}\right)^2=24.01
+\quad\Longrightarrow\quad n=25.
+(\#eq:single-mean-worked)
+\end{equation}
+
+The researchers would initially plan for 25 completed assessments. The app refines this calculation for a t interval, allowing for estimation of the SD from the sample. Its expected-width criterion requires 26 completed assessments, as explained below.
 
 With an assumed SD of 5 units, [Activity: Estimate a population mean with a precision target](https://katatam.github.io/sample-size-calculation/book/estimation-planning.html#activity-mean_precision) finds the smallest total sample meeting this target. The calculation uses the confidence level, SD and desired width. The population mean used in simulation is 3 units, which supplies a known value for checking the intervals.
 
@@ -1230,9 +1270,9 @@ The confidence intervals in Figure \@ref(fig:clinical-interval-plot) concern the
 Clinical interpretation also considers harms, burden, and the credibility of the study [@sandoval2025].
 
 <details class="misconception" id="misconception-power-precision">
-<summary>Common misconception: high power to detect a treatment difference guarantees a confidence interval narrow enough for clinical decisions</summary>
+<summary>Common misconception: 90% power means the trial will show whether the pain relief is large enough to matter</summary>
 
-For example, the interval from 2 to 28 percentage points in Figure \@ref(fig:clinical-interval-plot) excludes zero, but spans benefits below and above the 20 point clinical threshold. The result gives evidence of a treatment difference while leaving its clinical importance uncertain. Power describes the chance of rejecting the null under a specified difference. Precision describes the uncertainty around the estimated difference. Planning can consider both properties.
+The neuropathic pain trial is planned to detect a difference if the true benefit is 30 additional patients with relief per 100 treated. Suppose its observed interval instead runs from 2 to 28 additional patients per 100, as in Figure \@ref(fig:clinical-interval-plot). That result supports a treatment difference, while leaving uncertainty about whether it exceeds the clinical threshold of 20 per 100. Planning for power and planning for a narrow interval answer different questions.
 
 </details>
 
@@ -1417,9 +1457,9 @@ plot_power_curves(curve_table, target_power, analyzable_cap)
 In Table \@ref(tab:cap-table) and Figure \@ref(fig:power-curves), filled circles identify power at the vertical line of 100 patients per group. Open circles identify the patient counts where each curve reaches the horizontal line of 90% power. For the 20 point difference, the filled circle gives about 83% power at 100 patients per group. The open circle gives 124 patients per group for 90% power. Smaller differences are harder to distinguish from sampling variation. Increasing the sample reduces that variation, helping the test detect a smaller difference. [Chapter 2](#how-error-rates-and-power-affect-sample-size) explains this relationship.
 
 <details class="misconception" id="misconception-detection-boundary">
-<summary>Common misconception: a study cannot detect a treatment difference smaller than the target difference used to plan its sample size</summary>
+<summary>Common misconception: a trial planned for a 30-point benefit cannot detect a 20-point benefit</summary>
 
-The target difference used in a sample size calculation is not a detection cutoff. A smaller true difference can still produce a statistically significant result, with lower power under otherwise unchanged assumptions. In the neuropathic pain example in Figure \@ref(fig:power-curves), 100 patients per group give about 99% power at a true difference of 30 percentage points, 83% at 20 points and 59% at 15 points. Detecting a difference here means rejecting the null hypothesis of equal population relief percentages.
+A 20-point benefit can produce a statistically significant result. With 100 patients per group in Figure \@ref(fig:power-curves), power is about 99% at a true 30-point benefit, 83% at 20 points and 59% at 15 points. The target difference identifies where power was evaluated when choosing the sample size.
 
 </details>
 
@@ -1487,9 +1527,9 @@ With 8 rather than 7 patients reporting relief, the result becomes statistically
 Notice that the [clinical threshold](#clinical-threshold) remains 20 percentage points. What patients would consider a worthwhile improvement does not change because your pilot happens to contain only 10 patients per group.
 
 <details class="misconception" id="misconception-significance">
-<summary>Common misconception: a statistically significant treatment difference always represents a clinically worthwhile benefit</summary>
+<summary>Common misconception: a statistically significant benefit must be large enough to matter to patients</summary>
 
-A non-significant result can remain compatible with both no effect and a worthwhile benefit. A statistically significant difference can still be too small to matter to patients. You can examine the estimated difference and its [confidence interval](#confidence-interval) against both zero and the clinical threshold.
+An interval of 2 to 28 additional patients with relief per 100 treated excludes no benefit. It also includes benefits below the 20-per-100 clinical threshold. Statistical significance alone leaves that clinical judgment unresolved. The section [Clinical interpretation of a confidence interval](#interpret-a-confidence-interval-clinically) compares these values visually.
 
 </details>
 
@@ -1536,13 +1576,13 @@ Figure \@ref(fig:pain-critical-effect) shows how the observed significance bound
 
 The significance boundary concerns an observed result. [Power](#statistical-power) concerns the performance of the planned study: *If the true treatment difference is 30 percentage points, how likely is your study to produce a statistically significant result?*
 
-Different samples will give different observed differences, even when the true treatment effect remains the same. Some will be larger and others smaller. A power calculation takes this variation into account. The [simulation activities](https://katatam.github.io/sample-size-calculation/book/clinical-question.html#activity-pain_one_many) explore this probability across repeated studies.
+Different samples will give different observed differences, even when the true treatment effect remains the same. Some will be larger and others smaller. A power calculation takes this variation into account. The [simulation activity](https://katatam.github.io/sample-size-calculation/book/clinical-question.html#activity-pain_one_many) estimates this probability by counting how many of thousands of trials detect a difference.
 
 The observed significance boundary and the true difference used to evaluate power answer different questions [@lakens2022; @superpowerbook2022]. The [clinical interpretation of the interval](#interpret-a-confidence-interval-clinically) considers whether benefits below the clinical threshold remain compatible with the data.
 
 ### Type I and Type II error probabilities as areas {#alpha-beta .advanced-heading}
 
-This separate example uses one group to make the error probabilities easier to draw. Imagine repeatedly sampling 25 patients and calculating their mean systolic blood pressure. The curves show the distribution of sample means across repeated studies. One curve assumes a population mean of 120 mmHg; the other assumes 125 mmHg. These are sampling distributions of the mean.
+This separate example uses one group to make the error probabilities easier to draw. Imagine repeatedly sampling 25 patients and calculating their mean systolic blood pressure. Imagine collecting thousands of such samples and plotting one mean from each. The curves describe the distribution approached as more sample means are added. One curve assumes a population mean of 120 mmHg; the other assumes 125 mmHg. These are sampling distributions of the mean.
 
 [Standard deviation](#standard-deviation){.no-glossary-tooltip} (SD) describes how much individual patients differ. [Standard error](#standard-error){.no-glossary-tooltip} (SE) describes how much an estimated mean would vary if you repeated the study with new patients. If individual blood pressures have a known SD of 15 mmHg, the mean from 25 independent patients has an SE of $15/\sqrt{25}=3$ mmHg. With 100 patients, the SE falls to 1.5 mmHg. Increasing the sample size reduces the standard error of the mean while the population SD remains fixed.
 
@@ -1731,9 +1771,9 @@ Your justification should state the available sample, the plausible assumptions 
 <span id="sensitivity-is-not-observed-post-hoc-power"></span>
 
 <details class="misconception" id="misconception-observed-power">
-<summary>Common misconception: recalculating power from a completed study's observed effect provides new evidence about its result</summary>
+<summary>Common misconception: the observed treatment difference can tell me how much power my completed trial had</summary>
 
-Substituting the study's observed effect into a power calculation adds no independent evidence about that same result. Interpretation of a completed study uses the estimate, confidence interval, design and limitations, as explained in [clinical interpretation](#interpret-a-confidence-interval-clinically). Sensitivity analysis assesses the design using independently justified population assumptions [@consortee2025; @lakens2022].
+A trial may observe a large difference partly because of sampling variability. Entering that result into a power calculation simply restates information already reflected in its p value. The estimate and confidence interval describe the result. To assess the design, power can be calculated at independently justified differences, such as the prespecified 20- and 30-point benefits [@consortee2025; @lakens2022].
 
 </details>
 
@@ -1814,7 +1854,7 @@ knitr::kable(data.frame(Group=c("Standard treatment", "Novel treatment"), Patien
 
 ### Step 2: apply the planned analysis {.advanced-heading}
 
-Each simulated trial is analyzed using a two-sided pooled score test without continuity correction. The helper also calculates a Newcombe-Wilson interval for the risk difference [@newcombe1998]. The score test evaluates zero difference using a pooled estimate of the event probability under that null. The Newcombe–Wilson interval combines Wilson limits for the two separate proportions. It is not obtained by inverting this pooled test, so rejection and interval exclusion of zero can occasionally disagree near the decision boundary. Record the named test and interval procedure, as shown in the [methods table](#tutorial-methods).
+Each simulated trial is analyzed using a two-sided pooled [score test](#score-test) without continuity correction. The helper also calculates a Newcombe-Wilson interval for the risk difference [@newcombe1998]. The score test evaluates zero difference using a pooled estimate of the event probability under that null. The Newcombe–Wilson interval combines Wilson limits for the two separate proportions. It is not obtained by inverting this pooled test, so rejection and interval exclusion of zero can occasionally disagree near the decision boundary. Record the named test and interval procedure, as shown in the [methods table](#tutorial-methods).
 
 ```{r analyze-trial}
 # Analyze the relief counts using the tutorial's binary-outcome helper.
@@ -1873,9 +1913,9 @@ knitr::kable(display_simulation_summary(simulation_summary(trials)),
 The percentage of statistically significant simulated results estimates [power](#statistical-power) under these assumptions. Coverage is the percentage of [confidence intervals](#confidence-interval) containing the true population difference assumed in the simulation. The percentage meeting the width target counts intervals with a full width no greater than 30 [percentage points](#percentage-points). Full width is the upper limit minus the lower limit. An interval from 12 to 38 percentage points has width $38-12=26$ points and meets that target. Power, coverage and width attainment describe three separate properties.
 
 <details class="misconception" id="misconception-simulation-repetitions">
-<summary>Common misconception: simulating more trials increases the power of each trial without adding patients</summary>
+<summary>Common misconception: running 5,000 simulations gives each trial more power than running 20</summary>
 
-Increasing the number of simulated studies makes the estimated probability of a statistically significant result more precise. Increasing the patients per group changes the study; increasing the simulation repetitions improves your numerical description of it.
+With 20 patients per group in every trial, adding simulations gives a more stable estimate of how often that design detects a difference. As thousands of trials accumulate, the detected fraction tends toward the power of the simulated test. Increasing the patients per group changes the information available within each trial and can increase its power.
 
 </details>
 
@@ -2031,7 +2071,7 @@ The neuropathic pain simulations in this chapter each use one final analysis. A 
 
 An [interim futility rule](#futility) specifies when accumulating evidence gives too little prospect of meeting the planned success criterion to justify continuing. For example, a prespecified rule might stop recruitment if a calculated conditional probability of eventual success falls below a chosen threshold. That rule and its assumptions need evaluation with the final analysis.
 
-The evaluation should include scenarios with no treatment difference to estimate false-positive probability, and plausible beneficial differences to estimate power. With [several confirmatory claims](#multiple-outcomes-comparisons), it should also consider scenarios where some null hypotheses are true and others are false. Useful summaries include the probability of stopping at each stage, the expected sample size and its distribution, and the accuracy of effect estimates and confidence intervals. These are operating characteristics: how the complete design behaves across repeated studies [@iche91998; @fdaadaptive2019].
+The evaluation should include scenarios with no treatment difference to estimate false-positive probability, and plausible beneficial differences to estimate power. With [several confirmatory claims](#multiple-outcomes-comparisons), it should also consider scenarios where some null hypotheses are true and others are false. Useful summaries include the probability of stopping at each stage, the expected sample size and its distribution, and the accuracy of effect estimates and confidence intervals. These are operating characteristics: how the complete design would behave if many trials were conducted under the same assumptions [@iche91998; @fdaadaptive2019].
 
 For example, a proposed interim look in the neuropathic pain trial would require a simulation that includes four-week outcome availability, the stopping boundary and any recruitment already underway when a decision is made. The current [neuropathic pain simulation activity](https://katatam.github.io/sample-size-calculation/book/simulation.html#activity-pain_simulation) illustrates the fixed-sample workflow. Evaluating interim decisions requires a design-specific implementation with a statistician and the [additional reporting record](#complex-design-record).
 
@@ -2080,7 +2120,7 @@ render_chapter_quiz("study-designs")
 After this chapter, you should be able to:
 
 - Explain how computational reproducibility, replication and open science support scrutiny of research.
-- Choose software suited to the analysis and compare results using matching methods, assumptions and settings.
+- Validate a sample size calculation using a second implementation, expected input–output relationships and documented settings.
 - Specify the protocol, SAP, software and amendment records needed to check a calculation.
 - Reproduce a saved result and document changes when adapting it to another study.
 :::
@@ -2202,6 +2242,32 @@ For a planned analysis of covariance (ANCOVA), baseline adjustment introduces fu
 render_error_activity("software")
 ```
 
+## Validating a sample size calculation {#validating-calculations .advanced-heading}
+
+Before a calculation enters a protocol, it should be checked against an independent implementation or a published worked example using the same method. This is especially valuable when an unfamiliar procedure produces a number that is difficult to judge from experience. For open source software, the documentation, source code, tests and version history make these checks possible. A package's availability alone provides little information about how thoroughly its particular procedure has been checked. Commercial software also requires the correct procedure and settings [@gpowermanual2023; @pass2022].
+
+The check should cover three questions:
+
+1. Does the procedure represent the planned study? The outcome, independent or paired observations, allocation, hypothesis and analysis should match. The input scale matters, as the [Cohen's d and f example](#gpower-assumptions) demonstrates.
+2. Does the result behave as expected? In the basic comparisons, a smaller target difference or higher target power requires more patients when other inputs stay fixed. For a single-proportion normal calculation, halving the margin of error multiplies the unrounded sample by four. Per-group counts, total counts and recruitment allowances should be checked separately.
+3. Can the number be reproduced? A second calculation should match the inputs, tails, approximation, continuity correction and rounding. Any remaining discrepancy should be explained before the result is used. For a complex design, simulation of the planned analysis can check power and false-positive probability, with enough repetitions to quantify simulation uncertainty.
+
+The following calculations were run in G\*Power 3.1.9.7 and PASS 2022 version 22.0.8 on 25 November 2026. The two-group calculations use equal allocation, two-sided tests, a 5% Type I error probability and 90% target power. Counts are analyzable participants, before recruitment allowances. The G\*Power precision cells are marked “Not compared” because these checks used PASS's dedicated confidence interval procedures.
+
+| Tutorial example and procedure | Tutorial result | G\*Power procedure and result | PASS 2022 procedure and result | Interpretation |
+|:--|:--|:--|:--|:--|
+| Two proportions, 60% versus 30%, pooled score test planning approximation | 56 per group, 112 total | z tests: Difference between two independent proportions, no arcsine transform or continuity correction. 56 per group | Tests for Two Proportions, Normal Approximation, Z-Test (Pooled). 56 per group | Matching methods agree. Calculated power after rounding is 90.165% in all three implementations. |
+| Same two-proportion inputs with a continuity correction | Uncorrected tutorial: 56 per group | Same procedure with continuity correction selected. 62 per group | Not compared with this setting | The correction changes the calculation. The extra six per group reflect a method choice. |
+| Two means, difference 3, common SD 5, pooled two-sample t test | 60 per group, 120 total | t tests: Difference between two independent means, d = 0.60. 60 per group | Two-Sample T-Tests Assuming Equal Variance. 60 per group | Matching methods agree, with calculated power 90.312% after rounding. The teaching normal approximation gives 59 per group because it treats the SD as known. |
+| One percentage, anticipated 20%, 95% confidence, full width 10 percentage points | 246 total | Not compared | Confidence Intervals for One Proportion, Simple Asymptotic, two-sided, width 0.10. 246 total | Matching normal approximations agree. The width at this count and the assumed percentage is 9.997 percentage points. |
+| One mean, SD 5, 95% confidence, full width 4 units | Normal illustration: 25 total. App's expected t-interval width: 26 total | Not compared | Confidence Intervals for One Mean, unknown SD, distance to limits 2. 27 total | PASS holds the entered sample SD at 5. The app averages width over the sample SD's normal-sampling distribution. These are different width criteria. |
+
+Table: (\#tab:software-validation) Direct software checks of the tutorial's basic calculation examples. Exact procedure names and settings are retained in the [validation record](https://katatam.github.io/sample-size-calculation/documentation/software-validation.html).
+
+For the mean example, the app's expected full width is approximately 3.999 units at 26 observations. PASS's full width is approximately 3.956 units at 27 observations when the sample SD is fixed at 5. The normal illustration uses the 1.96 multiplier and gives 25. These differences can be understood from the stated methods [@pass2022].
+
+A useful validation record retains the original inputs, software versions, both outputs and the reason for agreement or disagreement. For open source functions, the saved test should be rerun after a relevant code or package update. Agreement supports the numerical implementation. Whether the assumptions represent the intended study remains a scientific question.
+
 ## Protocols and supporting records {#reproducibility-record .advanced-heading}
 
 The reproducibility record is the collection of materials needed to check the calculation: inputs and their sources, methods, software versions, code or saved settings, results and dated decisions. It can be stored alongside the study protocol and statistical analysis plan (SAP). The UMCG SAP template is one component of this collection.
@@ -2231,7 +2297,7 @@ Table \@ref(tab:tutorial-methods) distinguishes the planning calculation from th
 
 | App or example | Planning or calculation procedure | Analysis or interval procedure |
 |:--|:--|:--|
-| Two proportions | Normal approximation using R's `stats::power.prop.test()`, two-sided with `strict = TRUE`; required patients rounded upward per group | The reasoning lab uses a two-sided pooled score test without continuity correction and a Newcombe-Wilson interval for the difference |
+| Two proportions | Normal approximation using R's `stats::power.prop.test()`, two-sided with `strict = TRUE`; required patients rounded upward per group | The reasoning lab uses a two-sided pooled [score test](#score-test) without continuity correction and a Newcombe-Wilson interval for the difference |
 | Two means: calculator and reasoning lab | Pooled two-sample t-test planning using `stats::power.t.test()`, two-sided with `strict = TRUE`; required patients rounded upward per group | Pooled-variance t test and t interval; R analysis uses `t.test(..., var.equal = TRUE)` |
 | One population: lab estimation mode | Smallest total sample meeting the expected one-sample t-interval width for a mean, or Wilson interval width at the assumed percentage | Normal samples with one-sample t intervals, or binomial samples with Wilson intervals; the report records coverage and interval-width attainment |
 | One population percentage | Normal approximation for the requested margin of error; the unknown-percentage option uses 50% for planning | A simulated binomial count is summarized with a Wilson interval |
@@ -2306,6 +2372,7 @@ Your project may involve estimation, a fixed dataset or dependent observations. 
 
 - Computational reproducibility uses the same inputs and procedures; replication investigates the same question with new data.
 - Software and its settings should match the planned analysis, including the meaning and units of each input.
+- Independent calculation checks should match the procedure and inputs, with any discrepancy explained.
 - A calculation record should include assumptions, methods, results, rounding rules, and software and code versions.
 - A simulation record also needs data-generating assumptions, the analysis, the number of repetitions, and random-number settings.
 - Complex designs also need their success rule, interim and adaptation decisions, final analysis and dated protocol/SAP versions.

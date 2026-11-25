@@ -310,22 +310,22 @@
       "id": "q12",
       "chapter": "appendix",
       "level": "advanced",
-      "section": "Planning for the analysis",
-      "link": "appendix.html#tutorial-methods",
-      "question": "Why does the pooled two-sample t-test calculation give 60 patients per group when the introductory normal formula rounds to 59?",
+      "section": "Validating a calculation",
+      "link": "appendix.html#validating-calculations",
+      "question": "A normal formula gives 59 patients per group, while the pooled t-test calculation gives 60. What should be checked first?",
       "options": [
-        "A larger sample is appropriate regardless of the planned analysis",
-        "It accounts for estimating the common population SD",
-        "It includes the patients expected to miss follow-up",
-        "It counts patients while the normal formula counts measurements"
+        "Whether the calculations use the same method and assumptions",
+        "Which program gives the smaller recruitment target",
+        "Whether averaging the two answers produces a whole number",
+        "Whether the second calculation can be omitted"
       ],
-      "answer": 1,
-      "explanation": "The t-test calculation accounts for estimating the common SD. The normal formula explains the input relationships. the apps and reports use the t-test result for this planned analysis.",
+      "answer": 0,
+      "explanation": "The normal formula and pooled t-test calculation handle uncertainty in the SD differently. Matching the planned analysis and settings explains the discrepancy.",
       "feedback": [
-        "The procedure should match the planned analysis.",
-        "The t-test calculation accounts for estimating the common SD. The normal formula explains the input relationships. the apps and reports use the t-test result for this planned analysis.",
-        "Losses to follow-up are accounted for separately after the analyzable requirement is calculated.",
-        "Both counts refer to analyzable patients per group."
+        "The procedure and settings explain what each number represents.",
+        "The smaller result may use a different procedure.",
+        "Averaging does not explain the difference between methods.",
+        "The independent check helps identify and explain the method difference."
       ]
     },
     {
@@ -1137,15 +1137,15 @@
       "level": "core",
       "section": "Reproducibility and supporting records",
       "link": "reporting.html#record-assumptions",
-      "question": "How should the concise calculation report relate to the sample size calculation report?",
+      "question": "What belongs in a sample size calculation report?",
       "options": [
-        "Collect separate sets of answers for the report and report",
-        "Summarize the calculation, with evidence in the report",
-        "Use the report to replace the calculation inputs in the report",
-        "Include every explored simulation in the concise calculation report"
+        "The recruitment total alone",
+        "The question, justified inputs, method, software and recruitment calculation",
+        "Separate conflicting answers for the calculation and study plan",
+        "Every simulated trial in full"
       ],
       "answer": 1,
-      "explanation": "One set of answers supports both documents. The concise report makes the selected calculation reproducible. the report preserves the fuller reasoning and evidence."
+      "explanation": "One report connects the research question and evidence to the calculation, software and recruitment count."
     },
     {
       "id": "q53",
@@ -1508,17 +1508,17 @@
       "chapter": "appendix",
       "level": "advanced",
       "chapter_check": false,
-      "section": "Chapter 8: Reproducibility and open science",
-      "link": "appendix.html#tutorial-methods",
-      "question": "A collaborator has the seed and final simulation table but cannot recreate the results. Which package of records would most help?",
+      "section": "Validating a calculation",
+      "link": "appendix.html#validating-calculations",
+      "question": "Two programs give 56 and 62 participants per group for the same event percentages and target power. What is the best next step?",
       "options": [
-        "A screenshot of the table showing the final simulation output",
-        "Assumptions, code, software, repetitions and saved inputs",
-        "A different seed supplied without the generating assumptions or code",
-        "The final p-values supplied without their simulation settings or method"
+        "Use 56 because it requires fewer participants",
+        "Use 62 because larger counts always validate a method",
+        "Compare the selected test, correction, tails and other settings",
+        "Record only the software names"
       ],
-      "answer": 1,
-      "explanation": "Reproducibility depends on the full procedure and computational environment as well as the seed."
+      "answer": 2,
+      "explanation": "A continuity correction produces this difference in the tutorial example. Validation requires matching the procedure and documenting why results differ."
     },
     {
       "id": "c17",

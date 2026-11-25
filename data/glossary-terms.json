@@ -92,7 +92,7 @@
     "aliases": [
       "standard error"
     ],
-    "definition": "How much an estimate would vary across repeated samples. A smaller standard error means greater precision."
+    "definition": "The typical variation in an estimate if new samples of the same size were taken from the same population. A smaller standard error means greater precision."
   },
   {
     "id": "confidence-interval",
@@ -117,7 +117,7 @@
     "aliases": [
       "precision"
     ],
-    "definition": "How little an estimate varies across repeated samples. At the same confidence level, a narrower confidence interval indicates greater precision."
+    "definition": "How closely estimates from new samples of the same size would cluster together. At the same confidence level, a narrower interval indicates greater precision."
   },
   {
     "id": "margin-of-error",
@@ -634,7 +634,7 @@
       "Wilson score interval",
       "Wilson interval"
     ],
-    "definition": "A confidence interval for one population proportion, obtained from the score test. It stays between 0% and 100% and can have unequal margins around the observed percentage."
+    "definition": "A confidence interval for a population percentage, calculated from the event count. It stays within 0% and 100% and can extend farther on one side of the observed percentage."
   },
   {
     "id": "continuity-correction",
@@ -698,5 +698,14 @@
       "experimental units"
     ],
     "definition": "The entity independently assigned to an intervention, such as a participant, cage or culture."
+  },
+  {
+    "id": "score-test",
+    "label": "Score test",
+    "aliases": [
+      "score test",
+      "pooled score test"
+    ],
+    "definition": "A test that compares the observed result with variation expected under the null hypothesis. For two percentages, the pooled version uses one combined event percentage when testing equality."
   }
 ]
