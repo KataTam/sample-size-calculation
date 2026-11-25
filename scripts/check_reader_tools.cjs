@@ -12,6 +12,15 @@ let browser;
  assert.equal(await page.locator('a.start-route').first().getAttribute('href'),'book/');
  // Bookdown initializes chapter collapsing after loading its navigation scripts.
  await page.goto(base+'/book/clinical-question.html',{waitUntil:'networkidle'});
+ await page.waitForFunction(()=>getComputedStyle(document.querySelector('.sidebar-core-chapter > a')).backgroundColor==='rgb(219, 233, 251)');
+ const chapterColors=await page.locator('.book-summary ul.summary > li[class*="sidebar-"]').evaluateAll(items=>items.map(item=>({
+   level:item.dataset.level,background:getComputedStyle(item.querySelector(':scope > a')).backgroundColor
+ })));
+ assert.equal(chapterColors.length,8);
+ assert(chapterColors.every(item=>/^\d+$/.test(item.level)),'Only chapter titles receive route colors');
+ assert(chapterColors.filter(item=>Number(item.level)<=3).every(item=>item.background==='rgb(219, 233, 251)'));
+ assert(chapterColors.filter(item=>Number(item.level)>3).every(item=>item.background==='rgb(231, 220, 246)'));
+ assert.equal(await page.locator('.book-summary ul.summary > li > ul [class*="sidebar-"]').count(),0);
  const activityGroups=JSON.parse(fs.readFileSync('module/activity-contents.json','utf8'));
  for(const group of activityGroups) for(const activity of group.activities) {
   const section=page.locator('.book-summary li.chapter').filter({has:page.locator(':scope > a[href="'+group.chapter+'.html#'+activity.section+'"]')});

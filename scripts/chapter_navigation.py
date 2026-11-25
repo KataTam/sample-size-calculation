@@ -28,6 +28,13 @@ def add_chapter_navigation(book):
                 links.append(f'<a class="chapter-arrow chapter-arrow-{direction}" href="{escape(destination)}" aria-label="{escape(label)}"><span aria-hidden="true">{arrow}</span></a>')
         nav = '<nav class="chapter-end-nav" aria-label="Chapter navigation" data-link-navigation="same-tab">' + ''.join(links) + '</nav>\n'
         source = re.sub(r'(<a[^>]+class="navigation[^"]*"[^>]*?) title="[^"]*"', r'\1', chapter['source'])
+        # Reuse each chapter's own route class. Section links remain uncolored.
+        def chapter_color(match):
+            destination = chapters.get(match[3], {})
+            route = 'core' if destination.get('core') else 'extension' if destination.get('advanced') else None
+            css = 'chapter' + (f' sidebar-{route}-chapter' if route else '')
+            return f'<li class="{css}"{match[1]}><a href="{match[3]}"'
+        source = re.sub(r'<li class="chapter"([^>]*\bdata-level="(\d+)"[^>]*)><a href="([^"#]+)"', chapter_color, source)
         if source.count('</section>') != 1:
             raise ValueError(f'Expected one chapter content section in {name}')
         # Remove older forward chapter shortcuts so there is one consistent control.

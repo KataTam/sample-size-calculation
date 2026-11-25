@@ -278,6 +278,17 @@ table thead th, .page-inner table thead th { font-weight:normal; background:#edf
 .book:not(.color-theme-2) .book-summary ul.summary li > a:hover,
 .book:not(.color-theme-2) .book-summary ul.summary li > a:focus { color: #17547b; }
 
+/* Route colors belong to chapter titles only. */
+.book .book-summary ul.summary > li.sidebar-core-chapter > a,
+.book .book-summary ul.summary > li.sidebar-extension-chapter > a {
+  color:#25313b; border-left:3px solid; margin-block:2px; border-radius:2px;
+}
+.book .book-summary ul.summary > li.sidebar-core-chapter > a { background:#dbe9fb; border-left-color:#3263a0; }
+.book .book-summary ul.summary > li.sidebar-extension-chapter > a { background:#e7dcf6; border-left-color:#69509a; }
+.book .book-summary ul.summary > li:is(.sidebar-core-chapter,.sidebar-extension-chapter).active > a { text-decoration:underline; text-underline-offset:.18em; }
+.book.color-theme-2 .book-summary ul.summary > li.sidebar-core-chapter > a { background:#25364d; border-left-color:#8ab6f0; color:#eef3fa; }
+.book.color-theme-2 .book-summary ul.summary > li.sidebar-extension-chapter > a { background:#352c49; border-left-color:#c7afea; color:#eef3fa; }
+
 /* The heading itself labels an expandable advanced section. */
 details.section-disclosure > summary > :is(h2,h3,h4,h5,h6) {
   display:inline; margin:0; padding:0; border:0; background:transparent;

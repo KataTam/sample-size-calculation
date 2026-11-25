@@ -56,11 +56,22 @@
     host.replaceChildren();
     // Keep the null scenario on the left and the treatment difference on the right.
     const sources=[data,data.comparison].filter(Boolean).sort((a,b)=>Number(!isNull(a))-Number(!isNull(b)));
+    const charts=[];
     for(const source of sources) {
       const panel=document.createElement('div');panel.className='journey-scenario';host.append(panel);
       const title=document.createElement('h3');title.className='journey-scenario-title';title.textContent=scenarioName(source);panel.append(title);
-      const chart=document.createElement('div');panel.append(chart);drawInline(chart,progress,source);
+      const chart=document.createElement('div');panel.append(chart);charts.push({chart,source,title});
     }
+    // Measure at the current text size, then share the taller block in each row.
+    // Stacked scenarios on narrow screens keep independent layouts.
+    const paired=charts.length===2 && getComputedStyle(host).gridTemplateColumns.split(' ').length===2;
+    if(paired){
+      const titleHeight=Math.max(...charts.map(({title})=>title.getBoundingClientRect().height));
+      charts.forEach(({title})=>title.style.minHeight=titleHeight+'px');
+    }
+    const heights={};
+    charts.forEach(({chart,source})=>drawInline(chart,progress,source,paired?{measure:heights}:null));
+    if(paired)charts.forEach(({chart,source})=>drawInline(chart,progress,source,{shared:heights}));
     const reading=el('journey-reading');
     if(reading){reading.replaceChildren();reading.classList.toggle('journey-comparison',sources.length===2);
       for(const source of sources){const section=document.createElement('section'),title=document.createElement('h4'),p=document.createElement('p');
@@ -69,13 +80,21 @@
     drawnIndex=index;
   }
   const measureText = document.createElement('canvas').getContext('2d');
-  function drawInline(host, progress, data) {
+  function drawInline(host, progress, data, layout=null) {
     // Native-size lettering and wrapped labels keep the chart readable in a
     // narrow chapter column. Both estimate axes always use the same scale.
     host.replaceChildren();
     const width=Math.max(250,Math.floor(Math.min(760, host.clientWidth))), t=data.trials[index];
     const labels=data.labels || ['Standard','Novel'], at=x=>38+(x+1)*(width-76)/2;
     const svg=node(host,'svg',{viewBox:`0 0 ${width} 500`,role:'img','aria-label':'Patient outcomes, estimated differences, p values and test decisions','data-population':data.p1});
+    let previousBoundary=0;
+    function align(key,proposed){
+      const height=proposed-previousBoundary;
+      if(layout?.measure)layout.measure[key]=Math.max(layout.measure[key]||0,height);
+      const position=previousBoundary+Math.max(height,layout?.shared?.[key]||0);
+      previousBoundary=position;
+      return position;
+    }
     function text(text,x,y,available=width-24) {
       measureText.font='14px system-ui'; let line='';
       for(const word of text.split(' ')) {
@@ -87,7 +106,7 @@
       node(svg,'text',{x,y,style:'font-size:14px'},line); return y;
     }
     function heading(label,y){
-      const band=node(svg,'rect',{x:8,y:y-20,width:width-16,height:34,rx:5,fill:'#dcecfb'});
+      const band=node(svg,'rect',{x:8,y:y-20,width:width-16,height:34,rx:5,fill:'#dcecfb','data-step-heading':label.slice(0,1)});
       const last=text(label,16,y,width-40);band.setAttribute('height',last-y+34);
       const labelNode=svg.lastElementChild;labelNode.setAttribute('role','heading');labelNode.setAttribute('aria-level','4');labelNode.classList.add('journey-step-heading');return last;
     }
@@ -103,7 +122,7 @@
     for(let i=0;i<populationCount;i++)person(22+i*18,y+20,false,{'data-population-patient':i+1});
     y=text(`Recruit ${2*data.n} patients · randomize 1:1`,12,y+65);
     node(svg,'path',{d:`M${width/2} ${y+8} v18 m-5 -6 l5 6 l5 -6`,fill:'none',stroke:colors.neutral,'stroke-width':1.5});
-    y=heading(`1. Patient outcomes · trial ${index+1} of ${data.batch ? data.batch.estimates.length : data.trials.length}`,y+53);
+    y=heading(`1. Patient outcomes · trial ${index+1} of ${data.batch ? data.batch.estimates.length : data.trials.length}`,align('step1',y+53));
     const cols=Math.max(4,Math.min(10,Math.floor((width/2-24)/23))), rows=Math.ceil(shown/cols);
     const top=y+24;
     let groupBottom=top;
@@ -128,14 +147,14 @@
     y=text(`${data.n} patients per group`,12,groupBottom+10);
     if(info.complete && info.rates) y=text(`Mean across trials: ${labels[0]} ${pct(average(info.rates[0]))} · ${labels[1]} ${pct(average(info.rates[1]))}`,12,y+23);
     node(svg,'path',{d:`M${width/2} ${y+8} v18 m-5 -6 l5 6 l5 -6`,fill:'none',stroke:'#64748b','stroke-width':2});
-    y=heading('2. Estimated difference in this trial',y+53);
+    y=heading('2. Estimated difference in this trial',align('step2',y+53));
     y=text(`${pct(t.counts[1]/data.n)} − ${pct(t.counts[0]/data.n)} = ${Math.round(t.estimate*1000)/10} percentage points`,12,y+22);
-    const axis1=y+42;
-    y=heading('3. Estimates across trials',axis1+55);
+    const axis1=align('estimate-axis',y+42);
+    y=heading('3. Estimates across trials',align('step3',axis1+55));
     y=text(data.batch ? `${data.batch.estimates.length} trials, each with ${data.n} patients per group` : 'Each dot is one trial. Both axes show percentage points.',12,y+22);
     const stackCounts={};
     data.trials.slice(0,index+1).forEach(t=>{const key=Math.round(t.estimate*1000000);stackCounts[key]=(stackCounts[key]||0)+1;});
-    let axis2=y+Math.max(130,30+5*Math.max(...Object.values(stackCounts)));
+    let axis2=align('estimates-axis',y+Math.max(130,30+5*Math.max(...Object.values(stackCounts))));
     const distributionAxis=axis2;
     const bins={},positions=[];
     for(let i=0;i<=index;i++){
@@ -143,7 +162,7 @@
       bins[key]=level+1;positions.push({x:at(v),y:axis2-10-level*5});
     }
     [axis1,axis2].forEach(yy=>{
-      node(svg,'line',{x1:38,x2:width-38,y1:yy,y2:yy,stroke:'#64748b'});
+      node(svg,'line',{x1:38,x2:width-38,y1:yy,y2:yy,stroke:'#64748b','data-aligned-axis':yy===axis1?'estimate':'distribution'});
       [-1,-.5,0,.5,1].forEach(v=>node(svg,'text',{x:at(v),y:yy+20,'text-anchor':'middle',style:'font-size:14px'},v*100));
       node(svg,'line',{x1:at(data.p1-data.p0),x2:at(data.p1-data.p0),y1:yy-(yy===axis1?8:95),y2:yy,stroke:'#17734c','stroke-dasharray':'4 3'});
     });
@@ -187,14 +206,14 @@
     if(info.complete && info.estimates.length)y=text(`Mean estimated difference: ${Math.round(average(info.estimates)*1000)/10} points`,12,y+22);
     y=text(data.batch ? 'Pink dots: the first trial, included in this batch' : 'Pink dot: the current trial’s estimated difference',12,y+22);
     node(svg,'path',{d:`M${width/2} ${y+9} v20 m-5 -6 l5 6 l5 -6`,fill:'none',stroke:'#64748b','stroke-width':2});
-    y=heading('4. Test decisions across trials',y+62);
+    y=heading('4. Test decisions across trials',align('step4',y+62));
     const values=data.batch?data.batch.p_values:data.trials.slice(0,info.count).map(t=>t.p_value);
     const decisions=info.decisions;
     const detected=decisions.filter(Boolean).length, px=p=>38+p*(width-76), cutoff=px(data.alpha);
     y=text(progress>=.9 || data.batch?`Trial ${index+1}: p ${pText(t.p_value)}`:'The same trial now contributes its p value',12,y+23);
     y=text(progress>=.9 || data.batch?(t.reject?'H₀ rejected: statistically significant difference':'H₀ not rejected'):'Each trial produces one test decision',12,y+21);
     const pStacks={};values.forEach(p=>{const key=Math.round(p*1000);pStacks[key]=(pStacks[key]||0)+1;});
-    const pAxis=y+(data.batch?150:Math.max(125,30+7*Math.max(1,...Object.values(pStacks))));
+    const pAxis=align('decisions-axis',y+(data.batch?150:Math.max(125,30+7*Math.max(1,...Object.values(pStacks)))));
     node(svg,'rect',{x:38,y:pAxis-95,width:cutoff-38,height:95,fill:'#e4edf8'});
     if(data.batch) {
       const bins=Array(40).fill(0),correctBins=Array(40).fill(0);
@@ -225,16 +244,16 @@
       node(svg,'circle',{'data-moving-decision':'true','data-start-x':destination.x,'data-start-y':destination.y,'data-end-x':end.x,'data-end-y':end.y,
         cx:destination.x+(end.x-destination.x)*motion,cy:destination.y+(end.y-destination.y)*motion,r:5,fill:'#b53c69',stroke:'white',opacity:progress>=.5 && progress<.9?1:0});
     }
-    node(svg,'line',{x1:38,x2:width-38,y1:pAxis,y2:pAxis,stroke:'#64748b'});
+    node(svg,'line',{x1:38,x2:width-38,y1:pAxis,y2:pAxis,stroke:'#64748b','data-aligned-axis':'decisions'});
     node(svg,'line',{x1:cutoff,x2:cutoff,y1:pAxis-97,y2:pAxis,stroke:'#245e90','stroke-dasharray':'4 3'});
     [0,.5,1].forEach(p=>node(svg,'text',{x:px(p),y:pAxis+19,'text-anchor':'middle',style:'font-size:14px'},p));
     y=text(`p-value cutoff: ${data.alpha}. Values below it reject the null hypothesis.`,12,pAxis+44);
     y=text(`Completed trials: ${values.length}`,12,y+24);
-    for(const line of decisionSummary(data,decisions))y=text(line,12,y+23);
-    y=text(isNull(data)?`Planned Type I error probability: ${pct(data.alpha)}`:`Approximate power for these population assumptions: ${pct(data.expected)}`,12,y+23);
+    decisionSummary(data,decisions).forEach((line,i)=>{y=text(line,12,align('decision-'+i,y+23));});
+    y=text(isNull(data)?`Planned Type I error probability: ${pct(data.alpha)}`:`Approximate power for these population assumptions: ${pct(data.expected)}`,12,align('benchmark',y+23));
     if(!isNull(data))y=text(`With ${data.n} patients per group and population relief of ${pct(data.p0)} and ${pct(data.p1)}, the calculation predicts detection in about ${Math.round(100*data.expected)} of 100 repeated trials.`,12,y+23);
     const tiles=decisions.slice(-100).sort((a,b)=>Number(decisionCorrect(data,b))-Number(decisionCorrect(data,a))),tileCols=10,tileWidth=(width-24)/tileCols,tileHeight=23;
-    y=text(tiles.length<decisions.length?'Latest 100 trial decisions, grouped by outcome':'One tile per trial, grouped by outcome',12,y+28);
+    y=text(tiles.length<decisions.length?'Latest 100 trial decisions, grouped by outcome':'One tile per trial, grouped by outcome',12,align('decision-grid',y+28));
     tiles.forEach((reject,i)=>{
       const correct=decisionCorrect(data,reject),tx=12+(i%tileCols)*tileWidth,ty=y+12+Math.floor(i/tileCols)*tileHeight;
       const tile=node(svg,'g',{'data-decision-trial':i+1,'data-correct':String(correct)});
@@ -243,7 +262,7 @@
     });
     y+=12+Math.ceil(tiles.length/tileCols)*tileHeight;
     y=text('○ Correct decision     × Error',12,y+23);
-    svg.setAttribute('viewBox',`0 0 ${width} ${y+14}`);
+    svg.setAttribute('viewBox',`0 0 ${width} ${align('end',y+14)}`);
   }
   function status() {
     if(data.batch){

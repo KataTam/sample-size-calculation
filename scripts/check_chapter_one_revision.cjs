@@ -6,7 +6,7 @@ const base=(process.argv[2]||'http://127.0.0.1:8769').replace(/\/$/,'');
  try{
   const page=await browser.newPage({viewport:{width:1360,height:1100}}),errors=[];
   page.setDefaultTimeout(90000);
-  page.on('pageerror',e=>errors.push(e.message));
+  page.on('pageerror',e=>{errors.push(e.message);console.error(e.stack);});
   await page.goto(base+'/book/clinical-question.html');
   assert.equal(await page.locator('.sidebar-level').count(),0);
   const chapter=await page.locator('.page-inner').innerText();
@@ -21,6 +21,21 @@ const base=(process.argv[2]||'http://127.0.0.1:8769').replace(/\/$/,'');
    if(!app)await page.waitForTimeout(1000);
   }
   assert(app,'Inline app loaded');
+  const checkAlignment=async()=>{
+    const panels=await app.locator('#sampling-journey svg').evaluateAll(svgs=>svgs.map(svg=>({
+      positions:[...svg.querySelectorAll('[data-step-heading],[data-aligned-axis]')].map(el=>({
+        key:el.dataset.stepHeading||el.dataset.alignedAxis,y:el.getBoundingClientRect().top
+      })),font:parseFloat(getComputedStyle(svg.querySelector('text')).fontSize),
+      scale:svg.getBoundingClientRect().width/svg.viewBox.baseVal.width
+    })));
+    assert.equal(panels.length,2);
+    assert.equal(panels[0].positions.length,7);
+    for(let i=0;i<7;i++){
+      assert.equal(panels[0].positions[i].key,panels[1].positions[i].key);
+      assert(Math.abs(panels[0].positions[i].y-panels[1].positions[i].y)<1.5,JSON.stringify(panels));
+    }
+    assert(panels.every(p=>p.font*p.scale>=13.5),'Alignment retains readable lettering');
+  };
   const capture=async(name)=>{
     const snapshot=await browser.newPage({viewport:{width:1100,height:900}});
     const markup=await app.evaluate(()=>document.querySelector('#sampling-journey').outerHTML+document.querySelector('#journey-reading').outerHTML);
@@ -48,6 +63,10 @@ const base=(process.argv[2]||'http://127.0.0.1:8769').replace(/\/$/,'');
   assert.equal(await app.locator('[data-mean-estimate]').count(),2);
   assert.equal(await app.locator('#journey-reading > section').count(),2);
   assert.match(await app.locator('#journey-reading').textContent(),/mean estimated difference/);
+  await checkAlignment();
+  await page.setViewportSize({width:1100,height:1100});await page.waitForTimeout(500);
+  await checkAlignment();
+  await page.setViewportSize({width:1360,height:1100});await page.waitForTimeout(500);
   for(const svg of await app.locator('#sampling-journey svg').all()){
     const correct=await svg.locator('[data-decision-trial]').evaluateAll(xs=>xs.map(x=>x.dataset.correct==='true'));
     assert.deepEqual(correct,[...correct].sort((a,b)=>Number(b)-Number(a)),'Correct decisions precede errors');
@@ -78,6 +97,7 @@ const base=(process.argv[2]||'http://127.0.0.1:8769').replace(/\/$/,'');
   await app.locator('#many_text').filter({hasText:'batch of estimates'}).waitFor();
   assert.equal(await app.locator('[data-pvalue-bin]').count(),80);
   assert.equal(await app.locator('[data-pvalue-bin]').evaluateAll(bins=>bins.reduce((n,b)=>n+Number(b.dataset.count),0)),10000);
+  await checkAlignment();
   assert.match(await app.locator('#sampling-journey').innerText(),/Values\s+below\s+it\s+reject\s+the\s+null/);
   await app.locator('#fixed_n').fill('50');await app.locator('#fixed_n').press('Tab');
   await app.waitForFunction(()=>document.querySelector('#journey-status').textContent.includes('Inputs changed'));
@@ -85,6 +105,7 @@ const base=(process.argv[2]||'http://127.0.0.1:8769').replace(/\/$/,'');
   await app.locator('#run_many').click();
   await app.locator('[data-reference-batch="20"]').waitFor();
   assert.match(await app.locator('#sampling-journey').innerText(),/50 patients per group/);
+  await checkAlignment();
   fs.mkdirSync('build/chapter-one-review',{recursive:true});
   await capture('shared-display');
   await app.locator('#journey-motion').focus();await app.locator('#journey-motion').press('Space');
