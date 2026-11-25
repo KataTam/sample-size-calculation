@@ -5,6 +5,15 @@
   const ns = 'http://www.w3.org/2000/svg';
   const pct = x => `${Math.round(x * 1000) / 10}%`;
   const average = values => values.reduce((a,b)=>a+b,0)/values.length;
+  const originalPositions=new Map();
+  function moveCoreControl(node,target,first=false){
+    if(!node||!target||node.parentNode===target)return;
+    if(!originalPositions.has(node)){const marker=document.createComment('Original shared-app position');node.before(marker);originalPositions.set(node,marker);}
+    target.insertBefore(node,first?target.firstChild:null);
+  }
+  function restoreCoreControl(node){
+    const marker=originalPositions.get(node);if(marker){marker.replaceWith(node);originalPositions.delete(node);}
+  }
   const scenarioName = source => isNull(source)?'Scenario 1: H₀ is true · equal population relief percentages':'Scenario 2: H₀ is not true · different population relief percentages';
   function node(svg, tag, attrs, text) {
     const n = document.createElementNS(ns, tag);
@@ -355,6 +364,8 @@
       const oneLink=document.querySelector('a[data-value="One study"]'), manyLink=document.querySelector('a[data-value="Many studies"]');
       if(!oneLink || !manyLink) return;
       document.documentElement.classList.toggle('pain-focus', payload.combine);
+      const fixedControls=el('fixed-sample-controls'),settings=document.querySelector('#lab-settings > .lab-settings-content');
+      if(payload.combine)moveCoreControl(fixedControls,settings,true);else restoreCoreControl(fixedControls);
       const title=document.querySelector('.app-title'), intro=document.querySelector('.app-intro');
       const estimating=document.documentElement.classList.contains('single-population-mode');
       if(title) title.textContent=estimating?'Estimate one population':payload.combine?'Pain relief: one trial and repeated trials':'Sample size reasoning lab';
@@ -374,17 +385,15 @@
       const onePanel=document.querySelector(oneLink.getAttribute('href')), manyPanel=document.querySelector(manyLink.getAttribute('href'));
       let combined=el('combined-many-studies');
       if(payload.combine && !combined){
-        combined=document.createElement('details');combined.id='combined-many-studies';combined.className='activity-details';
-        const summary=document.createElement('summary');summary.textContent='Numerical results for repeated trials';
+        combined=document.createElement('div');combined.id='combined-many-studies';
         const content=document.createElement('div');content.className='combined-content';content.append(...manyPanel.childNodes);
-        combined.append(summary,content);onePanel.append(combined);
+        combined.append(content);onePanel.append(combined);
         onePanel.querySelector('.simulation-actions').append(el('run_many'));
-        onePanel.querySelector('h3').textContent='One trial and repeated trials';
-        const credit=el('journey-credit');if(credit)onePanel.append(credit);
+        moveCoreControl(el('sample_comparison'),el('inline-study-explanation'));
       } else if(!payload.combine && combined){
+        restoreCoreControl(el('sample_comparison'));
         manyPanel.append(...combined.querySelector('.combined-content').childNodes);
         manyPanel.querySelector('h3').after(el('run_many'));combined.remove();
-        onePanel.querySelector('h3').textContent='One simulated trial';
       }
       oneLink.textContent=payload.combine?'One trial and repeated trials':'One trial';
       manyLink.parentElement.hidden=payload.combine;
@@ -403,7 +412,7 @@
       ['journey-pause','journey-replay','journey-finish'].forEach(id=>el(id).disabled=true);
       document.documentElement.classList.add('journey-batch-view');
       draw(1);status();
-      const results=el('combined-many-studies');if(results)results.open=true;
+      const results=el('inline-study-explanation');if(results)results.open=true;
       window.dispatchEvent(new Event('resize'));
     });
     $(document).on('shiny:inputchanged', event => {

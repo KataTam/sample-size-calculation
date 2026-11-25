@@ -52,3 +52,16 @@
 .unified-sampling .separate-many-figure {display:none}
 .pain-focus #combined-many-studies h3 {display:none}
 .pain-focus.journey-batch-view #one_status {display:none}
+
+/* The introductory simulation has one result view and a compact settings box. */
+.pain-focus :is(.app-resume,#stage,#combined-many-studies) {display:none!important}
+.pain-focus .tab-pane[data-value="One study"] > h3 {display:none}
+.pain-focus .well {width:100%}
+.pain-focus .row > .col-sm-4,.pain-focus .row > .col-sm-8 {width:100%;float:none}
+.pain-focus #lab-settings {width:100%}
+.pain-focus .lab-settings-content {columns:2;column-gap:24px;padding-top:12px}
+.pain-focus .lab-settings-content :is(.shiny-input-container,.percentage-slider,.pain-population-options,details,p,h4) {break-inside:avoid;min-width:0;max-width:100%}
+.pain-focus .lab-settings-content .shiny-input-container {width:100%}
+.pain-focus:not(.lab-expanded) .lab-settings-content :is(.shiny-input-container,.percentage-slider):has(#goal,#outcome,#expected_p,#plan_p0,#plan_p1,#threshold_p,#target_power,#dropout) {display:none!important}
+.pain-focus #sample_comparison {margin-top:12px}
+@media(max-width:540px){.pain-focus .lab-settings-content{columns:1}}

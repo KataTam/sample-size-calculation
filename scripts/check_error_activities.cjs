@@ -20,7 +20,7 @@ const bank=JSON.parse(fs.readFileSync('data/error-activities.json','utf8'));
    const rendered=await root.locator('.spot-choice').evaluateAll(nodes=>nodes.map(n=>n.childNodes[0].textContent));
    const normalizeQuotes=text=>text.replace(/[‘’]/g,"'").replace(/[“”]/g,'"');
    assert.deepEqual(rendered.map(normalizeQuotes),parts.map(x=>normalizeQuotes(x.text)),'Rendered passages preserve their source text and symbols');
-   if(name==='report')assert.equal(await root.locator(':scope > .spot-text').count(),parts.length,'Report passages remain separated into readable paragraphs');
+   if(['report','discharge'].includes(name))assert.equal(await root.locator(':scope > .spot-text').count(),parts.length,'Report passages remain separated into readable paragraphs');
    assert.equal(await root.locator('.spot-found').count(),0);
    const correct=root.locator('.spot-choice[data-error="false"]').first();
    await correct.click();await popup.waitFor({state:'visible'});

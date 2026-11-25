@@ -66,8 +66,12 @@ const base=(process.argv[2]||'http://127.0.0.1:8769').replace(/\/$/,'');
     await app.locator('#inline-study-explanation > summary').click();
     assert.equal(await app.locator('#one-study-records').count(),0);
     assert.equal(await app.locator('#simulation_target').isVisible(),false);
-    const layout=await app.evaluate(()=>({population:document.querySelector('#pain_population').getBoundingClientRect().left,input:document.querySelector('#fixed_n').getBoundingClientRect().left}));
-    assert(Math.abs(layout.population-layout.input)<20,'Sample-size input remains aligned with the population controls');
+    assert.equal(await app.locator('#lab-settings').evaluate(el=>el.open),false);
+    await app.locator('#lab-settings > summary').click();
+    assert(await app.locator('#lab-settings #pain_population').isVisible());
+    assert(await app.locator('#lab-settings #fixed_n').isVisible());
+    assert.equal(await app.locator('.app-resume').isVisible(),false);
+    assert.equal(await app.locator('#stage').isVisible(),false);
     await app.locator('#fixed_n').fill('40');await app.locator('#fixed_n').press('Tab');
     await app.locator('#run_one').click();
     await app.locator('#sampling-journey svg').first().waitFor();
@@ -85,18 +89,12 @@ const base=(process.argv[2]||'http://127.0.0.1:8769').replace(/\/$/,'');
     await app.locator('#run_many').click();
     await app.waitForFunction(()=>document.querySelectorAll('[data-batch-bin]').length===80,null,{timeout:90000});
     await dimensions();
-    await app.locator('#combined-many-studies > summary').click();
-    // Bring the app's tabs back below the book's sticky toolbar after the
-    // long many-study panel collapses; then let both frame layouts settle.
-    await card.evaluate(el=>el.scrollIntoView({block:'start'}));
-    await dimensions();
-    await app.locator('a[data-value="Justify and communicate"]').click();
-    try {await app.locator('#report_preview').filter({hasText:'40 patients per group'}).waitFor();}
-    catch(error){console.log(await app.evaluate(()=>({n:document.querySelector('#fixed_n').value,stage:Shiny.shinyapp.$inputValues.stage,report:document.querySelector('#report_preview').outerHTML,clicks:window.inlineClicks})));throw error;}
-    assert.equal(await app.locator('#justification').isVisible(),false);
+    assert.equal(await app.locator('#combined-many-studies').isVisible(),false);
+    assert(await app.locator('#inline-study-explanation').evaluate(el=>el.open));
+    assert.match(await app.locator('#journey-reading').innerText(),/5000 completed trials with 40/);
     assert.equal(await app.locator('.plan-transfer').count(),0);
-    assert.equal(await app.locator('a[data-value="Methods"]').count(),0);
-    assert(!/Your reflection/.test(await app.locator('#report_preview').innerText()));
+    assert.equal(await app.locator('#report_preview').isVisible(),false);
+
    }
    // Calculators retain readable downloads. The introductory simulation is explored in place.
    for(const format of engine==='two_proportions'?['pdf','docx']:[]) {
@@ -124,11 +122,10 @@ const base=(process.argv[2]||'http://127.0.0.1:8769').replace(/\/$/,'');
     await app.locator('a[data-value="Overview"]').click();
    }else{
     assert.equal(await app.locator('#fixed_n').inputValue(),'40');
-    await app.locator('a[data-value="One study"]').click();
-    await app.locator('#lab-settings > summary').click();
+    assert.equal(await app.locator('#report_preview').isVisible(),false);
     await app.locator('#show_advanced').check();
     await app.locator('#reality-selectized').waitFor({state:'visible'});
-    await app.locator('a[data-value="Compare assumptions"]').waitFor({state:'visible'});
+    assert.equal(await app.locator('#stage').isVisible(),false);
     await app.evaluate(()=>jQuery('#reality')[0].selectize.setValue('null'));
     await app.locator('#show_advanced').uncheck();
     await app.waitForFunction(()=>Shiny.shinyapp.$inputValues.reality==='same');

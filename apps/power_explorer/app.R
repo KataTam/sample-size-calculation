@@ -32,14 +32,15 @@ ui <- fluidPage(
   sidebarLayout(sidebarPanel(width = 4,
     conditionalPanel("input.goal != 'precision'", textOutput("scenario_summary"),
       conditionalPanel("input.activity_choice != 'pain_curves' && input.activity_choice != 'pain_one_many'", uiOutput("simulation_target"))),
-    conditionalPanel("input.goal == 'fixed'", numericInput("fixed_n", "Analyzable participants per group", 60, min = 2, max = 100000, step = 1),
+    conditionalPanel("input.goal == 'fixed'", id="fixed-sample-controls", numericInput("fixed_n", "Analyzable participants per group", 60, min = 2, max = 100000, step = 1),
       activity_help("Enter the number with analyzable outcomes in each group. The power curves and simulation use this count; expected losses are applied separately when calculating recruitment.", for_input = "fixed_n")),
-    conditionalPanel("output.pain_report && !input.show_advanced",
-      radioButtons("pain_population", "Population pain-relief percentages",
+    tags$details(id="lab-settings", class="activity-details", tags$summary("Settings"),
+    tags$div(class="lab-settings-content",
+    conditionalPanel("output.pain_report && !input.show_advanced", class="pain-population-options",
+      radioButtons("pain_population", "Population scenario",
         c("Scenario 1: H0 is true (30% and 30% relief)"="equal",
           "Scenario 2: H0 is not true (30% and 60% relief)"="difference"), selected="difference"),
-      checkboxInput("compare_populations", "Show both population scenarios side by side", TRUE)),
-    tags$details(id="lab-settings", class="activity-details", tags$summary("Settings"),
+      checkboxInput("compare_populations", "Show both scenarios", TRUE)),
     selectInput("goal", "Planning goal", c("Test a difference from zero" = "testing", "Estimation with a target interval width" = "precision", "Assess a fixed number of available participants" = "fixed")),
     activity_help("Testing and the fixed-sample option concern two treatment groups. Estimation uses a confidence-interval-width target for one population mean or percentage.", for_input = "goal"),
     conditionalPanel("input.goal != 'precision'",
@@ -111,7 +112,7 @@ ui <- fluidPage(
     numericInput("B", "Number of simulated trials (B)", 1000, min = 2, max = 10000, step = 100),
     activity_help("More repetitions stabilize estimated power and coverage. Multiplying the repetitions by four approximately halves Monte Carlo standard error. Each simulated trial keeps the selected number of participants.", for_input = "B")),
     p(tags$a(href = "../book/Sample_size_open_module.html#glossary", target = "_blank", rel = "noopener", "Key terms and assumptions"), " · ",
-      tags$a(href = "../book/Sample_size_open_module.html#common-mistakes", target = "_blank", rel = "noopener", "Common mistakes and FAQ"))))),
+      tags$a(href = "../book/Sample_size_open_module.html#common-mistakes", target = "_blank", rel = "noopener", "Common mistakes and FAQ")))))),
   mainPanel(width = 8, conditionalPanel("input.goal != 'precision'", tabsetPanel(id = "stage",
     tabPanel("Overview", value = "Explore assumptions", h3("Your planned design"), uiOutput("overview_metrics"),
       textOutput("overview_text"),
@@ -166,8 +167,7 @@ ui <- fluidPage(
       conditionalPanel("output.one_ready && (input.outcome == 'means' || output.one_has_missing)", textOutput("one_interpretation")),
       conditionalPanel("output.one_ready && output.intervals_visible",
         activity_details("Interval for this study", plotOutput("one_plot", height="300px"), app_interval_key(),
-          p(class="caption", "Figure. The saved estimate and confidence interval, with the population difference and clinical threshold marked."))),
-      tags$div(id = "journey-credit", tags$hr(), p("The animated connection between samples, estimates, and sampling distributions was inspired by Douwe Postmus’s ", tags$a(href = "https://postmus.github.io/sampling-simulator/", target = "_blank", rel = "noopener", "Statistical Concepts Lab"), "."))),
+          p(class="caption", "Figure. The saved estimate and confidence interval, with the population difference and clinical threshold marked.")))),
     tabPanel("Repeated trials", value="Many studies", h3("Repeated simulated trials"),
       actionButton("run_many", "Simulate 5000 trials", class = "btn-primary"),
       textOutput("many_status"),
@@ -298,7 +298,7 @@ server <- function(input, output, session) {
   baseline_many <- reactiveVal(NULL)
   output$activity_sequence <- renderUI({
     if (identical(current_activity(), "pain_one_many"))
-      app_activity_sequence(c("Simulate one trial", "Repeat the trial", "Compare a larger sample"))
+      NULL
     else if (identical(current_activity(), "pain_curves"))
       app_activity_sequence(c("Select a sample size", "Compare assumptions", "Justify a plan"))
     else if (input$goal != "precision")

@@ -63,7 +63,10 @@ A threshold for improvement within a patient can define who counts as achieving 
 <span id="standardized-mean-difference">Standardized mean difference (Cohen's d)</span>
 : A difference between group means expressed in within-group standard-deviation units. In the two-independent-group example, SD describes the spread of individual outcomes within each population, assumed equal across groups. A pooled within-group sample SD estimates that common SD from observed data. A difference of 3 score units with SD 5 gives d = 3/5 = 0.60. The [two-means calculation](#two-means) uses these quantities. Clinical relevance depends on the outcome and study context.
 
-![Two hypothetical distributions of individual improvement scores with means 0 and 3 and a common within-group SD of 5. The 3-unit distance between means is 0.60 SD. Greater improvement is favorable.](../figures/standardized-difference.png)
+<div class="figure" id="fig:standardized-difference">
+<img src="../figures/standardized-difference.png" alt="Two distributions with means 0 and 3. A separate purple bracket spans one standard deviation, from 3 to 8, above the curves." />
+<p class="caption">Figure G.1: Standardized mean difference. The group means differ by 3 score units, and both populations have an SD of 5. The purple bracket spans one SD above the novel-treatment mean. The standardized difference is d = 3/5 = 0.60.</p>
+</div>
 
 
 ### Standardized treatment effect {#standardized-treatment-effect .core-heading .unnumbered}
@@ -325,11 +328,14 @@ The Central Committee on Research Involving Human Subjects directly reviews spec
 
 A Wilson interval gives a range for a population percentage from the observed event count. Both Wilson and the simple normal (Wald) interval use a normal critical value, such as 1.96 for 95% confidence. They use it differently. The Wald interval starts at the observed percentage and adds the same margin on both sides. Wilson checks which candidate population percentages are compatible with the observed count using a [score test](#score-test). Its limits stay within 0% and 100%, and the margins can differ [@brown2001interval].
 
-![Normal (Wald) and Wilson 95% intervals for the same patient counts. Dots mark the observed percentages. With 50 events in 100 patients, the intervals are similar. With one event in 20 patients, the normal lower limit is negative. With zero events in 20, the normal interval collapses to zero, while Wilson still allows population percentages up to about 16%.](../figures/wald-wilson-intervals.png)
+<div class="figure" id="fig:wald-wilson-intervals">
+<img src="../figures/wald-wilson-intervals.png" alt="Normal and Wilson 95% intervals for 50 of 100, 1 of 20, and 0 of 20 events. The normal interval extends below zero for 1 event and collapses to zero for no events. Wilson remains within 0% to 100%." />
+<p class="caption">Figure G.2: Normal (Wald) and Wilson 95% confidence intervals calculated from the same patient counts. Dots mark the observed percentages. The intervals are similar for 50 events in 100 patients. With one event in 20, the normal lower limit is negative. With zero events in 20, the normal interval collapses to zero, while Wilson allows population percentages up to about 16%.</p>
+</div>
 
 The normal formula is useful for understanding interval width and initial sample size planning. For an observed percentage, Wilson is a useful routine choice, including for common outcomes. Its advantages are particularly visible with small samples or percentages near 0% or 100%. A zero count in 20 patients still leaves uncertainty about events in the population. For very rare outcomes or requirements for conservative coverage, an exact binomial interval may be appropriate. The method should be named in the analysis plan [@brown2001interval; @nistbinomial].
 
-The [prevalence example](#estimation-report) uses the normal approximation for initial planning and Wilson intervals for the completed survey. Comparing these methods helps explain why planning and analysis procedures are recorded separately.
+The [prevalence example](#estimation-report) uses the normal approximation for initial planning and Wilson intervals for the completed survey.
 
 ### Score test {#score-test .advanced-heading .unnumbered}
 

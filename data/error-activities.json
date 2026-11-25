@@ -78,59 +78,79 @@
   },
   "discharge": {
     "id": "discharge-error-activity",
-    "title": "Activity: Review the discharge calculations",
+    "title": "Activity: Review a discharge sample size calculation report",
     "segments": [
       {
-        "text": "Standard care has an 80% discharge percentage",
+        "text": "The trial will compare a new discharge-support program with standard care. Patients will be randomized individually in a 1:1 ratio. The primary outcome is discharge within seven days of admission, recorded once for each patient.",
         "error": false,
-        "explanation": "This is the stated baseline for all three plans. Keeping it fixed makes the target differences comparable.",
-        "link": "exercises.html#discharge",
-        "section": "The discharge plans"
+        "explanation": "The report identifies the comparison, allocation, binary outcome and measurement time. Each patient contributes one outcome.",
+        "link": "reporting.html#record-assumptions",
+        "section": "Question and design",
+        "break_before": true,
+        "heading": "Question and design"
       },
       {
-        "text": ". "
-      },
-      {
-        "text": "A 20% relative increase in Plan A gives 100% discharged",
-        "error": true,
-        "explanation": "A relative increase of 20% gives 80% x 1.20 = 96%, an increase of 16 percentage points. Adding 20 percentage points would give 100%.",
-        "link": "exercises.html#discharge",
-        "section": "Relative increases and percentage points"
-      },
-      {
-        "text": ". "
-      },
-      {
-        "text": "Plan B's increase of 10 percentage points gives 90% discharged",
+        "text": "The standard-care discharge percentage is assumed to be 80%. Three plans are compared to assess how the target difference and target power affect the sample size.",
         "error": false,
-        "explanation": "Adding 10 percentage points to 80% gives 90%. This is an absolute change.",
+        "explanation": "The same baseline is used in all three plans. In a completed protocol, its source and relevance to the hospital population would also be recorded.",
         "link": "exercises.html#discharge",
-        "section": "The discharge plans"
+        "section": "The discharge plans",
+        "break_before": true,
+        "heading": "Assumptions and evidence"
       },
       {
-        "text": ". "
-      },
-      {
-        "text": "At the same 80% power, Plan B needs fewer patients than Plan A",
+        "text": "Plan A targets a 20% relative increase from the 80% standard-care percentage, giving 100% discharged with the new program.",
         "error": true,
-        "explanation": "In these plans, detecting the smaller 10-point difference in Plan B requires more patients than detecting the 16-point difference in Plan A. The calculation also uses the two event percentages.",
+        "explanation": "A relative increase of 20% gives 80% × 1.20 = 96%, an increase of 16 percentage points. Adding 20 percentage points would give 100%.",
         "link": "exercises.html#discharge",
-        "section": "Comparing the discharge plans"
+        "section": "Relative increases and percentage points",
+        "break_before": true
       },
       {
-        "text": ". "
+        "text": "Plan B targets an increase of 10 percentage points, giving 90% discharged with the new program. Plans A and B use 80% power. Plan C retains Plan A’s target difference and increases power to 90%.",
+        "error": false,
+        "explanation": "Adding 10 percentage points to 80% gives 90%. Comparing A with B changes the target difference. Comparing A with C changes the power target.",
+        "link": "exercises.html#discharge",
+        "section": "The discharge plans",
+        "break_before": true
       },
       {
-        "text": "Increasing power to 90% in Plan C reduces the required sample",
+        "text": "The planned analysis is a two-sided pooled score test for two independent proportions without continuity correction, with a Type I error probability of 5%. Sample sizes are calculated using the normal approximation in stats::power.prop.test() in R 4.5.1 (stats 4.5.1). Equal group sizes are assumed, and each per-group result is rounded upward.",
+        "error": false,
+        "explanation": "The report specifies the analysis, planning method, error probability, software and rounding. The calculation uses the event percentages and power target for each plan.",
+        "link": "calculations.html#two-proportions",
+        "section": "Two-proportions calculation",
+        "break_before": true,
+        "heading": "Calculation"
+      },
+      {
+        "text": "At the same 80% power, Plan B requires fewer patients than Plan A because its target difference is smaller.",
         "error": true,
-        "explanation": "Plan C retains Plan A's event percentages and Type I error probability. Achieving the higher power requires more patients.",
+        "explanation": "Plan B requires more patients: detecting a 10-point difference needs a larger sample than detecting a 16-point difference at the same power in these plans. Both event percentages enter the calculation.",
+        "link": "exercises.html#discharge",
+        "section": "Comparing the discharge plans",
+        "break_before": true
+      },
+      {
+        "text": "Increasing power to 90% in Plan C reduces the required sample compared with Plan A.",
+        "error": true,
+        "explanation": "Plan C retains Plan A’s event percentages and Type I error probability. Achieving higher power requires more patients.",
         "link": "calculations.html#how-error-rates-and-power-affect-sample-size",
-        "section": "Power and sample size"
+        "section": "Power and sample size",
+        "break_before": true
       },
       {
-        "text": "."
+        "text": "The calculated counts are analyzable patients per group. The total is twice the rounded per-group count. No allowance for missing outcomes is included at this stage. The final recruitment target will incorporate the anticipated proportion of patients with a recorded discharge outcome.",
+        "error": false,
+        "explanation": "The report distinguishes per-group and total counts and explains what remains to determine recruitment. A final report should give those counts and justify any allowance for missing outcomes.",
+        "link": "calculations.html#account-for-expected-losses",
+        "section": "Recruitment allowance",
+        "break_before": true,
+        "heading": "Recruitment and conclusion"
       }
-    ]
+    ],
+    "instructions": "Three passages need correction. Selecting a passage opens its explanation.",
+    "version": 2
   },
   "recruitment": {
     "id": "recruitment-error-activity",

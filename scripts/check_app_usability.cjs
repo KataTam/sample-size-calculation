@@ -3,7 +3,7 @@ const assert = require('node:assert/strict'), fs = require('node:fs');
 const base = (process.argv[2] || 'http://127.0.0.1:8769').replace(/\/$/, '');
 const selected = process.argv[3];
 const specs = [
-  ['two_proportions', 'pi1', '60', '50'], ['power_explorer', 'plan_p1', '60', '55'],
+  ['two_proportions', 'pi1', '60', '50'], ['power_explorer', 'alpha', '5', '2.5'],
   ['two_means', 'power', '90', '80'], ['dropout_adjustment', 'dropout', '10', '20'],
   ['prevalence_precision', 'anticipated_p', '20', '30'], ['sampling_distributions', 'alpha', '5', '2.5']
 ];
@@ -25,10 +25,9 @@ const specs = [
       if (app==='power_explorer') {
         await f.evaluate(()=>Shiny.setInputValue('activity_request',{activity:'pain_one_many',nonce:Date.now()}));
         await f.waitForFunction(()=>document.querySelector('#fixed_n').value==='20' && document.querySelector('#outcome').value==='proportions');
-        await f.getByRole('tab',{name:'One trial and repeated trials',exact:true}).click();
         await f.locator('#run_one').click();
         await f.locator('#sampling-journey svg').first().waitFor({timeout:60000});
-        assert.equal(await f.locator('.nav-tabs a:visible').count(),3,'Focused simulation has three primary views');
+        assert.equal(await f.locator('.nav-tabs a:visible').count(),0,'Focused simulation uses one result view');
         assert(await f.locator('#journey-motion').isChecked(),'Respects reduced motion');
       }
       await f.waitForFunction(()=>![...document.querySelectorAll('.recalculating')].some(e=>e.checkVisibility()));
@@ -49,7 +48,8 @@ const specs = [
       await f.evaluate(({id,initial})=>jQuery('#'+id).data('ionRangeSlider').update({from:Number(initial)/100}),{id,initial});
       await page.setViewportSize({width:720,height:1000});
       await page.waitForTimeout(700);
-      assert(!await f.locator('.app-settings').evaluate(e=>e.open),'Settings collapse in a split view');
+      if(app==='power_explorer')await f.locator('#lab-settings').evaluate(e=>e.open=false);
+      else assert(!await f.locator('.app-settings').evaluate(e=>e.open),'Settings collapse in a narrow view');
       await f.evaluate(()=>window.scrollTo(0,0));
       await page.screenshot({path:`build/app-usability/${app}-split.png`});
       const top=await f.evaluate(()=>document.querySelector('.tab-pane.active .app-primary-result,.tab-pane.active .app-metrics,.tab-pane.active .simulation-actions')?.getBoundingClientRect().top);

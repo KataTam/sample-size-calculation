@@ -392,7 +392,7 @@ Figure \@ref(fig:sample-differences) shows [sampling variability](#sampling-vari
 
 Increasing the sample size changes the information in each trial. Increasing simulation repetitions makes the estimated percentage of significant results more stable; each trial retains the same sample size and power.
 
-The app below starts with 20 patients per group. In Scenario 1, $H_0$ is true: both treatments provide 30% population relief. In Scenario 2, $H_0$ is not true: population relief is 30% with duloxetine and 60% with neravixa. Each trial contributes patient outcomes, an estimated difference, a two-sided p value and a test decision.
+The app below starts with 20 patients per group. In Scenario 1, $H_0$ is true: both treatments provide 30% population relief. In Scenario 2, $H_0$ is not true: population relief is 30% with duloxetine and 60% with neravixa. Each trial contributes patient outcomes, an estimated difference, a two-sided p value and a test decision [@superpowerbook2022; @thiesmeier2024; @rudolph2021].
 
 Step 4 plots the two-sided p values. A sufficiently large positive or negative difference produces a small p value. Values below 0.05 reject the hypothesis of equal population relief percentages. Steps 2–3 show the direction of the observed difference. The 100-tile grid summarizes the decision percentages across all completed trials, rounded to whole percentages. Exact counts appear above it.
 
@@ -402,9 +402,6 @@ In Scenario 1 ($H_0$ is true), the p values have spikes and gaps because relief 
 render_app_preview("pain_one_many", "Simulate further trials and compare different sample sizes.",
   image = "../figures/pain-trials-preview.png")
 ```
-
-[@superpowerbook2022; @thiesmeier2024; @rudolph2021]
-
 
 <div class="chapter-recap">
 
@@ -2475,18 +2472,15 @@ Each plan specifies its target difference. All three use equal group sizes, a tw
 | B | An absolute increase of 10 [percentage points](#percentage-points) | 80% |
 | C | The same target difference as Plan A | 90% |
 
-Table: (\#tab:discharge-task) Three discharge-sample size calculation reports with a 5% Type I error probability and a two-sided comparison.
+Table: (\#tab:discharge-task) Three plans for the hospital-discharge trial, each using a 5% Type I error probability and a two-sided comparison.
 
-### Your task {.unnumbered}
-
-The short note below contains proposed interpretations of the three plans. Reviewing it gives you a prediction to check with the calculator.
+The draft sample size calculation report below compares the three plans. Some passages need correction.
 
 ```{r discharge-error-review, echo=FALSE, results='asis'}
 render_error_activity("discharge")
 ```
 
-1. You can calculate each plan using the [two-proportions method](#two-proportions) or [Activity: Discharge percentages](https://katatam.github.io/sample-size-calculation/power_explorer/?activity=discharge). In the app's *Settings*, the standard-treatment percentage stays at 80%; the novel-treatment percentage and target power should match the plan. The *Overview* shows the required sample size. Your record should include both the analyzable count per group and the total. Each per-group count is rounded upward before doubling for two equal groups.
-2. Your explanation should connect the results to the target difference and power chosen in each plan. Which parts of the proposed interpretation would you retain, and which would you revise?
+You can check each plan using the [two-proportions method](#two-proportions) or [Activity: Discharge percentages](https://katatam.github.io/sample-size-calculation/power_explorer/?activity=discharge). In the app's *Settings*, the standard-treatment percentage stays at 80%. The novel-treatment percentage and target power should match the plan. The *Overview* shows the required sample size per group. Each count is rounded upward before doubling for the total.
 
 <details>
 <summary>Show the calculation and interpretation</summary>
@@ -2524,7 +2518,7 @@ From a baseline of 80%, a 20% relative increase gives 96% ($0.80\times1.20=0.96$
 
 </details>
 
-The [discharge simulation](#discharge-simulation) examines how the approximation performs when the assumed event probability is close to 100%.
+The [discharge simulation app](https://katatam.github.io/sample-size-calculation/power_explorer/?activity=discharge) examines how the approximation performs when the assumed event probability is close to 100%.
 
 ## Cumulative quiz {#cumulative-quiz .unnumbered}
 
@@ -2554,7 +2548,7 @@ This tutorial builds on Katalin Tamási’s original e-learning module [@tamasi2
 
 Our account of developing the epidemiology and medical statistics e-learning environment describes the learner and teacher needs underlying this approach [@wieringa2025]. Evaluation emphasizes explanations, application to new cases, and usability feedback, since access counts and time online may not reflect learning [@chan2019]. The tutorial uses R Markdown [@allaire2021rmarkdown] and bookdown [@xie2021bookdown]; the build environment records the versions used for the current edition.
 
-Except where otherwise noted, original teaching materials are shared under [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/) and original code under the [MIT License](https://opensource.org/license/mit). The [reuse and citation guidance](https://katatam.github.io/sample-size-calculation/documentation/reuse-and-citation.html) explains attribution and third-party exceptions. Shared adaptations of the teaching materials must use the same or a compatible license. Publishing student work, identifiable feedback, or named student acknowledgments requires consent.
+Except where otherwise noted, original teaching materials are shared under [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/) and original code under the [MIT License](https://opensource.org/license/mit). The [reuse and citation guidance](https://katatam.github.io/sample-size-calculation/documentation/reuse-and-citation.html) explains attribution and third-party exceptions. Shared adaptations of the teaching materials must use the same or a compatible license.
 
 ## Further reading {-}
 

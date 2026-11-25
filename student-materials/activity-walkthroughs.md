@@ -72,12 +72,12 @@ The [annotated report in Chapter 3](../book/reporting.html#write-a-sample-size-j
 
 Purpose: see why sample estimates differ from population values, interpret the uncertainty in one trial, and relate repeated trials to power.
 
-1. In Scenario 1, H₀ is true: both treatments provide 30% population relief. In Scenario 2, H₀ is not true: population relief is 30% with duloxetine and 60% with neravixa. The scenarios appear side by side, each starting with 20 patients per group and a 5% Type I error probability. Red stick figures represent the eligible population with neuropathic pain.
+1. In Scenario 1, H₀ is true: both treatments provide 30% population relief. In Scenario 2, H₀ is not true: population relief is 30% with duloxetine and 60% with neravixa. The scenarios appear side by side, each starting with 20 patients per group and a 5% Type I error probability. *Settings* contains the population choice, side-by-side display option and sample-size input. Red stick figures represent the eligible population with neuropathic pain.
 2. “Simulate one trial” follows patient outcomes through four steps: outcomes, estimated difference, estimates across trials, and the two-sided p value and test decision. Step 4 combines evidence in both directions into one p value. Values below the selected cutoff reject equal population relief percentages. Steps 2–3 retain the direction of the observed difference. In Scenario 1 (H₀ is true), whole-patient relief counts produce spikes and gaps among the p values. Equal counts give p = 1.
 3. The joined “Simulate [20] trials” control contains an editable number field. Selecting “Simulate” animates up to 20 trials. Larger selected counts appear immediately as distributions. Up to 40 patients per group appear as stick figures. Larger groups use red/green bars with exact outcome counts. The 100 tiles show decision percentages from all completed trials, rounded to whole percentages. For example, 250 errors among 5,000 trials produce five crosses. Correct decisions precede errors in both scenario grids, with exact counts above them. Each scenario has its own interpretation, with mean relief percentages and the mean estimated difference after a completed run. “Simulate 5000 trials” provides a quick view of repeated performance.
 4. Red stick figures show patients without pain relief, and green figures with raised arms show patients who achieved relief. Each trial's estimate and p value come from those patient outcomes. Blue circles mark correct test decisions, and amber crosses mark errors. Counts and percentages summarize both decisions in each population scenario.
 5. “Display and replay options” contains Pause, Replay, “Finish this batch,” animation speed and reduced motion. “Reset results” clears the simulations while keeping the input settings. Increasing the sample from 20 to 50 per group and generating another batch overlays the earlier estimates for comparison.
-6. “Interpret the figure” explains each scenario in its own column, including the observed percentages of correct decisions and errors.
+6. “Interpret the figure” explains each scenario in its own column, including the observed percentages of correct decisions and errors. After changing the sample size and running another batch, this section also compares the two batches. The introductory simulation is explored in place without a report tab or downloads.
 
 ## Reviewing short examples
 
@@ -288,7 +288,7 @@ Purpose: compare three sample size plans for a hypothetical trial of discharge w
 4. For Plan C, the novel-treatment percentage returns to 96%, and power increases to 90%. How does the required sample compare with Plan A?
 5. Your explanation should compare A with B to discuss the target difference, and A with C to discuss power. The worked answer in the tutorial shows all three calculations.
 
-For optional simulation exploration, “One trial” shows possible discharge counts and “Repeated trials” estimates the test's power under the selected assumptions. A no-effect scenario examines false positives. The [discharge simulation](../book/simulation.html#discharge-simulation) explains how simulation can assess the planning approximation near 100%.
+For optional simulation exploration, “One trial” shows possible discharge counts and “Repeated trials” estimates the test's power under the selected assumptions. A no-effect scenario examines false positives. The [discharge simulation app](../power_explorer/?activity=discharge) allows this comparison near 100%, with an explanation in [Evaluating the discharge calculation](../book/simulation.html#discharge-simulation).
 
 <span id="build-your-own-study-calculation--advanced-application"></span>
 

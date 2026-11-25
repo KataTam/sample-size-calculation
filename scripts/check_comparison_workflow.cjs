@@ -73,10 +73,9 @@ const base = (process.argv[2] || 'http://127.0.0.1:8769').replace(/\/$/, '');
     console.log('Power curves: pointer selection of sample size and power plus keyboard input passed.');
 
     f = await open('/power_explorer/?activity=pain_one_many&embedded=1','run_many');
-    await set(f,{B:1000});
-    await f.locator('#combined-many-studies > summary').click();
+    await f.locator('#lab-settings > summary').click();
     await f.locator('#run_many').click();
-    await has(f,'many_status','20 patients per group');
+    await has(f,'journey-reading','5000 completed trials with 20 patients per group');
     await f.locator('#fixed_n').fill('56'); await f.locator('#fixed_n').press('Tab');
     await f.locator('#run_many').click();
     await has(f,'sample_comparison','first batch used 20');

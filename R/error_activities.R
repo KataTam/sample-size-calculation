@@ -9,7 +9,7 @@ render_error_activity <- function(name) {
     htmltools::HTML(paste0(ifelse(points > 127, paste0("&#", points, ";"),
       intToUtf8(points, multiple = TRUE)), collapse = ""))
   }
-  title_tag <- if (name %in% c("discharge", "software")) tags$h4 else tags$h3
+  title_tag <- if (name == "software") tags$h4 else tags$h3
   passages <- list(); paragraphs <- list(); answers <- list(); index <- 0L
   for (segment in activity$segments) {
     if (isTRUE(segment$break_before) && length(passages)) {
