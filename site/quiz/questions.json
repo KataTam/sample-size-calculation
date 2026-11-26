@@ -30,7 +30,8 @@
         "An unspecified visit allows the outcome timing to vary between participants.",
         "Selecting an outcome because it shows a difference makes the analysis data-dependent.",
         "The outcome should follow the research question. a smaller calculation alone does not justify it."
-      ]
+      ],
+      "inline_check": "consider-outcome-time"
     },
     {
       "id": "q02",
@@ -52,7 +53,8 @@
         "Forty points is the difference observed in previous data. The stated power calculation uses the target difference.",
         "Power changes with the size of the true difference.",
         "The target difference is the effect used in the power calculation. The difference observed in previous data and clinical threshold answer separate questions. Their values can coincide or follow a different order. this example uses three different values."
-      ]
+      ],
+      "inline_check": "consider-pilot-target"
     },
     {
       "id": "q03",
@@ -162,7 +164,8 @@
         "Power assumes a specified alternative for its calculation.",
         "Patient improvement percentages describe outcomes, rather than the rejection probability of a test.",
         "Power is the probability of rejecting the null under a specified true difference, design and analysis. Its complement is the Type II error probability at that difference."
-      ]
+      ],
+      "inline_check": "consider-false-negative"
     },
     {
       "id": "q07",
@@ -184,7 +187,8 @@
         "Different random samples can produce these differences without a coding error.",
         "Realized estimates vary between independently generated samples even when their population assumptions and designs are identical.",
         "A larger realized difference can occur under the same design and power settings."
-      ]
+      ],
+      "inline_check": "consider-sampling"
     },
     {
       "id": "q38",
@@ -255,7 +259,8 @@
         "Rounding down leaves each group below the calculated requirement.",
         "The calculation is per group, so the two-group total is 112.",
         "An odd total cannot be divided into two equally sized whole-person groups."
-      ]
+      ],
+      "inline_check": "consider-report-counts"
     },
     {
       "id": "q10",
@@ -282,7 +287,8 @@
         "The inverse-square relationship gives a factor of four when the difference is halved.",
         "The target difference is a direct input to this calculation.",
         "Required sample size is proportional to the inverse square of the target difference in this approximation. Halving the difference multiplies the requirement by four."
-      ]
+      ],
+      "inline_check": "consider-halve-difference"
     },
     {
       "id": "q11",
@@ -326,7 +332,8 @@
         "The smaller result may use a different procedure.",
         "Averaging does not explain the difference between methods.",
         "The independent check helps identify and explain the method difference."
-      ]
+      ],
+      "inline_check": "consider-software-difference"
     },
     {
       "id": "q25",
@@ -371,7 +378,8 @@
         "Adding 10% to 90 gives 99. retaining 90% of 99 gives only 89.1 in expectation.",
         "Eighty-one is 90% of 90, which reduces the starting count.",
         "Recruiting 90 with 10% expected loss leaves about 81 for analysis."
-      ]
+      ],
+      "inline_check": "consider-recruitment"
     },
     {
       "id": "q42",
@@ -387,7 +395,8 @@
         "15"
       ],
       "answer": 3,
-      "explanation": "Each step uses the remaining patients: 30 are available and 50% of those enroll, giving 15 recruits per month."
+      "explanation": "Each step uses the remaining patients: 30 are available and 50% of those enroll, giving 15 recruits per month.",
+      "inline_check": "consider-recruitment-time"
     },
     {
       "id": "q45",
@@ -409,7 +418,8 @@
         "Changing the target after observing outcomes does not resolve selection in the available data.",
         "Recruitment inflation helps preserve the expected analyzable count. Outcome-related missingness can still bias the available-case comparison, so the reasons and analysis assumptions need attention.",
         "Reaching the recruitment target can still leave a biased available-case analysis."
-      ]
+      ],
+      "inline_check": "consider-missing-outcomes"
     },
     {
       "id": "q26",
@@ -431,7 +441,8 @@
         "The procedure, settings, versions and rounding identify how the stated inputs produce the result. Supporting evidence also needs to justify those inputs.",
         "Sufficiency depends on the assumptions, method and intended conclusion.",
         "Repeating a count adds no information about how it was obtained."
-      ]
+      ],
+      "inline_check": "consider-report-method"
     },
     {
       "id": "q27",
@@ -453,7 +464,8 @@
         "A larger requirement does not establish that its assumptions are true.",
         "The differences reveal uncertainty relevant to planning. The choice and its consequences need clinical and statistical justification.",
         "Selecting only the smaller answer hides uncertainty relevant to feasibility."
-      ]
+      ],
+      "inline_check": "consider-plausible-assumptions"
     },
     {
       "id": "q13",
@@ -475,7 +487,8 @@
         "Power is conditional on a specified true difference.",
         "About 59% of repeated trials using this sample, analysis and true difference would reject the null.",
         "The count is already fixed at 100 analyzable patients per group."
-      ]
+      ],
+      "inline_check": "consider-power-curve"
     },
     {
       "id": "q14",
@@ -563,7 +576,8 @@
         "Selecting only significant results favors unusually large estimates among these noisy studies.",
         "Power describes the study's performance under a specified population difference.",
         "Clinical importance is judged from the outcome and patient context."
-      ]
+      ],
+      "inline_check": "consider-exaggerated-benefit"
     },
     {
       "id": "q28",
@@ -673,7 +687,8 @@
         "Significance records rejection of the null.",
         "Coverage compares each interval with the known generating value. Rejection frequency and interval width measure different aspects of performance.",
         "Excluding zero assesses a particular null value, which can differ from the generating value."
-      ]
+      ],
+      "inline_check": "consider-coverage"
     },
     {
       "id": "q20",
@@ -695,7 +710,8 @@
         "More repetitions reduce Monte Carlo uncertainty. Analytical-approximation error and the credibility of the population assumptions require separate assessment.",
         "Finite simulation repetitions create ordinary random uncertainty even with a valid seed.",
         "An approximation and a finite-sample simulation can differ while both are implemented correctly."
-      ]
+      ],
+      "inline_check": "consider-simulation-agreement"
     },
     {
       "id": "q50",
@@ -739,7 +755,8 @@
         "The parameter is treated as fixed in this interval-planning framework.",
         "Estimation concerns the population quantity. precision concerns uncertainty around its estimate. Interval width at a stated confidence level can guide planning.",
         "A significance cutoff alone does not specify the desired interval width."
-      ]
+      ],
+      "inline_check": "consider-interval-width"
     },
     {
       "id": "q24",
@@ -761,7 +778,8 @@
         "Pilot sample size should follow its feasibility objectives. Uncertain treatment effects from a small pilot should be interpreted cautiously.",
         "A small feasibility study generally has a different primary purpose from a definitive efficacy trial.",
         "An unusually large pilot effect can lead to an inadequately justified main-trial calculation."
-      ]
+      ],
+      "inline_check": "consider-pilot-progression"
     },
     {
       "id": "q39",
@@ -805,7 +823,8 @@
         "The available sample is fixed, but the target quantity and intended conclusion have changed. Missing baseline information and the original eligibility criteria also affect what the estimate can establish.",
         "A new question needs a relevant assessment. no universal doubling rule applies.",
         "A descriptive percentage is commonly planned using interval precision."
-      ]
+      ],
+      "inline_check": "consider-reuse-precision"
     },
     {
       "id": "q29",
@@ -827,7 +846,8 @@
         "Two measurements from one patient remain dependent.",
         "The ON and OFF measurements come from the same individuals.",
         "The number of recordings alone omits the number of patients and their dependence."
-      ]
+      ],
+      "inline_check": "consider-paired"
     },
     {
       "id": "q30",
@@ -959,7 +979,8 @@
         "For independent tests, the joint probability is 0.90 × 0.90 = 0.81. Correlated outcomes require a calculation that accounts for their dependence.",
         "The Type I error probability does not determine this joint power.",
         "Adding the powers does not give the probability that both tests succeed."
-      ]
+      ],
+      "inline_check": "consider-coprimary"
     },
     {
       "id": "q47",
@@ -1003,7 +1024,8 @@
         "An early stopping opportunity does not imply a smaller maximum sample size.",
         "A data-dependent threshold can change the false-positive probability and introduce bias.",
         "The procedure should account for all planned opportunities to stop and the final analysis. Maximum and expected sample sizes should be assessed under relevant scenarios."
-      ]
+      ],
+      "inline_check": "consider-interim"
     },
     {
       "id": "q49",
@@ -1069,7 +1091,8 @@
         "Methods and code can often be shared even when patient data are restricted.",
         "A PDF alone may omit the computational inputs and procedures.",
         "Transparency and reuse can be supported through protocols, code and documentation while respecting consent and legitimate access restrictions."
-      ]
+      ],
+      "inline_check": "consider-open-calculation"
     },
     {
       "id": "q35",
@@ -1113,7 +1136,8 @@
         "A seed identifies a starting random state under particular settings. Different generators, algorithms or environments can yield different realized draws.",
         "Software and algorithms affect how a seed maps to generated values.",
         "Plot colors do not control random-number generation."
-      ]
+      ],
+      "inline_check": "consider-seed"
     },
     {
       "id": "q51",
@@ -1129,7 +1153,8 @@
         "Report only the final count because the inputs are already implied"
       ],
       "answer": 0,
-      "explanation": "The 40-point pilot result informs planning. The 30-point target comes from the selected 60% and 30% assumptions. The report should state and justify the inputs that reproduce its sample size."
+      "explanation": "The 40-point pilot result informs planning. The 30-point target comes from the selected 60% and 30% assumptions. The report should state and justify the inputs that reproduce its sample size.",
+      "inline_check": "consider-report-evidence"
     },
     {
       "id": "q52",

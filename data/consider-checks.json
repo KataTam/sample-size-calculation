@@ -1,0 +1,348 @@
+{
+  "checks": [
+    {
+      "id": "consider-outcome-time",
+      "chapter": "clinical-question",
+      "question": "Would changing the primary outcome from pain relief at four weeks to pain relief at six months require reviewing the sample size assumptions?",
+      "answer": true,
+      "feedback": "Relief percentages may change with follow-up time. The evidence and numerical assumptions should correspond to the outcome the trial will measure.",
+      "adapted_from": [
+        "q01"
+      ],
+      "aliases": []
+    },
+    {
+      "id": "consider-pilot-target",
+      "chapter": "clinical-question",
+      "question": "Does the 40-percentage-point difference observed in the pilot have to become the target difference for the main trial?",
+      "answer": false,
+      "feedback": "The pilot provides evidence for planning. The main trial uses a justified target difference of 30 points, taking account of the evidence, its uncertainty and clinical importance.",
+      "adapted_from": [
+        "q02"
+      ],
+      "aliases": []
+    },
+    {
+      "id": "consider-false-negative",
+      "chapter": "clinical-question",
+      "question": "With 90% power at a true 30-point difference, could the trial still fail to find a statistically significant difference?",
+      "answer": true,
+      "feedback": "Under those assumptions, about 10 of every 100 repetitions would fail to detect the difference. These are false negatives.",
+      "adapted_from": [
+        "q06"
+      ],
+      "aliases": []
+    },
+    {
+      "id": "consider-sampling",
+      "chapter": "clinical-question",
+      "question": "Can two trials with the same population relief probabilities and sample sizes produce different observed treatment differences?",
+      "answer": true,
+      "feedback": "Different patients contribute different outcomes. This sampling variability produces different estimates even when the population assumptions remain unchanged.",
+      "adapted_from": [
+        "q07"
+      ],
+      "aliases": []
+    },
+    {
+      "id": "consider-smaller-target",
+      "chapter": "calculations",
+      "question": "With standard-treatment relief kept at 30%, would achieving 90% power for a 20-point difference require more patients than achieving it for a 30-point difference?",
+      "answer": true,
+      "feedback": "At a 5% Type I error probability, the requirement increases from 56 to 124 analyzable patients per group. Detecting a smaller difference with the same power requires more information.",
+      "adapted_from": [],
+      "aliases": [
+        "model-answer-target-choice"
+      ]
+    },
+    {
+      "id": "consider-halve-difference",
+      "chapter": "calculations",
+      "question": "Under the normal approximation, would halving the target mean difference halve the required sample size?",
+      "answer": false,
+      "feedback": "Halving the target difference increases the unrounded sample size requirement fourfold. A smaller difference is harder to distinguish from variation between patients.",
+      "adapted_from": [
+        "q10"
+      ],
+      "aliases": [],
+      "calculator": {
+        "expression": "(3 / 1.5)^2",
+        "working": "(3 / 1.5)^2 = 4 times the original unrounded requirement.",
+        "round_up": false
+      }
+    },
+    {
+      "id": "consider-recruitment",
+      "chapter": "calculations",
+      "question": "If 56 analyzable patients are needed per group and 5% loss is expected, is the recruitment target 118 patients in total?",
+      "answer": true,
+      "feedback": "Dividing 56 by 0.95 and rounding upward gives 59 recruits per group. Two groups therefore require 118 recruits.",
+      "adapted_from": [
+        "q21"
+      ],
+      "aliases": [],
+      "calculator": {
+        "expression": "56 / 0.95",
+        "working": "56 / 0.95 = 58.947… Round upward to 59 per group. Then 2 × 59 = 118 in total.",
+        "round_up": true
+      }
+    },
+    {
+      "id": "consider-recruitment-time",
+      "chapter": "calculations",
+      "question": "With 30 eligible and available patients each month and half consenting, would four months be enough to recruit 118 participants?",
+      "answer": false,
+      "feedback": "Expected recruitment is 15 patients per month. Recruiting 118 would take approximately eight months at that rate.",
+      "adapted_from": [
+        "q42"
+      ],
+      "aliases": [],
+      "calculator": {
+        "expression": "118 / (30 * 50%)",
+        "working": "30 × 0.50 = 15 recruits per month. 118 / 15 ≈ 7.9 months.",
+        "round_up": true
+      }
+    },
+    {
+      "id": "consider-report-method",
+      "chapter": "reporting",
+      "question": "Would “The sample size was calculated in R” give another researcher enough information to reproduce the result?",
+      "answer": false,
+      "feedback": "The report should identify the procedure, numerical inputs, relevant settings, software version and rounding. The calculation code makes these choices easier to check.",
+      "adapted_from": [
+        "q26"
+      ],
+      "aliases": []
+    },
+    {
+      "id": "consider-report-evidence",
+      "chapter": "reporting",
+      "question": "Should the report explain why the calculation uses 60% versus 30% relief when the pilot observed 70% versus 30%?",
+      "answer": true,
+      "feedback": "Both sets of percentages have a role. The report should identify the pilot observations and explain the assumptions selected for the main trial.",
+      "adapted_from": [
+        "q51"
+      ],
+      "aliases": []
+    },
+    {
+      "id": "consider-report-counts",
+      "chapter": "reporting",
+      "question": "Does reporting “118 participants” alone make clear how many outcomes are needed for analysis?",
+      "answer": false,
+      "feedback": "The report should distinguish 56 analyzable patients from 59 recruits per group, giving totals of 112 and 118 respectively. It should also state the 5% expected-loss assumption.",
+      "adapted_from": [
+        "q09"
+      ],
+      "aliases": []
+    },
+    {
+      "id": "consider-margin",
+      "chapter": "estimation-planning",
+      "question": "For an estimate of 20% with an interval from 15% to 25%, is the margin of error 5 percentage points?",
+      "answer": true,
+      "feedback": "Each limit is 5 points from the estimate. The full interval width is 10 points.",
+      "adapted_from": [],
+      "aliases": [],
+      "calculator": {
+        "expression": "(25 - 15) / 2",
+        "working": "The full width is 25 − 15 = 10 percentage points. Half of that width is 5 points.",
+        "round_up": false
+      }
+    },
+    {
+      "id": "consider-interval-width",
+      "chapter": "estimation-planning",
+      "question": "If the calculation targets an interval width of 4 score units, will every trial produce an interval no wider than 4 units?",
+      "answer": false,
+      "feedback": "The calculation targets the expected width. With an assumed SD of 5, it requires 26 completed observations. Individual intervals vary because the sample SD varies between trials.",
+      "adapted_from": [
+        "q23"
+      ],
+      "aliases": [
+        "model-answer-precision-versus-power"
+      ]
+    },
+    {
+      "id": "consider-reuse-precision",
+      "chapter": "estimation-planning",
+      "question": "Does this sleep dataset estimate the percentage with sleep difficulty within 2 percentage points at 95% confidence?",
+      "answer": false,
+      "feedback": "The estimate is 40%, with an interval from 33.1% to 47.3%. The uncertainty extends approximately 7 points on either side. The report should also identify the population represented by the original trial and the 20 patients with missing sleep information.",
+      "adapted_from": [
+        "q43"
+      ],
+      "aliases": [
+        "model-answer-existing-data"
+      ],
+      "calculator": {
+        "expression": "47.3 - 40",
+        "working": "The distances from the estimate to the limits are 40 − 33.1 = 6.9 points and 47.3 − 40 = 7.3 points.",
+        "round_up": false
+      }
+    },
+    {
+      "id": "consider-pilot-progression",
+      "chapter": "estimation-planning",
+      "question": "Do both 32 of 40 and 80 of 100 retained participants meet the rule requiring 80% observed retention and a lower 95% confidence limit above 70%?",
+      "answer": false,
+      "feedback": "Both have 80% observed retention. Their lower 95% confidence limits are 65.2% and 71.1%, respectively. Only 80 of 100 meets both numerical criteria. Acceptable delivery is also required.",
+      "adapted_from": [
+        "q24"
+      ],
+      "aliases": [
+        "model-answer-pilot-progression"
+      ],
+      "calculator": {
+        "expression": "32 / 40 * 100",
+        "working": "32 / 40 × 100 = 80%. Also, 80 / 100 × 100 = 80%. The confidence limits are given in the pilot example above.",
+        "round_up": false
+      }
+    },
+    {
+      "id": "consider-power-curve",
+      "chapter": "curves",
+      "question": "With 100 analyzable patients per group, does the trial have at least 90% power at a true 30-point difference?",
+      "answer": true,
+      "feedback": "Power exceeds 90% at 30 points. At the same sample size, it is approximately 83% at 20 points and 59% at 15 points.",
+      "adapted_from": [
+        "q13"
+      ],
+      "aliases": [
+        "model-answer-curves-predict"
+      ]
+    },
+    {
+      "id": "consider-plausible-assumptions",
+      "chapter": "curves",
+      "question": "If several plausible assumptions give different sample sizes, is the smallest requirement sufficient reason to select that assumption?",
+      "answer": false,
+      "feedback": "The choice needs supporting evidence and clinical reasoning. The report should show how plausible alternatives affect the required sample.",
+      "adapted_from": [
+        "q27"
+      ],
+      "aliases": []
+    },
+    {
+      "id": "consider-exaggerated-benefit",
+      "chapter": "curves",
+      "question": "Can statistically significant results from studies with low power exaggerate the treatment benefit?",
+      "answer": true,
+      "feedback": "Among such studies, unusually large observed differences are more likely to reach statistical significance. Selecting only those results can give an inflated impression of benefit.",
+      "adapted_from": [
+        "q41"
+      ],
+      "aliases": []
+    },
+    {
+      "id": "consider-coverage",
+      "chapter": "simulation",
+      "question": "If the simulated population difference is 30 points, does an interval from −5 to 25 points count toward confidence interval coverage?",
+      "answer": false,
+      "feedback": "The interval excludes the known population difference of 30 points. Coverage counts intervals that contain that value.",
+      "adapted_from": [
+        "q19"
+      ],
+      "aliases": []
+    },
+    {
+      "id": "consider-simulation-agreement",
+      "chapter": "simulation",
+      "question": "Should power estimated from 5,000 simulated trials match the planning formula exactly?",
+      "answer": false,
+      "feedback": "Monte Carlo error causes variation between simulated batches. The planning approximation can also contribute to a difference between the results. More simulation repetitions reduce Monte Carlo error.",
+      "adapted_from": [
+        "q20"
+      ],
+      "aliases": [
+        "model-answer-simulation-predict",
+        "model-answer-simulation-report",
+        "model-answer-simulation-justify"
+      ]
+    },
+    {
+      "id": "consider-missing-outcomes",
+      "chapter": "simulation",
+      "question": "With the same expected dropout percentages, can the estimated benefit depend on which patients are lost?",
+      "answer": true,
+      "feedback": "If patients without relief are more likely to have missing outcomes in the novel-treatment group, its observed relief percentage can be inflated. In the selective-loss example, the estimated difference tends toward about 37 points instead of the true 30. This bias can reduce interval coverage and increase the percentage of statistically significant results.",
+      "adapted_from": [
+        "q45"
+      ],
+      "aliases": [
+        "model-answer-missing-outcomes"
+      ]
+    },
+    {
+      "id": "consider-paired",
+      "chapter": "study-designs",
+      "question": "Does measuring each Parkinson patient both OFF and ON medication create paired observations?",
+      "answer": true,
+      "feedback": "Each pair comes from the same person. Planning and analysis should account for the relationship between those measurements.",
+      "adapted_from": [
+        "q29"
+      ],
+      "aliases": []
+    },
+    {
+      "id": "consider-coprimary",
+      "chapter": "study-designs",
+      "question": "If both independent primary outcomes must succeed and each has 90% power, is the probability of success on both also 90%?",
+      "answer": false,
+      "feedback": "Under independence, the joint probability is 0.90 × 0.90 = 81%. Correlation between outcomes changes the calculation.",
+      "adapted_from": [
+        "q46"
+      ],
+      "aliases": [],
+      "calculator": {
+        "expression": "90% * 90% * 100",
+        "working": "0.90 × 0.90 = 0.81, or 81%.",
+        "round_up": false
+      }
+    },
+    {
+      "id": "consider-interim",
+      "chapter": "study-designs",
+      "question": "Should a planned opportunity to stop early for benefit be included when calculating sample size?",
+      "answer": true,
+      "feedback": "The analysis timing and stopping rules affect the trial’s statistical performance. They should be included in the planning procedure.",
+      "adapted_from": [
+        "q48"
+      ],
+      "aliases": []
+    },
+    {
+      "id": "consider-open-calculation",
+      "chapter": "appendix",
+      "question": "Can researchers make a sample size calculation independently checkable without publishing individual patient records?",
+      "answer": true,
+      "feedback": "The calculation can be documented through its inputs, methods, code and software. Supporting data can be shared through appropriate summaries or controlled access.",
+      "adapted_from": [
+        "q34"
+      ],
+      "aliases": []
+    },
+    {
+      "id": "consider-software-difference",
+      "chapter": "appendix",
+      "question": "Does a normal calculation giving 59 patients per group and a t-test calculation giving 60 show that one program is wrong?",
+      "answer": false,
+      "feedback": "The procedures handle estimation of the SD differently. The comparison should establish which method and settings each program used.",
+      "adapted_from": [
+        "q12"
+      ],
+      "aliases": []
+    },
+    {
+      "id": "consider-seed",
+      "chapter": "appendix",
+      "question": "Is saving the random seed alone sufficient to reproduce a simulated batch exactly?",
+      "answer": false,
+      "feedback": "The simulation algorithm, random-number generator and relevant software environment also need to be recorded.",
+      "adapted_from": [
+        "q36"
+      ],
+      "aliases": []
+    }
+  ]
+}

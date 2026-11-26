@@ -159,6 +159,11 @@ def page(source, target):
         "--metadata", "pagetitle=" + title, "--metadata", "lang=en", "--css", css, "--mathjax", "--output", str(target)],
         input=guide_text, text=True, encoding="utf-8", check=True)
     text = target.read_text(encoding="utf-8")
+    if 'class="activity consider-check"' in text:
+        css_inline = (ROOT / "module/consider-checks.css").read_text(encoding="utf-8")
+        js_inline = (ROOT / "module/consider-checks.js").read_text(encoding="utf-8")
+        text = text.replace('</head>', '<style>' + css_inline + '</style></head>')
+        text = text.replace('</body>', '<script>' + js_inline + '</script></body>')
     if source.name == "cards.md" and source.parent.name == "flashcards":
         assets = '<link rel="stylesheet" href="../../app-layout.css"><link rel="stylesheet" href="../../learning-layout.css"><link rel="stylesheet" href="../../flashcards/preview.css"><link rel="stylesheet" href="../../input-guidance.css"><script src="../../input-guidance.js" defer></script><script src="../../flashcards/preview.js" defer></script>'
         text = text.replace('</head>', assets + '</head>').replace('<body>', '<body class="learning-app flashcard-preview">')

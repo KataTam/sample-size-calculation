@@ -100,7 +100,7 @@
   "model-answer-simulation-justify": "simulation",
   "model-answer-simulation-predict": "simulation",
   "model-answer-simulation-report": "simulation",
-  "model-answer-target-choice": "clinical-question",
+  "model-answer-target-choice": "calculations",
   "multiple-outcomes-comparisons": "study-designs",
   "noninferiority-equivalence": "study-designs",
   "own-study": "appendix",

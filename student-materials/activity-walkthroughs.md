@@ -2,6 +2,8 @@
 
 These walkthroughs connect each activity to the question it helps answer. The clinical values are hypothetical teaching assumptions. The simulations generate hypothetical patient outcomes from specified population assumptions.
 
+Green “Question to consider” boxes offer Yes and No choices with immediate feedback. Numerical checks include a mini calculator using +, −, ×, ÷, ^, parentheses and percentages. After calculating a recruitment requirement per group, “Round up” places the whole-patient result in the calculation field, ready to multiply by the number of groups. The question retains its stated values.
+
 Before changing an input, you can predict what the result will do and identify the quantities you will keep fixed. After exploring, your explanation should compare the result with your prediction and note what it means for the sample size calculation report.
 
 You can drag a slider or type its value in the adjacent number field. Percentages are entered on the displayed scale, so 5 means 5%. In a narrow app panel, “Study settings” opens the inputs; closing it leaves room for the result and graph. Secondary calculation settings remain available in their expandable groups.

@@ -36,6 +36,7 @@ source("../R/tutorial_helpers.R")
 source("../R/teaching_cases.R")
 source("../R/question_map.R")
 source("../R/quiz_helpers.R")
+source("../R/consider_checks.R")
 source("../R/error_activities.R")
 source("../R/tutorial_diagrams.R")
 source("../R/uncertain_planning.R")
@@ -184,6 +185,11 @@ The map provides an overview of the remaining planning decisions. Its short expl
 knitr::asis_output(render_question_map())
 ```
 
+
+```{r consider-outcome-time, echo=FALSE, results="asis"}
+render_consider_check("consider-outcome-time")
+```
+
 ## Pilot findings, target difference, and clinical importance {#what-do-we-expect-what-will-we-plan-for-and-what-matters-clinically .core-heading}
 
 The pilot findings provide a starting point for planning the larger trial. Three quantities help organize the reasoning: the difference observed in the pilot, the target difference used in the calculation, and the clinical threshold. All three concern differences between groups.
@@ -231,6 +237,11 @@ draw_planning_differences()
 The sample size is chosen to give 90% power at the 30-point target difference. If the true benefit is 20 additional patients achieving relief per 100 treated, this trial will detect a difference less often than if the benefit is 30 per 100. The smaller benefit would still be clinically worthwhile. A larger sample is needed to achieve 90% power for that smaller difference. The next section explains power and the two error probabilities.
 
 
+
+```{r consider-pilot-target, echo=FALSE, results="asis"}
+render_consider_check("consider-pilot-target")
+```
+
 ## Hypotheses, error probabilities, and power {#power .core-heading}
 
 <span id="hypotheses-and-error-probabilities"></span>
@@ -272,7 +283,12 @@ Suppose 30% achieve relief with duloxetine and 60% with neravixa. A trial with 9
 draw_error_scenario("effect")
 ```
 
-These scenarios give the error probabilities their meaning:
+
+```{r consider-false-negative, echo=FALSE, results="asis"}
+render_consider_check("consider-false-negative")
+```
+
+Scenario 1 (equal population relief percentages) and Scenario 2 (different population relief percentages) give the error probabilities their meaning:
 
 - [Type I error probability](#alpha), written $\alpha$ (alpha), is the probability of falsely rejecting the null hypothesis when it is true: a [false positive](#false-positive).
 - [Type II error probability](#beta), written $\beta$ (beta), is the probability of failing to reject the null hypothesis at a specified true difference: a [false negative](#false-negative).
@@ -296,20 +312,7 @@ The 5% refers to trials where the population relief percentages are equal. In 1,
 
 The trial itself is conducted once. Calculations and repeated simulations help assess how often its planned test would detect a difference under specified population assumptions. The sample size calculation evaluates power at the 30-point target difference. The test evaluates evidence against a population difference of zero.
 
-::: {.activity}
-<p class="question-label">Question to consider</p>
 
-What would change if the trial needed 90% power when the true treatment difference was 20 percentage points?
-
-<details class="model-answer" id="model-answer-target-choice">
-<summary>Model answer</summary>
-
-More patients would be needed. With the larger sample, a true benefit of 20 additional patients achieving relief per 100 treated would be detected in about 90 of 100 repetitions. The current plan reaches that detection probability for a larger benefit of 30 per 100.
-
-The choice depends on which difference the trial needs a high probability of detecting. The clinical threshold stays at 20 points in either plan. The section [Two proportions in Chapter 2](#two-proportions) shows the numerical consequences.
-
-</details>
-:::
 
 ## One trial and repeated trials {#activity-1-one-study-then-many .core-heading}
 
@@ -347,6 +350,11 @@ draw_three_pain_trials(example_trials)
 ```
 
 These trials share population probabilities, group sizes, allocation and testing procedure. Their patient outcomes, observed percentages, differences and decisions vary. The simulation makes the distinction between population and sample visible because its population parameters are known.
+
+
+```{r consider-sampling, echo=FALSE, results="asis"}
+render_consider_check("consider-sampling")
+```
 
 ### Many trials and a larger sample {.core-heading}
 
@@ -500,6 +508,11 @@ knitr::kable(shown, digits = 2,
 ```
 
 Table \@ref(tab:multiplier-table) connects the cutoffs to recruitment planning. At 5% Type I error probability and 90% power, the calculation gives 56 analyzable patients per group. Lowering the error probability to 1% or raising power to 95% increases that requirement, with the relief probabilities unchanged.
+
+
+```{r consider-smaller-target, echo=FALSE, results="asis"}
+render_consider_check("consider-smaller-target")
+```
 
 ```{r error-power-counts, echo=FALSE, fig.width=7.5, fig.height=4.2, fig.cap="Analyzable patients per group under four error and power choices, with relief probabilities fixed at 60% and 30%. The blue point marks the neuropathic pain plan. Each other row changes one choice.", fig.alt="A horizontal patient-count plot compares the current plan, lower and higher target power, and a lower Type I error probability, keeping the treatment relief probabilities fixed."}
 draw_error_power_counts()
@@ -680,6 +693,11 @@ knitr::kable(data.frame(`Analyzable per group`=n_per_group, `Analyzable total`=2
 
 Smaller target differences require larger samples because they are harder to distinguish from patient-to-patient variation. In the normal formula, halving the difference or doubling the SD multiplies the unrounded requirement by four. The t-test calculation gives approximately this increase.
 
+
+```{r consider-halve-difference, echo=FALSE, results="asis"}
+render_consider_check("consider-halve-difference")
+```
+
 <details>
 <summary>Raw and standardized differences</summary>
 
@@ -828,6 +846,11 @@ render_app_preview("recruitment", "Use your analyzable count and one expected lo
 ```
 
 
+
+```{r consider-recruitment, echo=FALSE, results="asis"}
+render_consider_check("consider-recruitment")
+```
+
 <details class="misconception" id="misconception-dropout">
 <summary>Common misconception: recruiting extra patients removes bias caused by missing outcomes</summary>
 
@@ -849,12 +872,14 @@ draw_recruitment_funnel()
 
 At this rate, recruiting `r 2 * recruit_per_group` patients would take `r ceiling(2 * recruit_per_group / 15)` whole months. The report should also consider site-opening delays and a slower recruitment scenario. The section [Choosing plausible assumptions](#st01-expectations) examines the evidence behind recruitment forecasts, while [Options when the study provides insufficient information](#what-if-the-study-is-too-small-for-its-purpose) discusses changes to the design or recruitment plan.
 
-<details class="misconception" id="lasagnas-law">
-<summary>Common misconception: a busy clinic will easily recruit enough patients for a trial</summary>
+<span id="lasagnas-law"></span>
 
 *Lasagna's law* describes overestimating how many patients are available for a study. In the screening funnel, 100 potentially relevant patients per month becomes 15 recruits after eligibility, competing demands and consent are considered. Recent screening records should support the recruitment forecast [@lasagna1979].
+```{r consider-recruitment-time, echo=FALSE, results="asis"}
+render_consider_check("consider-recruitment-time")
+```
 
-</details>
+
 
 <div class="chapter-recap">
 
@@ -926,6 +951,11 @@ The [report activity](https://katatam.github.io/sample-size-calculation/assumpti
 
 </details>
 
+
+```{r consider-report-method, echo=FALSE, results="asis"}
+render_consider_check("consider-report-method")
+```
+
 Computational reproducibility means that another researcher can use the recorded inputs, procedure and software to obtain consistent results. Keeping the calculation, its evidence and dated decisions makes that check possible. Sharing suitable code and methods also supports scrutiny and reuse [@nas2019; @unesco2021].
 
 ## What belongs in the report? {#record-assumptions .core-heading}
@@ -946,6 +976,11 @@ Before completing the report, the method, inputs and result should be checked ag
 Table: (\#tab:planning-assumptions) Checklist for the four parts of the sample size calculation report, with links to the relevant chapters and methods.
 
 :::
+
+
+```{r consider-report-evidence, echo=FALSE, results="asis"}
+render_consider_check("consider-report-evidence")
+```
 
 @wang2024bep illustrate how evidence supports numerical inputs, using local data for the control percentage and a systematic review for the target risk ratio. Your report should retain each source, its relevance and the plausible alternatives considered; [Chapter 5](#curves) develops that assessment.
 
@@ -976,6 +1011,11 @@ The same checklist can guide the final review of [your sample size calculation r
 ## Complete your report {#complete-calculation-report .core-heading}
 
 Your final review should check that the inputs, target difference, power, procedure and participant counts agree across the report and attached calculations. The activity uses the same answers for the live report and its PDF and Word downloads. Unresolved assumptions can remain provisional, with the evidence needed recorded beside them.
+
+
+```{r consider-report-counts, echo=FALSE, results="asis"}
+render_consider_check("consider-report-counts")
+```
 
 ```{r plan-app-preview, echo=FALSE, results='asis'}
 render_app_preview("assumptions_report", "Develop your question, assumptions and calculation in one continuing report.")
@@ -1042,6 +1082,11 @@ Those limits come from one survey. To understand 95% confidence, imagine 1,000 n
 </details>
 
 The clinic survey starts with a desired margin of error and confidence level, chosen for the service-planning decision. Higher confidence or a narrower target interval requires a larger sample under the same planning model. The next section turns that precision target into a total sample size.
+
+
+```{r consider-margin, echo=FALSE, results="asis"}
+render_consider_check("consider-margin")
+```
 
 ## Estimate one proportion: a prevalence survey {#prevalence .advanced-heading}
 
@@ -1203,18 +1248,12 @@ A sample of $n$ observations gives the interval $\bar x\pm t_{0.975,n-1}s/\sqrt 
 render_app_preview("mean_precision", "Explore sample size for a chosen confidence interval width.")
 ```
 
-::: {.activity}
-<p class="question-label">Question to consider</p>
 
-In [Activity: Estimate a population mean with a precision target](https://katatam.github.io/sample-size-calculation/book/estimation-planning.html#activity-mean_precision), what does a full-width target of 4 units mean? Will every simulated interval meet it?
+```{r consider-interval-width, echo=FALSE, results="asis"}
+render_consider_check("consider-interval-width")
+```
 
-<details class="model-answer" id="model-answer-precision-versus-power">
-<summary>Model answer</summary>
 
-A full width of 4 units corresponds to a margin of approximately 2 units on either side of the estimated mean. With SD 5, the calculation requires `r precision_n` analyzable patients in total. It meets an anticipated-width target. Individual intervals can be wider or narrower because the sample SD varies across studies.
-
-</details>
-:::
 
 ## Clinical interpretation of a confidence interval {#interpret-a-confidence-interval-clinically .advanced-heading}
 
@@ -1311,21 +1350,12 @@ The estimate corresponds to 40 patients reporting sleep difficulty per 100, with
 Before analyzing the reused data, you should check that the required variables and time points are available, reuse is permitted, and the analysis fits the new objective. Your report should state the precision needed for the decision and identify analyses developed after inspecting the data as exploratory [@lakens2022; @consortee2025].
 
 
-::: {.activity}
-<p class="question-label">Question to consider</p>
 
-For your adapted research question, your plan should identify the new outcome, target population, available sample and missing observations. Would an interval of this width answer your project question? Your report should record these decisions in the [Activity: Prepare a sample size calculation report](https://katatam.github.io/sample-size-calculation/book/reporting.html#activity-assumptions_report), using a fixed-resource estimation goal.
+```{r consider-reuse-precision, echo=FALSE, results="asis"}
+render_consider_check("consider-reuse-precision")
+```
 
-<details class="model-answer" id="model-answer-existing-data">
-<summary>Model answer</summary>
 
-The new outcome is baseline sleep difficulty. The results directly describe the population defined by the original trial's eligibility criteria. The dataset contains 200 patients, with sleep information for 180 and missing information for 20. Among those with information, 72/180 = 40% reported difficulty; the 95% Wilson interval is `r percent(sleep_limits[1, 1])` to `r percent(sleep_limits[1, 2])`.
-
-Whether this precision is useful depends on a decision specified for the project. It may support a broad descriptive estimate, but would not support a requirement to estimate the percentage within 2 percentage points. The report should explain the fixed sample, missing information and restricted population. Adequacy here depends on precision for the descriptive objective.
-
-</details>
-
-:::
 
 ## Planning a pilot or feasibility study {#pilot-feasibility .advanced-heading}
 
@@ -1358,21 +1388,12 @@ The app below starts with 40 participants and an 80% retention probability. Comp
 render_app_preview("pilot_feasibility", "Explore the information a pilot with a fixed number of participants can provide.")
 ```
 
-::: {.activity}
-<p class="question-label">Question to consider</p>
 
-A pilot's prespecified progression rule requires at least 80% observed retention, a lower 95% confidence limit above 70%, and acceptable delivery. Which of these results meets the numerical criteria: 32 of 40 retained participants, or 80 of 100? Why?
+```{r consider-pilot-progression, echo=FALSE, results="asis"}
+render_consider_check("consider-pilot-progression")
+```
 
-<details class="model-answer" id="model-answer-pilot-progression">
-<summary>Model answer</summary>
 
-Both samples have 80% observed retention. With 32/40 retained participants, the 95% Wilson interval is `r percent(wilson_interval(.80, 40)[1, 1])` to `r percent(wilson_interval(.80, 40)[1, 2])`. Its lower limit is below 70%, so it does not meet the numerical progression rule.
-
-With 80/100 retained participants, the interval is `r percent(wilson_interval(.80, 100)[1, 1])` to `r percent(wilson_interval(.80, 100)[1, 2])`. Its lower limit exceeds 70%, so it meets the numerical criteria. Progression would also require acceptable delivery. The larger sample gives a narrower interval around the same retention estimate.
-
-</details>
-
-:::
 
 For another objective, suppose a practical problem independently affects 10% of participants. The probability of observing at least one problem in $n$ participants is $1-(1-0.10)^n$; 29 give at least a 95% probability. Much rarer problems require larger samples for reliable detection. A problem can remain undetected in a small pilot [@ying2025]. Different pilot objectives can therefore imply different numbers.
 
@@ -1477,18 +1498,12 @@ The [Sample size reasoning lab](https://katatam.github.io/sample-size-calculatio
 render_app_preview("pain_curves", "Compare power for plausible treatment differences with 100 analyzable patients per group.")
 ```
 
-::: {.activity}
-<p class="question-label">Question to consider</p>
 
-With 100 analyzable patients per group, which of the three differences would the trial detect with at least 90% power?
+```{r consider-power-curve, echo=FALSE, results="asis"}
+render_consider_check("consider-power-curve")
+```
 
-<details class="model-answer" id="model-answer-curves-predict">
-<summary>Model answer</summary>
 
-The trial exceeds 90% power for a 30-point difference. Power is approximately 83% for 20 points and 59% for 15 points. Reaching 90% power for these smaller differences would require 124 and 217 patients per group, respectively.
-
-</details>
-:::
 
 <span id="model-answer-curve-assumptions"></span>
 <span id="model-answer-curves-justify"></span>
@@ -1730,6 +1745,11 @@ The [commented calculation](#uncertainty-calculation-details) records the proced
 
 </details>
 
+
+```{r consider-plausible-assumptions, echo=FALSE, results="asis"}
+render_consider_check("consider-plausible-assumptions")
+```
+
 ## Sensitivity to other assumptions {#stress-test-the-study-plan .advanced-heading}
 
 <span id="compare-planning-assumptions"></span>
@@ -1786,6 +1806,11 @@ An underpowered study has a low probability of obtaining a statistically signifi
 In underpowered studies, sampling variability can be large relative to the treatment difference. Studies that obtain statistically significant results favoring treatment tend to have unusually large estimates of its benefit. Focusing on those significant results can therefore exaggerate the apparent benefit [@gelman2014beyond]. This concerns selection of unusually large estimates. Whether an estimated benefit is worthwhile requires the separate comparison with the clinical threshold, treatment harms and burden.
 
 Larger samples reduce [sampling variability](#sampling-variability). Addressing bias requires attention to the design, measurement and analysis.
+
+
+```{r consider-exaggerated-benefit, echo=FALSE, results="asis"}
+render_consider_check("consider-exaggerated-benefit")
+```
 
 ### Ways to increase power {#increase-power .advanced-heading}
 
@@ -1959,6 +1984,11 @@ knitr::kable(display_simulation_summary(simulation_summary(trials)),
 
 The percentage of statistically significant simulated results estimates [power](#statistical-power) under these assumptions. Coverage is the percentage of [confidence intervals](#confidence-interval) containing the true population difference assumed in the simulation. The percentage meeting the width target counts intervals with a full width no greater than 30 [percentage points](#percentage-points). Full width is the upper limit minus the lower limit. An interval from 12 to 38 percentage points has width $38-12=26$ points and meets that target. Power, coverage and width attainment describe three separate properties.
 
+
+```{r consider-coverage, echo=FALSE, results="asis"}
+render_consider_check("consider-coverage")
+```
+
 <details class="misconception" id="misconception-simulation-repetitions">
 <summary>Common misconception: running 5,000 simulations gives each trial more power than running 20</summary>
 
@@ -2028,28 +2058,12 @@ knitr::kable(data.frame(Method=c("Repeated-trial simulation", "Planning approxim
 
 A difference can reflect Monte Carlo error or the approximation used for binary planning. Increasing the number of simulations reduces only the Monte Carlo component. Simulation evaluates the analysis under specified assumptions. Their suitability for the clinical study requires supporting evidence.
 
-::: {.activity}
-<p class="question-label">Question to consider</p>
 
-With the sample fixed at 100 patients per group, how does the trial perform if true novel-treatment relief is 45% rather than 60%? The [repeated-trial activity](https://katatam.github.io/sample-size-calculation/book/simulation.html#activity-pain_simulation) offers this change under *Settings > Assumptions for the simulated studies > Custom effect or variability*.
-
-```{r model-smaller-trial, include=FALSE}
-model_changed_trial_spec <- trial_spec
-model_changed_trial_spec$p_treatment <- .45
-model_changed_simulation <- simulation_summary(simulate_trials(model_changed_trial_spec))[1, ]
+```{r consider-simulation-agreement, echo=FALSE, results="asis"}
+render_consider_check("consider-simulation-agreement")
 ```
 
-<details class="model-answer" id="model-answer-simulation-predict">
-<summary>Model answer</summary>
-<span id="model-answer-simulation-report"></span>
-<span id="model-answer-simulation-justify"></span>
 
-With standard-treatment relief still at 30%, the true difference falls to 15 percentage points. Estimates center around that smaller difference, and fewer trials reject zero. In 5,000 simulated trials with 100 patients per group, the rejection percentage is `r percent(model_changed_simulation$estimate)` (95% Monte Carlo interval: `r percent(model_changed_simulation$MC_lower_95)` to `r percent(model_changed_simulation$MC_upper_95)`). This summarizes performance under the specified population scenario.
-
-The smaller true difference is below the 20-point clinical threshold. Statistical significance alone would therefore be insufficient to establish a clinically worthwhile benefit. The [evidence assessment](#planning-uncertainty) should inform whether such a scenario changes the recommendation. More repetitions would narrow the Monte Carlo interval around this performance estimate.
-
-</details>
-:::
 
 ## Explore missing outcomes {#explore-missing-outcomes .advanced-heading}
 
@@ -2080,20 +2094,12 @@ In *Repeated trials*, the mean estimated difference is compared with the known p
 
 The available-case analysis uses a two-sided pooled score test and a Newcombe-Wilson interval with the actual retained group sizes. It illustrates the consequences of a simple analysis under different missingness assumptions. Planning an appropriate missing-data analysis for a real trial requires assumptions and methods matched to the intended treatment effect [@bell2013dropout; @little2012missing]. The [recruitment discussion](#account-for-expected-losses) explains differential dropout and recruitment allowances; the [methods section](#tutorial-methods) records the simulation procedures.
 
-::: {.activity}
-<p class="question-label">Question to consider</p>
 
-With 100 recruited participants per group, how do unequal losses unrelated to relief compare with outcome-related losses at the same expected percentages?
+```{r consider-missing-outcomes, echo=FALSE, results="asis"}
+render_consider_check("consider-missing-outcomes")
+```
 
-What happens to the estimated difference, coverage, and significance percentage?
 
-<details class="model-answer" id="model-answer-missing-outcomes">
-<summary>Model answer</summary>
-
-When loss is unrelated to relief, estimates should remain centered approximately on the full-population difference, although fewer observations reduce precision and can lower power. With outcome-related losses in the novel-treatment group, participants with relief are more likely to remain observed. The available-case comparison therefore tends to overestimate the benefit. With population relief of 30% and 60%, the retained novel-treatment population has approximately 66.7% relief, so the estimated difference tends toward 36.7 percentage points instead of the true 30 points. Coverage can fall even when the percentage of significant results rises. More simulation repetitions clarify these patterns; increasing recruitment reduces random uncertainty but leaves this selection bias in place.
-
-</details>
-:::
 
 ## How the simulations work {#simulation-reproducibility .advanced-heading}
 
@@ -2181,6 +2187,11 @@ A sample-size result is useful when another researcher can understand how it was
 Here, computational reproducibility means obtaining consistent results using the same inputs, computational procedures and conditions. Replicability concerns whether studies collecting new data to address the same scientific question produce consistent findings. These definitions follow @nas2019. Reproducing a calculation helps establish that its implementation can be checked. Its assumptions and the suitability of the study design still require scientific judgment.
 
 Open science supports scrutiny and reuse by making research methods, outputs and supporting resources accessible. A shared protocol, analysis code, documented assumptions and an identified software version help others understand and build on your work. Data access should respect consent, confidentiality and other legitimate restrictions [@unesco2021]. The synthetic examples here allow you to explore and share the computational workflow without using patient records.
+
+
+```{r consider-open-calculation, echo=FALSE, results="asis"}
+render_consider_check("consider-open-calculation")
+```
 
 ## Software and statistical support {#software-support .advanced-heading}
 
@@ -2315,6 +2326,11 @@ For the mean example, the app's expected full width is approximately 3.999 units
 
 A useful validation record retains the original inputs, software versions, both outputs and the reason for agreement or disagreement. For open source functions, the saved test should be rerun after a relevant code or package update. Agreement supports the numerical implementation. Whether the assumptions represent the intended study remains a scientific question.
 
+
+```{r consider-software-difference, echo=FALSE, results="asis"}
+render_consider_check("consider-software-difference")
+```
+
 ## Protocols and supporting records {#reproducibility-record .advanced-heading}
 
 The reproducibility record is the collection of materials needed to check the calculation: inputs and their sources, methods, software versions, code or saved settings, results and dated decisions. It can be stored alongside the study protocol and statistical analysis plan (SAP). The UMCG SAP template is one component of this collection.
@@ -2379,6 +2395,11 @@ sessionInfo()
 ```
 
 </details>
+
+
+```{r consider-seed, echo=FALSE, results="asis"}
+render_consider_check("consider-seed")
+```
 
 ## Reproduce or adapt an example {#reproduce-or-adapt-the-examples .advanced-heading}
 

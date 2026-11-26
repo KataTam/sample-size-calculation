@@ -7,7 +7,7 @@ const bank=JSON.parse(fs.readFileSync('site/quiz/questions.json','utf8'));
   const page=await browser.newPage({viewport:{width:1200,height:950}}),errors=[];
   page.on('pageerror',e=>errors.push(e.message));
   const chapters=[...bank.chapter_checks,'exercises'];
-  const introductoryCount=bank.questions.filter(q=>q.chapter==='clinical-question'&&q.chapter_check!==false).length;
+  const introductoryCount=bank.questions.filter(q=>q.chapter==='clinical-question'&&q.chapter_check!==false && !q.inline_check).length;
   for(const chapter of chapters){
    await page.goto(`${base}/book/${chapter}.html`);
    const quiz=page.locator('.chapter-quiz');

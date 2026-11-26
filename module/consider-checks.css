@@ -1,0 +1,31 @@
+.consider-check { color:#214f43; background:#deefee; border-left:4px solid #36745d; padding:12px 20px; margin:22px 0; }
+.consider-check [hidden] { display:none!important; }
+.consider-check p, .consider-check label, .consider-check legend { color:inherit; font-weight:400!important; }
+.consider-check .question-label { font-weight:400!important; }
+.consider-check .consider-question { margin:.4em 0 .8em; }
+.consider-choices { border:0; padding:0; margin:.7em 0; display:flex; flex-wrap:wrap; gap:.65em; min-width:0; }
+.consider-choices label { display:inline-flex; align-items:center; gap:.55em; min-height:44px; padding:8px 18px; border:1px solid #426b5d; border-radius:5px; cursor:pointer; background:#fff; }
+.consider-choices label:has(input:checked) { background:#c2dfd1; border-width:2px; padding:7px 17px; }
+.consider-choices input { margin:0; accent-color:#265d48; }
+.consider-check :focus-visible { outline:3px solid #8b4a9f; outline-offset:3px; }
+.consider-check .consider-answer { border-top:1px solid #729b87; padding-top:.6em; margin-top:.8em; }
+.consider-check .consider-result { margin-bottom:.35em; }
+.consider-check .consider-working { display:none; font-size:.95em; }
+.consider-calculator { margin:.9em 0; padding:.7em .8em; border:1px solid #83a696; border-radius:5px; }
+.consider-calculator-title { margin:0 0 .4em!important; }
+.consider-calculator-controls { display:flex; flex-wrap:wrap; gap:.5em; margin-top:.3em; align-items:center; }
+.consider-calculator input { flex:1 1 160px; min-width:0; width:100%; max-width:300px; padding:9px; min-height:44px; border:1px solid #426b5d; border-radius:4px; font:inherit; color:#214f43; background:#fff; }
+.consider-calculator button { min-height:44px; padding:8px 12px; border:1px solid #426b5d; border-radius:4px; font:inherit; color:#214f43; background:#fff; cursor:pointer; }
+.consider-calculator button:disabled { opacity:.55; cursor:default; }
+.consider-calculator-help { font-size:.85em; margin:.4em 0!important; }
+.consider-calculator-result { display:block; overflow-wrap:anywhere; color:inherit; }
+.consider-sr-only { position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0; }
+.book.color-theme-2 .consider-check { color:#edf7f1; }
+.book.color-theme-2 .consider-check :is(label,input,button) { color:#edf7f1!important; background:#263e36; border-color:#93bba8; }
+.book.color-theme-2 .consider-choices label:has(input:checked) { background:#3a624f; }
+@media print {
+  .consider-check { break-inside:avoid; }
+  .consider-check .consider-answer[hidden] { display:block!important; }
+  .consider-check .consider-working { display:block; }
+  .consider-check :is(.consider-choices,.consider-calculator,.consider-result) { display:none!important; }
+}

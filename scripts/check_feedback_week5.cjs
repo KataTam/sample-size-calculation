@@ -31,7 +31,7 @@ const bank=JSON.parse(fs.readFileSync('site/quiz/questions.json','utf8'));
    const state=()=>root.locator('fieldset:not([hidden])').evaluateAll(qs=>qs.map(q=>({id:q.dataset.question,options:[...q.querySelectorAll('input')].map(i=>i.value)})));
    const initial=await state();
    assert.deepEqual(await root.locator('.quiz-answer').evaluateAll(xs=>xs.map(x=>x.dataset.question)),await root.locator('fieldset').evaluateAll(xs=>xs.map(x=>x.dataset.question)),'Exportable answer key follows question order');
-   const original=bank.questions.filter(q=>q.chapter===chapter&&q.chapter_check!==false).map(q=>q.id);
+   const original=bank.questions.filter(q=>q.chapter===chapter&&q.chapter_check!==false && !q.inline_check).map(q=>q.id);
    if(original.length>1)assert.notDeepEqual(initial.map(x=>x.id),original,'Fresh chapter questions shuffle');
    for(const q of await root.locator('fieldset:not([hidden])').all()){
     const id=await q.getAttribute('data-question'),answer=await q.getAttribute('data-answer');

@@ -79,6 +79,7 @@ let browser;
         }
       }
       clone.querySelectorAll('.chapter-quiz').forEach(el => el.removeAttribute('data-quiz-ready'));
+      clone.querySelectorAll('.consider-check').forEach(el => el.removeAttribute('data-consider-ready'));
       clone.querySelectorAll('.spot-activity').forEach(el => {
         el.removeAttribute('data-spot-ready');
         el.querySelector('.spot-popover')?.remove();
@@ -224,6 +225,7 @@ let browser;
         if(answer.querySelector('.quiz-correct-option').textContent!==label)throw Error('PDF quiz answer label mismatch: '+el.dataset.question);
       });
     });
+    document.querySelectorAll('.consider-check .consider-answer').forEach(el => el.hidden=false);
     document.querySelectorAll('details').forEach(el => el.open=true);
     document.querySelectorAll('.spot-choice').forEach(el => {
       for (const attribute of ['role','tabindex','aria-expanded','aria-controls','aria-haspopup']) el.removeAttribute(attribute);

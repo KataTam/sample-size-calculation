@@ -87,6 +87,11 @@ Here, the treatment comparison is made within participants. When paired outcomes
 
 A study with 30 participants and two treated sites per participant provides 30 participant-level pairs. Its sample size should be planned using a method for [paired observations](#paired-observations). Designs with several sites or lesions per participant may require a more detailed model of the dependence among measurements.
 
+
+```{r consider-paired, echo=FALSE, results="asis"}
+render_consider_check("consider-paired")
+```
+
 ### What this means for sample size planning {.advanced-heading}
 
 Correlation has different consequences depending on where treatments are assigned. In a cluster-randomized trial, members of the same cluster receive the same treatment, so their correlated outcomes contribute partly overlapping information to the comparison between treatments. In a paired-site trial, the two treatments are compared within the same participant, allowing shared participant characteristics to cancel out in the difference.
@@ -217,6 +222,11 @@ For an illustration with two independent co-primary tests, each with 90% power, 
 
 The [FDA multiple-endpoints guidance](https://www.fda.gov/regulatory-information/search-fda-guidance-documents/multiple-endpoints-clinical-trials) describes these distinctions and methods such as Bonferroni, Holm, fixed-sequence testing and gatekeeping. Gatekeeping specifies which earlier tests or families must succeed before later claims can be evaluated. The procedure should be chosen with a statistician before fixing the sample size [@fdamultiple2022].
 
+
+```{r consider-coprimary, echo=FALSE, results="asis"}
+render_consider_check("consider-coprimary")
+```
+
 ## Interim analyses and stopping guidelines {#interim-analyses-stopping .advanced-heading}
 
 An [interim analysis](#interim-analysis){.no-glossary-tooltip} examines accumulating results before the planned final analysis. A trial may have prespecified opportunities to stop for convincing benefit, [futility](#futility){.no-glossary-tooltip} (a low prospect of demonstrating the planned benefit), or safety concerns. Repeated efficacy tests at the usual 5% threshold can increase the overall false-positive probability. A [group-sequential design](#group-sequential-design){.no-glossary-tooltip} accounts for the planned analyses and stopping opportunities [@iche91998].
@@ -226,6 +236,11 @@ For the neuropathic pain trial, an interim efficacy analysis after some particip
 Recruitment planning should distinguish the maximum sample size from the expected sample size under different population scenarios. Early stopping may reduce expected recruitment; the maximum required sample can exceed that of a comparable design with only a final analysis. Safety monitoring also requires clinical judgment, and stopping guidelines should support the agreed review process. An independent data monitoring committee may review unblinded evidence while protecting trial conduct [@iche91998].
 
 The [pilot progression criteria](#pilot-feasibility) address whether a future study is feasible. Interim efficacy and futility guidelines address decisions within the ongoing trial. The [reproducibility record](#complex-design-record) lists what should be documented for those decisions.
+
+
+```{r consider-interim, echo=FALSE, results="asis"}
+render_consider_check("consider-interim")
+```
 
 ## Sample-size re-estimation {#sample-size-re-estimation .advanced-heading}
 

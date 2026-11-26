@@ -7,7 +7,7 @@
   function save(){if(restoring||!bank||!current.length)return;try{localStorage.setItem(storageKey,JSON.stringify({version:JSON.stringify(bank),chapter:chapter.value,route:route.value,ids:current.map(q=>q.id),orders,answers:Object.fromEntries(new FormData($('quiz'))),submitted}));}catch(_) {}}
 
   const chapter = $('chapter'), route = $('route');
-  const selected = () => bank.questions.filter(q => ((chapter.value === 'all' && q.chapter_check === false) || (chapter.value !== 'all' && q.chapter === chapter.value && q.chapter_check !== false)) && (route.value === 'all' || q.level === 'core'));
+  const selected = () => bank.questions.filter(q => ((chapter.value === 'all' && q.chapter_check === false) || (chapter.value !== 'all' && q.chapter === chapter.value && q.chapter_check !== false && !q.inline_check)) && (route.value === 'all' || q.level === 'core'));
   function describe() {
     const questions = selected();
     $('start').disabled = questions.length === 0;
