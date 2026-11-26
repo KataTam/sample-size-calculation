@@ -10,7 +10,9 @@ const base=(process.argv[2]||'http://127.0.0.1:8769').replace(/\/$/,'');
   await page.goto(base+'/book/clinical-question.html');
   assert.equal(await page.locator('.sidebar-level').count(),0);
   const chapter=await page.locator('.page-inner').innerText();
-  assert(chapter.indexOf('Scenario 1:')<chapter.indexOf('These scenarios give'));
+  const definitions=chapter.indexOf('give the error probabilities their meaning:');
+  for(const scenario of ['Scenario 1:','Scenario 2:'])
+    assert(chapter.indexOf(scenario)>=0&&chapter.indexOf(scenario)<definitions,'Clinical scenarios precede the definitions');
   assert(chapter.includes('True positive (power)'));
   assert.equal(await page.locator('#fig\\:error-scenario-null, #fig\\:error-scenario-effect').count(),2);
   const card=page.locator('[data-activity="pain_one_many"]');
