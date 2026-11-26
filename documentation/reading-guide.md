@@ -25,7 +25,8 @@ Complete the [sample size calculation report](https://katatam.github.io/sample-s
 |---|---|---|
 | How precisely can I estimate a percentage? | Pourhoseingholi et al. (2013); Wang and Ji (2020) | [Prevalence estimation](../book/estimation-planning.html#prevalence) |
 | What must a pilot establish before a main trial? | Ying et al. (2025); Eldridge et al. (2016) | [Pilot retention](../book/estimation-planning.html#pilot-feasibility): denominator, useful precision and progression criteria |
-| What can existing data answer? | Lakens (2022); CONSORT's caution about observed post hoc power | [Dataset reuse](../book/estimation-planning.html#dataset-reuse): assess a new question, data completeness and attainable precision |
+| How can an available sample be justified? | Lakens (2022) | [Other sample size justifications](../book/clinical-question.html#other-sample-size-justifications) links to fixed samples, dataset reuse and pilot objectives |
+| Does observed post hoc power help interpret a completed trial? | Hoenig and Heisey (2001); Lakens (2014), linked from the Superpower preface; CONSORT 2025 | [Decisions with a fixed sample](../book/curves.html#available-sample): assess independently justified effects and interpret observed results through estimates and confidence intervals |
 | Can a valid design obtain more information? | Candel and van Breukelen (2023); Hayes and Bennett (1999) | Ways to increase power; paired and cluster designs in the study-design guide |
 | How should a prediction model be planned? | Riley et al. (2020); TRIPOD+AI (2024) | Parkinson speech example; separate model development from evaluation in new patients |
 | What changes when recruitment is limited by a rare disease? | EMA small-population guidance; FDA rare-disease guidance | Rare-disease planning; distinguish final guidance from the cited natural-history and external-control drafts |

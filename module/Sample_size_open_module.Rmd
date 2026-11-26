@@ -118,7 +118,7 @@ The Extensions address different study questions and methods. Their learning out
 ::: {.learning-goals .core-outcomes}
 After this chapter, you should be able to:
 
-- Specify a clinical question, outcome, design and planned comparison.
+- Specify a clinical question, outcome, design and appropriate basis for sample size.
 - Distinguish a difference observed in earlier data, a calculation target and a clinical threshold.
 - Explain Type I and Type II error probabilities and power under specified assumptions.
 - Compare one trial, repeated trials and a larger sample to explain sampling variability and power.
@@ -190,9 +190,17 @@ knitr::asis_output(render_question_map())
 render_consider_check("consider-outcome-time")
 ```
 
+## Other ways to justify sample size {#other-sample-size-justifications .core-heading}
+
+Some studies start with existing data or a feasibility question. Their sample size still needs a justification suited to the objective [@lakens2022]:
+
+- Existing data or a fixed recruitment limit: explain the available count and assess what it can establish. The sections [Decisions with a fixed sample](#available-sample) and [Reusing an existing dataset](#dataset-reuse) develop this reasoning.
+- A census: include every member of a clearly defined population and explain which population the findings describe.
+- Pilot and feasibility studies: justify numbers through objectives such as estimating retention or deciding whether a main trial can proceed. The section [Pilot and feasibility studies](#pilot-feasibility) explains suitable calculations [@eldridge2016].
+
 ## Pilot findings, target difference, and clinical importance {#what-do-we-expect-what-will-we-plan-for-and-what-matters-clinically .core-heading}
 
-The pilot findings provide a starting point for planning the larger trial. Three quantities help organize the reasoning: the difference observed in the pilot, the target difference used in the calculation, and the clinical threshold. All three concern differences between groups.
+For the main neuropathic pain trial, the pilot findings provide a starting point for choosing the calculation inputs. Three quantities help organize the reasoning: the difference observed in the pilot, the target difference used in the calculation, and the clinical threshold. All three concern differences between groups.
 
 The [difference observed in the pilot](#expected-difference) is 40 percentage points: 70% achieved pain relief with neravixa, compared with 30% with duloxetine. This describes the patients in that small study. Another pilot could produce a different result. These findings should therefore be considered alongside other relevant evidence, including differences in pain severity, background treatment and assessment time.
 
@@ -1833,7 +1841,7 @@ Changing the Type I error probability or using a one-sided test changes the reje
 
 The neuropathic pain example provides 100 analyzable patients per group. It exceeds the 90% power target at a 30-point difference, but power at the clinically important 20-point difference is about 83%. If 90% power at 20 points is essential, the calculation requires 124 analyzable patients per group. The [Sample size reasoning lab](https://katatam.github.io/sample-size-calculation/book/curves.html#activity-pain_curves) lets you examine how changing the available count affects that conclusion.
 
-Your justification should state the available sample, the plausible assumptions and the power they imply. The next decision is whether additional recruitment or a scientifically appropriate design change is feasible. A revised research objective should be agreed before data collection and supported by its own calculation.
+Your justification should state the available sample, the plausible assumptions and the power they imply. Evaluating power at independently justified differences, such as the prespecified 20- and 30-point benefits, shows what the fixed sample can detect reliably [@lakens2022]. This assessment can inform additional recruitment, a design change or a revised objective before data collection.
 
 <span id="a-fixed-total-of-70-patients"></span>
 <span id="sensitivity-is-not-observed-post-hoc-power"></span>
@@ -1841,7 +1849,9 @@ Your justification should state the available sample, the plausible assumptions 
 <details class="misconception" id="misconception-observed-power">
 <summary>Common misconception: the observed treatment difference can tell me how much power my completed trial had</summary>
 
-A trial may observe a large difference partly because of sampling variability. Entering that result into a power calculation simply restates information already reflected in its p value. The estimate and confidence interval describe the result. To assess the design, power can be calculated at independently justified differences, such as the prespecified 20- and 30-point benefits [@consortee2025; @lakens2022].
+Suppose the completed neuropathic pain trial finds an 8-percentage-point difference. Entering those observed percentages into a power calculation treats the sample result as the population truth. This is *observed post hoc power*. For common tests, it largely restates information in the p value and cannot independently explain a nonsignificant result [@hoenig2001; @consortee2025].
+
+The trial's estimated difference and confidence interval show the size and uncertainty of the observed benefit. The section [Interpreting a confidence interval clinically](#interpret-a-confidence-interval-clinically) explains how to compare them with the clinical threshold. The fixed-sample assessment above can also be conducted after data collection, using differences justified independently of the observed result [@lakens2014observed].
 
 </details>
 
@@ -2567,6 +2577,7 @@ Your choice of reading can follow the decision you need to make; the [reading gu
 - Design-specific guidance: @ying2025 and @eldridge2016 address pilot objectives; @candel2023 addresses efficient designs; @riley2020 addresses prediction-model development. CONSORT's explanation and elaboration details reporting, including sample size assumptions in item 16a [@consortee2025].
 - For multiple outcomes and testing hierarchies, see @fdamultiple2022. For interim analyses, stopping guidelines and sample-size re-estimation, see ICH E9, Sections 3.4 and 4.4-4.6 [@iche91998], and @fdaadaptive2019. These support the [testing strategies](#multiple-outcomes-comparisons) and [additional reporting checklist](#complex-design-record).
 - For the distinction between an observed significance boundary and planned power, see @lakens2022 and section 1.7 of *Power Analysis with Superpower* [@superpowerbook2022]. Chapters 11 and 15 of that book extend the simulation examples.
+- For [observed post hoc power](#misconception-observed-power), @hoenig2001 explains the statistical problem. The preface of *Power Analysis with Superpower* links to @lakens2014observed for practical guidance, while CONSORT 2025 addresses its reporting [@superpowerbook2022; @consortee2025].
 - Further methods and reference books: @pargent2024 explains mixed-model simulation, and @superpowerbook2022 supports exploring repeated studies. @julious2004 reviews normal-outcome trial calculations; @julious2023 provides broader design-specific sample size methods. @piantadosi2024 places planning within broader trial methodology. These books offer further detail on design-specific methods.
 
 For readers exploring prediction models, @shamsutdinova2026 describes recent simulation-based approaches (currently in preprint).
