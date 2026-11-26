@@ -824,10 +824,6 @@ knitr::kable(data.frame(`Analyzable per group`=analyzable_per_group, `Recruit pe
   caption = "Neuropathic pain recruitment target allowing for 5% expected loss.")
 ```
 
-```{r recruitment-counts, echo=FALSE, fig.width=7.5, fig.height=3.3, fig.cap="The neuropathic pain calculation gives 56 analyzable patients per group. Dividing by 0.95 and rounding upward within each group gives a recruitment target of 59 per group. The totals include both treatment groups.", fig.alt="Two connected boxes show 56 analyzable patients per group, 112 total, followed by division by 0.95 and upward rounding to 59 recruits per group, 118 total."}
-draw_recruitment_counts(analyzable_per_group, .05)
-```
-
 <details class="misconception" id="misconception-dropout-arithmetic">
 <summary>Common misconception: 10% expected dropout is covered by adding 10% to the required analyzable sample</summary>
 

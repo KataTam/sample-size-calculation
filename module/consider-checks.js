@@ -33,6 +33,7 @@
       root.dataset.considerReady = 'true';
       const feedback = root.querySelector('.consider-answer');
       feedback.hidden = true;
+      root.querySelectorAll('.consider-calculation').forEach(details => {details.open = false;});
       root.querySelector('.consider-choices').hidden = false;
       root.querySelectorAll('input[type=radio]').forEach(input => {
         input.checked = false;
@@ -47,6 +48,7 @@
       if (!calculator) return;
       calculator.hidden = false;
       const input = calculator.querySelector('input'), result = calculator.querySelector('output'), round = calculator.querySelector('.consider-round');
+      input.value = '';
       let last = null;
       const format = value => Number(value.toPrecision(14)).toString();
       function clearResult() { last = null; result.textContent = ''; input.removeAttribute('aria-invalid'); if (round) round.disabled = true; }

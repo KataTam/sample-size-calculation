@@ -19,12 +19,22 @@ const quiz=JSON.parse(fs.readFileSync('site/quiz/questions.json','utf8')).questi
     await root.evaluate(el=>{for(let p=el.parentElement;p;p=p.parentElement)if(p.tagName==='DETAILS')p.open=true;});
     assert.equal(await root.locator('.consider-question').innerText(),q.question);
     assert.equal(await root.locator('.consider-answer').isVisible(),false);
-    assert.equal(await root.locator('details').count(),0);
+    assert.equal(await root.locator('details').count(),q.calculator?1:0);
+    if(q.calculator){
+     assert.equal(await root.locator('.consider-calculator input').inputValue(),'');
+     assert.equal(await root.getByText('Show calculation',{exact:true}).isVisible(),false);
+    }
     for(const value of [!q.answer,q.answer]){
      await root.locator(`input[type=radio][value=${value?'yes':'no'}]`).check();
      assert.equal(await root.locator('.consider-answer').isVisible(),true);
      assert.equal(await root.locator('.consider-result').innerText(),value===q.answer?'Correct.':'Incorrect.');
      assert((await root.locator('.consider-explanation').innerText()).includes(q.feedback));
+    }
+    if(q.calculator){
+     assert.equal(await root.locator('.consider-working').isVisible(),false);
+     await root.getByText('Show calculation',{exact:true}).click();
+     assert((await root.locator('.consider-working').innerText()).includes(q.calculator.working));
+     assert.equal(await root.locator('.consider-calculator input').inputValue(),'','Revealing the answer does not fill the learner calculation');
     }
     for(const source of q.adapted_from) assert.equal(await page.locator(`.chapter-quiz [data-question="${source}"]`).count(),0);
    }
@@ -32,12 +42,14 @@ const quiz=JSON.parse(fs.readFileSync('site/quiz/questions.json','utf8')).questi
    if(chapter!=='reporting') assert.equal(await page.locator('.chapter-quiz fieldset').count(),selected.length);
   }
   await page.goto(base+'/book/calculations.html');
+  assert.equal(await page.locator('[id="fig:recruitment-counts"]').count(),0,'Removed recruitment figure stays absent');
   const root=page.locator('#consider-recruitment'),calculator=root.locator('.consider-calculator');
   const input=calculator.locator('input'),output=calculator.locator('output');
   assert.equal(await calculator.locator('.consider-calculator-help').innerText(),'5% = 0.05. Use ^ for powers.');
   assert.equal(await output.innerText(),'');
+  assert.equal(await input.inputValue(),'');
   assert.equal(await calculator.getByRole('button',{name:'Round up',exact:true}).isDisabled(),true);
-  await input.focus(); await input.press('Enter');
+  await input.fill('56 / 0.95'); await input.press('Enter');
   assert.match(await output.innerText(),/58\.947368/);
   await calculator.getByRole('button',{name:'Round up',exact:true}).click();
   assert.equal(await input.inputValue(),'59');
@@ -62,6 +74,8 @@ const quiz=JSON.parse(fs.readFileSync('site/quiz/questions.json','utf8')).questi
   assert.equal(await input.inputValue(),''); assert.equal(await output.innerText(),'');
   await root.locator('input[value=yes]').focus(); await page.keyboard.press('Space');
   assert.equal(await root.locator('.consider-result').innerText(),'Correct.');
+  await root.getByText('Show calculation',{exact:true}).click();
+  assert.equal(await root.locator('.consider-working').isVisible(),true);
   const axePath=process.env.AXE_PATH||require.resolve('axe-core/axe.min.js');
   await page.addScriptTag({path:axePath});
   for(const theme of ['color-theme-0','color-theme-1','color-theme-2']){
@@ -81,11 +95,17 @@ const quiz=JSON.parse(fs.readFileSync('site/quiz/questions.json','utf8')).questi
   const standalone=page.locator('#consider-recruitment');
   await standalone.locator('input[value=no]').check();
   assert.equal(await standalone.locator('.consider-result').innerText(),'Incorrect.');
+  assert.equal(await standalone.locator('.consider-calculator input').inputValue(),'');
+  assert.equal(await standalone.locator('.consider-working').isVisible(),false);
+  await standalone.getByText('Show calculation',{exact:true}).focus();
+  await page.keyboard.press('Enter');
+  assert.equal(await standalone.locator('.consider-working').isVisible(),true);
   await page.emulateMedia({media:'print'});
   await page.evaluate(()=>document.querySelectorAll('details').forEach(el=>el.open=true));
   assert.equal(await page.locator('.consider-answer:visible').count(),27);
   assert.equal(await page.locator('.consider-calculator:visible').count(),0);
   assert.equal(await page.locator('.consider-choices:visible').count(),0);
+  assert.equal(await page.locator('.consider-working:visible').count(),7);
   await page.emulateMedia({media:'screen'});
   await page.goto(base+'/student-materials/study-design-guide.html');
   assert.equal(await page.locator('.consider-check[data-consider-ready]').count(),3);

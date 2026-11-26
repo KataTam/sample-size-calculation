@@ -226,6 +226,11 @@ let browser;
       });
     });
     document.querySelectorAll('.consider-check .consider-answer').forEach(el => el.hidden=false);
+    // The printed answer includes its working directly, without an interactive prompt.
+    document.querySelectorAll('.consider-calculation').forEach(el => {
+      el.querySelector('summary')?.remove();
+      el.replaceWith(...el.childNodes);
+    });
     document.querySelectorAll('details').forEach(el => el.open=true);
     document.querySelectorAll('.spot-choice').forEach(el => {
       for (const attribute of ['role','tabindex','aria-expanded','aria-controls','aria-haspopup']) el.removeAttribute(attribute);

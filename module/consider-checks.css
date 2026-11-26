@@ -10,7 +10,9 @@
 .consider-check :focus-visible { outline:3px solid #8b4a9f; outline-offset:3px; }
 .consider-check .consider-answer { border-top:1px solid #729b87; padding-top:.6em; margin-top:.8em; }
 .consider-check .consider-result { margin-bottom:.35em; }
-.consider-check .consider-working { display:none; font-size:.95em; }
+.consider-check .consider-working { font-size:.95em; }
+.consider-calculation { margin-top:.6em; }
+.consider-calculation > summary { cursor:pointer; min-height:44px; padding:10px 0; box-sizing:border-box; font-weight:400!important; color:inherit; }
 .consider-calculator { margin:.9em 0; padding:.7em .8em; border:1px solid #83a696; border-radius:5px; }
 .consider-calculator-title { margin:0 0 .4em!important; }
 .consider-calculator-controls { display:flex; flex-wrap:wrap; gap:.5em; margin-top:.3em; align-items:center; }
@@ -27,5 +29,5 @@
   .consider-check { break-inside:avoid; }
   .consider-check .consider-answer[hidden] { display:block!important; }
   .consider-check .consider-working { display:block; }
-  .consider-check :is(.consider-choices,.consider-calculator,.consider-result) { display:none!important; }
+  .consider-check :is(.consider-choices,.consider-calculator,.consider-result,.consider-calculation > summary) { display:none!important; }
 }

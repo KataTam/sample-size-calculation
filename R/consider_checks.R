@@ -16,7 +16,7 @@ render_consider_check <- function(id) {
     tags$label(`for` = paste0(id, "-expression"), "Calculation"),
     tags$div(class = "consider-calculator-controls",
       tags$input(id = paste0(id, "-expression"), type = "text", maxlength = 160,
-        value = q$calculator$expression, autocomplete = "off", spellcheck = "false",
+        value = "", autocomplete = "off", spellcheck = "false",
         `aria-describedby` = paste0(id, "-calculator-help")),
       tags$button(type = "submit", "Calculate"),
       if (isTRUE(q$calculator$round_up)) tags$button(type = "button", class = "consider-round", disabled = NA, "Round up"),
@@ -37,6 +37,8 @@ render_consider_check <- function(id) {
     tags$div(class = "consider-answer", role = "status", `aria-live` = "polite", `aria-atomic` = "true",
       tags$p(class = "consider-result"),
       tags$p(class = "consider-explanation", text(paste0(answer, ". ", q$feedback))),
-      if (!is.null(q$calculator)) tags$p(class = "consider-working", text(paste0("Calculation: ", q$calculator$working)))))
+      if (!is.null(q$calculator)) tags$details(class = "consider-calculation",
+        tags$summary("Show calculation"),
+        tags$p(class = "consider-working", text(paste0("Calculation: ", q$calculator$working))))))
   cat(gsub("[\r\n]+[ ]*", "", as.character(widget)), "\n\n", sep = "")
 }
