@@ -875,6 +875,7 @@ At this rate, recruiting `r 2 * recruit_per_group` patients would take `r ceilin
 <span id="lasagnas-law"></span>
 
 *Lasagna's law* describes overestimating how many patients are available for a study. In the screening funnel, 100 potentially relevant patients per month becomes 15 recruits after eligibility, competing demands and consent are considered. Recent screening records should support the recruitment forecast [@lasagna1979].
+
 ```{r consider-recruitment-time, echo=FALSE, results="asis"}
 render_consider_check("consider-recruitment-time")
 ```
