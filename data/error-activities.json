@@ -247,70 +247,64 @@
   },
   "estimation_report": {
     "id": "estimation-report-error-activity",
-    "title": "Activity: Review an estimation sample size calculation report",
+    "title": "Activity: Spot the error in a published sample size calculation",
+    "instructions": "Does this sample size calculation support the treatment comparison? Each marked passage can be selected to reveal feedback.",
+    "version": 4,
     "segments": [
       {
-        "text": "The survey will estimate the percentage of adult outpatient clinic patients who need an interpreter at their next appointment. Patients will be selected at random from the appointment register, with one assessment per patient and the same question about interpreter need.",
+        "heading": "Study description",
+        "text": "The study compared a daily recording intervention with a control group over two weeks. Mobile phone dependence was assessed before and after the intervention."
+      },
+      {
+        "heading": "Sample size calculation",
+        "break_before": true,
+        "text": "The calculation used a 95% confidence level, an assumed standard deviation of 20 and a margin of error of five units.",
+        "error": true,
+        "feedback_title": "What do these inputs mean?",
+        "explanation": [
+          "The report should explain where SD 20 came from and why a five unit margin of error would be useful.",
+          "Here, five units describes the intended uncertainty around an estimated mean. A target difference describes the treatment effect at which power is evaluated. Choosing five for one purpose does not justify using five for the other."
+        ],
+        "link": "estimation-planning.html#plan-for-precision",
+        "section": "Margin of error for a population mean"
+      },
+      {
+        "break_before": true,
+        "text": "n = (1.96 × 20 / 5)² = 61.47, rounded upward to 62 completed responses.",
+        "error": true,
+        "feedback_title": "What quantity does this formula estimate?",
+        "explanation": [
+          "This formula plans the precision of one population mean. With the assumed SD, approximately 62 observations give a 95% confidence interval extending five units on either side of that mean.",
+          "The trial’s question concerns the difference between intervention and control. A calculation for that difference must account for uncertainty in both groups and the planned analysis."
+        ],
+        "link": "calculations.html#two-means",
+        "section": "Sample size for two means"
+      },
+      {
+        "break_before": true,
+        "text": "Allowing for an anticipated 80% valid response rate gave a minimum recruitment target of 78.",
         "error": false,
-        "explanation": "The population, outcome, time point and selection method are stated. One assessment per patient supports a single population estimate.",
-        "link": "estimation-planning.html#estimation-foundations",
-        "section": "Research question and sampling",
-        "break_before": true,
-        "heading": "Question and design"
+        "feedback_title": "This adjustment is correct",
+        "explanation": [
+          "Dividing 62 by 0.80 gives 77.5, rounded upward to 78. If 80% provide valid responses, this recruitment target yields approximately 62 completed responses.",
+          "The adjustment preserves the participant count obtained from the original calculation. The choice of calculation still needs to match the study’s objective."
+        ],
+        "calculation": "62 / 0.80 = 77.5 → 78 people to recruit.",
+        "link": "calculations.html#account-for-expected-losses",
+        "section": "Allowing for expected missing outcomes"
       },
       {
-        "text": "Appointment records suggest that 30% of patients need an interpreter. A margin of six percentage points was selected so that language support can be planned to within approximately six patients per 100 appointments. The records cover the same clinic and patient group.",
+        "break_before": true,
+        "text": "The researchers ultimately randomized 110 students, with 55 assigned to each group.",
         "error": false,
-        "explanation": "The assumed percentage has a stated source, and the margin is linked to a practical decision. The date and reference for the appointment records would complete the evidence record.",
-        "link": "estimation-planning.html#prevalence",
-        "section": "Assumptions and their justification",
-        "break_before": true,
-        "heading": "Assumptions and evidence"
-      },
-      {
-        "text": "With 80% power, anticipated interpreter need of 30% and a margin of error of six percentage points, the normal approximation requires 225 completed assessments.",
-        "error": true,
-        "explanation": "The goal is a precise percentage estimate. This calculation needs a confidence level. The stated result uses 95% confidence: 1.96² × 0.30 × 0.70 / 0.06² = 224.09, rounded upward to 225. Replace “80% power” with “95% confidence.”",
-        "link": "estimation-planning.html#prevalence",
-        "section": "Confidence level and calculation",
-        "break_before": true,
-        "heading": "Calculation"
-      },
-      {
-        "text": "The required sample is therefore 225 patients per group.",
-        "error": true,
-        "explanation": "The survey samples one population. The requirement is 225 completed assessments in total.",
-        "link": "estimation-planning.html#prevalence",
-        "section": "Total sample size",
-        "break_before": true
-      },
-      {
-        "text": "The sample size was obtained using an online calculator. The final percentage will be reported with a 95% confidence interval.",
-        "error": true,
-        "explanation": "A reproducible record identifies the calculator, version or access date, planning formula and inputs. It also names the analysis interval, for example Wilson without continuity correction. A named interval makes the analysis reproducible.",
-        "link": "estimation-planning.html#estimation-report",
-        "section": "Procedure and software",
-        "break_before": true
-      },
-      {
-        "text": "Allowing for 10% nonresponse, the clinic will approach 225 patients. This will provide 225 completed assessments.",
-        "error": true,
-        "explanation": "Ten of every 100 invited patients are expected not to respond. To obtain 225 completed assessments, the clinic should approach 225 / 0.90 = 250 patients. The report also needs the evidence supporting the nonresponse assumption.",
-        "link": "estimation-planning.html#estimation-report",
-        "section": "Recruitment allowance",
-        "break_before": true,
-        "heading": "Recruitment and conclusion"
-      },
-      {
-        "text": "The appointment register contains enough eligible patients for the planned invitations. Results will be expressed as the estimated number needing an interpreter per 100 clinic patients, with the interval showing uncertainty around that estimate.",
-        "error": false,
-        "explanation": "The report connects the sampling frame and planned estimate to staffing decisions. It should also state the recruitment period and check capacity for the corrected 250 invitations.",
-        "link": "estimation-planning.html#estimation-report",
-        "section": "Feasibility and interpretation",
-        "break_before": true
+        "feedback_title": "Does exceeding the recruitment target establish adequate power?",
+        "explanation": [
+          "Adequate power depends on the target between-group difference, variability, analysis and Type I error probability. Recruiting more than 78 does not establish those properties.",
+          "The available information is insufficient to determine whether 55 per group meets an appropriate power target for the intended comparison."
+        ],
+        "link": "clinical-question.html#power",
+        "section": "Error probabilities and power"
       }
-    ],
-    "version": 3,
-    "instructions": "Four passages need correction. Each selected passage explains what is sound or what should change."
+    ]
   }
 }

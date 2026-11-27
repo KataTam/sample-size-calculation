@@ -30,8 +30,13 @@ render_error_activity <- function(name) {
         html_text(segment$text), tags$span(class = "spot-print-marker", `aria-hidden` = "true", paste0(" [", index, "]")))))
       answers <- c(answers, list(tags$li(`data-choice` = index,
         tags$p(class = "spot-answer-quote", html_text(paste0("Passage ", index, ": ", segment$text))),
-        tags$div(class = "spot-explanation", tags$p(if (segment$error) "This part needs correction." else "This part is appropriate."),
-          tags$p(html_text(segment$explanation)), tags$a(href = paste0("https://katatam.github.io/sample-size-calculation/book/", segment$link),
+        tags$div(class = "spot-explanation", tags$p(html_text(if (is.null(segment$feedback_title)) {
+            if (segment$error) "This part needs correction." else "This part is appropriate."
+          } else segment$feedback_title)),
+          lapply(as.list(segment$explanation), function(text) tags$p(html_text(text))),
+          if (!is.null(segment$calculation)) tags$details(class = "spot-calculation",
+            tags$summary("Show calculation"), tags$p(html_text(segment$calculation))),
+          tags$a(href = paste0("https://katatam.github.io/sample-size-calculation/book/", segment$link),
             html_text(paste0("Review: ", segment$section)))))))
     }
   }

@@ -17,7 +17,7 @@ The neuropathic pain case compares fictional neravixa with duloxetine for painfu
 
 The sidebar labels distinguish Core chapters from Extensions. Chapters 7 and 8 provide reading routes for selecting topics relevant to a study. The [simulation implementation](../book/simulation.html#simulation-reproducibility) is in Chapter 6, with links to runnable R code.
 
-The [estimation review](../book/estimation-planning.html#estimation-report-error-activity) uses interpreter need at an outpatient clinic, with inputs that differ from the worked prevalence example. The [software review](../book/appendix.html#software-error-activity) uses fatigue scores. Apply the method to these new settings before revealing the explanations. Fresh quiz attempts and retries shuffle questions and answer options. Reloading keeps the current attempt, and feedback letters match the order on screen.
+The [published-calculation review](../book/estimation-planning.html#estimation-report-error-activity) follows the population-mean explanation. It uses Li et al.’s mobile phone intervention study to examine whether a sample size formula addresses the research question. The [software review](../book/appendix.html#software-error-activity) uses fatigue scores. Apply the method to these new settings before revealing the explanations. Fresh quiz attempts and retries shuffle questions and answer options. Reloading keeps the current attempt, and feedback letters match the order on screen.
 
 ## The four-activity core route
 
@@ -83,12 +83,14 @@ Purpose: see why sample estimates differ from population values, interpret the u
 
 ## Reviewing short examples
 
-The tutorial includes selectable passages in five review activities: [discharge calculations](../book/exercises.html#discharge-error-activity), [recruitment planning](../book/study-designs.html#recruitment-error-activity), [a sample size calculation report](../book/reporting.html#report-error-activity), [an estimation sample size calculation report](../book/estimation-planning.html#estimation-report-error-activity) and [software choices](../book/appendix.html#software-error-activity).
+The tutorial includes selectable passages in five review activities: [discharge calculations](../book/exercises.html#discharge-error-activity), [recruitment planning](../book/study-designs.html#recruitment-error-activity), [a sample size calculation report](../book/reporting.html#report-error-activity), [a published sample size calculation](../book/estimation-planning.html#estimation-report-error-activity) and [software choices](../book/appendix.html#software-error-activity).
 
 1. You can read the proposed statement and choose a passage that may need correction. Some passages are appropriate.
 2. Clicking or tapping a passage opens an explanation and a link to the relevant teaching material. With a keyboard, Tab reaches each passage and Enter or Space opens its explanation; Escape closes it.
 3. Passages already checked can be revisited by hovering or selecting them again. The count records problem areas found, and Reset activity starts again. Progress is stored in the current browser.
 4. The explanations can support a corrected version in your own words. The PDF and the expandable answer key provide the same explanations for offline review.
+
+For the published-calculation review, the four passages cover the numerical assumptions, the single-mean formula, the recruitment allowance and the final group sizes. “Show calculation” reveals the arithmetic for the response allowance. The final model answer brings the study question and planning method together. No corrected trial sample size is supplied because the necessary assumptions were not reported.
 
 <span id="type-i-and-type-ii-error-probabilities-and-power--advanced"></span>
 

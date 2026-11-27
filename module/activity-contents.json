@@ -59,14 +59,14 @@
         "section": "prevalence"
       },
       {
-        "label": "Review an estimation sample size calculation report",
-        "path": "book/estimation-planning.html#estimation-report-error-activity",
-        "route": "Extensions",
-        "section": "estimation-report"
-      },
-      {
         "label": "Estimate a population mean with a precision target",
         "path": "book/estimation-planning.html#activity-mean_precision",
+        "route": "Extensions",
+        "section": "plan-for-precision"
+      },
+      {
+        "label": "Spot the error in a published sample size calculation",
+        "path": "book/estimation-planning.html#estimation-report-error-activity",
         "route": "Extensions",
         "section": "plan-for-precision"
       },

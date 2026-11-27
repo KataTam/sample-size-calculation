@@ -24,13 +24,22 @@ const bank=JSON.parse(fs.readFileSync('data/error-activities.json','utf8'));
    assert.equal(await root.locator('.spot-found').count(),0);
    const correct=root.locator('.spot-choice[data-error="false"]').first();
    await correct.click();await popup.waitFor({state:'visible'});
-   assert.match(await popup.innerText(),/This part is appropriate/);
+   assert((await popup.innerText()).includes(parts.find(x=>!x.error).feedback_title||'This part is appropriate.'));
+   if(name==='estimation_report'){
+    assert.equal(parts.length,4);
+    assert(await root.evaluate(el=>Boolean(document.querySelector('#activity-mean_precision').compareDocumentPosition(el)&Node.DOCUMENT_POSITION_FOLLOWING)),'Published example follows the population-mean activity');
+    const calculation=popup.locator('.spot-calculation');
+    assert.equal(await calculation.evaluate(el=>el.open),false);
+    await calculation.locator('summary').click();
+    assert.match(await calculation.innerText(),/62 \/ 0\.80 = 77\.5/);
+    assert(await calculation.locator('p').isVisible());
+   }
    assert.equal(await root.locator('.spot-status').innerText(),`0 of ${count} problem areas found.`);
    await page.keyboard.press('Escape');
    await popup.waitFor({state:'hidden'});assert(await correct.evaluate(el=>el===document.activeElement));
    const wrong=root.locator('.spot-choice[data-error="true"]').first();
    await wrong.focus();await page.keyboard.press('Enter');
-   await popup.waitFor({state:'visible'});assert.match(await popup.innerText(),/needs correction/);
+   await popup.waitFor({state:'visible'});assert((await popup.innerText()).includes(parts.find(x=>x.error).feedback_title||'This part needs correction.'));
    assert.equal(await root.locator('.spot-status').innerText(),`1 of ${count} problem areas found.`);
    assert(await popup.locator('a').getAttribute('href'));
    await popup.locator('.spot-close').click();
@@ -78,6 +87,6 @@ const bank=JSON.parse(fs.readFileSync('data/error-activities.json','utf8'));
   assert(await offline.locator('#report-error-activity .spot-answer-key li').first().isVisible());
   assert.equal(await offline.locator('#report-error-activity .spot-tools').isVisible(),false);
   assert.deepEqual(errors,[]);
-  console.log('Error reviews passed: four banks, appropriate/error choices, progress, persistence/reset, keyboard, hover, touch, themes, links, standalone HTML, print and no-script answers.');
+  console.log(`Error reviews passed: ${Object.keys(bank).length} banks, appropriate/error choices, calculation disclosure, progress, persistence/reset, keyboard, hover, touch, themes, links, standalone HTML, print and no-script answers.`);
  }finally{await browser.close();}
 })().catch(error=>{console.error(error);process.exit(1)});

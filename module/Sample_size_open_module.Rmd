@@ -1050,6 +1050,7 @@ After this chapter, you should be able to:
 - Justify the confidence level and precision target in relation to the study purpose.
 - Plan a sample size for a desired precision and explain what its result means for patients or service planning.
 - Write an estimation-based sample size calculation report with a justified precision target.
+- Evaluate whether a published sample size calculation addresses the study's research question.
 - Assess the precision available from an existing dataset or a pilot study.
 :::
 
@@ -1192,12 +1193,6 @@ The normal approximation gives an initial sample size from the anticipated perce
 
 To interpret a result for workload planning, an estimated prevalence of 20% would correspond to about 200 affected patients in a comparable clinic population of 1,000. An interval from 15% to 25% would correspond to approximately 150–250 affected patients.
 
-The following draft concerns a different service question: the percentage of clinic patients needing an interpreter. Apply the same reporting principles to its new assumptions and counts. Select the highlighted passages to inspect the calculation and reporting problems.
-
-```{r estimation-report-error, echo=FALSE, results='asis'}
-render_error_activity("estimation_report")
-```
-
 ## Estimating a population mean {#plan-for-precision .advanced-heading}
 
 The same precision-based approach can be used for a population mean, with the SD describing variability between patients.
@@ -1258,7 +1253,20 @@ render_app_preview("mean_precision", "Explore sample size for a chosen confidenc
 render_consider_check("consider-interval-width")
 ```
 
+The following activity summarizes the methods reported by Li et al. [@li2025phone], who studied daily recording of mobile phone use among university students.
 
+```{r estimation-report-error, echo=FALSE, results='asis'}
+render_error_activity("estimation_report")
+```
+
+<details class="model-answer">
+<summary>Model answer</summary>
+
+The arithmetic is reproducible, but the calculation addresses the precision of one mean. The study aims to evaluate a treatment difference.
+
+A revised justification should identify the primary outcome and planned analysis, then specify either a target difference and power or a desired precision for the between-group difference. The assumptions should include their supporting evidence and the allowance for incomplete responses. The sections on [two means](#two-means) and [estimation reporting](#estimation-report) explain these planning choices.
+
+</details>
 
 ## Clinical interpretation of a confidence interval {#interpret-a-confidence-interval-clinically .advanced-heading}
 
